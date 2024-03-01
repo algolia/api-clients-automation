@@ -11,6 +11,7 @@ class SnippetInsightsClient
      */
     public function snippetForCustomDelete()
     {
+        // >SEPARATOR customDelete
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -21,6 +22,7 @@ class SnippetInsightsClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -30,6 +32,7 @@ class SnippetInsightsClient
      */
     public function snippetForCustomGet()
     {
+        // >SEPARATOR customGet
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -40,6 +43,7 @@ class SnippetInsightsClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -49,6 +53,7 @@ class SnippetInsightsClient
      */
     public function snippetForCustomPost()
     {
+        // >SEPARATOR customPost
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -59,6 +64,7 @@ class SnippetInsightsClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -68,6 +74,7 @@ class SnippetInsightsClient
      */
     public function snippetForCustomPut()
     {
+        // >SEPARATOR customPut
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -78,6 +85,7 @@ class SnippetInsightsClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -87,6 +95,7 @@ class SnippetInsightsClient
      */
     public function snippetForDeleteUserToken()
     {
+        // >SEPARATOR deleteUserToken
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -97,6 +106,7 @@ class SnippetInsightsClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -106,6 +116,7 @@ class SnippetInsightsClient
      */
     public function snippetForPushEvents()
     {
+        // >SEPARATOR pushEvents
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -136,5 +147,6 @@ class SnippetInsightsClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 }

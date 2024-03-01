@@ -18,6 +18,7 @@ class SnippetMonitoringClient {
     * allow del method for a custom path with minimal parameters
     */
   def snippetForMonitoringClientCustomDelete(): Unit = {
+    // >SEPARATOR customDelete
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -28,6 +29,7 @@ class SnippetMonitoringClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customGet method.
@@ -35,6 +37,7 @@ class SnippetMonitoringClient {
     * allow get method for a custom path with minimal parameters
     */
   def snippetForMonitoringClientCustomGet(): Unit = {
+    // >SEPARATOR customGet
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -45,6 +48,7 @@ class SnippetMonitoringClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customPost method.
@@ -52,6 +56,7 @@ class SnippetMonitoringClient {
     * allow post method for a custom path with minimal parameters
     */
   def snippetForMonitoringClientCustomPost(): Unit = {
+    // >SEPARATOR customPost
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -62,6 +67,7 @@ class SnippetMonitoringClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customPut method.
@@ -69,6 +75,7 @@ class SnippetMonitoringClient {
     * allow put method for a custom path with minimal parameters
     */
   def snippetForMonitoringClientCustomPut(): Unit = {
+    // >SEPARATOR customPut
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -79,6 +86,7 @@ class SnippetMonitoringClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getClusterIncidents method.
@@ -86,6 +94,7 @@ class SnippetMonitoringClient {
     * getClusterIncidents
     */
   def snippetForMonitoringClientGetClusterIncidents(): Unit = {
+    // >SEPARATOR getClusterIncidents
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -96,6 +105,7 @@ class SnippetMonitoringClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getClusterStatus method.
@@ -103,6 +113,7 @@ class SnippetMonitoringClient {
     * getClusterStatus
     */
   def snippetForMonitoringClientGetClusterStatus(): Unit = {
+    // >SEPARATOR getClusterStatus
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -113,6 +124,7 @@ class SnippetMonitoringClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getIncidents method.
@@ -120,6 +132,7 @@ class SnippetMonitoringClient {
     * getIncidents
     */
   def snippetForMonitoringClientGetIncidents(): Unit = {
+    // >SEPARATOR getIncidents
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -129,6 +142,7 @@ class SnippetMonitoringClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getIndexingTime method.
@@ -136,6 +150,7 @@ class SnippetMonitoringClient {
     * getIndexingTime
     */
   def snippetForMonitoringClientGetIndexingTime(): Unit = {
+    // >SEPARATOR getIndexingTime
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -146,6 +161,7 @@ class SnippetMonitoringClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getInventory method.
@@ -153,6 +169,7 @@ class SnippetMonitoringClient {
     * getInventory
     */
   def snippetForMonitoringClientGetInventory(): Unit = {
+    // >SEPARATOR getInventory
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -162,6 +179,7 @@ class SnippetMonitoringClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getLatency method.
@@ -169,6 +187,7 @@ class SnippetMonitoringClient {
     * getLatency
     */
   def snippetForMonitoringClientGetLatency(): Unit = {
+    // >SEPARATOR getLatency
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -179,6 +198,7 @@ class SnippetMonitoringClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getMetrics method.
@@ -186,6 +206,7 @@ class SnippetMonitoringClient {
     * getMetrics
     */
   def snippetForMonitoringClientGetMetrics(): Unit = {
+    // >SEPARATOR getMetrics
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -197,6 +218,7 @@ class SnippetMonitoringClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getReachability method.
@@ -204,6 +226,7 @@ class SnippetMonitoringClient {
     * getReachability
     */
   def snippetForMonitoringClientGetReachability(): Unit = {
+    // >SEPARATOR getReachability
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -214,6 +237,7 @@ class SnippetMonitoringClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getStatus method.
@@ -221,6 +245,7 @@ class SnippetMonitoringClient {
     * getStatus
     */
   def snippetForMonitoringClientGetStatus(): Unit = {
+    // >SEPARATOR getStatus
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -230,6 +255,7 @@ class SnippetMonitoringClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
 }

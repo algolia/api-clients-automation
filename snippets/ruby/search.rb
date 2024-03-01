@@ -4,6 +4,7 @@ require 'algolia'
 #
 # addApiKey0
 def snippet_for_add_api_key
+  # >SEPARATOR addApiKey
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -23,12 +24,14 @@ def snippet_for_add_api_key
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the addOrUpdateObject method.
 #
 # addOrUpdateObject0
 def snippet_for_add_or_update_object
+  # >SEPARATOR addOrUpdateObject
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -40,12 +43,14 @@ def snippet_for_add_or_update_object
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the appendSource method.
 #
 # appendSource0
 def snippet_for_append_source
+  # >SEPARATOR appendSource
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -62,12 +67,14 @@ def snippet_for_append_source
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the assignUserId method.
 #
 # assignUserId0
 def snippet_for_assign_user_id
+  # >SEPARATOR assignUserId
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -79,12 +86,14 @@ def snippet_for_assign_user_id
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the batch method.
 #
 # allows batch method with `addObject` action
 def snippet_for_batch
+  # >SEPARATOR batch
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -99,12 +108,14 @@ def snippet_for_batch
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the batchAssignUserIds method.
 #
 # batchAssignUserIds0
 def snippet_for_batch_assign_user_ids
+  # >SEPARATOR batchAssignUserIds
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -119,12 +130,14 @@ def snippet_for_batch_assign_user_ids
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the batchDictionaryEntries method.
 #
 # get batchDictionaryEntries results with minimal parameters
 def snippet_for_batch_dictionary_entries
+  # >SEPARATOR batchDictionaryEntries
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -153,12 +166,14 @@ def snippet_for_batch_dictionary_entries
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the browse method.
 #
 # browse with minimal parameters
 def snippet_for_browse
+  # >SEPARATOR browse
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -170,12 +185,14 @@ def snippet_for_browse
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the clearObjects method.
 #
 # clearObjects0
 def snippet_for_clear_objects
+  # >SEPARATOR clearObjects
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -187,12 +204,14 @@ def snippet_for_clear_objects
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the clearRules method.
 #
 # clearRules0
 def snippet_for_clear_rules
+  # >SEPARATOR clearRules
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -204,12 +223,14 @@ def snippet_for_clear_rules
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the clearSynonyms method.
 #
 # clearSynonyms0
 def snippet_for_clear_synonyms
+  # >SEPARATOR clearSynonyms
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -221,12 +242,14 @@ def snippet_for_clear_synonyms
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customDelete method.
 #
 # allow del method for a custom path with minimal parameters
 def snippet_for_custom_delete
+  # >SEPARATOR customDelete
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -238,12 +261,14 @@ def snippet_for_custom_delete
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customGet method.
 #
 # allow get method for a custom path with minimal parameters
 def snippet_for_custom_get
+  # >SEPARATOR customGet
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -255,12 +280,14 @@ def snippet_for_custom_get
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customPost method.
 #
 # allow post method for a custom path with minimal parameters
 def snippet_for_custom_post
+  # >SEPARATOR customPost
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -272,12 +299,14 @@ def snippet_for_custom_post
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customPut method.
 #
 # allow put method for a custom path with minimal parameters
 def snippet_for_custom_put
+  # >SEPARATOR customPut
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -289,12 +318,14 @@ def snippet_for_custom_put
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the deleteApiKey method.
 #
 # deleteApiKey0
 def snippet_for_delete_api_key
+  # >SEPARATOR deleteApiKey
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -306,12 +337,14 @@ def snippet_for_delete_api_key
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the deleteBy method.
 #
 # deleteBy0
 def snippet_for_delete_by
+  # >SEPARATOR deleteBy
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -323,12 +356,14 @@ def snippet_for_delete_by
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the deleteIndex method.
 #
 # deleteIndex0
 def snippet_for_delete_index
+  # >SEPARATOR deleteIndex
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -340,12 +375,14 @@ def snippet_for_delete_index
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the deleteObject method.
 #
 # deleteObject0
 def snippet_for_delete_object
+  # >SEPARATOR deleteObject
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -357,12 +394,14 @@ def snippet_for_delete_object
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the deleteRule method.
 #
 # delete rule simple case
 def snippet_for_delete_rule
+  # >SEPARATOR deleteRule
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -374,12 +413,14 @@ def snippet_for_delete_rule
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the deleteSource method.
 #
 # deleteSource0
 def snippet_for_delete_source
+  # >SEPARATOR deleteSource
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -391,12 +432,14 @@ def snippet_for_delete_source
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the deleteSynonym method.
 #
 # deleteSynonym0
 def snippet_for_delete_synonym
+  # >SEPARATOR deleteSynonym
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -408,12 +451,14 @@ def snippet_for_delete_synonym
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getApiKey method.
 #
 # getApiKey0
 def snippet_for_get_api_key
+  # >SEPARATOR getApiKey
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -425,12 +470,14 @@ def snippet_for_get_api_key
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getDictionaryLanguages method.
 #
 # get getDictionaryLanguages
 def snippet_for_get_dictionary_languages
+  # >SEPARATOR getDictionaryLanguages
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -442,12 +489,14 @@ def snippet_for_get_dictionary_languages
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getDictionarySettings method.
 #
 # get getDictionarySettings results
 def snippet_for_get_dictionary_settings
+  # >SEPARATOR getDictionarySettings
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -459,12 +508,14 @@ def snippet_for_get_dictionary_settings
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getLogs method.
 #
 # getLogs with minimal parameters
 def snippet_for_get_logs
+  # >SEPARATOR getLogs
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -476,12 +527,14 @@ def snippet_for_get_logs
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getObject method.
 #
 # getObject0
 def snippet_for_get_object
+  # >SEPARATOR getObject
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -493,12 +546,14 @@ def snippet_for_get_object
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getObjects method.
 #
 # getObjects0
 def snippet_for_get_objects
+  # >SEPARATOR getObjects
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -519,12 +574,14 @@ def snippet_for_get_objects
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getRule method.
 #
 # getRule0
 def snippet_for_get_rule
+  # >SEPARATOR getRule
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -536,12 +593,14 @@ def snippet_for_get_rule
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getSettings method.
 #
 # getSettings0
 def snippet_for_get_settings
+  # >SEPARATOR getSettings
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -553,12 +612,14 @@ def snippet_for_get_settings
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getSources method.
 #
 # getSources0
 def snippet_for_get_sources
+  # >SEPARATOR getSources
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -570,12 +631,14 @@ def snippet_for_get_sources
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getSynonym method.
 #
 # getSynonym0
 def snippet_for_get_synonym
+  # >SEPARATOR getSynonym
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -587,12 +650,14 @@ def snippet_for_get_synonym
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getTask method.
 #
 # getTask0
 def snippet_for_get_task
+  # >SEPARATOR getTask
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -604,12 +669,14 @@ def snippet_for_get_task
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getTopUserIds method.
 #
 # getTopUserIds0
 def snippet_for_get_top_user_ids
+  # >SEPARATOR getTopUserIds
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -621,12 +688,14 @@ def snippet_for_get_top_user_ids
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getUserId method.
 #
 # getUserId0
 def snippet_for_get_user_id
+  # >SEPARATOR getUserId
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -638,12 +707,14 @@ def snippet_for_get_user_id
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the hasPendingMappings method.
 #
 # hasPendingMappings with minimal parameters
 def snippet_for_has_pending_mappings
+  # >SEPARATOR hasPendingMappings
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -655,12 +726,14 @@ def snippet_for_has_pending_mappings
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the listApiKeys method.
 #
 # listApiKeys0
 def snippet_for_list_api_keys
+  # >SEPARATOR listApiKeys
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -672,12 +745,14 @@ def snippet_for_list_api_keys
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the listClusters method.
 #
 # listClusters0
 def snippet_for_list_clusters
+  # >SEPARATOR listClusters
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -689,12 +764,14 @@ def snippet_for_list_clusters
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the listIndices method.
 #
 # listIndices with minimal parameters
 def snippet_for_list_indices
+  # >SEPARATOR listIndices
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -706,12 +783,14 @@ def snippet_for_list_indices
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the listUserIds method.
 #
 # listUserIds with minimal parameters
 def snippet_for_list_user_ids
+  # >SEPARATOR listUserIds
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -723,12 +802,14 @@ def snippet_for_list_user_ids
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the multipleBatch method.
 #
 # multipleBatch0
 def snippet_for_multiple_batch
+  # >SEPARATOR multipleBatch
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -746,12 +827,14 @@ def snippet_for_multiple_batch
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the operationIndex method.
 #
 # operationIndex0
 def snippet_for_operation_index
+  # >SEPARATOR operationIndex
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -766,12 +849,14 @@ def snippet_for_operation_index
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the partialUpdateObject method.
 #
 # partialUpdateObject0
 def snippet_for_partial_update_object
+  # >SEPARATOR partialUpdateObject
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -788,12 +873,14 @@ def snippet_for_partial_update_object
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the removeUserId method.
 #
 # removeUserId0
 def snippet_for_remove_user_id
+  # >SEPARATOR removeUserId
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -805,12 +892,14 @@ def snippet_for_remove_user_id
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the replaceSources method.
 #
 # replaceSources0
 def snippet_for_replace_sources
+  # >SEPARATOR replaceSources
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -827,12 +916,14 @@ def snippet_for_replace_sources
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the restoreApiKey method.
 #
 # restoreApiKey0
 def snippet_for_restore_api_key
+  # >SEPARATOR restoreApiKey
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -844,12 +935,14 @@ def snippet_for_restore_api_key
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the saveObject method.
 #
 # saveObject0
 def snippet_for_save_object
+  # >SEPARATOR saveObject
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -861,12 +954,14 @@ def snippet_for_save_object
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the saveRule method.
 #
 # saveRule with minimal parameters
 def snippet_for_save_rule
+  # >SEPARATOR saveRule
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -885,12 +980,14 @@ def snippet_for_save_rule
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the saveRules method.
 #
 # saveRules with minimal parameters
 def snippet_for_save_rules
+  # >SEPARATOR saveRules
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -917,12 +1014,14 @@ def snippet_for_save_rules
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the saveSynonym method.
 #
 # saveSynonym0
 def snippet_for_save_synonym
+  # >SEPARATOR saveSynonym
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -939,12 +1038,14 @@ def snippet_for_save_synonym
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the saveSynonyms method.
 #
 # saveSynonyms0
 def snippet_for_save_synonyms
+  # >SEPARATOR saveSynonyms
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -967,12 +1068,14 @@ def snippet_for_save_synonyms
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the search method.
 #
 # search for a single hits request with minimal parameters
 def snippet_for_search
+  # >SEPARATOR search
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -984,12 +1087,14 @@ def snippet_for_search
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the searchDictionaryEntries method.
 #
 # get searchDictionaryEntries results with minimal parameters
 def snippet_for_search_dictionary_entries
+  # >SEPARATOR searchDictionaryEntries
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -1004,12 +1109,14 @@ def snippet_for_search_dictionary_entries
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the searchForFacetValues method.
 #
 # get searchForFacetValues results with minimal parameters
 def snippet_for_search_for_facet_values
+  # >SEPARATOR searchForFacetValues
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -1021,12 +1128,14 @@ def snippet_for_search_for_facet_values
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the searchRules method.
 #
 # searchRules0
 def snippet_for_search_rules
+  # >SEPARATOR searchRules
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -1038,12 +1147,14 @@ def snippet_for_search_rules
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the searchSingleIndex method.
 #
 # search with minimal parameters
 def snippet_for_search_single_index
+  # >SEPARATOR searchSingleIndex
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -1055,12 +1166,14 @@ def snippet_for_search_single_index
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the searchSynonyms method.
 #
 # searchSynonyms with minimal parameters
 def snippet_for_search_synonyms
+  # >SEPARATOR searchSynonyms
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -1072,12 +1185,14 @@ def snippet_for_search_synonyms
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the searchUserIds method.
 #
 # searchUserIds0
 def snippet_for_search_user_ids
+  # >SEPARATOR searchUserIds
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -1096,12 +1211,14 @@ def snippet_for_search_user_ids
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the setDictionarySettings method.
 #
 # get setDictionarySettings results with minimal parameters
 def snippet_for_set_dictionary_settings
+  # >SEPARATOR setDictionarySettings
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -1121,12 +1238,14 @@ def snippet_for_set_dictionary_settings
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the setSettings method.
 #
 # setSettings with minimal parameters
 def snippet_for_set_settings
+  # >SEPARATOR setSettings
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -1142,12 +1261,14 @@ def snippet_for_set_settings
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the updateApiKey method.
 #
 # updateApiKey0
 def snippet_for_update_api_key
+  # >SEPARATOR updateApiKey
   # Initialize the client
   client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -1167,4 +1288,5 @@ def snippet_for_update_api_key
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end

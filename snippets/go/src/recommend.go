@@ -11,6 +11,7 @@ func SnippetForCustomDeleteOfRecommend() {
 	   allow del method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customDelete
 	// Initialize the client
 	client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -29,6 +30,7 @@ func SnippetForCustomDeleteOfRecommend() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomGetOfRecommend() {
 	/*
@@ -37,6 +39,7 @@ func SnippetForCustomGetOfRecommend() {
 	   allow get method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customGet
 	// Initialize the client
 	client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -55,6 +58,7 @@ func SnippetForCustomGetOfRecommend() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomPostOfRecommend() {
 	/*
@@ -63,6 +67,7 @@ func SnippetForCustomPostOfRecommend() {
 	   allow post method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customPost
 	// Initialize the client
 	client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -81,6 +86,7 @@ func SnippetForCustomPostOfRecommend() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomPutOfRecommend() {
 	/*
@@ -89,6 +95,7 @@ func SnippetForCustomPutOfRecommend() {
 	   allow put method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customPut
 	// Initialize the client
 	client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -107,6 +114,7 @@ func SnippetForCustomPutOfRecommend() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForDeleteRecommendRuleOfRecommend() {
 	/*
@@ -115,6 +123,7 @@ func SnippetForDeleteRecommendRuleOfRecommend() {
 	   deleteRecommendRule0
 	*/
 
+	// >SEPARATOR deleteRecommendRule
 	// Initialize the client
 	client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -133,6 +142,7 @@ func SnippetForDeleteRecommendRuleOfRecommend() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetRecommendRuleOfRecommend() {
 	/*
@@ -141,6 +151,7 @@ func SnippetForGetRecommendRuleOfRecommend() {
 	   getRecommendRule0
 	*/
 
+	// >SEPARATOR getRecommendRule
 	// Initialize the client
 	client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -159,6 +170,7 @@ func SnippetForGetRecommendRuleOfRecommend() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetRecommendStatusOfRecommend() {
 	/*
@@ -167,6 +179,7 @@ func SnippetForGetRecommendStatusOfRecommend() {
 	   getRecommendStatus0
 	*/
 
+	// >SEPARATOR getRecommendStatus
 	// Initialize the client
 	client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -185,6 +198,7 @@ func SnippetForGetRecommendStatusOfRecommend() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetRecommendationsOfRecommend() {
 	/*
@@ -193,6 +207,7 @@ func SnippetForGetRecommendationsOfRecommend() {
 	   get recommendations for recommend model with minimal parameters
 	*/
 
+	// >SEPARATOR getRecommendations
 	// Initialize the client
 	client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -214,6 +229,7 @@ func SnippetForGetRecommendationsOfRecommend() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSearchRecommendRulesOfRecommend() {
 	/*
@@ -222,6 +238,7 @@ func SnippetForSearchRecommendRulesOfRecommend() {
 	   searchRecommendRules0
 	*/
 
+	// >SEPARATOR searchRecommendRules
 	// Initialize the client
 	client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -240,4 +257,5 @@ func SnippetForSearchRecommendRulesOfRecommend() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }

@@ -617,6 +617,163 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new MonitoringClient(new
+            MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.CustomGetAsync("/test/minimal");
+        - lang: Go
+          source: |
+            // Initialize the client
+            client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.CustomGet(client.NewApiCustomGetRequest(
+              "/test/minimal",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            MonitoringClient client = new MonitoringClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.customGet("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.customGet({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.customGet(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->customGet(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.custom_get(
+                path="/test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.custom_get("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.customGet[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.customGet(
+                path: "/test/minimal"
+            )
     post:
       operationId: customPost
       requestBody:
@@ -645,6 +802,163 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new MonitoringClient(new
+            MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.CustomPostAsync("/test/minimal");
+        - lang: Go
+          source: |
+            // Initialize the client
+            client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.CustomPost(client.NewApiCustomPostRequest(
+              "/test/minimal",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            MonitoringClient client = new MonitoringClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.customPost("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.customPost({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.customPost(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->customPost(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.custom_post(
+                path="/test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.custom_post("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.customPost[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.customPost(
+                path: "/test/minimal"
+            )
     put:
       operationId: customPut
       requestBody:
@@ -673,6 +987,163 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new MonitoringClient(new
+            MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.CustomPutAsync("/test/minimal");
+        - lang: Go
+          source: |
+            // Initialize the client
+            client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.CustomPut(client.NewApiCustomPutRequest(
+              "/test/minimal",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            MonitoringClient client = new MonitoringClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.customPut("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.customPut({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.customPut(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->customPut(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.custom_put(
+                path="/test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.custom_put("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.customPut[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.customPut(
+                path: "/test/minimal"
+            )
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API.
@@ -695,6 +1166,169 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new MonitoringClient(new
+            MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.CustomDeleteAsync("/test/minimal");
+        - lang: Go
+          source: |
+            // Initialize the client
+            client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+              "/test/minimal",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            MonitoringClient client = new MonitoringClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.customDelete("/test/minimal");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.customDelete({ path: '/test/minimal'
+            });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.customDelete(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->customDelete(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.custom_delete(
+                path="/test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.custom_delete("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.customDelete[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.customDelete(
+                path: "/test/minimal"
+            )
   /1/status:
     get:
       operationId: getStatus
@@ -719,6 +1353,153 @@ paths:
           $ref: '#/components/responses/StatusResponse'
         '401':
           $ref: '#/components/responses/UnauthorizedResponse'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new MonitoringClient(new
+            MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.GetStatusAsync();
+        - lang: Go
+          source: |
+            // Initialize the client
+            client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.GetStatus()
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            MonitoringClient client = new MonitoringClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.getStatus();
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.getStatus();
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.getStatus()
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->getStatus();
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.get_status()
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.get_status
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.getStatus(
+
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.getStatus()
   /1/status/{clusters}:
     get:
       summary: List statuses of selected clusters.
@@ -736,6 +1517,177 @@ paths:
           $ref: '#/components/responses/UnauthorizedResponse'
         '404':
           $ref: '#/components/responses/NotFoundResponse'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new MonitoringClient(new
+            MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.GetClusterStatusAsync("c1-de");
+        - lang: Go
+          source: >
+            // Initialize the client
+
+            client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetClusterStatus(client.NewApiGetClusterStatusRequest(
+              "c1-de",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            MonitoringClient client = new MonitoringClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.getClusterStatus("c1-de");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.getClusterStatus({ clusters: 'c1-de'
+            });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.getClusterStatus(
+              clusters = "c1-de",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->getClusterStatus(
+                'c1-de',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.get_cluster_status(
+                clusters="c1-de",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.get_cluster_status("c1-de")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.getClusterStatus(
+              clusters = "c1-de"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.getClusterStatus(
+                clusters: "c1-de"
+            )
   /1/incidents:
     get:
       summary: List incidents.
@@ -749,6 +1701,153 @@ paths:
           $ref: '#/components/responses/IncidentsResponse'
         '401':
           $ref: '#/components/responses/UnauthorizedResponse'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new MonitoringClient(new
+            MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.GetIncidentsAsync();
+        - lang: Go
+          source: |
+            // Initialize the client
+            client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.GetIncidents()
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            MonitoringClient client = new MonitoringClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.getIncidents();
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.getIncidents();
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.getIncidents()
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->getIncidents();
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.get_incidents()
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.get_incidents
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.getIncidents(
+
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.getIncidents()
   /1/incidents/{clusters}:
     get:
       summary: List incidents for selected clusters.
@@ -766,6 +1865,177 @@ paths:
           $ref: '#/components/responses/UnauthorizedResponse'
         '404':
           $ref: '#/components/responses/NotFoundResponse'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new MonitoringClient(new
+            MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.GetClusterIncidentsAsync("c1-de");
+        - lang: Go
+          source: >
+            // Initialize the client
+
+            client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetClusterIncidents(client.NewApiGetClusterIncidentsRequest(
+              "c1-de",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            MonitoringClient client = new MonitoringClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.getClusterIncidents("c1-de");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.getClusterIncidents({ clusters:
+            'c1-de' });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.getClusterIncidents(
+              clusters = "c1-de",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->getClusterIncidents(
+                'c1-de',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.get_cluster_incidents(
+                clusters="c1-de",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.get_cluster_incidents("c1-de")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.getClusterIncidents(
+              clusters = "c1-de"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.getClusterIncidents(
+                clusters: "c1-de"
+            )
   /1/inventory/servers:
     get:
       summary: List servers.
@@ -790,6 +2060,153 @@ paths:
           $ref: '#/components/responses/InventoryResponse'
         '403':
           $ref: '#/components/responses/ForbiddenResponse'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new MonitoringClient(new
+            MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.GetInventoryAsync();
+        - lang: Go
+          source: |
+            // Initialize the client
+            client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.GetInventory()
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            MonitoringClient client = new MonitoringClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.getInventory();
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.getInventory();
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.getInventory()
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->getInventory();
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.get_inventory()
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.get_inventory
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.getInventory(
+
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.getInventory()
   /1/latency/{clusters}:
     get:
       summary: Get search latency times.
@@ -805,6 +2222,163 @@ paths:
           $ref: '#/components/responses/LatencyResponse'
         '400':
           $ref: '#/components/responses/BadRequestResponse'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new MonitoringClient(new
+            MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.GetLatencyAsync("c1-de");
+        - lang: Go
+          source: |
+            // Initialize the client
+            client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.GetLatency(client.NewApiGetLatencyRequest(
+              "c1-de",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            MonitoringClient client = new MonitoringClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.getLatency("c1-de");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.getLatency({ clusters: 'c1-de' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.getLatency(
+              clusters = "c1-de",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->getLatency(
+                'c1-de',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.get_latency(
+                clusters="c1-de",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.get_latency("c1-de")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.getLatency(
+              clusters = "c1-de"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.getLatency(
+                clusters: "c1-de"
+            )
   /1/indexing/{clusters}:
     get:
       summary: Get indexing times.
@@ -820,6 +2394,177 @@ paths:
           $ref: '#/components/responses/IndexingResponse'
         '400':
           $ref: '#/components/responses/BadRequestResponse'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new MonitoringClient(new
+            MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.GetIndexingTimeAsync("c1-de");
+        - lang: Go
+          source: >
+            // Initialize the client
+
+            client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetIndexingTime(client.NewApiGetIndexingTimeRequest(
+              "c1-de",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            MonitoringClient client = new MonitoringClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.getIndexingTime("c1-de");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.getIndexingTime({ clusters: 'c1-de'
+            });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.getIndexingTime(
+              clusters = "c1-de",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->getIndexingTime(
+                'c1-de',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.get_indexing_time(
+                clusters="c1-de",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.get_indexing_time("c1-de")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.getIndexingTime(
+              clusters = "c1-de"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.getIndexingTime(
+                clusters: "c1-de"
+            )
   /1/reachability/{clusters}/probes:
     get:
       summary: Test the reachability of clusters.
@@ -835,6 +2580,177 @@ paths:
           $ref: '#/components/responses/ReachabilityResponse'
         '400':
           $ref: '#/components/responses/BadRequestResponse'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new MonitoringClient(new
+            MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.GetReachabilityAsync("c1-de");
+        - lang: Go
+          source: >
+            // Initialize the client
+
+            client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetReachability(client.NewApiGetReachabilityRequest(
+              "c1-de",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            MonitoringClient client = new MonitoringClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.getReachability("c1-de");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.getReachability({ clusters: 'c1-de'
+            });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.getReachability(
+              clusters = "c1-de",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->getReachability(
+                'c1-de',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.get_reachability(
+                clusters="c1-de",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.get_reachability("c1-de")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.getReachability(
+              clusters = "c1-de"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.getReachability(
+                clusters: "c1-de"
+            )
   /1/infrastructure/{metric}/period/{period}:
     get:
       summary: Get metrics for a given period.
@@ -850,3 +2766,172 @@ paths:
           $ref: '#/components/responses/InfrastructureResponse'
         '401':
           $ref: '#/components/responses/InfrastructureAPIUnauthorized'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new MonitoringClient(new
+            MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.GetMetricsAsync(
+              Enum.Parse<Metric>("AvgBuildTime"),
+              Enum.Parse<Period>("Minute")
+            );
+        - lang: Go
+          source: |
+            // Initialize the client
+            client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.GetMetrics(client.NewApiGetMetricsRequest(
+              monitoring.Metric("avg_build_time"), monitoring.Period("minute"),
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            MonitoringClient client = new MonitoringClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.getMetrics(Metric.fromValue("avg_build_time"),
+            Period.fromValue("minute"));
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.getMetrics({
+              metric: 'avg_build_time',
+              period: 'minute',
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.getMetrics(
+              metric = Metric.entries.first { it.value == "avg_build_time" },
+              period = Period.entries.first { it.value == "minute" },
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->getMetrics(
+                'avg_build_time',
+                'minute',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.get_metrics(
+                metric="avg_build_time",
+                period="minute",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.get_metrics('avg_build_time', 'minute')
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.getMetrics(
+              metric = Metric.withName("avg_build_time"),
+              period = Period.withName("minute")
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.getMetrics(
+                metric: Metric.avgBuildTime,
+                period: Period.minute
+            )

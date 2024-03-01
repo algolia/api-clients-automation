@@ -11,6 +11,7 @@ class SnippetMonitoringClient
      */
     public function snippetForCustomDelete()
     {
+        // >SEPARATOR customDelete
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -21,6 +22,7 @@ class SnippetMonitoringClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -30,6 +32,7 @@ class SnippetMonitoringClient
      */
     public function snippetForCustomGet()
     {
+        // >SEPARATOR customGet
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -40,6 +43,7 @@ class SnippetMonitoringClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -49,6 +53,7 @@ class SnippetMonitoringClient
      */
     public function snippetForCustomPost()
     {
+        // >SEPARATOR customPost
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -59,6 +64,7 @@ class SnippetMonitoringClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -68,6 +74,7 @@ class SnippetMonitoringClient
      */
     public function snippetForCustomPut()
     {
+        // >SEPARATOR customPut
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -78,6 +85,7 @@ class SnippetMonitoringClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -87,6 +95,7 @@ class SnippetMonitoringClient
      */
     public function snippetForGetClusterIncidents()
     {
+        // >SEPARATOR getClusterIncidents
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -97,6 +106,7 @@ class SnippetMonitoringClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -106,6 +116,7 @@ class SnippetMonitoringClient
      */
     public function snippetForGetClusterStatus()
     {
+        // >SEPARATOR getClusterStatus
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -116,6 +127,7 @@ class SnippetMonitoringClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -125,6 +137,7 @@ class SnippetMonitoringClient
      */
     public function snippetForGetIncidents()
     {
+        // >SEPARATOR getIncidents
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -133,6 +146,7 @@ class SnippetMonitoringClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -142,6 +156,7 @@ class SnippetMonitoringClient
      */
     public function snippetForGetIndexingTime()
     {
+        // >SEPARATOR getIndexingTime
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -152,6 +167,7 @@ class SnippetMonitoringClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -161,6 +177,7 @@ class SnippetMonitoringClient
      */
     public function snippetForGetInventory()
     {
+        // >SEPARATOR getInventory
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -169,6 +186,7 @@ class SnippetMonitoringClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -178,6 +196,7 @@ class SnippetMonitoringClient
      */
     public function snippetForGetLatency()
     {
+        // >SEPARATOR getLatency
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -188,6 +207,7 @@ class SnippetMonitoringClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -197,6 +217,7 @@ class SnippetMonitoringClient
      */
     public function snippetForGetMetrics()
     {
+        // >SEPARATOR getMetrics
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -208,6 +229,7 @@ class SnippetMonitoringClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -217,6 +239,7 @@ class SnippetMonitoringClient
      */
     public function snippetForGetReachability()
     {
+        // >SEPARATOR getReachability
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -227,6 +250,7 @@ class SnippetMonitoringClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -236,6 +260,7 @@ class SnippetMonitoringClient
      */
     public function snippetForGetStatus()
     {
+        // >SEPARATOR getStatus
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
@@ -244,5 +269,6 @@ class SnippetMonitoringClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 }

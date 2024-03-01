@@ -7,6 +7,7 @@ import kotlin.system.exitProcess
 
 class SnippetAbtestingClient {
   suspend fun snippetForAddABTests() {
+    // >SEPARATOR addABTests
     // Initialize the client
     val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -30,11 +31,13 @@ class SnippetAbtestingClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomDelete() {
+    // >SEPARATOR customDelete
     // Initialize the client
     val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -45,11 +48,13 @@ class SnippetAbtestingClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomGet() {
+    // >SEPARATOR customGet
     // Initialize the client
     val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -60,11 +65,13 @@ class SnippetAbtestingClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomPost() {
+    // >SEPARATOR customPost
     // Initialize the client
     val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -75,11 +82,13 @@ class SnippetAbtestingClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomPut() {
+    // >SEPARATOR customPut
     // Initialize the client
     val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -90,11 +99,13 @@ class SnippetAbtestingClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForDeleteABTest() {
+    // >SEPARATOR deleteABTest
     // Initialize the client
     val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -105,11 +116,13 @@ class SnippetAbtestingClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetABTest() {
+    // >SEPARATOR getABTest
     // Initialize the client
     val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -120,11 +133,13 @@ class SnippetAbtestingClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForListABTests() {
+    // >SEPARATOR listABTests
     // Initialize the client
     val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -133,11 +148,13 @@ class SnippetAbtestingClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForStopABTest() {
+    // >SEPARATOR stopABTest
     // Initialize the client
     val client = AbtestingClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -148,6 +165,7 @@ class SnippetAbtestingClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }

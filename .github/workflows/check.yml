@@ -420,6 +420,29 @@ jobs:
         with:
           type: minimal
 
+      - name: Generate documentation specs with code snippets
+        if: ${{ needs.setup.outputs.RUN_GEN == 'true' || needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' }}
+        run: yarn cli build specs ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).toRun }} --docs
+
+      - name: Build website
+        run: yarn website:build
+
+      - name: Deploy documentation
+        uses: nwtgck/actions-netlify@v2.0
+        with:
+          publish-dir: 'website/build'
+          production-branch: main
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: 'Deploy from GitHub Actions'
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
+          netlify-config-path: ./netlify.toml
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 5
+
       - name: Push generated code
         id: pushGeneratedCode
         run: yarn workspace scripts pushGeneratedCode

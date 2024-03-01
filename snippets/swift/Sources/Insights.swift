@@ -8,6 +8,7 @@ final class InsightsClientSnippet {
     ///
     /// allow del method for a custom path with minimal parameters
     func snippetForCustomDelete() async throws {
+        // >SEPARATOR customDelete
         // Initialize the client
         let client = try InsightsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
@@ -15,12 +16,14 @@ final class InsightsClientSnippet {
         _ = try await client.customDelete(
             path: "/test/minimal"
         )
+        // SEPARATOR<
     }
 
     /// Snippet for the customGet method.
     ///
     /// allow get method for a custom path with minimal parameters
     func snippetForCustomGet() async throws {
+        // >SEPARATOR customGet
         // Initialize the client
         let client = try InsightsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
@@ -28,12 +31,14 @@ final class InsightsClientSnippet {
         _ = try await client.customGet(
             path: "/test/minimal"
         )
+        // SEPARATOR<
     }
 
     /// Snippet for the customPost method.
     ///
     /// allow post method for a custom path with minimal parameters
     func snippetForCustomPost() async throws {
+        // >SEPARATOR customPost
         // Initialize the client
         let client = try InsightsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
@@ -41,12 +46,14 @@ final class InsightsClientSnippet {
         _ = try await client.customPost(
             path: "/test/minimal"
         )
+        // SEPARATOR<
     }
 
     /// Snippet for the customPut method.
     ///
     /// allow put method for a custom path with minimal parameters
     func snippetForCustomPut() async throws {
+        // >SEPARATOR customPut
         // Initialize the client
         let client = try InsightsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
@@ -54,12 +61,14 @@ final class InsightsClientSnippet {
         _ = try await client.customPut(
             path: "/test/minimal"
         )
+        // SEPARATOR<
     }
 
     /// Snippet for the deleteUserToken method.
     ///
     /// deleteUserToken0
     func snippetForDeleteUserToken() async throws {
+        // >SEPARATOR deleteUserToken
         // Initialize the client
         let client = try InsightsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
@@ -67,12 +76,14 @@ final class InsightsClientSnippet {
         _ = try await client.deleteUserToken(
             userToken: "test-user-1"
         )
+        // SEPARATOR<
     }
 
     /// Snippet for the pushEvents method.
     ///
     /// pushEvents0
     func snippetForPushEvents() async throws {
+        // >SEPARATOR pushEvents
         // Initialize the client
         let client = try InsightsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
@@ -104,5 +115,6 @@ final class InsightsClientSnippet {
                     ]
                 )
             )
+        // SEPARATOR<
     }
 }

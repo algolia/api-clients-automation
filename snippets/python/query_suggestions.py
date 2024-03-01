@@ -7,6 +7,7 @@ async def snippet_for_create_config():
 
     createConfig0
     """
+    # >SEPARATOR createConfig
     # Initialize the client
     _client = QuerySuggestionsClient(
         "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
@@ -49,6 +50,7 @@ async def snippet_for_create_config():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_delete():
@@ -57,6 +59,7 @@ async def snippet_for_custom_delete():
 
     allow del method for a custom path with minimal parameters
     """
+    # >SEPARATOR customDelete
     # Initialize the client
     _client = QuerySuggestionsClient(
         "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
@@ -72,6 +75,7 @@ async def snippet_for_custom_delete():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_get():
@@ -80,6 +84,7 @@ async def snippet_for_custom_get():
 
     allow get method for a custom path with minimal parameters
     """
+    # >SEPARATOR customGet
     # Initialize the client
     _client = QuerySuggestionsClient(
         "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
@@ -95,6 +100,7 @@ async def snippet_for_custom_get():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_post():
@@ -103,6 +109,7 @@ async def snippet_for_custom_post():
 
     allow post method for a custom path with minimal parameters
     """
+    # >SEPARATOR customPost
     # Initialize the client
     _client = QuerySuggestionsClient(
         "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
@@ -118,6 +125,7 @@ async def snippet_for_custom_post():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_put():
@@ -126,6 +134,7 @@ async def snippet_for_custom_put():
 
     allow put method for a custom path with minimal parameters
     """
+    # >SEPARATOR customPut
     # Initialize the client
     _client = QuerySuggestionsClient(
         "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
@@ -141,6 +150,7 @@ async def snippet_for_custom_put():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_delete_config():
@@ -149,6 +159,7 @@ async def snippet_for_delete_config():
 
     deleteConfig0
     """
+    # >SEPARATOR deleteConfig
     # Initialize the client
     _client = QuerySuggestionsClient(
         "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
@@ -164,6 +175,7 @@ async def snippet_for_delete_config():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_all_configs():
@@ -172,6 +184,7 @@ async def snippet_for_get_all_configs():
 
     getAllConfigs0
     """
+    # >SEPARATOR getAllConfigs
     # Initialize the client
     _client = QuerySuggestionsClient(
         "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
@@ -185,6 +198,7 @@ async def snippet_for_get_all_configs():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_config():
@@ -193,6 +207,7 @@ async def snippet_for_get_config():
 
     Retrieve QS config e2e
     """
+    # >SEPARATOR getConfig
     # Initialize the client
     _client = QuerySuggestionsClient(
         "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
@@ -208,6 +223,7 @@ async def snippet_for_get_config():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_config_status():
@@ -216,6 +232,7 @@ async def snippet_for_get_config_status():
 
     getConfigStatus0
     """
+    # >SEPARATOR getConfigStatus
     # Initialize the client
     _client = QuerySuggestionsClient(
         "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
@@ -231,6 +248,7 @@ async def snippet_for_get_config_status():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_log_file():
@@ -239,6 +257,7 @@ async def snippet_for_get_log_file():
 
     getLogFile0
     """
+    # >SEPARATOR getLogFile
     # Initialize the client
     _client = QuerySuggestionsClient(
         "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
@@ -254,6 +273,7 @@ async def snippet_for_get_log_file():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_update_config():
@@ -262,6 +282,7 @@ async def snippet_for_update_config():
 
     updateConfig0
     """
+    # >SEPARATOR updateConfig
     # Initialize the client
     _client = QuerySuggestionsClient(
         "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
@@ -304,3 +325,4 @@ async def snippet_for_update_config():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<

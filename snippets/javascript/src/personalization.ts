@@ -6,6 +6,7 @@ import { personalizationClient } from '@algolia/client-personalization';
 //
 // allow del method for a custom path with minimal parameters
 export async function snippetForcustomDelete(): Promise<void> {
+  // >SEPARATOR customDelete
   // Initialize the client
   const client = personalizationClient(
     'YOUR_APP_ID',
@@ -16,14 +17,16 @@ export async function snippetForcustomDelete(): Promise<void> {
   // Call the API
   const response = await client.customDelete({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the customGet method.
 //
 // allow get method for a custom path with minimal parameters
 export async function snippetForcustomGet(): Promise<void> {
+  // >SEPARATOR customGet
   // Initialize the client
   const client = personalizationClient(
     'YOUR_APP_ID',
@@ -34,14 +37,16 @@ export async function snippetForcustomGet(): Promise<void> {
   // Call the API
   const response = await client.customGet({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the customPost method.
 //
 // allow post method for a custom path with minimal parameters
 export async function snippetForcustomPost(): Promise<void> {
+  // >SEPARATOR customPost
   // Initialize the client
   const client = personalizationClient(
     'YOUR_APP_ID',
@@ -52,14 +57,16 @@ export async function snippetForcustomPost(): Promise<void> {
   // Call the API
   const response = await client.customPost({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the customPut method.
 //
 // allow put method for a custom path with minimal parameters
 export async function snippetForcustomPut(): Promise<void> {
+  // >SEPARATOR customPut
   // Initialize the client
   const client = personalizationClient(
     'YOUR_APP_ID',
@@ -70,14 +77,16 @@ export async function snippetForcustomPut(): Promise<void> {
   // Call the API
   const response = await client.customPut({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the deleteUserProfile method.
 //
 // delete deleteUserProfile
 export async function snippetFordeleteUserProfile(): Promise<void> {
+  // >SEPARATOR deleteUserProfile
   // Initialize the client
   const client = personalizationClient(
     'YOUR_APP_ID',
@@ -88,14 +97,16 @@ export async function snippetFordeleteUserProfile(): Promise<void> {
   // Call the API
   const response = await client.deleteUserProfile({ userToken: 'UserToken' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getPersonalizationStrategy method.
 //
 // get getPersonalizationStrategy
 export async function snippetForgetPersonalizationStrategy(): Promise<void> {
+  // >SEPARATOR getPersonalizationStrategy
   // Initialize the client
   const client = personalizationClient(
     'YOUR_APP_ID',
@@ -106,14 +117,16 @@ export async function snippetForgetPersonalizationStrategy(): Promise<void> {
   // Call the API
   const response = await client.getPersonalizationStrategy();
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getUserTokenProfile method.
 //
 // get getUserTokenProfile
 export async function snippetForgetUserTokenProfile(): Promise<void> {
+  // >SEPARATOR getUserTokenProfile
   // Initialize the client
   const client = personalizationClient(
     'YOUR_APP_ID',
@@ -124,14 +137,16 @@ export async function snippetForgetUserTokenProfile(): Promise<void> {
   // Call the API
   const response = await client.getUserTokenProfile({ userToken: 'UserToken' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the setPersonalizationStrategy method.
 //
 // set setPersonalizationStrategy
 export async function snippetForsetPersonalizationStrategy(): Promise<void> {
+  // >SEPARATOR setPersonalizationStrategy
   // Initialize the client
   const client = personalizationClient(
     'YOUR_APP_ID',
@@ -146,6 +161,7 @@ export async function snippetForsetPersonalizationStrategy(): Promise<void> {
     personalizationImpact: 42,
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }

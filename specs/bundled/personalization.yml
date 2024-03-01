@@ -33,9 +33,7 @@ components:
       name: userToken
       in: path
       required: true
-      description: >-
-        userToken representing the user for which to fetch the Personalization
-        profile.
+      description: userToken representing the user for which to fetch the Personalization profile.
       schema:
         type: string
   schemas:
@@ -49,9 +47,7 @@ components:
           example: Invalid Application-Id or API-Key
     userToken:
       type: string
-      description: >-
-        userToken representing the user for which to fetch the Personalization
-        profile.
+      description: userToken representing the user for which to fetch the Personalization profile.
     score:
       type: integer
       description: The score for the event.
@@ -103,10 +99,7 @@ components:
             $ref: '#/components/schemas/facetScoring'
         personalizationImpact:
           type: integer
-          description: >-
-            The impact that personalization has on search results: a number
-            between 0 (personalization disabled) and 100 (personalization fully
-            enabled).
+          description: 'The impact that personalization has on search results: a number between 0 (personalization disabled) and 100 (personalization fully enabled).'
   responses:
     BadRequest:
       description: Bad request or request arguments.
@@ -179,8 +172,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      tags:
-        - personalization
     post:
       operationId: customPost
       requestBody:
@@ -209,8 +200,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      tags:
-        - personalization
     put:
       operationId: customPut
       requestBody:
@@ -239,8 +228,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      tags:
-        - personalization
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API.
@@ -263,26 +250,18 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      tags:
-        - personalization
   /1/profiles/personalization/{userToken}:
     get:
       tags:
-        - personalization
+        - profiles
       operationId: getUserTokenProfile
       x-acl:
         - recommendation
       summary: Get a user profile.
-      description: >
+      description: |
         Get the user profile built from Personalization strategy.
 
-
-        The profile is structured by facet name used in the strategy. Each facet
-        value is mapped to its score. Each score represents the user affinity
-        for a specific facet value given the userToken past events and the
-        Personalization strategy defined. Scores are bounded to 20. The last
-        processed event timestamp is provided using the ISO 8601 format for
-        debugging purposes.
+        The profile is structured by facet name used in the strategy. Each facet value is mapped to its score. Each score represents the user affinity for a specific facet value given the userToken past events and the Personalization strategy defined. Scores are bounded to 20. The last processed event timestamp is provided using the ISO 8601 format for debugging purposes.
       parameters:
         - $ref: '#/components/parameters/UserToken'
       responses:
@@ -318,24 +297,17 @@ paths:
   /1/profiles/{userToken}:
     delete:
       tags:
-        - personalization
+        - profiles
       operationId: deleteUserProfile
       x-acl:
         - recommendation
       summary: Delete a user profile.
-      description: >
+      description: |
         Delete the user profile and all its associated data.
 
+        Returns, as part of the response, a date until which the data can safely be considered as deleted for the given user. This means if you send events for the given user before this date, they will be ignored. Any data received after the deletedUntil date will start building a new user profile.
 
-        Returns, as part of the response, a date until which the data can safely
-        be considered as deleted for the given user. This means if you send
-        events for the given user before this date, they will be ignored. Any
-        data received after the deletedUntil date will start building a new user
-        profile.
-
-
-        It might take a couple hours for the deletion request to be fully
-        processed.
+        It might take a couple hours for the deletion request to be fully processed.
       parameters:
         - $ref: '#/components/parameters/UserToken'
       responses:
@@ -355,11 +327,7 @@ paths:
                     $ref: '#/components/schemas/userToken'
                   deletedUntil:
                     type: string
-                    description: >-
-                      A date until which the data can safely be considered as
-                      deleted for the given user. Any data received after the
-                      `deletedUntil` date will start building a new user
-                      profile.
+                    description: A date until which the data can safely be considered as deleted for the given user. Any data received after the `deletedUntil` date will start building a new user profile.
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -371,14 +339,12 @@ paths:
   /1/strategies/personalization:
     get:
       tags:
-        - personalization
+        - strategies
       operationId: getPersonalizationStrategy
       x-acl:
         - recommendation
       summary: Get the current strategy.
-      description: >-
-        The strategy contains information on the events and facets that impact
-        user profiles and personalized search results.
+      description: The strategy contains information on the events and facets that impact user profiles and personalized search results.
       responses:
         '200':
           description: OK
@@ -396,14 +362,12 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
     post:
       tags:
-        - personalization
+        - strategies
       operationId: setPersonalizationStrategy
       x-acl:
         - recommendation
       summary: Set a new strategy.
-      description: >-
-        A strategy defines the events and facets that impact user profiles and
-        personalized search results.
+      description: A strategy defines the events and facets that impact user profiles and personalized search results.
       requestBody:
         required: true
         content:

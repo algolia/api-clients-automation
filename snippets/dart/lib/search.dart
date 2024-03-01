@@ -4,6 +4,7 @@ import 'package:algolia_client_search/algolia_client_search.dart';
 //
 // addApiKey0
 void snippetForaddApiKey() async {
+  // >SEPARATOR addApiKey
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -20,12 +21,14 @@ void snippetForaddApiKey() async {
       maxHitsPerQuery: 20,
     ),
   );
+  // SEPARATOR<
 }
 
 // Snippet for the addOrUpdateObject method.
 //
 // addOrUpdateObject0
 void snippetForaddOrUpdateObject() async {
+  // >SEPARATOR addOrUpdateObject
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -37,12 +40,14 @@ void snippetForaddOrUpdateObject() async {
       'key': "value",
     },
   );
+  // SEPARATOR<
 }
 
 // Snippet for the appendSource method.
 //
 // appendSource0
 void snippetForappendSource() async {
+  // >SEPARATOR appendSource
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -53,12 +58,14 @@ void snippetForappendSource() async {
       description: "theDescription",
     ),
   );
+  // SEPARATOR<
 }
 
 // Snippet for the assignUserId method.
 //
 // assignUserId0
 void snippetForassignUserId() async {
+  // >SEPARATOR assignUserId
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -69,12 +76,14 @@ void snippetForassignUserId() async {
       cluster: "theCluster",
     ),
   );
+  // SEPARATOR<
 }
 
 // Snippet for the batch method.
 //
 // allows batch method with `addObject` action
 void snippetForbatch() async {
+  // >SEPARATOR batch
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -92,12 +101,14 @@ void snippetForbatch() async {
       ],
     ),
   );
+  // SEPARATOR<
 }
 
 // Snippet for the batchAssignUserIds method.
 //
 // batchAssignUserIds0
 void snippetForbatchAssignUserIds() async {
+  // >SEPARATOR batchAssignUserIds
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -112,12 +123,14 @@ void snippetForbatchAssignUserIds() async {
       ],
     ),
   );
+  // SEPARATOR<
 }
 
 // Snippet for the batchDictionaryEntries method.
 //
 // get batchDictionaryEntries results with minimal parameters
 void snippetForbatchDictionaryEntries() async {
+  // >SEPARATOR batchDictionaryEntries
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -143,12 +156,14 @@ void snippetForbatchDictionaryEntries() async {
       ],
     ),
   );
+  // SEPARATOR<
 }
 
 // Snippet for the browse method.
 //
 // browse with minimal parameters
 void snippetForbrowse() async {
+  // >SEPARATOR browse
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -156,12 +171,14 @@ void snippetForbrowse() async {
   final response = await client.browse(
     indexName: "cts_e2e_browse",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the clearObjects method.
 //
 // clearObjects0
 void snippetForclearObjects() async {
+  // >SEPARATOR clearObjects
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -169,12 +186,14 @@ void snippetForclearObjects() async {
   final response = await client.clearObjects(
     indexName: "theIndexName",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the clearRules method.
 //
 // clearRules0
 void snippetForclearRules() async {
+  // >SEPARATOR clearRules
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -182,12 +201,14 @@ void snippetForclearRules() async {
   final response = await client.clearRules(
     indexName: "indexName",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the clearSynonyms method.
 //
 // clearSynonyms0
 void snippetForclearSynonyms() async {
+  // >SEPARATOR clearSynonyms
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -195,12 +216,14 @@ void snippetForclearSynonyms() async {
   final response = await client.clearSynonyms(
     indexName: "indexName",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the customDelete method.
 //
 // allow del method for a custom path with minimal parameters
 void snippetForcustomDelete() async {
+  // >SEPARATOR customDelete
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -208,12 +231,14 @@ void snippetForcustomDelete() async {
   final response = await client.customDelete(
     path: "/test/minimal",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the customGet method.
 //
 // allow get method for a custom path with minimal parameters
 void snippetForcustomGet() async {
+  // >SEPARATOR customGet
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -221,12 +246,14 @@ void snippetForcustomGet() async {
   final response = await client.customGet(
     path: "/test/minimal",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the customPost method.
 //
 // allow post method for a custom path with minimal parameters
 void snippetForcustomPost() async {
+  // >SEPARATOR customPost
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -234,12 +261,14 @@ void snippetForcustomPost() async {
   final response = await client.customPost(
     path: "/test/minimal",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the customPut method.
 //
 // allow put method for a custom path with minimal parameters
 void snippetForcustomPut() async {
+  // >SEPARATOR customPut
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -247,12 +276,14 @@ void snippetForcustomPut() async {
   final response = await client.customPut(
     path: "/test/minimal",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the deleteApiKey method.
 //
 // deleteApiKey0
 void snippetFordeleteApiKey() async {
+  // >SEPARATOR deleteApiKey
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -260,12 +291,14 @@ void snippetFordeleteApiKey() async {
   final response = await client.deleteApiKey(
     key: "myTestApiKey",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the deleteBy method.
 //
 // deleteBy0
 void snippetFordeleteBy() async {
+  // >SEPARATOR deleteBy
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -276,12 +309,14 @@ void snippetFordeleteBy() async {
       filters: "brand:brandName",
     ),
   );
+  // SEPARATOR<
 }
 
 // Snippet for the deleteIndex method.
 //
 // deleteIndex0
 void snippetFordeleteIndex() async {
+  // >SEPARATOR deleteIndex
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -289,12 +324,14 @@ void snippetFordeleteIndex() async {
   final response = await client.deleteIndex(
     indexName: "theIndexName",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the deleteObject method.
 //
 // deleteObject0
 void snippetFordeleteObject() async {
+  // >SEPARATOR deleteObject
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -303,12 +340,14 @@ void snippetFordeleteObject() async {
     indexName: "theIndexName",
     objectID: "uniqueID",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the deleteRule method.
 //
 // delete rule simple case
 void snippetFordeleteRule() async {
+  // >SEPARATOR deleteRule
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -317,12 +356,14 @@ void snippetFordeleteRule() async {
     indexName: "indexName",
     objectID: "id1",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the deleteSource method.
 //
 // deleteSource0
 void snippetFordeleteSource() async {
+  // >SEPARATOR deleteSource
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -330,12 +371,14 @@ void snippetFordeleteSource() async {
   final response = await client.deleteSource(
     source: "theSource",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the deleteSynonym method.
 //
 // deleteSynonym0
 void snippetFordeleteSynonym() async {
+  // >SEPARATOR deleteSynonym
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -344,12 +387,14 @@ void snippetFordeleteSynonym() async {
     indexName: "indexName",
     objectID: "id1",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the getApiKey method.
 //
 // getApiKey0
 void snippetForgetApiKey() async {
+  // >SEPARATOR getApiKey
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -357,45 +402,53 @@ void snippetForgetApiKey() async {
   final response = await client.getApiKey(
     key: "myTestApiKey",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the getDictionaryLanguages method.
 //
 // get getDictionaryLanguages
 void snippetForgetDictionaryLanguages() async {
+  // >SEPARATOR getDictionaryLanguages
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
   // Call the API
   final response = await client.getDictionaryLanguages();
+  // SEPARATOR<
 }
 
 // Snippet for the getDictionarySettings method.
 //
 // get getDictionarySettings results
 void snippetForgetDictionarySettings() async {
+  // >SEPARATOR getDictionarySettings
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
   // Call the API
   final response = await client.getDictionarySettings();
+  // SEPARATOR<
 }
 
 // Snippet for the getLogs method.
 //
 // getLogs with minimal parameters
 void snippetForgetLogs() async {
+  // >SEPARATOR getLogs
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
   // Call the API
   final response = await client.getLogs();
+  // SEPARATOR<
 }
 
 // Snippet for the getObject method.
 //
 // getObject0
 void snippetForgetObject() async {
+  // >SEPARATOR getObject
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -408,12 +461,14 @@ void snippetForgetObject() async {
       "attr2",
     ],
   );
+  // SEPARATOR<
 }
 
 // Snippet for the getObjects method.
 //
 // getObjects0
 void snippetForgetObjects() async {
+  // >SEPARATOR getObjects
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -432,12 +487,14 @@ void snippetForgetObjects() async {
       ],
     ),
   );
+  // SEPARATOR<
 }
 
 // Snippet for the getRule method.
 //
 // getRule0
 void snippetForgetRule() async {
+  // >SEPARATOR getRule
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -446,12 +503,14 @@ void snippetForgetRule() async {
     indexName: "indexName",
     objectID: "id1",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the getSettings method.
 //
 // getSettings0
 void snippetForgetSettings() async {
+  // >SEPARATOR getSettings
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -459,23 +518,27 @@ void snippetForgetSettings() async {
   final response = await client.getSettings(
     indexName: "cts_e2e_settings",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the getSources method.
 //
 // getSources0
 void snippetForgetSources() async {
+  // >SEPARATOR getSources
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
   // Call the API
   final response = await client.getSources();
+  // SEPARATOR<
 }
 
 // Snippet for the getSynonym method.
 //
 // getSynonym0
 void snippetForgetSynonym() async {
+  // >SEPARATOR getSynonym
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -484,12 +547,14 @@ void snippetForgetSynonym() async {
     indexName: "indexName",
     objectID: "id1",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the getTask method.
 //
 // getTask0
 void snippetForgetTask() async {
+  // >SEPARATOR getTask
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -498,23 +563,27 @@ void snippetForgetTask() async {
     indexName: "theIndexName",
     taskID: 123,
   );
+  // SEPARATOR<
 }
 
 // Snippet for the getTopUserIds method.
 //
 // getTopUserIds0
 void snippetForgetTopUserIds() async {
+  // >SEPARATOR getTopUserIds
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
   // Call the API
   final response = await client.getTopUserIds();
+  // SEPARATOR<
 }
 
 // Snippet for the getUserId method.
 //
 // getUserId0
 void snippetForgetUserId() async {
+  // >SEPARATOR getUserId
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -522,67 +591,79 @@ void snippetForgetUserId() async {
   final response = await client.getUserId(
     userID: "uniqueID",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the hasPendingMappings method.
 //
 // hasPendingMappings with minimal parameters
 void snippetForhasPendingMappings() async {
+  // >SEPARATOR hasPendingMappings
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
   // Call the API
   final response = await client.hasPendingMappings();
+  // SEPARATOR<
 }
 
 // Snippet for the listApiKeys method.
 //
 // listApiKeys0
 void snippetForlistApiKeys() async {
+  // >SEPARATOR listApiKeys
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
   // Call the API
   final response = await client.listApiKeys();
+  // SEPARATOR<
 }
 
 // Snippet for the listClusters method.
 //
 // listClusters0
 void snippetForlistClusters() async {
+  // >SEPARATOR listClusters
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
   // Call the API
   final response = await client.listClusters();
+  // SEPARATOR<
 }
 
 // Snippet for the listIndices method.
 //
 // listIndices with minimal parameters
 void snippetForlistIndices() async {
+  // >SEPARATOR listIndices
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
   // Call the API
   final response = await client.listIndices();
+  // SEPARATOR<
 }
 
 // Snippet for the listUserIds method.
 //
 // listUserIds with minimal parameters
 void snippetForlistUserIds() async {
+  // >SEPARATOR listUserIds
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
   // Call the API
   final response = await client.listUserIds();
+  // SEPARATOR<
 }
 
 // Snippet for the multipleBatch method.
 //
 // multipleBatch0
 void snippetFormultipleBatch() async {
+  // >SEPARATOR multipleBatch
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -600,12 +681,14 @@ void snippetFormultipleBatch() async {
       ],
     ),
   );
+  // SEPARATOR<
 }
 
 // Snippet for the operationIndex method.
 //
 // operationIndex0
 void snippetForoperationIndex() async {
+  // >SEPARATOR operationIndex
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -621,12 +704,14 @@ void snippetForoperationIndex() async {
       ],
     ),
   );
+  // SEPARATOR<
 }
 
 // Snippet for the partialUpdateObject method.
 //
 // partialUpdateObject0
 void snippetForpartialUpdateObject() async {
+  // >SEPARATOR partialUpdateObject
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -643,12 +728,14 @@ void snippetForpartialUpdateObject() async {
     },
     createIfNotExists: true,
   );
+  // SEPARATOR<
 }
 
 // Snippet for the removeUserId method.
 //
 // removeUserId0
 void snippetForremoveUserId() async {
+  // >SEPARATOR removeUserId
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -656,12 +743,14 @@ void snippetForremoveUserId() async {
   final response = await client.removeUserId(
     userID: "uniqueID",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the replaceSources method.
 //
 // replaceSources0
 void snippetForreplaceSources() async {
+  // >SEPARATOR replaceSources
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -674,12 +763,14 @@ void snippetForreplaceSources() async {
       ),
     ],
   );
+  // SEPARATOR<
 }
 
 // Snippet for the restoreApiKey method.
 //
 // restoreApiKey0
 void snippetForrestoreApiKey() async {
+  // >SEPARATOR restoreApiKey
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -687,12 +778,14 @@ void snippetForrestoreApiKey() async {
   final response = await client.restoreApiKey(
     key: "myApiKey",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the saveObject method.
 //
 // saveObject0
 void snippetForsaveObject() async {
+  // >SEPARATOR saveObject
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -704,12 +797,14 @@ void snippetForsaveObject() async {
       'test': "val",
     },
   );
+  // SEPARATOR<
 }
 
 // Snippet for the saveRule method.
 //
 // saveRule with minimal parameters
 void snippetForsaveRule() async {
+  // >SEPARATOR saveRule
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -727,12 +822,14 @@ void snippetForsaveRule() async {
       ],
     ),
   );
+  // SEPARATOR<
 }
 
 // Snippet for the saveRules method.
 //
 // saveRules with minimal parameters
 void snippetForsaveRules() async {
+  // >SEPARATOR saveRules
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -760,12 +857,14 @@ void snippetForsaveRules() async {
       ),
     ],
   );
+  // SEPARATOR<
 }
 
 // Snippet for the saveSynonym method.
 //
 // saveSynonym0
 void snippetForsaveSynonym() async {
+  // >SEPARATOR saveSynonym
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -784,12 +883,14 @@ void snippetForsaveSynonym() async {
     ),
     forwardToReplicas: true,
   );
+  // SEPARATOR<
 }
 
 // Snippet for the saveSynonyms method.
 //
 // saveSynonyms0
 void snippetForsaveSynonyms() async {
+  // >SEPARATOR saveSynonyms
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -820,12 +921,14 @@ void snippetForsaveSynonyms() async {
     forwardToReplicas: true,
     replaceExistingSynonyms: false,
   );
+  // SEPARATOR<
 }
 
 // Snippet for the search method.
 //
 // search for a single hits request with minimal parameters
 void snippetForsearch() async {
+  // >SEPARATOR search
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -839,12 +942,14 @@ void snippetForsearch() async {
       ],
     ),
   );
+  // SEPARATOR<
 }
 
 // Snippet for the searchDictionaryEntries method.
 //
 // get searchDictionaryEntries results with minimal parameters
 void snippetForsearchDictionaryEntries() async {
+  // >SEPARATOR searchDictionaryEntries
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -855,12 +960,14 @@ void snippetForsearchDictionaryEntries() async {
       query: "foo",
     ),
   );
+  // SEPARATOR<
 }
 
 // Snippet for the searchForFacetValues method.
 //
 // get searchForFacetValues results with minimal parameters
 void snippetForsearchForFacetValues() async {
+  // >SEPARATOR searchForFacetValues
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -869,12 +976,14 @@ void snippetForsearchForFacetValues() async {
     indexName: "indexName",
     facetName: "facetName",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the searchRules method.
 //
 // searchRules0
 void snippetForsearchRules() async {
+  // >SEPARATOR searchRules
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -885,12 +994,14 @@ void snippetForsearchRules() async {
       query: "something",
     ),
   );
+  // SEPARATOR<
 }
 
 // Snippet for the searchSingleIndex method.
 //
 // search with minimal parameters
 void snippetForsearchSingleIndex() async {
+  // >SEPARATOR searchSingleIndex
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -898,12 +1009,14 @@ void snippetForsearchSingleIndex() async {
   final response = await client.searchSingleIndex(
     indexName: "indexName",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the searchSynonyms method.
 //
 // searchSynonyms with minimal parameters
 void snippetForsearchSynonyms() async {
+  // >SEPARATOR searchSynonyms
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -911,12 +1024,14 @@ void snippetForsearchSynonyms() async {
   final response = await client.searchSynonyms(
     indexName: "indexName",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the searchUserIds method.
 //
 // searchUserIds0
 void snippetForsearchUserIds() async {
+  // >SEPARATOR searchUserIds
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -929,12 +1044,14 @@ void snippetForsearchUserIds() async {
       hitsPerPage: 10,
     ),
   );
+  // SEPARATOR<
 }
 
 // Snippet for the setDictionarySettings method.
 //
 // get setDictionarySettings results with minimal parameters
 void snippetForsetDictionarySettings() async {
+  // >SEPARATOR setDictionarySettings
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -950,12 +1067,14 @@ void snippetForsetDictionarySettings() async {
       ),
     ),
   );
+  // SEPARATOR<
 }
 
 // Snippet for the setSettings method.
 //
 // setSettings with minimal parameters
 void snippetForsetSettings() async {
+  // >SEPARATOR setSettings
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -967,12 +1086,14 @@ void snippetForsetSettings() async {
     ),
     forwardToReplicas: true,
   );
+  // SEPARATOR<
 }
 
 // Snippet for the updateApiKey method.
 //
 // updateApiKey0
 void snippetForupdateApiKey() async {
+  // >SEPARATOR updateApiKey
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -989,4 +1110,5 @@ void snippetForupdateApiKey() async {
       maxHitsPerQuery: 20,
     ),
   );
+  // SEPARATOR<
 }

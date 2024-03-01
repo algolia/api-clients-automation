@@ -6,6 +6,7 @@ import '{{{import}}}';
 //
 // {{{description}}}
 void snippetFor{{method}}() async {
+  // >SEPARATOR {{method}}
   // Initialize the client
   final client = {{client}}(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY'{{#hasRegionalHost}}, region: 'YOUR_APP_ID_REGION'{{/hasRegionalHost}});
 
@@ -33,6 +34,7 @@ void snippetFor{{method}}() async {
     ),
     {{/hasRequestOptions}}
   );
+  // SEPARATOR<
 }
 
 {{/snippet}}

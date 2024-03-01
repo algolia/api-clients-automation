@@ -7,6 +7,7 @@ async def snippet_for_create_authentication():
 
     createAuthenticationOAuth
     """
+    # >SEPARATOR createAuthentication
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -28,6 +29,7 @@ async def snippet_for_create_authentication():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_create_destination():
@@ -36,6 +38,7 @@ async def snippet_for_create_destination():
 
     createDestination
     """
+    # >SEPARATOR createDestination
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -56,6 +59,7 @@ async def snippet_for_create_destination():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_create_source():
@@ -64,6 +68,7 @@ async def snippet_for_create_source():
 
     createSource
     """
+    # >SEPARATOR createSource
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -91,6 +96,7 @@ async def snippet_for_create_source():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_create_task():
@@ -99,6 +105,7 @@ async def snippet_for_create_task():
 
     createTaskOnDemand
     """
+    # >SEPARATOR createTask
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -119,6 +126,7 @@ async def snippet_for_create_task():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_delete():
@@ -127,6 +135,7 @@ async def snippet_for_custom_delete():
 
     allow del method for a custom path with minimal parameters
     """
+    # >SEPARATOR customDelete
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -140,6 +149,7 @@ async def snippet_for_custom_delete():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_get():
@@ -148,6 +158,7 @@ async def snippet_for_custom_get():
 
     allow get method for a custom path with minimal parameters
     """
+    # >SEPARATOR customGet
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -161,6 +172,7 @@ async def snippet_for_custom_get():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_post():
@@ -169,6 +181,7 @@ async def snippet_for_custom_post():
 
     allow post method for a custom path with minimal parameters
     """
+    # >SEPARATOR customPost
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -182,6 +195,7 @@ async def snippet_for_custom_post():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_put():
@@ -190,6 +204,7 @@ async def snippet_for_custom_put():
 
     allow put method for a custom path with minimal parameters
     """
+    # >SEPARATOR customPut
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -203,6 +218,7 @@ async def snippet_for_custom_put():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_delete_authentication():
@@ -211,6 +227,7 @@ async def snippet_for_delete_authentication():
 
     deleteAuthentication
     """
+    # >SEPARATOR deleteAuthentication
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -224,6 +241,7 @@ async def snippet_for_delete_authentication():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_delete_destination():
@@ -232,6 +250,7 @@ async def snippet_for_delete_destination():
 
     deleteDestination
     """
+    # >SEPARATOR deleteDestination
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -245,6 +264,7 @@ async def snippet_for_delete_destination():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_delete_source():
@@ -253,6 +273,7 @@ async def snippet_for_delete_source():
 
     deleteSource
     """
+    # >SEPARATOR deleteSource
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -266,6 +287,7 @@ async def snippet_for_delete_source():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_delete_task():
@@ -274,6 +296,7 @@ async def snippet_for_delete_task():
 
     deleteTask
     """
+    # >SEPARATOR deleteTask
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -287,6 +310,7 @@ async def snippet_for_delete_task():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_disable_task():
@@ -295,6 +319,7 @@ async def snippet_for_disable_task():
 
     disableTask
     """
+    # >SEPARATOR disableTask
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -308,6 +333,7 @@ async def snippet_for_disable_task():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_enable_task():
@@ -316,6 +342,7 @@ async def snippet_for_enable_task():
 
     enable task e2e
     """
+    # >SEPARATOR enableTask
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -329,6 +356,7 @@ async def snippet_for_enable_task():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_authentication():
@@ -337,6 +365,7 @@ async def snippet_for_get_authentication():
 
     getAuthentication
     """
+    # >SEPARATOR getAuthentication
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -350,6 +379,7 @@ async def snippet_for_get_authentication():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_authentications():
@@ -358,6 +388,7 @@ async def snippet_for_get_authentications():
 
     getAuthentications
     """
+    # >SEPARATOR getAuthentications
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -369,6 +400,7 @@ async def snippet_for_get_authentications():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_destination():
@@ -377,6 +409,7 @@ async def snippet_for_get_destination():
 
     getDestination
     """
+    # >SEPARATOR getDestination
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -390,6 +423,7 @@ async def snippet_for_get_destination():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_destinations():
@@ -398,6 +432,7 @@ async def snippet_for_get_destinations():
 
     getDestinations
     """
+    # >SEPARATOR getDestinations
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -409,6 +444,7 @@ async def snippet_for_get_destinations():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_docker_source_streams():
@@ -417,6 +453,7 @@ async def snippet_for_get_docker_source_streams():
 
     getDockerSourceStreams
     """
+    # >SEPARATOR getDockerSourceStreams
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -430,6 +467,7 @@ async def snippet_for_get_docker_source_streams():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_event():
@@ -438,6 +476,7 @@ async def snippet_for_get_event():
 
     getEvent
     """
+    # >SEPARATOR getEvent
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -452,6 +491,7 @@ async def snippet_for_get_event():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_events():
@@ -460,6 +500,7 @@ async def snippet_for_get_events():
 
     getEvents
     """
+    # >SEPARATOR getEvents
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -473,6 +514,7 @@ async def snippet_for_get_events():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_run():
@@ -481,6 +523,7 @@ async def snippet_for_get_run():
 
     getRun
     """
+    # >SEPARATOR getRun
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -494,6 +537,7 @@ async def snippet_for_get_run():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_runs():
@@ -502,6 +546,7 @@ async def snippet_for_get_runs():
 
     getRuns
     """
+    # >SEPARATOR getRuns
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -513,6 +558,7 @@ async def snippet_for_get_runs():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_source():
@@ -521,6 +567,7 @@ async def snippet_for_get_source():
 
     getSource
     """
+    # >SEPARATOR getSource
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -534,6 +581,7 @@ async def snippet_for_get_source():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_sources():
@@ -542,6 +590,7 @@ async def snippet_for_get_sources():
 
     getSources
     """
+    # >SEPARATOR getSources
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -553,6 +602,7 @@ async def snippet_for_get_sources():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_task():
@@ -561,6 +611,7 @@ async def snippet_for_get_task():
 
     getTask
     """
+    # >SEPARATOR getTask
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -574,6 +625,7 @@ async def snippet_for_get_task():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_tasks():
@@ -582,6 +634,7 @@ async def snippet_for_get_tasks():
 
     getTasks
     """
+    # >SEPARATOR getTasks
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -593,6 +646,7 @@ async def snippet_for_get_tasks():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_run_task():
@@ -601,6 +655,7 @@ async def snippet_for_run_task():
 
     runTask
     """
+    # >SEPARATOR runTask
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -614,6 +669,7 @@ async def snippet_for_run_task():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_search_authentications():
@@ -622,6 +678,7 @@ async def snippet_for_search_authentications():
 
     searchAuthentications
     """
+    # >SEPARATOR searchAuthentications
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -640,6 +697,7 @@ async def snippet_for_search_authentications():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_search_destinations():
@@ -648,6 +706,7 @@ async def snippet_for_search_destinations():
 
     searchDestinations
     """
+    # >SEPARATOR searchDestinations
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -666,6 +725,7 @@ async def snippet_for_search_destinations():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_search_sources():
@@ -674,6 +734,7 @@ async def snippet_for_search_sources():
 
     searchSources
     """
+    # >SEPARATOR searchSources
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -692,6 +753,7 @@ async def snippet_for_search_sources():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_search_tasks():
@@ -700,6 +762,7 @@ async def snippet_for_search_tasks():
 
     searchTasks
     """
+    # >SEPARATOR searchTasks
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -719,6 +782,7 @@ async def snippet_for_search_tasks():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_trigger_docker_source_discover():
@@ -727,6 +791,7 @@ async def snippet_for_trigger_docker_source_discover():
 
     triggerDockerSourceDiscover
     """
+    # >SEPARATOR triggerDockerSourceDiscover
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -740,6 +805,7 @@ async def snippet_for_trigger_docker_source_discover():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_update_authentication():
@@ -748,6 +814,7 @@ async def snippet_for_update_authentication():
 
     updateAuthentication
     """
+    # >SEPARATOR updateAuthentication
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -764,6 +831,7 @@ async def snippet_for_update_authentication():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_update_destination():
@@ -772,6 +840,7 @@ async def snippet_for_update_destination():
 
     updateDestination
     """
+    # >SEPARATOR updateDestination
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -788,6 +857,7 @@ async def snippet_for_update_destination():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_update_source():
@@ -796,6 +866,7 @@ async def snippet_for_update_source():
 
     updateSource
     """
+    # >SEPARATOR updateSource
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -812,6 +883,7 @@ async def snippet_for_update_source():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_update_task():
@@ -820,6 +892,7 @@ async def snippet_for_update_task():
 
     updateTask
     """
+    # >SEPARATOR updateTask
     # Initialize the client
     _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -836,3 +909,4 @@ async def snippet_for_update_task():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<

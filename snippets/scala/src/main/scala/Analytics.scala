@@ -18,6 +18,7 @@ class SnippetAnalyticsClient {
     * allow del method for a custom path with minimal parameters
     */
   def snippetForAnalyticsClientCustomDelete(): Unit = {
+    // >SEPARATOR customDelete
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -28,6 +29,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customGet method.
@@ -35,6 +37,7 @@ class SnippetAnalyticsClient {
     * allow get method for a custom path with minimal parameters
     */
   def snippetForAnalyticsClientCustomGet(): Unit = {
+    // >SEPARATOR customGet
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -45,6 +48,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customPost method.
@@ -52,6 +56,7 @@ class SnippetAnalyticsClient {
     * allow post method for a custom path with minimal parameters
     */
   def snippetForAnalyticsClientCustomPost(): Unit = {
+    // >SEPARATOR customPost
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -62,6 +67,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customPut method.
@@ -69,6 +75,7 @@ class SnippetAnalyticsClient {
     * allow put method for a custom path with minimal parameters
     */
   def snippetForAnalyticsClientCustomPut(): Unit = {
+    // >SEPARATOR customPut
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -79,6 +86,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getAverageClickPosition method.
@@ -86,6 +94,7 @@ class SnippetAnalyticsClient {
     * get getAverageClickPosition with minimal parameters
     */
   def snippetForAnalyticsClientGetAverageClickPosition(): Unit = {
+    // >SEPARATOR getAverageClickPosition
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -96,6 +105,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getClickPositions method.
@@ -103,6 +113,7 @@ class SnippetAnalyticsClient {
     * get getClickPositions with minimal parameters
     */
   def snippetForAnalyticsClientGetClickPositions(): Unit = {
+    // >SEPARATOR getClickPositions
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -113,6 +124,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getClickThroughRate method.
@@ -120,6 +132,7 @@ class SnippetAnalyticsClient {
     * get getClickThroughRate with minimal parameters
     */
   def snippetForAnalyticsClientGetClickThroughRate(): Unit = {
+    // >SEPARATOR getClickThroughRate
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -130,6 +143,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getConversationRate method.
@@ -137,6 +151,7 @@ class SnippetAnalyticsClient {
     * get getConversationRate with minimal parameters
     */
   def snippetForAnalyticsClientGetConversationRate(): Unit = {
+    // >SEPARATOR getConversationRate
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -147,6 +162,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getNoClickRate method.
@@ -154,6 +170,7 @@ class SnippetAnalyticsClient {
     * get getNoClickRate with minimal parameters
     */
   def snippetForAnalyticsClientGetNoClickRate(): Unit = {
+    // >SEPARATOR getNoClickRate
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -164,6 +181,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getNoResultsRate method.
@@ -171,6 +189,7 @@ class SnippetAnalyticsClient {
     * get getNoResultsRate with minimal parameters
     */
   def snippetForAnalyticsClientGetNoResultsRate(): Unit = {
+    // >SEPARATOR getNoResultsRate
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -181,6 +200,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getSearchesCount method.
@@ -188,6 +208,7 @@ class SnippetAnalyticsClient {
     * get getSearchesCount with minimal parameters
     */
   def snippetForAnalyticsClientGetSearchesCount(): Unit = {
+    // >SEPARATOR getSearchesCount
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -198,6 +219,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getSearchesNoClicks method.
@@ -205,6 +227,7 @@ class SnippetAnalyticsClient {
     * get getSearchesNoClicks with minimal parameters
     */
   def snippetForAnalyticsClientGetSearchesNoClicks(): Unit = {
+    // >SEPARATOR getSearchesNoClicks
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -215,6 +238,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getSearchesNoResults method.
@@ -222,6 +246,7 @@ class SnippetAnalyticsClient {
     * get getSearchesNoResults with minimal parameters
     */
   def snippetForAnalyticsClientGetSearchesNoResults(): Unit = {
+    // >SEPARATOR getSearchesNoResults
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -232,6 +257,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getStatus method.
@@ -239,6 +265,7 @@ class SnippetAnalyticsClient {
     * get getStatus with minimal parameters
     */
   def snippetForAnalyticsClientGetStatus(): Unit = {
+    // >SEPARATOR getStatus
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -249,6 +276,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getTopCountries method.
@@ -256,6 +284,7 @@ class SnippetAnalyticsClient {
     * get getTopCountries with minimal parameters
     */
   def snippetForAnalyticsClientGetTopCountries(): Unit = {
+    // >SEPARATOR getTopCountries
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -266,6 +295,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getTopFilterAttributes method.
@@ -273,6 +303,7 @@ class SnippetAnalyticsClient {
     * get getTopFilterAttributes with minimal parameters
     */
   def snippetForAnalyticsClientGetTopFilterAttributes(): Unit = {
+    // >SEPARATOR getTopFilterAttributes
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -283,6 +314,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getTopFilterForAttribute method.
@@ -290,6 +322,7 @@ class SnippetAnalyticsClient {
     * get getTopFilterForAttribute with minimal parameters
     */
   def snippetForAnalyticsClientGetTopFilterForAttribute(): Unit = {
+    // >SEPARATOR getTopFilterForAttribute
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -301,6 +334,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getTopFiltersNoResults method.
@@ -308,6 +342,7 @@ class SnippetAnalyticsClient {
     * get getTopFiltersNoResults with minimal parameters
     */
   def snippetForAnalyticsClientGetTopFiltersNoResults(): Unit = {
+    // >SEPARATOR getTopFiltersNoResults
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -318,6 +353,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getTopHits method.
@@ -325,6 +361,7 @@ class SnippetAnalyticsClient {
     * get getTopHits with minimal parameters
     */
   def snippetForAnalyticsClientGetTopHits(): Unit = {
+    // >SEPARATOR getTopHits
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -335,6 +372,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getTopSearches method.
@@ -342,6 +380,7 @@ class SnippetAnalyticsClient {
     * get getTopSearches with minimal parameters
     */
   def snippetForAnalyticsClientGetTopSearches(): Unit = {
+    // >SEPARATOR getTopSearches
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -352,6 +391,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getUsersCount method.
@@ -359,6 +399,7 @@ class SnippetAnalyticsClient {
     * get getUsersCount with minimal parameters
     */
   def snippetForAnalyticsClientGetUsersCount(): Unit = {
+    // >SEPARATOR getUsersCount
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -369,6 +410,7 @@ class SnippetAnalyticsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
 }

@@ -7,6 +7,7 @@ import kotlin.system.exitProcess
 
 class SnippetInsightsClient {
   suspend fun snippetForCustomDelete() {
+    // >SEPARATOR customDelete
     // Initialize the client
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -17,11 +18,13 @@ class SnippetInsightsClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomGet() {
+    // >SEPARATOR customGet
     // Initialize the client
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -32,11 +35,13 @@ class SnippetInsightsClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomPost() {
+    // >SEPARATOR customPost
     // Initialize the client
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -47,11 +52,13 @@ class SnippetInsightsClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomPut() {
+    // >SEPARATOR customPut
     // Initialize the client
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -62,11 +69,13 @@ class SnippetInsightsClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForDeleteUserToken() {
+    // >SEPARATOR deleteUserToken
     // Initialize the client
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -77,11 +86,13 @@ class SnippetInsightsClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForPushEvents() {
+    // >SEPARATOR pushEvents
     // Initialize the client
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -106,6 +117,7 @@ class SnippetInsightsClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }

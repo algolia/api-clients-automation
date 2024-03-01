@@ -66,21 +66,15 @@ components:
       example: 224
     updatedAt:
       type: string
-      description: >-
-        Update date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601)
-        format.
+      description: Update date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
       example: '2023-06-15T15:06:44.400601Z'
     createdAt:
       type: string
-      description: >-
-        Creation date timestamp in
-        [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
+      description: Creation date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
       example: '2023-06-15T15:06:04.249906Z'
     endAt:
       type: string
-      description: >-
-        End date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601)
-        format.
+      description: End date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
       example: '2023-06-17T00:00:00Z'
     name:
       type: string
@@ -132,9 +126,7 @@ components:
       properties:
         outliers:
           type: object
-          description: >-
-            Outliers removed from the A/B test as a result of configuration
-            settings.
+          description: Outliers removed from the A/B test as a result of configuration settings.
           example:
             usersCount: 1
             trackedSearchesCount: 237
@@ -149,9 +141,7 @@ components:
               example: 237
         emptySearch:
           type: object
-          description: >-
-            Empty searches removed from the A/B test as a result of
-            configuration settings.
+          description: Empty searches removed from the A/B test as a result of configuration settings.
           example:
             usersCount: 1
             trackedSearchesCount: 237
@@ -172,9 +162,7 @@ components:
       type: integer
       example: 2
       nullable: true
-      description: >-
-        Number of tracked searches. This is the number of search requests where
-        the `clickAnalytics` parameter is `true`.
+      description: Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
     trafficPercentage:
       type: integer
       description: A/B test traffic percentage.
@@ -191,16 +179,12 @@ components:
           type: number
           format: double
           nullable: true
-          description: >-
-            Variant's [add-to-cart
-            rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#add-to-cart-rate).
+          description: Variant's [add-to-cart rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#add-to-cart-rate).
           example: 0
         averageClickPosition:
           type: integer
           nullable: true
-          description: >-
-            Variant's [average click
-            position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position).
+          description: Variant's [average click position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position).
           example: 0
         clickCount:
           type: integer
@@ -210,9 +194,7 @@ components:
           type: number
           format: double
           nullable: true
-          description: >-
-            Variant's [click-through
-            rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+          description: Variant's [click-through rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
           example: 0.22219857724813036
         conversionCount:
           type: integer
@@ -222,9 +204,7 @@ components:
           type: number
           format: double
           nullable: true
-          description: >-
-            Variant's [conversion
-            rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+          description: Variant's [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
           example: 0.14546725846658964
         currencies:
           $ref: '#/components/schemas/currencies'
@@ -232,11 +212,7 @@ components:
           $ref: '#/components/schemas/description'
         estimatedSampleSize:
           type: integer
-          description: >-
-            The estimated number of searches that will need to be run to achieve
-            the desired confidence level and statistical power. A
-            `minimumDetectableEffect` must be set in the `configuration` object
-            for this to be used.
+          description: The estimated number of searches that will need to be run to achieve the desired confidence level and statistical power. A `minimumDetectableEffect` must be set in the `configuration` object for this to be used.
           example: 0
         filterEffects:
           $ref: '#/components/schemas/filterEffects'
@@ -245,10 +221,7 @@ components:
         noResultCount:
           type: integer
           nullable: true
-          description: >-
-            Number of [searches without
-            results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results)
-            for that variant.
+          description: Number of [searches without results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results) for that variant.
           example: 0
         purchaseCount:
           type: integer
@@ -258,9 +231,7 @@ components:
           type: number
           format: double
           nullable: true
-          description: >-
-            Variant's [purchase
-            rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#purchase-rate).
+          description: Variant's [purchase rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#purchase-rate).
           example: 0
         searchCount:
           type: integer
@@ -314,41 +285,29 @@ components:
           type: number
           format: double
           nullable: true
-          description: >
-            [A/B test
-            significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
-            based on click data. A value of 0.95 or over is considered to be
-            _significant_.
+          description: |
+            [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on click data. A value of 0.95 or over is considered to be _significant_.
           example: 1
         conversionSignificance:
           type: number
           format: double
           nullable: true
-          description: >
-            [A/B test
-            significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
-            based on conversion. A value of 0.95 or over is considered to be
-            _significant_.
+          description: |
+            [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on conversion. A value of 0.95 or over is considered to be _significant_.
           example: 1
         addToCartSignificance:
           type: number
           format: double
           nullable: true
-          description: >
-            [A/B test
-            significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
-            based on add-to-cart data. A value of 0.95 or over is considered to
-            be _significant_.
+          description: |
+            [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on add-to-cart data. A value of 0.95 or over is considered to be _significant_.
           example: 1
         purchaseSignificance:
           type: number
           format: double
           nullable: true
-          description: >
-            [A/B test
-            significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
-            based on purchase data. A value of 0.95 or over is considered to be
-            _significant_.
+          description: |
+            [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on purchase data. A value of 0.95 or over is considered to be _significant_.
           example: 1
         revenueSignificance:
           type: object
@@ -356,11 +315,8 @@ components:
             type: number
             format: double
           nullable: true
-          description: >
-            [A/B test
-            significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
-            based on revenue data. A value of 0.95 or over is considered to be
-            _significant_.
+          description: |
+            [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on revenue data. A value of 0.95 or over is considered to be _significant_.
           example:
             USD: 1
             EUR: 0.87
@@ -412,10 +368,7 @@ components:
         - trafficPercentage
     customSearchParams:
       type: object
-      description: >-
-        Applies search parameters from [a restricted set of
-        options](https://www.algolia.com/doc/api-reference/api-methods/add-ab-test/#method-param-customsearchparameters).
-        Only use this parameter if the two variants use the same index.
+      description: Applies search parameters from [a restricted set of options](https://www.algolia.com/doc/api-reference/api-methods/add-ab-test/#method-param-customsearchparameters). Only use this parameter if the two variants use the same index.
       example:
         typoTolerance: false
         synonyms: false
@@ -437,12 +390,9 @@ components:
       type: integer
       format: int64
       example: 1514562690001
-      description: >
+      description: |
         Unique identifier of a task.
-
-        A successful API response means that a task was added to a queue. It
-        might not run immediately. You can check the task's progress with the
-        `task` operation and this `taskID`.
+        A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the `task` operation and this `taskID`.
     ABTestResponse:
       type: object
       additionalProperties: false
@@ -526,8 +476,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      tags:
-        - abtesting
     post:
       operationId: customPost
       requestBody:
@@ -556,8 +504,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      tags:
-        - abtesting
     put:
       operationId: customPut
       requestBody:
@@ -586,8 +532,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      tags:
-        - abtesting
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API.
@@ -610,12 +554,10 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
-      tags:
-        - abtesting
   /2/abtests:
     post:
       tags:
-        - abtesting
+        - abtest
       operationId: addABTests
       x-acl:
         - editSettings
@@ -662,7 +604,7 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
     get:
       tags:
-        - abtesting
+        - abtest
       operationId: listABTests
       x-acl:
         - analytics
@@ -718,16 +660,14 @@ paths:
   /2/abtests/{id}:
     get:
       tags:
-        - abtesting
+        - abtest
       operationId: getABTest
       x-acl:
         - analytics
       summary: Get A/B test details.
-      description: >
+      description: |
         Get specific details for an A/B test.
-
-        To determine the `id` for an A/B test, use the [`listABTests`
-        operation](#tag/abtest/operation/listABTests).
+        To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
       parameters:
         - $ref: '#/components/parameters/ID'
       responses:
@@ -747,16 +687,14 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
     delete:
       tags:
-        - abtesting
+        - abtest
       operationId: deleteABTest
       x-acl:
         - editSettings
       summary: Delete an A/B test.
-      description: >
+      description: |
         Delete an A/B test.
-
-        To determine the `id` for an A/B test, use the [`listABTests`
-        operation](#tag/abtest/operation/listABTests).
+        To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
       parameters:
         - $ref: '#/components/parameters/ID'
       responses:
@@ -777,19 +715,15 @@ paths:
   /2/abtests/{id}/stop:
     post:
       tags:
-        - abtesting
+        - abtest
       operationId: stopABTest
       x-acl:
         - editSettings
       summary: Stop an A/B test.
-      description: >
-        If stopped, the test is over and can't be restarted. There is now only
-        one index, receiving 100% of all search requests.
-
+      description: |
+        If stopped, the test is over and can't be restarted. There is now only one index, receiving 100% of all search requests.
         The data gathered for stopped A/B tests is retained.
-
-        To determine the `id` for an A/B test, use the [`listABTests`
-        operation](#tag/abtest/operation/listABTests).
+        To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
       parameters:
         - $ref: '#/components/parameters/ID'
       responses:

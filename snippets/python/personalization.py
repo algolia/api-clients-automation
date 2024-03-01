@@ -7,6 +7,7 @@ async def snippet_for_custom_delete():
 
     allow del method for a custom path with minimal parameters
     """
+    # >SEPARATOR customDelete
     # Initialize the client
     _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -20,6 +21,7 @@ async def snippet_for_custom_delete():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_get():
@@ -28,6 +30,7 @@ async def snippet_for_custom_get():
 
     allow get method for a custom path with minimal parameters
     """
+    # >SEPARATOR customGet
     # Initialize the client
     _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -41,6 +44,7 @@ async def snippet_for_custom_get():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_post():
@@ -49,6 +53,7 @@ async def snippet_for_custom_post():
 
     allow post method for a custom path with minimal parameters
     """
+    # >SEPARATOR customPost
     # Initialize the client
     _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -62,6 +67,7 @@ async def snippet_for_custom_post():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_put():
@@ -70,6 +76,7 @@ async def snippet_for_custom_put():
 
     allow put method for a custom path with minimal parameters
     """
+    # >SEPARATOR customPut
     # Initialize the client
     _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -83,6 +90,7 @@ async def snippet_for_custom_put():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_delete_user_profile():
@@ -91,6 +99,7 @@ async def snippet_for_delete_user_profile():
 
     delete deleteUserProfile
     """
+    # >SEPARATOR deleteUserProfile
     # Initialize the client
     _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -104,6 +113,7 @@ async def snippet_for_delete_user_profile():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_personalization_strategy():
@@ -112,6 +122,7 @@ async def snippet_for_get_personalization_strategy():
 
     get getPersonalizationStrategy
     """
+    # >SEPARATOR getPersonalizationStrategy
     # Initialize the client
     _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -123,6 +134,7 @@ async def snippet_for_get_personalization_strategy():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_user_token_profile():
@@ -131,6 +143,7 @@ async def snippet_for_get_user_token_profile():
 
     get getUserTokenProfile
     """
+    # >SEPARATOR getUserTokenProfile
     # Initialize the client
     _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -144,6 +157,7 @@ async def snippet_for_get_user_token_profile():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_set_personalization_strategy():
@@ -152,6 +166,7 @@ async def snippet_for_set_personalization_strategy():
 
     set setPersonalizationStrategy
     """
+    # >SEPARATOR setPersonalizationStrategy
     # Initialize the client
     _client = PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -180,3 +195,4 @@ async def snippet_for_set_personalization_strategy():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<

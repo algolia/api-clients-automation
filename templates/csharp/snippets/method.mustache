@@ -15,6 +15,7 @@ public class Snippet{{client}}
   /// </summary>
   public async Task SnippetFor{{client}}{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}()
   {
+    // >SEPARATOR {{method}}
     // Initialize the client
     var client = new {{client}}(new {{clientPrefix}}Config("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}},"YOUR_APP_ID_REGION"{{/hasRegionalHost}}));
 
@@ -28,6 +29,7 @@ public class Snippet{{client}}
     {{/requestOptions.headers.parametersWithDataType}}
         .Build()
       {{/hasRequestOptions}});
+    // SEPARATOR<
   }
 
   {{/snippet}}

@@ -12,6 +12,7 @@ public class SnippetInsightsClient
   /// </summary>
   public async Task SnippetForInsightsClientCustomDelete()
   {
+    // >SEPARATOR customDelete
     // Initialize the client
     var client = new InsightsClient(
       new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -19,6 +20,7 @@ public class SnippetInsightsClient
 
     // Call the API
     var response = await client.CustomDeleteAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -28,6 +30,7 @@ public class SnippetInsightsClient
   /// </summary>
   public async Task SnippetForInsightsClientCustomGet()
   {
+    // >SEPARATOR customGet
     // Initialize the client
     var client = new InsightsClient(
       new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -35,6 +38,7 @@ public class SnippetInsightsClient
 
     // Call the API
     var response = await client.CustomGetAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -44,6 +48,7 @@ public class SnippetInsightsClient
   /// </summary>
   public async Task SnippetForInsightsClientCustomPost()
   {
+    // >SEPARATOR customPost
     // Initialize the client
     var client = new InsightsClient(
       new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -51,6 +56,7 @@ public class SnippetInsightsClient
 
     // Call the API
     var response = await client.CustomPostAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -60,6 +66,7 @@ public class SnippetInsightsClient
   /// </summary>
   public async Task SnippetForInsightsClientCustomPut()
   {
+    // >SEPARATOR customPut
     // Initialize the client
     var client = new InsightsClient(
       new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -67,6 +74,7 @@ public class SnippetInsightsClient
 
     // Call the API
     var response = await client.CustomPutAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -76,6 +84,7 @@ public class SnippetInsightsClient
   /// </summary>
   public async Task SnippetForInsightsClientDeleteUserToken()
   {
+    // >SEPARATOR deleteUserToken
     // Initialize the client
     var client = new InsightsClient(
       new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -83,6 +92,7 @@ public class SnippetInsightsClient
 
     // Call the API
     var response = await client.DeleteUserTokenAsync("test-user-1");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -92,6 +102,7 @@ public class SnippetInsightsClient
   /// </summary>
   public async Task SnippetForInsightsClientPushEvents()
   {
+    // >SEPARATOR pushEvents
     // Initialize the client
     var client = new InsightsClient(
       new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -120,5 +131,6 @@ public class SnippetInsightsClient
         },
       }
     );
+    // SEPARATOR<
   }
 }

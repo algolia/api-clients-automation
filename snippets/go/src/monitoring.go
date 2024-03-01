@@ -11,6 +11,7 @@ func SnippetForCustomDeleteOfMonitoring() {
 	   allow del method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customDelete
 	// Initialize the client
 	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -29,6 +30,7 @@ func SnippetForCustomDeleteOfMonitoring() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomGetOfMonitoring() {
 	/*
@@ -37,6 +39,7 @@ func SnippetForCustomGetOfMonitoring() {
 	   allow get method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customGet
 	// Initialize the client
 	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -55,6 +58,7 @@ func SnippetForCustomGetOfMonitoring() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomPostOfMonitoring() {
 	/*
@@ -63,6 +67,7 @@ func SnippetForCustomPostOfMonitoring() {
 	   allow post method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customPost
 	// Initialize the client
 	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -81,6 +86,7 @@ func SnippetForCustomPostOfMonitoring() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomPutOfMonitoring() {
 	/*
@@ -89,6 +95,7 @@ func SnippetForCustomPutOfMonitoring() {
 	   allow put method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customPut
 	// Initialize the client
 	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -107,6 +114,7 @@ func SnippetForCustomPutOfMonitoring() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetClusterIncidentsOfMonitoring() {
 	/*
@@ -115,6 +123,7 @@ func SnippetForGetClusterIncidentsOfMonitoring() {
 	   getClusterIncidents
 	*/
 
+	// >SEPARATOR getClusterIncidents
 	// Initialize the client
 	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -133,6 +142,7 @@ func SnippetForGetClusterIncidentsOfMonitoring() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetClusterStatusOfMonitoring() {
 	/*
@@ -141,6 +151,7 @@ func SnippetForGetClusterStatusOfMonitoring() {
 	   getClusterStatus
 	*/
 
+	// >SEPARATOR getClusterStatus
 	// Initialize the client
 	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -159,6 +170,7 @@ func SnippetForGetClusterStatusOfMonitoring() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetIncidentsOfMonitoring() {
 	/*
@@ -167,6 +179,7 @@ func SnippetForGetIncidentsOfMonitoring() {
 	   getIncidents
 	*/
 
+	// >SEPARATOR getIncidents
 	// Initialize the client
 	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -183,6 +196,7 @@ func SnippetForGetIncidentsOfMonitoring() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetIndexingTimeOfMonitoring() {
 	/*
@@ -191,6 +205,7 @@ func SnippetForGetIndexingTimeOfMonitoring() {
 	   getIndexingTime
 	*/
 
+	// >SEPARATOR getIndexingTime
 	// Initialize the client
 	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -209,6 +224,7 @@ func SnippetForGetIndexingTimeOfMonitoring() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetInventoryOfMonitoring() {
 	/*
@@ -217,6 +233,7 @@ func SnippetForGetInventoryOfMonitoring() {
 	   getInventory
 	*/
 
+	// >SEPARATOR getInventory
 	// Initialize the client
 	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -233,6 +250,7 @@ func SnippetForGetInventoryOfMonitoring() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetLatencyOfMonitoring() {
 	/*
@@ -241,6 +259,7 @@ func SnippetForGetLatencyOfMonitoring() {
 	   getLatency
 	*/
 
+	// >SEPARATOR getLatency
 	// Initialize the client
 	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -259,6 +278,7 @@ func SnippetForGetLatencyOfMonitoring() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetMetricsOfMonitoring() {
 	/*
@@ -267,6 +287,7 @@ func SnippetForGetMetricsOfMonitoring() {
 	   getMetrics
 	*/
 
+	// >SEPARATOR getMetrics
 	// Initialize the client
 	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -285,6 +306,7 @@ func SnippetForGetMetricsOfMonitoring() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetReachabilityOfMonitoring() {
 	/*
@@ -293,6 +315,7 @@ func SnippetForGetReachabilityOfMonitoring() {
 	   getReachability
 	*/
 
+	// >SEPARATOR getReachability
 	// Initialize the client
 	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -311,6 +334,7 @@ func SnippetForGetReachabilityOfMonitoring() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetStatusOfMonitoring() {
 	/*
@@ -319,6 +343,7 @@ func SnippetForGetStatusOfMonitoring() {
 	   getStatus
 	*/
 
+	// >SEPARATOR getStatus
 	// Initialize the client
 	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -335,4 +360,5 @@ func SnippetForGetStatusOfMonitoring() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }

@@ -7,6 +7,7 @@ async def snippet_for_custom_delete():
 
     allow del method for a custom path with minimal parameters
     """
+    # >SEPARATOR customDelete
     # Initialize the client
     _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -20,6 +21,7 @@ async def snippet_for_custom_delete():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_get():
@@ -28,6 +30,7 @@ async def snippet_for_custom_get():
 
     allow get method for a custom path with minimal parameters
     """
+    # >SEPARATOR customGet
     # Initialize the client
     _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -41,6 +44,7 @@ async def snippet_for_custom_get():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_post():
@@ -49,6 +53,7 @@ async def snippet_for_custom_post():
 
     allow post method for a custom path with minimal parameters
     """
+    # >SEPARATOR customPost
     # Initialize the client
     _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -62,6 +67,7 @@ async def snippet_for_custom_post():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_put():
@@ -70,6 +76,7 @@ async def snippet_for_custom_put():
 
     allow put method for a custom path with minimal parameters
     """
+    # >SEPARATOR customPut
     # Initialize the client
     _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -83,6 +90,7 @@ async def snippet_for_custom_put():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_delete_recommend_rule():
@@ -91,6 +99,7 @@ async def snippet_for_delete_recommend_rule():
 
     deleteRecommendRule0
     """
+    # >SEPARATOR deleteRecommendRule
     # Initialize the client
     _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -106,6 +115,7 @@ async def snippet_for_delete_recommend_rule():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_recommend_rule():
@@ -114,6 +124,7 @@ async def snippet_for_get_recommend_rule():
 
     getRecommendRule0
     """
+    # >SEPARATOR getRecommendRule
     # Initialize the client
     _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -129,6 +140,7 @@ async def snippet_for_get_recommend_rule():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_recommend_status():
@@ -137,6 +149,7 @@ async def snippet_for_get_recommend_status():
 
     getRecommendStatus0
     """
+    # >SEPARATOR getRecommendStatus
     # Initialize the client
     _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -152,6 +165,7 @@ async def snippet_for_get_recommend_status():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_recommendations():
@@ -160,6 +174,7 @@ async def snippet_for_get_recommendations():
 
     get recommendations for recommend model with minimal parameters
     """
+    # >SEPARATOR getRecommendations
     # Initialize the client
     _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -182,6 +197,7 @@ async def snippet_for_get_recommendations():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_search_recommend_rules():
@@ -190,6 +206,7 @@ async def snippet_for_search_recommend_rules():
 
     searchRecommendRules0
     """
+    # >SEPARATOR searchRecommendRules
     # Initialize the client
     _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -204,3 +221,4 @@ async def snippet_for_search_recommend_rules():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<

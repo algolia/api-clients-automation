@@ -84,17 +84,6 @@ function getSpecsForNavBar() {
         'redocusaurus',
         {
           specs: getSpecsForPlugin(),
-          theme: {
-            options: { disableSearch: true },
-            primaryColor: '#5468ff',
-            theme: {
-              typography: { fontSize: '14px', lineHeight: '1.2em' },
-              spacing: {
-                unit: 5,
-                sectionHorizontal: 30,
-              },
-            },
-          },
         },
       ],
     ],

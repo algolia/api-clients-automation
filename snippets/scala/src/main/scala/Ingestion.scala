@@ -18,6 +18,7 @@ class SnippetIngestionClient {
     * createAuthenticationOAuth
     */
   def snippetForIngestionClientCreateAuthentication(): Unit = {
+    // >SEPARATOR createAuthentication
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -36,6 +37,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the createDestination method.
@@ -43,6 +45,7 @@ class SnippetIngestionClient {
     * createDestination
     */
   def snippetForIngestionClientCreateDestination(): Unit = {
+    // >SEPARATOR createDestination
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -60,6 +63,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the createSource method.
@@ -67,6 +71,7 @@ class SnippetIngestionClient {
     * createSource
     */
   def snippetForIngestionClientCreateSource(): Unit = {
+    // >SEPARATOR createSource
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -87,6 +92,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the createTask method.
@@ -94,6 +100,7 @@ class SnippetIngestionClient {
     * createTaskOnDemand
     */
   def snippetForIngestionClientCreateTask(): Unit = {
+    // >SEPARATOR createTask
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -111,6 +118,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customDelete method.
@@ -118,6 +126,7 @@ class SnippetIngestionClient {
     * allow del method for a custom path with minimal parameters
     */
   def snippetForIngestionClientCustomDelete(): Unit = {
+    // >SEPARATOR customDelete
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -128,6 +137,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customGet method.
@@ -135,6 +145,7 @@ class SnippetIngestionClient {
     * allow get method for a custom path with minimal parameters
     */
   def snippetForIngestionClientCustomGet(): Unit = {
+    // >SEPARATOR customGet
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -145,6 +156,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customPost method.
@@ -152,6 +164,7 @@ class SnippetIngestionClient {
     * allow post method for a custom path with minimal parameters
     */
   def snippetForIngestionClientCustomPost(): Unit = {
+    // >SEPARATOR customPost
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -162,6 +175,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customPut method.
@@ -169,6 +183,7 @@ class SnippetIngestionClient {
     * allow put method for a custom path with minimal parameters
     */
   def snippetForIngestionClientCustomPut(): Unit = {
+    // >SEPARATOR customPut
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -179,6 +194,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the deleteAuthentication method.
@@ -186,6 +202,7 @@ class SnippetIngestionClient {
     * deleteAuthentication
     */
   def snippetForIngestionClientDeleteAuthentication(): Unit = {
+    // >SEPARATOR deleteAuthentication
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -196,6 +213,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the deleteDestination method.
@@ -203,6 +221,7 @@ class SnippetIngestionClient {
     * deleteDestination
     */
   def snippetForIngestionClientDeleteDestination(): Unit = {
+    // >SEPARATOR deleteDestination
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -213,6 +232,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the deleteSource method.
@@ -220,6 +240,7 @@ class SnippetIngestionClient {
     * deleteSource
     */
   def snippetForIngestionClientDeleteSource(): Unit = {
+    // >SEPARATOR deleteSource
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -230,6 +251,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the deleteTask method.
@@ -237,6 +259,7 @@ class SnippetIngestionClient {
     * deleteTask
     */
   def snippetForIngestionClientDeleteTask(): Unit = {
+    // >SEPARATOR deleteTask
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -247,6 +270,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the disableTask method.
@@ -254,6 +278,7 @@ class SnippetIngestionClient {
     * disableTask
     */
   def snippetForIngestionClientDisableTask(): Unit = {
+    // >SEPARATOR disableTask
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -264,6 +289,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the enableTask method.
@@ -271,6 +297,7 @@ class SnippetIngestionClient {
     * enable task e2e
     */
   def snippetForIngestionClientEnableTask(): Unit = {
+    // >SEPARATOR enableTask
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -281,6 +308,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getAuthentication method.
@@ -288,6 +316,7 @@ class SnippetIngestionClient {
     * getAuthentication
     */
   def snippetForIngestionClientGetAuthentication(): Unit = {
+    // >SEPARATOR getAuthentication
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -298,6 +327,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getAuthentications method.
@@ -305,6 +335,7 @@ class SnippetIngestionClient {
     * getAuthentications
     */
   def snippetForIngestionClientGetAuthentications(): Unit = {
+    // >SEPARATOR getAuthentications
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -314,6 +345,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getDestination method.
@@ -321,6 +353,7 @@ class SnippetIngestionClient {
     * getDestination
     */
   def snippetForIngestionClientGetDestination(): Unit = {
+    // >SEPARATOR getDestination
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -331,6 +364,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getDestinations method.
@@ -338,6 +372,7 @@ class SnippetIngestionClient {
     * getDestinations
     */
   def snippetForIngestionClientGetDestinations(): Unit = {
+    // >SEPARATOR getDestinations
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -347,6 +382,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getDockerSourceStreams method.
@@ -354,6 +390,7 @@ class SnippetIngestionClient {
     * getDockerSourceStreams
     */
   def snippetForIngestionClientGetDockerSourceStreams(): Unit = {
+    // >SEPARATOR getDockerSourceStreams
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -364,6 +401,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getEvent method.
@@ -371,6 +409,7 @@ class SnippetIngestionClient {
     * getEvent
     */
   def snippetForIngestionClientGetEvent(): Unit = {
+    // >SEPARATOR getEvent
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -382,6 +421,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getEvents method.
@@ -389,6 +429,7 @@ class SnippetIngestionClient {
     * getEvents
     */
   def snippetForIngestionClientGetEvents(): Unit = {
+    // >SEPARATOR getEvents
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -399,6 +440,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getRun method.
@@ -406,6 +448,7 @@ class SnippetIngestionClient {
     * getRun
     */
   def snippetForIngestionClientGetRun(): Unit = {
+    // >SEPARATOR getRun
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -416,6 +459,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getRuns method.
@@ -423,6 +467,7 @@ class SnippetIngestionClient {
     * getRuns
     */
   def snippetForIngestionClientGetRuns(): Unit = {
+    // >SEPARATOR getRuns
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -432,6 +477,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getSource method.
@@ -439,6 +485,7 @@ class SnippetIngestionClient {
     * getSource
     */
   def snippetForIngestionClientGetSource(): Unit = {
+    // >SEPARATOR getSource
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -449,6 +496,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getSources method.
@@ -456,6 +504,7 @@ class SnippetIngestionClient {
     * getSources
     */
   def snippetForIngestionClientGetSources(): Unit = {
+    // >SEPARATOR getSources
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -465,6 +514,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getTask method.
@@ -472,6 +522,7 @@ class SnippetIngestionClient {
     * getTask
     */
   def snippetForIngestionClientGetTask(): Unit = {
+    // >SEPARATOR getTask
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -482,6 +533,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the getTasks method.
@@ -489,6 +541,7 @@ class SnippetIngestionClient {
     * getTasks
     */
   def snippetForIngestionClientGetTasks(): Unit = {
+    // >SEPARATOR getTasks
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -498,6 +551,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the runTask method.
@@ -505,6 +559,7 @@ class SnippetIngestionClient {
     * runTask
     */
   def snippetForIngestionClientRunTask(): Unit = {
+    // >SEPARATOR runTask
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -515,6 +570,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the searchAuthentications method.
@@ -522,6 +578,7 @@ class SnippetIngestionClient {
     * searchAuthentications
     */
   def snippetForIngestionClientSearchAuthentications(): Unit = {
+    // >SEPARATOR searchAuthentications
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -534,6 +591,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the searchDestinations method.
@@ -541,6 +599,7 @@ class SnippetIngestionClient {
     * searchDestinations
     */
   def snippetForIngestionClientSearchDestinations(): Unit = {
+    // >SEPARATOR searchDestinations
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -553,6 +612,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the searchSources method.
@@ -560,6 +620,7 @@ class SnippetIngestionClient {
     * searchSources
     */
   def snippetForIngestionClientSearchSources(): Unit = {
+    // >SEPARATOR searchSources
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -572,6 +633,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the searchTasks method.
@@ -579,6 +641,7 @@ class SnippetIngestionClient {
     * searchTasks
     */
   def snippetForIngestionClientSearchTasks(): Unit = {
+    // >SEPARATOR searchTasks
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -595,6 +658,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the triggerDockerSourceDiscover method.
@@ -602,6 +666,7 @@ class SnippetIngestionClient {
     * triggerDockerSourceDiscover
     */
   def snippetForIngestionClientTriggerDockerSourceDiscover(): Unit = {
+    // >SEPARATOR triggerDockerSourceDiscover
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -612,6 +677,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the updateAuthentication method.
@@ -619,6 +685,7 @@ class SnippetIngestionClient {
     * updateAuthentication
     */
   def snippetForIngestionClientUpdateAuthentication(): Unit = {
+    // >SEPARATOR updateAuthentication
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -632,6 +699,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the updateDestination method.
@@ -639,6 +707,7 @@ class SnippetIngestionClient {
     * updateDestination
     */
   def snippetForIngestionClientUpdateDestination(): Unit = {
+    // >SEPARATOR updateDestination
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -652,6 +721,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the updateSource method.
@@ -659,6 +729,7 @@ class SnippetIngestionClient {
     * updateSource
     */
   def snippetForIngestionClientUpdateSource(): Unit = {
+    // >SEPARATOR updateSource
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -672,6 +743,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the updateTask method.
@@ -679,6 +751,7 @@ class SnippetIngestionClient {
     * updateTask
     */
   def snippetForIngestionClientUpdateTask(): Unit = {
+    // >SEPARATOR updateTask
     // Initialize the client
     val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -692,6 +765,7 @@ class SnippetIngestionClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
 }

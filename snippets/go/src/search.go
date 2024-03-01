@@ -11,6 +11,7 @@ func SnippetForAddApiKeyOfSearch() {
 	   addApiKey0
 	*/
 
+	// >SEPARATOR addApiKey
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -31,6 +32,7 @@ func SnippetForAddApiKeyOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForAddOrUpdateObjectOfSearch() {
 	/*
@@ -39,6 +41,7 @@ func SnippetForAddOrUpdateObjectOfSearch() {
 	   addOrUpdateObject0
 	*/
 
+	// >SEPARATOR addOrUpdateObject
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -57,6 +60,7 @@ func SnippetForAddOrUpdateObjectOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForAppendSourceOfSearch() {
 	/*
@@ -65,6 +69,7 @@ func SnippetForAppendSourceOfSearch() {
 	   appendSource0
 	*/
 
+	// >SEPARATOR appendSource
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -84,6 +89,7 @@ func SnippetForAppendSourceOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForAssignUserIdOfSearch() {
 	/*
@@ -92,6 +98,7 @@ func SnippetForAssignUserIdOfSearch() {
 	   assignUserId0
 	*/
 
+	// >SEPARATOR assignUserId
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -111,6 +118,7 @@ func SnippetForAssignUserIdOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForBatchOfSearch() {
 	/*
@@ -119,6 +127,7 @@ func SnippetForBatchOfSearch() {
 	   allows batch method with `addObject` action
 	*/
 
+	// >SEPARATOR batch
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -139,6 +148,7 @@ func SnippetForBatchOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForBatchAssignUserIdsOfSearch() {
 	/*
@@ -147,6 +157,7 @@ func SnippetForBatchAssignUserIdsOfSearch() {
 	   batchAssignUserIds0
 	*/
 
+	// >SEPARATOR batchAssignUserIds
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -167,6 +178,7 @@ func SnippetForBatchAssignUserIdsOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForBatchDictionaryEntriesOfSearch() {
 	/*
@@ -175,6 +187,7 @@ func SnippetForBatchDictionaryEntriesOfSearch() {
 	   get batchDictionaryEntries results with minimal parameters
 	*/
 
+	// >SEPARATOR batchDictionaryEntries
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -197,6 +210,7 @@ func SnippetForBatchDictionaryEntriesOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForBrowseOfSearch() {
 	/*
@@ -205,6 +219,7 @@ func SnippetForBrowseOfSearch() {
 	   browse with minimal parameters
 	*/
 
+	// >SEPARATOR browse
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -223,6 +238,7 @@ func SnippetForBrowseOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForClearObjectsOfSearch() {
 	/*
@@ -231,6 +247,7 @@ func SnippetForClearObjectsOfSearch() {
 	   clearObjects0
 	*/
 
+	// >SEPARATOR clearObjects
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -249,6 +266,7 @@ func SnippetForClearObjectsOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForClearRulesOfSearch() {
 	/*
@@ -257,6 +275,7 @@ func SnippetForClearRulesOfSearch() {
 	   clearRules0
 	*/
 
+	// >SEPARATOR clearRules
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -275,6 +294,7 @@ func SnippetForClearRulesOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForClearSynonymsOfSearch() {
 	/*
@@ -283,6 +303,7 @@ func SnippetForClearSynonymsOfSearch() {
 	   clearSynonyms0
 	*/
 
+	// >SEPARATOR clearSynonyms
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -301,6 +322,7 @@ func SnippetForClearSynonymsOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomDeleteOfSearch() {
 	/*
@@ -309,6 +331,7 @@ func SnippetForCustomDeleteOfSearch() {
 	   allow del method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customDelete
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -327,6 +350,7 @@ func SnippetForCustomDeleteOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomGetOfSearch() {
 	/*
@@ -335,6 +359,7 @@ func SnippetForCustomGetOfSearch() {
 	   allow get method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customGet
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -353,6 +378,7 @@ func SnippetForCustomGetOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomPostOfSearch() {
 	/*
@@ -361,6 +387,7 @@ func SnippetForCustomPostOfSearch() {
 	   allow post method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customPost
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -379,6 +406,7 @@ func SnippetForCustomPostOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomPutOfSearch() {
 	/*
@@ -387,6 +415,7 @@ func SnippetForCustomPutOfSearch() {
 	   allow put method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customPut
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -405,6 +434,7 @@ func SnippetForCustomPutOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForDeleteApiKeyOfSearch() {
 	/*
@@ -413,6 +443,7 @@ func SnippetForDeleteApiKeyOfSearch() {
 	   deleteApiKey0
 	*/
 
+	// >SEPARATOR deleteApiKey
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -431,6 +462,7 @@ func SnippetForDeleteApiKeyOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForDeleteByOfSearch() {
 	/*
@@ -439,6 +471,7 @@ func SnippetForDeleteByOfSearch() {
 	   deleteBy0
 	*/
 
+	// >SEPARATOR deleteBy
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -458,6 +491,7 @@ func SnippetForDeleteByOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForDeleteIndexOfSearch() {
 	/*
@@ -466,6 +500,7 @@ func SnippetForDeleteIndexOfSearch() {
 	   deleteIndex0
 	*/
 
+	// >SEPARATOR deleteIndex
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -484,6 +519,7 @@ func SnippetForDeleteIndexOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForDeleteObjectOfSearch() {
 	/*
@@ -492,6 +528,7 @@ func SnippetForDeleteObjectOfSearch() {
 	   deleteObject0
 	*/
 
+	// >SEPARATOR deleteObject
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -510,6 +547,7 @@ func SnippetForDeleteObjectOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForDeleteRuleOfSearch() {
 	/*
@@ -518,6 +556,7 @@ func SnippetForDeleteRuleOfSearch() {
 	   delete rule simple case
 	*/
 
+	// >SEPARATOR deleteRule
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -536,6 +575,7 @@ func SnippetForDeleteRuleOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForDeleteSourceOfSearch() {
 	/*
@@ -544,6 +584,7 @@ func SnippetForDeleteSourceOfSearch() {
 	   deleteSource0
 	*/
 
+	// >SEPARATOR deleteSource
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -562,6 +603,7 @@ func SnippetForDeleteSourceOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForDeleteSynonymOfSearch() {
 	/*
@@ -570,6 +612,7 @@ func SnippetForDeleteSynonymOfSearch() {
 	   deleteSynonym0
 	*/
 
+	// >SEPARATOR deleteSynonym
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -588,6 +631,7 @@ func SnippetForDeleteSynonymOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetApiKeyOfSearch() {
 	/*
@@ -596,6 +640,7 @@ func SnippetForGetApiKeyOfSearch() {
 	   getApiKey0
 	*/
 
+	// >SEPARATOR getApiKey
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -614,6 +659,7 @@ func SnippetForGetApiKeyOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetDictionaryLanguagesOfSearch() {
 	/*
@@ -622,6 +668,7 @@ func SnippetForGetDictionaryLanguagesOfSearch() {
 	   get getDictionaryLanguages
 	*/
 
+	// >SEPARATOR getDictionaryLanguages
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -638,6 +685,7 @@ func SnippetForGetDictionaryLanguagesOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetDictionarySettingsOfSearch() {
 	/*
@@ -646,6 +694,7 @@ func SnippetForGetDictionarySettingsOfSearch() {
 	   get getDictionarySettings results
 	*/
 
+	// >SEPARATOR getDictionarySettings
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -662,6 +711,7 @@ func SnippetForGetDictionarySettingsOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetLogsOfSearch() {
 	/*
@@ -670,6 +720,7 @@ func SnippetForGetLogsOfSearch() {
 	   getLogs with minimal parameters
 	*/
 
+	// >SEPARATOR getLogs
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -686,6 +737,7 @@ func SnippetForGetLogsOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetObjectOfSearch() {
 	/*
@@ -694,6 +746,7 @@ func SnippetForGetObjectOfSearch() {
 	   getObject0
 	*/
 
+	// >SEPARATOR getObject
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -713,6 +766,7 @@ func SnippetForGetObjectOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetObjectsOfSearch() {
 	/*
@@ -721,6 +775,7 @@ func SnippetForGetObjectsOfSearch() {
 	   getObjects0
 	*/
 
+	// >SEPARATOR getObjects
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -742,6 +797,7 @@ func SnippetForGetObjectsOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetRuleOfSearch() {
 	/*
@@ -750,6 +806,7 @@ func SnippetForGetRuleOfSearch() {
 	   getRule0
 	*/
 
+	// >SEPARATOR getRule
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -768,6 +825,7 @@ func SnippetForGetRuleOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetSettingsOfSearch() {
 	/*
@@ -776,6 +834,7 @@ func SnippetForGetSettingsOfSearch() {
 	   getSettings0
 	*/
 
+	// >SEPARATOR getSettings
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -794,6 +853,7 @@ func SnippetForGetSettingsOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetSourcesOfSearch() {
 	/*
@@ -802,6 +862,7 @@ func SnippetForGetSourcesOfSearch() {
 	   getSources0
 	*/
 
+	// >SEPARATOR getSources
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -818,6 +879,7 @@ func SnippetForGetSourcesOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetSynonymOfSearch() {
 	/*
@@ -826,6 +888,7 @@ func SnippetForGetSynonymOfSearch() {
 	   getSynonym0
 	*/
 
+	// >SEPARATOR getSynonym
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -844,6 +907,7 @@ func SnippetForGetSynonymOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetTaskOfSearch() {
 	/*
@@ -852,6 +916,7 @@ func SnippetForGetTaskOfSearch() {
 	   getTask0
 	*/
 
+	// >SEPARATOR getTask
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -870,6 +935,7 @@ func SnippetForGetTaskOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetTopUserIdsOfSearch() {
 	/*
@@ -878,6 +944,7 @@ func SnippetForGetTopUserIdsOfSearch() {
 	   getTopUserIds0
 	*/
 
+	// >SEPARATOR getTopUserIds
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -894,6 +961,7 @@ func SnippetForGetTopUserIdsOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetUserIdOfSearch() {
 	/*
@@ -902,6 +970,7 @@ func SnippetForGetUserIdOfSearch() {
 	   getUserId0
 	*/
 
+	// >SEPARATOR getUserId
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -920,6 +989,7 @@ func SnippetForGetUserIdOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForHasPendingMappingsOfSearch() {
 	/*
@@ -928,6 +998,7 @@ func SnippetForHasPendingMappingsOfSearch() {
 	   hasPendingMappings with minimal parameters
 	*/
 
+	// >SEPARATOR hasPendingMappings
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -944,6 +1015,7 @@ func SnippetForHasPendingMappingsOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForListApiKeysOfSearch() {
 	/*
@@ -952,6 +1024,7 @@ func SnippetForListApiKeysOfSearch() {
 	   listApiKeys0
 	*/
 
+	// >SEPARATOR listApiKeys
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -968,6 +1041,7 @@ func SnippetForListApiKeysOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForListClustersOfSearch() {
 	/*
@@ -976,6 +1050,7 @@ func SnippetForListClustersOfSearch() {
 	   listClusters0
 	*/
 
+	// >SEPARATOR listClusters
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -992,6 +1067,7 @@ func SnippetForListClustersOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForListIndicesOfSearch() {
 	/*
@@ -1000,6 +1076,7 @@ func SnippetForListIndicesOfSearch() {
 	   listIndices with minimal parameters
 	*/
 
+	// >SEPARATOR listIndices
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1016,6 +1093,7 @@ func SnippetForListIndicesOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForListUserIdsOfSearch() {
 	/*
@@ -1024,6 +1102,7 @@ func SnippetForListUserIdsOfSearch() {
 	   listUserIds with minimal parameters
 	*/
 
+	// >SEPARATOR listUserIds
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1040,6 +1119,7 @@ func SnippetForListUserIdsOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForMultipleBatchOfSearch() {
 	/*
@@ -1048,6 +1128,7 @@ func SnippetForMultipleBatchOfSearch() {
 	   multipleBatch0
 	*/
 
+	// >SEPARATOR multipleBatch
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1068,6 +1149,7 @@ func SnippetForMultipleBatchOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForOperationIndexOfSearch() {
 	/*
@@ -1076,6 +1158,7 @@ func SnippetForOperationIndexOfSearch() {
 	   operationIndex0
 	*/
 
+	// >SEPARATOR operationIndex
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1096,6 +1179,7 @@ func SnippetForOperationIndexOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForPartialUpdateObjectOfSearch() {
 	/*
@@ -1104,6 +1188,7 @@ func SnippetForPartialUpdateObjectOfSearch() {
 	   partialUpdateObject0
 	*/
 
+	// >SEPARATOR partialUpdateObject
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1123,6 +1208,7 @@ func SnippetForPartialUpdateObjectOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForRemoveUserIdOfSearch() {
 	/*
@@ -1131,6 +1217,7 @@ func SnippetForRemoveUserIdOfSearch() {
 	   removeUserId0
 	*/
 
+	// >SEPARATOR removeUserId
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1149,6 +1236,7 @@ func SnippetForRemoveUserIdOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForReplaceSourcesOfSearch() {
 	/*
@@ -1157,6 +1245,7 @@ func SnippetForReplaceSourcesOfSearch() {
 	   replaceSources0
 	*/
 
+	// >SEPARATOR replaceSources
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1176,6 +1265,7 @@ func SnippetForReplaceSourcesOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForRestoreApiKeyOfSearch() {
 	/*
@@ -1184,6 +1274,7 @@ func SnippetForRestoreApiKeyOfSearch() {
 	   restoreApiKey0
 	*/
 
+	// >SEPARATOR restoreApiKey
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1202,6 +1293,7 @@ func SnippetForRestoreApiKeyOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSaveObjectOfSearch() {
 	/*
@@ -1210,6 +1302,7 @@ func SnippetForSaveObjectOfSearch() {
 	   saveObject0
 	*/
 
+	// >SEPARATOR saveObject
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1228,6 +1321,7 @@ func SnippetForSaveObjectOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSaveRuleOfSearch() {
 	/*
@@ -1236,6 +1330,7 @@ func SnippetForSaveRuleOfSearch() {
 	   saveRule with minimal parameters
 	*/
 
+	// >SEPARATOR saveRule
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1256,6 +1351,7 @@ func SnippetForSaveRuleOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSaveRulesOfSearch() {
 	/*
@@ -1264,6 +1360,7 @@ func SnippetForSaveRulesOfSearch() {
 	   saveRules with minimal parameters
 	*/
 
+	// >SEPARATOR saveRules
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1285,6 +1382,7 @@ func SnippetForSaveRulesOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSaveSynonymOfSearch() {
 	/*
@@ -1293,6 +1391,7 @@ func SnippetForSaveSynonymOfSearch() {
 	   saveSynonym0
 	*/
 
+	// >SEPARATOR saveSynonym
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1313,6 +1412,7 @@ func SnippetForSaveSynonymOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSaveSynonymsOfSearch() {
 	/*
@@ -1321,6 +1421,7 @@ func SnippetForSaveSynonymsOfSearch() {
 	   saveSynonyms0
 	*/
 
+	// >SEPARATOR saveSynonyms
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1342,6 +1443,7 @@ func SnippetForSaveSynonymsOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSearchOfSearch() {
 	/*
@@ -1350,6 +1452,7 @@ func SnippetForSearchOfSearch() {
 	   search for a single hits request with minimal parameters
 	*/
 
+	// >SEPARATOR search
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1371,6 +1474,7 @@ func SnippetForSearchOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSearchDictionaryEntriesOfSearch() {
 	/*
@@ -1379,6 +1483,7 @@ func SnippetForSearchDictionaryEntriesOfSearch() {
 	   get searchDictionaryEntries results with minimal parameters
 	*/
 
+	// >SEPARATOR searchDictionaryEntries
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1398,6 +1503,7 @@ func SnippetForSearchDictionaryEntriesOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSearchForFacetValuesOfSearch() {
 	/*
@@ -1406,6 +1512,7 @@ func SnippetForSearchForFacetValuesOfSearch() {
 	   get searchForFacetValues results with minimal parameters
 	*/
 
+	// >SEPARATOR searchForFacetValues
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1424,6 +1531,7 @@ func SnippetForSearchForFacetValuesOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSearchRulesOfSearch() {
 	/*
@@ -1432,6 +1540,7 @@ func SnippetForSearchRulesOfSearch() {
 	   searchRules0
 	*/
 
+	// >SEPARATOR searchRules
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1451,6 +1560,7 @@ func SnippetForSearchRulesOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSearchSingleIndexOfSearch() {
 	/*
@@ -1459,6 +1569,7 @@ func SnippetForSearchSingleIndexOfSearch() {
 	   search with minimal parameters
 	*/
 
+	// >SEPARATOR searchSingleIndex
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1477,6 +1588,7 @@ func SnippetForSearchSingleIndexOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSearchSynonymsOfSearch() {
 	/*
@@ -1485,6 +1597,7 @@ func SnippetForSearchSynonymsOfSearch() {
 	   searchSynonyms with minimal parameters
 	*/
 
+	// >SEPARATOR searchSynonyms
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1503,6 +1616,7 @@ func SnippetForSearchSynonymsOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSearchUserIdsOfSearch() {
 	/*
@@ -1511,6 +1625,7 @@ func SnippetForSearchUserIdsOfSearch() {
 	   searchUserIds0
 	*/
 
+	// >SEPARATOR searchUserIds
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1530,6 +1645,7 @@ func SnippetForSearchUserIdsOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSetDictionarySettingsOfSearch() {
 	/*
@@ -1538,6 +1654,7 @@ func SnippetForSetDictionarySettingsOfSearch() {
 	   get setDictionarySettings results with minimal parameters
 	*/
 
+	// >SEPARATOR setDictionarySettings
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1558,6 +1675,7 @@ func SnippetForSetDictionarySettingsOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSetSettingsOfSearch() {
 	/*
@@ -1566,6 +1684,7 @@ func SnippetForSetSettingsOfSearch() {
 	   setSettings with minimal parameters
 	*/
 
+	// >SEPARATOR setSettings
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1585,6 +1704,7 @@ func SnippetForSetSettingsOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForUpdateApiKeyOfSearch() {
 	/*
@@ -1593,6 +1713,7 @@ func SnippetForUpdateApiKeyOfSearch() {
 	   updateApiKey0
 	*/
 
+	// >SEPARATOR updateApiKey
 	// Initialize the client
 	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
 	if err != nil {
@@ -1613,4 +1734,5 @@ func SnippetForUpdateApiKeyOfSearch() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }

@@ -10,6 +10,7 @@ class Snippet{{client}} {
   {{#blocksRequests}}
   {{#snippet}}
   suspend fun snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}() {
+      // >SEPARATOR {{method}}
       // Initialize the client
       val client = {{client}}(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY"{{#hasRegionalHost}}, region = "YOUR_APP_ID_REGION"{{/hasRegionalHost}})
 
@@ -40,6 +41,7 @@ class Snippet{{client}} {
 
       // Use the response
       println(response)
+      // SEPARATOR<
 
       exitProcess(0)
   }

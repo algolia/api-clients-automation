@@ -7,6 +7,7 @@ import kotlin.system.exitProcess
 
 class SnippetPersonalizationClient {
   suspend fun snippetForCustomDelete() {
+    // >SEPARATOR customDelete
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -17,11 +18,13 @@ class SnippetPersonalizationClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomGet() {
+    // >SEPARATOR customGet
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -32,11 +35,13 @@ class SnippetPersonalizationClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomPost() {
+    // >SEPARATOR customPost
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -47,11 +52,13 @@ class SnippetPersonalizationClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomPut() {
+    // >SEPARATOR customPut
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -62,11 +69,13 @@ class SnippetPersonalizationClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForDeleteUserProfile() {
+    // >SEPARATOR deleteUserProfile
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -77,11 +86,13 @@ class SnippetPersonalizationClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetPersonalizationStrategy() {
+    // >SEPARATOR getPersonalizationStrategy
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -90,11 +101,13 @@ class SnippetPersonalizationClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetUserTokenProfile() {
+    // >SEPARATOR getUserTokenProfile
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -105,11 +118,13 @@ class SnippetPersonalizationClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForSetPersonalizationStrategy() {
+    // >SEPARATOR setPersonalizationStrategy
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
@@ -135,6 +150,7 @@ class SnippetPersonalizationClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }

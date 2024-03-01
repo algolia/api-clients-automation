@@ -7,6 +7,7 @@ async def snippet_for_custom_delete():
 
     allow del method for a custom path with minimal parameters
     """
+    # >SEPARATOR customDelete
     # Initialize the client
     _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -20,6 +21,7 @@ async def snippet_for_custom_delete():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_get():
@@ -28,6 +30,7 @@ async def snippet_for_custom_get():
 
     allow get method for a custom path with minimal parameters
     """
+    # >SEPARATOR customGet
     # Initialize the client
     _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -41,6 +44,7 @@ async def snippet_for_custom_get():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_post():
@@ -49,6 +53,7 @@ async def snippet_for_custom_post():
 
     allow post method for a custom path with minimal parameters
     """
+    # >SEPARATOR customPost
     # Initialize the client
     _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -62,6 +67,7 @@ async def snippet_for_custom_post():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_put():
@@ -70,6 +76,7 @@ async def snippet_for_custom_put():
 
     allow put method for a custom path with minimal parameters
     """
+    # >SEPARATOR customPut
     # Initialize the client
     _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -83,6 +90,7 @@ async def snippet_for_custom_put():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_cluster_incidents():
@@ -91,6 +99,7 @@ async def snippet_for_get_cluster_incidents():
 
     getClusterIncidents
     """
+    # >SEPARATOR getClusterIncidents
     # Initialize the client
     _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -104,6 +113,7 @@ async def snippet_for_get_cluster_incidents():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_cluster_status():
@@ -112,6 +122,7 @@ async def snippet_for_get_cluster_status():
 
     getClusterStatus
     """
+    # >SEPARATOR getClusterStatus
     # Initialize the client
     _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -125,6 +136,7 @@ async def snippet_for_get_cluster_status():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_incidents():
@@ -133,6 +145,7 @@ async def snippet_for_get_incidents():
 
     getIncidents
     """
+    # >SEPARATOR getIncidents
     # Initialize the client
     _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -144,6 +157,7 @@ async def snippet_for_get_incidents():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_indexing_time():
@@ -152,6 +166,7 @@ async def snippet_for_get_indexing_time():
 
     getIndexingTime
     """
+    # >SEPARATOR getIndexingTime
     # Initialize the client
     _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -165,6 +180,7 @@ async def snippet_for_get_indexing_time():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_inventory():
@@ -173,6 +189,7 @@ async def snippet_for_get_inventory():
 
     getInventory
     """
+    # >SEPARATOR getInventory
     # Initialize the client
     _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -184,6 +201,7 @@ async def snippet_for_get_inventory():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_latency():
@@ -192,6 +210,7 @@ async def snippet_for_get_latency():
 
     getLatency
     """
+    # >SEPARATOR getLatency
     # Initialize the client
     _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -205,6 +224,7 @@ async def snippet_for_get_latency():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_metrics():
@@ -213,6 +233,7 @@ async def snippet_for_get_metrics():
 
     getMetrics
     """
+    # >SEPARATOR getMetrics
     # Initialize the client
     _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -227,6 +248,7 @@ async def snippet_for_get_metrics():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_reachability():
@@ -235,6 +257,7 @@ async def snippet_for_get_reachability():
 
     getReachability
     """
+    # >SEPARATOR getReachability
     # Initialize the client
     _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -248,6 +271,7 @@ async def snippet_for_get_reachability():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_status():
@@ -256,6 +280,7 @@ async def snippet_for_get_status():
 
     getStatus
     """
+    # >SEPARATOR getStatus
     # Initialize the client
     _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -267,3 +292,4 @@ async def snippet_for_get_status():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<

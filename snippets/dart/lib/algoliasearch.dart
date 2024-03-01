@@ -4,6 +4,7 @@ import 'package:algoliasearch/algoliasearch_lite.dart';
 //
 // allow post method for a custom path with minimal parameters
 void snippetForcustomPost() async {
+  // >SEPARATOR customPost
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -11,12 +12,14 @@ void snippetForcustomPost() async {
   final response = await client.customPost(
     path: "/test/minimal",
   );
+  // SEPARATOR<
 }
 
 // Snippet for the search method.
 //
 // search for a single hits request with minimal parameters
 void snippetForsearch() async {
+  // >SEPARATOR search
   // Initialize the client
   final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
 
@@ -30,4 +33,5 @@ void snippetForsearch() async {
       ],
     ),
   );
+  // SEPARATOR<
 }
