@@ -37,4 +37,11 @@ export function algoliasearch(
   };
 
   {{> algoliasearch/builds/initClients}}
+
+  return {
+    ...client,
+    {{#nodeSearchHelpers}}
+    {{> client/api/nodeHelpers}}
+    {{/nodeSearchHelpers}}
+  };
 }
