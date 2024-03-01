@@ -63,6 +63,9 @@ package algoliasearch.recommend
   *   Host name of the server that processed the request.
   * @param userData
   *   Lets you store custom data in your indices.
+  * @param queryID
+  *   Unique identifier for the query. This is used for [click
+  *   analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
   * @param query
   *   Text to search for in an index.
   * @param params
@@ -96,6 +99,7 @@ case class RecommendationsResults(
     serverTimeMS: Option[Int] = scala.None,
     serverUsed: Option[String] = scala.None,
     userData: Option[Any] = scala.None,
+    queryID: Option[String] = scala.None,
     hits: Seq[RecommendationsHit],
     query: Option[String] = scala.None,
     params: Option[String] = scala.None

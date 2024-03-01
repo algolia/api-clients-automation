@@ -95,6 +95,9 @@ public class BrowseResponse<T> {
   @JsonProperty("userData")
   private Object userData;
 
+  @JsonProperty("queryID")
+  private String queryID;
+
   @JsonProperty("hits")
   private List<T> hits = new ArrayList<>();
 
@@ -452,6 +455,20 @@ public class BrowseResponse<T> {
     return userData;
   }
 
+  public BrowseResponse<T> setQueryID(String queryID) {
+    this.queryID = queryID;
+    return this;
+  }
+
+  /**
+   * Unique identifier for the query. This is used for [click
+   * analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+   */
+  @javax.annotation.Nullable
+  public String getQueryID() {
+    return queryID;
+  }
+
   public BrowseResponse<T> setHits(List<T> hits) {
     this.hits = hits;
     return this;
@@ -542,6 +559,7 @@ public class BrowseResponse<T> {
       Objects.equals(this.serverTimeMS, browseResponse.serverTimeMS) &&
       Objects.equals(this.serverUsed, browseResponse.serverUsed) &&
       Objects.equals(this.userData, browseResponse.userData) &&
+      Objects.equals(this.queryID, browseResponse.queryID) &&
       Objects.equals(this.hits, browseResponse.hits) &&
       Objects.equals(this.query, browseResponse.query) &&
       Objects.equals(this.params, browseResponse.params) &&
@@ -579,6 +597,7 @@ public class BrowseResponse<T> {
       serverTimeMS,
       serverUsed,
       userData,
+      queryID,
       hits,
       query,
       params,
@@ -617,6 +636,7 @@ public class BrowseResponse<T> {
     sb.append("    serverTimeMS: ").append(toIndentedString(serverTimeMS)).append("\n");
     sb.append("    serverUsed: ").append(toIndentedString(serverUsed)).append("\n");
     sb.append("    userData: ").append(toIndentedString(userData)).append("\n");
+    sb.append("    queryID: ").append(toIndentedString(queryID)).append("\n");
     sb.append("    hits: ").append(toIndentedString(hits)).append("\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb.append("    params: ").append(toIndentedString(params)).append("\n");

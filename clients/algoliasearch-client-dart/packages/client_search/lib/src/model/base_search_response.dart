@@ -41,6 +41,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
     this.serverTimeMS,
     this.serverUsed,
     this.userData,
+    this.queryID,
     Map<String, dynamic> additionalProperties = const {},
   }) : super(additionalProperties);
 
@@ -155,6 +156,10 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
   @JsonKey(name: r'userData')
   final Object? userData;
 
+  /// Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+  @JsonKey(name: r'queryID')
+  final String? queryID;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -186,6 +191,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
           other.serverTimeMS == serverTimeMS &&
           other.serverUsed == serverUsed &&
           other.userData == userData &&
+          other.queryID == queryID &&
           const MapEquality<String, dynamic>().equals(this, this);
 
   @override
@@ -217,6 +223,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
       serverTimeMS.hashCode +
       serverUsed.hashCode +
       (userData == null ? 0 : userData.hashCode) +
+      queryID.hashCode +
       const MapEquality<String, dynamic>().hash(this);
 
   factory BaseSearchResponse.fromJson(Map<String, dynamic> json) {
@@ -252,6 +259,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
       serverTimeMS: instance.serverTimeMS,
       serverUsed: instance.serverUsed,
       userData: instance.userData,
+      queryID: instance.queryID,
       additionalProperties: additionalProperties,
     );
   }

@@ -2701,7 +2701,7 @@ describe('getSecuredApiKeyRemainingValidity', () => {
       throw new Error('test is expected to throw error');
     } catch (e) {
       expect((e as Error).message).toMatch(
-        'ValidUntil not found in given secured api key.'
+        'validUntil not found in given secured api key.'
       );
     }
   });

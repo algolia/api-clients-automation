@@ -66,6 +66,7 @@ RecommendationsResults _$RecommendationsResultsFromJson(
           serverTimeMS: $checkedConvert('serverTimeMS', (v) => v as int?),
           serverUsed: $checkedConvert('serverUsed', (v) => v as String?),
           userData: $checkedConvert('userData', (v) => v),
+          queryID: $checkedConvert('queryID', (v) => v as String?),
           hits: $checkedConvert('hits', (v) => v as List<dynamic>),
           query: $checkedConvert('query', (v) => v as String?),
           params: $checkedConvert('params', (v) => v as String?),
@@ -113,6 +114,7 @@ Map<String, dynamic> _$RecommendationsResultsToJson(
   writeNotNull('serverTimeMS', instance.serverTimeMS);
   writeNotNull('serverUsed', instance.serverUsed);
   writeNotNull('userData', instance.userData);
+  writeNotNull('queryID', instance.queryID);
   val['hits'] = instance.hits.toList();
   writeNotNull('query', instance.query);
   writeNotNull('params', instance.params);
