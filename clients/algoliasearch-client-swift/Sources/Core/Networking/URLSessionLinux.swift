@@ -27,9 +27,7 @@ public extension URLSession {
         }
 
         return try await withTaskCancellationHandler {
-            if #available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *) {
-                try Task.checkCancellation()
-            }
+            try Task.checkCancellation()
 
             return try await withCheckedThrowingContinuation { continuation in
 

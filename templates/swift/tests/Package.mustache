@@ -12,10 +12,9 @@ let libraries: [Target.Dependency] = [{{#packageList}}
 let package = Package(
   name: "AlgoliaSearchClientTests",
   platforms: [
-    .macOS(.v10_15)
+    .macOS(.v11)
   ],
   dependencies: [
-    .package(url: "https://github.com/Flight-School/AnyCodable", from: "0.6.7"),
     .package(url: "https://github.com/swiftpackages/DotEnv.git", from: "3.0.0"),
     .package(path: "../../../clients/algoliasearch-client-swift"),
   ],
@@ -23,7 +22,6 @@ let package = Package(
     .target(
         name: "Utils",
         dependencies: [
-            .product(name: "AnyCodable", package: "AnyCodable"),
             .product(name: "Core", package: "algoliasearch-client-swift"),
             .product(name: "Search", package: "algoliasearch-client-swift")
         ],
@@ -32,14 +30,12 @@ let package = Package(
     .testTarget(
       name: "client",
       dependencies: [
-        .product(name: "AnyCodable", package: "AnyCodable"),
         .target(name: "Utils"),
       ] + libraries
     ),
     .testTarget(
       name: "requests",
       dependencies: [
-        .product(name: "AnyCodable", package: "AnyCodable"),
         .product(name: "DotEnv", package: "DotEnv"),
         .target(name: "Utils"),
       ] + libraries
@@ -47,7 +43,6 @@ let package = Package(
     .testTarget(
       name: "handwritten",
       dependencies: [
-        .product(name: "AnyCodable", package: "AnyCodable"),
         .product(name: "DotEnv", package: "DotEnv"),
         .target(name: "Utils"),
         .product(name: "Core", package: "algoliasearch-client-swift"),

@@ -6,7 +6,7 @@ let package = Package(
   name: "AlgoliaSearchClientSnippets",
   platforms: [
     .iOS(.v13),
-    .macOS(.v10_15),
+    .macOS(.v11),
     .tvOS(.v13),
     .watchOS(.v6),
   ],
@@ -16,14 +16,12 @@ let package = Package(
           targets: ["AlgoliaSearchClientSnippets"]),
   ],
   dependencies: [
-      .package(path: "../../clients/algoliasearch-client-swift"),
-      .package(url: "https://github.com/Flight-School/AnyCodable", from: "0.6.7")
+      .package(path: "../../clients/algoliasearch-client-swift")
   ],
   targets: [
     .target(
       name: "AlgoliaSearchClientSnippets",
-      dependencies: [
-        .product(name: "AnyCodable", package: "AnyCodable"),{{#packageList}}
+      dependencies: [{{#packageList}}
         .product(
           name: "{{{.}}}",
           package: "algoliasearch-client-swift"

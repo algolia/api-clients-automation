@@ -5,7 +5,6 @@
 //  Created by Algolia on 26/02/2024.
 //
 
-import AnyCodable
 #if canImport(Core)
     import Core
 #endif

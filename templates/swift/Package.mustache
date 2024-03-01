@@ -25,10 +25,6 @@ var products: [Product] = []
     ])
 #endif
 
-extraTargetDependencies.append(
-  .product(name: "AnyCodable", package: "AnyCodable")
-)
-
 #if os(Linux)
   targets.append(contentsOf: [
     .systemLibrary(name: "zlib", pkgConfig: "zlib", providers: [.apt(["zlib1g-dev"])]),
@@ -87,8 +83,6 @@ let package = Package(
         .watchOS(.v7),
   ],
   products: products,
-  dependencies: [
-    .package(url: "https://github.com/Flight-School/AnyCodable", from: "0.6.7"),
-  ] + extraPackageDependencies,
+  dependencies: extraPackageDependencies,
   targets: targets
 )
