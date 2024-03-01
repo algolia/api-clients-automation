@@ -1,16 +1,26 @@
-import type { Region as AnalyticsRegion, AnalyticsClient } from '{{{npmNamespace}}}/client-analytics/src/analyticsClient';
+{{#nodeSearchHelpers}}
+import {createHmac} from 'crypto';
+{{/nodeSearchHelpers}}
+
+
+import type { PersonalizationClient } from '@algolia/client-personalization';
+import type { AnalyticsClient } from '@algolia/client-analytics';
+import type { AbtestingClient } from '@algolia/client-abtesting';
+
+import type { Region as AnalyticsRegion } from '{{{npmNamespace}}}/client-analytics/src/analyticsClient';
 import { createAnalyticsClient, REGIONS as analyticsRegions } from '{{{npmNamespace}}}/client-analytics/src/analyticsClient';
 
-import type { Region as AbtestingRegion, AbtestingClient } from '{{{npmNamespace}}}/client-abtesting/src/abtestingClient';
+import type { Region as AbtestingRegion } from '{{{npmNamespace}}}/client-abtesting/src/abtestingClient';
 import { createAbtestingClient, REGIONS as abtestingRegions } from '{{{npmNamespace}}}/client-abtesting/src/abtestingClient';
 
-import type { Region as PersonalizationRegion, PersonalizationClient } from '{{{npmNamespace}}}/client-personalization/src/personalizationClient';
+import type { Region as PersonalizationRegion } from '{{{npmNamespace}}}/client-personalization/src/personalizationClient';
 import { createPersonalizationClient, REGIONS as personalizationRegions } from '{{{npmNamespace}}}/client-personalization/src/personalizationClient';
 
 import { createSearchClient, apiClientVersion as searchClientVersion } from '{{{npmNamespace}}}/client-search/src/searchClient';
 
-import type { CreateClientOptions, ClientOptions } from '{{{npmNamespace}}}/client-common';
-import { InitClientOptions, InitClientRegion } from "./models"
+import type { serializeQueryParameters  } from '{{{npmNamespace}}}/client-common';
+import type { CreateClientOptions, ClientOptions  } from '{{{npmNamespace}}}/client-common';
+import type { InitClientOptions, InitClientRegion, GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions } from "./models"
 
 export * from './models';
 
@@ -20,4 +30,3 @@ export const apiClientVersion = searchClientVersion;
  * The client type.
  */
 export type Algoliasearch = ReturnType<typeof algoliasearch>;
-

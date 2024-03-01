@@ -60,6 +60,11 @@ return {
   get _ua(): string {
     return this.transporter.algoliaAgent.value;
   },
+
+  {{#nodeSearchHelpers}}
+  {{> client/api/nodeHelpers}}
+  {{/nodeSearchHelpers}}
+
   initAnalytics,
   initPersonalization,
   initAbtesting,

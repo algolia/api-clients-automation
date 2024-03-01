@@ -79,6 +79,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
       // `lite` builds
       supportingFiles.add(new SupportingFile("client/builds/browser.mustache", "lite/builds", "browser.ts"));
       supportingFiles.add(new SupportingFile("client/builds/node.mustache", "lite/builds", "node.ts"));
+      supportingFiles.add(new SupportingFile("client/builds/liteNode.mustache", "lite/builds", "node.ts"));
 
       // `lite` models
       supportingFiles.add(new SupportingFile("client/model/clientMethodProps.mustache", "lite/model", "clientMethodProps.ts"));
@@ -146,6 +147,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     additionalProperties.put("isAlgoliasearchClient", isAlgoliasearchClient);
     additionalProperties.put("packageVersion", Helpers.getPackageJsonVersion(packageName));
     additionalProperties.put("packageName", packageName);
+    additionalProperties.put("nodeSearchHelpers", CLIENT.equals("search") || isAlgoliasearchClient);
 
     if (isAlgoliasearchClient) {
       // Files used to create the package.json of the algoliasearch package
