@@ -10,5 +10,7 @@ theme:
     disableSearch: true
     downloadDefinitionUrl: https://github.com/algolia/api-clients-automation/tree/main/specs/bundled
     hideRequestPayloadSample: true
+    showExtensions:
+      - x-acl
     # See https://redocly.com/docs/api-reference-docs/configuration/theming/
     theme:
