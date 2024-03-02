@@ -1,17 +1,5 @@
 // {{{generationBanner}}}
 
-{{#nodeSearchHelpers}}
-import {createHmac} from 'crypto';
-{{/nodeSearchHelpers}}
-
-{{#isSearchClient}}
-import { GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions } from '../model';
-{{/isSearchClient}}
-
-import { createHttpRequester } from '{{{npmNamespace}}}/requester-node-http';
-import { serializeQueryParameters, DEFAULT_CONNECT_TIMEOUT_NODE, DEFAULT_READ_TIMEOUT_NODE, DEFAULT_WRITE_TIMEOUT_NODE } from '{{{npmNamespace}}}/client-common';
-{{> client/builds/imports}}
-
 {{> client/builds/definition}}
   return {
     ...create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
@@ -35,5 +23,3 @@ import { serializeQueryParameters, DEFAULT_CONNECT_TIMEOUT_NODE, DEFAULT_READ_TI
     {{/nodeSearchHelpers}}
   };
 }
-
-{{> client/builds/exportType}}
