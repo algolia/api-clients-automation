@@ -41,4 +41,17 @@ export function {{apiName}}(
   apiKey: string,{{#hasRegionalHost}}region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region,{{/hasRegionalHost}}
   options?: ClientOptions
 ) {
-  {{> client/builds/checkParameters}}
+  if (!appId || typeof appId !== 'string') {
+    throw new Error("`appId` is missing.");
+  }
+  
+  if (!apiKey || typeof apiKey !== 'string') {
+    throw new Error("`apiKey` is missing.");
+  }
+  
+  {{#hasRegionalHost}}
+    
+  if ({{^fallbackToAliasHost}}!region || {{/fallbackToAliasHost}}(region && (typeof region !== 'string' || !REGIONS.includes(region)))) {
+    throw new Error(`\`region\` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: ${REGIONS.join(', ')}`);
+  }
+  {{/hasRegionalHost}}
