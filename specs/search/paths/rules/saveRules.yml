@@ -4,8 +4,12 @@ post:
   operationId: saveRules
   x-acl:
     - editSettings
-  summary: Save a batch of rules.
-  description: Create or update multiple rules.
+  summary: Create or update rules.
+  description: |
+    Create or update multiple rules.
+
+    If a rule with the `objectID` doesn't exist, Algolia creates a new one.
+    Otherwise, existing rules are replaced.
   x-codegen-request-body-name: rules
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
@@ -17,7 +21,7 @@ post:
       application/json:
         schema:
           type: array
-          description: Rules to add.
+          description: Rules to add or replace.
           items:
             $ref: 'common/schemas.yml#/rule'
   responses:

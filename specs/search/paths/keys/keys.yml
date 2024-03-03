@@ -38,13 +38,11 @@ post:
   operationId: addApiKey
   x-acl:
     - admin
-  summary: Add API key.
+  summary: Create an API key.
   description: >
-    Add a new API key with specific permissions and restrictions.
+    Create a new API key with specific permissions and restrictions.
 
-    The request must be authenticated with the admin API key.
-
-    The response returns an API key string.
+    The response returns an API key as string.
   requestBody:
     required: true
     content:

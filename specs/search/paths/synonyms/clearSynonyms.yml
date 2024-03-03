@@ -5,7 +5,7 @@ post:
   x-acl:
     - editSettings
   summary: Delete all synonyms.
-  description: Delete all synonyms in the index.
+  description: Delete all synonyms from the index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ForwardToReplicas'

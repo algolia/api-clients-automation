@@ -3,7 +3,7 @@ get:
     - Api Keys
   operationId: getApiKey
   summary: Get API key permissions.
-  description: >
+  description: |
     Get the permissions and restrictions of a specific API key.
 
     When authenticating with the admin API key, you can request information for any of your application's keys.
@@ -33,12 +33,10 @@ put:
   x-acl:
     - admin
   summary: Update an API key.
-  description: >
+  description: |
     Replace the permissions of an existing API key.
 
     Any unspecified parameter resets that permission to its default value.
-
-    The request must be authenticated with the admin API key.
   parameters:
     - $ref: 'common/parameters.yml#/KeyString'
   requestBody:
@@ -79,11 +77,9 @@ delete:
   operationId: deleteApiKey
   x-acl:
     - admin
-  summary: Delete API key.
+  summary: Delete an API key.
   description: >
     Delete an existing API key.
-
-    The request must be authenticated with the admin API key.
   parameters:
     - $ref: 'common/parameters.yml#/KeyString'
   responses:

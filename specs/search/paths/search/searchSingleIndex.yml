@@ -7,7 +7,11 @@ post:
   x-acl:
     - search
   summary: Search an index.
-  description: Return records that match the query.
+  description: |
+    Search an index and return matching search results (_hits_).
+
+    This method lets you retrieve up to 1,000 hits.
+    If you need more, use the [`browse` operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:

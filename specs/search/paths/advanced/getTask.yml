@@ -4,8 +4,12 @@ get:
   operationId: getTask
   x-acl:
     - addObject
-  description: Some operations, such as copying an index, will respond with a `taskID` value. Use this value here to check the status of that task.
-  summary: Check a task's status.
+  description: |
+    Check the status of a given task.
+
+    Indexing tasks are asynchronous.
+    Responses include a `taskID` that you can use to check the status.
+  summary: Check task status.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - name: taskID

@@ -4,8 +4,10 @@ post:
   operationId: saveSynonyms
   x-acl:
     - editSettings
-  summary: Save a batch of synonyms.
-  description: Create or update multiple synonyms.
+  summary: Create or replace synonyms.
+  description: |
+    If a synonym with the `objectID` doesn't exist, Algolia adds a new one.
+    Otherwise, existing synonyms are replaced.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ForwardToReplicas'

@@ -4,18 +4,30 @@ post:
   operationId: operationIndex
   x-acl:
     - addObject
-  summary: Copy, move, or rename an index.
-  description: |-
-    This `operation`, _copy_ or _move_, will copy or move a source index's (`IndexName`) records, settings, synonyms, and rules to a `destination` index.
-    If the destination index exists, it will be replaced, except for index-specific API keys and analytics data.
-    If the destination index doesn't exist, it will be created.
+  summary: Copy or move an index.
+  description: |
+    Copy or move (rename) an index within the same Algolia application.
 
-    The choice between moving or copying an index depends on your needs. Choose:
+    - Existing destination indices are overwritten, except for index-specific API keys and analytics data.
+    - If the destination index doesn't exist yet, it'll be created.
 
-    - **Move** to rename an index.
-    - **Copy** to create a new index with the same records and configuration as an existing one.
+    **Copy**
 
-    > **Note**: When considering copying or moving, be aware of the [rate limitations](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits) on these processes and the [impact on your analytics data](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/concepts/indices-analytics/).
+    - Copying a source index that doesn't exist creates a new index with 0 records and default settings.
+    - The API keys of the source index are merged with the existing keys in the destination index.
+    - You can't copy the `enableReRanking`, `mode`, and `replicas` settings.
+    - You can't copy to a destination index that already has replicas.
+    - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
+    - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
+
+    **Move**
+
+    - Moving a source index that doesn't exist is ignored without returning an error.
+    - When moving an index, the analytics data keep their original name and a new set of analytics data is started for the new name.
+      To access the original analytics in the dashboard, create an index with the original name.
+    - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices.
+    - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:
@@ -35,12 +47,11 @@ post:
               type: array
               items:
                 $ref: '../../common/enums.yml#/scopeType'
-              description: |-
-                **This only applies to the _copy_ operation.**
+              description: |
+                **Only for copying.**
 
-                If you omit `scope`, the copy command copies all records, settings, synonyms, and rules.
-
-                If you specify `scope`, only the specified scopes are copied.
+                If you speficy a scope, only the selected scopes are copied. Records and the other scopes are left unchanged.
+                If you omit the `scope` parameter, everything is copied: records, settings, synonyms, and rules.
           required:
             - operation
             - destination

@@ -5,7 +5,10 @@ get:
   x-acl:
     - listIndexes
   summary: List indices.
-  description: List indices in an Algolia application.
+  description: |
+    List all indices in the current Algolia application.
+
+    The request follows any index restrictions of the API key you use to make the request.
   parameters:
     - $ref: '../../../common/parameters.yml#/Page'
     - $ref: '../../../common/parameters.yml#/HitsPerPage'

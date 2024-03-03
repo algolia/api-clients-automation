@@ -4,11 +4,9 @@ post:
   operationId: restoreApiKey
   x-acl:
     - admin
-  summary: Restore API key.
+  summary: Restore an API key.
   description: >
     Restore a deleted API key, along with its associated permissions.
-
-    The request must be authenticated with the admin API key.
   parameters:
     - $ref: 'common/parameters.yml#/KeyString'
   responses:

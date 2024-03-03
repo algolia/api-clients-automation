@@ -7,7 +7,7 @@ post:
   x-acl:
     - settings
   summary: Search for rules.
-  description: Search for rules in your index. You can control the search with parameters. To list all rules, send an empty request body.
+  description: Search for rules in your index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:
@@ -25,7 +25,7 @@ post:
               $ref: 'common/schemas.yml#/anchoring'
             context:
               type: string
-              description: Restricts responses to the specified [contextual rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
+              description: Only return rules that match the context (exact match).
               example: 'mobile'
             page:
               $ref: '../../../common/parameters.yml#/page'
@@ -35,15 +35,10 @@ post:
               type: boolean
               nullable: true
               default: null
-              description: Restricts responses to enabled rules. When not specified (default), _all_ rules are retrieved.
-            requestOptions:
-              type: array
-              description: Request options to send with the API call.
-              example: >
-                {timeouts:{read:20}}
-              items:
-                type: object
-                description: Request option.
+              description: |
+                If `true`, return only enabled rules.
+                If `false`, return only inactive rules.
+                By default, _all_ rules are returned.
   responses:
     '200':
       description: OK
@@ -61,12 +56,12 @@ post:
             properties:
               hits:
                 type: array
-                description: Fetched rules.
+                description: Rules that matched the search criteria.
                 items:
                   $ref: 'common/schemas.yml#/rule'
               nbHits:
                 type: integer
-                description: Number of fetched rules.
+                description: Number of rules that matched the search criteria.
               page:
                 type: integer
                 description: Current page.
