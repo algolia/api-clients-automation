@@ -10,6 +10,7 @@ import clientsConfig from '../config/clients.config.json' assert { type: 'json' 
 import releaseConfig from '../config/release.config.json' assert { type: 'json' };
 
 import { buildSpecs } from './buildSpecs';
+import { Cache } from './cache';
 import { getDockerImage } from './config';
 import { generateOpenapitools } from './pre-gen';
 import { getGitAuthor } from './release/common.js';
@@ -156,8 +157,24 @@ export async function gitCommit({
 
 async function buildCustomGenerators(): Promise<void> {
   const spinner = createSpinner('building custom generators');
+  const cache = new Cache({
+    folder: toAbsolutePath('generators/'),
+    generatedFiles: ['build/classes'],
+    filesToCache: ['src', 'build.gradle', 'settings.gradle'],
+    cacheFile: toAbsolutePath('generators/.cache'),
+  });
+
+  const cacheExists = await cache.isValid();
+
+  if (cacheExists) {
+    spinner.succeed('job skipped, cache found for custom generators');
+    return;
+  }
 
   await run('./gradle/gradlew --no-daemon -p generators assemble', { language: 'java' });
+
+  spinner.text = 'storing custom generators cache';
+  await cache.store();
 
   spinner.succeed();
 }
@@ -272,7 +289,7 @@ export async function setupAndGen(
 ): Promise<void> {
   if (!CI) {
     const clients = [...new Set(generators.map((gen) => gen.client))];
-    await buildSpecs({ clients, outputFormat: 'yml', docs: false, useCache: false });
+    await buildSpecs({ clients, outputFormat: 'yml', docs: false, useCache: true });
   }
 
   await generateOpenapitools(generators, mode);
