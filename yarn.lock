@@ -107,7 +107,7 @@ __metadata:
     lint-staged: "npm:15.2.2"
     pinst: "npm:3.0.0"
     prettier: "npm:3.2.5"
-    prettier-plugin-java: "npm:2.5.0"
+    prettier-plugin-java: "npm:2.6.0"
     renovate-config-algolia: "npm:2.1.10"
   languageName: unknown
   linkType: soft
@@ -1701,6 +1701,48 @@ __metadata:
   version: 0.2.3
   resolution: "@bcoe/v8-coverage@npm:0.2.3"
   checksum: 1a1f0e356a3bb30b5f1ced6f79c413e6ebacf130421f15fac5fcd8be5ddf98aedb4404d7f5624e3285b700e041f9ef938321f3ca4d359d5b716f96afa120d88d
+  languageName: node
+  linkType: hard
+
+"@chevrotain/cst-dts-gen@npm:11.0.3":
+  version: 11.0.3
+  resolution: "@chevrotain/cst-dts-gen@npm:11.0.3"
+  dependencies:
+    "@chevrotain/gast": "npm:11.0.3"
+    "@chevrotain/types": "npm:11.0.3"
+    lodash-es: "npm:4.17.21"
+  checksum: 601d23fa3312bd0e32816bd3f9ca2dcba775a52192a082fd6c5e4a2e8ee068523401191babbe2c346d6d2551900a67b549f2f74d7ebb7d5b2ee1b6fa3c8857a0
+  languageName: node
+  linkType: hard
+
+"@chevrotain/gast@npm:11.0.3":
+  version: 11.0.3
+  resolution: "@chevrotain/gast@npm:11.0.3"
+  dependencies:
+    "@chevrotain/types": "npm:11.0.3"
+    lodash-es: "npm:4.17.21"
+  checksum: 7169453a8fbfa994e91995523dea09eab87ab23062ad93f6e51f4a3b03f5e2958e0a8b99d5ca6fa067fccfbbbb8bcf1a4573ace2e1b5a455f6956af9eaccb35a
+  languageName: node
+  linkType: hard
+
+"@chevrotain/regexp-to-ast@npm:11.0.3":
+  version: 11.0.3
+  resolution: "@chevrotain/regexp-to-ast@npm:11.0.3"
+  checksum: 7387a1c61c5a052de41e1172b33eaaedea166fcdb1ffe4c381b86d00051a8014855a031d28fb658768a62c833ef5f5b0689d0c40de3d7bed556f8fea24396e69
+  languageName: node
+  linkType: hard
+
+"@chevrotain/types@npm:11.0.3":
+  version: 11.0.3
+  resolution: "@chevrotain/types@npm:11.0.3"
+  checksum: 49a82b71d2de8ceb2383ff2709fa61d245f2ab2e42790b70c57102c80846edaa318d0b3645aedc904d23ea7bd9be8a58f2397b1341760a15eb5aa95a1336e2a9
+  languageName: node
+  linkType: hard
+
+"@chevrotain/utils@npm:11.0.3":
+  version: 11.0.3
+  resolution: "@chevrotain/utils@npm:11.0.3"
+  checksum: 29b5d84373a7761ad055c53e2f540a67b5b56550d5be1c473149f6b8923eef87ff391ce021c06ac7653843b0149f6ff0cf30b5e48c3f825d295eb06a6c517bd3
   languageName: node
   linkType: hard
 
@@ -5842,12 +5884,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chevrotain@npm:6.5.0":
-  version: 6.5.0
-  resolution: "chevrotain@npm:6.5.0"
+"chevrotain-allstar@npm:0.3.1":
+  version: 0.3.1
+  resolution: "chevrotain-allstar@npm:0.3.1"
   dependencies:
-    regexp-to-ast: "npm:0.4.0"
-  checksum: e98f7cc12bea6732246a0a2c25028bc076d5ed7dda470403599c595e5eece5d60fe808a7cdb187b938ad3364c308c03f9eb603e2743871c861db497186776efb
+    lodash-es: "npm:^4.17.21"
+  peerDependencies:
+    chevrotain: ^11.0.0
+  checksum: a12c0e408c17920b5f8fc095b7981d15609a63b3795946005fdfc77a5bbc692bbdb196ea29ad4655f55bfa7c93bbcbe7fe2e5782475bf65761b33f13a4aa1a77
+  languageName: node
+  linkType: hard
+
+"chevrotain@npm:11.0.3":
+  version: 11.0.3
+  resolution: "chevrotain@npm:11.0.3"
+  dependencies:
+    "@chevrotain/cst-dts-gen": "npm:11.0.3"
+    "@chevrotain/gast": "npm:11.0.3"
+    "@chevrotain/regexp-to-ast": "npm:11.0.3"
+    "@chevrotain/types": "npm:11.0.3"
+    "@chevrotain/utils": "npm:11.0.3"
+    lodash-es: "npm:4.17.21"
+  checksum: 8fa6253e51320dd4c3d386315b925734943e509d7954a2cd917746c0604461191bea57b0fb8fbab1903e0508fd94bfd35ebd0f8eace77cd0f3f42a9ee4f8f676
   languageName: node
   linkType: hard
 
@@ -8970,13 +9028,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"java-parser@npm:2.2.0":
-  version: 2.2.0
-  resolution: "java-parser@npm:2.2.0"
+"java-parser@npm:2.3.0":
+  version: 2.3.0
+  resolution: "java-parser@npm:2.3.0"
   dependencies:
-    chevrotain: "npm:6.5.0"
+    chevrotain: "npm:11.0.3"
+    chevrotain-allstar: "npm:0.3.1"
     lodash: "npm:4.17.21"
-  checksum: a081cb4735146d113c691d10a0640b2d5f3a82b6bfbd474bd01ff27a5fa6e297fb4189ac1f2abb05ff986a6b660f83b67da85cc585cd64897d2908703633039b
+  checksum: 7f1722a22b2aa47fbb1d52df2b7bd8cf304c2fe99d394e4c41fe9517abd1b5dbe6b9d148783b12c4be13328492e3b2a5744ef11b5eeee1d3613eaf7285e48c9f
   languageName: node
   linkType: hard
 
@@ -9961,6 +10020,13 @@ __metadata:
   dependencies:
     p-locate: "npm:^5.0.0"
   checksum: 72eb661788a0368c099a184c59d2fee760b3831c9c1c33955e8a19ae4a21b4116e53fa736dc086cdeb9fce9f7cc508f2f92d2d3aae516f133e16a2bb59a39f5a
+  languageName: node
+  linkType: hard
+
+"lodash-es@npm:4.17.21, lodash-es@npm:^4.17.21":
+  version: 4.17.21
+  resolution: "lodash-es@npm:4.17.21"
+  checksum: 03f39878ea1e42b3199bd3f478150ab723f93cc8730ad86fec1f2804f4a07c6e30deaac73cad53a88e9c3db33348bb8ceeb274552390e7a75d7849021c02df43
   languageName: node
   linkType: hard
 
@@ -11553,23 +11619,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-java@npm:2.5.0":
-  version: 2.5.0
-  resolution: "prettier-plugin-java@npm:2.5.0"
+"prettier-plugin-java@npm:2.6.0":
+  version: 2.6.0
+  resolution: "prettier-plugin-java@npm:2.6.0"
   dependencies:
-    java-parser: "npm:2.2.0"
+    java-parser: "npm:2.3.0"
     lodash: "npm:4.17.21"
-    prettier: "npm:3.0.3"
-  checksum: 3cd3b8bede2904137186018bc1c8b3ded2630ea0dca8e6b85e6a79426b7efea4ff0676eb29150970b898da9ece68b7f96d0aa2657dadd84d9832f9bec09132fb
-  languageName: node
-  linkType: hard
-
-"prettier@npm:3.0.3":
-  version: 3.0.3
-  resolution: "prettier@npm:3.0.3"
-  bin:
-    prettier: bin/prettier.cjs
-  checksum: ccf1ead9794b017be6b42d0873f459070beef2069eb393c8b4c0d11aa3430acefc54f6d5f44a5b7ce9af05ad8daf694b912f0aa2808d1c22dfa86e61e9d563f8
+    prettier: "npm:3.2.5"
+  checksum: 15c5d83c32081fb299a9ed816121381b849d9832aff255f37f864907e03bfa1d2849e7a63f3c5a69011d7264428420e645551db737319c73ba637542d9a71f9f
   languageName: node
   linkType: hard
 
@@ -11969,13 +12026,6 @@ __metadata:
   dependencies:
     "@babel/runtime": "npm:^7.8.4"
   checksum: c4fdcb46d11bbe32605b4b9ed76b21b8d3f241a45153e9dc6f5542fed4c7744fed459f42701f650d5d5956786bf7de57547329d1c05a9df2ed9e367b9d903302
-  languageName: node
-  linkType: hard
-
-"regexp-to-ast@npm:0.4.0":
-  version: 0.4.0
-  resolution: "regexp-to-ast@npm:0.4.0"
-  checksum: 381f57fa4d056056a50d7bc1365ece93434e1eea87bd3d60144ef6fd85bc4875410757908000c06fbe99ef9554c930c9890e695292b8e49756dfc0762890e777
   languageName: node
   linkType: hard
 
