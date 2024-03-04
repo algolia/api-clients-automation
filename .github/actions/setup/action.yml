@@ -52,6 +52,7 @@ runs:
       uses: actions/cache@v4
       with:
         path: ${{ steps.yarn-cache-dir.outputs.dir || '.yarn/cache' }}
+        key: yarn-cache-${{ hashFiles('yarn.lock') }}
 
     - name: Install JavaScript dependencies
       shell: bash
@@ -86,6 +87,7 @@ runs:
       uses: actions/cache@v4
       with:
         path: ${{ steps.yarn-cache-dir-client.outputs.dir || 'clients/algoliasearch-client-javascript/.yarn/cache' }}
+        key: yarn-cache-${{ hashFiles('clients/algoliasearch-client-javascript/yarn.lock') }}
 
     - name: Cache js-client node modules
       if: ${{ inputs.language == 'javascript' }}
