@@ -17,6 +17,9 @@ public class ScheduleDateUtilsInput implements TaskInput {
   @JsonProperty("timeframe")
   private Integer timeframe;
 
+  @JsonProperty("mapping")
+  private MappingInput mapping;
+
   public ScheduleDateUtilsInput setTimeframe(Integer timeframe) {
     this.timeframe = timeframe;
     return this;
@@ -28,6 +31,17 @@ public class ScheduleDateUtilsInput implements TaskInput {
     return timeframe;
   }
 
+  public ScheduleDateUtilsInput setMapping(MappingInput mapping) {
+    this.mapping = mapping;
+    return this;
+  }
+
+  /** Get mapping */
+  @javax.annotation.Nullable
+  public MappingInput getMapping() {
+    return mapping;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -37,12 +51,12 @@ public class ScheduleDateUtilsInput implements TaskInput {
       return false;
     }
     ScheduleDateUtilsInput scheduleDateUtilsInput = (ScheduleDateUtilsInput) o;
-    return Objects.equals(this.timeframe, scheduleDateUtilsInput.timeframe);
+    return Objects.equals(this.timeframe, scheduleDateUtilsInput.timeframe) && Objects.equals(this.mapping, scheduleDateUtilsInput.mapping);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(timeframe);
+    return Objects.hash(timeframe, mapping);
   }
 
   @Override
@@ -50,6 +64,7 @@ public class ScheduleDateUtilsInput implements TaskInput {
     StringBuilder sb = new StringBuilder();
     sb.append("class ScheduleDateUtilsInput {\n");
     sb.append("    timeframe: ").append(toIndentedString(timeframe)).append("\n");
+    sb.append("    mapping: ").append(toIndentedString(mapping)).append("\n");
     sb.append("}");
     return sb.toString();
   }

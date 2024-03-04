@@ -14,5 +14,6 @@ package algoliasearch.ingestion
   *   The timeframe of the extraction, in number of days from today.
   */
 case class ScheduleDateUtilsInput(
-    timeframe: Int
+    timeframe: Int,
+    mapping: Option[MappingInput] = scala.None
 ) extends TaskInputTrait
