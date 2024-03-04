@@ -396,7 +396,7 @@ jobs:
         run: yarn website:build
 
       - name: Deploy documentation
-        uses: nwtgck/actions-netlify@v2.0
+        uses: nwtgck/actions-netlify@v2.1
         with:
           publish-dir: 'website/build'
           production-branch: main
