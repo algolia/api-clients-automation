@@ -257,6 +257,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.yarn-cache-dir-tests.outputs.dir || 'tests/output/javascript/.yarn/cache' }}
+          key: yarn-cache-tests-${{ hashFiles('tests/output/javascript/yarn.lock') }}
 
       - name: Cache js tests node modules
         uses: actions/cache@v4
