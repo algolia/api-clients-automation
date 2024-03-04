@@ -3,17 +3,17 @@
   {{classname}}{{{nameInCamelCase}}}{{#isArray}}[]{{/isArray}}
 {{/isEnum}}
 {{^isEnum}}
-  {{#x-propagated-generic}}
+  {{#vendorExtensions.x-propagated-generic}}
     {{> client/model/types/dataTypeGeneric}}
-  {{/x-propagated-generic}}
-  {{^x-propagated-generic}}
-    {{#x-has-child-generic}}
+  {{/vendorExtensions.x-propagated-generic}}
+  {{^vendorExtensions.x-propagated-generic}}
+    {{#vendorExtensions.x-has-child-generic}}
       {{> client/model/types/dataTypeGeneric}}
-    {{/x-has-child-generic}}
-    {{^x-has-child-generic}}
+    {{/vendorExtensions.x-has-child-generic}}
+    {{^vendorExtensions.x-has-child-generic}}
       {{{dataType}}}
-    {{/x-has-child-generic}}
-  {{/x-propagated-generic}}
+    {{/vendorExtensions.x-has-child-generic}}
+  {{/vendorExtensions.x-propagated-generic}}
   {{#isNullable}}
     | null
   {{/isNullable}}
