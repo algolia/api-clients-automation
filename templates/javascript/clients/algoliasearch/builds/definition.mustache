@@ -1,0 +1,63 @@
+import type { PersonalizationClient } from '@algolia/client-personalization';
+import type { AnalyticsClient } from '@algolia/client-analytics';
+import type { AbtestingClient } from '@algolia/client-abtesting';
+
+import type { Region as AnalyticsRegion } from '{{{npmNamespace}}}/client-analytics/src/analyticsClient';
+import { createAnalyticsClient, REGIONS as analyticsRegions } from '{{{npmNamespace}}}/client-analytics/src/analyticsClient';
+
+import type { Region as AbtestingRegion } from '{{{npmNamespace}}}/client-abtesting/src/abtestingClient';
+import { createAbtestingClient, REGIONS as abtestingRegions } from '{{{npmNamespace}}}/client-abtesting/src/abtestingClient';
+
+import type { Region as PersonalizationRegion } from '{{{npmNamespace}}}/client-personalization/src/personalizationClient';
+import { createPersonalizationClient, REGIONS as personalizationRegions } from '{{{npmNamespace}}}/client-personalization/src/personalizationClient';
+import { createSearchClient, apiClientVersion as searchClientVersion } from '{{{npmNamespace}}}/client-search/src/searchClient';
+
+import type { serializeQueryParameters  } from '{{{npmNamespace}}}/client-common';
+import type {} from '{{{npmNamespace}}}/client-common';
+import type { InitClientOptions, InitClientRegion, GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions } from "./models"
+
+{{#nodeSearchHelpers}}
+import {createHmac} from 'crypto';
+{{/nodeSearchHelpers}}
+
+import {
+  ClientOptions,
+  CreateClientOptions,
+  DEFAULT_CONNECT_TIMEOUT_BROWSER,
+  DEFAULT_CONNECT_TIMEOUT_NODE,
+  DEFAULT_READ_TIMEOUT_BROWSER,
+  DEFAULT_READ_TIMEOUT_NODE,
+  DEFAULT_WRITE_TIMEOUT_BROWSER,
+  DEFAULT_WRITE_TIMEOUT_NODE,
+  createBrowserLocalStorageCache,
+  createFallbackableCache,
+  createMemoryCache,
+  createNullCache,
+} from '{{{npmNamespace}}}/client-common';
+
+import { createHttpRequester } from '{{{npmNamespace}}}/requester-node-http';
+
+import { createXhrRequester } from '{{{npmNamespace}}}/requester-browser-xhr';
+
+export * from './models';
+
+export const apiClientVersion = searchClientVersion;
+
+/**
+ * The client type.
+ */
+export type Algoliasearch = ReturnType<typeof algoliasearch>;
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export function algoliasearch(
+  appId: string,
+  apiKey: string,
+  options?: ClientOptions
+) {
+  if (!appId || typeof appId !== 'string') {
+    throw new Error('`appId` is missing.');
+  }
+
+  if (!apiKey || typeof apiKey !== 'string') {
+    throw new Error('`apiKey` is missing.');
+  }

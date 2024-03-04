@@ -1,0 +1,57 @@
+import { createXhrRequester } from '{{{npmNamespace}}}/requester-browser-xhr';
+import { createHttpRequester } from '{{{npmNamespace}}}/requester-node-http';
+import { createMemoryCache, createFallbackableCache, createBrowserLocalStorageCache, createNullCache,  ClientOptions, serializeQueryParameters, DEFAULT_CONNECT_TIMEOUT_NODE, DEFAULT_READ_TIMEOUT_NODE, DEFAULT_WRITE_TIMEOUT_NODE, DEFAULT_CONNECT_TIMEOUT_BROWSER, DEFAULT_READ_TIMEOUT_BROWSER, DEFAULT_WRITE_TIMEOUT_BROWSER } from '{{{npmNamespace}}}/client-common';
+
+import { create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}, apiClientVersion } from '../src/{{apiName}}';
+
+{{#hasRegionalHost}}
+import { Region, REGIONS } from '../src/{{apiName}}';
+{{/hasRegionalHost}}
+
+{{! We don't use `export *` to prevent exposing the factory, to avoid confusion for the user }}
+export {
+  apiClientVersion,
+  {{#hasRegionalHost}}
+  Region,
+  {{/hasRegionalHost}}
+  {{#isIngestionClient}}
+  isOnDemandTrigger,
+  isScheduleTrigger,
+  isSubscriptionTrigger,
+  {{/isIngestionClient}}
+} from '../src/{{apiName}}';
+export * from '../model';
+
+{{#isSearchClient}}
+import { GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions } from '../model';
+{{/isSearchClient}}
+
+{{#nodeSearchHelpers}}
+import {createHmac} from 'crypto';
+{{/nodeSearchHelpers}}
+
+/**
+ * The client type.
+ */
+export type {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} = ReturnType<typeof {{apiName}}>;
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export function {{apiName}}(
+  appId: string,
+  apiKey: string,{{#hasRegionalHost}}region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region,{{/hasRegionalHost}}
+  options?: ClientOptions
+) {
+  if (!appId || typeof appId !== 'string') {
+    throw new Error("`appId` is missing.");
+  }
+  
+  if (!apiKey || typeof apiKey !== 'string') {
+    throw new Error("`apiKey` is missing.");
+  }
+  
+  {{#hasRegionalHost}}
+    
+  if ({{^fallbackToAliasHost}}!region || {{/fallbackToAliasHost}}(region && (typeof region !== 'string' || !REGIONS.includes(region)))) {
+    throw new Error(`\`region\` {{^fallbackToAliasHost}}is required and {{/fallbackToAliasHost}}must be one of the following: ${REGIONS.join(', ')}`);
+  }
+  {{/hasRegionalHost}}

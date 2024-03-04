@@ -1,29 +1,25 @@
 // {{{generationBanner}}}
 
-import { createHttpRequester } from '{{{npmNamespace}}}/requester-node-http';
-import { DEFAULT_CONNECT_TIMEOUT_NODE, DEFAULT_READ_TIMEOUT_NODE, DEFAULT_WRITE_TIMEOUT_NODE } from '{{{npmNamespace}}}/client-common';
-{{> client/builds/imports}}
+{{> client/builds/definition}}
+  return {
+    ...create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
+      appId,
+      apiKey,{{#hasRegionalHost}}region,{{/hasRegionalHost}}
+      timeouts: {
+        connect: DEFAULT_CONNECT_TIMEOUT_NODE,
+        read: DEFAULT_READ_TIMEOUT_NODE,
+        write: DEFAULT_WRITE_TIMEOUT_NODE,
+      },
+      requester: createHttpRequester(),
+      algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],
+      responsesCache: createNullCache(),
+      requestsCache: createNullCache(),
+      hostsCache: createMemoryCache(),
+      ...options,
+    }),
 
-export function {{apiName}}(
-  appId: string,
-  apiKey: string,{{#hasRegionalHost}}region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region,{{/hasRegionalHost}}
-  options?: ClientOptions
-): {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} {
-  {{> client/builds/checkParameters}}
-
-  return create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
-    appId,
-    apiKey,{{#hasRegionalHost}}region,{{/hasRegionalHost}}
-    timeouts: {
-      connect: DEFAULT_CONNECT_TIMEOUT_NODE,
-      read: DEFAULT_READ_TIMEOUT_NODE,
-      write: DEFAULT_WRITE_TIMEOUT_NODE,
-    },
-    requester: createHttpRequester(),
-    algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],
-    responsesCache: createNullCache(),
-    requestsCache: createNullCache(),
-    hostsCache: createMemoryCache(),
-    ...options,
-  });
+    {{#nodeSearchHelpers}}
+    {{> client/api/nodeHelpers}}
+    {{/nodeSearchHelpers}}
+  };
 }
