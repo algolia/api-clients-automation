@@ -32,6 +32,10 @@ const flags = {
     flag: '-v, --verbose',
     description: 'make the generation verbose',
   },
+  skipCache: {
+    flag: '-s, --skip-cache',
+    description: 'skip cache checking to force building specs',
+  },
   outputType: {
     flag: '-json, --output-json',
     description: 'outputs the spec in JSON instead of yml',
@@ -85,9 +89,10 @@ buildCommand
   .description('Build a specified spec')
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
+  .option(flags.skipCache.flag, flags.skipCache.description)
   .option(flags.outputType.flag, flags.outputType.description)
   .option(flags.docs.flag, flags.docs.description)
-  .action(async (clientArg: string[], { verbose, outputJson, docs }) => {
+  .action(async (clientArg: string[], { verbose, skipCache, outputJson, docs }) => {
     const { client, clientList } = transformSelection({
       langArg: ALL,
       clientArg,
@@ -99,6 +104,7 @@ buildCommand
       clients: client[0] === ALL ? clientList : client,
       outputFormat: outputJson ? 'json' : 'yml',
       docs: Boolean(docs),
+      useCache: !skipCache,
     });
   });
 
