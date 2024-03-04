@@ -2,7 +2,6 @@ import fsp from 'fs/promises';
 
 import yaml from 'js-yaml';
 
-import { Cache } from './cache.js';
 import { GENERATORS, capitalize, createClientName, exists, run, toAbsolutePath } from './common.js';
 import { createSpinner } from './spinners.js';
 import type { CodeSamples, Language, SnippetSamples, Spec } from './types.js';
@@ -160,27 +159,10 @@ async function transformBundle({
   );
 }
 
-async function lintCommon(useCache: boolean): Promise<void> {
+async function lintCommon(): Promise<void> {
   const spinner = createSpinner('linting common spec');
 
-  const cache = new Cache({
-    folder: toAbsolutePath('specs/'),
-    generatedFiles: [],
-    filesToCache: ['common'],
-    cacheFile: toAbsolutePath('specs/dist/common.cache'),
-  });
-
-  if (useCache && (await cache.isValid())) {
-    spinner.succeed("job skipped, cache found for 'common' spec");
-    return;
-  }
-
   await run(`yarn specs:lint common`);
-
-  if (useCache) {
-    spinner.text = 'storing common spec cache';
-    await cache.store();
-  }
 
   spinner.succeed();
 }
@@ -229,7 +211,6 @@ async function buildSpec({
   spec,
   outputFormat,
   docs,
-  useCache,
 }: BaseBuildSpecsOptions & { spec: string }): Promise<void> {
   const isAlgoliasearch = spec === 'algoliasearch';
 
@@ -240,25 +221,8 @@ async function buildSpec({
   // In case of lite we use a the `search` spec as a base because only its bundled form exists.
   const specBase = isAlgoliasearch ? 'search' : spec;
   const logSuffix = docs ? 'doc spec' : 'spec';
-  const cache = new Cache({
-    folder: toAbsolutePath('specs/'),
-    generatedFiles: [docs ? `bundled/${spec}.doc.yml` : `bundled/${spec}.yml`],
-    filesToCache: [specBase, 'common'],
-    cacheFile: toAbsolutePath(`specs/dist/${spec}.${docs ? 'doc.' : ''}cache`),
-  });
 
   const spinner = createSpinner(`starting '${spec}' ${logSuffix}`);
-
-  if (useCache) {
-    spinner.text = `checking cache for '${specBase}'`;
-
-    if (await cache.isValid()) {
-      spinner.succeed(`job skipped, cache found for '${specBase}'`);
-      return;
-    }
-
-    spinner.text = `cache not found for '${specBase}'`;
-  }
 
   // First linting the base
   spinner.text = `linting '${spec}' ${logSuffix}`;
@@ -290,31 +254,22 @@ async function buildSpec({
   spinner.text = `linting '${spec}' ${logSuffix}`;
   await run(`yarn specs:fix bundled/${spec}.${docs ? 'doc.' : ''}${outputFormat}`);
 
-  if (useCache) {
-    spinner.text = `storing '${spec}' ${logSuffix}`;
-    await cache.store();
-  }
-
   spinner.succeed(`building complete for '${spec}' ${logSuffix}`);
 }
 
 type BaseBuildSpecsOptions = {
   outputFormat: 'json' | 'yml';
   docs: boolean;
-  useCache: boolean;
 };
 
 export async function buildSpecs({
   clients,
   outputFormat,
   docs,
-  useCache,
 }: BaseBuildSpecsOptions & { clients: string[] }): Promise<void> {
   await fsp.mkdir(toAbsolutePath('specs/dist'), { recursive: true });
 
-  await lintCommon(useCache);
+  await lintCommon();
 
-  await Promise.all(
-    clients.map((client) => buildSpec({ spec: client, outputFormat, docs, useCache })),
-  );
+  await Promise.all(clients.map((client) => buildSpec({ spec: client, outputFormat, docs })));
 }

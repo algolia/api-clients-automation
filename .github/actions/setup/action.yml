@@ -13,11 +13,6 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Read current GitHub Actions cache version
-      shell: bash
-      run: |
-        echo "CACHE_VERSION=$(< .github/.cache_version)" >> $GITHUB_ENV
-
     # Java for code generation
     - name: Install Java
       if: inputs.type != 'minimal'
@@ -57,8 +52,6 @@ runs:
       uses: actions/cache@v4
       with:
         path: ${{ steps.yarn-cache-dir.outputs.dir || '.yarn/cache' }}
-        # let yarn handle the cache hash
-        key: yarn-cache-${{ env.CACHE_VERSION }}
 
     - name: Install JavaScript dependencies
       shell: bash
@@ -93,15 +86,13 @@ runs:
       uses: actions/cache@v4
       with:
         path: ${{ steps.yarn-cache-dir-client.outputs.dir || 'clients/algoliasearch-client-javascript/.yarn/cache' }}
-        # let yarn handle the cache hash
-        key: yarn-cache-client-${{ env.CACHE_VERSION }}
 
     - name: Cache js-client node modules
       if: ${{ inputs.language == 'javascript' }}
       uses: actions/cache@v4
       with:
         path: clients/algoliasearch-client-javascript/node_modules
-        key: node-modules-client-${{ env.CACHE_VERSION }}-${{ hashFiles('clients/algoliasearch-client-javascript/yarn.lock') }}
+        key: node-modules-client-${{ hashFiles('clients/algoliasearch-client-javascript/yarn.lock') }}
 
     - name: Install JavaScript client dependencies
       if: ${{ inputs.language == 'javascript' }}
@@ -144,7 +135,7 @@ runs:
       uses: actions/cache@v4
       with:
         path: ~/.cache/golangci-lint
-        key: golangci-lint-${{ env.CACHE_VERSION }}-${{ steps.versions.outputs.GO_VERSION }}-${{ hashFiles('clients/algoliasearch-client-go/go.sum') }}
+        key: golangci-lint-${{ steps.versions.outputs.GO_VERSION }}-${{ hashFiles('clients/algoliasearch-client-go/go.sum') }}
 
     # Kotlin
     - name: Cache spotless
@@ -152,7 +143,7 @@ runs:
       uses: actions/cache@v4
       with:
         path: clients/algoliasearch-client-kotlin/client/build/spotless
-        key: spotless-${{ env.CACHE_VERSION }}-${{ hashFiles('clients/algoliasearch-client-kotlin/build.gradle.kts') }}
+        key: spotless-${{ hashFiles('clients/algoliasearch-client-kotlin/build.gradle.kts') }}
 
     # Dart
     - name: Install dart
@@ -219,7 +210,7 @@ runs:
       uses: actions/cache@v4
       with:
         path: swiftformat/.build
-        key: swiftformat-build-0.53.0-${{ runner.os }}-${{ env.CACHE_VERSION }}
+        key: swiftformat-build-0.53.0-${{ runner.os }}
 
     - name: Build swiftformat
       if: ${{ inputs.language == 'swift' && steps.cache-swiftformat.outputs.cache-hit != 'true' }}

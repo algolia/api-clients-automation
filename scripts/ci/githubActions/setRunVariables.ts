@@ -8,7 +8,7 @@ import type { Language } from '../../types.js';
 import { isBaseChanged } from './utils.js';
 
 export const COMMON_DEPENDENCIES = {
-  GITHUB_ACTIONS_CHANGED: ['.github/actions', '.github/workflows', '.github/.cache_version'],
+  GITHUB_ACTIONS_CHANGED: ['.github/actions', '.github/workflows'],
   SCRIPTS_CHANGED: [
     'scripts',
     'eslint',
