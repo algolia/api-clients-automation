@@ -238,13 +238,13 @@ async function buildSpec({
   }
 
   // In case of lite we use a the `search` spec as a base because only its bundled form exists.
-  const logSuffix = docs ? 'doc spec' : 'spec';
   const specBase = isAlgoliasearch ? 'search' : spec;
+  const logSuffix = docs ? 'doc spec' : 'spec';
   const cache = new Cache({
     folder: toAbsolutePath('specs/'),
     generatedFiles: [docs ? `bundled/${spec}.doc.yml` : `bundled/${spec}.yml`],
     filesToCache: [specBase, 'common'],
-    cacheFile: toAbsolutePath(`specs/dist/${spec}.cache`),
+    cacheFile: toAbsolutePath(`specs/dist/${spec}.${docs ? 'doc.' : ''}cache`),
   });
 
   const spinner = createSpinner(`starting '${spec}' ${logSuffix}`);
@@ -265,7 +265,7 @@ async function buildSpec({
   await run(`yarn specs:fix ${specBase}`);
 
   // Then bundle the file
-  const bundledPath = `specs/bundled/${spec}.${outputFormat}`;
+  const bundledPath = `specs/bundled/${spec}.${docs ? 'doc.' : ''}${outputFormat}`;
   await run(
     `yarn openapi bundle specs/${specBase}/spec.yml -o ${bundledPath} --ext ${outputFormat}`,
   );
