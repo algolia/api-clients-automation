@@ -60,7 +60,9 @@ components:
         - function
     Configuration:
       type: object
-      description: A Crawler configuration object. See the Crawler documentation to have more details about it.
+      description: >-
+        A Crawler configuration object. See the Crawler documentation to have
+        more details about it.
       properties:
         appId:
           type: string
@@ -126,7 +128,9 @@ components:
         - FAILED
     urlsCrawledGroupCategory:
       type: string
-      description: In case of error, will be set to the step where the error occurred, otherwise will be set to 'success'.
+      description: >-
+        In case of error, will be set to the step where the error occurred,
+        otherwise will be set to 'success'.
       enum:
         - fetch
         - extraction
@@ -134,7 +138,9 @@ components:
         - success
     UrlsCrawledGroup:
       type: object
-      description: Represent a group of URLs that have been crawled and have the same final state.
+      description: >-
+        Represent a group of URLs that have been crawled and have the same final
+        state.
       properties:
         status:
           $ref: '#/components/schemas/urlsCrawledGroupStatus'
@@ -234,7 +240,9 @@ components:
     MissingAuthorization:
       description: Authorization information is missing or invalid.
     NoRightsOnCrawler:
-      description: The user doesn't have enough rights on the specified Crawler, or it doesn't exists.
+      description: >-
+        The user doesn't have enough rights on the specified Crawler, or it
+        doesn't exists.
     ActionAcknowledged:
       description: The request has been acknowledged by the crawler.
       content:
@@ -361,6 +369,8 @@ paths:
           description: Invalid credentials.
         '404':
           description: The call does not have results for this combinaison of query params.
+      tags:
+        - crawler
     post:
       operationId: createCrawler
       summary: Create a new Crawler with the given config.
@@ -397,6 +407,8 @@ paths:
           $ref: '#/components/responses/MissingAuthorization'
         '403':
           description: The user doesn't have enough rights to create a Crawler.
+      tags:
+        - crawler
   /crawlers/{id}:
     get:
       operationId: getCrawler
@@ -408,7 +420,9 @@ paths:
           name: withConfig
           schema:
             type: boolean
-          description: Whether or not the configuration should be returned in the response (in the 'config' field).
+          description: >-
+            Whether or not the configuration should be returned in the response
+            (in the 'config' field).
       responses:
         '200':
           description: Several field with information about the specified Crawler.
@@ -429,30 +443,42 @@ paths:
                     example: '2019-05-10T08:16:47.920Z'
                   running:
                     type: boolean
-                    description: Indicate if this Crawler is running, i.e. will crawl regularly based on its configuration.
+                    description: >-
+                      Indicate if this Crawler is running, i.e. will crawl
+                      regularly based on its configuration.
                   reindexing:
                     type: boolean
-                    description: Indicate if this Crawler is currently doing a complete reindex.
+                    description: >-
+                      Indicate if this Crawler is currently doing a complete
+                      reindex.
                   blocked:
                     type: boolean
-                    description: Indicate if this Crawler is currently blocked and need a manual intervention in the Console.
+                    description: >-
+                      Indicate if this Crawler is currently blocked and need a
+                      manual intervention in the Console.
                     example: false
                   blockingError:
                     type: string
                     description: The reason for which the Crawler has been blocked.
-                    example: 'Error: Failed to fetch external data for source ''testCSV'': 404'
+                    example: >-
+                      Error: Failed to fetch external data for source 'testCSV':
+                      404
                   blockingTaskId:
                     type: string
                     description: The ID of the task that is currently blocking the Crawler.
                   lastReindexStartedAt:
                     type: string
                     nullable: true
-                    description: The date when the last complete reindex was started. Will be null if no reindex was ever done.
+                    description: >-
+                      The date when the last complete reindex was started. Will
+                      be null if no reindex was ever done.
                     example: '2019-05-10T08:16:47.920Z'
                   lastReindexEndedAt:
                     type: string
                     nullable: true
-                    description: The date when the last complete reindex finished. Can be null if the reindex is still running.
+                    description: >-
+                      The date when the last complete reindex finished. Can be
+                      null if the reindex is still running.
                     example: null
                   config:
                     $ref: '#/components/schemas/Configuration'
@@ -471,6 +497,8 @@ paths:
           $ref: '#/components/responses/MissingAuthorization'
         '403':
           $ref: '#/components/responses/NoRightsOnCrawler'
+      tags:
+        - crawler
     patch:
       operationId: patchCrawler
       summary: Update parts of the Crawler, either its name, its config, or both.
@@ -496,6 +524,8 @@ paths:
           $ref: '#/components/responses/MissingAuthorization'
         '403':
           $ref: '#/components/responses/NoRightsOnCrawler'
+      tags:
+        - crawler
   /crawlers/{id}/config:
     patch:
       operationId: patchConfig
@@ -508,7 +538,9 @@ paths:
           application/json:
             schema:
               type: object
-              description: A partial config object that will be injected into the current one.
+              description: >-
+                A partial config object that will be injected into the current
+                one.
               example:
                 rateLimit: 10
                 startUrls:
@@ -523,6 +555,8 @@ paths:
           $ref: '#/components/responses/MissingAuthorization'
         '403':
           $ref: '#/components/responses/NoRightsOnCrawler'
+      tags:
+        - crawler
   /crawlers/{id}/run:
     post:
       operationId: runCrawler
@@ -539,6 +573,8 @@ paths:
           $ref: '#/components/responses/MissingAuthorization'
         '403':
           $ref: '#/components/responses/NoRightsOnCrawler'
+      tags:
+        - crawler
   /crawlers/{id}/pause:
     post:
       operationId: pauseCrawler
@@ -555,6 +591,8 @@ paths:
           $ref: '#/components/responses/MissingAuthorization'
         '403':
           $ref: '#/components/responses/NoRightsOnCrawler'
+      tags:
+        - crawler
   /crawlers/{id}/reindex:
     post:
       operationId: startReindex
@@ -571,16 +609,24 @@ paths:
           $ref: '#/components/responses/MissingAuthorization'
         '403':
           $ref: '#/components/responses/NoRightsOnCrawler'
+      tags:
+        - crawler
   /crawlers/{id}/stats/urls:
     get:
       operationId: getStats
-      summary: Get a summary of the current status of crawled URLs for the specified Crawler.
-      description: Get a summary of the current status of crawled URLs for the specified Crawler.
+      summary: >-
+        Get a summary of the current status of crawled URLs for the specified
+        Crawler.
+      description: >-
+        Get a summary of the current status of crawled URLs for the specified
+        Crawler.
       parameters:
         - $ref: '#/components/parameters/CrawlerIdParameter'
       responses:
         '200':
-          description: Several metrics to know what the Crawler did during since the last reindex.
+          description: >-
+            Several metrics to know what the Crawler did during since the last
+            reindex.
           content:
             application/json:
               schema:
@@ -600,13 +646,18 @@ paths:
           $ref: '#/components/responses/MissingAuthorization'
         '403':
           $ref: '#/components/responses/NoRightsOnCrawler'
+      tags:
+        - crawler
   /crawlers/{id}/test:
     post:
       operationId: testUrl
       summary: Test an URL against the crawler's config.
-      description: |-
-        Test an URL against the given Crawler's config and see what will be processed.
-        You can also override parts of the configuration to try your changes before updating the configuration.
+      description: >-
+        Test an URL against the given Crawler's config and see what will be
+        processed.
+
+        You can also override parts of the configuration to try your changes
+        before updating the configuration.
       parameters:
         - $ref: '#/components/parameters/CrawlerIdParameter'
       requestBody:
@@ -621,10 +672,16 @@ paths:
                   example: https://www.algolia.com/blog
                 config:
                   type: object
-                  description: |-
-                    A partial configuration object, that will be merged with the configuration saved.
-                    This allows to tests changes in a configuration before saving it.
-                    Note that it's not a deep merge, we will simply override all top level fields with the ones that
+                  description: >-
+                    A partial configuration object, that will be merged with the
+                    configuration saved.
+
+                    This allows to tests changes in a configuration before
+                    saving it.
+
+                    Note that it's not a deep merge, we will simply override all
+                    top level fields with the ones that
+
                     you will pass.
               required:
                 - url
@@ -646,10 +703,14 @@ paths:
                     example: '2019-05-21T09:04:33.923Z'
                   logs:
                     type: array
-                    description: The list of logs generated by `console.log()` in the recordExtractors.
+                    description: >-
+                      The list of logs generated by `console.log()` in the
+                      recordExtractors.
                     items:
                       type: array
-                      description: Each console.log() accepts many parameter. They will be returned in an array.
+                      description: >-
+                        Each console.log() accepts many parameter. They will be
+                        returned in an array.
                       items:
                         type: string
                         example: Processing url 'https://www.algolia.com/blog'
@@ -688,7 +749,9 @@ paths:
                                 type: array
                                 items:
                                   type: object
-                                  description: The partial record generated by the extractor.
+                                  description: >-
+                                    The partial record generated by the
+                                    extractor.
                           example:
                             - index: 0
                               type: custom
@@ -696,15 +759,20 @@ paths:
                                 - objectID: https://www.algolia.com/blog
                   links:
                     type: array
-                    description: The list of links found on the page, that match the configuration (and would be processed).
+                    description: >-
+                      The list of links found on the page, that match the
+                      configuration (and would be processed).
                     items:
                       type: string
                     example:
-                      - https://blog.algolia.com/challenging-migration-heroku-google-kubernetes-engine/
+                      - >-
+                        https://blog.algolia.com/challenging-migration-heroku-google-kubernetes-engine/
                       - https://blog.algolia.com/tale-two-engines-algolia-unity/
                   externalData:
                     type: object
-                    description: The External Data associated to the tested URL. External data are refreshed automatically before reindex.
+                    description: >-
+                      The External Data associated to the tested URL. External
+                      data are refreshed automatically before reindex.
                     example:
                       externalData1:
                         data1: val1
@@ -734,6 +802,8 @@ paths:
           $ref: '#/components/responses/MissingAuthorization'
         '403':
           $ref: '#/components/responses/NoRightsOnCrawler'
+      tags:
+        - crawler
   /crawlers/{id}/tasks/{tid}:
     get:
       operationId: getTaskStatus
@@ -752,14 +822,18 @@ paths:
                 properties:
                   pending:
                     type: boolean
-                    description: |
-                      A boolean that will be true if the action hasn't been processed yet, false if it has been processed or if the action doesn't exists.
+                    description: >
+                      A boolean that will be true if the action hasn't been
+                      processed yet, false if it has been processed or if the
+                      action doesn't exists.
                 required:
                   - pending
         '401':
           $ref: '#/components/responses/MissingAuthorization'
         '403':
           $ref: '#/components/responses/NoRightsOnCrawler'
+      tags:
+        - crawler
   /crawlers/{id}/tasks/{tid}/cancel:
     post:
       operationId: cancelBlockingAction
@@ -777,6 +851,8 @@ paths:
           $ref: '#/components/responses/MissingAuthorization'
         '403':
           $ref: '#/components/responses/NoRightsOnCrawler'
+      tags:
+        - crawler
   /crawlers/{id}/config/versions:
     get:
       operationId: listConfigVersions
@@ -807,6 +883,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/crawlerConfigVersionsResponse'
+      tags:
+        - crawler
   /crawlers/{id}/config/versions/{version}:
     get:
       operationId: getConfigVersion
@@ -836,13 +914,18 @@ paths:
                   - version
                   - config
                   - createdAt
+      tags:
+        - crawler
   /crawlers/{id}/urls/crawl:
     post:
       operationId: crawlUrls
       summary: Immediately crawl some URLs and update the live index.
-      description: |
-        The passed URLs will be crawled immediately, and the generated records will be pushed to the live index if no reindex is currently running.
-        If a reindex is running, the records will be pushed to the temporary index.
+      description: >
+        The passed URLs will be crawled immediately, and the generated records
+        will be pushed to the live index if no reindex is currently running.
+
+        If a reindex is running, the records will be pushed to the temporary
+        index.
       parameters:
         - $ref: '#/components/parameters/CrawlerIdParameter'
       requestBody:
@@ -859,10 +942,16 @@ paths:
                     - https://www.algolia.com/products/crawler/
                 save:
                   type: boolean
-                  description: |
-                    If true, the given URLs will be added to the `extraUrls` field of the config (if not already in `startUrls` or `sitemaps`).
+                  description: >
+                    If true, the given URLs will be added to the `extraUrls`
+                    field of the config (if not already in `startUrls` or
+                    `sitemaps`).
+
                     If false, the URLs will not be saved in the config.
-                    If unspecified, the URLs will be saved to the `extraUrls` field of the config only if they haven't been indexed during the last reindex.
+
+                    If unspecified, the URLs will be saved to the `extraUrls`
+                    field of the config only if they haven't been indexed during
+                    the last reindex.
               required:
                 - urls
       responses:
@@ -874,6 +963,8 @@ paths:
           $ref: '#/components/responses/MissingAuthorization'
         '403':
           $ref: '#/components/responses/NoRightsOnCrawler'
+      tags:
+        - crawler
   /domains:
     get:
       operationId: listDomains
@@ -915,3 +1006,5 @@ paths:
           $ref: '#/components/responses/MissingAuthorization'
         '403':
           $ref: '#/components/responses/Forbidden'
+      tags:
+        - crawler
