@@ -93,7 +93,9 @@ components:
     Timestamp:
       type: integer
       format: int64
-      description: Timestamp in [Unix epoch time](https://wikipedia.org/wiki/Unix_time) in milliseconds.
+      description: >-
+        Timestamp in [Unix epoch time](https://wikipedia.org/wiki/Unix_time) in
+        milliseconds.
     Incident:
       title: incident
       description: Incident details.
@@ -106,7 +108,9 @@ components:
           $ref: '#/components/schemas/Status'
     Incidents:
       title: incidents
-      description: Key-value pairs with the cluster names as keys and the list of incidents reported for this cluster as values.
+      description: >-
+        Key-value pairs with the cluster names as keys and the list of incidents
+        reported for this cluster as values.
       type: array
       items:
         type: object
@@ -198,7 +202,9 @@ components:
       additionalProperties:
         x-additionalPropertiesName: probe
         type: boolean
-        description: Key-value pair with the probe name as the key and the reachability status as the value.
+        description: >-
+          Key-value pair with the probe name as the key and the reachability
+          status as the value.
     Metric:
       type: string
       enum:
@@ -285,7 +291,9 @@ components:
           examples:
             Unauthorized:
               summary: Invalid credentials.
-              description: Make sure to use the Monitoring API key if you authenticate your API requests.
+              description: >-
+                Make sure to use the Monitoring API key if you authenticate your
+                API requests.
               value: Invalid credentials
     NotFoundResponse:
       description: Not Found.
@@ -316,11 +324,15 @@ components:
                   m134-de:
                     - t: 1687441685000
                       v:
-                        title: 'Incident on cluster m134-de: Everything operating normally.'
+                        title: >-
+                          Incident on cluster m134-de: Everything operating
+                          normally.
                         status: operational
                     - t: 1687441579000
                       v:
-                        title: 'Incident on cluster m134-de: We are encountering a major issue that impact all API calls.'
+                        title: >-
+                          Incident on cluster m134-de: We are encountering a
+                          major issue that impact all API calls.
                         status: major_outage
     InventoryResponse:
       description: OK
@@ -493,9 +505,11 @@ components:
                       $ref: '#/components/schemas/InfraProbes'
                   ssd_usage:
                     type: object
-                    description: |
+                    description: >
                       Solid-state disk (SSD) usage expressed as % of RAM. 
-                      0% means no SSD usage. A value of 50% indicates 32&nbsp;GB SSD usage for a machine with 64&nbsp;RAM.
+
+                      0% means no SSD usage. A value of 50% indicates 32&nbsp;GB
+                      SSD usage for a machine with 64&nbsp;RAM.
                     additionalProperties:
                       x-additionalPropertiesName: probes
                       $ref: '#/components/schemas/InfraProbes'
@@ -550,16 +564,22 @@ components:
           examples:
             Unauthorized:
               value:
-                reason: The infrastructure usage API is only available on Enterprise plans. Please contact enterprise@algolia.com for more detail.
+                reason: >-
+                  The infrastructure usage API is only available on Enterprise
+                  plans. Please contact enterprise@algolia.com for more detail.
 tags:
   - name: incidents
     description: List the known incidents.
     x-displayName: Incidents
   - name: infrastructure
-    description: Return information about the Algolia infrastructure used by your application.
+    description: >-
+      Return information about the Algolia infrastructure used by your
+      application.
     x-displayName: Infrastructure
   - name: monitoring-tag
-    description: Report search and indexing times for your clusters, and get a list of servers.
+    description: >-
+      Report search and indexing times for your clusters, and get a list of
+      servers.
     x-displayName: Monitoring
   - name: status
     description: |
@@ -597,6 +617,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - monitoring
     post:
       operationId: customPost
       requestBody:
@@ -625,6 +647,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - monitoring
     put:
       operationId: customPut
       requestBody:
@@ -653,6 +677,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - monitoring
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API.
@@ -675,12 +701,14 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - monitoring
   /1/status:
     get:
       operationId: getStatus
       summary: List cluster statuses.
       tags:
-        - status
+        - monitoring
       security:
         - appId: []
         - apiKey: []
@@ -705,7 +733,7 @@ paths:
       description: Report whether a cluster is operational.
       operationId: getClusterStatus
       tags:
-        - status
+        - monitoring
       security: []
       parameters:
         - $ref: '#/components/parameters/Clusters'
@@ -723,7 +751,7 @@ paths:
       operationId: getIncidents
       security: []
       tags:
-        - incidents
+        - monitoring
       responses:
         '200':
           $ref: '#/components/responses/IncidentsResponse'
@@ -735,7 +763,7 @@ paths:
       description: List known incidents for selected clusters.
       operationId: getClusterIncidents
       tags:
-        - incidents
+        - monitoring
       security: []
       parameters:
         - $ref: '#/components/parameters/Clusters'
@@ -764,7 +792,7 @@ paths:
         - Without authentication, the response lists the servers for all Algolia
         clusters.
       tags:
-        - monitoring-tag
+        - monitoring
       responses:
         '200':
           $ref: '#/components/responses/InventoryResponse'
@@ -777,7 +805,7 @@ paths:
       operationId: getLatency
       security: []
       tags:
-        - monitoring-tag
+        - monitoring
       parameters:
         - $ref: '#/components/parameters/Clusters'
       responses:
@@ -792,7 +820,7 @@ paths:
       operationId: getIndexingTime
       security: []
       tags:
-        - monitoring-tag
+        - monitoring
       parameters:
         - $ref: '#/components/parameters/Clusters'
       responses:
@@ -807,7 +835,7 @@ paths:
       operationId: getReachability
       security: []
       tags:
-        - monitoring-tag
+        - monitoring
       parameters:
         - $ref: '#/components/parameters/Clusters'
       responses:
@@ -821,7 +849,7 @@ paths:
       description: Report the aggregate value of a metric for a selected period of time.
       operationId: getMetrics
       tags:
-        - infrastructure
+        - monitoring
       parameters:
         - $ref: '#/components/parameters/MetricInPath'
         - $ref: '#/components/parameters/PeriodInPath'

@@ -1,10 +1,17 @@
 openapi: 3.0.2
 info:
   title: Query Suggestions API
-  description: |
-    The Query Suggestions API lets you manage Algolia's Query Suggestions configurations.
-    Query Suggestions add new indices with popular search queries, external suggestions, or facet values to your Algolia application.
-    In your user interface, you can query the Query Suggestions indices like regular indices and add [suggested searches](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/query-suggestions/js/) to guide users and speed up their search.
+  description: >
+    The Query Suggestions API lets you manage Algolia's Query Suggestions
+    configurations.
+
+    Query Suggestions add new indices with popular search queries, external
+    suggestions, or facet values to your Algolia application.
+
+    In your user interface, you can query the Query Suggestions indices like
+    regular indices and add [suggested
+    searches](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/query-suggestions/js/)
+    to guide users and speed up their search.
   version: 1.0.0
 components:
   securitySchemes:
@@ -102,14 +109,18 @@ components:
         replicas:
           type: boolean
           default: false
-          description: |
-            If true, Query Suggestions uses all replicas of the primary index to find popular searches.
+          description: >
+            If true, Query Suggestions uses all replicas of the primary index to
+            find popular searches.
+
             If false, only the primary index is used. 
           example: false
         analyticsTags:
           type: array
-          description: |
-            [Analytics tags](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) for filtering the popular searches.
+          description: >
+            [Analytics
+            tags](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
+            for filtering the popular searches.
           nullable: true
           items:
             type: string
@@ -118,10 +129,12 @@ components:
           items:
             $ref: '#/components/schemas/Facet'
           nullable: true
-          description: |
+          description: >
             Facets to use as top categories with your suggestions.
 
-            If provided, Query Suggestions adds the top facet values to each suggestion.
+
+            If provided, Query Suggestions adds the top facet values to each
+            suggestion.
           example:
             - attribute: category
               amount: 3
@@ -131,18 +144,22 @@ components:
           type: integer
           minimum: 0
           default: 5
-          description: |
+          description: >
             Minimum number of hits required to be included as a suggestion.
 
-            A search query must at least generate `minHits` hits to be included in the Query Suggestions index.
+
+            A search query must at least generate `minHits` hits to be included
+            in the Query Suggestions index.
         minLetters:
           type: integer
           minimum: 0
           default: 4
-          description: |
+          description: >
             Minimum letters required to be included as a suggestion.
 
-            A search query must be at least `minLetters` long to be included in the Query Suggestions index.
+
+            A search query must be at least `minLetters` long to be included in
+            the Query Suggestions index.
         generate:
           type: array
           items:
@@ -150,11 +167,15 @@ components:
             items:
               type: string
             nullable: true
-            description: |
+            description: >
               Facets used for generating query suggestions from facet values.
 
-              For example, if you set `generate: ["color", "brand"]`, combinations from the facet values are added as query suggestions,
+
+              For example, if you set `generate: ["color", "brand"]`,
+              combinations from the facet values are added as query suggestions,
+
               such as "blue adidas", "red adidas", "blue nike", "red nike", etc.
+
 
               You can include nested lists.
             example:
@@ -165,21 +186,28 @@ components:
           items:
             type: string
           nullable: true
-          description: |
+          description: >
             Algolia indices with popular searches to use as query suggestions.
+
 
             Records of these indices must have these attributes:
 
               - `query`: search query which will be added as a suggestion
               - `count`: measure of popularity of that search query
 
-            For example, you can export popular searches from an external analytics tool, such as Google Analytics or Adobe Analytics,
+            For example, you can export popular searches from an external
+            analytics tool, such as Google Analytics or Adobe Analytics,
+
             and feed this data into an external Algolia index.
-            You can use this external index to generate query suggestions until your Algolia analytics has collected enough data.
+
+            You can use this external index to generate query suggestions until
+            your Algolia analytics has collected enough data.
     SourceIndices:
       title: sourceIndices
       type: array
-      description: Algolia indices from which to get the popular searches for query suggestions.
+      description: >-
+        Algolia indices from which to get the popular searches for query
+        suggestions.
       minItems: 1
       items:
         $ref: '#/components/schemas/SourceIndex'
@@ -246,11 +274,16 @@ components:
     LogLevel:
       title: level
       type: string
-      description: |
+      description: >
         The type of log entry. 
 
-        - `SKIP`. A query is skipped because it doesn't match the conditions for successful inclusion. For example, when a query doesn't generate enough search results.
+
+        - `SKIP`. A query is skipped because it doesn't match the conditions for
+        successful inclusion. For example, when a query doesn't generate enough
+        search results.
+
         - `INFO`. An informative log entry.
+
         - `ERROR`. The Query Suggestions process encountered an error.
       enum:
         - SKIP
@@ -290,10 +323,13 @@ components:
           examples:
             Unauthorized:
               summary: Wrong region.
-              description: |
-                Make sure to make your request to the server corresponding to your region.  
+              description: >
+                Make sure to make your request to the server corresponding to
+                your region.  
 
-                You can check the region for your application in the [Algolia dashboard](https://dashboard.algolia.com/account/infrastructure/analytics).
+
+                You can check the region for your application in the [Algolia
+                dashboard](https://dashboard.algolia.com/account/infrastructure/analytics).
               value:
                 status: 401
                 message: The log processing region does not match
@@ -325,7 +361,9 @@ components:
               summary: Source indices required.
               value:
                 status: 400
-                message: Invalid body "sourceIndices needs to contain at least one index".
+                message: >-
+                  Invalid body "sourceIndices needs to contain at least one
+                  index".
             SourceIndexNameRequired:
               summary: Source index name required.
               value:
@@ -340,7 +378,9 @@ components:
               summary: MinLetters must be positive.
               value:
                 status: 400
-                message: Invalid body "every source index `minLetters` must be positive".
+                message: >-
+                  Invalid body "every source index `minLetters` must be
+                  positive".
     UnprocessableEntity:
       description: Unprocessable Entity.
       content:
@@ -379,15 +419,21 @@ components:
             $ref: '#/components/schemas/BaseResponse'
           examples:
             Error:
-              description: This error can happen if you use a non-existing `indexName` as a path parameter when trying to update or delete a Query Suggestions configuration.
+              description: >-
+                This error can happen if you use a non-existing `indexName` as a
+                path parameter when trying to update or delete a Query
+                Suggestions configuration.
               value:
                 status: 500
                 message: Internal Server Error
 servers:
   - url: https://query-suggestions.{region}.algolia.com
-    description: |
-      You can check the region for your application in the [Algolia dashboard](https://dashboard.algolia.com/account/infrastructure/analytics).
-      If you connect to the wrong region, the API returns an error with the status `401` and the message: "The log processing region does not match".
+    description: >
+      You can check the region for your application in the [Algolia
+      dashboard](https://dashboard.algolia.com/account/infrastructure/analytics).
+
+      If you connect to the wrong region, the API returns an error with the
+      status `401` and the message: "The log processing region does not match".
     variables:
       region:
         enum:
@@ -435,6 +481,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - query-suggestions
     post:
       operationId: customPost
       requestBody:
@@ -463,6 +511,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - query-suggestions
     put:
       operationId: customPut
       requestBody:
@@ -491,6 +541,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - query-suggestions
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API.
@@ -513,10 +565,12 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - query-suggestions
   /1/configs:
     get:
       tags:
-        - configurations
+        - query-suggestions
       operationId: getAllConfigs
       x-acl:
         - settings
@@ -535,7 +589,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       tags:
-        - configurations
+        - query-suggestions
       operationId: createConfig
       x-acl:
         - editSettings
@@ -562,7 +616,9 @@ paths:
                   summary: Configuration created.
                   value:
                     status: 200
-                    message: Configuration was created, and a new indexing job has been scheduled.
+                    message: >-
+                      Configuration was created, and a new indexing job has been
+                      scheduled.
         '400':
           $ref: '#/components/responses/BadRequest-2'
         '401':
@@ -574,7 +630,7 @@ paths:
   /1/configs/{indexName}:
     get:
       tags:
-        - configurations
+        - query-suggestions
       operationId: getConfig
       x-acl:
         - settings
@@ -597,7 +653,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       tags:
-        - configurations
+        - query-suggestions
       operationId: updateConfig
       x-acl:
         - editSettings
@@ -623,22 +679,27 @@ paths:
                   summary: Configuration created.
                   value:
                     status: 200
-                    message: Configuration was updated, and a new indexing job has been scheduled.
+                    message: >-
+                      Configuration was updated, and a new indexing job has been
+                      scheduled.
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalError-2'
     delete:
       tags:
-        - configurations
+        - query-suggestions
       operationId: deleteConfig
       x-acl:
         - editSettings
       summary: Delete a configuration.
-      description: |
+      description: >
         Delete a Query Suggestions configuration.
 
-        Deleting only removes the configuration and stops updates to the Query Suggestions index.
+
+        Deleting only removes the configuration and stops updates to the Query
+        Suggestions index.
+
         The Query Suggestions index itself is not deleted.
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -662,7 +723,7 @@ paths:
   /1/configs/{indexName}/status:
     get:
       tags:
-        - configurations
+        - query-suggestions
       operationId: getConfigStatus
       x-acl:
         - settings
@@ -683,15 +744,24 @@ paths:
                     $ref: '#/components/schemas/QuerySuggestionsIndexName'
                   isRunning:
                     type: boolean
-                    description: Indicates whether the creation or update of the Query Suggestions is in progress.
+                    description: >-
+                      Indicates whether the creation or update of the Query
+                      Suggestions is in progress.
                     example: false
                   lastBuiltAt:
                     type: string
-                    description: Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format when the Query Suggestions index was last built.
+                    description: >-
+                      Timestamp in
+                      [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format
+                      when the Query Suggestions index was last built.
                     example: '2023-07-05T08:03:53Z'
                   lastSuccessfulBuiltAt:
                     type: string
-                    description: Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format when the Query Suggestions index was last updated successfully.
+                    description: >-
+                      Timestamp in
+                      [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format
+                      when the Query Suggestions index was last updated
+                      successfully.
                     example: '2023-07-05T08:03:53Z'
                   lastSuccessfulBuildDuration:
                     type: string
@@ -704,7 +774,7 @@ paths:
   /1/logs/{indexName}:
     get:
       tags:
-        - logs
+        - query-suggestions
       operationId: getLogFile
       x-acl:
         - settings
@@ -723,20 +793,28 @@ paths:
                 properties:
                   timestamp:
                     type: string
-                    description: Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
+                    description: >-
+                      Timestamp in
+                      [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
                     example: '2023-07-05T08:03:33.898076171Z'
                   level:
                     $ref: '#/components/schemas/LogLevel'
                   message:
                     type: string
                     description: Details about this log entry.
-                    example: 'skipping query "Brooke Adams": not enough search results, got 1, expected 5'
+                    example: >-
+                      skipping query "Brooke Adams": not enough search results,
+                      got 1, expected 5
                   contextLevel:
                     type: integer
-                    description: |
-                      Level indicating the position of a suggestion in a hierarchy of records. 
+                    description: >
+                      Level indicating the position of a suggestion in a
+                      hierarchy of records. 
 
-                      For example, a `contextLevel` of 1 indicates that this suggestion belongs to a previous suggestion with `contextLevel` 0.
+
+                      For example, a `contextLevel` of 1 indicates that this
+                      suggestion belongs to a previous suggestion with
+                      `contextLevel` 0.
                     example: 1
         '401':
           $ref: '#/components/responses/Unauthorized'
