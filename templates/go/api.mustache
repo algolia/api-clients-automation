@@ -109,53 +109,14 @@ func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/s
 {{/hasParams}}
 /*
 {{operationId}} Wraps {{nickname}}WithContext using context.Background.
-{{#notes}}
-
-{{{unescapedNotes}}}
-{{/notes}}
-{{#vendorExtensions}}
-{{#x-acl.0}}
-
-Required API Key ACLs:{{/x-acl.0}}
-{{#x-acl}}
-  - {{.}}
-{{/x-acl}}
-{{/vendorExtensions}}
-
-Request can be constructed by NewApi{{operationId}}Request with parameters below.
- {{#allParams}}
- @param {{paramName}} {{dataType}}{{#description}} - {{{.}}}{{/description}}
- {{/allParams}}
- {{#returnType}}@return {{{.}}}{{/returnType}}
-{{#isDeprecated}}
-
-Deprecated
-{{/isDeprecated}}
-*/
-{{#isDeprecated}}
-// Deprecated
-{{/isDeprecated}}
+{{> operation_description}}
 func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...Option) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
   return c.{{nickname}}WithContext(context.Background(), {{#hasParams}}r,{{/hasParams}} opts...)
 }
 
 /*
 {{operationId}}
-{{#notes}}
-
-{{{unescapedNotes}}}
-{{/notes}}
-
-Request can be constructed by NewApi{{operationId}}Request with parameters below.
- {{#allParams}}
- @param {{paramName}} {{dataType}}{{#description}} - {{{.}}}{{/description}}
- {{/allParams}}
- {{#returnType}}@return {{{.}}}{{/returnType}}
-{{#isDeprecated}}
-
-Deprecated
-{{/isDeprecated}}
-*/
+{{> operation_description}}
 func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...Option) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
 	var (
     postBody     any
