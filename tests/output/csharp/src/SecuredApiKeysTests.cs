@@ -17,7 +17,7 @@ public class SecuredApiKeysTests
     var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"));
     var securedApiKey = client.GenerateSecuredApiKey(
       "parent-api-key",
-      new SecuredAPIKeyRestrictions
+      new SecuredApiKeyRestrictions
       {
         SearchParams = new SearchParamsObject
         {
@@ -52,7 +52,7 @@ public class SecuredApiKeysTests
   public void ShouldDetectExpiredKey()
   {
     // Test an expired key
-    var restriction = new SecuredAPIKeyRestrictions
+    var restriction = new SecuredApiKeyRestrictions
     {
       ValidUntil = new DateTimeOffset(DateTime.UtcNow.AddMinutes(-10)).ToUnixTimeSeconds(),
       RestrictIndices = ["indexName"]
@@ -73,7 +73,7 @@ public class SecuredApiKeysTests
   public void ShouldDetectValidKey()
   {
     // Test a valid key
-    var restriction = new SecuredAPIKeyRestrictions
+    var restriction = new SecuredApiKeyRestrictions
     {
       ValidUntil = new DateTimeOffset(DateTime.UtcNow.AddMinutes(10)).ToUnixTimeSeconds(),
       RestrictIndices = ["indexName"]
@@ -94,7 +94,7 @@ public class SecuredApiKeysTests
   public void TestRemainingValidityParameters()
   {
     // Test a valid key, but with no validUntil
-    var restriction = new SecuredAPIKeyRestrictions { RestrictIndices = ["indexName"] };
+    var restriction = new SecuredApiKeyRestrictions { RestrictIndices = ["indexName"] };
 
     var client = new SearchClient(
       new SearchConfig("test-app-id", "test-api-key"),

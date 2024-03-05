@@ -1,5 +1,5 @@
-{{^useEchoRequester}}res, err := {{/useEchoRequester}}{{#useEchoRequester}}_, err = {{/useEchoRequester}}client.{{#lambda.titlecase}}{{path}}{{/lambda.titlecase}}(client.NewApi{{#lambda.titlecase}}{{path}}{{/lambda.titlecase}}Request(
+{{^useEchoRequester}}res, err := {{/useEchoRequester}}{{#useEchoRequester}}_, err = {{/useEchoRequester}}client.{{#lambda.titlecase}}{{path}}{{/lambda.titlecase}}({{^isHelper}}client.NewApi{{#lambda.titlecase}}{{path}}{{/lambda.titlecase}}Request({{/isHelper}}
         {{#parametersWithDataType}}{{#required}}{{> tests/generateParams}},{{/required}}{{/parametersWithDataType}}
-      ){{#parametersWithDataType}}{{^required}}.With{{#lambda.pascalcase}}{{{key}}}{{/lambda.pascalcase}}({{> tests/generateParams}}){{/required}}{{/parametersWithDataType}}{{#requestOptions}},
+      {{^isHelper}}){{#parametersWithDataType}}{{^required}}.With{{#lambda.pascalcase}}{{{key}}}{{/lambda.pascalcase}}({{> tests/generateParams}}){{/required}}{{/parametersWithDataType}}{{/isHelper}}{{#isHelper}}{{#parametersWithDataType}}{{^required}}{{> tests/generateParams}},{{/required}}{{/parametersWithDataType}}{{/isHelper}}{{#requestOptions}}{{#hasOperationParams}},{{/hasOperationParams}}
       {{#queryParameters.parametersWithDataType}}{{clientPrefix}}.QueryParamOption("{{{key}}}", {{> tests/generateInnerParams}}),{{/queryParameters.parametersWithDataType}}{{#headers.parametersWithDataType}}{{clientPrefix}}.HeaderParamOption("{{{key}}}", {{> tests/generateInnerParams}}),{{/headers.parametersWithDataType}}
       {{/requestOptions}})

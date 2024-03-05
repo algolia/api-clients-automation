@@ -6,15 +6,15 @@ def union(expected, received)
       res.push(union(v, received[i]))
     end
 
-    return res
+    res
   when Hash
     res = {}
     expected.each do |key, value|
       res[key] = union(value, received[key])
     end
 
-    return res
+    res
   else
-    return received
+    received
   end
 end

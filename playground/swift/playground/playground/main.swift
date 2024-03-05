@@ -18,7 +18,7 @@ guard let apiKey = Bundle.main.infoDictionary?["ALGOLIA_ADMIN_KEY"] as? String e
 }
 
 guard applicationID != "" && apiKey != "" else {
-    fatalError("AppID and APIKey must be filled in your Info.plist file")
+    fatalError("AppID and ApiKey must be filled in your Info.plist file")
 }
 
 struct Contact: Codable {

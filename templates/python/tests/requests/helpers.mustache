@@ -3,7 +3,7 @@ def test_generate_secured_api_key_0(self):
         allow generating a secured api key without restrictions
         """
         _resp = self._client.generate_secured_api_key(parent_api_key="foo")
-        assert _resp == "Yzc2MzU2ZWZhMTlkMjE5ZDFkN2UwOGNjYjIwYjFkMjZkYjUzYjE0MzE1NmY0MDZjOTlkY2I4ZTA4NzZkNmM1NXt9"
+        assert _resp == "NjgzNzE2ZDlkN2Y4MmVlZDE3NGM2Y2FlYmUwODZlZTkzMzc2Yzc5ZDdjNjFkZDY3MGVhMDBmN2Y4ZDZlYjBhOA=="
 
     def test_generate_secured_api_key_1(self):
         """
@@ -16,20 +16,20 @@ def test_generate_secured_api_key_0(self):
             "restrict_sources": "baz",
             "user_token": "foobarbaz",
         })
-        assert _resp == "OGM3YTUyNjI5MTExNjEwNWQ5ZTJhYzBlMWFmY2VjNTg3MmRlZTM4MjZmNzk2MjVmOTJkZGUyNjFhZTQzNDJlNXsic2VhcmNoX3BhcmFtcyI6ICJ7XCJxdWVyeVwiOiBcImZvb1wifSIsICJ2YWxpZF91bnRpbCI6ICIxMDAiLCAicmVzdHJpY3RfaW5kaWNlcyI6ICJiYXIiLCAicmVzdHJpY3Rfc291cmNlcyI6ICJiYXoiLCAidXNlcl90b2tlbiI6ICJmb29iYXJiYXoifQ=="
+        assert _resp == "ZDhjY2YwNTJlMTY0ZmM2ZDM1NmRjMWRlYTg2N2ZhNzgyYWE4YzM0NjY0MzU2MDY0OTAxOThhNjkxMzgzYjlkMXF1ZXJ5PWZvbyZyZXN0cmljdF9pbmRpY2VzPWJhciZyZXN0cmljdF9zb3VyY2VzPWJheiZ1c2VyX3Rva2VuPWZvb2JhcmJheiZ2YWxpZF91bnRpbD0xMDA="
 
     def test_generate_secured_api_key_2(self):
         """
         allow generating a secured api key with from the model
         """
-        _resp = self._client.generate_secured_api_key(parent_api_key="bar", restrictions=SecuredAPIKeyRestrictions(
+        _resp = self._client.generate_secured_api_key(parent_api_key="bar", restrictions=SecuredApiKeyRestrictions(
               search_params={"query": "bar", "page": 3},
               valid_until=42,
               restrict_indices=["baz"],
               restrict_sources="foo",
               user_token="bazbarfoo",
         ))
-        assert _resp == "Y2ZhNWM0Y2MxNjc1NTE2YjhiZjdlMGU5YWE1OGViOTk5MTdjMGU1YjRhNDU2NTczOWI5ZGE5Y2NjMTJmMDE0YXsic2VhcmNoUGFyYW1zIjogIntcInF1ZXJ5XCI6IFwiYmFyXCIsIFwic2ltaWxhclF1ZXJ5XCI6IFwiXCIsIFwiZmlsdGVyc1wiOiBcIlwiLCBcInN1bU9yRmlsdGVyc1Njb3Jlc1wiOiBmYWxzZSwgXCJmYWNldGluZ0FmdGVyRGlzdGluY3RcIjogZmFsc2UsIFwicGFnZVwiOiAzLCBcImFyb3VuZExhdExuZ1wiOiBcIlwiLCBcImFyb3VuZExhdExuZ1ZpYUlQXCI6IGZhbHNlLCBcInBlcnNvbmFsaXphdGlvbkltcGFjdFwiOiAxMDAsIFwiZ2V0UmFua2luZ0luZm9cIjogZmFsc2UsIFwic3lub255bXNcIjogdHJ1ZSwgXCJjbGlja0FuYWx5dGljc1wiOiBmYWxzZSwgXCJhbmFseXRpY3NcIjogdHJ1ZSwgXCJwZXJjZW50aWxlQ29tcHV0YXRpb25cIjogdHJ1ZSwgXCJlbmFibGVBQlRlc3RcIjogdHJ1ZSwgXCJyZWxldmFuY3lTdHJpY3RuZXNzXCI6IDEwMCwgXCJoaWdobGlnaHRQcmVUYWdcIjogXCI8ZW0+XCIsIFwiaGlnaGxpZ2h0UG9zdFRhZ1wiOiBcIjwvZW0+XCIsIFwic25pcHBldEVsbGlwc2lzVGV4dFwiOiBcIlxcdTIwMjZcIiwgXCJyZXN0cmljdEhpZ2hsaWdodEFuZFNuaXBwZXRBcnJheXNcIjogZmFsc2UsIFwiaGl0c1BlclBhZ2VcIjogMjAsIFwibWluV29yZFNpemVmb3IxVHlwb1wiOiA0LCBcIm1pbldvcmRTaXplZm9yMlR5cG9zXCI6IDgsIFwiYWxsb3dUeXBvc09uTnVtZXJpY1Rva2Vuc1wiOiB0cnVlLCBcImtlZXBEaWFjcml0aWNzT25DaGFyYWN0ZXJzXCI6IFwiXCIsIFwiZGVjb21wb3VuZFF1ZXJ5XCI6IHRydWUsIFwiZW5hYmxlUnVsZXNcIjogdHJ1ZSwgXCJlbmFibGVQZXJzb25hbGl6YXRpb25cIjogZmFsc2UsIFwiYWR2YW5jZWRTeW50YXhcIjogZmFsc2UsIFwicmVwbGFjZVN5bm9ueW1zSW5IaWdobGlnaHRcIjogZmFsc2UsIFwibWluUHJveGltaXR5XCI6IDEsIFwibWF4RmFjZXRIaXRzXCI6IDEwLCBcIm1heFZhbHVlc1BlckZhY2V0XCI6IDEwMCwgXCJzb3J0RmFjZXRWYWx1ZXNCeVwiOiBcImNvdW50XCIsIFwiYXR0cmlidXRlQ3JpdGVyaWFDb21wdXRlZEJ5TWluUHJveGltaXR5XCI6IGZhbHNlLCBcImVuYWJsZVJlUmFua2luZ1wiOiB0cnVlfSIsICJ2YWxpZFVudGlsIjogIjQyIiwgInJlc3RyaWN0SW5kaWNlcyI6ICJiYXoiLCAicmVzdHJpY3RTb3VyY2VzIjogImZvbyIsICJ1c2VyVG9rZW4iOiAiYmF6YmFyZm9vIn0="
+        assert _resp == "ZDI2YzJhNTY2ZDc4YTVhNWJiZmQyZTMwZDZiNzg4Y2NiOWFiNTAwMTc0MTNjZGI3MjUwZjUxN2FmYmFlZTQ1ZWFkdmFuY2VkU3ludGF4PWZhbHNlJmFsbG93VHlwb3NPbk51bWVyaWNUb2tlbnM9dHJ1ZSZhbmFseXRpY3M9dHJ1ZSZhcm91bmRMYXRMbmc9JmFyb3VuZExhdExuZ1ZpYUlQPWZhbHNlJmF0dHJpYnV0ZUNyaXRlcmlhQ29tcHV0ZWRCeU1pblByb3hpbWl0eT1mYWxzZSZjbGlja0FuYWx5dGljcz1mYWxzZSZkZWNvbXBvdW5kUXVlcnk9dHJ1ZSZlbmFibGVBQlRlc3Q9dHJ1ZSZlbmFibGVQZXJzb25hbGl6YXRpb249ZmFsc2UmZW5hYmxlUmVSYW5raW5nPXRydWUmZW5hYmxlUnVsZXM9dHJ1ZSZmYWNldGluZ0FmdGVyRGlzdGluY3Q9ZmFsc2UmZmlsdGVycz0mZ2V0UmFua2luZ0luZm89ZmFsc2UmaGlnaGxpZ2h0UG9zdFRhZz0lM0MlMkZlbSUzRSZoaWdobGlnaHRQcmVUYWc9JTNDZW0lM0UmaGl0c1BlclBhZ2U9MjAma2VlcERpYWNyaXRpY3NPbkNoYXJhY3RlcnM9Jm1heEZhY2V0SGl0cz0xMCZtYXhWYWx1ZXNQZXJGYWNldD0xMDAmbWluUHJveGltaXR5PTEmbWluV29yZFNpemVmb3IxVHlwbz00Jm1pbldvcmRTaXplZm9yMlR5cG9zPTgmcGFnZT0zJnBlcmNlbnRpbGVDb21wdXRhdGlvbj10cnVlJnBlcnNvbmFsaXphdGlvbkltcGFjdD0xMDAmcXVlcnk9YmFyJnJlbGV2YW5jeVN0cmljdG5lc3M9MTAwJnJlcGxhY2VTeW5vbnltc0luSGlnaGxpZ2h0PWZhbHNlJnJlc3RyaWN0SGlnaGxpZ2h0QW5kU25pcHBldEFycmF5cz1mYWxzZSZyZXN0cmljdEluZGljZXM9YmF6JnJlc3RyaWN0U291cmNlcz1mb28mc2ltaWxhclF1ZXJ5PSZzbmlwcGV0RWxsaXBzaXNUZXh0PSVFMiU4MCVBNiZzb3J0RmFjZXRWYWx1ZXNCeT1jb3VudCZzdW1PckZpbHRlcnNTY29yZXM9ZmFsc2Umc3lub255bXM9dHJ1ZSZ1c2VyVG9rZW49YmF6YmFyZm9vJnZhbGlkVW50aWw9NDI="
 
     def test_generate_secured_api_key_and_validity_0(self):
         """

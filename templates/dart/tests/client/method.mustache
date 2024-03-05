@@ -6,7 +6,12 @@ try {
   );
   {{#match}}
   {{#testResponse}}
+  {{#matchIsObject}}
   expectBody(res, """{{{match.parameters}}}""");
+  {{/matchIsObject}}
+  {{^matchIsObject}}
+  expect(res, """{{match}}""");
+  {{/matchIsObject}}
   {{/testResponse}}
   {{/match}}
 } on InterceptionException catch (_) {

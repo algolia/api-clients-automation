@@ -41,7 +41,12 @@ describe('{{testType}}', () => {
           expect(result.host).toEqual("{{{match}}}");
         {{/testHost}}
         {{#testResponse}}
-        expect(result).toEqual({{{match.parameters}}});
+          {{#matchIsObject}}
+            expect(result).toEqual({{{match.parameters}}});
+          {{/matchIsObject}}
+          {{^matchIsObject}}
+            expect(result).toEqual("{{{match}}}");
+          {{/matchIsObject}}
         {{/testResponse}}
       {{/isError}}
     {{/steps}}

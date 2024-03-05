@@ -57,19 +57,24 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{testType}}{{/lambda.titlecase}}{
   require.NoError(t, err)
   {{#match}}
     {{#testUserAgent}}
-    require.Regexp(t, regexp.MustCompile(`{{{match}}}`), echo.Header.Get("User-Agent"))
+      require.Regexp(t, regexp.MustCompile(`{{{match}}}`), echo.Header.Get("User-Agent"))
     {{/testUserAgent}}
     {{#testTimeouts}}
-    require.Equal(t, int64({{{match.parametersWithDataTypeMap.connectTimeout.value}}}), echo.ConnectTimeout.Milliseconds())
-    require.Equal(t, int64({{{match.parametersWithDataTypeMap.responseTimeout.value}}}), echo.Timeout.Milliseconds())
+      require.Equal(t, int64({{{match.parametersWithDataTypeMap.connectTimeout.value}}}), echo.ConnectTimeout.Milliseconds())
+      require.Equal(t, int64({{{match.parametersWithDataTypeMap.responseTimeout.value}}}), echo.Timeout.Milliseconds())
     {{/testTimeouts}}
     {{#testHost}}
-    require.Equal(t, "{{{match}}}", echo.Host)
+      require.Equal(t, "{{{match}}}", echo.Host)
     {{/testHost}}
     {{#testResponse}}
-    rawBody, err := json.Marshal(res)
-    require.NoError(t, err)
-    require.JSONEq(t, `{{{match.parameters}}}`, string(rawBody))
+      {{#matchIsObject}}
+        rawBody, err := json.Marshal(res)
+        require.NoError(t, err)
+        require.JSONEq(t, `{{{match.parameters}}}`, string(rawBody))
+      {{/matchIsObject}}
+      {{^matchIsObject}}
+        require.Equal(t, `{{{match}}}`, res)
+      {{/matchIsObject}}
     {{/testResponse}}
   {{/match}}
   {{/isError}}
