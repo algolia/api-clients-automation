@@ -84,6 +84,9 @@ function getSpecsForNavBar() {
         'redocusaurus',
         {
           specs: getSpecsForPlugin(),
+          theme: {
+            primaryColor: '#003DFF',
+          },
         },
       ],
     ],
@@ -93,7 +96,15 @@ function getSpecsForNavBar() {
       ({
         prism: {
           // scala is required to make java work
-          additionalLanguages: ['php', 'java', 'scala', 'dart', 'go', 'groovy', 'csharp']
+          additionalLanguages: [
+            'php',
+            'java',
+            'scala',
+            'dart',
+            'go',
+            'groovy',
+            'csharp',
+          ],
         },
         navbar: {
           title: 'Algolia API',
