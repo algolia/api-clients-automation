@@ -2,16 +2,16 @@
 IndexName:
   name: indexName
   in: path
-  description: Index on which to perform the request.
+  description: Name of the index on which to perform the operation.
   required: true
   schema:
     type: string
-    example: myIndexName
+    example: YourIndexName
 
 ObjectID:
   name: objectID
   in: path
-  description: Unique record (object) identifier.
+  description: Unique record identifier.
   required: true
   schema:
     type: string
@@ -48,7 +48,7 @@ EndDate:
 ForwardToReplicas:
   in: query
   name: forwardToReplicas
-  description: Indicates whether changed index settings are forwarded to the replica indices.
+  description: Whether changed index settings are also applied to replica indices.
   schema:
     type: boolean
 
@@ -56,7 +56,9 @@ Page:
   in: query
   name: page
   description: >
-    Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated.
+    Returns the requested page number.
+    The page size is determined by the `hitsPerPage` parameter.
+    When `page` is null, the API response is not paginated.
   schema:
     type: integer
     minimum: 0
@@ -67,7 +69,9 @@ PageDefault0:
   in: query
   name: page
   description: >
-    Returns the requested page number (the first page is 0). Page size is set by `hitsPerPage`. When null, there's no pagination.
+    Returns the requested page number (the first page is 0).
+    The page size is determined by the `hitsPerPage` parameter.
+    When `page` is null, the API response is not paginated.
   schema:
     type: integer
     nullable: true
@@ -77,7 +81,7 @@ PageDefault0:
 HitsPerPage:
   in: query
   name: hitsPerPage
-  description: Maximum number of hits per page.
+  description: Number of hits per page.
   schema:
     type: integer
     default: 100
@@ -85,10 +89,13 @@ HitsPerPage:
 Offset:
   in: query
   name: offset
-  description: Position of the starting record. Used for paging. 0 is the first record.
+  description: >
+    Position of the starting record.
+    Used for paging. 0 is the first record.
   schema:
     type: integer
     default: 0
+    minimum: 0
 
 Limit:
   in: query
