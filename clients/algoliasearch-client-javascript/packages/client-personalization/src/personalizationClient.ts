@@ -27,7 +27,7 @@ import type { GetUserTokenResponse } from '../model/getUserTokenResponse';
 import type { PersonalizationStrategyParams } from '../model/personalizationStrategyParams';
 import type { SetPersonalizationStrategyResponse } from '../model/setPersonalizationStrategyResponse';
 
-export const apiClientVersion = '5.0.0-alpha.104';
+export const apiClientVersion = '5.0.0-alpha.106';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -387,10 +387,3 @@ export function createPersonalizationClient({
     },
   };
 }
-
-/**
- * The client type.
- */
-export type PersonalizationClient = ReturnType<
-  typeof createPersonalizationClient
->;

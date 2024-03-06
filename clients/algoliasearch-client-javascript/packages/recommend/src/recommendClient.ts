@@ -32,7 +32,7 @@ import type { GetRecommendationsResponse } from '../model/getRecommendationsResp
 import type { RuleResponse } from '../model/ruleResponse';
 import type { SearchRecommendRulesResponse } from '../model/searchRecommendRulesResponse';
 
-export const apiClientVersion = '5.0.0-alpha.104';
+export const apiClientVersion = '5.0.0-alpha.106';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -514,8 +514,3 @@ export function createRecommendClient({
     },
   };
 }
-
-/**
- * The client type.
- */
-export type RecommendClient = ReturnType<typeof createRecommendClient>;

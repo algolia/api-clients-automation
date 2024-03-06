@@ -1,16 +1,6 @@
 // {{{generationBanner}}}
 
-import { createXhrRequester } from '{{{npmNamespace}}}/requester-browser-xhr';
-import { DEFAULT_CONNECT_TIMEOUT_BROWSER, DEFAULT_READ_TIMEOUT_BROWSER, DEFAULT_WRITE_TIMEOUT_BROWSER } from '{{{npmNamespace}}}/client-common';
-{{> client/builds/imports}}
-
-export function {{apiName}}(
-  appId: string,
-  apiKey: string,{{#hasRegionalHost}}region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}: Region,{{/hasRegionalHost}}
-  options?: ClientOptions
-): {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} {
-  {{> client/builds/checkParameters}}
-
+{{> client/builds/definition}}
   return create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
     appId,
     apiKey,{{#hasRegionalHost}}region,{{/hasRegionalHost}}

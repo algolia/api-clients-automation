@@ -38,6 +38,12 @@ public partial class ScheduleDateUtilsInput
   public int Timeframe { get; set; }
 
   /// <summary>
+  /// Gets or Sets Mapping
+  /// </summary>
+  [JsonPropertyName("mapping")]
+  public MappingInput Mapping { get; set; }
+
+  /// <summary>
   /// Returns the string presentation of the object
   /// </summary>
   /// <returns>String presentation of the object</returns>
@@ -46,6 +52,7 @@ public partial class ScheduleDateUtilsInput
     StringBuilder sb = new StringBuilder();
     sb.Append("class ScheduleDateUtilsInput {\n");
     sb.Append("  Timeframe: ").Append(Timeframe).Append("\n");
+    sb.Append("  Mapping: ").Append(Mapping).Append("\n");
     sb.Append("}\n");
     return sb.ToString();
   }
@@ -72,7 +79,8 @@ public partial class ScheduleDateUtilsInput
     }
 
     return
-        (Timeframe == input.Timeframe || Timeframe.Equals(input.Timeframe));
+        (Timeframe == input.Timeframe || Timeframe.Equals(input.Timeframe)) &&
+        (Mapping == input.Mapping || (Mapping != null && Mapping.Equals(input.Mapping)));
   }
 
   /// <summary>
@@ -85,6 +93,10 @@ public partial class ScheduleDateUtilsInput
     {
       int hashCode = 41;
       hashCode = (hashCode * 59) + Timeframe.GetHashCode();
+      if (Mapping != null)
+      {
+        hashCode = (hashCode * 59) + Mapping.GetHashCode();
+      }
       return hashCode;
     }
   }

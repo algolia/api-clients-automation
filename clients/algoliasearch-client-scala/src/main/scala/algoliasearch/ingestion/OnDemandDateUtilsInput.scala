@@ -17,5 +17,6 @@ package algoliasearch.ingestion
   */
 case class OnDemandDateUtilsInput(
     startDate: String,
-    endDate: String
+    endDate: String,
+    mapping: Option[MappingInput] = scala.None
 ) extends TaskInputTrait

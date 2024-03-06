@@ -13,11 +13,14 @@ module Algolia
       # The end date of the extraction (RFC3339 format).
       attr_accessor :end_date
 
+      attr_accessor :mapping
+
       # Attribute mapping from ruby-style variable name to JSON key.
       def self.attribute_map
         {
           :start_date => :startDate,
-          :end_date => :endDate
+          :end_date => :endDate,
+          :mapping => :mapping
         }
       end
 
@@ -30,7 +33,8 @@ module Algolia
       def self.types_mapping
         {
           :start_date => :String,
-          :end_date => :String
+          :end_date => :String,
+          :mapping => :MappingInput
         }
       end
 
@@ -67,6 +71,10 @@ module Algolia
         else
           self.end_date = nil
         end
+
+        if attributes.key?(:mapping)
+          self.mapping = attributes[:mapping]
+        end
       end
 
       # Checks equality by comparing each attribute.
@@ -76,7 +84,8 @@ module Algolia
 
         self.class == other.class &&
           start_date == other.start_date &&
-          end_date == other.end_date
+          end_date == other.end_date &&
+          mapping == other.mapping
       end
 
       # @see the `==` method
@@ -88,7 +97,7 @@ module Algolia
       # Calculates hash code according to all attributes.
       # @return [Integer] Hash code
       def hash
-        [start_date, end_date].hash
+        [start_date, end_date, mapping].hash
       end
 
       # Builds the object from hash

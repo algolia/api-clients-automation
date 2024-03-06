@@ -20,6 +20,9 @@ public class OnDemandDateUtilsInput implements TaskInput {
   @JsonProperty("endDate")
   private String endDate;
 
+  @JsonProperty("mapping")
+  private MappingInput mapping;
+
   public OnDemandDateUtilsInput setStartDate(String startDate) {
     this.startDate = startDate;
     return this;
@@ -42,6 +45,17 @@ public class OnDemandDateUtilsInput implements TaskInput {
     return endDate;
   }
 
+  public OnDemandDateUtilsInput setMapping(MappingInput mapping) {
+    this.mapping = mapping;
+    return this;
+  }
+
+  /** Get mapping */
+  @javax.annotation.Nullable
+  public MappingInput getMapping() {
+    return mapping;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -51,12 +65,16 @@ public class OnDemandDateUtilsInput implements TaskInput {
       return false;
     }
     OnDemandDateUtilsInput onDemandDateUtilsInput = (OnDemandDateUtilsInput) o;
-    return Objects.equals(this.startDate, onDemandDateUtilsInput.startDate) && Objects.equals(this.endDate, onDemandDateUtilsInput.endDate);
+    return (
+      Objects.equals(this.startDate, onDemandDateUtilsInput.startDate) &&
+      Objects.equals(this.endDate, onDemandDateUtilsInput.endDate) &&
+      Objects.equals(this.mapping, onDemandDateUtilsInput.mapping)
+    );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(startDate, endDate);
+    return Objects.hash(startDate, endDate, mapping);
   }
 
   @Override
@@ -65,6 +83,7 @@ public class OnDemandDateUtilsInput implements TaskInput {
     sb.append("class OnDemandDateUtilsInput {\n");
     sb.append("    startDate: ").append(toIndentedString(startDate)).append("\n");
     sb.append("    endDate: ").append(toIndentedString(endDate)).append("\n");
+    sb.append("    mapping: ").append(toIndentedString(mapping)).append("\n");
     sb.append("}");
     return sb.toString();
   }

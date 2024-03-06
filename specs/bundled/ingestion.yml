@@ -140,8 +140,9 @@ components:
     sourceParameters_authenticationID:
       name: authenticationID
       in: query
-      description: |
-        The authenticationIDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication.
+      description: >
+        The authenticationIDs of the sources to retrieve. 'none' returns sources
+        that doesn't have an authentication.
       required: false
       style: form
       explode: false
@@ -303,7 +304,9 @@ components:
           example: Invalid Application-Id or API-Key
     AuthenticationType:
       type: string
-      description: Type of the Authentication, defines what kind of object is stored in the input.
+      description: >-
+        Type of the Authentication, defines what kind of object is stored in the
+        input.
       enum:
         - googleServiceAccount
         - basic
@@ -399,7 +402,9 @@ components:
           description: Algolia Application ID.
         apiKey:
           type: string
-          description: Algolia API Key, with the correct rights to push to an index and change settings.
+          description: >-
+            Algolia API Key, with the correct rights to push to an index and
+            change settings.
     AuthInputPartial:
       oneOf:
         - $ref: '#/components/schemas/AuthGoogleServiceAccountPartial'
@@ -415,7 +420,9 @@ components:
       description: Date of last update (RFC3339 format).
     Authentication:
       type: object
-      description: An authentication is used to login into a Source or a Destination, with obfuscated input.
+      description: >-
+        An authentication is used to login into a Source or a Destination, with
+        obfuscated input.
       additionalProperties: false
       properties:
         authenticationID:
@@ -518,7 +525,9 @@ components:
           description: Algolia Application ID.
         apiKey:
           type: string
-          description: Algolia API Key, with the correct rights to push to an index and change settings.
+          description: >-
+            Algolia API Key, with the correct rights to push to an index and
+            change settings.
       required:
         - appID
         - apiKey
@@ -564,7 +573,9 @@ components:
     AuthenticationSearch:
       type: object
       additionalProperties: false
-      description: Payload to search for multiple authentications, based on the given `authenticationIDs`.
+      description: >-
+        Payload to search for multiple authentications, based on the given
+        `authenticationIDs`.
       properties:
         authenticationIDs:
           type: array
@@ -610,7 +621,9 @@ components:
         - updatedAt
     DestinationType:
       type: string
-      description: Type of the Destination, defines in which Algolia product the data will be stored.
+      description: >-
+        Type of the Destination, defines in which Algolia product the data will
+        be stored.
       enum:
         - search
         - insights
@@ -644,9 +657,11 @@ components:
         - variant
     AttributesToExclude:
       type: array
-      description: |
+      description: >
         Determines the attributes to exclude from an Algolia record.
-        To remove nested element, you can separate the path to the element with dots (`.`):
+
+        To remove nested element, you can separate the path to the element with
+        dots (`.`):
           - "foo.bar": will remove `bar` from `foo`.
         To remove elements from an array, you can use the following:
           - "foo.[0].bar": will only remove `bar` from the first element of `foo`.
@@ -730,7 +745,9 @@ components:
     DestinationSearch:
       type: object
       additionalProperties: false
-      description: Payload to search for multiple destinations, based on the given `destinationIDs`.
+      description: >-
+        Payload to search for multiple destinations, based on the given
+        `destinationIDs`.
       properties:
         destinationIDs:
           type: array
@@ -790,7 +807,9 @@ components:
     CommercetoolsCustomFields:
       type: object
       additionalProperties: false
-      description: Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).
+      description: >-
+        Custom fields from Commercetools to index in the records (see
+        https://docs.commercetools.com/tutorials/custom-types).
       properties:
         inventory:
           type: array
@@ -821,8 +840,9 @@ components:
             type: string
         locales:
           type: array
-          description: |
-            Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example ["fr-FR", "en"].
+          description: >
+            Array of locales that must match the following pattern:
+            ^[a-z]{2}(-[A-Z]{2})?$. For example ["fr-FR", "en"].
           items:
             type: string
         url:
@@ -832,8 +852,9 @@ components:
         fallbackIsInStockValue:
           type: boolean
           default: true
-          description: |
-            Determines the value that will be stored in the Algolia record if there's no inventory information on the product.
+          description: >
+            Determines the value that will be stored in the Algolia record if
+            there's no inventory information on the product.
         customFields:
           $ref: '#/components/schemas/CommercetoolsCustomFields'
       required:
@@ -850,7 +871,9 @@ components:
           description: The ID of the bigcommerce channel.
         currencies:
           type: array
-          description: An array of currencies for the given channel `ID`, a currency is a trigram string that represents the currency code.
+          description: >-
+            An array of currencies for the given channel `ID`, a currency is a
+            trigram string that represents the currency code.
           example:
             - usd
             - eur
@@ -899,7 +922,9 @@ components:
         - storeHash
     UniqueIDColumn:
       type: string
-      description: The name of the column that contains the unique ID, used as `objectID` in Algolia.
+      description: >-
+        The name of the column that contains the unique ID, used as `objectID`
+        in Algolia.
     MethodType:
       type: string
       enum:
@@ -937,8 +962,9 @@ components:
           $ref: '#/components/schemas/UniqueIDColumn'
         mapping:
           type: object
-          description: |
-            Mapping of type for every column. For example {"myColumn": "boolean", "myOtherColumn": "json"}.
+          description: >
+            Mapping of type for every column. For example {"myColumn":
+            "boolean", "myOtherColumn": "json"}.
           additionalProperties:
             $ref: '#/components/schemas/MappingTypeCSV'
         method:
@@ -948,7 +974,9 @@ components:
           minLength: 1
           maxLength: 1
           default: ','
-          description: The character used to split the value on each line, default to a comma (\r, \n, 0xFFFD, and space are forbidden).
+          description: >-
+            The character used to split the value on each line, default to a
+            comma (\r, \n, 0xFFFD, and space are forbidden).
       required:
         - url
     BigQueryDataType:
@@ -1104,16 +1132,18 @@ components:
             type: string
         locales:
           type: array
-          description: |
-            Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example ["fr-FR", "en"].
+          description: >
+            Array of locales that must match the following pattern:
+            ^[a-z]{2}(-[A-Z]{2})?$. For example ["fr-FR", "en"].
           items:
             type: string
         url:
           type: string
         fallbackIsInStockValue:
           type: boolean
-          description: |
-            Determines the value that will be stored in the Algolia record if there's no inventory information on the product.
+          description: >
+            Determines the value that will be stored in the Algolia record if
+            there's no inventory information on the product.
         customFields:
           $ref: '#/components/schemas/CommercetoolsCustomFields'
     SourceUpdateDocker:
@@ -1230,7 +1260,9 @@ components:
         - schedule
     Cron:
       type: string
-      description: A cron expression that represent at which regularity the task should run.
+      description: >-
+        A cron expression that represent at which regularity the task should
+        run.
       example: '* * 1 * *'
     ScheduleTrigger:
       type: object
@@ -1269,10 +1301,73 @@ components:
         - $ref: '#/components/schemas/OnDemandTrigger'
         - $ref: '#/components/schemas/ScheduleTrigger'
         - $ref: '#/components/schemas/SubscriptionTrigger'
+    MappingFieldDirective:
+      type: object
+      additionalProperties: false
+      description: >-
+        Describes how a field should be resolved by applying a set of
+        directives.
+      properties:
+        fieldKey:
+          description: Destination field key.
+          type: string
+        value:
+          type: object
+          additionalProperties: true
+          description: How the destination field should be resolved from the source.
+      required:
+        - fieldKey
+        - value
+    MappingKitAction:
+      type: object
+      additionalProperties: false
+      description: >-
+        Describes how a destination object should be resolved by means of
+        applying a set of directives.
+      properties:
+        id:
+          description: ID to uniquely identify this action.
+          type: string
+        enabled:
+          description: Whether this action has any effect.
+          type: boolean
+        trigger:
+          description: >-
+            Condition which must be satisfied to apply the action. If this
+            evaluates to false, the action is not applied, and the process
+            attempts to apply the next action, if any.
+          type: string
+        fieldDirectives:
+          type: array
+          items:
+            $ref: '#/components/schemas/MappingFieldDirective'
+      required:
+        - enabled
+        - trigger
+        - fieldDirectives
+    MappingInput:
+      type: object
+      additionalProperties: false
+      description: Transformations to apply to source, serialized as a JSON string.
+      properties:
+        format:
+          description: >-
+            Name of the mapping format schema, `mappingkit/v1` is currently the
+            only supported format.
+          type: string
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/MappingKitAction'
+      required:
+        - format
+        - actions
     OnDemandDateUtilsInput:
       type: object
       additionalProperties: false
-      description: The input for an `onDemand` task whose source is of type `bigquery` and for which extracted data spans a given time range.
+      description: >-
+        The input for an `onDemand` task whose source is of type `bigquery` and
+        for which extracted data spans a given time range.
       properties:
         startDate:
           description: The start date of the extraction (RFC3339 format).
@@ -1280,19 +1375,25 @@ components:
         endDate:
           description: The end date of the extraction (RFC3339 format).
           type: string
+        mapping:
+          $ref: '#/components/schemas/MappingInput'
       required:
         - startDate
         - endDate
     ScheduleDateUtilsInput:
       type: object
       additionalProperties: false
-      description: The input for a `schedule` task whose source is of type `bigquery` and for which extracted data spans a fixed number of days.
+      description: >-
+        The input for a `schedule` task whose source is of type `bigquery` and
+        for which extracted data spans a fixed number of days.
       properties:
         timeframe:
           description: The timeframe of the extraction, in number of days from today.
           type: integer
           minimum: 1
           maximum: 30
+        mapping:
+          $ref: '#/components/schemas/MappingInput'
       required:
         - timeframe
     TaskInput:
@@ -1303,7 +1404,9 @@ components:
       type: integer
       minimum: 0
       maximum: 100
-      description: A percentage representing the accepted failure threshold to determine if a `run` succeeded or not.
+      description: >-
+        A percentage representing the accepted failure threshold to determine if
+        a `run` succeeded or not.
     Task:
       type: object
       additionalProperties: false
@@ -1451,7 +1554,9 @@ components:
     RunResponse:
       type: object
       additionalProperties: false
-      description: The response from the run task API, containing an Observability Run ID and the time it was created at.
+      description: >-
+        The response from the run task API, containing an Observability Run ID
+        and the time it was created at.
       properties:
         runID:
           $ref: '#/components/schemas/runID'
@@ -1551,14 +1656,20 @@ components:
     Window:
       type: object
       additionalProperties: false
-      description: The window parameter represents the holds the dates used to query the Observability data from the database in a given window.
+      description: >-
+        The window parameter represents the holds the dates used to query the
+        Observability data from the database in a given window.
       properties:
         startDate:
           type: string
-          description: A date in format RFC3339 representing the oldest possible data in query window.
+          description: >-
+            A date in format RFC3339 representing the oldest possible data in
+            query window.
         endDate:
           type: string
-          description: A date in format RFC3339 representing the newest possible data in query window.
+          description: >-
+            A date in format RFC3339 representing the newest possible data in
+            query window.
       required:
         - startDate
         - endDate
@@ -1682,10 +1793,14 @@ security:
 tags:
   - name: authentications
     x-displayName: Authentications
-    description: An authentication describe the way we connect to Algolia, or any supported connector.
+    description: >-
+      An authentication describe the way we connect to Algolia, or any supported
+      connector.
   - name: destinations
     x-displayName: Destinations
-    description: A destination refers to an Algolia product (Search, Insight, Recommend, ...).
+    description: >-
+      A destination refers to an Algolia product (Search, Insight, Recommend,
+      ...).
   - name: observability
     x-displayName: Observability
     description: The observability API associates a run to a task execution.
@@ -1694,7 +1809,9 @@ tags:
     description: A source describe the platform informations.
   - name: tasks
     x-displayName: Tasks
-    description: A Task describe how we fetch the data (onDemand, schedule, subscription) from a source and how we index it on the Algolia side.
+    description: >-
+      A Task describe how we fetch the data (onDemand, schedule, subscription)
+      from a source and how we index it on the Algolia side.
 paths:
   /1{path}:
     get:
@@ -1719,6 +1836,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - ingestion
     post:
       operationId: customPost
       requestBody:
@@ -1747,6 +1866,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - ingestion
     put:
       operationId: customPut
       requestBody:
@@ -1775,6 +1896,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - ingestion
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API.
@@ -1797,12 +1920,16 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - ingestion
   /1/authentications:
     get:
       tags:
-        - authentications
+        - ingestion
       summary: Get a list of authentications.
-      description: Get a list of authentications for the given query parameters, with pagination details.
+      description: >-
+        Get a list of authentications for the given query parameters, with
+        pagination details.
       operationId: getAuthentications
       x-acl:
         - addObject
@@ -1838,7 +1965,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     post:
       tags:
-        - authentications
+        - ingestion
       summary: Create a authentication.
       description: Create a authentication.
       operationId: createAuthentication
@@ -1865,7 +1992,7 @@ paths:
   /1/authentications/search:
     post:
       tags:
-        - authentications
+        - ingestion
       summary: Search among authentications.
       description: Search among authentications with a defined set of parameters.
       operationId: searchAuthentications
@@ -1894,7 +2021,7 @@ paths:
   /1/authentications/{authenticationID}:
     get:
       tags:
-        - authentications
+        - ingestion
       summary: Get a authentication.
       description: Get the authentication of the given authenticationID.
       operationId: getAuthentication
@@ -1915,7 +2042,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     patch:
       tags:
-        - authentications
+        - ingestion
       summary: Update a authentication.
       description: Update the authentication of the given authenticationID.
       operationId: updateAuthentication
@@ -1942,7 +2069,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     delete:
       tags:
-        - authentications
+        - ingestion
       summary: Delete a authentication.
       description: Soft delete the authentication of the given authenticationID.
       operationId: deleteAuthentication
@@ -1964,9 +2091,11 @@ paths:
   /1/destinations:
     get:
       tags:
-        - destinations
+        - ingestion
       summary: Get a list of destinations.
-      description: Get a list of destinations for the given query parameters, with pagination details.
+      description: >-
+        Get a list of destinations for the given query parameters, with
+        pagination details.
       operationId: getDestinations
       x-acl:
         - addObject
@@ -2002,7 +2131,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     post:
       tags:
-        - destinations
+        - ingestion
       summary: Create a destination.
       description: Create a destination.
       operationId: createDestination
@@ -2029,7 +2158,7 @@ paths:
   /1/destinations/search:
     post:
       tags:
-        - destinations
+        - ingestion
       summary: Search among destinations.
       description: Search among destinations with a defined set of parameters.
       operationId: searchDestinations
@@ -2058,7 +2187,7 @@ paths:
   /1/destinations/{destinationID}:
     get:
       tags:
-        - destinations
+        - ingestion
       summary: Get a destination.
       description: Get the destination of the given destinationID.
       operationId: getDestination
@@ -2079,7 +2208,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     patch:
       tags:
-        - destinations
+        - ingestion
       summary: Update a destination.
       description: Update the destination of the given destinationID.
       operationId: updateDestination
@@ -2106,7 +2235,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     delete:
       tags:
-        - destinations
+        - ingestion
       summary: Delete a destination.
       description: Soft delete the destination of the given destinationID.
       operationId: deleteDestination
@@ -2128,9 +2257,11 @@ paths:
   /1/sources:
     get:
       tags:
-        - sources
+        - ingestion
       summary: Get a list of sources.
-      description: Get a list of sources for the given query parameters, with pagination details.
+      description: >-
+        Get a list of sources for the given query parameters, with pagination
+        details.
       operationId: getSources
       x-acl:
         - addObject
@@ -2166,7 +2297,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     post:
       tags:
-        - sources
+        - ingestion
       summary: Create a source.
       description: Create a source.
       operationId: createSource
@@ -2193,7 +2324,7 @@ paths:
   /1/sources/search:
     post:
       tags:
-        - sources
+        - ingestion
       summary: Search among sources.
       description: Search among sources with a defined set of parameters.
       operationId: searchSources
@@ -2222,7 +2353,7 @@ paths:
   /1/sources/{sourceID}:
     get:
       tags:
-        - sources
+        - ingestion
       summary: Get a source.
       description: Get the source of the given sourceID.
       operationId: getSource
@@ -2243,7 +2374,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     patch:
       tags:
-        - sources
+        - ingestion
       summary: Update a source.
       description: Update the source of the given sourceID.
       operationId: updateSource
@@ -2270,7 +2401,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     delete:
       tags:
-        - sources
+        - ingestion
       summary: Delete a source.
       description: Soft delete the source of the given sourceID.
       operationId: deleteSource
@@ -2292,9 +2423,11 @@ paths:
   /1/sources/{sourceID}/discover:
     get:
       tags:
-        - sources
+        - ingestion
       summary: Retrieve a stream listing.
-      description: Retrieve a stream listing for a given Singer specification compatible docker type source ID.
+      description: >-
+        Retrieve a stream listing for a given Singer specification compatible
+        docker type source ID.
       operationId: getDockerSourceStreams
       x-acl:
         - addObject
@@ -2322,9 +2455,11 @@ paths:
           $ref: '#/components/responses/BadRequest'
     post:
       tags:
-        - sources
+        - ingestion
       summary: Trigger a stream listing request.
-      description: Trigger a stream listing request for a Singer specification compatible docker type source.
+      description: >-
+        Trigger a stream listing request for a Singer specification compatible
+        docker type source.
       operationId: triggerDockerSourceDiscover
       x-acl:
         - addObject
@@ -2354,9 +2489,11 @@ paths:
   /1/tasks:
     get:
       tags:
-        - tasks
+        - ingestion
       summary: Get a list of tasks.
-      description: Get a list of tasks for the given query parameters, with pagination details.
+      description: >-
+        Get a list of tasks for the given query parameters, with pagination
+        details.
       operationId: getTasks
       x-acl:
         - addObject
@@ -2396,7 +2533,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     post:
       tags:
-        - tasks
+        - ingestion
       summary: Create a task.
       description: Create a task.
       operationId: createTask
@@ -2419,7 +2556,7 @@ paths:
   /1/tasks/search:
     post:
       tags:
-        - tasks
+        - ingestion
       summary: Search among tasks.
       description: Search among tasks with a defined set of parameters.
       operationId: searchTasks
@@ -2448,7 +2585,7 @@ paths:
   /1/tasks/{taskID}:
     get:
       tags:
-        - tasks
+        - ingestion
       summary: Get a task.
       description: Get the task of the given taskID.
       operationId: getTask
@@ -2469,7 +2606,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     patch:
       tags:
-        - tasks
+        - ingestion
       summary: Update a task.
       description: Update the task of the given taskID.
       operationId: updateTask
@@ -2492,7 +2629,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     delete:
       tags:
-        - tasks
+        - ingestion
       summary: Delete a task.
       description: Soft delete the task of the given taskID.
       operationId: deleteTask
@@ -2510,7 +2647,7 @@ paths:
   /1/tasks/{taskID}/run:
     post:
       tags:
-        - tasks
+        - ingestion
       summary: Run a task.
       description: Run the task of the given taskID.
       operationId: runTask
@@ -2532,7 +2669,7 @@ paths:
   /1/tasks/{taskID}/enable:
     put:
       tags:
-        - tasks
+        - ingestion
       summary: Enable a task.
       description: Enable the task of the given taskID.
       operationId: enableTask
@@ -2554,7 +2691,7 @@ paths:
   /1/tasks/{taskID}/disable:
     put:
       tags:
-        - tasks
+        - ingestion
       summary: Disable a task.
       description: Disable the task of the given taskID.
       operationId: disableTask
@@ -2576,9 +2713,11 @@ paths:
   /1/runs:
     get:
       tags:
-        - observability
+        - ingestion
       summary: Get a list of runs.
-      description: Get a list of runs for the given query parameters, with pagination details.
+      description: >-
+        Get a list of runs for the given query parameters, with pagination
+        details.
       operationId: getRuns
       x-acl:
         - addObject
@@ -2593,12 +2732,16 @@ paths:
         - $ref: '#/components/parameters/order'
         - name: startDate
           in: query
-          description: The start date (in RFC3339 format) of the runs fetching window. Defaults to 'now'-7 days if omitted.
+          description: >-
+            The start date (in RFC3339 format) of the runs fetching window.
+            Defaults to 'now'-7 days if omitted.
           schema:
             type: string
         - name: endDate
           in: query
-          description: The end date (in RFC3339 format) of the runs fetching window. Defaults to 'now' days if omitted.
+          description: >-
+            The end date (in RFC3339 format) of the runs fetching window.
+            Defaults to 'now' days if omitted.
           schema:
             type: string
       responses:
@@ -2613,7 +2756,7 @@ paths:
   /1/runs/{runID}:
     get:
       tags:
-        - observability
+        - ingestion
       summary: Get a run.
       description: Get a single run for the given ID.
       operationId: getRun
@@ -2635,9 +2778,11 @@ paths:
   /1/runs/{runID}/events:
     get:
       tags:
-        - observability
+        - ingestion
       summary: Get a list of events.
-      description: Get a list of events associated to the given runID, for the given query parameters.
+      description: >-
+        Get a list of events associated to the given runID, for the given query
+        parameters.
       operationId: getEvents
       x-acl:
         - addObject
@@ -2653,12 +2798,16 @@ paths:
         - $ref: '#/components/parameters/order'
         - name: startDate
           in: query
-          description: The start date (in RFC3339 format) of the events fetching window. Defaults to 'now'-3 hours if omitted.
+          description: >-
+            The start date (in RFC3339 format) of the events fetching window.
+            Defaults to 'now'-3 hours if omitted.
           schema:
             type: string
         - name: endDate
           in: query
-          description: The end date (in RFC3339 format) of the events fetching window. Defaults to 'now' days if omitted.
+          description: >-
+            The end date (in RFC3339 format) of the events fetching window.
+            Defaults to 'now' days if omitted.
           schema:
             type: string
       responses:
@@ -2688,7 +2837,7 @@ paths:
   /1/runs/{runID}/events/{eventID}:
     get:
       tags:
-        - observability
+        - ingestion
       summary: Get an event.
       description: Get a single event for a specific runID.
       operationId: getEvent

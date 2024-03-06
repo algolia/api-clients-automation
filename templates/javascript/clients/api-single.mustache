@@ -153,9 +153,4 @@ export function create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}({
   };
 }
 
-/**
- * The client type.
- */
-export type {{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}} = ReturnType<typeof create{{#lambda.titlecase}}{{apiName}}{{/lambda.titlecase}}>;
-
 {{/operations}}
