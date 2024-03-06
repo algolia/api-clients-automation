@@ -725,7 +725,25 @@ indexSettingsAsSearchParams:
       x-categories:
         - Faceting
     sortFacetValuesBy:
-      $ref: '#/sortFacetValuesBy'
+      type: string
+      description: |
+        Order in which to retrieve facet values.
+
+        <dl>
+        <dt><code>count</code></dt>
+        <dd>
+        Facet values are retrieved by decreasing count.
+        The count is the number of matching records containing this facet value.
+        </dd>
+        <dt><code>alpha</code></dt>
+        <dd>Retrieve facet values alphabetically.</dd>
+        </dl>
+
+        This setting doesn't influence how facet values are displayed in your UI (see `renderingContent`).
+        For more information, see [facet value display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js/).
+      default: count
+      x-categories:
+        - Faceting
     attributeCriteriaComputedByMinProximity:
       type: boolean
       description: |
@@ -1078,27 +1096,6 @@ order:
   type: array
   items:
     type: string
-
-sortFacetValuesBy:
-  type: string
-  description: |
-    Order in which to retrieve facet values.
-
-    <dl>
-    <dt><code>count</code></dt>
-    <dd>
-    Facet values are retrieved by decreasing count.
-    The count is the number of matching records containing this facet value.
-    </dd>
-    <dt><code>alpha</code></dt>
-    <dd>Retrieve facet values alphabetically.</dd>
-    </dl>
-
-    This setting doesn't influence how facet values are displayed in your UI (see `renderingContent`).
-    For more information, see [facet value display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js/).
-  enum: [count, alpha]
-  x-categories:
-    - Faceting
 
 sortRemainingBy:
   description: |
