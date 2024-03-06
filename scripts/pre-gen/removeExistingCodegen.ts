@@ -1,7 +1,9 @@
 import fsp from 'fs/promises';
 import path from 'path';
 
-import { createClientName, toAbsolutePath, toSnakeCase } from '../common.js';
+import { glob } from 'glob';
+
+import { createClientName, isVerbose, toAbsolutePath, toSnakeCase } from '../common.js';
 import { getLanguageApiFolder, getLanguageModelFolder } from '../config.js';
 import type { Generator } from '../types.js';
 
@@ -79,15 +81,18 @@ export async function removeExistingCodegen({
       break;
   }
 
-  // Delete client model folder/file
-  await fsp.rm(toAbsolutePath(path.resolve('..', output, baseModelFolder, clientModel)), {
-    force: true,
-    recursive: true,
-  });
+  // Delete client model and API folder/files
+  const filesToRemove = await glob([
+    toAbsolutePath(path.resolve('..', output, baseModelFolder, clientModel)),
+    toAbsolutePath(path.resolve('..', output, baseApiFolder, clientApi)),
+  ]);
 
-  // Delete client api folder/file
-  await fsp.rm(toAbsolutePath(path.resolve('..', output, baseApiFolder, clientApi)), {
-    force: true,
-    recursive: true,
-  });
+  if (isVerbose()) {
+    // eslint-disable-next-line no-console
+    console.log('Existing codegen that will be removed: ', filesToRemove);
+  }
+
+  for (const file of filesToRemove) {
+    await fsp.rm(file, { force: true, recursive: true });
+  }
 }
