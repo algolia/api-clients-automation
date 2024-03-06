@@ -12,8 +12,7 @@ baseIndexSettings:
       type: array
       items:
         type: string
-      example: virtual(prod_products_price_asc)
-        dev_products_replica
+      example: [virtual(prod_products_price_asc), dev_products_replica]
       description: |
         Creates [replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/).
 
@@ -120,7 +119,7 @@ baseIndexSettings:
     indexLanguages:
       type: array
       items:
-        $ref: '#/language'
+        type: string
       example:
         - ja
       description: |
@@ -522,7 +521,7 @@ indexSettingsAsSearchParams:
     queryLanguages:
       type: array
       items:
-        $ref: '#/language'
+        type: string
       example:
         - es
       description: |
@@ -982,7 +981,7 @@ ignorePlurals:
   oneOf:
     - type: array
       items:
-        $ref: '#/language'
+        type: string
     - type: boolean
       default: false
   x-categories:
@@ -1134,77 +1133,3 @@ semanticSearch:
       type: array
       items:
         type: string
-
-language:
-  type: string
-  example: de
-  description: Supported language.
-  enum:
-    - af # Afrikaans
-    - ar # Arabic
-    - az # Azerbaijani
-    - bg # Bulgarian
-    - bn # Bengali
-    - ca # Catalan
-    - cs # Czech
-    - cy # Welsh
-    - da # Danish
-    - de # German
-    - el # Greek
-    - en # English
-    - eo # Esperanto
-    - es # Spanish
-    - et # Estonian
-    - eu # Basque
-    - fa # Farsi
-    - fi # Finnish
-    - fo # Faroese
-    - fr # French
-    - ga # Irish
-    - gl # Galician
-    - he # Hebrew
-    - hi # Hindi
-    - hu # Hungarian
-    - hy # Armenian
-    - id # Indonesian
-    - is # Icelandic
-    - it # Italian
-    - ja # Japanese
-    - ka # Georgian
-    - kk # Kazakh
-    - ko # Korean
-    - ku # Kurdish
-    - ky # Kirghiz
-    - lt # Lithuanian
-    - lv # Latvian
-    - mi # Maori
-    - mn # Mongolian
-    - mr # Marathi
-    - ms # Malay
-    - mt # Maltese
-    - nb # Norwegian Bokmål
-    - nl # Dutch
-    - no # Norwegian
-    - ns # Northern Sotho
-    - pl # Polish
-    - ps # Pashto
-    - pt # Portugese
-    - 'pt-br' # Brazilian
-    - qu # Quechua
-    - ro # Romanian
-    - ru # Russian
-    - sk # Slovak
-    - sq # Albanian
-    - sv # Swedish
-    - sw # Swahili
-    - ta # Tamil
-    - te # Telugu
-    - th # Thai
-    - tl # Tagalog
-    - tn # Tswana
-    - tr # Turkish
-    - tt # Tartar
-    - uk # Ukrainian
-    - ur # Urdu
-    - uz # Uzbek
-    - zh # Chinese
