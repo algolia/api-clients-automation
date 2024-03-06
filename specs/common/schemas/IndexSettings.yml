@@ -1140,7 +1140,6 @@ language:
   example: de
   description: Supported language.
   enum:
-    - null
     - af # Afrikaans
     - ar # Arabic
     - az # Azerbaijani
