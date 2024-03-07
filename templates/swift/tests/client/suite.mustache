@@ -17,7 +17,7 @@ final class {{client}}ClientTests: XCTestCase {
     */
     func test{{#lambda.titlecase}}{{testType}}{{/lambda.titlecase}}Test{{testIndex}}() async throws {
       {{#autoCreateClient}}
-        let configuration: {{import}}.Configuration = try {{import}}.Configuration(appID: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: Region.{{defaultRegion}}{{/hasRegionalHost}})
+        let configuration = try {{client}}Configuration(appID: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: Region.{{defaultRegion}}{{/hasRegionalHost}})
         let transporter: Transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client: {{client}} = {{client}}(configuration: configuration, transporter: transporter)
       {{/autoCreateClient}}
