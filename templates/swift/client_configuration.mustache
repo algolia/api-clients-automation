@@ -5,9 +5,7 @@ import Foundation
   import Core
 #endif
 
-typealias {{#lambda.client-to-name}}{{{client}}}{{/lambda.client-to-name}}ClientConfiguration = Configuration
-
-public struct Configuration: BaseConfiguration, Credentials {
+public struct {{#lambda.client-to-name}}{{{client}}}{{/lambda.client-to-name}}ClientConfiguration: BaseConfiguration, Credentials {
 {{#hasRegionalHost}}
 
   private let authorizedRegions: [Region] = [

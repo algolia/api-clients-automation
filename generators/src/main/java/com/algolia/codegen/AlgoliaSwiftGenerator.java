@@ -32,6 +32,78 @@ import org.openapitools.codegen.utils.ModelUtils;
 
 public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
 
+  private static final List<String> reservedModelNames = List.of(
+    "AdvancedSyntaxFeatures",
+    "AlternativesAsExact",
+    "Anchoring",
+    "AroundPrecision",
+    "AroundPrecisionFromValueInner",
+    "AroundRadius",
+    "AroundRadiusAll",
+    "AutomaticFacetFilter",
+    "AutomaticFacetFilters",
+    "BaseSearchParams",
+    "BaseSearchParamsWithoutQuery",
+    "BaseSearchResponse",
+    "Condition",
+    "Configuration",
+    "Consequence",
+    "ConsequenceHide",
+    "ConsequenceParams",
+    "ConsequenceQuery",
+    "ConsequenceQueryObject",
+    "DeletedAtResponse",
+    "Distinct",
+    "Edit",
+    "EditType",
+    "ErrorBase",
+    "ExactOnSingleWordQuery",
+    "Exhaustive",
+    "FacetFilters",
+    "FacetOrdering",
+    "Facets",
+    "FacetsStats",
+    "HighlightResult",
+    "HighlightResultOption",
+    "IgnorePlurals",
+    "IndexSettingsAsSearchParams",
+    "Languages",
+    "MatchLevel",
+    "MatchedGeoLocation",
+    "MixedSearchFilters",
+    "Mode",
+    "NumericFilters",
+    "OptionalFilters",
+    "Params",
+    "Personalization",
+    "Promote",
+    "PromoteObjectID",
+    "PromoteObjectIDs",
+    "QueryType",
+    "RankingInfo",
+    "ReRankingApplyFilter",
+    "Redirect",
+    "RedirectRuleIndexMetadata",
+    "RedirectRuleIndexMetadataData",
+    "Region",
+    "RemoveStopWords",
+    "RemoveWordsIfNoResults",
+    "RenderingContent",
+    "SearchParams",
+    "SearchParamsObject",
+    "SearchParamsQuery",
+    "SemanticSearch",
+    "SnippetResult",
+    "SnippetResultOption",
+    "SortRemainingBy",
+    "Source",
+    "TagFilters",
+    "TaskStatus",
+    "TypoTolerance",
+    "TypoToleranceEnum",
+    "Value"
+  );
+
   // This is used for the CTS generation
   private static final AlgoliaSwiftGenerator INSTANCE = new AlgoliaSwiftGenerator();
 
@@ -43,6 +115,21 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     }
 
     return INSTANCE.isReservedWord(text) ? INSTANCE.escapeReservedWord(text) : text;
+  }
+
+  public static Boolean isReservedModelName(String name) {
+    return (
+      AlgoliaSwiftGenerator.reservedModelNames.contains(name) || AlgoliaSwiftGenerator.reservedModelNames.contains(Helpers.capitalize(name))
+    );
+  }
+
+  public static String prefixReservedModelName(String name, String client) {
+    var camelizedName = camelize(name);
+    if (AlgoliaSwiftGenerator.isReservedModelName(camelizedName)) {
+      return INSTANCE.getClientName(client) + Helpers.capitalize(camelizedName);
+    }
+
+    return name;
   }
 
   private String CLIENT;
@@ -96,7 +183,9 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
 
     super.processOpts();
 
-    supportingFiles.add(new SupportingFile("client_configuration.mustache", sourceFolder, "Configuration.swift"));
+    supportingFiles.add(
+      new SupportingFile("client_configuration.mustache", sourceFolder, getClientName(CLIENT) + "ClientConfiguration.swift")
+    );
     supportingFiles.add(new SupportingFile("Package.mustache", "Package.swift"));
     supportingFiles.add(new SupportingFile("podspec.mustache", projectName + ".podspec"));
     supportingFiles.add(
@@ -345,5 +434,26 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
       WordUtils.capitalizeFully(StringUtils.lowerCase(value), separators).replaceAll("[-_ :\\(\\)]", ""),
       LOWERCASE_FIRST_LETTER
     );
+  }
+
+  @Override
+  public String toModelName(String name) {
+    var sanitizedName = this.sanitizeName(name);
+    var camelizedName = camelize(sanitizedName);
+    if (AlgoliaSwiftGenerator.isReservedModelName(camelizedName)) {
+      return AlgoliaSwiftGenerator.prefixReservedModelName(camelizedName, CLIENT);
+    }
+
+    return super.toModelName(name);
+  }
+
+  @Override
+  public String toParamName(String name) {
+    var trimmedName = name.replaceFirst(getClientName(CLIENT), "");
+    if (AlgoliaSwiftGenerator.isReservedModelName(trimmedName)) {
+      return camelize(trimmedName, LOWERCASE_FIRST_LETTER);
+    }
+
+    return super.toParamName(name);
   }
 }

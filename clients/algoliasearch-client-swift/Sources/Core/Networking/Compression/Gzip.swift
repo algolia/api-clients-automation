@@ -20,7 +20,7 @@ public extension Data {
         guard let deflatedBody = try self.compress() else {
             return nil
         }
-        try gzipData.append(deflatedBody)
+        gzipData.append(deflatedBody)
 
         // Calculate and append CRC32 checksum (little-endian)
         let crc32 = self.computeChecksum()
@@ -118,7 +118,6 @@ public extension Data {
             if streamStatus != Z_OK, streamStatus != Z_STREAM_END, streamStatus != Z_BUF_ERROR {
                 throw AlgoliaError.runtimeError("Failure while compressing data stream: \(streamStatus)")
             }
-            let readByteCount: Int = copiedByteCount - Int(stream.avail_in)
             // always copy out all written bytes
             let newOutByteCount = Int(stream.total_out) - previousTotalOut
             compressedData.append(&outBuffer, count: newOutByteCount)
