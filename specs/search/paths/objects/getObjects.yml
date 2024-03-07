@@ -6,9 +6,10 @@ post:
   x-cacheable: true
   x-acl:
     - search
-  summary: Get records.
+  summary: Retrieve records.
   description: |
-    Get one or more records, potentially from different indices.
+    Retrieves one or more records, potentially from different indices.
+
     Records are returned in the same order as the requests.
   requestBody:
     required: true
@@ -39,11 +40,11 @@ post:
                     description: |
                       Attributes to retrieve.
                       If not specified, all retrievable attributes are returned.
-                    example: ['author', 'title', 'content']
+                    example: [author, title, content]
                   objectID:
                     type: string
                     description: Object ID for the record to retrieve.
-                    example: 'product-1'
+                    example: product-1
                   indexName:
                     type: string
                     description: Index from which to retrieve the records.
@@ -65,7 +66,7 @@ post:
                 description: Retrieved records.
                 items:
                   type: object
-                  description: Fetched record.
+                  description: Retrieved record.
                   x-is-generic: true
             required:
               - results

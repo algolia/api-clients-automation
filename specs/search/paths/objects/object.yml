@@ -4,11 +4,11 @@ get:
   operationId: getObject
   x-acl:
     - search
-  summary: Get a record.
+  summary: Retrieve a record.
   description: |
-    Get one record by its `objectID`.
+    Retrieves one record by its object ID.
 
-    To get more than one record, use the [`objects` operation](#tag/Records/operation/getObjects).
+    To retrieve more than one record, use the [`objects` operation](#tag/Records/operation/getObjects).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ObjectID'
@@ -53,9 +53,9 @@ put:
   operationId: addOrUpdateObject
   x-acl:
     - addObject
-  summary: Add or replace a record by objectID.
+  summary: Add or replace a record.
   description: |
-    If a record with the specified `objectID` exists, the existing record is replaced.
+    If a record with the specified object ID exists, the existing record is replaced.
     Otherwise, a new record is added to the index.
 
     To update _some_ attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead.
@@ -90,7 +90,7 @@ delete:
     - deleteObject
   summary: Delete a record.
   description: |
-    Delete a record by its `objectID`.
+    Deletes a record by its object ID.
 
     To delete more than one record, use the [`batch` operation](#tag/Records/operation/batch).
     To delete records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy).

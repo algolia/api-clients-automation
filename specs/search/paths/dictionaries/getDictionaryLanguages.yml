@@ -5,7 +5,7 @@ get:
   x-acl:
     - settings
   description: |
-    List supported languages and their dictionaries.
+    Lists supported languages with their supported dictionary types and number of custom entries.
   summary: List available languages.
   externalDocs:
     url: https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/
@@ -19,6 +19,7 @@ get:
             title: getDictionaryLanguagesResponse
             type: object
             additionalProperties:
+              x-additionalPropertiesName: language
               $ref: 'common/schemas/Languages.yml#/languages'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'

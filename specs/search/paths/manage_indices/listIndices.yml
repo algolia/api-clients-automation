@@ -6,7 +6,7 @@ get:
     - listIndexes
   summary: List indices.
   description: |
-    List all indices in the current Algolia application.
+    Lists all indices in the current Algolia application.
 
     The request follows any index restrictions of the API key you use to make the request.
   parameters:

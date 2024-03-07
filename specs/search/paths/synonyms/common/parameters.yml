@@ -3,12 +3,12 @@ ReplaceExistingSynonyms:
   name: replaceExistingSynonyms
   schema:
     type: boolean
-  description: Indicates whether to replace all synonyms in the index with the ones sent with this request.
+  description: Whether to replace all synonyms in the index with the ones sent with this request.
 
 Query:
   in: query
   name: query
-  description: Search for synonyms that match this string.
+  description: Search query for synonyms.
   schema:
     type: string
     default: ''

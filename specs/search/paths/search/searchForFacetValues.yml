@@ -8,7 +8,7 @@ post:
     - search
   summary: Search for facet values.
   description: |
-    Search for values of a specified facet attribute.
+    Searches for values of a specified facet attribute.
 
     - By default, facet values are sorted by decreasing count.
       You can adjust this with the `sortFacetValueBy` parameter.
@@ -19,8 +19,7 @@ post:
       description: |
         Facet attribute in which to search for values.
 
-        This attribute must be included in the `attributesForFaceting` index setting,
-        using the `searchable()` modifier.
+        This attribute must be included in the `attributesForFaceting` index setting with the `searchable()` modifier.
       in: path
       required: true
       schema:

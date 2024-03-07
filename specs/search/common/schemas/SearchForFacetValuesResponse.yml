@@ -5,10 +5,11 @@ searchForFacetValuesResponse:
     - facetHits
     - exhaustiveFacetsCount
   x-discriminator-fields:
-    - facetHits  
+    - facetHits
   properties:
     facetHits:
       type: array
+      description: Matching facet values.
       items:
         type: object
         title: facetHits
@@ -25,7 +26,7 @@ searchForFacetValuesResponse:
           highlighted:
             $ref: '../../../common/schemas/HighlightResult.yml#/highlightedValue'
           count:
-            description: Number of records containing this facet value. This takes into account the extra search parameters specified in the query. Like for a regular search query, the [counts may not be exhaustive](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
+            description: Number of records with this facet value. [The count may be approximated](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
             type: integer
     exhaustiveFacetsCount:
       $ref: 'SearchResponse.yml#/exhaustiveFacetsCount'

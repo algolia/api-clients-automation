@@ -3,7 +3,7 @@ post:
     - Records
   operationId: multipleBatch
   description: |
-    Add, update, or delete records in multiple indices with a single API request.
+    Adds, updates, or deletes records in multiple indices with a single API request.
 
     - Actions are applied in the order they are specified.
     - Actions are equivalent to the individual API requests of the same name.
@@ -69,7 +69,7 @@ post:
             properties:
               taskID:
                 type: object
-                description: TaskIDs per index.
+                description: Task IDs. One for each index.
                 additionalProperties:
                   $ref: '../../../common/responses/common.yml#/taskID'
               objectIDs:

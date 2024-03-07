@@ -173,6 +173,8 @@ tags:
       Create, update, delete, and search for rules.
 
       Rules are _if-then_ statements that you can use to curate search results.
+      Rules have _conditions_ which can trigger _consequences_.
+      Consequences are changes to the search results, such as changing the order of search results, or boosting a facet.
       This can be useful for tuning specific queries or for merchandising.
     externalDocs:
       url: https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/

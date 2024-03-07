@@ -5,8 +5,13 @@ post:
   x-acl:
     - admin
   summary: Restore an API key.
-  description: >
-    Restore a deleted API key, along with its associated permissions.
+  description: |
+    Restores a deleted API key.
+
+    Restoring resets the `validity` attribute to `0`.
+
+    Algolia stores up to 1,000 API keys per application.
+    If you create more, the oldest API keys are deleted and can't be restored.
   parameters:
     - $ref: 'common/parameters.yml#/KeyString'
   responses:

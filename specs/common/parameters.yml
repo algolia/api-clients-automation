@@ -21,7 +21,7 @@ ObjectID:
 Index:
   in: query
   name: index
-  description: Index name to target.
+  description: Index name.
   required: true
   schema:
     type: string
@@ -30,25 +30,25 @@ Index:
 StartDate:
   in: query
   name: startDate
-  description: Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+  description: Start date (`YYYY-MM-DD`) of the period to analyze.
   schema:
     type: string
+    format: date
     example: 2022-09-19
-    pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
 
 EndDate:
   in: query
   name: endDate
-  description: End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+  description: End date (`YYYY-MM-DD`) of the period to analyze.
   schema:
     type: string
+    format: date
     example: 2023-01-21
-    pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
 
 ForwardToReplicas:
   in: query
   name: forwardToReplicas
-  description: Whether changed index settings are also applied to replica indices.
+  description: Whether changes are applied to replica indices.
   schema:
     type: boolean
 
@@ -56,9 +56,8 @@ Page:
   in: query
   name: page
   description: >
-    Returns the requested page number.
-    The page size is determined by the `hitsPerPage` parameter.
-    When `page` is null, the API response is not paginated.
+    Requested page of the API response.
+    If `null`, the API response is not paginated.
   schema:
     type: integer
     minimum: 0
@@ -69,9 +68,8 @@ PageDefault0:
   in: query
   name: page
   description: >
-    Returns the requested page number (the first page is 0).
-    The page size is determined by the `hitsPerPage` parameter.
-    When `page` is null, the API response is not paginated.
+    Requested page of the API response.
+    If `null`, the API response is not paginated.
   schema:
     type: integer
     nullable: true
@@ -89,9 +87,7 @@ HitsPerPage:
 Offset:
   in: query
   name: offset
-  description: >
-    Position of the starting record.
-    Used for paging. 0 is the first record.
+  description: Position of the first item to return.
   schema:
     type: integer
     default: 0
@@ -100,7 +96,7 @@ Offset:
 Limit:
   in: query
   name: limit
-  description: Number of records to return (page size).
+  description: Number of items to return.
   schema:
     type: integer
     default: 10
@@ -108,8 +104,12 @@ Limit:
 # misc
 objectID:
   type: string
-  description: Unique object identifier.
-  example: 'product-1'
+  description: Unique record identifier.
+
+ruleID:
+  title: objectID
+  type: string
+  description: Unique identifier of a rule object.
 
 id:
   type: string
@@ -119,7 +119,7 @@ id:
 indexName:
   type: string
   example: products
-  description: Algolia index name.
+  description: Index name.
 
 hitsPerPage:
   type: integer
@@ -130,13 +130,13 @@ hitsPerPage:
 
 query:
   type: string
-  description: Full-text query.
+  description: Search query.
   default: ''
 
 page:
   type: integer
   minimum: 0
-  description: Requested page (the first page is page 0).
+  description: Requested page of the API response.
 
 trackedSearchCount:
   type: integer

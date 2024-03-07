@@ -7,7 +7,7 @@ post:
   x-acl:
     - settings
   summary: Search for rules.
-  description: Search for rules in your index.
+  description: Searches for rules in your index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:

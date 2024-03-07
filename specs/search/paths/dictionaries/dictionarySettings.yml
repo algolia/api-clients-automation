@@ -4,9 +4,8 @@ get:
   operationId: getDictionarySettings
   x-acl:
     - settings
-  summary: Get dictionary settings.
-  description: |
-    Get the languages for which standard dictionary entries are turned off.
+  summary: Retrieve dictionary settings.
+  description: Retrieves the languages for which standard dictionary entries are turned off.
   responses:
     '200':
       description: OK
@@ -36,7 +35,7 @@ put:
   operationId: setDictionarySettings
   x-acl:
     - editSettings
-  description: Turn on or off standard stop word dictionary entries for a given language.
+  description: Turns standard stop word dictionary entries on or off for a given language.
   summary: Update dictionary settings.
   requestBody:
     required: true

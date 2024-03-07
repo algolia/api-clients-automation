@@ -2,7 +2,7 @@
 DictionaryName:
   in: path
   name: dictionaryName
-  description: Dictionary to search in.
+  description: Dictionary type in which to search.
   required: true
   schema:
     $ref: '#/dictionaryType'
@@ -13,9 +13,8 @@ dictionaryType:
 
 # misc
 language:
-  description: >
-    [Supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
-  example: 'en'
+  description: ISO code of a [supported language](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
+  example: en
   type: string
 
 standardEntries:
@@ -32,9 +31,10 @@ standardEntries:
 
 standardEntry:
   description: Key-value pair of a language ISO code and a boolean value.
-  example: >
-    {'fr': false}
+  example:
+    fr: false
   type: object
   nullable: true
   additionalProperties:
+    x-additionalPropertiesName: language
     type: boolean

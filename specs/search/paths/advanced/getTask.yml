@@ -5,10 +5,13 @@ get:
   x-acl:
     - addObject
   description: |
-    Check the status of a given task.
+    Checks the status of a given task.
 
     Indexing tasks are asynchronous.
-    Responses include a `taskID` that you can use to check the status.
+    When you add, update, or delete records or indices,
+    a task is created on a queue and completed depending on the load on the server.
+
+    The indexing tasks' responses include a task ID that you can use to check the status.
   summary: Check task status.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'

@@ -11,7 +11,7 @@ HitsPerPage:
 # headers
 UserIDInHeader:
   name: X-Algolia-User-ID
-  description: userID to assign.
+  description: User ID to assign.
   in: header
   required: true
   schema:
@@ -21,7 +21,7 @@ UserIDInHeader:
 # path
 UserIDInPath:
   name: userID
-  description: userID to assign.
+  description: User ID to assign.
   in: path
   required: true
   schema:
@@ -32,5 +32,5 @@ UserIDInPath:
 userID:
   type: string
   pattern: '^[a-zA-Z0-9 \-*.]+$'
-  description: userID of the user.
+  description: User ID.
   example: user1

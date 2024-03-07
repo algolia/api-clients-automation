@@ -1,6 +1,6 @@
 synonymHits:
   type: array
-  description: Synonym objects.
+  description: Matching synonyms.
   items:
     $ref: '#/synonymHit'
 
@@ -21,7 +21,7 @@ synonymHit:
       items:
         type: string
       description: Words or phrases considered equivalent.
-      example: ['vehicle','auto']
+      example: ['vehicle', 'auto']
     input:
       type: string
       description: Word or phrase to appear in query strings (for [`onewaysynonym`s](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/one-way-synonyms/)).
@@ -35,7 +35,7 @@ synonymHit:
       items:
         type: string
       description: Words to be matched in records.
-      example: ['vehicle','auto']
+      example: ['vehicle', 'auto']
     placeholder:
       type: string
       description: >
@@ -46,7 +46,7 @@ synonymHit:
       items:
         type: string
       description: Query words that will match the [placeholder token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/).
-      example: ['street','st']
+      example: ['street', 'st']
   required:
     - objectID
     - type

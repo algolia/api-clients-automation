@@ -4,7 +4,7 @@ post:
   operationId: appendSource
   x-acl:
     - admin
-  description: Add a source to the list of allowed sources.
+  description: Adds a source to the list of allowed sources.
   summary: Add a source.
   requestBody:
     required: true

@@ -5,8 +5,7 @@ post:
   x-acl:
     - deleteIndex
   summary: Delete all records from an index.
-  description: |
-    Delete all records from an index without affecting its settings.
+  description: Deletes only the records from an index while keeping settings, synonyms, and rules.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   responses:

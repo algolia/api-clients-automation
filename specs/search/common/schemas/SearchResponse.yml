@@ -10,14 +10,18 @@ searchHits:
   properties:
     hits:
       type: array
+      description: |
+        Search results (hits).
+
+        Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
       items:
         $ref: 'Hit.yml#/hit'
     query:
-      $ref: '../../../common/schemas/SearchParams.yml#/query'    
+      $ref: '../../../common/schemas/SearchParams.yml#/query'
     params:
       type: string
       description: URL-encoded string of all search parameters.
-      example: query=a&hitsPerPage=20  
+      example: query=a&hitsPerPage=20
   required:
     - hits
     - query
@@ -47,7 +51,7 @@ baseSearchResponse:
       pattern: ^(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)$
     automaticRadius:
       type: string
-      description: Automatically-computed radius.
+      description: Distance from a central coordinate provided by `aroundLatLng`.
     exhaustive:
       type: object
       title: exhaustive
@@ -87,10 +91,12 @@ baseSearchResponse:
       title: facets
       type: object
       additionalProperties:
+        x-additionalPropertiesName: facet
         type: object
         additionalProperties:
+          x-additionalPropertiesName: facet count
           type: integer
-      description: Mapping of each facet name to the corresponding facet counts.
+      description: Facet counts.
       example:
         category:
           food: 1
@@ -174,7 +180,7 @@ baseSearchResponse:
       type: string
       description: Host name of the server that processed the request.
       example: 'c2-uk-3.algolia.net'
-    userData: 
+    userData:
       $ref: '../../../common/schemas/IndexSettings.yml#/userData'
     queryID:
       type: string
@@ -183,12 +189,12 @@ baseSearchResponse:
 
 nbHits:
   type: integer
-  description: Number of hits the search query matched.
+  description: Number of results (hits).
   example: 20
 
 nbPages:
   type: integer
-  description: Number of pages of results for the current query.
+  description: Number of pages of results.
   example: 1
 
 exhaustiveFacetsCount:

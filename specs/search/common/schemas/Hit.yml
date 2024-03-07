@@ -1,6 +1,9 @@
 hit:
   type: object
-  description: A single hit.
+  description: |
+    Search result.
+
+    A hit is a record from your index, augmented with special attributes for highlighting, snippeting, and ranking.
   x-is-generic: true
   additionalProperties: true
   required:
@@ -23,19 +26,24 @@ _distinctSeqID:
 
 rankingInfo:
   type: object
+  description: Object with detailed information about the record's ranking.
   additionalProperties: false
   properties:
     filters:
       type: integer
-      description: This field is reserved for advanced usage.
+      minimum: 0
+      description: Whether a filter matched the query.
     firstMatchedWord:
       type: integer
-      description: Position of the most important matched attribute in the attributes to index list.
+      minimum: 0
+      description: Position of the first matched word in the best matching attribute of the record.
     geoDistance:
       type: integer
+      minimum: 0
       description: Distance between the geo location in the search query and the best matching geo location in the record, divided by the geo precision (in meters).
     geoPrecision:
       type: integer
+      minimum: 1
       description: Precision used when computing the geo distance, in meters.
     matchedGeoLocation:
       $ref: '#/matchedGeoLocation'
@@ -43,25 +51,29 @@ rankingInfo:
       $ref: '#/personalization'
     nbExactWords:
       type: integer
+      minimum: 0
       description: Number of exactly matched words.
     nbTypos:
       type: integer
+      minimum: 0
       description: Number of typos encountered when matching the record.
     promoted:
       type: boolean
-      description: Present and set to true if a Rule promoted the hit.
+      description: Whether the record was promoted by a rule.
     proximityDistance:
       type: integer
-      description: When the query contains more than one word, the sum of the distances between matched words (in meters).
+      minimum: 0
+      description: Number of words between multiple matches in the query plus 1. For single word queries, `proximityDistance` is 0.
     userScore:
       type: integer
-      description: Custom ranking for the object, expressed as a single integer value.
+      description: Overall ranking of the record, expressed as a single integer. This attribute is internal.
     words:
       type: integer
-      description: Number of matched words, including prefixes and typos.
+      minimum: 1
+      description: Number of matched words.
     promotedByReRanking:
       type: boolean
-      description: Wether the record are promoted by the re-ranking strategy.
+      description: Whether the record is re-ranked.
   required:
     - promoted
     - nbTypos

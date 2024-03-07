@@ -4,10 +4,10 @@ get:
   operationId: getRule
   x-acl:
     - settings
-  summary: Get a rule.
+  summary: Retrieve a rule.
   description: |
-    Get a rule by its ID.
-    To find the `objectID` for rules, use the [`search` operation](#tag/Rules/operation/searchRules).
+    Retrieves a rule by its ID.
+    To find the object ID of rules, use the [`search` operation](#tag/Rules/operation/searchRules).
 
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
@@ -36,7 +36,7 @@ put:
     - editSettings
   summary: Create or replace a rule.
   description: |
-    If a rule with the `objectID` doesn't exist, it's created.
+    If a rule with the specified object ID doesn't exist, it's created.
     Otherwise, the existing rule is replaced.
 
     To create or update more than one rule, use the [`batch` operation](#tag/Rules/operation/saveRules).
@@ -74,8 +74,8 @@ delete:
     - editSettings
   summary: Delete a rule.
   description: |
-    Delete a rule by its ID.
-    To find the `objectID` for rules,
+    Deletes a rule by its ID.
+    To find the object ID for rules,
     use the [`search` operation](#tag/Rules/operation/searchRules).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'

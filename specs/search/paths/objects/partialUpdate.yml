@@ -7,10 +7,10 @@ post:
   summary: Add or update attributes.
   x-codegen-request-body-name: attributesToUpdate
   description: |
-    Add new attributes to a record, or update existing ones.
+    Adds new attributes to a record, or update existing ones.
 
-    - If a record with `objectID` doesn't exist,
-      a new record is added to the index **if** `createIfNotExists` is `true`.
+    - If a record with the specified object ID doesn't exist,
+      a new record is added to the index **if** `createIfNotExists` is true.
     - If the index doesn't exist yet, this method creates a new index.
     - You can use any first-level attribute but not nested attributes.
       If you specify a nested attribute, the engine treats it as a replacement for its first-level ancestor.
@@ -25,7 +25,7 @@ post:
         default: true
   requestBody:
     required: true
-    description: Key-value pairs of attributes to add or update.
+    description: Attributes with their values.
     content:
       application/json:
         schema:

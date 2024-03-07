@@ -1,15 +1,17 @@
 searchStrategy:
   type: string
   enum: [none, stopIfEnoughMatches]
-  description: >
-    - `none`: executes all queries.
-    - `stopIfEnoughMatches`: executes queries one by one, stopping further query execution as soon as a query matches at least the `hitsPerPage` number of results.
+  description: |
+    Strategy for multiple search queries:
+
+    - `none`. Run all queries.
+    - `stopIfEnoughMatches`. Run the queries one by one, stopping as soon as a query matches at least the `hitsPerPage` number of results.
 
 operationType:
   type: string
   enum: [move, copy]
   example: copy
-  description: Operation to perform (_move_ or _copy_).
+  description: Operation to perform on the index.
 
 scopeType:
   type: string
@@ -24,7 +26,7 @@ dictionaryEntryState:
   type: string
   enum: [enabled, disabled]
   default: enabled
-  description: Indicates whether a dictionary entry is active (`enabled`) or inactive (`disabled`).
+  description: Whether a dictionary entry is active.
 
 logType:
   type: string
@@ -34,4 +36,4 @@ logType:
 taskStatus:
   type: string
   enum: [published, notPublished]
-  description: _published_ if the task has been processed, _notPublished_ otherwise.
+  description: Task status, `published` if the task is completed, `notPublished` otherwise.

@@ -4,7 +4,7 @@ post:
   operationId: batch
   summary: Batch indexing operations on one index.
   description: |
-    Add, update, or delete records in a single index with a single API request.
+    Adds, updates, or deletes records in one index with a single API request.
 
     Batching index updates reduces latency and increases data integrity.
 
@@ -35,9 +35,9 @@ post:
                     type: object
                     description: Operation arguments (varies with specified `action`).
                     example:
-                      name: 'Betty Jane McCamey'
-                      company: 'Vita Foods Inc.'
-                      email: 'betty@mccamey.com'
+                      name: Betty Jane McCamey
+                      company: Vita Foods Inc.
+                      email: betty@mccamey.com
 
                 required:
                   - action

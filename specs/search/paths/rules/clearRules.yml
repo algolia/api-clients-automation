@@ -6,7 +6,7 @@ post:
     - editSettings
   summary: Delete all rules.
   description: |
-    Delete all rules from the index.
+    Deletes all rules from the index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ForwardToReplicas'
