@@ -266,6 +266,61 @@ SubscriptionTrigger:
 
 # Task input
 
+MappingFieldDirective:
+  type: object
+  additionalProperties: false
+  description: Describes how a field should be resolved by applying a set of directives.
+  properties:
+    fieldKey:
+      description: Destination field key.
+      type: string
+    value:
+      type: object
+      additionalProperties: true
+      description: How the destination field should be resolved from the source.
+  required:
+    - fieldKey
+    - value
+
+MappingKitAction:
+  type: object
+  additionalProperties: false
+  description: Describes how a destination object should be resolved by means of applying a set of directives.
+  properties:
+    id:
+      description: ID to uniquely identify this action.
+      type: string
+    enabled:
+      description: Whether this action has any effect.
+      type: boolean
+    trigger:
+      description: Condition which must be satisfied to apply the action. If this evaluates to false, the action is not applied, and the process attempts to apply the next action, if any.
+      type: string
+    fieldDirectives:
+      type: array
+      items:
+        $ref: '#/MappingFieldDirective'
+  required:
+    - enabled
+    - trigger
+    - fieldDirectives
+
+MappingInput:
+  type: object
+  additionalProperties: false
+  description: Transformations to apply to source, serialized as a JSON string.
+  properties:
+    format:
+      description: Name of the mapping format schema, `mappingkit/v1` is currently the only supported format.
+      type: string
+    actions:
+      type: array
+      items:
+        $ref: '#/MappingKitAction'
+  required:
+    - format
+    - actions
+
 OnDemandDateUtilsInput:
   type: object
   additionalProperties: false
@@ -277,6 +332,8 @@ OnDemandDateUtilsInput:
     endDate:
       description: The end date of the extraction (RFC3339 format).
       type: string
+    mapping:
+      $ref: '#/MappingInput'
   required:
     - startDate
     - endDate
@@ -291,6 +348,8 @@ ScheduleDateUtilsInput:
       type: integer
       minimum: 1
       maximum: 30
+    mapping:
+      $ref: '#/MappingInput'
   required:
     - timeframe
 

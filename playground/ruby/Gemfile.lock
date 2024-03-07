@@ -1,7 +1,7 @@
 PATH
   remote: ../../clients/algoliasearch-client-ruby
   specs:
-    algolia (3.0.0.alpha.9)
+    algolia (3.0.0.alpha.11)
       faraday (>= 1.0.1, < 3.0)
       faraday-net_http_persistent (>= 0.15, < 3)
       net-http-persistent
@@ -10,7 +10,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     connection_pool (2.4.1)
-    dotenv (3.0.2)
+    dotenv (3.1.0)
     faraday (2.9.0)
       faraday-net_http (>= 2.0, < 3.2)
     faraday-net_http (3.1.0)

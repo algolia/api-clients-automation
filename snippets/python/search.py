@@ -7,6 +7,7 @@ async def snippet_for_add_api_key():
 
     addApiKey0
     """
+    # >SEPARATOR addApiKey
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -29,6 +30,7 @@ async def snippet_for_add_api_key():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_add_or_update_object():
@@ -37,6 +39,7 @@ async def snippet_for_add_or_update_object():
 
     addOrUpdateObject0
     """
+    # >SEPARATOR addOrUpdateObject
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -54,6 +57,7 @@ async def snippet_for_add_or_update_object():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_append_source():
@@ -62,6 +66,7 @@ async def snippet_for_append_source():
 
     appendSource0
     """
+    # >SEPARATOR appendSource
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -78,6 +83,7 @@ async def snippet_for_append_source():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_assign_user_id():
@@ -86,6 +92,7 @@ async def snippet_for_assign_user_id():
 
     assignUserId0
     """
+    # >SEPARATOR assignUserId
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -102,6 +109,7 @@ async def snippet_for_assign_user_id():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_batch():
@@ -110,6 +118,7 @@ async def snippet_for_batch():
 
     allows batch method with `addObject` action
     """
+    # >SEPARATOR batch
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -133,6 +142,7 @@ async def snippet_for_batch():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_batch_assign_user_ids():
@@ -141,6 +151,7 @@ async def snippet_for_batch_assign_user_ids():
 
     batchAssignUserIds0
     """
+    # >SEPARATOR batchAssignUserIds
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -161,6 +172,7 @@ async def snippet_for_batch_assign_user_ids():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_batch_dictionary_entries():
@@ -169,6 +181,7 @@ async def snippet_for_batch_dictionary_entries():
 
     get batchDictionaryEntries results with minimal parameters
     """
+    # >SEPARATOR batchDictionaryEntries
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -200,6 +213,7 @@ async def snippet_for_batch_dictionary_entries():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_browse():
@@ -208,6 +222,7 @@ async def snippet_for_browse():
 
     browse with minimal parameters
     """
+    # >SEPARATOR browse
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -221,6 +236,7 @@ async def snippet_for_browse():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_clear_objects():
@@ -229,6 +245,7 @@ async def snippet_for_clear_objects():
 
     clearObjects0
     """
+    # >SEPARATOR clearObjects
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -242,6 +259,7 @@ async def snippet_for_clear_objects():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_clear_rules():
@@ -250,6 +268,7 @@ async def snippet_for_clear_rules():
 
     clearRules0
     """
+    # >SEPARATOR clearRules
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -263,6 +282,7 @@ async def snippet_for_clear_rules():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_clear_synonyms():
@@ -271,6 +291,7 @@ async def snippet_for_clear_synonyms():
 
     clearSynonyms0
     """
+    # >SEPARATOR clearSynonyms
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -284,6 +305,7 @@ async def snippet_for_clear_synonyms():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_delete():
@@ -292,6 +314,7 @@ async def snippet_for_custom_delete():
 
     allow del method for a custom path with minimal parameters
     """
+    # >SEPARATOR customDelete
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -305,6 +328,7 @@ async def snippet_for_custom_delete():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_get():
@@ -313,6 +337,7 @@ async def snippet_for_custom_get():
 
     allow get method for a custom path with minimal parameters
     """
+    # >SEPARATOR customGet
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -326,6 +351,7 @@ async def snippet_for_custom_get():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_post():
@@ -334,6 +360,7 @@ async def snippet_for_custom_post():
 
     allow post method for a custom path with minimal parameters
     """
+    # >SEPARATOR customPost
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -347,6 +374,7 @@ async def snippet_for_custom_post():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_put():
@@ -355,6 +383,7 @@ async def snippet_for_custom_put():
 
     allow put method for a custom path with minimal parameters
     """
+    # >SEPARATOR customPut
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -368,6 +397,7 @@ async def snippet_for_custom_put():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_delete_api_key():
@@ -376,6 +406,7 @@ async def snippet_for_delete_api_key():
 
     deleteApiKey0
     """
+    # >SEPARATOR deleteApiKey
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -389,6 +420,7 @@ async def snippet_for_delete_api_key():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_delete_by():
@@ -397,6 +429,7 @@ async def snippet_for_delete_by():
 
     deleteBy0
     """
+    # >SEPARATOR deleteBy
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -413,6 +446,7 @@ async def snippet_for_delete_by():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_delete_index():
@@ -421,6 +455,7 @@ async def snippet_for_delete_index():
 
     deleteIndex0
     """
+    # >SEPARATOR deleteIndex
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -434,6 +469,7 @@ async def snippet_for_delete_index():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_delete_object():
@@ -442,6 +478,7 @@ async def snippet_for_delete_object():
 
     deleteObject0
     """
+    # >SEPARATOR deleteObject
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -456,6 +493,7 @@ async def snippet_for_delete_object():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_delete_rule():
@@ -464,6 +502,7 @@ async def snippet_for_delete_rule():
 
     delete rule simple case
     """
+    # >SEPARATOR deleteRule
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -478,6 +517,7 @@ async def snippet_for_delete_rule():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_delete_source():
@@ -486,6 +526,7 @@ async def snippet_for_delete_source():
 
     deleteSource0
     """
+    # >SEPARATOR deleteSource
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -499,6 +540,7 @@ async def snippet_for_delete_source():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_delete_synonym():
@@ -507,6 +549,7 @@ async def snippet_for_delete_synonym():
 
     deleteSynonym0
     """
+    # >SEPARATOR deleteSynonym
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -521,6 +564,7 @@ async def snippet_for_delete_synonym():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_api_key():
@@ -529,6 +573,7 @@ async def snippet_for_get_api_key():
 
     getApiKey0
     """
+    # >SEPARATOR getApiKey
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -542,6 +587,7 @@ async def snippet_for_get_api_key():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_dictionary_languages():
@@ -550,6 +596,7 @@ async def snippet_for_get_dictionary_languages():
 
     get getDictionaryLanguages
     """
+    # >SEPARATOR getDictionaryLanguages
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -561,6 +608,7 @@ async def snippet_for_get_dictionary_languages():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_dictionary_settings():
@@ -569,6 +617,7 @@ async def snippet_for_get_dictionary_settings():
 
     get getDictionarySettings results
     """
+    # >SEPARATOR getDictionarySettings
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -580,6 +629,7 @@ async def snippet_for_get_dictionary_settings():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_logs():
@@ -588,6 +638,7 @@ async def snippet_for_get_logs():
 
     getLogs with minimal parameters
     """
+    # >SEPARATOR getLogs
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -599,6 +650,7 @@ async def snippet_for_get_logs():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_object():
@@ -607,6 +659,7 @@ async def snippet_for_get_object():
 
     getObject0
     """
+    # >SEPARATOR getObject
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -625,6 +678,7 @@ async def snippet_for_get_object():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_objects():
@@ -633,6 +687,7 @@ async def snippet_for_get_objects():
 
     getObjects0
     """
+    # >SEPARATOR getObjects
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -657,6 +712,7 @@ async def snippet_for_get_objects():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_rule():
@@ -665,6 +721,7 @@ async def snippet_for_get_rule():
 
     getRule0
     """
+    # >SEPARATOR getRule
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -679,6 +736,7 @@ async def snippet_for_get_rule():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_settings():
@@ -687,6 +745,7 @@ async def snippet_for_get_settings():
 
     getSettings0
     """
+    # >SEPARATOR getSettings
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -700,6 +759,7 @@ async def snippet_for_get_settings():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_sources():
@@ -708,6 +768,7 @@ async def snippet_for_get_sources():
 
     getSources0
     """
+    # >SEPARATOR getSources
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -719,6 +780,7 @@ async def snippet_for_get_sources():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_synonym():
@@ -727,6 +789,7 @@ async def snippet_for_get_synonym():
 
     getSynonym0
     """
+    # >SEPARATOR getSynonym
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -741,6 +804,7 @@ async def snippet_for_get_synonym():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_task():
@@ -749,6 +813,7 @@ async def snippet_for_get_task():
 
     getTask0
     """
+    # >SEPARATOR getTask
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -763,6 +828,7 @@ async def snippet_for_get_task():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_top_user_ids():
@@ -771,6 +837,7 @@ async def snippet_for_get_top_user_ids():
 
     getTopUserIds0
     """
+    # >SEPARATOR getTopUserIds
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -782,6 +849,7 @@ async def snippet_for_get_top_user_ids():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_user_id():
@@ -790,6 +858,7 @@ async def snippet_for_get_user_id():
 
     getUserId0
     """
+    # >SEPARATOR getUserId
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -803,6 +872,7 @@ async def snippet_for_get_user_id():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_has_pending_mappings():
@@ -811,6 +881,7 @@ async def snippet_for_has_pending_mappings():
 
     hasPendingMappings with minimal parameters
     """
+    # >SEPARATOR hasPendingMappings
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -822,6 +893,7 @@ async def snippet_for_has_pending_mappings():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_list_api_keys():
@@ -830,6 +902,7 @@ async def snippet_for_list_api_keys():
 
     listApiKeys0
     """
+    # >SEPARATOR listApiKeys
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -841,6 +914,7 @@ async def snippet_for_list_api_keys():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_list_clusters():
@@ -849,6 +923,7 @@ async def snippet_for_list_clusters():
 
     listClusters0
     """
+    # >SEPARATOR listClusters
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -860,6 +935,7 @@ async def snippet_for_list_clusters():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_list_indices():
@@ -868,6 +944,7 @@ async def snippet_for_list_indices():
 
     listIndices with minimal parameters
     """
+    # >SEPARATOR listIndices
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -879,6 +956,7 @@ async def snippet_for_list_indices():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_list_user_ids():
@@ -887,6 +965,7 @@ async def snippet_for_list_user_ids():
 
     listUserIds with minimal parameters
     """
+    # >SEPARATOR listUserIds
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -898,6 +977,7 @@ async def snippet_for_list_user_ids():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_multiple_batch():
@@ -906,6 +986,7 @@ async def snippet_for_multiple_batch():
 
     multipleBatch0
     """
+    # >SEPARATOR multipleBatch
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -929,6 +1010,7 @@ async def snippet_for_multiple_batch():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_operation_index():
@@ -937,6 +1019,7 @@ async def snippet_for_operation_index():
 
     operationIndex0
     """
+    # >SEPARATOR operationIndex
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -958,6 +1041,7 @@ async def snippet_for_operation_index():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_partial_update_object():
@@ -966,6 +1050,7 @@ async def snippet_for_partial_update_object():
 
     partialUpdateObject0
     """
+    # >SEPARATOR partialUpdateObject
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -988,6 +1073,7 @@ async def snippet_for_partial_update_object():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_remove_user_id():
@@ -996,6 +1082,7 @@ async def snippet_for_remove_user_id():
 
     removeUserId0
     """
+    # >SEPARATOR removeUserId
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -1009,6 +1096,7 @@ async def snippet_for_remove_user_id():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_replace_sources():
@@ -1017,6 +1105,7 @@ async def snippet_for_replace_sources():
 
     replaceSources0
     """
+    # >SEPARATOR replaceSources
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -1035,6 +1124,7 @@ async def snippet_for_replace_sources():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_restore_api_key():
@@ -1043,6 +1133,7 @@ async def snippet_for_restore_api_key():
 
     restoreApiKey0
     """
+    # >SEPARATOR restoreApiKey
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -1056,6 +1147,7 @@ async def snippet_for_restore_api_key():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_save_object():
@@ -1064,6 +1156,7 @@ async def snippet_for_save_object():
 
     saveObject0
     """
+    # >SEPARATOR saveObject
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -1081,6 +1174,7 @@ async def snippet_for_save_object():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_save_rule():
@@ -1089,6 +1183,7 @@ async def snippet_for_save_rule():
 
     saveRule with minimal parameters
     """
+    # >SEPARATOR saveRule
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -1112,6 +1207,7 @@ async def snippet_for_save_rule():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_save_rules():
@@ -1120,6 +1216,7 @@ async def snippet_for_save_rules():
 
     saveRules with minimal parameters
     """
+    # >SEPARATOR saveRules
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -1153,6 +1250,7 @@ async def snippet_for_save_rules():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_save_synonym():
@@ -1161,6 +1259,7 @@ async def snippet_for_save_synonym():
 
     saveSynonym0
     """
+    # >SEPARATOR saveSynonym
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -1185,6 +1284,7 @@ async def snippet_for_save_synonym():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_save_synonyms():
@@ -1193,6 +1293,7 @@ async def snippet_for_save_synonyms():
 
     saveSynonyms0
     """
+    # >SEPARATOR saveSynonyms
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -1229,6 +1330,7 @@ async def snippet_for_save_synonyms():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_search():
@@ -1237,6 +1339,7 @@ async def snippet_for_search():
 
     search for a single hits request with minimal parameters
     """
+    # >SEPARATOR search
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -1256,6 +1359,7 @@ async def snippet_for_search():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_search_dictionary_entries():
@@ -1264,6 +1368,7 @@ async def snippet_for_search_dictionary_entries():
 
     get searchDictionaryEntries results with minimal parameters
     """
+    # >SEPARATOR searchDictionaryEntries
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -1280,6 +1385,7 @@ async def snippet_for_search_dictionary_entries():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_search_for_facet_values():
@@ -1288,6 +1394,7 @@ async def snippet_for_search_for_facet_values():
 
     get searchForFacetValues results with minimal parameters
     """
+    # >SEPARATOR searchForFacetValues
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -1302,6 +1409,7 @@ async def snippet_for_search_for_facet_values():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_search_rules():
@@ -1310,6 +1418,7 @@ async def snippet_for_search_rules():
 
     searchRules0
     """
+    # >SEPARATOR searchRules
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -1326,6 +1435,7 @@ async def snippet_for_search_rules():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_search_single_index():
@@ -1334,6 +1444,7 @@ async def snippet_for_search_single_index():
 
     search with minimal parameters
     """
+    # >SEPARATOR searchSingleIndex
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -1347,6 +1458,7 @@ async def snippet_for_search_single_index():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_search_synonyms():
@@ -1355,6 +1467,7 @@ async def snippet_for_search_synonyms():
 
     searchSynonyms with minimal parameters
     """
+    # >SEPARATOR searchSynonyms
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -1368,6 +1481,7 @@ async def snippet_for_search_synonyms():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_search_user_ids():
@@ -1376,6 +1490,7 @@ async def snippet_for_search_user_ids():
 
     searchUserIds0
     """
+    # >SEPARATOR searchUserIds
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -1394,6 +1509,7 @@ async def snippet_for_search_user_ids():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_set_dictionary_settings():
@@ -1402,6 +1518,7 @@ async def snippet_for_set_dictionary_settings():
 
     get setDictionarySettings results with minimal parameters
     """
+    # >SEPARATOR setDictionarySettings
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -1423,6 +1540,7 @@ async def snippet_for_set_dictionary_settings():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_set_settings():
@@ -1431,6 +1549,7 @@ async def snippet_for_set_settings():
 
     setSettings with minimal parameters
     """
+    # >SEPARATOR setSettings
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -1448,6 +1567,7 @@ async def snippet_for_set_settings():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_update_api_key():
@@ -1456,6 +1576,7 @@ async def snippet_for_update_api_key():
 
     updateApiKey0
     """
+    # >SEPARATOR updateApiKey
     # Initialize the client
     _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
@@ -1478,3 +1599,4 @@ async def snippet_for_update_api_key():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<

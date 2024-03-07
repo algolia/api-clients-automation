@@ -4,6 +4,7 @@ require 'algolia'
 #
 # allow del method for a custom path with minimal parameters
 def snippet_for_custom_delete
+  # >SEPARATOR customDelete
   # Initialize the client
   client = Algolia::RecommendClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -15,12 +16,14 @@ def snippet_for_custom_delete
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customGet method.
 #
 # allow get method for a custom path with minimal parameters
 def snippet_for_custom_get
+  # >SEPARATOR customGet
   # Initialize the client
   client = Algolia::RecommendClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -32,12 +35,14 @@ def snippet_for_custom_get
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customPost method.
 #
 # allow post method for a custom path with minimal parameters
 def snippet_for_custom_post
+  # >SEPARATOR customPost
   # Initialize the client
   client = Algolia::RecommendClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -49,12 +54,14 @@ def snippet_for_custom_post
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customPut method.
 #
 # allow put method for a custom path with minimal parameters
 def snippet_for_custom_put
+  # >SEPARATOR customPut
   # Initialize the client
   client = Algolia::RecommendClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -66,12 +73,14 @@ def snippet_for_custom_put
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the deleteRecommendRule method.
 #
 # deleteRecommendRule0
 def snippet_for_delete_recommend_rule
+  # >SEPARATOR deleteRecommendRule
   # Initialize the client
   client = Algolia::RecommendClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -83,12 +92,14 @@ def snippet_for_delete_recommend_rule
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getRecommendRule method.
 #
 # getRecommendRule0
 def snippet_for_get_recommend_rule
+  # >SEPARATOR getRecommendRule
   # Initialize the client
   client = Algolia::RecommendClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -100,12 +111,14 @@ def snippet_for_get_recommend_rule
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getRecommendStatus method.
 #
 # getRecommendStatus0
 def snippet_for_get_recommend_status
+  # >SEPARATOR getRecommendStatus
   # Initialize the client
   client = Algolia::RecommendClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -117,12 +130,14 @@ def snippet_for_get_recommend_status
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getRecommendations method.
 #
 # get recommendations for recommend model with minimal parameters
 def snippet_for_get_recommendations
+  # >SEPARATOR getRecommendations
   # Initialize the client
   client = Algolia::RecommendClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -140,12 +155,14 @@ def snippet_for_get_recommendations
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the searchRecommendRules method.
 #
 # searchRecommendRules0
 def snippet_for_search_recommend_rules
+  # >SEPARATOR searchRecommendRules
   # Initialize the client
   client = Algolia::RecommendClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -157,4 +174,5 @@ def snippet_for_search_recommend_rules
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end

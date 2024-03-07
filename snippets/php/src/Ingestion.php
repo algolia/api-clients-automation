@@ -11,6 +11,7 @@ class SnippetIngestionClient
      */
     public function snippetForCreateAuthentication()
     {
+        // >SEPARATOR createAuthentication
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -27,6 +28,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -36,6 +38,7 @@ class SnippetIngestionClient
      */
     public function snippetForCreateDestination()
     {
+        // >SEPARATOR createDestination
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -51,6 +54,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -60,6 +64,7 @@ class SnippetIngestionClient
      */
     public function snippetForCreateSource()
     {
+        // >SEPARATOR createSource
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -82,6 +87,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -91,6 +97,7 @@ class SnippetIngestionClient
      */
     public function snippetForCreateTask()
     {
+        // >SEPARATOR createTask
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -106,6 +113,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -115,6 +123,7 @@ class SnippetIngestionClient
      */
     public function snippetForCustomDelete()
     {
+        // >SEPARATOR customDelete
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -125,6 +134,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -134,6 +144,7 @@ class SnippetIngestionClient
      */
     public function snippetForCustomGet()
     {
+        // >SEPARATOR customGet
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -144,6 +155,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -153,6 +165,7 @@ class SnippetIngestionClient
      */
     public function snippetForCustomPost()
     {
+        // >SEPARATOR customPost
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -163,6 +176,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -172,6 +186,7 @@ class SnippetIngestionClient
      */
     public function snippetForCustomPut()
     {
+        // >SEPARATOR customPut
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -182,6 +197,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -191,6 +207,7 @@ class SnippetIngestionClient
      */
     public function snippetForDeleteAuthentication()
     {
+        // >SEPARATOR deleteAuthentication
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -201,6 +218,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -210,6 +228,7 @@ class SnippetIngestionClient
      */
     public function snippetForDeleteDestination()
     {
+        // >SEPARATOR deleteDestination
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -220,6 +239,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -229,6 +249,7 @@ class SnippetIngestionClient
      */
     public function snippetForDeleteSource()
     {
+        // >SEPARATOR deleteSource
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -239,6 +260,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -248,6 +270,7 @@ class SnippetIngestionClient
      */
     public function snippetForDeleteTask()
     {
+        // >SEPARATOR deleteTask
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -258,6 +281,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -267,6 +291,7 @@ class SnippetIngestionClient
      */
     public function snippetForDisableTask()
     {
+        // >SEPARATOR disableTask
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -277,6 +302,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -286,6 +312,7 @@ class SnippetIngestionClient
      */
     public function snippetForEnableTask()
     {
+        // >SEPARATOR enableTask
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -296,6 +323,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -305,6 +333,7 @@ class SnippetIngestionClient
      */
     public function snippetForGetAuthentication()
     {
+        // >SEPARATOR getAuthentication
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -315,6 +344,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -324,6 +354,7 @@ class SnippetIngestionClient
      */
     public function snippetForGetAuthentications()
     {
+        // >SEPARATOR getAuthentications
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -332,6 +363,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -341,6 +373,7 @@ class SnippetIngestionClient
      */
     public function snippetForGetDestination()
     {
+        // >SEPARATOR getDestination
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -351,6 +384,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -360,6 +394,7 @@ class SnippetIngestionClient
      */
     public function snippetForGetDestinations()
     {
+        // >SEPARATOR getDestinations
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -368,6 +403,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -377,6 +413,7 @@ class SnippetIngestionClient
      */
     public function snippetForGetDockerSourceStreams()
     {
+        // >SEPARATOR getDockerSourceStreams
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -387,6 +424,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -396,6 +434,7 @@ class SnippetIngestionClient
      */
     public function snippetForGetEvent()
     {
+        // >SEPARATOR getEvent
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -407,6 +446,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -416,6 +456,7 @@ class SnippetIngestionClient
      */
     public function snippetForGetEvents()
     {
+        // >SEPARATOR getEvents
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -426,6 +467,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -435,6 +477,7 @@ class SnippetIngestionClient
      */
     public function snippetForGetRun()
     {
+        // >SEPARATOR getRun
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -445,6 +488,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -454,6 +498,7 @@ class SnippetIngestionClient
      */
     public function snippetForGetRuns()
     {
+        // >SEPARATOR getRuns
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -462,6 +507,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -471,6 +517,7 @@ class SnippetIngestionClient
      */
     public function snippetForGetSource()
     {
+        // >SEPARATOR getSource
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -481,6 +528,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -490,6 +538,7 @@ class SnippetIngestionClient
      */
     public function snippetForGetSources()
     {
+        // >SEPARATOR getSources
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -498,6 +547,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -507,6 +557,7 @@ class SnippetIngestionClient
      */
     public function snippetForGetTask()
     {
+        // >SEPARATOR getTask
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -517,6 +568,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -526,6 +578,7 @@ class SnippetIngestionClient
      */
     public function snippetForGetTasks()
     {
+        // >SEPARATOR getTasks
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -534,6 +587,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -543,6 +597,7 @@ class SnippetIngestionClient
      */
     public function snippetForRunTask()
     {
+        // >SEPARATOR runTask
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -553,6 +608,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -562,6 +618,7 @@ class SnippetIngestionClient
      */
     public function snippetForSearchAuthentications()
     {
+        // >SEPARATOR searchAuthentications
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -577,6 +634,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -586,6 +644,7 @@ class SnippetIngestionClient
      */
     public function snippetForSearchDestinations()
     {
+        // >SEPARATOR searchDestinations
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -601,6 +660,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -610,6 +670,7 @@ class SnippetIngestionClient
      */
     public function snippetForSearchSources()
     {
+        // >SEPARATOR searchSources
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -625,6 +686,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -634,6 +696,7 @@ class SnippetIngestionClient
      */
     public function snippetForSearchTasks()
     {
+        // >SEPARATOR searchTasks
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -651,6 +714,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -660,6 +724,7 @@ class SnippetIngestionClient
      */
     public function snippetForTriggerDockerSourceDiscover()
     {
+        // >SEPARATOR triggerDockerSourceDiscover
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -670,6 +735,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -679,6 +745,7 @@ class SnippetIngestionClient
      */
     public function snippetForUpdateAuthentication()
     {
+        // >SEPARATOR updateAuthentication
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -691,6 +758,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -700,6 +768,7 @@ class SnippetIngestionClient
      */
     public function snippetForUpdateDestination()
     {
+        // >SEPARATOR updateDestination
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -712,6 +781,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -721,6 +791,7 @@ class SnippetIngestionClient
      */
     public function snippetForUpdateSource()
     {
+        // >SEPARATOR updateSource
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -733,6 +804,7 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -742,6 +814,7 @@ class SnippetIngestionClient
      */
     public function snippetForUpdateTask()
     {
+        // >SEPARATOR updateTask
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -754,5 +827,6 @@ class SnippetIngestionClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 }

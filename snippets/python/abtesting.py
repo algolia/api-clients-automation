@@ -7,6 +7,7 @@ async def snippet_for_add_ab_tests():
 
     addABTests with minimal parameters
     """
+    # >SEPARATOR addABTests
     # Initialize the client
     _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -33,6 +34,7 @@ async def snippet_for_add_ab_tests():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_delete():
@@ -41,6 +43,7 @@ async def snippet_for_custom_delete():
 
     allow del method for a custom path with minimal parameters
     """
+    # >SEPARATOR customDelete
     # Initialize the client
     _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -54,6 +57,7 @@ async def snippet_for_custom_delete():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_get():
@@ -62,6 +66,7 @@ async def snippet_for_custom_get():
 
     allow get method for a custom path with minimal parameters
     """
+    # >SEPARATOR customGet
     # Initialize the client
     _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -75,6 +80,7 @@ async def snippet_for_custom_get():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_post():
@@ -83,6 +89,7 @@ async def snippet_for_custom_post():
 
     allow post method for a custom path with minimal parameters
     """
+    # >SEPARATOR customPost
     # Initialize the client
     _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -96,6 +103,7 @@ async def snippet_for_custom_post():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_custom_put():
@@ -104,6 +112,7 @@ async def snippet_for_custom_put():
 
     allow put method for a custom path with minimal parameters
     """
+    # >SEPARATOR customPut
     # Initialize the client
     _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -117,6 +126,7 @@ async def snippet_for_custom_put():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_delete_ab_test():
@@ -125,6 +135,7 @@ async def snippet_for_delete_ab_test():
 
     deleteABTest
     """
+    # >SEPARATOR deleteABTest
     # Initialize the client
     _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -138,6 +149,7 @@ async def snippet_for_delete_ab_test():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_get_ab_test():
@@ -146,6 +158,7 @@ async def snippet_for_get_ab_test():
 
     getABTest
     """
+    # >SEPARATOR getABTest
     # Initialize the client
     _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -159,6 +172,7 @@ async def snippet_for_get_ab_test():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_list_ab_tests():
@@ -167,6 +181,7 @@ async def snippet_for_list_ab_tests():
 
     listABTests with minimal parameters
     """
+    # >SEPARATOR listABTests
     # Initialize the client
     _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -178,6 +193,7 @@ async def snippet_for_list_ab_tests():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 
 async def snippet_for_stop_ab_test():
@@ -186,6 +202,7 @@ async def snippet_for_stop_ab_test():
 
     stopABTest
     """
+    # >SEPARATOR stopABTest
     # Initialize the client
     _client = AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
@@ -199,3 +216,4 @@ async def snippet_for_stop_ab_test():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<

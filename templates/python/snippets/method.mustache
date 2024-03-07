@@ -9,6 +9,7 @@ async def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}():
 
     {{{description}}}
     """
+    # >SEPARATOR {{method}}
     # Initialize the client
     _client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, "YOUR_APP_ID_REGION"{{/hasRegionalHost}})
 
@@ -20,6 +21,7 @@ async def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}():
 
     # print the JSON response
     print(resp.to_json())
+    # SEPARATOR<
 
 {{/snippet}}
 {{/blocksRequests}}

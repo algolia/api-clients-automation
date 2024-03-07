@@ -9,9 +9,9 @@ import {
   getTestOutputFolder,
 } from '../../config.js';
 
-import { getVersionFileForLanguage, COMMON_DEPENDENCIES, DEPENDENCIES } from './setRunVariables.js';
-import type { ClientMatrix, CreateMatrix, Matrix, SpecMatrix, ToRunMatrix } from './types.js';
-import { computeCacheKey, isBaseChanged } from './utils.js';
+import { COMMON_DEPENDENCIES, DEPENDENCIES } from './setRunVariables.js';
+import type { ClientMatrix, CreateMatrix, ToRunMatrix } from './types.js';
+import { isBaseChanged } from './utils.js';
 
 // This empty matrix is required by the CI, otherwise it throws
 const EMPTY_MATRIX = { client: ['no-run'] };
@@ -48,26 +48,19 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       }
     }
 
-    // if this language is not yet in the matrix, we initialize it with the client-specific files
+    // if no common has changed and the current language is therefore not yet in the matrix,
+    // we initialize it with the client-specific files
     if (!(language in matrix)) {
-      const cacheToCompute: string[] = [getVersionFileForLanguage(language)];
-
-      for (const [, dependency] of Object.entries(COMMON_DEPENDENCIES)) {
-        cacheToCompute.push(...dependency);
-      }
-
       matrix[language] = {
         path: getLanguageFolder(language),
         toRun: [],
-        cacheToCompute,
       };
     }
 
     matrix[language].toRun.push(client);
-    matrix[language].cacheToCompute.push(`specs/${bundledSpec}`);
   }
 
-  const clientMatrix: Matrix<ClientMatrix> = {
+  const clientMatrix: ClientMatrix = {
     client: [],
   };
 
@@ -141,7 +134,6 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
       path: matrix[language].path,
       toRun,
       buildCommand,
-      cacheKey: await computeCacheKey(`clients-${language}`, matrix[language].cacheToCompute),
       testsRootFolder,
       testsToDelete,
       testsToStore,
@@ -162,28 +154,14 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
   core.setOutput('GEN_MATRIX', JSON.stringify(shouldRun ? clientMatrix : EMPTY_MATRIX));
 }
 
-async function createSpecMatrix(): Promise<void> {
-  const matrix: ToRunMatrix = {
-    path: 'specs/bundled',
-    toRun: [],
-    cacheToCompute: ['specs/common'],
-  };
-
-  for (const client of CLIENTS) {
-    // The `algoliasearch` spec is created by the `search` spec.
-    const bundledSpecName = client === 'algoliasearch' ? 'search' : client;
-
-    matrix.toRun.push(client);
-    matrix.cacheToCompute.push(`specs/${bundledSpecName}`);
-  }
-
-  const ciMatrix: SpecMatrix = {
-    bundledPath: matrix.path,
-    toRun: matrix.toRun.join(' '),
-    cacheKey: await computeCacheKey('specs', matrix.cacheToCompute),
-  };
-
-  core.setOutput('MATRIX', JSON.stringify(ciMatrix));
+function createSpecMatrix(): void {
+  core.setOutput(
+    'MATRIX',
+    JSON.stringify({
+      bundledPath: 'specs/bundled',
+      toRun: CLIENTS.join(' '),
+    }),
+  );
 }
 
 /**
@@ -194,7 +172,7 @@ async function createMatrix(opts: CreateMatrix): Promise<void> {
     return await createClientMatrix(opts.baseBranch);
   }
 
-  return await createSpecMatrix();
+  return createSpecMatrix();
 }
 
 if (import.meta.url.endsWith(process.argv[1])) {

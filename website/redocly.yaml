@@ -1,0 +1,16 @@
+# NOTE: Only supports options marked as "Supported in Redoc CE"
+# See https://redocly.com/docs/cli/configuration/ for more information.
+
+extends:
+  - recommended
+
+theme:
+  # See https://redocly.com/docs/api-reference-docs/configuration/functionality/
+  openapi:
+    disableSearch: true
+    downloadDefinitionUrl: https://github.com/algolia/api-clients-automation/tree/main/specs/bundled
+    hideRequestPayloadSample: true
+    showExtensions:
+      - x-acl
+    # See https://redocly.com/docs/api-reference-docs/configuration/theming/
+    theme:

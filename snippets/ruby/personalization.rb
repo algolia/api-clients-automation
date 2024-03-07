@@ -4,6 +4,7 @@ require 'algolia'
 #
 # allow del method for a custom path with minimal parameters
 def snippet_for_custom_delete
+  # >SEPARATOR customDelete
   # Initialize the client
   client = Algolia::PersonalizationClient.create(
     'YOUR_APP_ID',
@@ -19,12 +20,14 @@ def snippet_for_custom_delete
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customGet method.
 #
 # allow get method for a custom path with minimal parameters
 def snippet_for_custom_get
+  # >SEPARATOR customGet
   # Initialize the client
   client = Algolia::PersonalizationClient.create(
     'YOUR_APP_ID',
@@ -40,12 +43,14 @@ def snippet_for_custom_get
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customPost method.
 #
 # allow post method for a custom path with minimal parameters
 def snippet_for_custom_post
+  # >SEPARATOR customPost
   # Initialize the client
   client = Algolia::PersonalizationClient.create(
     'YOUR_APP_ID',
@@ -61,12 +66,14 @@ def snippet_for_custom_post
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customPut method.
 #
 # allow put method for a custom path with minimal parameters
 def snippet_for_custom_put
+  # >SEPARATOR customPut
   # Initialize the client
   client = Algolia::PersonalizationClient.create(
     'YOUR_APP_ID',
@@ -82,12 +89,14 @@ def snippet_for_custom_put
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the deleteUserProfile method.
 #
 # delete deleteUserProfile
 def snippet_for_delete_user_profile
+  # >SEPARATOR deleteUserProfile
   # Initialize the client
   client = Algolia::PersonalizationClient.create(
     'YOUR_APP_ID',
@@ -103,12 +112,14 @@ def snippet_for_delete_user_profile
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getPersonalizationStrategy method.
 #
 # get getPersonalizationStrategy
 def snippet_for_get_personalization_strategy
+  # >SEPARATOR getPersonalizationStrategy
   # Initialize the client
   client = Algolia::PersonalizationClient.create(
     'YOUR_APP_ID',
@@ -124,12 +135,14 @@ def snippet_for_get_personalization_strategy
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getUserTokenProfile method.
 #
 # get getUserTokenProfile
 def snippet_for_get_user_token_profile
+  # >SEPARATOR getUserTokenProfile
   # Initialize the client
   client = Algolia::PersonalizationClient.create(
     'YOUR_APP_ID',
@@ -145,12 +158,14 @@ def snippet_for_get_user_token_profile
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the setPersonalizationStrategy method.
 #
 # set setPersonalizationStrategy
 def snippet_for_set_personalization_strategy
+  # >SEPARATOR setPersonalizationStrategy
   # Initialize the client
   client = Algolia::PersonalizationClient.create(
     'YOUR_APP_ID',
@@ -176,4 +191,5 @@ def snippet_for_set_personalization_strategy
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end

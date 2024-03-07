@@ -6,6 +6,7 @@ import { abtestingClient } from '@algolia/client-abtesting';
 //
 // addABTests with minimal parameters
 export async function snippetForaddABTests(): Promise<void> {
+  // >SEPARATOR addABTests
   // Initialize the client
   const client = abtestingClient(
     'YOUR_APP_ID',
@@ -23,14 +24,16 @@ export async function snippetForaddABTests(): Promise<void> {
     ],
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the customDelete method.
 //
 // allow del method for a custom path with minimal parameters
 export async function snippetForcustomDelete(): Promise<void> {
+  // >SEPARATOR customDelete
   // Initialize the client
   const client = abtestingClient(
     'YOUR_APP_ID',
@@ -41,14 +44,16 @@ export async function snippetForcustomDelete(): Promise<void> {
   // Call the API
   const response = await client.customDelete({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the customGet method.
 //
 // allow get method for a custom path with minimal parameters
 export async function snippetForcustomGet(): Promise<void> {
+  // >SEPARATOR customGet
   // Initialize the client
   const client = abtestingClient(
     'YOUR_APP_ID',
@@ -59,14 +64,16 @@ export async function snippetForcustomGet(): Promise<void> {
   // Call the API
   const response = await client.customGet({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the customPost method.
 //
 // allow post method for a custom path with minimal parameters
 export async function snippetForcustomPost(): Promise<void> {
+  // >SEPARATOR customPost
   // Initialize the client
   const client = abtestingClient(
     'YOUR_APP_ID',
@@ -77,14 +84,16 @@ export async function snippetForcustomPost(): Promise<void> {
   // Call the API
   const response = await client.customPost({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the customPut method.
 //
 // allow put method for a custom path with minimal parameters
 export async function snippetForcustomPut(): Promise<void> {
+  // >SEPARATOR customPut
   // Initialize the client
   const client = abtestingClient(
     'YOUR_APP_ID',
@@ -95,14 +104,16 @@ export async function snippetForcustomPut(): Promise<void> {
   // Call the API
   const response = await client.customPut({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the deleteABTest method.
 //
 // deleteABTest
 export async function snippetFordeleteABTest(): Promise<void> {
+  // >SEPARATOR deleteABTest
   // Initialize the client
   const client = abtestingClient(
     'YOUR_APP_ID',
@@ -113,14 +124,16 @@ export async function snippetFordeleteABTest(): Promise<void> {
   // Call the API
   const response = await client.deleteABTest({ id: 42 });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getABTest method.
 //
 // getABTest
 export async function snippetForgetABTest(): Promise<void> {
+  // >SEPARATOR getABTest
   // Initialize the client
   const client = abtestingClient(
     'YOUR_APP_ID',
@@ -131,14 +144,16 @@ export async function snippetForgetABTest(): Promise<void> {
   // Call the API
   const response = await client.getABTest({ id: 42 });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the listABTests method.
 //
 // listABTests with minimal parameters
 export async function snippetForlistABTests(): Promise<void> {
+  // >SEPARATOR listABTests
   // Initialize the client
   const client = abtestingClient(
     'YOUR_APP_ID',
@@ -149,14 +164,16 @@ export async function snippetForlistABTests(): Promise<void> {
   // Call the API
   const response = await client.listABTests();
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the stopABTest method.
 //
 // stopABTest
 export async function snippetForstopABTest(): Promise<void> {
+  // >SEPARATOR stopABTest
   // Initialize the client
   const client = abtestingClient(
     'YOUR_APP_ID',
@@ -167,6 +184,7 @@ export async function snippetForstopABTest(): Promise<void> {
   // Call the API
   const response = await client.stopABTest({ id: 42 });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }

@@ -6,62 +6,71 @@ import { recommendClient } from '@algolia/recommend';
 //
 // allow del method for a custom path with minimal parameters
 export async function snippetForcustomDelete(): Promise<void> {
+  // >SEPARATOR customDelete
   // Initialize the client
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
   const response = await client.customDelete({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the customGet method.
 //
 // allow get method for a custom path with minimal parameters
 export async function snippetForcustomGet(): Promise<void> {
+  // >SEPARATOR customGet
   // Initialize the client
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
   const response = await client.customGet({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the customPost method.
 //
 // allow post method for a custom path with minimal parameters
 export async function snippetForcustomPost(): Promise<void> {
+  // >SEPARATOR customPost
   // Initialize the client
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
   const response = await client.customPost({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the customPut method.
 //
 // allow put method for a custom path with minimal parameters
 export async function snippetForcustomPut(): Promise<void> {
+  // >SEPARATOR customPut
   // Initialize the client
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
   const response = await client.customPut({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the deleteRecommendRule method.
 //
 // deleteRecommendRule0
 export async function snippetFordeleteRecommendRule(): Promise<void> {
+  // >SEPARATOR deleteRecommendRule
   // Initialize the client
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
@@ -72,14 +81,16 @@ export async function snippetFordeleteRecommendRule(): Promise<void> {
     objectID: 'objectID',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getRecommendRule method.
 //
 // getRecommendRule0
 export async function snippetForgetRecommendRule(): Promise<void> {
+  // >SEPARATOR getRecommendRule
   // Initialize the client
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
@@ -90,14 +101,16 @@ export async function snippetForgetRecommendRule(): Promise<void> {
     objectID: 'objectID',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getRecommendStatus method.
 //
 // getRecommendStatus0
 export async function snippetForgetRecommendStatus(): Promise<void> {
+  // >SEPARATOR getRecommendStatus
   // Initialize the client
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
@@ -108,14 +121,16 @@ export async function snippetForgetRecommendStatus(): Promise<void> {
     taskID: 12345,
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getRecommendations method.
 //
 // get recommendations for recommend model with minimal parameters
 export async function snippetForgetRecommendations(): Promise<void> {
+  // >SEPARATOR getRecommendations
   // Initialize the client
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
@@ -131,14 +146,16 @@ export async function snippetForgetRecommendations(): Promise<void> {
     ],
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the searchRecommendRules method.
 //
 // searchRecommendRules0
 export async function snippetForsearchRecommendRules(): Promise<void> {
+  // >SEPARATOR searchRecommendRules
   // Initialize the client
   const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
@@ -148,6 +165,7 @@ export async function snippetForsearchRecommendRules(): Promise<void> {
     model: 'related-products',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }

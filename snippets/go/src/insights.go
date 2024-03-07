@@ -11,6 +11,7 @@ func SnippetForCustomDeleteOfInsights() {
 	   allow del method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customDelete
 	// Initialize the client with your application region, eg. insights.YOUR_APP_ID_REGION
 	client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY", insights.US)
 	if err != nil {
@@ -29,6 +30,7 @@ func SnippetForCustomDeleteOfInsights() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomGetOfInsights() {
 	/*
@@ -37,6 +39,7 @@ func SnippetForCustomGetOfInsights() {
 	   allow get method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customGet
 	// Initialize the client with your application region, eg. insights.YOUR_APP_ID_REGION
 	client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY", insights.US)
 	if err != nil {
@@ -55,6 +58,7 @@ func SnippetForCustomGetOfInsights() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomPostOfInsights() {
 	/*
@@ -63,6 +67,7 @@ func SnippetForCustomPostOfInsights() {
 	   allow post method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customPost
 	// Initialize the client with your application region, eg. insights.YOUR_APP_ID_REGION
 	client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY", insights.US)
 	if err != nil {
@@ -81,6 +86,7 @@ func SnippetForCustomPostOfInsights() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomPutOfInsights() {
 	/*
@@ -89,6 +95,7 @@ func SnippetForCustomPutOfInsights() {
 	   allow put method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customPut
 	// Initialize the client with your application region, eg. insights.YOUR_APP_ID_REGION
 	client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY", insights.US)
 	if err != nil {
@@ -107,6 +114,7 @@ func SnippetForCustomPutOfInsights() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForDeleteUserTokenOfInsights() {
 	/*
@@ -115,6 +123,7 @@ func SnippetForDeleteUserTokenOfInsights() {
 	   deleteUserToken0
 	*/
 
+	// >SEPARATOR deleteUserToken
 	// Initialize the client with your application region, eg. insights.YOUR_APP_ID_REGION
 	client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY", insights.US)
 	if err != nil {
@@ -131,6 +140,7 @@ func SnippetForDeleteUserTokenOfInsights() {
 		panic(err)
 	}
 
+	// SEPARATOR<
 }
 func SnippetForPushEventsOfInsights() {
 	/*
@@ -139,6 +149,7 @@ func SnippetForPushEventsOfInsights() {
 	   pushEvents0
 	*/
 
+	// >SEPARATOR pushEvents
 	// Initialize the client with your application region, eg. insights.YOUR_APP_ID_REGION
 	client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY", insights.US)
 	if err != nil {
@@ -162,4 +173,5 @@ func SnippetForPushEventsOfInsights() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }

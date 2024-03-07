@@ -481,6 +481,173 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new QuerySuggestionsClient(
+              new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomGetAsync("/test/minimal");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            suggestions.YOUR_APP_ID_REGION
+
+            client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            suggestions.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomGet(client.NewApiCustomGetRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            QuerySuggestionsClient client = new
+            QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customGet("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = querySuggestionsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.customGet({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customGet(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customGet(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = QuerySuggestionsClient(
+                "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
+            )
+
+            # Call the API
+            resp = await _client.custom_get(
+                path="/test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::QuerySuggestionsClient.create(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            )
+
+            # Call the API
+            resp = client.custom_get("/test/minimal")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val res = client.customGet[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            apiKey: "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customGet(
+                path: "/test/minimal"
+            )
     post:
       operationId: customPost
       requestBody:
@@ -509,6 +676,173 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new QuerySuggestionsClient(
+              new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomPostAsync("/test/minimal");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            suggestions.YOUR_APP_ID_REGION
+
+            client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            suggestions.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomPost(client.NewApiCustomPostRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            QuerySuggestionsClient client = new
+            QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customPost("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = querySuggestionsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.customPost({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customPost(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customPost(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = QuerySuggestionsClient(
+                "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
+            )
+
+            # Call the API
+            resp = await _client.custom_post(
+                path="/test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::QuerySuggestionsClient.create(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            )
+
+            # Call the API
+            resp = client.custom_post("/test/minimal")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val res = client.customPost[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            apiKey: "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customPost(
+                path: "/test/minimal"
+            )
     put:
       operationId: customPut
       requestBody:
@@ -537,6 +871,173 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new QuerySuggestionsClient(
+              new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomPutAsync("/test/minimal");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            suggestions.YOUR_APP_ID_REGION
+
+            client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            suggestions.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomPut(client.NewApiCustomPutRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            QuerySuggestionsClient client = new
+            QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customPut("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = querySuggestionsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.customPut({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customPut(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customPut(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = QuerySuggestionsClient(
+                "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
+            )
+
+            # Call the API
+            resp = await _client.custom_put(
+                path="/test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::QuerySuggestionsClient.create(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            )
+
+            # Call the API
+            resp = client.custom_put("/test/minimal")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val res = client.customPut[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            apiKey: "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customPut(
+                path: "/test/minimal"
+            )
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API.
@@ -559,6 +1060,179 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new QuerySuggestionsClient(
+              new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomDeleteAsync("/test/minimal");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            suggestions.YOUR_APP_ID_REGION
+
+            client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            suggestions.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            QuerySuggestionsClient client = new
+            QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customDelete("/test/minimal");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = querySuggestionsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+
+            // Call the API
+
+            const response = await client.customDelete({ path: '/test/minimal'
+            });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customDelete(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customDelete(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = QuerySuggestionsClient(
+                "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
+            )
+
+            # Call the API
+            resp = await _client.custom_delete(
+                path="/test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::QuerySuggestionsClient.create(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            )
+
+            # Call the API
+            resp = client.custom_delete("/test/minimal")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val res = client.customDelete[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            apiKey: "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customDelete(
+                path: "/test/minimal"
+            )
   /1/configs:
     get:
       tags:
@@ -579,6 +1253,163 @@ paths:
                   $ref: '#/components/schemas/QuerySuggestionsConfigurationResponse'
         '401':
           $ref: '#/components/responses/Unauthorized'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new QuerySuggestionsClient(
+              new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetAllConfigsAsync();
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            suggestions.YOUR_APP_ID_REGION
+
+            client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            suggestions.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.GetAllConfigs()
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            QuerySuggestionsClient client = new
+            QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getAllConfigs();
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = querySuggestionsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.getAllConfigs();
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getAllConfigs()
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getAllConfigs();
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = QuerySuggestionsClient(
+                "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
+            )
+
+            # Call the API
+            resp = await _client.get_all_configs()
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::QuerySuggestionsClient.create(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            )
+
+            # Call the API
+            resp = client.get_all_configs
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val res = client.getAllConfigs(
+
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            apiKey: "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getAllConfigs()
     post:
       tags:
         - configurations
@@ -619,6 +1450,350 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
         '500':
           $ref: '#/components/responses/InternalError'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new QuerySuggestionsClient(
+              new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CreateConfigAsync(
+              new QuerySuggestionsConfigurationWithIndex
+              {
+                IndexName = "theIndexName",
+                SourceIndices = new List<SourceIndex>
+                {
+                  new SourceIndex
+                  {
+                    IndexName = "testIndex",
+                    Facets = new List<Facet> { new Facet { Attribute = "test", } },
+                    Generate = new List<List<string>>
+                    {
+                      new List<string> { "facetA", "facetB" },
+                      new List<string> { "facetC" }
+                    },
+                  }
+                },
+                Languages = new Languages(new List<string> { "french" }),
+                Exclude = new List<string> { "test" },
+              }
+            );
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            suggestions.YOUR_APP_ID_REGION
+
+            client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            suggestions.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CreateConfig(client.NewApiCreateConfigRequest(
+
+              suggestions.NewEmptyQuerySuggestionsConfigurationWithIndex().SetIndexName("theIndexName").SetSourceIndices(
+                []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("testIndex").SetFacets(
+                  []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
+                  [][]string{
+                    []string{"facetA", "facetB"},
+                    []string{"facetC"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(
+                []string{"french"})).SetExclude(
+                []string{"test"}),
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            QuerySuggestionsClient client = new
+            QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.createConfig(
+              new QuerySuggestionsConfigurationWithIndex()
+                .setIndexName("theIndexName")
+                .setSourceIndices(
+                  List.of(
+                    new SourceIndex()
+                      .setIndexName("testIndex")
+                      .setFacets(List.of(new Facet().setAttribute("test")))
+                      .setGenerate(List.of(List.of("facetA", "facetB"), List.of("facetC")))
+                  )
+                )
+                .setLanguages(Languages.of(List.of("french")))
+                .setExclude(List.of("test"))
+            );
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = querySuggestionsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.createConfig({
+              indexName: 'theIndexName',
+              sourceIndices: [
+                {
+                  indexName: 'testIndex',
+                  facets: [{ attribute: 'test' }],
+                  generate: [['facetA', 'facetB'], ['facetC']],
+                },
+              ],
+              languages: ['french'],
+              exclude: ['test'],
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.createConfig(
+              querySuggestionsConfigurationWithIndex = QuerySuggestionsConfigurationWithIndex(
+                indexName = "theIndexName",
+                sourceIndices = listOf(
+                  SourceIndex(
+                    indexName = "testIndex",
+                    facets = listOf(
+                      Facet(
+                        attribute = "test",
+                      ),
+                    ),
+                    generate = listOf(listOf("facetA", "facetB"), listOf("facetC")),
+                  ),
+                ),
+                languages = Languages.of(listOf("french")),
+                exclude = listOf("test"),
+              ),
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->createConfig(
+                ['indexName' => 'theIndexName',
+                    'sourceIndices' => [
+                        ['indexName' => 'testIndex',
+                            'facets' => [
+                                ['attribute' => 'test',
+                                ],
+                            ],
+                            'generate' => [
+                                [
+                                    'facetA',
+
+                                    'facetB',
+                                ],
+
+                                [
+                                    'facetC',
+                                ],
+                            ],
+                        ],
+                    ],
+                    'languages' => [
+                        'french',
+                    ],
+                    'exclude' => [
+                        'test',
+                    ],
+                ],
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = QuerySuggestionsClient(
+                "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
+            )
+
+            # Call the API
+            resp = await _client.create_config(
+                query_suggestions_configuration_with_index={
+                    "indexName": "theIndexName",
+                    "sourceIndices": [
+                        {
+                            "indexName": "testIndex",
+                            "facets": [
+                                {
+                                    "attribute": "test",
+                                },
+                            ],
+                            "generate": [
+                                [
+                                    "facetA",
+                                    "facetB",
+                                ],
+                                [
+                                    "facetC",
+                                ],
+                            ],
+                        },
+                    ],
+                    "languages": [
+                        "french",
+                    ],
+                    "exclude": [
+                        "test",
+                    ],
+                },
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::QuerySuggestionsClient.create(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            )
+
+            # Call the API
+            resp = client.create_config(
+              QuerySuggestionsConfigurationWithIndex.new(
+                index_name: "theIndexName",
+                source_indices: [SourceIndex.new(
+                  index_name: "testIndex",
+                  facets: [Facet.new(attribute: "test")],
+                  generate: [["facetA", "facetB"], ["facetC"]]
+                )],
+                languages: ["french"],
+                exclude: ["test"]
+              )
+            )
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val res = client.createConfig(
+              querySuggestionsConfigurationWithIndex = QuerySuggestionsConfigurationWithIndex(
+                indexName = "theIndexName",
+                sourceIndices = Seq(
+                  SourceIndex(
+                    indexName = "testIndex",
+                    facets = Some(
+                      Seq(
+                        Facet(
+                          attribute = Some("test")
+                        )
+                      )
+                    ),
+                    generate = Some(Seq(Seq("facetA", "facetB"), Seq("facetC")))
+                  )
+                ),
+                languages = Some(Languages(Seq("french"))),
+                exclude = Some(Seq("test"))
+              )
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            apiKey: "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.createConfig(
+                querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex(
+                    indexName: "theIndexName",
+                    sourceIndices: [
+                        SourceIndex(
+                            indexName: "testIndex",
+                            facets: [
+                                Facet(
+                                    attribute: "test"
+                                ),
+                            ],
+                            generate: [
+                                [
+                                    "facetA",
+                                    "facetB",
+                                ],
+                                [
+                                    "facetC",
+                                ],
+                            ]
+                        ),
+                    ],
+                    languages: Languages.arrayOfString(
+                        [
+                            "french",
+                        ]
+                    ),
+                    exclude: [
+                        "test",
+                    ]
+                )
+            )
   /1/configs/{indexName}:
     get:
       tags:
@@ -643,6 +1818,179 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new QuerySuggestionsClient(
+              new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+
+            // Call the API
+
+            var response = await
+            client.GetConfigAsync("cts_e2e_browse_query_suggestions");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            suggestions.YOUR_APP_ID_REGION
+
+            client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            suggestions.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.GetConfig(client.NewApiGetConfigRequest(
+              "cts_e2e_browse_query_suggestions",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            QuerySuggestionsClient client = new
+            QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getConfig("cts_e2e_browse_query_suggestions");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = querySuggestionsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.getConfig({
+              indexName: 'cts_e2e_browse_query_suggestions',
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getConfig(
+              indexName = "cts_e2e_browse_query_suggestions",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getConfig(
+                'cts_e2e_browse_query_suggestions',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = QuerySuggestionsClient(
+                "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
+            )
+
+            # Call the API
+            resp = await _client.get_config(
+                index_name="cts_e2e_browse_query_suggestions",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::QuerySuggestionsClient.create(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            )
+
+            # Call the API
+            resp = client.get_config("cts_e2e_browse_query_suggestions")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val res = client.getConfig(
+              indexName = "cts_e2e_browse_query_suggestions"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            apiKey: "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getConfig(
+                indexName: "cts_e2e_browse_query_suggestions"
+            )
     put:
       tags:
         - configurations
@@ -678,6 +2026,352 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalError-2'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new QuerySuggestionsClient(
+              new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.UpdateConfigAsync(
+              "theIndexName",
+              new QuerySuggestionsConfiguration
+              {
+                SourceIndices = new List<SourceIndex>
+                {
+                  new SourceIndex
+                  {
+                    IndexName = "testIndex",
+                    Facets = new List<Facet> { new Facet { Attribute = "test", } },
+                    Generate = new List<List<string>>
+                    {
+                      new List<string> { "facetA", "facetB" },
+                      new List<string> { "facetC" }
+                    },
+                  }
+                },
+                Languages = new Languages(new List<string> { "french" }),
+                Exclude = new List<string> { "test" },
+              }
+            );
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            suggestions.YOUR_APP_ID_REGION
+
+            client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            suggestions.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.UpdateConfig(client.NewApiUpdateConfigRequest(
+              "theIndexName",
+              suggestions.NewEmptyQuerySuggestionsConfiguration().SetSourceIndices(
+                []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("testIndex").SetFacets(
+                  []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
+                  [][]string{
+                    []string{"facetA", "facetB"},
+                    []string{"facetC"}})}).SetLanguages(suggestions.ArrayOfStringAsLanguages(
+                []string{"french"})).SetExclude(
+                []string{"test"}),
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            QuerySuggestionsClient client = new
+            QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.updateConfig(
+              "theIndexName",
+              new QuerySuggestionsConfiguration()
+                .setSourceIndices(
+                  List.of(
+                    new SourceIndex()
+                      .setIndexName("testIndex")
+                      .setFacets(List.of(new Facet().setAttribute("test")))
+                      .setGenerate(List.of(List.of("facetA", "facetB"), List.of("facetC")))
+                  )
+                )
+                .setLanguages(Languages.of(List.of("french")))
+                .setExclude(List.of("test"))
+            );
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = querySuggestionsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.updateConfig({
+              indexName: 'theIndexName',
+              querySuggestionsConfiguration: {
+                sourceIndices: [
+                  {
+                    indexName: 'testIndex',
+                    facets: [{ attribute: 'test' }],
+                    generate: [['facetA', 'facetB'], ['facetC']],
+                  },
+                ],
+                languages: ['french'],
+                exclude: ['test'],
+              },
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.updateConfig(
+              indexName = "theIndexName",
+              querySuggestionsConfiguration = QuerySuggestionsConfiguration(
+                sourceIndices = listOf(
+                  SourceIndex(
+                    indexName = "testIndex",
+                    facets = listOf(
+                      Facet(
+                        attribute = "test",
+                      ),
+                    ),
+                    generate = listOf(listOf("facetA", "facetB"), listOf("facetC")),
+                  ),
+                ),
+                languages = Languages.of(listOf("french")),
+                exclude = listOf("test"),
+              ),
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->updateConfig(
+                'theIndexName',
+                ['sourceIndices' => [
+                    ['indexName' => 'testIndex',
+                        'facets' => [
+                            ['attribute' => 'test',
+                            ],
+                        ],
+                        'generate' => [
+                            [
+                                'facetA',
+
+                                'facetB',
+                            ],
+
+                            [
+                                'facetC',
+                            ],
+                        ],
+                    ],
+                ],
+                    'languages' => [
+                        'french',
+                    ],
+                    'exclude' => [
+                        'test',
+                    ],
+                ],
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = QuerySuggestionsClient(
+                "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
+            )
+
+            # Call the API
+            resp = await _client.update_config(
+                index_name="theIndexName",
+                query_suggestions_configuration={
+                    "sourceIndices": [
+                        {
+                            "indexName": "testIndex",
+                            "facets": [
+                                {
+                                    "attribute": "test",
+                                },
+                            ],
+                            "generate": [
+                                [
+                                    "facetA",
+                                    "facetB",
+                                ],
+                                [
+                                    "facetC",
+                                ],
+                            ],
+                        },
+                    ],
+                    "languages": [
+                        "french",
+                    ],
+                    "exclude": [
+                        "test",
+                    ],
+                },
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::QuerySuggestionsClient.create(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            )
+
+            # Call the API
+            resp = client.update_config(
+              "theIndexName",
+              QuerySuggestionsConfiguration.new(
+                source_indices: [SourceIndex.new(
+                  index_name: "testIndex",
+                  facets: [Facet.new(attribute: "test")],
+                  generate: [["facetA", "facetB"], ["facetC"]]
+                )],
+                languages: ["french"],
+                exclude: ["test"]
+              )
+            )
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val res = client.updateConfig(
+              indexName = "theIndexName",
+              querySuggestionsConfiguration = QuerySuggestionsConfiguration(
+                sourceIndices = Seq(
+                  SourceIndex(
+                    indexName = "testIndex",
+                    facets = Some(
+                      Seq(
+                        Facet(
+                          attribute = Some("test")
+                        )
+                      )
+                    ),
+                    generate = Some(Seq(Seq("facetA", "facetB"), Seq("facetC")))
+                  )
+                ),
+                languages = Some(Languages(Seq("french"))),
+                exclude = Some(Seq("test"))
+              )
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            apiKey: "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.updateConfig(
+                indexName: "theIndexName",
+                querySuggestionsConfiguration: QuerySuggestionsConfiguration(
+                    sourceIndices: [
+                        SourceIndex(
+                            indexName: "testIndex",
+                            facets: [
+                                Facet(
+                                    attribute: "test"
+                                ),
+                            ],
+                            generate: [
+                                [
+                                    "facetA",
+                                    "facetB",
+                                ],
+                                [
+                                    "facetC",
+                                ],
+                            ]
+                        ),
+                    ],
+                    languages: Languages.arrayOfString(
+                        [
+                            "french",
+                        ]
+                    ),
+                    exclude: [
+                        "test",
+                    ]
+                )
+            )
     delete:
       tags:
         - configurations
@@ -712,6 +2406,179 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '500':
           $ref: '#/components/responses/InternalError-2'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new QuerySuggestionsClient(
+              new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.DeleteConfigAsync("theIndexName");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            suggestions.YOUR_APP_ID_REGION
+
+            client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            suggestions.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.DeleteConfig(client.NewApiDeleteConfigRequest(
+              "theIndexName",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            QuerySuggestionsClient client = new
+            QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.deleteConfig("theIndexName");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = querySuggestionsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+
+            // Call the API
+
+            const response = await client.deleteConfig({ indexName:
+            'theIndexName' });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.deleteConfig(
+              indexName = "theIndexName",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->deleteConfig(
+                'theIndexName',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = QuerySuggestionsClient(
+                "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
+            )
+
+            # Call the API
+            resp = await _client.delete_config(
+                index_name="theIndexName",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::QuerySuggestionsClient.create(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            )
+
+            # Call the API
+            resp = client.delete_config("theIndexName")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val res = client.deleteConfig(
+              indexName = "theIndexName"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            apiKey: "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.deleteConfig(
+                indexName: "theIndexName"
+            )
   /1/configs/{indexName}/status:
     get:
       tags:
@@ -763,6 +2630,180 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new QuerySuggestionsClient(
+              new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetConfigStatusAsync("theIndexName");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            suggestions.YOUR_APP_ID_REGION
+
+            client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            suggestions.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetConfigStatus(client.NewApiGetConfigStatusRequest(
+              "theIndexName",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            QuerySuggestionsClient client = new
+            QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getConfigStatus("theIndexName");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = querySuggestionsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+
+            // Call the API
+
+            const response = await client.getConfigStatus({ indexName:
+            'theIndexName' });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getConfigStatus(
+              indexName = "theIndexName",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getConfigStatus(
+                'theIndexName',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = QuerySuggestionsClient(
+                "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
+            )
+
+            # Call the API
+            resp = await _client.get_config_status(
+                index_name="theIndexName",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::QuerySuggestionsClient.create(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            )
+
+            # Call the API
+            resp = client.get_config_status("theIndexName")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val res = client.getConfigStatus(
+              indexName = "theIndexName"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            apiKey: "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getConfigStatus(
+                indexName: "theIndexName"
+            )
   /1/logs/{indexName}:
     get:
       tags:
@@ -812,3 +2853,176 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new QuerySuggestionsClient(
+              new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetLogFileAsync("theIndexName");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            suggestions.YOUR_APP_ID_REGION
+
+            client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            suggestions.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.GetLogFile(client.NewApiGetLogFileRequest(
+              "theIndexName",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            QuerySuggestionsClient client = new
+            QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getLogFile("theIndexName");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = querySuggestionsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+
+            // Call the API
+
+            const response = await client.getLogFile({ indexName: 'theIndexName'
+            });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getLogFile(
+              indexName = "theIndexName",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getLogFile(
+                'theIndexName',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = QuerySuggestionsClient(
+                "YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION"
+            )
+
+            # Call the API
+            resp = await _client.get_log_file(
+                index_name="theIndexName",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::QuerySuggestionsClient.create(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            )
+
+            # Call the API
+            resp = client.get_log_file("theIndexName")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val res = client.getLogFile(
+              indexName = "theIndexName"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            apiKey: "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getLogFile(
+                indexName: "theIndexName"
+            )

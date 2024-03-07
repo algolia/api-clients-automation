@@ -19,6 +19,7 @@ class ScheduleDateUtilsInput extends \Algolia\AlgoliaSearch\Model\AbstractModel 
      */
     protected static $modelTypes = [
         'timeframe' => 'int',
+        'mapping' => '\Algolia\AlgoliaSearch\Model\Ingestion\MappingInput',
     ];
 
     /**
@@ -28,6 +29,7 @@ class ScheduleDateUtilsInput extends \Algolia\AlgoliaSearch\Model\AbstractModel 
      */
     protected static $modelFormats = [
         'timeframe' => null,
+        'mapping' => null,
     ];
 
     /**
@@ -38,6 +40,7 @@ class ScheduleDateUtilsInput extends \Algolia\AlgoliaSearch\Model\AbstractModel 
      */
     protected static $attributeMap = [
         'timeframe' => 'timeframe',
+        'mapping' => 'mapping',
     ];
 
     /**
@@ -47,6 +50,7 @@ class ScheduleDateUtilsInput extends \Algolia\AlgoliaSearch\Model\AbstractModel 
      */
     protected static $setters = [
         'timeframe' => 'setTimeframe',
+        'mapping' => 'setMapping',
     ];
 
     /**
@@ -56,6 +60,7 @@ class ScheduleDateUtilsInput extends \Algolia\AlgoliaSearch\Model\AbstractModel 
      */
     protected static $getters = [
         'timeframe' => 'getTimeframe',
+        'mapping' => 'getMapping',
     ];
 
     /**
@@ -74,6 +79,9 @@ class ScheduleDateUtilsInput extends \Algolia\AlgoliaSearch\Model\AbstractModel 
     {
         if (isset($data['timeframe'])) {
             $this->container['timeframe'] = $data['timeframe'];
+        }
+        if (isset($data['mapping'])) {
+            $this->container['mapping'] = $data['mapping'];
         }
     }
 
@@ -189,6 +197,30 @@ class ScheduleDateUtilsInput extends \Algolia\AlgoliaSearch\Model\AbstractModel 
         }
 
         $this->container['timeframe'] = $timeframe;
+
+        return $this;
+    }
+
+    /**
+     * Gets mapping.
+     *
+     * @return null|\Algolia\AlgoliaSearch\Model\Ingestion\MappingInput
+     */
+    public function getMapping()
+    {
+        return $this->container['mapping'] ?? null;
+    }
+
+    /**
+     * Sets mapping.
+     *
+     * @param null|\Algolia\AlgoliaSearch\Model\Ingestion\MappingInput $mapping mapping
+     *
+     * @return self
+     */
+    public function setMapping($mapping)
+    {
+        $this->container['mapping'] = $mapping;
 
         return $this;
     }

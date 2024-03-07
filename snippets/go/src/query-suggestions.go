@@ -11,6 +11,7 @@ func SnippetForCreateConfigOfSuggestions() {
 	   createConfig0
 	*/
 
+	// >SEPARATOR createConfig
 	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
 	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
 	if err != nil {
@@ -37,6 +38,7 @@ func SnippetForCreateConfigOfSuggestions() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomDeleteOfSuggestions() {
 	/*
@@ -45,6 +47,7 @@ func SnippetForCustomDeleteOfSuggestions() {
 	   allow del method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customDelete
 	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
 	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
 	if err != nil {
@@ -63,6 +66,7 @@ func SnippetForCustomDeleteOfSuggestions() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomGetOfSuggestions() {
 	/*
@@ -71,6 +75,7 @@ func SnippetForCustomGetOfSuggestions() {
 	   allow get method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customGet
 	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
 	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
 	if err != nil {
@@ -89,6 +94,7 @@ func SnippetForCustomGetOfSuggestions() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomPostOfSuggestions() {
 	/*
@@ -97,6 +103,7 @@ func SnippetForCustomPostOfSuggestions() {
 	   allow post method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customPost
 	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
 	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
 	if err != nil {
@@ -115,6 +122,7 @@ func SnippetForCustomPostOfSuggestions() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomPutOfSuggestions() {
 	/*
@@ -123,6 +131,7 @@ func SnippetForCustomPutOfSuggestions() {
 	   allow put method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customPut
 	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
 	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
 	if err != nil {
@@ -141,6 +150,7 @@ func SnippetForCustomPutOfSuggestions() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForDeleteConfigOfSuggestions() {
 	/*
@@ -149,6 +159,7 @@ func SnippetForDeleteConfigOfSuggestions() {
 	   deleteConfig0
 	*/
 
+	// >SEPARATOR deleteConfig
 	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
 	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
 	if err != nil {
@@ -167,6 +178,7 @@ func SnippetForDeleteConfigOfSuggestions() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetAllConfigsOfSuggestions() {
 	/*
@@ -175,6 +187,7 @@ func SnippetForGetAllConfigsOfSuggestions() {
 	   getAllConfigs0
 	*/
 
+	// >SEPARATOR getAllConfigs
 	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
 	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
 	if err != nil {
@@ -191,6 +204,7 @@ func SnippetForGetAllConfigsOfSuggestions() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetConfigOfSuggestions() {
 	/*
@@ -199,6 +213,7 @@ func SnippetForGetConfigOfSuggestions() {
 	   Retrieve QS config e2e
 	*/
 
+	// >SEPARATOR getConfig
 	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
 	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
 	if err != nil {
@@ -217,6 +232,7 @@ func SnippetForGetConfigOfSuggestions() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetConfigStatusOfSuggestions() {
 	/*
@@ -225,6 +241,7 @@ func SnippetForGetConfigStatusOfSuggestions() {
 	   getConfigStatus0
 	*/
 
+	// >SEPARATOR getConfigStatus
 	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
 	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
 	if err != nil {
@@ -243,6 +260,7 @@ func SnippetForGetConfigStatusOfSuggestions() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetLogFileOfSuggestions() {
 	/*
@@ -251,6 +269,7 @@ func SnippetForGetLogFileOfSuggestions() {
 	   getLogFile0
 	*/
 
+	// >SEPARATOR getLogFile
 	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
 	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
 	if err != nil {
@@ -269,6 +288,7 @@ func SnippetForGetLogFileOfSuggestions() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForUpdateConfigOfSuggestions() {
 	/*
@@ -277,6 +297,7 @@ func SnippetForUpdateConfigOfSuggestions() {
 	   updateConfig0
 	*/
 
+	// >SEPARATOR updateConfig
 	// Initialize the client with your application region, eg. suggestions.YOUR_APP_ID_REGION
 	client, err := suggestions.NewClient("YOUR_APP_ID", "YOUR_API_KEY", suggestions.US)
 	if err != nil {
@@ -303,4 +324,5 @@ func SnippetForUpdateConfigOfSuggestions() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }

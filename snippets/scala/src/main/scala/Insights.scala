@@ -18,6 +18,7 @@ class SnippetInsightsClient {
     * allow del method for a custom path with minimal parameters
     */
   def snippetForInsightsClientCustomDelete(): Unit = {
+    // >SEPARATOR customDelete
     // Initialize the client
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -28,6 +29,7 @@ class SnippetInsightsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customGet method.
@@ -35,6 +37,7 @@ class SnippetInsightsClient {
     * allow get method for a custom path with minimal parameters
     */
   def snippetForInsightsClientCustomGet(): Unit = {
+    // >SEPARATOR customGet
     // Initialize the client
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -45,6 +48,7 @@ class SnippetInsightsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customPost method.
@@ -52,6 +56,7 @@ class SnippetInsightsClient {
     * allow post method for a custom path with minimal parameters
     */
   def snippetForInsightsClientCustomPost(): Unit = {
+    // >SEPARATOR customPost
     // Initialize the client
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -62,6 +67,7 @@ class SnippetInsightsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the customPut method.
@@ -69,6 +75,7 @@ class SnippetInsightsClient {
     * allow put method for a custom path with minimal parameters
     */
   def snippetForInsightsClientCustomPut(): Unit = {
+    // >SEPARATOR customPut
     // Initialize the client
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -79,6 +86,7 @@ class SnippetInsightsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the deleteUserToken method.
@@ -86,6 +94,7 @@ class SnippetInsightsClient {
     * deleteUserToken0
     */
   def snippetForInsightsClientDeleteUserToken(): Unit = {
+    // >SEPARATOR deleteUserToken
     // Initialize the client
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -96,6 +105,7 @@ class SnippetInsightsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
   /** Snippet for the pushEvents method.
@@ -103,6 +113,7 @@ class SnippetInsightsClient {
     * pushEvents0
     */
   def snippetForInsightsClientPushEvents(): Unit = {
+    // >SEPARATOR pushEvents
     // Initialize the client
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
@@ -127,6 +138,7 @@ class SnippetInsightsClient {
 
     // Use the response
     val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
   }
 
 }

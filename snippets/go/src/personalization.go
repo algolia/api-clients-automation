@@ -11,6 +11,7 @@ func SnippetForCustomDeleteOfPersonalization() {
 	   allow del method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customDelete
 	// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION
 	client, err := personalization.NewClient("YOUR_APP_ID", "YOUR_API_KEY", personalization.US)
 	if err != nil {
@@ -29,6 +30,7 @@ func SnippetForCustomDeleteOfPersonalization() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomGetOfPersonalization() {
 	/*
@@ -37,6 +39,7 @@ func SnippetForCustomGetOfPersonalization() {
 	   allow get method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customGet
 	// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION
 	client, err := personalization.NewClient("YOUR_APP_ID", "YOUR_API_KEY", personalization.US)
 	if err != nil {
@@ -55,6 +58,7 @@ func SnippetForCustomGetOfPersonalization() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomPostOfPersonalization() {
 	/*
@@ -63,6 +67,7 @@ func SnippetForCustomPostOfPersonalization() {
 	   allow post method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customPost
 	// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION
 	client, err := personalization.NewClient("YOUR_APP_ID", "YOUR_API_KEY", personalization.US)
 	if err != nil {
@@ -81,6 +86,7 @@ func SnippetForCustomPostOfPersonalization() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomPutOfPersonalization() {
 	/*
@@ -89,6 +95,7 @@ func SnippetForCustomPutOfPersonalization() {
 	   allow put method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customPut
 	// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION
 	client, err := personalization.NewClient("YOUR_APP_ID", "YOUR_API_KEY", personalization.US)
 	if err != nil {
@@ -107,6 +114,7 @@ func SnippetForCustomPutOfPersonalization() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForDeleteUserProfileOfPersonalization() {
 	/*
@@ -115,6 +123,7 @@ func SnippetForDeleteUserProfileOfPersonalization() {
 	   delete deleteUserProfile
 	*/
 
+	// >SEPARATOR deleteUserProfile
 	// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION
 	client, err := personalization.NewClient("YOUR_APP_ID", "YOUR_API_KEY", personalization.US)
 	if err != nil {
@@ -133,6 +142,7 @@ func SnippetForDeleteUserProfileOfPersonalization() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetPersonalizationStrategyOfPersonalization() {
 	/*
@@ -141,6 +151,7 @@ func SnippetForGetPersonalizationStrategyOfPersonalization() {
 	   get getPersonalizationStrategy
 	*/
 
+	// >SEPARATOR getPersonalizationStrategy
 	// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION
 	client, err := personalization.NewClient("YOUR_APP_ID", "YOUR_API_KEY", personalization.US)
 	if err != nil {
@@ -157,6 +168,7 @@ func SnippetForGetPersonalizationStrategyOfPersonalization() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetUserTokenProfileOfPersonalization() {
 	/*
@@ -165,6 +177,7 @@ func SnippetForGetUserTokenProfileOfPersonalization() {
 	   get getUserTokenProfile
 	*/
 
+	// >SEPARATOR getUserTokenProfile
 	// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION
 	client, err := personalization.NewClient("YOUR_APP_ID", "YOUR_API_KEY", personalization.US)
 	if err != nil {
@@ -183,6 +196,7 @@ func SnippetForGetUserTokenProfileOfPersonalization() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForSetPersonalizationStrategyOfPersonalization() {
 	/*
@@ -191,6 +205,7 @@ func SnippetForSetPersonalizationStrategyOfPersonalization() {
 	   set setPersonalizationStrategy
 	*/
 
+	// >SEPARATOR setPersonalizationStrategy
 	// Initialize the client with your application region, eg. personalization.YOUR_APP_ID_REGION
 	client, err := personalization.NewClient("YOUR_APP_ID", "YOUR_API_KEY", personalization.US)
 	if err != nil {
@@ -212,4 +227,5 @@ func SnippetForSetPersonalizationStrategyOfPersonalization() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }

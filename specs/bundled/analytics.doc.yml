@@ -543,6 +543,182 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomGetAsync("/test/minimal");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomGet(client.NewApiCustomGetRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customGet("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.customGet({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customGet(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customGet(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.custom_get(
+                path="/test/minimal",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.custom_get("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.customGet[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customGet(
+                path: "/test/minimal"
+            )
     post:
       operationId: customPost
       requestBody:
@@ -571,6 +747,182 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomPostAsync("/test/minimal");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomPost(client.NewApiCustomPostRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customPost("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.customPost({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customPost(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customPost(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.custom_post(
+                path="/test/minimal",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.custom_post("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.customPost[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customPost(
+                path: "/test/minimal"
+            )
     put:
       operationId: customPut
       requestBody:
@@ -599,6 +951,182 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomPutAsync("/test/minimal");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomPut(client.NewApiCustomPutRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customPut("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.customPut({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customPut(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customPut(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.custom_put(
+                path="/test/minimal",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.custom_put("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.customPut[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customPut(
+                path: "/test/minimal"
+            )
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API.
@@ -621,6 +1149,188 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomDeleteAsync("/test/minimal");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customDelete("/test/minimal");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+
+            // Call the API
+
+            const response = await client.customDelete({ path: '/test/minimal'
+            });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customDelete(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customDelete(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.custom_delete(
+                path="/test/minimal",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.custom_delete("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.customDelete[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customDelete(
+                path: "/test/minimal"
+            )
   /2/searches:
     get:
       tags:
@@ -657,6 +1367,183 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetTopSearchesAsync("index");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetTopSearches(client.NewApiGetTopSearchesRequest(
+              "index",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getTopSearches("index");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.getTopSearches({ index: 'index' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getTopSearches(
+              index = "index",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getTopSearches(
+                'index',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_top_searches(
+                index="index",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.get_top_searches("index")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.getTopSearches(
+              index = "index"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getTopSearches(
+                index: "index"
+            )
   /2/searches/count:
     get:
       tags:
@@ -709,6 +1596,183 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetSearchesCountAsync("index");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetSearchesCount(client.NewApiGetSearchesCountRequest(
+              "index",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getSearchesCount("index");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.getSearchesCount({ index: 'index' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getSearchesCount(
+              index = "index",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getSearchesCount(
+                'index',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_searches_count(
+                index="index",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.get_searches_count("index")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.getSearchesCount(
+              index = "index"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getSearchesCount(
+                index: "index"
+            )
   /2/searches/noResults:
     get:
       tags:
@@ -765,6 +1829,189 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetSearchesNoResultsAsync("index");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetSearchesNoResults(client.NewApiGetSearchesNoResultsRequest(
+              "index",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getSearchesNoResults("index");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+
+            // Call the API
+
+            const response = await client.getSearchesNoResults({ index: 'index'
+            });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getSearchesNoResults(
+              index = "index",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getSearchesNoResults(
+                'index',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_searches_no_results(
+                index="index",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.get_searches_no_results("index")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.getSearchesNoResults(
+              index = "index"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getSearchesNoResults(
+                index: "index"
+            )
   /2/searches/noClicks:
     get:
       tags:
@@ -821,6 +2068,189 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetSearchesNoClicksAsync("index");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetSearchesNoClicks(client.NewApiGetSearchesNoClicksRequest(
+              "index",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getSearchesNoClicks("index");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+
+            // Call the API
+
+            const response = await client.getSearchesNoClicks({ index: 'index'
+            });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getSearchesNoClicks(
+              index = "index",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getSearchesNoClicks(
+                'index',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_searches_no_clicks(
+                index="index",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.get_searches_no_clicks("index")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.getSearchesNoClicks(
+              index = "index"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getSearchesNoClicks(
+                index: "index"
+            )
   /2/searches/noResultRate:
     get:
       tags:
@@ -887,6 +2317,183 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetNoResultsRateAsync("index");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetNoResultsRate(client.NewApiGetNoResultsRateRequest(
+              "index",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getNoResultsRate("index");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.getNoResultsRate({ index: 'index' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getNoResultsRate(
+              index = "index",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getNoResultsRate(
+                'index',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_no_results_rate(
+                index="index",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.get_no_results_rate("index")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.getNoResultsRate(
+              index = "index"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getNoResultsRate(
+                index: "index"
+            )
   /2/searches/noClickRate:
     get:
       tags:
@@ -957,6 +2564,183 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetNoClickRateAsync("index");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetNoClickRate(client.NewApiGetNoClickRateRequest(
+              "index",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getNoClickRate("index");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.getNoClickRate({ index: 'index' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getNoClickRate(
+              index = "index",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getNoClickRate(
+                'index',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_no_click_rate(
+                index="index",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.get_no_click_rate("index")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.getNoClickRate(
+              index = "index"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getNoClickRate(
+                index: "index"
+            )
   /2/hits:
     get:
       tags:
@@ -990,6 +2774,182 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetTopHitsAsync("index");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.GetTopHits(client.NewApiGetTopHitsRequest(
+              "index",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getTopHits("index");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.getTopHits({ index: 'index' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getTopHits(
+              index = "index",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getTopHits(
+                'index',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_top_hits(
+                index="index",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.get_top_hits("index")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.getTopHits(
+              index = "index"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getTopHits(
+                index: "index"
+            )
   /2/users/count:
     get:
       tags:
@@ -1042,6 +3002,182 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetUsersCountAsync("index");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.GetUsersCount(client.NewApiGetUsersCountRequest(
+              "index",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getUsersCount("index");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.getUsersCount({ index: 'index' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getUsersCount(
+              index = "index",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getUsersCount(
+                'index',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_users_count(
+                index="index",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.get_users_count("index")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.getUsersCount(
+              index = "index"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getUsersCount(
+                index: "index"
+            )
   /2/filters:
     get:
       tags:
@@ -1077,6 +3213,189 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetTopFilterAttributesAsync("index");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetTopFilterAttributes(client.NewApiGetTopFilterAttributesRequest(
+              "index",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getTopFilterAttributes("index");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+
+            // Call the API
+
+            const response = await client.getTopFilterAttributes({ index:
+            'index' });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getTopFilterAttributes(
+              index = "index",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getTopFilterAttributes(
+                'index',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_top_filter_attributes(
+                index="index",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.get_top_filter_attributes("index")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.getTopFilterAttributes(
+              index = "index"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getTopFilterAttributes(
+                index: "index"
+            )
   /2/filters/{attribute}:
     get:
       tags:
@@ -1112,6 +3431,195 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+
+            // Call the API
+
+            var response = await
+            client.GetTopFilterForAttributeAsync("myAttribute", "index");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(
+              "myAttribute", "index",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getTopFilterForAttribute("myAttribute", "index");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.getTopFilterForAttribute({
+              attribute: 'myAttribute',
+              index: 'index',
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getTopFilterForAttribute(
+              attribute = "myAttribute",
+              index = "index",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getTopFilterForAttribute(
+                'myAttribute',
+                'index',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_top_filter_for_attribute(
+                attribute="myAttribute",
+                index="index",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.get_top_filter_for_attribute("myAttribute", "index")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.getTopFilterForAttribute(
+              attribute = "myAttribute",
+              index = "index"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getTopFilterForAttribute(
+                attribute: "myAttribute",
+                index: "index"
+            )
   /2/filters/noResults:
     get:
       tags:
@@ -1146,6 +3654,189 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetTopFiltersNoResultsAsync("index");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetTopFiltersNoResults(client.NewApiGetTopFiltersNoResultsRequest(
+              "index",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getTopFiltersNoResults("index");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+
+            // Call the API
+
+            const response = await client.getTopFiltersNoResults({ index:
+            'index' });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getTopFiltersNoResults(
+              index = "index",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getTopFiltersNoResults(
+                'index',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_top_filters_no_results(
+                index="index",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.get_top_filters_no_results("index")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.getTopFiltersNoResults(
+              index = "index"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getTopFiltersNoResults(
+                index: "index"
+            )
   /2/countries:
     get:
       tags:
@@ -1199,6 +3890,183 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetTopCountriesAsync("index");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetTopCountries(client.NewApiGetTopCountriesRequest(
+              "index",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getTopCountries("index");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.getTopCountries({ index: 'index' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getTopCountries(
+              index = "index",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getTopCountries(
+                'index',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_top_countries(
+                index="index",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.get_top_countries("index")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.getTopCountries(
+              index = "index"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getTopCountries(
+                index: "index"
+            )
   /2/clicks/averageClickPosition:
     get:
       tags:
@@ -1264,6 +4132,189 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetAverageClickPositionAsync("index");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(
+              "index",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getAverageClickPosition("index");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+
+            // Call the API
+
+            const response = await client.getAverageClickPosition({ index:
+            'index' });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getAverageClickPosition(
+              index = "index",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getAverageClickPosition(
+                'index',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_average_click_position(
+                index="index",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.get_average_click_position("index")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.getAverageClickPosition(
+              index = "index"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getAverageClickPosition(
+                index: "index"
+            )
   /2/clicks/positions:
     get:
       tags:
@@ -1335,6 +4386,183 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetClickPositionsAsync("index");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetClickPositions(client.NewApiGetClickPositionsRequest(
+              "index",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getClickPositions("index");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.getClickPositions({ index: 'index' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getClickPositions(
+              index = "index",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getClickPositions(
+                'index',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_click_positions(
+                index="index",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.get_click_positions("index")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.getClickPositions(
+              index = "index"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getClickPositions(
+                index: "index"
+            )
   /2/clicks/clickThroughRate:
     get:
       tags:
@@ -1401,6 +4629,189 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetClickThroughRateAsync("index");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetClickThroughRate(client.NewApiGetClickThroughRateRequest(
+              "index",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getClickThroughRate("index");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+
+            // Call the API
+
+            const response = await client.getClickThroughRate({ index: 'index'
+            });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getClickThroughRate(
+              index = "index",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getClickThroughRate(
+                'index',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_click_through_rate(
+                index="index",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.get_click_through_rate("index")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.getClickThroughRate(
+              index = "index"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getClickThroughRate(
+                index: "index"
+            )
   /2/conversions/conversionRate:
     get:
       tags:
@@ -1467,6 +4878,189 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetConversationRateAsync("index");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetConversationRate(client.NewApiGetConversationRateRequest(
+              "index",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getConversationRate("index");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+
+            // Call the API
+
+            const response = await client.getConversationRate({ index: 'index'
+            });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getConversationRate(
+              index = "index",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getConversationRate(
+                'index',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_conversation_rate(
+                index="index",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.get_conversation_rate("index")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.getConversationRate(
+              index = "index"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getConversationRate(
+                index: "index"
+            )
   /2/status:
     get:
       tags:
@@ -1505,3 +5099,179 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new AnalyticsClient(
+              new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.GetStatusAsync("index");
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            analytics.YOUR_APP_ID_REGION
+
+            client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            analytics.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.GetStatus(client.NewApiGetStatusRequest(
+              "index",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.getStatus("index");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = analyticsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.getStatus({ index: 'index' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.getStatus(
+              index = "index",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->getStatus(
+                'index',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.get_status(
+                index="index",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.get_status("index")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.getStatus(
+              index = "index"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.getStatus(
+                index: "index"
+            )

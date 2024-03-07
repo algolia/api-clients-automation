@@ -4,6 +4,7 @@ require 'algolia'
 #
 # allow del method for a custom path with minimal parameters
 def snippet_for_custom_delete
+  # >SEPARATOR customDelete
   # Initialize the client
   client = Algolia::MonitoringClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -15,12 +16,14 @@ def snippet_for_custom_delete
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customGet method.
 #
 # allow get method for a custom path with minimal parameters
 def snippet_for_custom_get
+  # >SEPARATOR customGet
   # Initialize the client
   client = Algolia::MonitoringClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -32,12 +35,14 @@ def snippet_for_custom_get
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customPost method.
 #
 # allow post method for a custom path with minimal parameters
 def snippet_for_custom_post
+  # >SEPARATOR customPost
   # Initialize the client
   client = Algolia::MonitoringClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -49,12 +54,14 @@ def snippet_for_custom_post
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the customPut method.
 #
 # allow put method for a custom path with minimal parameters
 def snippet_for_custom_put
+  # >SEPARATOR customPut
   # Initialize the client
   client = Algolia::MonitoringClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -66,12 +73,14 @@ def snippet_for_custom_put
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getClusterIncidents method.
 #
 # getClusterIncidents
 def snippet_for_get_cluster_incidents
+  # >SEPARATOR getClusterIncidents
   # Initialize the client
   client = Algolia::MonitoringClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -83,12 +92,14 @@ def snippet_for_get_cluster_incidents
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getClusterStatus method.
 #
 # getClusterStatus
 def snippet_for_get_cluster_status
+  # >SEPARATOR getClusterStatus
   # Initialize the client
   client = Algolia::MonitoringClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -100,12 +111,14 @@ def snippet_for_get_cluster_status
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getIncidents method.
 #
 # getIncidents
 def snippet_for_get_incidents
+  # >SEPARATOR getIncidents
   # Initialize the client
   client = Algolia::MonitoringClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -117,12 +130,14 @@ def snippet_for_get_incidents
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getIndexingTime method.
 #
 # getIndexingTime
 def snippet_for_get_indexing_time
+  # >SEPARATOR getIndexingTime
   # Initialize the client
   client = Algolia::MonitoringClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -134,12 +149,14 @@ def snippet_for_get_indexing_time
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getInventory method.
 #
 # getInventory
 def snippet_for_get_inventory
+  # >SEPARATOR getInventory
   # Initialize the client
   client = Algolia::MonitoringClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -151,12 +168,14 @@ def snippet_for_get_inventory
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getLatency method.
 #
 # getLatency
 def snippet_for_get_latency
+  # >SEPARATOR getLatency
   # Initialize the client
   client = Algolia::MonitoringClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -168,12 +187,14 @@ def snippet_for_get_latency
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getMetrics method.
 #
 # getMetrics
 def snippet_for_get_metrics
+  # >SEPARATOR getMetrics
   # Initialize the client
   client = Algolia::MonitoringClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -185,12 +206,14 @@ def snippet_for_get_metrics
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getReachability method.
 #
 # getReachability
 def snippet_for_get_reachability
+  # >SEPARATOR getReachability
   # Initialize the client
   client = Algolia::MonitoringClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -202,12 +225,14 @@ def snippet_for_get_reachability
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end
 
 # Snippet for the getStatus method.
 #
 # getStatus
 def snippet_for_get_status
+  # >SEPARATOR getStatus
   # Initialize the client
   client = Algolia::MonitoringClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
@@ -219,4 +244,5 @@ def snippet_for_get_status
 
   # print the JSON response
   puts resp.to_json
+  # SEPARATOR<
 end

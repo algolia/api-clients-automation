@@ -6,6 +6,7 @@ import { analyticsClient } from '@algolia/client-analytics';
 //
 // allow del method for a custom path with minimal parameters
 export async function snippetForcustomDelete(): Promise<void> {
+  // >SEPARATOR customDelete
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -16,14 +17,16 @@ export async function snippetForcustomDelete(): Promise<void> {
   // Call the API
   const response = await client.customDelete({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the customGet method.
 //
 // allow get method for a custom path with minimal parameters
 export async function snippetForcustomGet(): Promise<void> {
+  // >SEPARATOR customGet
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -34,14 +37,16 @@ export async function snippetForcustomGet(): Promise<void> {
   // Call the API
   const response = await client.customGet({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the customPost method.
 //
 // allow post method for a custom path with minimal parameters
 export async function snippetForcustomPost(): Promise<void> {
+  // >SEPARATOR customPost
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -52,14 +57,16 @@ export async function snippetForcustomPost(): Promise<void> {
   // Call the API
   const response = await client.customPost({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the customPut method.
 //
 // allow put method for a custom path with minimal parameters
 export async function snippetForcustomPut(): Promise<void> {
+  // >SEPARATOR customPut
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -70,14 +77,16 @@ export async function snippetForcustomPut(): Promise<void> {
   // Call the API
   const response = await client.customPut({ path: '/test/minimal' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getAverageClickPosition method.
 //
 // get getAverageClickPosition with minimal parameters
 export async function snippetForgetAverageClickPosition(): Promise<void> {
+  // >SEPARATOR getAverageClickPosition
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -88,14 +97,16 @@ export async function snippetForgetAverageClickPosition(): Promise<void> {
   // Call the API
   const response = await client.getAverageClickPosition({ index: 'index' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getClickPositions method.
 //
 // get getClickPositions with minimal parameters
 export async function snippetForgetClickPositions(): Promise<void> {
+  // >SEPARATOR getClickPositions
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -106,14 +117,16 @@ export async function snippetForgetClickPositions(): Promise<void> {
   // Call the API
   const response = await client.getClickPositions({ index: 'index' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getClickThroughRate method.
 //
 // get getClickThroughRate with minimal parameters
 export async function snippetForgetClickThroughRate(): Promise<void> {
+  // >SEPARATOR getClickThroughRate
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -124,14 +137,16 @@ export async function snippetForgetClickThroughRate(): Promise<void> {
   // Call the API
   const response = await client.getClickThroughRate({ index: 'index' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getConversationRate method.
 //
 // get getConversationRate with minimal parameters
 export async function snippetForgetConversationRate(): Promise<void> {
+  // >SEPARATOR getConversationRate
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -142,14 +157,16 @@ export async function snippetForgetConversationRate(): Promise<void> {
   // Call the API
   const response = await client.getConversationRate({ index: 'index' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getNoClickRate method.
 //
 // get getNoClickRate with minimal parameters
 export async function snippetForgetNoClickRate(): Promise<void> {
+  // >SEPARATOR getNoClickRate
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -160,14 +177,16 @@ export async function snippetForgetNoClickRate(): Promise<void> {
   // Call the API
   const response = await client.getNoClickRate({ index: 'index' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getNoResultsRate method.
 //
 // get getNoResultsRate with minimal parameters
 export async function snippetForgetNoResultsRate(): Promise<void> {
+  // >SEPARATOR getNoResultsRate
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -178,14 +197,16 @@ export async function snippetForgetNoResultsRate(): Promise<void> {
   // Call the API
   const response = await client.getNoResultsRate({ index: 'index' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getSearchesCount method.
 //
 // get getSearchesCount with minimal parameters
 export async function snippetForgetSearchesCount(): Promise<void> {
+  // >SEPARATOR getSearchesCount
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -196,14 +217,16 @@ export async function snippetForgetSearchesCount(): Promise<void> {
   // Call the API
   const response = await client.getSearchesCount({ index: 'index' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getSearchesNoClicks method.
 //
 // get getSearchesNoClicks with minimal parameters
 export async function snippetForgetSearchesNoClicks(): Promise<void> {
+  // >SEPARATOR getSearchesNoClicks
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -214,14 +237,16 @@ export async function snippetForgetSearchesNoClicks(): Promise<void> {
   // Call the API
   const response = await client.getSearchesNoClicks({ index: 'index' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getSearchesNoResults method.
 //
 // get getSearchesNoResults with minimal parameters
 export async function snippetForgetSearchesNoResults(): Promise<void> {
+  // >SEPARATOR getSearchesNoResults
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -232,14 +257,16 @@ export async function snippetForgetSearchesNoResults(): Promise<void> {
   // Call the API
   const response = await client.getSearchesNoResults({ index: 'index' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getStatus method.
 //
 // get getStatus with minimal parameters
 export async function snippetForgetStatus(): Promise<void> {
+  // >SEPARATOR getStatus
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -250,14 +277,16 @@ export async function snippetForgetStatus(): Promise<void> {
   // Call the API
   const response = await client.getStatus({ index: 'index' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getTopCountries method.
 //
 // get getTopCountries with minimal parameters
 export async function snippetForgetTopCountries(): Promise<void> {
+  // >SEPARATOR getTopCountries
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -268,14 +297,16 @@ export async function snippetForgetTopCountries(): Promise<void> {
   // Call the API
   const response = await client.getTopCountries({ index: 'index' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getTopFilterAttributes method.
 //
 // get getTopFilterAttributes with minimal parameters
 export async function snippetForgetTopFilterAttributes(): Promise<void> {
+  // >SEPARATOR getTopFilterAttributes
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -286,14 +317,16 @@ export async function snippetForgetTopFilterAttributes(): Promise<void> {
   // Call the API
   const response = await client.getTopFilterAttributes({ index: 'index' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getTopFilterForAttribute method.
 //
 // get getTopFilterForAttribute with minimal parameters
 export async function snippetForgetTopFilterForAttribute(): Promise<void> {
+  // >SEPARATOR getTopFilterForAttribute
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -307,14 +340,16 @@ export async function snippetForgetTopFilterForAttribute(): Promise<void> {
     index: 'index',
   });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getTopFiltersNoResults method.
 //
 // get getTopFiltersNoResults with minimal parameters
 export async function snippetForgetTopFiltersNoResults(): Promise<void> {
+  // >SEPARATOR getTopFiltersNoResults
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -325,14 +360,16 @@ export async function snippetForgetTopFiltersNoResults(): Promise<void> {
   // Call the API
   const response = await client.getTopFiltersNoResults({ index: 'index' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getTopHits method.
 //
 // get getTopHits with minimal parameters
 export async function snippetForgetTopHits(): Promise<void> {
+  // >SEPARATOR getTopHits
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -343,14 +380,16 @@ export async function snippetForgetTopHits(): Promise<void> {
   // Call the API
   const response = await client.getTopHits({ index: 'index' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getTopSearches method.
 //
 // get getTopSearches with minimal parameters
 export async function snippetForgetTopSearches(): Promise<void> {
+  // >SEPARATOR getTopSearches
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -361,14 +400,16 @@ export async function snippetForgetTopSearches(): Promise<void> {
   // Call the API
   const response = await client.getTopSearches({ index: 'index' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }
 
 // Snippet for the getUsersCount method.
 //
 // get getUsersCount with minimal parameters
 export async function snippetForgetUsersCount(): Promise<void> {
+  // >SEPARATOR getUsersCount
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -379,6 +420,7 @@ export async function snippetForgetUsersCount(): Promise<void> {
   // Call the API
   const response = await client.getUsersCount({ index: 'index' });
 
-  // Use typed response
+  // use typed response
   console.log(response);
+  // SEPARATOR<
 }

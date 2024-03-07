@@ -51,16 +51,3 @@ function initPersonalization(initOptions: InitClientOptions & Required<InitClien
     ...initOptions,
   });
 }
-
-return {
-  ...createSearchClient(commonOptions),
-  /**
-   * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
-   */
-  get _ua(): string {
-    return this.transporter.algoliaAgent.value;
-  },
-  initAnalytics,
-  initPersonalization,
-  initAbtesting,
-};

@@ -12,6 +12,7 @@ public class SnippetQuerySuggestionsClient
   /// </summary>
   public async Task SnippetForQuerySuggestionsClientCreateConfig()
   {
+    // >SEPARATOR createConfig
     // Initialize the client
     var client = new QuerySuggestionsClient(
       new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -39,6 +40,7 @@ public class SnippetQuerySuggestionsClient
         Exclude = new List<string> { "test" },
       }
     );
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -48,6 +50,7 @@ public class SnippetQuerySuggestionsClient
   /// </summary>
   public async Task SnippetForQuerySuggestionsClientCustomDelete()
   {
+    // >SEPARATOR customDelete
     // Initialize the client
     var client = new QuerySuggestionsClient(
       new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -55,6 +58,7 @@ public class SnippetQuerySuggestionsClient
 
     // Call the API
     var response = await client.CustomDeleteAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -64,6 +68,7 @@ public class SnippetQuerySuggestionsClient
   /// </summary>
   public async Task SnippetForQuerySuggestionsClientCustomGet()
   {
+    // >SEPARATOR customGet
     // Initialize the client
     var client = new QuerySuggestionsClient(
       new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -71,6 +76,7 @@ public class SnippetQuerySuggestionsClient
 
     // Call the API
     var response = await client.CustomGetAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -80,6 +86,7 @@ public class SnippetQuerySuggestionsClient
   /// </summary>
   public async Task SnippetForQuerySuggestionsClientCustomPost()
   {
+    // >SEPARATOR customPost
     // Initialize the client
     var client = new QuerySuggestionsClient(
       new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -87,6 +94,7 @@ public class SnippetQuerySuggestionsClient
 
     // Call the API
     var response = await client.CustomPostAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -96,6 +104,7 @@ public class SnippetQuerySuggestionsClient
   /// </summary>
   public async Task SnippetForQuerySuggestionsClientCustomPut()
   {
+    // >SEPARATOR customPut
     // Initialize the client
     var client = new QuerySuggestionsClient(
       new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -103,6 +112,7 @@ public class SnippetQuerySuggestionsClient
 
     // Call the API
     var response = await client.CustomPutAsync("/test/minimal");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -112,6 +122,7 @@ public class SnippetQuerySuggestionsClient
   /// </summary>
   public async Task SnippetForQuerySuggestionsClientDeleteConfig()
   {
+    // >SEPARATOR deleteConfig
     // Initialize the client
     var client = new QuerySuggestionsClient(
       new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -119,6 +130,7 @@ public class SnippetQuerySuggestionsClient
 
     // Call the API
     var response = await client.DeleteConfigAsync("theIndexName");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -128,6 +140,7 @@ public class SnippetQuerySuggestionsClient
   /// </summary>
   public async Task SnippetForQuerySuggestionsClientGetAllConfigs()
   {
+    // >SEPARATOR getAllConfigs
     // Initialize the client
     var client = new QuerySuggestionsClient(
       new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -135,6 +148,7 @@ public class SnippetQuerySuggestionsClient
 
     // Call the API
     var response = await client.GetAllConfigsAsync();
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -144,6 +158,7 @@ public class SnippetQuerySuggestionsClient
   /// </summary>
   public async Task SnippetForQuerySuggestionsClientGetConfig()
   {
+    // >SEPARATOR getConfig
     // Initialize the client
     var client = new QuerySuggestionsClient(
       new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -151,6 +166,7 @@ public class SnippetQuerySuggestionsClient
 
     // Call the API
     var response = await client.GetConfigAsync("cts_e2e_browse_query_suggestions");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -160,6 +176,7 @@ public class SnippetQuerySuggestionsClient
   /// </summary>
   public async Task SnippetForQuerySuggestionsClientGetConfigStatus()
   {
+    // >SEPARATOR getConfigStatus
     // Initialize the client
     var client = new QuerySuggestionsClient(
       new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -167,6 +184,7 @@ public class SnippetQuerySuggestionsClient
 
     // Call the API
     var response = await client.GetConfigStatusAsync("theIndexName");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -176,6 +194,7 @@ public class SnippetQuerySuggestionsClient
   /// </summary>
   public async Task SnippetForQuerySuggestionsClientGetLogFile()
   {
+    // >SEPARATOR getLogFile
     // Initialize the client
     var client = new QuerySuggestionsClient(
       new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -183,6 +202,7 @@ public class SnippetQuerySuggestionsClient
 
     // Call the API
     var response = await client.GetLogFileAsync("theIndexName");
+    // SEPARATOR<
   }
 
   /// <summary>
@@ -192,6 +212,7 @@ public class SnippetQuerySuggestionsClient
   /// </summary>
   public async Task SnippetForQuerySuggestionsClientUpdateConfig()
   {
+    // >SEPARATOR updateConfig
     // Initialize the client
     var client = new QuerySuggestionsClient(
       new QuerySuggestionsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
@@ -219,5 +240,6 @@ public class SnippetQuerySuggestionsClient
         Exclude = new List<string> { "test" },
       }
     );
+    // SEPARATOR<
   }
 }

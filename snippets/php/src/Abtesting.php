@@ -11,6 +11,7 @@ class SnippetAbtestingClient
      */
     public function snippetForAddABTests()
     {
+        // >SEPARATOR addABTests
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -32,6 +33,7 @@ class SnippetAbtestingClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -41,6 +43,7 @@ class SnippetAbtestingClient
      */
     public function snippetForCustomDelete()
     {
+        // >SEPARATOR customDelete
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -51,6 +54,7 @@ class SnippetAbtestingClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -60,6 +64,7 @@ class SnippetAbtestingClient
      */
     public function snippetForCustomGet()
     {
+        // >SEPARATOR customGet
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -70,6 +75,7 @@ class SnippetAbtestingClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -79,6 +85,7 @@ class SnippetAbtestingClient
      */
     public function snippetForCustomPost()
     {
+        // >SEPARATOR customPost
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -89,6 +96,7 @@ class SnippetAbtestingClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -98,6 +106,7 @@ class SnippetAbtestingClient
      */
     public function snippetForCustomPut()
     {
+        // >SEPARATOR customPut
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -108,6 +117,7 @@ class SnippetAbtestingClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -117,6 +127,7 @@ class SnippetAbtestingClient
      */
     public function snippetForDeleteABTest()
     {
+        // >SEPARATOR deleteABTest
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -127,6 +138,7 @@ class SnippetAbtestingClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -136,6 +148,7 @@ class SnippetAbtestingClient
      */
     public function snippetForGetABTest()
     {
+        // >SEPARATOR getABTest
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -146,6 +159,7 @@ class SnippetAbtestingClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -155,6 +169,7 @@ class SnippetAbtestingClient
      */
     public function snippetForListABTests()
     {
+        // >SEPARATOR listABTests
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -163,6 +178,7 @@ class SnippetAbtestingClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 
     /**
@@ -172,6 +188,7 @@ class SnippetAbtestingClient
      */
     public function snippetForStopABTest()
     {
+        // >SEPARATOR stopABTest
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
@@ -182,5 +199,6 @@ class SnippetAbtestingClient
 
         // play with the response
         var_dump($response);
+        // SEPARATOR<
     }
 }

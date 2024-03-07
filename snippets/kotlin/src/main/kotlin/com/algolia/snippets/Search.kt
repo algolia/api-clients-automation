@@ -7,6 +7,7 @@ import kotlin.system.exitProcess
 
 class SnippetSearchClient {
   suspend fun snippetForAddApiKey() {
+    // >SEPARATOR addApiKey
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -23,11 +24,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForAddOrUpdateObject() {
+    // >SEPARATOR addOrUpdateObject
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -45,11 +48,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForAppendSource() {
+    // >SEPARATOR appendSource
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -63,11 +68,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForAssignUserId() {
+    // >SEPARATOR assignUserId
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -81,11 +88,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForBatch() {
+    // >SEPARATOR batch
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -109,11 +118,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForBatchAssignUserIds() {
+    // >SEPARATOR batchAssignUserIds
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -128,11 +139,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForBatchDictionaryEntries() {
+    // >SEPARATOR batchDictionaryEntries
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -161,11 +174,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForBrowse() {
+    // >SEPARATOR browse
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -176,11 +191,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForClearObjects() {
+    // >SEPARATOR clearObjects
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -191,11 +208,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForClearRules() {
+    // >SEPARATOR clearRules
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -206,11 +225,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForClearSynonyms() {
+    // >SEPARATOR clearSynonyms
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -221,11 +242,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomDelete() {
+    // >SEPARATOR customDelete
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -236,11 +259,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomGet() {
+    // >SEPARATOR customGet
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -251,11 +276,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomPost() {
+    // >SEPARATOR customPost
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -266,11 +293,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForCustomPut() {
+    // >SEPARATOR customPut
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -281,11 +310,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForDeleteApiKey() {
+    // >SEPARATOR deleteApiKey
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -296,11 +327,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForDeleteBy() {
+    // >SEPARATOR deleteBy
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -314,11 +347,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForDeleteIndex() {
+    // >SEPARATOR deleteIndex
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -329,11 +364,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForDeleteObject() {
+    // >SEPARATOR deleteObject
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -345,11 +382,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForDeleteRule() {
+    // >SEPARATOR deleteRule
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -361,11 +400,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForDeleteSource() {
+    // >SEPARATOR deleteSource
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -376,11 +417,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForDeleteSynonym() {
+    // >SEPARATOR deleteSynonym
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -392,11 +435,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetApiKey() {
+    // >SEPARATOR getApiKey
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -407,11 +452,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetDictionaryLanguages() {
+    // >SEPARATOR getDictionaryLanguages
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -420,11 +467,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetDictionarySettings() {
+    // >SEPARATOR getDictionarySettings
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -433,11 +482,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetLogs() {
+    // >SEPARATOR getLogs
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -446,11 +497,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetObject() {
+    // >SEPARATOR getObject
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -463,11 +516,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetObjects() {
+    // >SEPARATOR getObjects
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -486,11 +541,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetRule() {
+    // >SEPARATOR getRule
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -502,11 +559,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetSettings() {
+    // >SEPARATOR getSettings
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -517,11 +576,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetSources() {
+    // >SEPARATOR getSources
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -530,11 +591,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetSynonym() {
+    // >SEPARATOR getSynonym
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -546,11 +609,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetTask() {
+    // >SEPARATOR getTask
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -562,11 +627,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetTopUserIds() {
+    // >SEPARATOR getTopUserIds
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -575,11 +642,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForGetUserId() {
+    // >SEPARATOR getUserId
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -590,11 +659,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForHasPendingMappings() {
+    // >SEPARATOR hasPendingMappings
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -603,11 +674,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForListApiKeys() {
+    // >SEPARATOR listApiKeys
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -616,11 +689,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForListClusters() {
+    // >SEPARATOR listClusters
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -629,11 +704,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForListIndices() {
+    // >SEPARATOR listIndices
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -642,11 +719,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForListUserIds() {
+    // >SEPARATOR listUserIds
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -655,11 +734,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForMultipleBatch() {
+    // >SEPARATOR multipleBatch
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -683,11 +764,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForOperationIndex() {
+    // >SEPARATOR operationIndex
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -703,11 +786,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForPartialUpdateObject() {
+    // >SEPARATOR partialUpdateObject
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -727,11 +812,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForRemoveUserId() {
+    // >SEPARATOR removeUserId
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -742,11 +829,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForReplaceSources() {
+    // >SEPARATOR replaceSources
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -762,11 +851,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForRestoreApiKey() {
+    // >SEPARATOR restoreApiKey
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -777,11 +868,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForSaveObject() {
+    // >SEPARATOR saveObject
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -802,11 +895,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForSaveRule() {
+    // >SEPARATOR saveRule
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -827,11 +922,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForSaveRules() {
+    // >SEPARATOR saveRules
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -862,11 +959,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForSaveSynonym() {
+    // >SEPARATOR saveSynonym
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -884,11 +983,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForSaveSynonyms() {
+    // >SEPARATOR saveSynonyms
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -914,11 +1015,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForSearch() {
+    // >SEPARATOR search
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -935,11 +1038,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForSearchDictionaryEntries() {
+    // >SEPARATOR searchDictionaryEntries
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -953,11 +1058,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForSearchForFacetValues() {
+    // >SEPARATOR searchForFacetValues
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -969,11 +1076,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForSearchRules() {
+    // >SEPARATOR searchRules
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -987,11 +1096,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForSearchSingleIndex() {
+    // >SEPARATOR searchSingleIndex
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -1002,11 +1113,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForSearchSynonyms() {
+    // >SEPARATOR searchSynonyms
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -1017,11 +1130,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForSearchUserIds() {
+    // >SEPARATOR searchUserIds
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -1037,11 +1152,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForSetDictionarySettings() {
+    // >SEPARATOR setDictionarySettings
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -1056,11 +1173,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForSetSettings() {
+    // >SEPARATOR setSettings
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -1075,11 +1194,13 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }
 
   suspend fun snippetForUpdateApiKey() {
+    // >SEPARATOR updateApiKey
     // Initialize the client
     val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
@@ -1096,6 +1217,7 @@ class SnippetSearchClient {
 
     // Use the response
     println(response)
+    // SEPARATOR<
 
     exitProcess(0)
   }

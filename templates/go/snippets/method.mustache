@@ -13,6 +13,7 @@ func SnippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Of{{#lambda.p
     {{{description}}}
     */
     
+    // >SEPARATOR {{method}}
     // Initialize the client{{#hasRegionalHost}} with your application region, eg. {{clientPrefix}}.YOUR_APP_ID_REGION{{/hasRegionalHost}}
     client, err := {{clientPrefix}}.NewClient("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, {{clientPrefix}}.{{#lambda.uppercase}}{{defaultRegion}}{{/lambda.uppercase}}{{/hasRegionalHost}})
     if err != nil {
@@ -35,6 +36,7 @@ func SnippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Of{{#lambda.p
     // use the model directly
     print(resp)
     {{/hasResponsePayload}}
+    // SEPARATOR<
 }
 {{/snippet}}
 {{/blocksRequests}}

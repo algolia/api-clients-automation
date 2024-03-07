@@ -1,3 +1,7 @@
+## [2.0.0-alpha.11](https://github.com/algolia/algoliasearch-client-scala/compare/2.0.0-alpha.10...2.0.0-alpha.11)
+
+- [234427491](https://github.com/algolia/api-clients-automation/commit/234427491) feat(specs): Add MappingInput to Task Inputs ([#2787](https://github.com/algolia/api-clients-automation/pull/2787)) by [@jsok](https://github.com/jsok/)
+
 ## [2.0.0-alpha.10](https://github.com/algolia/algoliasearch-client-scala/compare/2.0.0-alpha.9...2.0.0-alpha.10)
 
 - [a138c2fef](https://github.com/algolia/api-clients-automation/commit/a138c2fef) fix(specs): add `queryID` to search response ([#2801](https://github.com/algolia/api-clients-automation/pull/2801)) by [@aallam](https://github.com/aallam/)

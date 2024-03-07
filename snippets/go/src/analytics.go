@@ -11,6 +11,7 @@ func SnippetForCustomDeleteOfAnalytics() {
 	   allow del method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customDelete
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -29,6 +30,7 @@ func SnippetForCustomDeleteOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomGetOfAnalytics() {
 	/*
@@ -37,6 +39,7 @@ func SnippetForCustomGetOfAnalytics() {
 	   allow get method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customGet
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -55,6 +58,7 @@ func SnippetForCustomGetOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomPostOfAnalytics() {
 	/*
@@ -63,6 +67,7 @@ func SnippetForCustomPostOfAnalytics() {
 	   allow post method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customPost
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -81,6 +86,7 @@ func SnippetForCustomPostOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForCustomPutOfAnalytics() {
 	/*
@@ -89,6 +95,7 @@ func SnippetForCustomPutOfAnalytics() {
 	   allow put method for a custom path with minimal parameters
 	*/
 
+	// >SEPARATOR customPut
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -107,6 +114,7 @@ func SnippetForCustomPutOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetAverageClickPositionOfAnalytics() {
 	/*
@@ -115,6 +123,7 @@ func SnippetForGetAverageClickPositionOfAnalytics() {
 	   get getAverageClickPosition with minimal parameters
 	*/
 
+	// >SEPARATOR getAverageClickPosition
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -133,6 +142,7 @@ func SnippetForGetAverageClickPositionOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetClickPositionsOfAnalytics() {
 	/*
@@ -141,6 +151,7 @@ func SnippetForGetClickPositionsOfAnalytics() {
 	   get getClickPositions with minimal parameters
 	*/
 
+	// >SEPARATOR getClickPositions
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -159,6 +170,7 @@ func SnippetForGetClickPositionsOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetClickThroughRateOfAnalytics() {
 	/*
@@ -167,6 +179,7 @@ func SnippetForGetClickThroughRateOfAnalytics() {
 	   get getClickThroughRate with minimal parameters
 	*/
 
+	// >SEPARATOR getClickThroughRate
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -185,6 +198,7 @@ func SnippetForGetClickThroughRateOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetConversationRateOfAnalytics() {
 	/*
@@ -193,6 +207,7 @@ func SnippetForGetConversationRateOfAnalytics() {
 	   get getConversationRate with minimal parameters
 	*/
 
+	// >SEPARATOR getConversationRate
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -211,6 +226,7 @@ func SnippetForGetConversationRateOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetNoClickRateOfAnalytics() {
 	/*
@@ -219,6 +235,7 @@ func SnippetForGetNoClickRateOfAnalytics() {
 	   get getNoClickRate with minimal parameters
 	*/
 
+	// >SEPARATOR getNoClickRate
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -237,6 +254,7 @@ func SnippetForGetNoClickRateOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetNoResultsRateOfAnalytics() {
 	/*
@@ -245,6 +263,7 @@ func SnippetForGetNoResultsRateOfAnalytics() {
 	   get getNoResultsRate with minimal parameters
 	*/
 
+	// >SEPARATOR getNoResultsRate
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -263,6 +282,7 @@ func SnippetForGetNoResultsRateOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetSearchesCountOfAnalytics() {
 	/*
@@ -271,6 +291,7 @@ func SnippetForGetSearchesCountOfAnalytics() {
 	   get getSearchesCount with minimal parameters
 	*/
 
+	// >SEPARATOR getSearchesCount
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -289,6 +310,7 @@ func SnippetForGetSearchesCountOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetSearchesNoClicksOfAnalytics() {
 	/*
@@ -297,6 +319,7 @@ func SnippetForGetSearchesNoClicksOfAnalytics() {
 	   get getSearchesNoClicks with minimal parameters
 	*/
 
+	// >SEPARATOR getSearchesNoClicks
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -315,6 +338,7 @@ func SnippetForGetSearchesNoClicksOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetSearchesNoResultsOfAnalytics() {
 	/*
@@ -323,6 +347,7 @@ func SnippetForGetSearchesNoResultsOfAnalytics() {
 	   get getSearchesNoResults with minimal parameters
 	*/
 
+	// >SEPARATOR getSearchesNoResults
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -341,6 +366,7 @@ func SnippetForGetSearchesNoResultsOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetStatusOfAnalytics() {
 	/*
@@ -349,6 +375,7 @@ func SnippetForGetStatusOfAnalytics() {
 	   get getStatus with minimal parameters
 	*/
 
+	// >SEPARATOR getStatus
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -367,6 +394,7 @@ func SnippetForGetStatusOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetTopCountriesOfAnalytics() {
 	/*
@@ -375,6 +403,7 @@ func SnippetForGetTopCountriesOfAnalytics() {
 	   get getTopCountries with minimal parameters
 	*/
 
+	// >SEPARATOR getTopCountries
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -393,6 +422,7 @@ func SnippetForGetTopCountriesOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetTopFilterAttributesOfAnalytics() {
 	/*
@@ -401,6 +431,7 @@ func SnippetForGetTopFilterAttributesOfAnalytics() {
 	   get getTopFilterAttributes with minimal parameters
 	*/
 
+	// >SEPARATOR getTopFilterAttributes
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -419,6 +450,7 @@ func SnippetForGetTopFilterAttributesOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetTopFilterForAttributeOfAnalytics() {
 	/*
@@ -427,6 +459,7 @@ func SnippetForGetTopFilterForAttributeOfAnalytics() {
 	   get getTopFilterForAttribute with minimal parameters
 	*/
 
+	// >SEPARATOR getTopFilterForAttribute
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -445,6 +478,7 @@ func SnippetForGetTopFilterForAttributeOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetTopFiltersNoResultsOfAnalytics() {
 	/*
@@ -453,6 +487,7 @@ func SnippetForGetTopFiltersNoResultsOfAnalytics() {
 	   get getTopFiltersNoResults with minimal parameters
 	*/
 
+	// >SEPARATOR getTopFiltersNoResults
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -471,6 +506,7 @@ func SnippetForGetTopFiltersNoResultsOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetTopHitsOfAnalytics() {
 	/*
@@ -479,6 +515,7 @@ func SnippetForGetTopHitsOfAnalytics() {
 	   get getTopHits with minimal parameters
 	*/
 
+	// >SEPARATOR getTopHits
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -497,6 +534,7 @@ func SnippetForGetTopHitsOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetTopSearchesOfAnalytics() {
 	/*
@@ -505,6 +543,7 @@ func SnippetForGetTopSearchesOfAnalytics() {
 	   get getTopSearches with minimal parameters
 	*/
 
+	// >SEPARATOR getTopSearches
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -523,6 +562,7 @@ func SnippetForGetTopSearchesOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
 func SnippetForGetUsersCountOfAnalytics() {
 	/*
@@ -531,6 +571,7 @@ func SnippetForGetUsersCountOfAnalytics() {
 	   get getUsersCount with minimal parameters
 	*/
 
+	// >SEPARATOR getUsersCount
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -549,4 +590,5 @@ func SnippetForGetUsersCountOfAnalytics() {
 
 	// use the model directly
 	print(resp)
+	// SEPARATOR<
 }
