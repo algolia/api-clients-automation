@@ -4,7 +4,7 @@ eventName:
   maxLength: 64
   pattern: '[\x20-\x7E]{1,64}'
   description: |
-    The name of the event, up to 64 ASCII characters.
+    Event name, up to 64 ASCII characters.
 
     Consider naming events consistently—for example, by adopting Segment's
     [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
@@ -13,7 +13,7 @@ eventName:
 
 index:
   type: string
-  description: The name of an Algolia index.
+  description: Index name to which the event's items belong.
   example: YourIndexName
 
 userToken:
@@ -22,9 +22,10 @@ userToken:
   maxLength: 129
   pattern: '[a-zA-Z0-9_=/+-]{1,129}'
   description: |
-    An anonymous or pseudonymous user identifier.
+    Anonymous or pseudonymous user identifier.
 
-    > **Note**: Never include personally identifiable information in user tokens.
+    Don't use personally identifiable information in user tokens.
+    For more information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
   example: test-user-1
 
 authenticatedUserToken:
@@ -33,16 +34,19 @@ authenticatedUserToken:
   maxLength: 129
   pattern: '[a-zA-Z0-9_=/+-]{1,129}'
   description: |
-    An identifier for authenticated users.
+    Identifier for authenticated users.
 
-    > **Note**: Never include personally identifiable information in user tokens.
+    When the user signs in, you can get an identifier from your system and send it as `authenticatedUserToken`.
+    This lets you keep using the `userToken` from before the user signed in, while providing a reliable way to identify users across sessions.
+    Don't use personally identifiable information in user tokens.
+    For more information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
   example: c6a52c02-d0c7-4b53-8ce3-2b8fd202f3f9
 
 timestamp:
   type: integer
   format: int64
   description: |
-    The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
+    Timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
     By default, the Insights API uses the time it receives an event as its timestamp.
   example: 1687193127
 
@@ -60,7 +64,7 @@ queryID:
 
 objectIDs:
   type: array
-  description: The object IDs of the records that are part of the event.
+  description: Object IDs of the records that are part of the event.
   items:
     type: string
   minItems: 1
@@ -70,9 +74,10 @@ objectIDs:
 filters:
   type: array
   description: |
-    Facet filters.
+    Applied facet filters.
 
-    Each facet filter string must be URL-encoded, such as, `discount:10%25`.
+    Facet filters are `facet:value` pairs.
+    Facet values must be URL-encoded, such as, `discount:10%25`.
   items:
     type: string
   minItems: 1
@@ -87,15 +92,13 @@ positions:
   minItems: 1
   maxItems: 20
   description: |
-    The position of the clicked item the search results.
+    Position of the clicked item the search results.
 
-    The first search result has a position of 1 (not 0).
     You must provide 1 `position` for each `objectID`.
   example: [1, 2, 5]
 
 price:
-  description: |
-    The total price of a product, including any discounts, in units of `currency`.
+  description: Total price of a product, including any discounts, in units of `currency`.
   oneOf:
     - type: number
       format: double
@@ -104,8 +107,7 @@ price:
       example: '9.99'
 
 discount:
-  description: |
-    The absolute value of the discount for this product, in units of `currency`.
+  description: Absolute value of the discount for this product, in units of `currency`.
   oneOf:
     - type: number
       format: double
@@ -118,8 +120,8 @@ quantity:
   format: int32
   example: 2
   description: |
-    The quantity of a product that has been purchased or added to the cart.
-    The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item.
+    Quantity of a product that has been purchased or added to the cart.
+    The total purchase value is the sum of `quantity` multiplied with the `price` for each purchased item.
 
 objectData:
   type: object
@@ -174,7 +176,6 @@ objectDataAfterSearchList:
 
 currency:
   type: string
-  format: ISO 4217
   description: Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).
   example: EUR
 
