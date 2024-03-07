@@ -42,6 +42,9 @@ export type Spec = {
   servers: Server[];
   tags: Tag[];
   paths: Path[];
+  components: {
+    schemas: Record<string, any>;
+  };
 };
 
 /**
@@ -105,5 +108,9 @@ export type SnippetSamples = Record<Language, Record<string, string>>;
  */
 type Path = Record<
   Method,
-  Record<string, any> & { operationId: string; 'x-codeSamples': CodeSamples[]; summary: string }
+  Record<string, any> & {
+    operationId: string;
+    'x-codeSamples': CodeSamples[];
+    summary: string;
+  }
 >;

@@ -7,7 +7,7 @@ import { GENERATORS, capitalize, createClientName, exists, run, toAbsolutePath }
 import { createSpinner } from './spinners.js';
 import type { CodeSamples, Language, SnippetSamples, Spec } from './types.js';
 
-const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'customPost'];
+const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'customPost', 'getRecommendations'];
 
 function mapLanguageToCodeSampleSupporter(language: Language): CodeSamples['lang'] {
   switch (language) {
@@ -196,10 +196,18 @@ async function buildLiteSpec({
   spec: string;
   bundledPath: string;
 }): Promise<void> {
-  const parsed = yaml.load(await fsp.readFile(toAbsolutePath(bundledPath), 'utf8')) as Spec;
+  const base = yaml.load(await fsp.readFile(toAbsolutePath(bundledPath), 'utf8')) as Spec;
+
+  await run(`yarn specs:fix recommend`);
+  const recommendTmpPath = toAbsolutePath('specs/bundled/algoliasearch-recommend.tmp.yml');
+  await run(`yarn openapi bundle specs/recommend/spec.yml -o ${recommendTmpPath} --ext yml`);
+  const recommend = yaml.load(await fsp.readFile(recommendTmpPath, 'utf8')) as Spec;
+  fsp.rm(recommendTmpPath);
+
+  const paths = [...Object.entries(base.paths), ...Object.entries(recommend.paths)];
 
   // Filter methods.
-  parsed.paths = Object.entries(parsed.paths).reduce(
+  base.paths = paths.reduce(
     (acc, [path, operations]) => {
       for (const [, operation] of Object.entries(operations)) {
         if (ALGOLIASEARCH_LITE_OPERATIONS.includes(operation.operationId)) {
@@ -212,7 +220,12 @@ async function buildLiteSpec({
     {} as Spec['paths'],
   );
 
-  await fsp.writeFile(bundledPath, yaml.dump(parsed));
+  // Merge both specs
+  base.components.schemas = { ...base.components.schemas, ...recommend.components.schemas };
+  base.tags.push(...recommend.tags);
+  base['x-tagGroups'].push(...recommend['x-tagGroups']);
+
+  await fsp.writeFile(bundledPath, yaml.dump(base));
 
   await transformBundle({
     bundledPath,
@@ -239,25 +252,26 @@ async function buildSpec({
 
   // In case of lite we use a the `search` spec as a base because only its bundled form exists.
   const specBase = isAlgoliasearch ? 'search' : spec;
+  const deps = isAlgoliasearch ? ['search', 'recommend'] : [spec];
   const logSuffix = docs ? 'doc spec' : 'spec';
   const cache = new Cache({
     folder: toAbsolutePath('specs/'),
     generatedFiles: [docs ? `bundled/${spec}.doc.yml` : `bundled/${spec}.yml`],
-    filesToCache: [specBase, 'common'],
+    filesToCache: [...deps, 'common'],
     cacheFile: toAbsolutePath(`specs/dist/${spec}.${docs ? 'doc.' : ''}cache`),
   });
 
   const spinner = createSpinner(`starting '${spec}' ${logSuffix}`);
 
   if (useCache) {
-    spinner.text = `checking cache for '${specBase}'`;
+    spinner.text = `checking cache for '${spec}'`;
 
     if (await cache.isValid()) {
-      spinner.succeed(`job skipped, cache found for '${specBase}'`);
+      spinner.succeed(`job skipped, cache found for '${spec}'`);
       return;
     }
 
-    spinner.text = `cache not found for '${specBase}'`;
+    spinner.text = `cache not found for '${spec}'`;
   }
 
   // First linting the base
