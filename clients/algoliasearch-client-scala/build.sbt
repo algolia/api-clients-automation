@@ -22,10 +22,6 @@ developers += Developer(
   "contact@algolia.com",
   url("https://github.com/algolia/algoliasearch-client-scala/")
 )
-publishTo := sonatypePublishToBundle.value
-pgpSigningKey := Credentials
-  .forHost(credentials.value, "pgp")
-  .map(_.userName) // related to https://github.com/sbt/sbt-pgp/issues/170
 
 lazy val root = project
   .in(file("."))
