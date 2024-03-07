@@ -1,5 +1,6 @@
 package com.algolia.codegen.cts.tests;
 
+import com.algolia.codegen.AlgoliaSwiftGenerator;
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -17,10 +18,12 @@ public class ParametersWithDataType {
 
   private final Map<String, CodegenModel> models;
   private final String language;
+  private final String client;
 
-  public ParametersWithDataType(Map<String, CodegenModel> models, String language) {
+  public ParametersWithDataType(Map<String, CodegenModel> models, String language, String client) {
     this.models = models;
     this.language = language;
+    this.client = client;
   }
 
   public void enhanceParameters(Map<String, Object> parameters, Map<String, Object> bundle)
@@ -132,6 +135,10 @@ public class ParametersWithDataType {
       finalParamName = "type_";
     }
 
+    if (language.equals("swift")) {
+      parent = AlgoliaSwiftGenerator.prefixReservedModelName(parent, client);
+    }
+
     testOutput.put("key", finalParamName);
     testOutput.put("isKeyAllUpperCase", StringUtils.isAllUpperCase(finalParamName));
     testOutput.put("parentSuffix", suffix - 1);
@@ -169,6 +176,10 @@ public class ParametersWithDataType {
     String finalParamName = paramName;
     if (language.equals("java") && paramName.startsWith("_")) {
       finalParamName = paramName.substring(1);
+    }
+
+    if (language.equals("swift")) {
+      parent = AlgoliaSwiftGenerator.prefixReservedModelName(parent, client);
     }
 
     Map<String, Object> testOutput = createDefaultOutput();
@@ -324,6 +335,11 @@ public class ParametersWithDataType {
         useExplicitName = Helpers.shouldUseExplicitOneOfName(composedSchemas.getOneOf().stream().map(this::getTypeName).toList());
       } else {
         useExplicitName = Helpers.shouldUseExplicitOneOfName(model.oneOf);
+      }
+
+      if (language.equals("swift")) {
+        typeName = AlgoliaSwiftGenerator.prefixReservedModelName(typeName, client);
+        baseType = AlgoliaSwiftGenerator.prefixReservedModelName(baseType, client);
       }
 
       oneOfModel.put("parentClassName", Helpers.capitalize(baseType));
@@ -517,6 +533,8 @@ public class ParametersWithDataType {
           case "List":
             return "array";
         }
+
+        return Helpers.capitalize(AlgoliaSwiftGenerator.prefixReservedModelName(objectName, client));
     }
     return Helpers.capitalize(objectName);
   }

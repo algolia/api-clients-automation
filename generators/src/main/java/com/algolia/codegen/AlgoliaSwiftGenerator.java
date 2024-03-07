@@ -124,6 +124,10 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   }
 
   public static String prefixReservedModelName(String name, String client) {
+    if (name == null || name.isEmpty()) {
+      return name;
+    }
+
     var camelizedName = camelize(name);
     if (AlgoliaSwiftGenerator.isReservedModelName(camelizedName)) {
       return INSTANCE.getClientName(client) + Helpers.capitalize(camelizedName);
@@ -449,9 +453,9 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
 
   @Override
   public String toParamName(String name) {
-    var trimmedName = name.replaceFirst(getClientName(CLIENT), "");
+    var trimmedName = camelize(name.replaceFirst(getClientName(CLIENT), ""), LOWERCASE_FIRST_LETTER);
     if (AlgoliaSwiftGenerator.isReservedModelName(trimmedName)) {
-      return camelize(trimmedName, LOWERCASE_FIRST_LETTER);
+      return trimmedName;
     }
 
     return super.toParamName(name);

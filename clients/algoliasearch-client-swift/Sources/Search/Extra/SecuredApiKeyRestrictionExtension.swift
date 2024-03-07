@@ -26,7 +26,7 @@ public extension SecuredAPIKeyRestrictions {
             queryDictionary["validUntil"] = Int(validUntil)
         }
         if let restrictIndices {
-            queryDictionary["restrictIndices"] = restrictIndices.joined(separator: ",")
+            queryDictionary["restrictIndices"] = restrictIndices
         }
         if let restrictSources {
             queryDictionary["restrictSources"] = restrictSources
