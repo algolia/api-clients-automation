@@ -13,6 +13,11 @@ searchDictionaryEntriesResponse:
       $ref: '../../../../common/schemas/SearchResponse.yml#/nbHits'
     nbPages:
       $ref: '../../../../common/schemas/SearchResponse.yml#/nbPages'
+  required:
+    - hits
+    - page
+    - nbHits
+    - nbPages
 
 dictionaryEntry:
   type: object
