@@ -29,12 +29,18 @@ jobs:
         with:
           gpg_private_key: ${{ secrets.SIGNING_PRIVATE_KEY }}
           passphrase: ${{ secrets.SIGNING_PRIVATE_KEY_PASSWORD }}
-          fingerprint: "${{ secrets.SIGNING_PRIVATE_KEY_FINGERPRINT }}"
+          fingerprint: ${{ secrets.SIGNING_PRIVATE_KEY_FINGERPRINT }}
 
-      - name: Release to Sonatype
+      - name: List GPG keys
+        run: gpg -K
+
+      - name: Publish Signed Artifacts
         env:
-          SONATYPE_USERNAME: '${{ secrets.SONATYPE_NEXUS_USERNAME }}'
-          SONATYPE_PASSWORD: '${{ secrets.SONATYPE_NEXUS_PASSWORD }}'
           PGP_PASSPHRASE: ${{ secrets.SIGNING_PRIVATE_KEY_PASSWORD }}
-        run: sbt +publishSigned +sonatypeBundleRelease
-  
+        run: sbt +publishSigned
+
+      - name: Release Bundle to Sonatype
+        env:
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
+        run: sbt +sonatypeBundleRelease
