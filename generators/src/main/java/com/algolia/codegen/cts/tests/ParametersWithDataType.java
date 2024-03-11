@@ -528,14 +528,16 @@ public class ParametersWithDataType {
           case "Object":
             return "map[string]any";
         }
+        break;
       case "swift":
         switch (objectName) {
           case "List":
             return "array";
+          default:
+            return Helpers.capitalize(AlgoliaSwiftGenerator.prefixReservedModelName(objectName, client));
         }
-
-        return Helpers.capitalize(AlgoliaSwiftGenerator.prefixReservedModelName(objectName, client));
     }
+
     return Helpers.capitalize(objectName);
   }
 
