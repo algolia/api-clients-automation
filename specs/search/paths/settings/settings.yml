@@ -4,11 +4,8 @@ get:
   operationId: getSettings
   x-acl:
     - search
-  description: |
-    Get an object with index settings.
-
-    The object only includes non-null settings.
-  summary: Get index settings.
+  description: Retrieves an object with non-null index settings.
+  summary: Retrieve index settings.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   responses:
