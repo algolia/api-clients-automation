@@ -418,10 +418,12 @@ maxFacetHits:
 
 reRankingApplyFilter:
   description: When [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) is enabled, only records that match these filters will be affected by Dynamic Re-Ranking.
-  nullable: true
   oneOf:
-    - $ref: './SearchParams.yml#/listOfSearchFilters'
+    - type: array
+      nullable: true
+      $ref: './SearchParams.yml#/listOfSearchFilters'
     - type: string
+      nullable: true
       x-categories:
         - Filtering
 
