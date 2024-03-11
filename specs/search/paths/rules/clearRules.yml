@@ -5,8 +5,7 @@ post:
   x-acl:
     - editSettings
   summary: Delete all rules.
-  description: |
-    Deletes all rules from the index.
+  description: Deletes all rules from the index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ForwardToReplicas'
