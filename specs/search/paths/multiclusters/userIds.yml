@@ -5,7 +5,7 @@ post:
   x-acl:
     - admin
   summary: Assign or move a user ID.
-  description: >
+  description: |
     Assigns or moves a user ID to a cluster.
 
     The time it takes to move a user is proportional to the amount of data linked to the user ID.
@@ -44,7 +44,7 @@ get:
   x-acl:
     - admin
   summary: List user IDs.
-  description: >
+  description: |
     Lists the userIDs assigned to a multi-cluster application.
 
     Since it can take a few seconds to get the data from the different clusters,

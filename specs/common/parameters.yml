@@ -55,7 +55,7 @@ ForwardToReplicas:
 Page:
   in: query
   name: page
-  description: >
+  description: |
     Requested page of the API response.
     If `null`, the API response is not paginated.
   schema:
@@ -67,7 +67,7 @@ Page:
 PageDefault0:
   in: query
   name: page
-  description: >
+  description: |
     Requested page of the API response.
     If `null`, the API response is not paginated.
   schema:

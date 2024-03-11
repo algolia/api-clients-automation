@@ -5,7 +5,7 @@ get:
   x-acl:
     - admin
   summary: Get top user IDs.
-  description: >
+  description: |
     Get the IDs of the 10 users with the highest number of records per cluster.
 
     Since it can take a few seconds to get the data from the different clusters,

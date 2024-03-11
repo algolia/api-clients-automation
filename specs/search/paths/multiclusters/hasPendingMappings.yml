@@ -5,7 +5,7 @@ get:
   x-acl:
     - admin
   summary: Get migration and user mapping status.
-  description: >
+  description: |
     To determine when the time-consuming process of creating a large batch of users or migrating users from one cluster to another is complete, this operation retrieves the status of the process.
   parameters:
     - in: query
@@ -27,7 +27,7 @@ get:
                 description: Whether there are clusters undergoing migration, creation, or deletion.
                 type: boolean
               clusters:
-                description: >
+                description: |
                   Cluster pending mapping state: migrating, creating, deleting.
                 type: object
                 additionalProperties:

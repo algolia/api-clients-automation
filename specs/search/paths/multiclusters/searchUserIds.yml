@@ -7,7 +7,7 @@ post:
   x-acl:
     - admin
   summary: Search for user IDs.
-  description: >
+  description: |
     Since it can take a few seconds to get the data from the different clusters,
     the response isn't real-time.
 
