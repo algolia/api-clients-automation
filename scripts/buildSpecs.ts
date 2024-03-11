@@ -12,7 +12,7 @@ const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'customPost'];
 function mapLanguageToCodeSampleSupporter(language: Language): CodeSamples['lang'] {
   switch (language) {
     case 'csharp':
-      return 'CSharp';
+      return 'C#';
     case 'javascript':
       return 'JavaScript';
     case 'php':
