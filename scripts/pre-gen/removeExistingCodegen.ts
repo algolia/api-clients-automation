@@ -1,8 +1,8 @@
 import fsp from 'fs/promises';
 import path from 'path';
 
-import { createClientName, toAbsolutePath, toSnakeCase } from '../common.js';
-import { getLanguageApiFolder, getLanguageModelFolder } from '../config.js';
+import { createClientName, run, toAbsolutePath, toSnakeCase } from '../common.js';
+import { getLanguageApiFolder, getLanguageFolder, getLanguageModelFolder } from '../config.js';
 import type { Generator } from '../types.js';
 
 /**
@@ -13,6 +13,7 @@ export async function removeExistingCodegen({
   client,
   output,
 }: Generator): Promise<void> {
+  const folder = getLanguageFolder(language);
   let baseModelFolder = getLanguageModelFolder(language);
   let baseApiFolder = getLanguageApiFolder(language);
   const clientName = createClientName(client, language);
@@ -80,14 +81,14 @@ export async function removeExistingCodegen({
   }
 
   // Delete client model folder/file
-  await fsp.rm(toAbsolutePath(path.resolve('..', output, baseModelFolder, clientModel)), {
-    force: true,
-    recursive: true,
+  await run(`rm -rf ${path.join(baseModelFolder, clientModel)}`, {
+    cwd: folder,
+    language,
   });
 
   // Delete client api folder/file
-  await fsp.rm(toAbsolutePath(path.resolve('..', output, baseApiFolder, clientApi)), {
-    force: true,
-    recursive: true,
+  await run(`rm -rf ${path.join(baseApiFolder, clientApi)}`, {
+    cwd: folder,
+    language,
   });
 }
