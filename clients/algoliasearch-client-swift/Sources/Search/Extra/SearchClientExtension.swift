@@ -417,6 +417,7 @@ public extension SearchClient {
         let batchResponses = try await self.chunkedBatch(
             indexName: tmpIndexName,
             objects: objects,
+            waitForTasks: true,
             batchSize: batchSize,
             requestOptions: requestOptions
         )
