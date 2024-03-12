@@ -2326,7 +2326,6 @@ class SearchTest extends AnyFunSuite {
             aroundPrecision = Some(AroundPrecision(0)),
             aroundRadius = Some(AroundRadiusAll.withName("all")),
             attributeCriteriaComputedByMinProximity = Some(true),
-            attributesForFaceting = Some(Seq("")),
             attributesToHighlight = Some(Seq("")),
             attributesToRetrieve = Some(Seq("")),
             attributesToSnippet = Some(Seq("")),
@@ -2341,7 +2340,6 @@ class SearchTest extends AnyFunSuite {
             enableReRanking = Some(true),
             enableRules = Some(true),
             exactOnSingleWordQuery = Some(ExactOnSingleWordQuery.withName("attribute")),
-            explain = Some(Seq("foo", "bar")),
             facetFilters = Some(FacetFilters(Seq(MixedSearchFilters("")))),
             facetingAfterDistinct = Some(true),
             facets = Some(Seq("")),
@@ -2428,7 +2426,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/*/queries")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesForFaceting":[""],"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","explain":["foo","bar"],"facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":[""],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}"""
+      """{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":[""],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -2437,20 +2435,34 @@ class SearchTest extends AnyFunSuite {
   test("get searchDictionaryEntries results with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.searchDictionaryEntries(
-      dictionaryName = DictionaryType.withName("compounds"),
+      dictionaryName = DictionaryType.withName("stopwords"),
       searchDictionaryEntriesParams = SearchDictionaryEntriesParams(
-        query = "foo"
+        query = "about"
       )
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/dictionaries/compounds/search")
+    assert(res.path == "/1/dictionaries/stopwords/search")
     assert(res.method == "POST")
-    val expectedBody = parse("""{"query":"foo"}""")
+    val expectedBody = parse("""{"query":"about"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
+    val e2eClient = testE2EClient()
+    val e2eFuture = e2eClient.searchDictionaryEntries(
+      dictionaryName = DictionaryType.withName("stopwords"),
+      searchDictionaryEntriesParams = SearchDictionaryEntriesParams(
+        query = "about"
+      )
+    )
+
+    val response = Await.result(e2eFuture, Duration.Inf)
+    compareJSON(
+      """{"hits":[{"objectID":"86ef58032f47d976ca7130a896086783","language":"en","word":"about"}],"page":0,"nbHits":1,"nbPages":1}""",
+      write(response),
+      JSONCompareMode.LENIENT
+    )
   }
 
   test("get searchDictionaryEntries results with all parameters") {

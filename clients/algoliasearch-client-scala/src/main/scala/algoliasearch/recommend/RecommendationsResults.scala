@@ -20,7 +20,7 @@ package algoliasearch.recommend
   * @param aroundLatLng
   *   Computed geographical location.
   * @param automaticRadius
-  *   Automatically-computed radius.
+  *   Distance from a central coordinate provided by `aroundLatLng`.
   * @param exhaustiveFacetsCount
   *   See the `facetsCount` field of the `exhaustive` object in the response.
   * @param exhaustiveNbHits
@@ -28,7 +28,7 @@ package algoliasearch.recommend
   * @param exhaustiveTypo
   *   See the `typo` field of the `exhaustive` object in the response.
   * @param facets
-  *   Mapping of each facet name to the corresponding facet counts.
+  *   Facet counts.
   * @param facetsStats
   *   Statistics for numerical facets.
   * @param hitsPerPage
@@ -40,13 +40,13 @@ package algoliasearch.recommend
   * @param message
   *   Warnings about the query.
   * @param nbHits
-  *   Number of hits the search query matched.
+  *   Number of results (hits).
   * @param nbPages
-  *   Number of pages of results for the current query.
+  *   Number of pages of results.
   * @param nbSortedHits
   *   Number of hits selected and sorted by the relevant sort algorithm.
   * @param page
-  *   Page to retrieve (the first page is `0`, not `1`).
+  *   Page of search results to retrieve.
   * @param parsedQuery
   *   Post-[normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/#what-does-normalization-mean)
   *   query string that will be searched.
@@ -62,12 +62,12 @@ package algoliasearch.recommend
   * @param serverUsed
   *   Host name of the server that processed the request.
   * @param userData
-  *   Lets you store custom data in your indices.
+  *   An object with custom data. You can store up to 32&nbsp;kB as custom data.
   * @param queryID
   *   Unique identifier for the query. This is used for [click
   *   analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
   * @param query
-  *   Text to search for in an index.
+  *   Search query.
   * @param params
   *   URL-encoded string of all search parameters.
   */

@@ -22,7 +22,7 @@ final class Edit {
   @JsonKey(name: r'delete')
   final String? delete;
 
-  /// Text that should be inserted in place of the removed text inside the query string.
+  /// Text to be added in place of the deleted text inside the query string.
   @JsonKey(name: r'insert')
   final String? insert;
 

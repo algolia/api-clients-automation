@@ -16,7 +16,7 @@ import algoliasearch.recommend.RecommendationModels._
 /** RecommendationsQuery
   *
   * @param indexName
-  *   Algolia index name.
+  *   Index name.
   * @param threshold
   *   Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each
   *   recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the
@@ -24,7 +24,7 @@ import algoliasearch.recommend.RecommendationModels._
   * @param maxRecommendations
   *   Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
   * @param objectID
-  *   Unique object identifier.
+  *   Unique record identifier.
   */
 case class RecommendationsQuery(
     indexName: String,

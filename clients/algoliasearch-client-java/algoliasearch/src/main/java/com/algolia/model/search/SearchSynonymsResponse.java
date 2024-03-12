@@ -43,7 +43,7 @@ public class SearchSynonymsResponse {
     return this;
   }
 
-  /** Synonym objects. */
+  /** Matching synonyms. */
   @javax.annotation.Nonnull
   public List<SynonymHit> getHits() {
     return hits;
@@ -54,7 +54,7 @@ public class SearchSynonymsResponse {
     return this;
   }
 
-  /** Number of hits the search query matched. */
+  /** Number of results (hits). */
   @javax.annotation.Nonnull
   public Integer getNbHits() {
     return nbHits;

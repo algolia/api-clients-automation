@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** Enable or turn off the built-in Algolia stop words for a specific language. */
+/** Turn on or off the built-in Algolia stop words for a specific language. */
 public class DictionarySettingsParams {
 
   @JsonProperty("disableStandardEntries")

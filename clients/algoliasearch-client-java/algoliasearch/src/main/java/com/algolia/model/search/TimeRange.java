@@ -21,7 +21,7 @@ public class TimeRange {
     return this;
   }
 
-  /** Lower bound of the time range (Unix timestamp). */
+  /** When the rule should start to be active, in Unix epoch time. */
   @javax.annotation.Nonnull
   public Integer getFrom() {
     return from;
@@ -32,7 +32,7 @@ public class TimeRange {
     return this;
   }
 
-  /** Upper bound of the time range (Unix timestamp). */
+  /** When the rule should stop to be active, in Unix epoch time. */
   @javax.annotation.Nonnull
   public Integer getUntil() {
     return until;

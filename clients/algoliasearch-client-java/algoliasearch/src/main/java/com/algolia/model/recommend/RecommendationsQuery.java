@@ -37,7 +37,7 @@ public class RecommendationsQuery implements RecommendationsRequest {
     return this;
   }
 
-  /** Algolia index name. */
+  /** Index name. */
   @javax.annotation.Nonnull
   public String getIndexName() {
     return indexName;
@@ -85,7 +85,7 @@ public class RecommendationsQuery implements RecommendationsRequest {
     return this;
   }
 
-  /** Unique object identifier. */
+  /** Unique record identifier. */
   @javax.annotation.Nonnull
   public String getObjectID() {
     return objectID;

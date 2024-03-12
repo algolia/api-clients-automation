@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** RankingInfo */
+/** Object with detailed information about the record's ranking. */
 public class RankingInfo {
 
   @JsonProperty("filters")
@@ -54,7 +54,7 @@ public class RankingInfo {
     return this;
   }
 
-  /** This field is reserved for advanced usage. */
+  /** Whether a filter matched the query. minimum: 0 */
   @javax.annotation.Nonnull
   public Integer getFilters() {
     return filters;
@@ -65,7 +65,7 @@ public class RankingInfo {
     return this;
   }
 
-  /** Position of the most important matched attribute in the attributes to index list. */
+  /** Position of the first matched word in the best matching attribute of the record. minimum: 0 */
   @javax.annotation.Nonnull
   public Integer getFirstMatchedWord() {
     return firstMatchedWord;
@@ -78,7 +78,7 @@ public class RankingInfo {
 
   /**
    * Distance between the geo location in the search query and the best matching geo location in the
-   * record, divided by the geo precision (in meters).
+   * record, divided by the geo precision (in meters). minimum: 0
    */
   @javax.annotation.Nonnull
   public Integer getGeoDistance() {
@@ -90,7 +90,7 @@ public class RankingInfo {
     return this;
   }
 
-  /** Precision used when computing the geo distance, in meters. */
+  /** Precision used when computing the geo distance, in meters. minimum: 1 */
   @javax.annotation.Nullable
   public Integer getGeoPrecision() {
     return geoPrecision;
@@ -123,7 +123,7 @@ public class RankingInfo {
     return this;
   }
 
-  /** Number of exactly matched words. */
+  /** Number of exactly matched words. minimum: 0 */
   @javax.annotation.Nonnull
   public Integer getNbExactWords() {
     return nbExactWords;
@@ -134,7 +134,7 @@ public class RankingInfo {
     return this;
   }
 
-  /** Number of typos encountered when matching the record. */
+  /** Number of typos encountered when matching the record. minimum: 0 */
   @javax.annotation.Nonnull
   public Integer getNbTypos() {
     return nbTypos;
@@ -145,7 +145,7 @@ public class RankingInfo {
     return this;
   }
 
-  /** Present and set to true if a Rule promoted the hit. */
+  /** Whether the record was promoted by a rule. */
   @javax.annotation.Nonnull
   public Boolean getPromoted() {
     return promoted;
@@ -157,8 +157,8 @@ public class RankingInfo {
   }
 
   /**
-   * When the query contains more than one word, the sum of the distances between matched words (in
-   * meters).
+   * Number of words between multiple matches in the query plus 1. For single word queries,
+   * `proximityDistance` is 0. minimum: 0
    */
   @javax.annotation.Nullable
   public Integer getProximityDistance() {
@@ -170,7 +170,7 @@ public class RankingInfo {
     return this;
   }
 
-  /** Custom ranking for the object, expressed as a single integer value. */
+  /** Overall ranking of the record, expressed as a single integer. This attribute is internal. */
   @javax.annotation.Nonnull
   public Integer getUserScore() {
     return userScore;
@@ -181,7 +181,7 @@ public class RankingInfo {
     return this;
   }
 
-  /** Number of matched words, including prefixes and typos. */
+  /** Number of matched words. minimum: 1 */
   @javax.annotation.Nonnull
   public Integer getWords() {
     return words;
@@ -192,7 +192,7 @@ public class RankingInfo {
     return this;
   }
 
-  /** Wether the record are promoted by the re-ranking strategy. */
+  /** Whether the record is re-ranked. */
   @javax.annotation.Nullable
   public Boolean getPromotedByReRanking() {
     return promotedByReRanking;

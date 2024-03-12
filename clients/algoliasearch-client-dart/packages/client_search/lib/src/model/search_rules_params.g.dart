@@ -19,8 +19,6 @@ SearchRulesParams _$SearchRulesParamsFromJson(Map<String, dynamic> json) =>
           page: $checkedConvert('page', (v) => v as int?),
           hitsPerPage: $checkedConvert('hitsPerPage', (v) => v as int?),
           enabled: $checkedConvert('enabled', (v) => v as bool?),
-          requestOptions: $checkedConvert('requestOptions',
-              (v) => (v as List<dynamic>?)?.map((e) => e as Object).toList()),
         );
         return val;
       },
@@ -41,7 +39,6 @@ Map<String, dynamic> _$SearchRulesParamsToJson(SearchRulesParams instance) {
   writeNotNull('page', instance.page);
   writeNotNull('hitsPerPage', instance.hitsPerPage);
   writeNotNull('enabled', instance.enabled);
-  writeNotNull('requestOptions', instance.requestOptions);
   return val;
 }
 

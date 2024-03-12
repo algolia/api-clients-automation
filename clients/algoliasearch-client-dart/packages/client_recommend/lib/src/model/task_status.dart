@@ -2,7 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:json_annotation/json_annotation.dart';
 
-/// _published_ if the task has been processed, _notPublished_ otherwise.
+/// Task status, `published` if the task is completed, `notPublished` otherwise.
 @JsonEnum(valueField: 'raw')
 enum TaskStatus {
   published(r'published'),

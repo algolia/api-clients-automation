@@ -15,7 +15,8 @@ import org.json4s._
 
 sealed trait Mode
 
-/** Search mode the index will use to query for results.
+/** Search mode the index will use to query for results. This setting only applies to indices, for which Algolia enabled
+  * NeuralSearch for you.
   */
 object Mode {
   case object NeuralSearch extends Mode {

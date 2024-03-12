@@ -18,11 +18,11 @@ final class GetObjectsRequest {
   @JsonKey(name: r'attributesToRetrieve')
   final List<String>? attributesToRetrieve;
 
-  /// Record's objectID.
+  /// Object ID for the record to retrieve.
   @JsonKey(name: r'objectID')
   final String objectID;
 
-  /// Name of the index containing the required records.
+  /// Index from which to retrieve the records.
   @JsonKey(name: r'indexName')
   final String indexName;
 

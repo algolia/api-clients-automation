@@ -6,13 +6,20 @@ import Core
 import Foundation
 
 public struct SearchRecommendRulesResponse: Codable, JSONEncodable, Hashable {
+    static let pageRule = NumericRule<Int>(
+        minimum: 0,
+        exclusiveMinimum: false,
+        maximum: nil,
+        exclusiveMaximum: false,
+        multipleOf: nil
+    )
     /// Fetched rules.
     public var hits: [RuleResponse]
-    /// Number of hits the search query matched.
+    /// Number of results (hits).
     public var nbHits: Int
-    /// Page to retrieve (the first page is `0`, not `1`).
+    /// Page of search results to retrieve.
     public var page: Int
-    /// Number of pages of results for the current query.
+    /// Number of pages of results.
     public var nbPages: Int
 
     public init(hits: [RuleResponse], nbHits: Int, page: Int, nbPages: Int) {

@@ -15,7 +15,7 @@ import org.json4s._
 
 sealed trait TaskStatus
 
-/** _published_ if the task has been processed, _notPublished_ otherwise.
+/** Task status, `published` if the task is completed, `notPublished` otherwise.
   */
 object TaskStatus {
   case object Published extends TaskStatus {

@@ -59,8 +59,6 @@ ConsequenceParams _$ConsequenceParamsFromJson(Map<String, dynamic> json) =>
               $checkedConvert('personalizationImpact', (v) => v as int?),
           userToken: $checkedConvert('userToken', (v) => v as String?),
           getRankingInfo: $checkedConvert('getRankingInfo', (v) => v as bool?),
-          explain: $checkedConvert('explain',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           synonyms: $checkedConvert('synonyms', (v) => v as bool?),
           clickAnalytics: $checkedConvert('clickAnalytics', (v) => v as bool?),
           analytics: $checkedConvert('analytics', (v) => v as bool?),
@@ -69,8 +67,6 @@ ConsequenceParams _$ConsequenceParamsFromJson(Map<String, dynamic> json) =>
           percentileComputation:
               $checkedConvert('percentileComputation', (v) => v as bool?),
           enableABTest: $checkedConvert('enableABTest', (v) => v as bool?),
-          attributesForFaceting: $checkedConvert('attributesForFaceting',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           attributesToRetrieve: $checkedConvert('attributesToRetrieve',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           ranking: $checkedConvert('ranking',
@@ -208,14 +204,12 @@ Map<String, dynamic> _$ConsequenceParamsToJson(ConsequenceParams instance) {
   writeNotNull('personalizationImpact', instance.personalizationImpact);
   writeNotNull('userToken', instance.userToken);
   writeNotNull('getRankingInfo', instance.getRankingInfo);
-  writeNotNull('explain', instance.explain);
   writeNotNull('synonyms', instance.synonyms);
   writeNotNull('clickAnalytics', instance.clickAnalytics);
   writeNotNull('analytics', instance.analytics);
   writeNotNull('analyticsTags', instance.analyticsTags);
   writeNotNull('percentileComputation', instance.percentileComputation);
   writeNotNull('enableABTest', instance.enableABTest);
-  writeNotNull('attributesForFaceting', instance.attributesForFaceting);
   writeNotNull('attributesToRetrieve', instance.attributesToRetrieve);
   writeNotNull('ranking', instance.ranking);
   writeNotNull('customRanking', instance.customRanking);

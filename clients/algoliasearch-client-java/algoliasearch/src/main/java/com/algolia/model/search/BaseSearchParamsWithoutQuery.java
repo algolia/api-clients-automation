@@ -87,9 +87,6 @@ public class BaseSearchParamsWithoutQuery {
   @JsonProperty("getRankingInfo")
   private Boolean getRankingInfo;
 
-  @JsonProperty("explain")
-  private List<String> explain;
-
   @JsonProperty("synonyms")
   private Boolean synonyms;
 
@@ -113,7 +110,14 @@ public class BaseSearchParamsWithoutQuery {
     return this;
   }
 
-  /** Overrides the query parameter and performs a more generic search. */
+  /**
+   * Keywords to be used instead of the search query to conduct a more broader search. Using the
+   * `similarQuery` parameter changes other settings: - `queryType` is set to `prefixNone`. -
+   * `removeStopWords` is set to true. - `words` is set as the first ranking criterion. - All
+   * remaining words are treated as `optionalWords`. Since the `similarQuery` is supposed to do a
+   * broad search, they usually return many results. Combine it with `filters` to narrow down the
+   * list of results.
+   */
   @javax.annotation.Nullable
   public String getSimilarQuery() {
     return similarQuery;
@@ -125,8 +129,21 @@ public class BaseSearchParamsWithoutQuery {
   }
 
   /**
-   * [Filter](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) the
-   * query with numeric, facet, or tag filters.
+   * Filter the search so that only records with matching values are included in the results. These
+   * filters are supported: - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of
+   * `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and
+   * `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.**
+   * `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet
+   * value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean
+   * filters.** `<facet>: true | false`. You can combine filters with `AND`, `OR`, and `NOT`
+   * operators with the following restrictions: - You can only combine filters of the same type with
+   * `OR`. **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of
+   * filters. **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions
+   * (`AND`) with `OR`. **Not supported:** `facet:value OR (facet:value AND facet:value)` Use quotes
+   * around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`,
+   * `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at
+   * least one element of the array. For more information, see
+   * [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
    */
   @javax.annotation.Nullable
   public String getFilters() {
@@ -183,9 +200,9 @@ public class BaseSearchParamsWithoutQuery {
   }
 
   /**
-   * Determines how to calculate [filter
+   * Whether to sum all filter scores. If true, all filter scores are summed. Otherwise, the maximum
+   * filter score is kept. For more information, see [filter
    * scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulating-scores-with-sumorfiltersscores).
-   * If `false`, maximum score is kept. If `true`, score is summed.
    */
   @javax.annotation.Nullable
   public Boolean getSumOrFiltersScores() {
@@ -205,10 +222,7 @@ public class BaseSearchParamsWithoutQuery {
     return this;
   }
 
-  /**
-   * Restricts a query to only look at a subset of your [searchable
-   * attributes](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/).
-   */
+  /** Restricts a search to a subset of your searchable attributes. */
   @javax.annotation.Nullable
   public List<String> getRestrictSearchableAttributes() {
     return restrictSearchableAttributes;
@@ -228,9 +242,10 @@ public class BaseSearchParamsWithoutQuery {
   }
 
   /**
-   * Returns
-   * [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts),
-   * their facet values, and the number of matching facet values.
+   * Facets for which to retrieve facet values that match the search criteria and the number of
+   * matching facet values. To retrieve all facets, use the wildcard character `*`. For more
+   * information, see
+   * [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
    */
   @javax.annotation.Nullable
   public List<String> getFacets() {
@@ -243,11 +258,11 @@ public class BaseSearchParamsWithoutQuery {
   }
 
   /**
-   * Forces faceting to be applied after
-   * [de-duplication](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/)
-   * (with the distinct feature). Alternatively, the `afterDistinct`
-   * [modifier](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/#modifiers)
-   * of `attributesForFaceting` allows for more granular control.
+   * Whether faceting should be applied after deduplication with `distinct`. This leads to accurate
+   * facet counts when using faceting in combination with `distinct`. It's usually better to use
+   * `afterDistinct` modifiers in the `attributesForFaceting` setting, as `facetingAfterDistinct`
+   * only computes correct facet counts if all records have the same facet values for the
+   * `attributeForDistinct`.
    */
   @javax.annotation.Nullable
   public Boolean getFacetingAfterDistinct() {
@@ -259,7 +274,7 @@ public class BaseSearchParamsWithoutQuery {
     return this;
   }
 
-  /** Page to retrieve (the first page is `0`, not `1`). */
+  /** Page of search results to retrieve. minimum: 0 */
   @javax.annotation.Nullable
   public Integer getPage() {
     return page;
@@ -270,13 +285,7 @@ public class BaseSearchParamsWithoutQuery {
     return this;
   }
 
-  /**
-   * Specifies the offset of the first hit to return. > **Note**: Using `page` and `hitsPerPage` is
-   * the recommended method for [paging
-   * results](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/).
-   * However, you can use `offset` and `length` to implement [an alternative approach to
-   * paging](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/#retrieving-a-subset-of-records-with-offset-and-length).
-   */
+  /** Position of the first hit to retrieve. */
   @javax.annotation.Nullable
   public Integer getOffset() {
     return offset;
@@ -287,14 +296,7 @@ public class BaseSearchParamsWithoutQuery {
     return this;
   }
 
-  /**
-   * Sets the number of hits to retrieve (for use with `offset`). > **Note**: Using `page` and
-   * `hitsPerPage` is the recommended method for [paging
-   * results](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/).
-   * However, you can use `offset` and `length` to implement [an alternative approach to
-   * paging](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/pagination/js/#retrieving-a-subset-of-records-with-offset-and-length).
-   * minimum: 1 maximum: 1000
-   */
+  /** Number of hits to retrieve (used in combination with `offset`). minimum: 1 maximum: 1000 */
   @javax.annotation.Nullable
   public Integer getLength() {
     return length;
@@ -306,9 +308,10 @@ public class BaseSearchParamsWithoutQuery {
   }
 
   /**
-   * Search for entries [around a central
-   * location](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filter-around-a-central-point),
-   * enabling a geographical search within a circular area.
+   * Coordinates for the center of a circle, expressed as a comma-separated string of latitude and
+   * longitude. Only records included within circle around this central location are included in the
+   * results. The radius of the circle is determined by the `aroundRadius` and `minimumAroundRadius`
+   * settings. This parameter is ignored if you also specify `insidePolygon` or `insideBoundingBox`.
    */
   @javax.annotation.Nullable
   public String getAroundLatLng() {
@@ -320,10 +323,7 @@ public class BaseSearchParamsWithoutQuery {
     return this;
   }
 
-  /**
-   * Search for entries around a location. The location is automatically computed from the
-   * requester's IP address.
-   */
+  /** Whether to obtain the coordinates from the request's IP address. */
   @javax.annotation.Nullable
   public Boolean getAroundLatLngViaIP() {
     return aroundLatLngViaIP;
@@ -357,7 +357,7 @@ public class BaseSearchParamsWithoutQuery {
   }
 
   /**
-   * Minimum radius (in meters) used for a geographical search when `aroundRadius` isn't set.
+   * Minimum radius (in meters) for a search around a location when `aroundRadius` isn't set.
    * minimum: 1
    */
   @javax.annotation.Nullable
@@ -379,9 +379,11 @@ public class BaseSearchParamsWithoutQuery {
   }
 
   /**
-   * Search inside a [rectangular
-   * area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas)
-   * (in geographical coordinates).
+   * Coordinates for a rectangular area in which to search. Each bounding box is defined by the two
+   * opposite points of its diagonal, and expressed as latitude and longitude pair: `[p1 lat, p1
+   * long, p2 lat, p2 long]`. Provide multiple bounding boxes as nested arrays. For more
+   * information, see [rectangular
+   * area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
    */
   @javax.annotation.Nullable
   public List<List<Double>> getInsideBoundingBox() {
@@ -402,9 +404,11 @@ public class BaseSearchParamsWithoutQuery {
   }
 
   /**
-   * Search inside a
-   * [polygon](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas)
-   * (in geographical coordinates).
+   * Coordinates of a polygon in which to search. Polygons are defined by 3 to 10,000 points. Each
+   * point is represented by its latitude and longitude. Provide multiple polygons as nested arrays.
+   * For more information, see [filtering inside
+   * polygons](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
+   * This parameter is ignored, if you also specify `insideBoundingBox`.
    */
   @javax.annotation.Nullable
   public List<List<Double>> getInsidePolygon() {
@@ -425,10 +429,10 @@ public class BaseSearchParamsWithoutQuery {
   }
 
   /**
-   * Changes the default values of parameters that work best for a natural language query, such as
-   * `ignorePlurals`, `removeStopWords`, `removeWordsIfNoResults`, `analyticsTags`, and
-   * `ruleContexts`. These parameters work well together when the query consists of fuller natural
-   * language strings instead of keywords, for example when processing voice search queries.
+   * ISO language codes that adjust settings that are useful for processing natural language queries
+   * (as opposed to keyword searches): - Sets `removeStopWords` and `ignorePlurals` to the list of
+   * provided languages. - Sets `removeWordsIfNoResults` to `allOptional`. - Adds a
+   * `natural_language` attribute to `ruleContexts` and `analyticsTags`.
    */
   @javax.annotation.Nullable
   public List<String> getNaturalLanguages() {
@@ -449,9 +453,9 @@ public class BaseSearchParamsWithoutQuery {
   }
 
   /**
-   * Assigns [rule
+   * Assigns a rule context to the search query. [Rule
    * contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context)
-   * to search queries.
+   * are strings that you can use to trigger matching rules.
    */
   @javax.annotation.Nullable
   public List<String> getRuleContexts() {
@@ -464,8 +468,11 @@ public class BaseSearchParamsWithoutQuery {
   }
 
   /**
-   * Defines how much [Personalization affects
-   * results](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).
+   * Impact that Personalization should have on this search. The higher this value is, the more
+   * Personalization determines the ranking compared to other factors. For more information, see
+   * [Understanding Personalization
+   * impact](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).
+   * minimum: 0 maximum: 100
    */
   @javax.annotation.Nullable
   public Integer getPersonalizationImpact() {
@@ -478,9 +485,9 @@ public class BaseSearchParamsWithoutQuery {
   }
 
   /**
-   * Associates a [user
-   * token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/) with the current
-   * search.
+   * Unique pseudonymous or anonymous user identifier. This helps with analytics and click and
+   * conversion events. For more information, see [user
+   * token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
    */
   @javax.annotation.Nullable
   public String getUserToken() {
@@ -492,32 +499,10 @@ public class BaseSearchParamsWithoutQuery {
     return this;
   }
 
-  /**
-   * Incidates whether the search response includes [detailed ranking
-   * information](https://www.algolia.com/doc/guides/building-search-ui/going-further/backend-search/in-depth/understanding-the-api-response/#ranking-information).
-   */
+  /** Whether the search response should include detailed ranking information. */
   @javax.annotation.Nullable
   public Boolean getGetRankingInfo() {
     return getRankingInfo;
-  }
-
-  public BaseSearchParamsWithoutQuery setExplain(List<String> explain) {
-    this.explain = explain;
-    return this;
-  }
-
-  public BaseSearchParamsWithoutQuery addExplain(String explainItem) {
-    if (this.explain == null) {
-      this.explain = new ArrayList<>();
-    }
-    this.explain.add(explainItem);
-    return this;
-  }
-
-  /** Enriches the API's response with information about how the query was processed. */
-  @javax.annotation.Nullable
-  public List<String> getExplain() {
-    return explain;
   }
 
   public BaseSearchParamsWithoutQuery setSynonyms(Boolean synonyms) {
@@ -525,7 +510,7 @@ public class BaseSearchParamsWithoutQuery {
     return this;
   }
 
-  /** Whether to take into account an index's synonyms for a particular search. */
+  /** Whether to take into account an index's synonyms for this search. */
   @javax.annotation.Nullable
   public Boolean getSynonyms() {
     return synonyms;
@@ -537,9 +522,9 @@ public class BaseSearchParamsWithoutQuery {
   }
 
   /**
-   * Indicates whether a query ID parameter is included in the search response. This is required for
-   * [tracking click and conversion
-   * events](https://www.algolia.com/doc/guides/sending-events/concepts/event-types/#events-related-to-algolia-requests).
+   * Whether to include a `queryID` attribute in the response. The query ID is a unique identifier
+   * for a search query and is required for tracking [click and conversion
+   * events](https://www.algolia.com/guides/sending-events/getting-started/).
    */
   @javax.annotation.Nullable
   public Boolean getClickAnalytics() {
@@ -551,10 +536,7 @@ public class BaseSearchParamsWithoutQuery {
     return this;
   }
 
-  /**
-   * Indicates whether this query will be included in
-   * [analytics](https://www.algolia.com/doc/guides/search-analytics/guides/exclude-queries/).
-   */
+  /** Whether this search will be included in Analytics. */
   @javax.annotation.Nullable
   public Boolean getAnalytics() {
     return analytics;
@@ -587,7 +569,7 @@ public class BaseSearchParamsWithoutQuery {
     return this;
   }
 
-  /** Whether to include or exclude a query from the processing-time percentile computation. */
+  /** Whether to include this search when calculating processing-time percentiles. */
   @javax.annotation.Nullable
   public Boolean getPercentileComputation() {
     return percentileComputation;
@@ -598,7 +580,7 @@ public class BaseSearchParamsWithoutQuery {
     return this;
   }
 
-  /** Incidates whether this search will be considered in A/B testing. */
+  /** Whether to enable A/B testing for this search. */
   @javax.annotation.Nullable
   public Boolean getEnableABTest() {
     return enableABTest;
@@ -639,7 +621,6 @@ public class BaseSearchParamsWithoutQuery {
       Objects.equals(this.personalizationImpact, baseSearchParamsWithoutQuery.personalizationImpact) &&
       Objects.equals(this.userToken, baseSearchParamsWithoutQuery.userToken) &&
       Objects.equals(this.getRankingInfo, baseSearchParamsWithoutQuery.getRankingInfo) &&
-      Objects.equals(this.explain, baseSearchParamsWithoutQuery.explain) &&
       Objects.equals(this.synonyms, baseSearchParamsWithoutQuery.synonyms) &&
       Objects.equals(this.clickAnalytics, baseSearchParamsWithoutQuery.clickAnalytics) &&
       Objects.equals(this.analytics, baseSearchParamsWithoutQuery.analytics) &&
@@ -677,7 +658,6 @@ public class BaseSearchParamsWithoutQuery {
       personalizationImpact,
       userToken,
       getRankingInfo,
-      explain,
       synonyms,
       clickAnalytics,
       analytics,
@@ -716,7 +696,6 @@ public class BaseSearchParamsWithoutQuery {
     sb.append("    personalizationImpact: ").append(toIndentedString(personalizationImpact)).append("\n");
     sb.append("    userToken: ").append(toIndentedString(userToken)).append("\n");
     sb.append("    getRankingInfo: ").append(toIndentedString(getRankingInfo)).append("\n");
-    sb.append("    explain: ").append(toIndentedString(explain)).append("\n");
     sb.append("    synonyms: ").append(toIndentedString(synonyms)).append("\n");
     sb.append("    clickAnalytics: ").append(toIndentedString(clickAnalytics)).append("\n");
     sb.append("    analytics: ").append(toIndentedString(analytics)).append("\n");

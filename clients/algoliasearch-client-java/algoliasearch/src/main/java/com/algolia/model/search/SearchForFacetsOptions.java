@@ -41,7 +41,7 @@ public class SearchForFacetsOptions {
     return this;
   }
 
-  /** Algolia index name. */
+  /** Index name. */
   @javax.annotation.Nonnull
   public String getIndexName() {
     return indexName;
@@ -64,7 +64,7 @@ public class SearchForFacetsOptions {
   }
 
   /**
-   * Maximum number of facet hits to return when [searching for facet
+   * Maximum number of facet values to return when [searching for facet
    * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
    * maximum: 100
    */

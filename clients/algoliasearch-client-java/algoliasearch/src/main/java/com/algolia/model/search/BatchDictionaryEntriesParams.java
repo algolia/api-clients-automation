@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** `batchDictionaryEntries` parameters. */
+/** Request body for updating dictionary entries. */
 public class BatchDictionaryEntriesParams {
 
   @JsonProperty("clearExistingDictionaryEntries")
@@ -24,8 +24,7 @@ public class BatchDictionaryEntriesParams {
   }
 
   /**
-   * Incidates whether to replace all custom entries in the dictionary with the ones sent with this
-   * request.
+   * Whether to replace all custom entries in the dictionary with the ones sent with this request.
    */
   @javax.annotation.Nullable
   public Boolean getClearExistingDictionaryEntries() {
@@ -42,7 +41,7 @@ public class BatchDictionaryEntriesParams {
     return this;
   }
 
-  /** Operations to batch. */
+  /** List of additions and deletions to your dictionaries. */
   @javax.annotation.Nonnull
   public List<BatchDictionaryEntriesRequest> getRequests() {
     return requests;

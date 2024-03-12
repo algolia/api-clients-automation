@@ -13,7 +13,7 @@ final class HasPendingMappingsResponse {
     this.clusters,
   });
 
-  /// Indicates whether there are clusters undergoing migration, creation, or deletion.
+  /// Whether there are clusters undergoing migration, creation, or deletion.
   @JsonKey(name: r'pending')
   final bool pending;
 

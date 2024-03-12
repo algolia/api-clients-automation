@@ -16,7 +16,7 @@ import algoliasearch.recommend.RecommendationModels._
 /** BaseRecommendationsQuery
   *
   * @param objectID
-  *   Unique object identifier.
+  *   Unique record identifier.
   */
 case class BaseRecommendationsQuery(
     model: RecommendationModels,

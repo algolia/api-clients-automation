@@ -106,6 +106,7 @@ export 'src/model/save_object_response.dart';
 export 'src/model/save_synonym_response.dart';
 export 'src/model/scope_type.dart';
 export 'src/model/search_dictionary_entries_params.dart';
+export 'src/model/search_dictionary_entries_response.dart';
 export 'src/model/search_for_facet_values_request.dart';
 export 'src/model/search_for_facet_values_response.dart';
 export 'src/model/search_for_facets.dart';

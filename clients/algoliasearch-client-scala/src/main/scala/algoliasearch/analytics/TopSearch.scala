@@ -16,7 +16,7 @@ package algoliasearch.analytics
   * @param count
   *   Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).
   * @param nbHits
-  *   Number of hits the search query matched.
+  *   Number of results (hits).
   */
 case class TopSearch(
     search: String,

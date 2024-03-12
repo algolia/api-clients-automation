@@ -9,7 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-/** A single hit. */
+/**
+ * Search result. A hit is a record from your index, augmented with special attributes for
+ * highlighting, snippeting, and ranking.
+ */
 public class Hit {
 
   @JsonProperty("objectID")
@@ -45,7 +48,7 @@ public class Hit {
     return this;
   }
 
-  /** Unique object identifier. */
+  /** Unique record identifier. */
   @javax.annotation.Nonnull
   public String getObjectID() {
     return objectID;
@@ -64,7 +67,7 @@ public class Hit {
     return this;
   }
 
-  /** Show highlighted section and words matched on a query. */
+  /** Surround words that match the query with HTML tags for highlighting. */
   @javax.annotation.Nullable
   public Map<String, HighlightResult> getHighlightResult() {
     return highlightResult;
@@ -83,10 +86,7 @@ public class Hit {
     return this;
   }
 
-  /**
-   * Snippeted attributes show parts of the matched attributes. Only returned when
-   * attributesToSnippet is non-empty.
-   */
+  /** Snippets that show the context around a matching search query. */
   @javax.annotation.Nullable
   public Map<String, SnippetResult> getSnippetResult() {
     return snippetResult;

@@ -467,11 +467,11 @@ public class RecommendClient extends ApiClient {
   /**
    * Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param objectID Unique record identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -488,11 +488,11 @@ public class RecommendClient extends ApiClient {
   /**
    * Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public DeletedAtResponse deleteRecommendRule(@Nonnull String indexName, @Nonnull RecommendModels model, @Nonnull String objectID)
@@ -504,11 +504,11 @@ public class RecommendClient extends ApiClient {
    * (asynchronously) Delete a [Recommend
    * rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param objectID Unique record identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -537,11 +537,11 @@ public class RecommendClient extends ApiClient {
    * (asynchronously) Delete a [Recommend
    * rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<DeletedAtResponse> deleteRecommendRuleAsync(
@@ -555,11 +555,11 @@ public class RecommendClient extends ApiClient {
   /**
    * Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param objectID Unique record identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -576,11 +576,11 @@ public class RecommendClient extends ApiClient {
   /**
    * Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RuleResponse getRecommendRule(@Nonnull String indexName, @Nonnull RecommendModels model, @Nonnull String objectID)
@@ -592,11 +592,11 @@ public class RecommendClient extends ApiClient {
    * (asynchronously) Return a [Recommend
    * rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param objectID Unique record identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -625,11 +625,11 @@ public class RecommendClient extends ApiClient {
    * (asynchronously) Return a [Recommend
    * rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RuleResponse> getRecommendRuleAsync(
@@ -644,7 +644,7 @@ public class RecommendClient extends ApiClient {
    * Some operations, such as deleting a Recommend rule, will respond with a `taskID` value. Use
    * this value here to check the status of that task.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
@@ -666,7 +666,7 @@ public class RecommendClient extends ApiClient {
    * Some operations, such as deleting a Recommend rule, will respond with a `taskID` value. Use
    * this value here to check the status of that task.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
@@ -682,7 +682,7 @@ public class RecommendClient extends ApiClient {
    * (asynchronously) Some operations, such as deleting a Recommend rule, will respond with a
    * `taskID` value. Use this value here to check the status of that task.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
@@ -715,7 +715,7 @@ public class RecommendClient extends ApiClient {
    * (asynchronously) Some operations, such as deleting a Recommend rule, will respond with a
    * `taskID` value. Use this value here to check the status of that task.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
@@ -821,7 +821,7 @@ public class RecommendClient extends ApiClient {
   /**
    * List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
@@ -842,7 +842,7 @@ public class RecommendClient extends ApiClient {
   /**
    * List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
@@ -860,7 +860,7 @@ public class RecommendClient extends ApiClient {
   /**
    * List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
@@ -879,7 +879,7 @@ public class RecommendClient extends ApiClient {
   /**
    * List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
@@ -894,7 +894,7 @@ public class RecommendClient extends ApiClient {
    * (asynchronously) List [Recommend
    * rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
@@ -927,7 +927,7 @@ public class RecommendClient extends ApiClient {
    * (asynchronously) List [Recommend
    * rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
@@ -946,7 +946,7 @@ public class RecommendClient extends ApiClient {
    * (asynchronously) List [Recommend
    * rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
@@ -966,7 +966,7 @@ public class RecommendClient extends ApiClient {
    * (asynchronously) List [Recommend
    * rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
    *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)

@@ -2,7 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:json_annotation/json_annotation.dart';
 
-/// Operation to perform (_move_ or _copy_).
+/// Operation to perform on the index.
 @JsonEnum(valueField: 'raw')
 enum OperationType {
   move(r'move'),

@@ -961,9 +961,9 @@ final class SearchClientSnippet {
 
         // Call the API
         _ = try await client.searchDictionaryEntries(
-            dictionaryName: DictionaryType.compounds,
+            dictionaryName: DictionaryType.stopwords,
             searchDictionaryEntriesParams: SearchDictionaryEntriesParams(
-                query: "foo"
+                query: "about"
             )
         )
         // SEPARATOR<

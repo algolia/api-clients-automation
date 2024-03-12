@@ -14,15 +14,15 @@ final class SaveObjectResponse {
     this.objectID,
   });
 
-  /// Date of creation (ISO-8601 format).
+  /// Timestamp when the record was added, in ISO 8601 format.
   @JsonKey(name: r'createdAt')
   final String createdAt;
 
-  /// Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the `task` operation and this `taskID`.
+  /// Unique identifier of a task.  A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.
   @JsonKey(name: r'taskID')
   final int taskID;
 
-  /// Unique object identifier.
+  /// Unique record identifier.
   @JsonKey(name: r'objectID')
   final String? objectID;
 

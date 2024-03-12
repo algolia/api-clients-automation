@@ -17,11 +17,11 @@ import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, Typ
 /** Recommend hit.
   *
   * @param objectID
-  *   Unique object identifier.
+  *   Unique record identifier.
   * @param highlightResult
-  *   Show highlighted section and words matched on a query.
+  *   Surround words that match the query with HTML tags for highlighting.
   * @param snippetResult
-  *   Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
+  *   Snippets that show the context around a matching search query.
   * @param score
   *   Recommendation score.
   */

@@ -6,7 +6,10 @@ package com.algolia.model.recommend;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Search mode the index will use to query for results. */
+/**
+ * Search mode the index will use to query for results. This setting only applies to indices, for
+ * which Algolia enabled NeuralSearch for you.
+ */
 public enum Mode {
   NEURAL_SEARCH("neuralSearch"),
 

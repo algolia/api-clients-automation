@@ -6,7 +6,7 @@ package com.algolia.model.search;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Indicates whether a dictionary entry is active (`enabled`) or inactive (`disabled`). */
+/** Whether a dictionary entry is active. */
 public enum DictionaryEntryState {
   ENABLED("enabled"),
 

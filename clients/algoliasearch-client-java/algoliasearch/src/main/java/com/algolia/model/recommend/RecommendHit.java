@@ -49,7 +49,7 @@ public class RecommendHit implements RecommendationsHit {
     return this;
   }
 
-  /** Unique object identifier. */
+  /** Unique record identifier. */
   @javax.annotation.Nonnull
   public String getObjectID() {
     return objectID;
@@ -68,7 +68,7 @@ public class RecommendHit implements RecommendationsHit {
     return this;
   }
 
-  /** Show highlighted section and words matched on a query. */
+  /** Surround words that match the query with HTML tags for highlighting. */
   @javax.annotation.Nullable
   public Map<String, HighlightResult> getHighlightResult() {
     return highlightResult;
@@ -87,10 +87,7 @@ public class RecommendHit implements RecommendationsHit {
     return this;
   }
 
-  /**
-   * Snippeted attributes show parts of the matched attributes. Only returned when
-   * attributesToSnippet is non-empty.
-   */
+  /** Snippets that show the context around a matching search query. */
   @javax.annotation.Nullable
   public Map<String, SnippetResult> getSnippetResult() {
     return snippetResult;

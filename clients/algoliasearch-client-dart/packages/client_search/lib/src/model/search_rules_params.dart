@@ -16,21 +16,20 @@ final class SearchRulesParams {
     this.page,
     this.hitsPerPage,
     this.enabled,
-    this.requestOptions,
   });
 
-  /// Rule object query.
+  /// Search query for rules.
   @JsonKey(name: r'query')
   final String? query;
 
   @JsonKey(name: r'anchoring')
   final Anchoring? anchoring;
 
-  /// Restricts responses to the specified [contextual rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
+  /// Only return rules that match the context (exact match).
   @JsonKey(name: r'context')
   final String? context;
 
-  /// Requested page (the first page is page 0).
+  /// Requested page of the API response.
   // minimum: 0
   @JsonKey(name: r'page')
   final int? page;
@@ -41,13 +40,9 @@ final class SearchRulesParams {
   @JsonKey(name: r'hitsPerPage')
   final int? hitsPerPage;
 
-  /// Restricts responses to enabled rules. When not specified (default), _all_ rules are retrieved.
+  /// If `true`, return only enabled rules. If `false`, return only inactive rules. By default, _all_ rules are returned.
   @JsonKey(name: r'enabled')
   final bool? enabled;
-
-  /// Request options to send with the API call.
-  @JsonKey(name: r'requestOptions')
-  final List<Object>? requestOptions;
 
   @override
   bool operator ==(Object other) =>
@@ -58,8 +53,7 @@ final class SearchRulesParams {
           other.context == context &&
           other.page == page &&
           other.hitsPerPage == hitsPerPage &&
-          other.enabled == enabled &&
-          other.requestOptions == requestOptions;
+          other.enabled == enabled;
 
   @override
   int get hashCode =>
@@ -68,8 +62,7 @@ final class SearchRulesParams {
       context.hashCode +
       page.hashCode +
       hitsPerPage.hashCode +
-      (enabled == null ? 0 : enabled.hashCode) +
-      requestOptions.hashCode;
+      (enabled == null ? 0 : enabled.hashCode);
 
   factory SearchRulesParams.fromJson(Map<String, dynamic> json) =>
       _$SearchRulesParamsFromJson(json);

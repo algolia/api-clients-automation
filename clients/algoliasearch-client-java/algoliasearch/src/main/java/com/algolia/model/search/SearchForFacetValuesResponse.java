@@ -32,7 +32,7 @@ public class SearchForFacetValuesResponse implements SearchResult {
     return this;
   }
 
-  /** Get facetHits */
+  /** Matching facet values. */
   @javax.annotation.Nonnull
   public List<FacetHits> getFacetHits() {
     return facetHits;

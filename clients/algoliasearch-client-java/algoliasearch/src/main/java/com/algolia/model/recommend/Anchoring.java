@@ -7,8 +7,10 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
 /**
- * Whether the pattern parameter matches the beginning (`startsWith`) or end (`endsWith`) of the
- * query string, is an exact match (`is`), or a partial match (`contains`).
+ * Which part of the search query the pattern should match: - `startsWith`. The pattern must match
+ * the begginning of the query. - `endsWith`. The pattern must match the end of the query. - `is`.
+ * The pattern must match the query exactly. - `contains`. The pattern must match anywhere in the
+ * query. Empty queries are only allowed as pattern with `anchoring: is`.
  */
 public enum Anchoring {
   IS("is"),

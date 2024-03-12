@@ -60,8 +60,6 @@ BaseSearchParamsWithoutQuery _$BaseSearchParamsWithoutQueryFromJson(
               $checkedConvert('personalizationImpact', (v) => v as int?),
           userToken: $checkedConvert('userToken', (v) => v as String?),
           getRankingInfo: $checkedConvert('getRankingInfo', (v) => v as bool?),
-          explain: $checkedConvert('explain',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           synonyms: $checkedConvert('synonyms', (v) => v as bool?),
           clickAnalytics: $checkedConvert('clickAnalytics', (v) => v as bool?),
           analytics: $checkedConvert('analytics', (v) => v as bool?),
@@ -111,7 +109,6 @@ Map<String, dynamic> _$BaseSearchParamsWithoutQueryToJson(
   writeNotNull('personalizationImpact', instance.personalizationImpact);
   writeNotNull('userToken', instance.userToken);
   writeNotNull('getRankingInfo', instance.getRankingInfo);
-  writeNotNull('explain', instance.explain);
   writeNotNull('synonyms', instance.synonyms);
   writeNotNull('clickAnalytics', instance.clickAnalytics);
   writeNotNull('analytics', instance.analytics);

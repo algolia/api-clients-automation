@@ -14,8 +14,12 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * [Filter hits by facet
- * value](https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/).
+ * Filter the search by facet values, so that only records with the same facet values are retrieved.
+ * **Prefer using the `filters` parameter, which supports all filter types and combinations with
+ * boolean operators.** - `[filter1, filter2]` is interpreted as `filter1 AND filter2`. -
+ * `[[filter1, filter2], filter3]` is interpreted as `filter1 OR filter2 AND filter3`. -
+ * `facet:-value` is interpreted as `NOT facet:value`. While it's best to avoid attributes that
+ * start with a `-`, you can still filter them by escaping with a backslash: `facet:\\-value`.
  */
 @JsonDeserialize(using = FacetFilters.Deserializer.class)
 public interface FacetFilters {

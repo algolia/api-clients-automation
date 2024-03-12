@@ -14,7 +14,7 @@ package algoliasearch.recommend
 /** BaseRecommendRequest
   *
   * @param indexName
-  *   Algolia index name.
+  *   Index name.
   * @param threshold
   *   Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each
   *   recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the

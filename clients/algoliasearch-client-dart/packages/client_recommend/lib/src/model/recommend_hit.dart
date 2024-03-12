@@ -20,15 +20,15 @@ final class RecommendHit extends DelegatingMap<String, dynamic> {
     Map<String, dynamic> additionalProperties = const {},
   }) : super(additionalProperties);
 
-  /// Unique object identifier.
+  /// Unique record identifier.
   @JsonKey(name: r'objectID')
   final String objectID;
 
-  /// Show highlighted section and words matched on a query.
+  /// Surround words that match the query with HTML tags for highlighting.
   @JsonKey(name: r'_highlightResult')
   final Map<String, dynamic>? highlightResult;
 
-  /// Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
+  /// Snippets that show the context around a matching search query.
   @JsonKey(name: r'_snippetResult')
   final Map<String, dynamic>? snippetResult;
 

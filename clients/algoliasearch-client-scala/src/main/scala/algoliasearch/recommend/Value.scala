@@ -16,7 +16,8 @@ import algoliasearch.recommend.SortRemainingBy._
 /** Value
   *
   * @param order
-  *   Pinned order of facet lists.
+  *   Explicit order of facets or facet values. This setting lets you always show specific facets or facet values at the
+  *   top of the list.
   */
 case class Value(
     order: Option[Seq[String]] = scala.None,

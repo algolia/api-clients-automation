@@ -6,7 +6,7 @@ package com.algolia.model.search;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Operation to perform (_move_ or _copy_). */
+/** Operation to perform on the index. */
 public enum OperationType {
   MOVE("move"),
 

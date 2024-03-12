@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** Ordering of facets (widgets). */
+/** Order of facet names. */
 public class Facets {
 
   @JsonProperty("order")
@@ -28,7 +28,10 @@ public class Facets {
     return this;
   }
 
-  /** Pinned order of facet lists. */
+  /**
+   * Explicit order of facets or facet values. This setting lets you always show specific facets or
+   * facet values at the top of the list.
+   */
   @javax.annotation.Nullable
   public List<String> getOrder() {
     return order;

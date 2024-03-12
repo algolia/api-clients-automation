@@ -16,11 +16,11 @@ final class SearchRulesResponse {
     required this.nbPages,
   });
 
-  /// Fetched rules.
+  /// Rules that matched the search criteria.
   @JsonKey(name: r'hits')
   final List<Rule> hits;
 
-  /// Number of fetched rules.
+  /// Number of rules that matched the search criteria.
   @JsonKey(name: r'nbHits')
   final int nbHits;
 

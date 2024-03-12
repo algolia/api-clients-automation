@@ -177,11 +177,11 @@ class RecommendClient(
     *   - editSettings
     *
     * @param indexName
-    *   Index on which to perform the request.
+    *   Name of the index on which to perform the operation.
     * @param model
     *   [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
     * @param objectID
-    *   Unique record (object) identifier.
+    *   Unique record identifier.
     */
   def deleteRecommendRule(
       indexName: String,
@@ -207,11 +207,11 @@ class RecommendClient(
     *   - settings
     *
     * @param indexName
-    *   Index on which to perform the request.
+    *   Name of the index on which to perform the operation.
     * @param model
     *   [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
     * @param objectID
-    *   Unique record (object) identifier.
+    *   Unique record identifier.
     */
   def getRecommendRule(
       indexName: String,
@@ -238,7 +238,7 @@ class RecommendClient(
     *   - editSettings
     *
     * @param indexName
-    *   Index on which to perform the request.
+    *   Name of the index on which to perform the operation.
     * @param model
     *   [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
     * @param taskID
@@ -297,7 +297,7 @@ class RecommendClient(
     *   - settings
     *
     * @param indexName
-    *   Index on which to perform the request.
+    *   Name of the index on which to perform the operation.
     * @param model
     *   [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
     */

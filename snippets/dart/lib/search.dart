@@ -955,9 +955,9 @@ void snippetForsearchDictionaryEntries() async {
 
   // Call the API
   final response = await client.searchDictionaryEntries(
-    dictionaryName: DictionaryType.fromJson("compounds"),
+    dictionaryName: DictionaryType.fromJson("stopwords"),
     searchDictionaryEntriesParams: SearchDictionaryEntriesParams(
-      query: "foo",
+      query: "about",
     ),
   );
   // SEPARATOR<

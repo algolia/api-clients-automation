@@ -60,7 +60,7 @@ final class SearchResponse {
   @JsonKey(name: r'aroundLatLng')
   final String? aroundLatLng;
 
-  /// Automatically-computed radius.
+  /// Distance from a central coordinate provided by `aroundLatLng`.
   @JsonKey(name: r'automaticRadius')
   final String? automaticRadius;
 
@@ -82,7 +82,7 @@ final class SearchResponse {
   @JsonKey(name: r'exhaustiveTypo')
   final bool? exhaustiveTypo;
 
-  /// Mapping of each facet name to the corresponding facet counts.
+  /// Facet counts.
   @JsonKey(name: r'facets')
   final Map<String, Map<String, int>>? facets;
 
@@ -108,11 +108,11 @@ final class SearchResponse {
   @JsonKey(name: r'message')
   final String? message;
 
-  /// Number of hits the search query matched.
+  /// Number of results (hits).
   @JsonKey(name: r'nbHits')
   final int nbHits;
 
-  /// Number of pages of results for the current query.
+  /// Number of pages of results.
   @JsonKey(name: r'nbPages')
   final int nbPages;
 
@@ -120,7 +120,8 @@ final class SearchResponse {
   @JsonKey(name: r'nbSortedHits')
   final int? nbSortedHits;
 
-  /// Page to retrieve (the first page is `0`, not `1`).
+  /// Page of search results to retrieve.
+  // minimum: 0
   @JsonKey(name: r'page')
   final int page;
 
@@ -154,7 +155,7 @@ final class SearchResponse {
   @JsonKey(name: r'serverUsed')
   final String? serverUsed;
 
-  /// Lets you store custom data in your indices.
+  /// An object with custom data.  You can store up to 32&nbsp;kB as custom data.
   @JsonKey(name: r'userData')
   final Object? userData;
 
@@ -162,10 +163,11 @@ final class SearchResponse {
   @JsonKey(name: r'queryID')
   final String? queryID;
 
+  /// Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
   @JsonKey(name: r'hits')
   final List<Hit> hits;
 
-  /// Text to search for in an index.
+  /// Search query.
   @JsonKey(name: r'query')
   final String query;
 

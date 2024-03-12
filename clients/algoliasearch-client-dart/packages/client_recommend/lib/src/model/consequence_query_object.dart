@@ -14,11 +14,11 @@ final class ConsequenceQueryObject {
     this.edits,
   });
 
-  /// Words to remove.
+  /// Words to remove from the search query.
   @JsonKey(name: r'remove')
   final List<String>? remove;
 
-  /// Edits to apply.
+  /// Changes to make to the search query.
   @JsonKey(name: r'edits')
   final List<Edit>? edits;
 

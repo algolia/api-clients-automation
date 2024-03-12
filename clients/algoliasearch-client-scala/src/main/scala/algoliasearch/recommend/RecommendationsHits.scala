@@ -14,7 +14,7 @@ package algoliasearch.recommend
 /** RecommendationsHits
   *
   * @param query
-  *   Text to search for in an index.
+  *   Search query.
   * @param params
   *   URL-encoded string of all search parameters.
   */

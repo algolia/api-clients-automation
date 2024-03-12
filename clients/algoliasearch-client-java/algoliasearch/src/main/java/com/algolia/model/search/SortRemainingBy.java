@@ -7,8 +7,19 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
 /**
- * How to display the remaining items: - `count`: facet count (descending). - `alpha`: alphabetical
- * (ascending). - `hidden`: show only pinned values.
+ * Order of facet values that aren't explicitly positioned with the `order` setting.
+ *
+ * <dl>
+ *   <dt><code>count</code>
+ *   <dd>Order remaining facet values by decreasing count. The count is the number of matching
+ *       records containing this facet value.
+ *   <dt><code>alpha</code>
+ *   <dd>Sort facet values alphabetically.
+ *   <dt><code>hidden</code>
+ *   <dd>Don't show facet values that aren't explicitly positioned.
+ * </dl>
+ *
+ * .
  */
 public enum SortRemainingBy {
   COUNT("count"),

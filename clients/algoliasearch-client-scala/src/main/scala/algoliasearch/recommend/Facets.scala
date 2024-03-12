@@ -11,10 +11,11 @@
   */
 package algoliasearch.recommend
 
-/** Ordering of facets (widgets).
+/** Order of facet names.
   *
   * @param order
-  *   Pinned order of facet lists.
+  *   Explicit order of facets or facet values. This setting lets you always show specific facets or facet values at the
+  *   top of the list.
   */
 case class Facets(
     order: Option[Seq[String]] = scala.None

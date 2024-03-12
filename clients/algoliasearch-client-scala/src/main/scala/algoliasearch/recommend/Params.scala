@@ -11,7 +11,8 @@
   */
 package algoliasearch.recommend
 
-/** Additional search parameters.
+/** Parameters to apply to this search. You can use all search parameters, plus special `automaticFacetFilters`,
+  * `automaticOptionalFacetFilters`, and `query`.
   */
 case class Params(
     query: Option[ConsequenceQuery] = scala.None,

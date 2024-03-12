@@ -2,7 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:json_annotation/json_annotation.dart';
 
-/// Type of batch operation.
+/// Type of indexing operation.
 @JsonEnum(valueField: 'raw')
 enum Action {
   addObject(r'addObject'),

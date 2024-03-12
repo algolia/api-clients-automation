@@ -18,7 +18,7 @@ final class UserHit {
     required this.highlightResult,
   });
 
-  /// userID of the user.
+  /// User ID.
   @JsonKey(name: r'userID')
   final String userID;
 

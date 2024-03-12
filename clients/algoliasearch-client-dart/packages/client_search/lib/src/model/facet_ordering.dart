@@ -18,7 +18,7 @@ final class FacetOrdering {
   @JsonKey(name: r'facets')
   final Facets? facets;
 
-  /// Ordering of facet values within an individual facet.
+  /// Order of facet values. One object for each facet.
   @JsonKey(name: r'values')
   final Map<String, Value>? values;
 

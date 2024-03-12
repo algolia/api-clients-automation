@@ -150,7 +150,7 @@ public class RecommendationsResults {
     return this;
   }
 
-  /** Automatically-computed radius. */
+  /** Distance from a central coordinate provided by `aroundLatLng`. */
   @javax.annotation.Nullable
   public String getAutomaticRadius() {
     return automaticRadius;
@@ -228,7 +228,7 @@ public class RecommendationsResults {
     return this;
   }
 
-  /** Mapping of each facet name to the corresponding facet counts. */
+  /** Facet counts. */
   @javax.annotation.Nullable
   public Map<String, Map<String, Integer>> getFacets() {
     return facets;
@@ -305,7 +305,7 @@ public class RecommendationsResults {
     return this;
   }
 
-  /** Number of hits the search query matched. */
+  /** Number of results (hits). */
   @javax.annotation.Nonnull
   public Integer getNbHits() {
     return nbHits;
@@ -316,7 +316,7 @@ public class RecommendationsResults {
     return this;
   }
 
-  /** Number of pages of results for the current query. */
+  /** Number of pages of results. */
   @javax.annotation.Nonnull
   public Integer getNbPages() {
     return nbPages;
@@ -338,7 +338,7 @@ public class RecommendationsResults {
     return this;
   }
 
-  /** Page to retrieve (the first page is `0`, not `1`). */
+  /** Page of search results to retrieve. minimum: 0 */
   @javax.annotation.Nonnull
   public Integer getPage() {
     return page;
@@ -446,7 +446,7 @@ public class RecommendationsResults {
     return this;
   }
 
-  /** Lets you store custom data in your indices. */
+  /** An object with custom data. You can store up to 32&nbsp;kB as custom data. */
   @javax.annotation.Nullable
   public Object getUserData() {
     return userData;
@@ -487,7 +487,7 @@ public class RecommendationsResults {
     return this;
   }
 
-  /** Text to search for in an index. */
+  /** Search query. */
   @javax.annotation.Nullable
   public String getQuery() {
     return query;

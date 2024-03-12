@@ -27,27 +27,27 @@ final class Log {
     this.innerQueries,
   });
 
-  /// Timestamp in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
+  /// Timestamp of the API request in ISO 8601 format.
   @JsonKey(name: r'timestamp')
   final String timestamp;
 
-  /// HTTP method of the performed request.
+  /// HTTP method of the request.
   @JsonKey(name: r'method')
   final String method;
 
-  /// HTTP response code.
+  /// HTTP status code of the response.
   @JsonKey(name: r'answer_code')
   final String answerCode;
 
-  /// Request body. Truncated after 1,000 characters.
+  /// Request body.
   @JsonKey(name: r'query_body')
   final String queryBody;
 
-  /// Answer body. Truncated after 1,000 characters.
+  /// Response body.
   @JsonKey(name: r'answer')
   final String answer;
 
-  /// Request URL.
+  /// URL of the API endpoint.
   @JsonKey(name: r'url')
   final String url;
 
@@ -55,7 +55,7 @@ final class Log {
   @JsonKey(name: r'ip')
   final String ip;
 
-  /// Request headers (API key is obfuscated).
+  /// Request headers (API keys are obfuscated).
   @JsonKey(name: r'query_headers')
   final String queryHeaders;
 
@@ -63,11 +63,11 @@ final class Log {
   @JsonKey(name: r'sha1')
   final String sha1;
 
-  /// Number of API calls.
+  /// Number of API requests.
   @JsonKey(name: r'nb_api_calls')
   final String nbApiCalls;
 
-  /// Processing time for the query. Doesn't include network time.
+  /// Processing time for the query in milliseconds. This doesn't include latency due to the network.
   @JsonKey(name: r'processing_time_ms')
   final String processingTimeMs;
 
@@ -79,11 +79,11 @@ final class Log {
   @JsonKey(name: r'query_params')
   final String? queryParams;
 
-  /// Number of hits returned for the query.
+  /// Number of search results (hits) returned for the query.
   @JsonKey(name: r'query_nb_hits')
   final String? queryNbHits;
 
-  /// Performed queries for the given request.
+  /// Queries performed for the given request.
   @JsonKey(name: r'inner_queries')
   final List<LogQuery>? innerQueries;
 

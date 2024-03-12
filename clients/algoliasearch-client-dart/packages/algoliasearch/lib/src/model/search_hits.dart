@@ -17,10 +17,11 @@ final class SearchHits extends DelegatingMap<String, dynamic> {
     Map<String, dynamic> additionalProperties = const {},
   }) : super(additionalProperties);
 
+  /// Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
   @JsonKey(name: r'hits')
   final List<Hit> hits;
 
-  /// Text to search for in an index.
+  /// Search query.
   @JsonKey(name: r'query')
   final String query;
 

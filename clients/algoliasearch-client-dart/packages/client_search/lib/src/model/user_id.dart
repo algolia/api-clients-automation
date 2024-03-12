@@ -15,7 +15,7 @@ final class UserId {
     required this.dataSize,
   });
 
-  /// userID of the user.
+  /// User ID.
   @JsonKey(name: r'userID')
   final String userID;
 

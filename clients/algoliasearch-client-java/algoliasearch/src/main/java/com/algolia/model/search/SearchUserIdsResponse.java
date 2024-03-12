@@ -48,7 +48,7 @@ public class SearchUserIdsResponse {
     return this;
   }
 
-  /** Number of hits the search query matched. */
+  /** Number of results (hits). */
   @javax.annotation.Nonnull
   public Integer getNbHits() {
     return nbHits;
@@ -59,7 +59,7 @@ public class SearchUserIdsResponse {
     return this;
   }
 
-  /** Page to retrieve (the first page is `0`, not `1`). */
+  /** Page of search results to retrieve. minimum: 0 */
   @javax.annotation.Nonnull
   public Integer getPage() {
     return page;

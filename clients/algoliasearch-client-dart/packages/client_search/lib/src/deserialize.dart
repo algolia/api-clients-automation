@@ -99,6 +99,7 @@ import 'package:algolia_client_search/src/model/save_object_response.dart';
 import 'package:algolia_client_search/src/model/save_synonym_response.dart';
 import 'package:algolia_client_search/src/model/scope_type.dart';
 import 'package:algolia_client_search/src/model/search_dictionary_entries_params.dart';
+import 'package:algolia_client_search/src/model/search_dictionary_entries_response.dart';
 import 'package:algolia_client_search/src/model/search_for_facet_values_request.dart';
 import 'package:algolia_client_search/src/model/search_for_facet_values_response.dart';
 import 'package:algolia_client_search/src/model/search_for_facets.dart';
@@ -421,6 +422,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return ScopeType.fromJson(value) as ReturnType;
     case 'SearchDictionaryEntriesParams':
       return SearchDictionaryEntriesParams.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'SearchDictionaryEntriesResponse':
+      return SearchDictionaryEntriesResponse.fromJson(
           value as Map<String, dynamic>) as ReturnType;
     case 'SearchForFacetValuesRequest':
       return SearchForFacetValuesRequest.fromJson(value as Map<String, dynamic>)

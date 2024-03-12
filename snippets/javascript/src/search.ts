@@ -987,8 +987,8 @@ export async function snippetForsearchDictionaryEntries(): Promise<void> {
 
   // Call the API
   const response = await client.searchDictionaryEntries({
-    dictionaryName: 'compounds',
-    searchDictionaryEntriesParams: { query: 'foo' },
+    dictionaryName: 'stopwords',
+    searchDictionaryEntriesParams: { query: 'about' },
   });
 
   // use typed response

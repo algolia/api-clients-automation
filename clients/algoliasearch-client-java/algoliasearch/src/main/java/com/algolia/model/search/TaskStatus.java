@@ -6,7 +6,7 @@ package com.algolia.model.search;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** _published_ if the task has been processed, _notPublished_ otherwise. */
+/** Task status, `published` if the task is completed, `notPublished` otherwise. */
 public enum TaskStatus {
   PUBLISHED("published"),
 

@@ -5,6 +5,7 @@ package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +29,7 @@ public class Log {
   private String answer;
 
   @JsonProperty("url")
-  private String url;
+  private URI url;
 
   @JsonProperty("ip")
   private String ip;
@@ -62,7 +63,7 @@ public class Log {
     return this;
   }
 
-  /** Timestamp in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format. */
+  /** Timestamp of the API request in ISO 8601 format. */
   @javax.annotation.Nonnull
   public String getTimestamp() {
     return timestamp;
@@ -73,7 +74,7 @@ public class Log {
     return this;
   }
 
-  /** HTTP method of the performed request. */
+  /** HTTP method of the request. */
   @javax.annotation.Nonnull
   public String getMethod() {
     return method;
@@ -84,7 +85,7 @@ public class Log {
     return this;
   }
 
-  /** HTTP response code. */
+  /** HTTP status code of the response. */
   @javax.annotation.Nonnull
   public String getAnswerCode() {
     return answerCode;
@@ -95,7 +96,7 @@ public class Log {
     return this;
   }
 
-  /** Request body. Truncated after 1,000 characters. */
+  /** Request body. */
   @javax.annotation.Nonnull
   public String getQueryBody() {
     return queryBody;
@@ -106,20 +107,20 @@ public class Log {
     return this;
   }
 
-  /** Answer body. Truncated after 1,000 characters. */
+  /** Response body. */
   @javax.annotation.Nonnull
   public String getAnswer() {
     return answer;
   }
 
-  public Log setUrl(String url) {
+  public Log setUrl(URI url) {
     this.url = url;
     return this;
   }
 
-  /** Request URL. */
+  /** URL of the API endpoint. */
   @javax.annotation.Nonnull
-  public String getUrl() {
+  public URI getUrl() {
     return url;
   }
 
@@ -139,7 +140,7 @@ public class Log {
     return this;
   }
 
-  /** Request headers (API key is obfuscated). */
+  /** Request headers (API keys are obfuscated). */
   @javax.annotation.Nonnull
   public String getQueryHeaders() {
     return queryHeaders;
@@ -161,7 +162,7 @@ public class Log {
     return this;
   }
 
-  /** Number of API calls. */
+  /** Number of API requests. */
   @javax.annotation.Nonnull
   public String getNbApiCalls() {
     return nbApiCalls;
@@ -172,7 +173,9 @@ public class Log {
     return this;
   }
 
-  /** Processing time for the query. Doesn't include network time. */
+  /**
+   * Processing time for the query in milliseconds. This doesn't include latency due to the network.
+   */
   @javax.annotation.Nonnull
   public String getProcessingTimeMs() {
     return processingTimeMs;
@@ -205,7 +208,7 @@ public class Log {
     return this;
   }
 
-  /** Number of hits returned for the query. */
+  /** Number of search results (hits) returned for the query. */
   @javax.annotation.Nullable
   public String getQueryNbHits() {
     return queryNbHits;
@@ -224,7 +227,7 @@ public class Log {
     return this;
   }
 
-  /** Performed queries for the given request. */
+  /** Queries performed for the given request. */
   @javax.annotation.Nullable
   public List<LogQuery> getInnerQueries() {
     return innerQueries;

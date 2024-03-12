@@ -1374,9 +1374,9 @@ async def snippet_for_search_dictionary_entries():
 
     # Call the API
     resp = await _client.search_dictionary_entries(
-        dictionary_name="compounds",
+        dictionary_name="stopwords",
         search_dictionary_entries_params={
-            "query": "foo",
+            "query": "about",
         },
     )
 
