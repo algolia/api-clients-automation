@@ -28,7 +28,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       await run('goimports -w . && golangci-lint run --fix', { cwd, language });
       break;
     case 'javascript':
-      await run(`yarn eslint --ext=ts,json ${cwd} --fix --no-error-on-unmatched-pattern`);
+      await run(`yarn eslint --fix --no-error-on-unmatched-pattern --ext=ts,json ${cwd}`);
       break;
     case 'java':
       await run(

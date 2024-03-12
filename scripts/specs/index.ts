@@ -10,7 +10,7 @@ import type { Spec } from '../types.js';
 import { lintCommon, transformBundle } from './format.js';
 import type { BaseBuildSpecsOptions } from './types.js';
 
-const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'customPost'];
+const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'customPost', 'getRecommendations'];
 
 /**
  * Creates a lite search spec with the `ALGOLIASEARCH_LITE_OPERATIONS` methods
@@ -19,32 +19,36 @@ const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'customPost'];
 async function buildLiteSpec({
   spec,
   bundledPath,
+  docs,
+  useCache,
 }: {
   spec: string;
   bundledPath: string;
+  docs: boolean;
+  useCache: boolean;
 }): Promise<void> {
-  const parsed = yaml.load(await fsp.readFile(toAbsolutePath(bundledPath), 'utf8')) as Spec;
+  await buildSpec({ spec: 'recommend', outputFormat: 'yml', docs, useCache });
 
-  // Filter methods.
-  parsed.paths = Object.entries(parsed.paths).reduce(
-    (acc, [path, operations]) => {
-      for (const [, operation] of Object.entries(operations)) {
-        if (ALGOLIASEARCH_LITE_OPERATIONS.includes(operation.operationId)) {
-          return { ...acc, [path]: { post: operation } };
-        }
+  const base = yaml.load(await fsp.readFile(toAbsolutePath(bundledPath), 'utf8')) as Spec;
+  const recommend = yaml.load(
+    await fsp.readFile(toAbsolutePath(bundledPath.replace('algoliasearch', 'recommend')), 'utf8'),
+  ) as Spec;
+  base.paths = { ...base.paths, ...recommend.paths };
+  base.components.schemas = { ...base.components.schemas, ...recommend.components.schemas };
+
+  const lite = { ...base, paths: {} };
+
+  for (const [path, operations] of Object.entries(base.paths)) {
+    for (const [, operation] of Object.entries(operations)) {
+      if (ALGOLIASEARCH_LITE_OPERATIONS.includes(operation.operationId)) {
+        lite.paths[path] = { post: operation };
+
+        break;
       }
+    }
+  }
 
-      return acc;
-    },
-    {} as Spec['paths'],
-  );
-
-  await fsp.writeFile(bundledPath, yaml.dump(parsed));
-
-  // remove unused components for the outputted light spec
-  await run(
-    `yarn openapi bundle ${bundledPath} -o ${bundledPath} --ext yml --remove-unused-components`,
-  );
+  await fsp.writeFile(bundledPath, yaml.dump(lite));
 
   await transformBundle({
     bundledPath,
@@ -71,11 +75,12 @@ async function buildSpec({
 
   // In case of lite we use a the `search` spec as a base because only its bundled form exists.
   const specBase = isAlgoliasearch ? 'search' : spec;
+  const deps = isAlgoliasearch ? ['search', 'recommend'] : [spec];
   const logSuffix = docs ? 'doc spec' : 'spec';
   const cache = new Cache({
     folder: toAbsolutePath('specs/'),
     generatedFiles: [docs ? `bundled/${spec}.doc.yml` : `bundled/${spec}.yml`],
-    filesToCache: [specBase, 'common'],
+    filesToCache: [...deps, 'common'],
     cacheFile: toAbsolutePath(`specs/dist/${spec}.${docs ? 'doc.' : ''}cache`),
   });
 
@@ -113,6 +118,8 @@ async function buildSpec({
     await buildLiteSpec({
       spec,
       bundledPath: toAbsolutePath(bundledPath),
+      docs,
+      useCache,
     });
   }
 
@@ -139,6 +146,13 @@ export async function buildSpecs({
   await fsp.mkdir(toAbsolutePath('specs/dist'), { recursive: true });
 
   await lintCommon(useCache);
+
+  // the `lite` spec will build the `recommend` spec, so we remove it from the list
+  // to prevent concurrent builds
+  if (clients.includes('algoliasearch')) {
+    // eslint-disable-next-line no-param-reassign
+    clients = clients.filter((client) => client !== 'recommend');
+  }
 
   await Promise.all(
     clients.map((client) => buildSpec({ spec: client, outputFormat, docs, useCache })),
