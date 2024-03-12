@@ -1,3 +1,7 @@
+## [2.0.0-alpha.12](https://github.com/algolia/algoliasearch-client-scala/compare/2.0.0-alpha.11...2.0.0-alpha.12)
+
+- [14e19ef79](https://github.com/algolia/api-clients-automation/commit/14e19ef79) chore(scala): fix scala release ci ([#2833](https://github.com/algolia/api-clients-automation/pull/2833)) by [@aallam](https://github.com/aallam/)
+
 ## [2.0.0-alpha.11](https://github.com/algolia/algoliasearch-client-scala/compare/2.0.0-alpha.10...2.0.0-alpha.11)
 
 - [234427491](https://github.com/algolia/api-clients-automation/commit/234427491) feat(specs): Add MappingInput to Task Inputs ([#2787](https://github.com/algolia/api-clients-automation/pull/2787)) by [@jsok](https://github.com/jsok/)

@@ -1,3 +1,7 @@
+## [9.0.0-alpha.10](https://github.com/algolia/algoliasearch-client-swift/compare/9.0.0-alpha.9...9.0.0-alpha.10)
+
+- [1f56734a4](https://github.com/algolia/api-clients-automation/commit/1f56734a4) fix(swift): wait for tasks while sending chunk batches ([#2856](https://github.com/algolia/api-clients-automation/pull/2856)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [9.0.0-alpha.9](https://github.com/algolia/algoliasearch-client-swift/compare/9.0.0-alpha.8...9.0.0-alpha.9)
 
 - [234427491](https://github.com/algolia/api-clients-automation/commit/234427491) feat(specs): Add MappingInput to Task Inputs ([#2787](https://github.com/algolia/api-clients-automation/pull/2787)) by [@jsok](https://github.com/jsok/)
