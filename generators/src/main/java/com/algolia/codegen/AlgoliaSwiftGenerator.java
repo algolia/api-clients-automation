@@ -136,6 +136,21 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     return name;
   }
 
+  public static String removeReservedModelNamePrefix(String name, String client) {
+    if (name == null || name.isEmpty()) {
+      return name;
+    }
+
+    var camelizedName = camelize(name, LOWERCASE_FIRST_LETTER);
+    var clientName = camelize(INSTANCE.getClientName(client), LOWERCASE_FIRST_LETTER);
+    var trimmedName = camelize(camelizedName.replaceFirst(clientName, ""), LOWERCASE_FIRST_LETTER);
+    if (AlgoliaSwiftGenerator.isReservedModelName(trimmedName)) {
+      return trimmedName;
+    }
+
+    return name;
+  }
+
   private String CLIENT;
 
   @Override

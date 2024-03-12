@@ -180,6 +180,7 @@ public class ParametersWithDataType {
 
     if (language.equals("swift")) {
       parent = AlgoliaSwiftGenerator.prefixReservedModelName(parent, client);
+      finalParamName = AlgoliaSwiftGenerator.removeReservedModelNamePrefix(finalParamName, client);
     }
 
     Map<String, Object> testOutput = createDefaultOutput();
