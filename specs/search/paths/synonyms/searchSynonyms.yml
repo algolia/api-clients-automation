@@ -7,7 +7,7 @@ post:
   x-acl:
     - settings
   summary: Search for synonyms.
-  description: Search for synonyms in your index. You can control and filter the search with parameters. To get all synonyms, send an empty request body.
+  description: Searches for synonyms in your index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:

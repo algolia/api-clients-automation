@@ -4,28 +4,31 @@ rule:
   additionalProperties: false
   properties:
     objectID:
-      type: string
-      description: Unique identifier for a rule object.
-      example: 'hide-12345'
+      $ref: '../../../../common/parameters.yml#/ruleID'
     conditions:
       type: array
-      description: >
-        [Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions) required to activate a rule. You can use up to 25 conditions per rule.
+      minItems: 0
+      maxItems: 25
+      description: |
+        Conditions that trigger a rule.
+
+        Some consequences require specific conditions or don't require any condition.
+        For more information, see [Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions).
       items:
         $ref: '#/condition'
     consequence:
       $ref: '#/consequence'
     description:
       type: string
-      description: Description of the rule's purpose. This can be helpful for display in the Algolia dashboard.
-      example: 'Display a promotional banner'
+      description: Description of the rule's purpose to help you distinguish between different rules.
+      example: Display a promotional banner
     enabled:
       type: boolean
       default: true
-      description: Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.
+      description: Whether the rule is active.
     validity:
       type: array
-      description: If you specify a validity period, the rule _only_ applies only during that period. If specified, the array must not be empty.
+      description: Time periods when the rule is active.
       items:
         $ref: '#/timeRange'
   required:
@@ -37,48 +40,85 @@ condition:
   properties:
     pattern:
       type: string
-      description: Query pattern syntax.
-      example: '{facet:brand}'
+      description: |
+        Query pattern that triggers the rule.
+
+        You can use either a literal string, or a special pattern `{facet:ATTRIBUTE}`, where `ATTRIBUTE` is a facet name.
+        The rule is triggered if the query matches the literal string or a value of the specified facet.
+        For example, with `pattern: {facet:genre}`, the rule is triggered when users search for a genre, such as "comedy".
+      example: '{facet:genre}'
     anchoring:
       $ref: '#/anchoring'
     alternatives:
       type: boolean
-      description: Whether the pattern matches on plurals, synonyms, and typos.
+      description: Whether the pattern should match plurals, synonyms, and typos.
       default: false
     context:
       type: string
-      description: 'Rule context format: [A-Za-z0-9_-]+).'
-      example: 'trackedFilters'
+      pattern: '[A-Za-z0-9_-]+'
+      description: |
+        An additional restriction that only triggers the rule, when the search has the same value as `ruleContexts` parameter.
+        For example, if `context: mobile`, the rule is only triggered when the search request has a matching `ruleContexts: mobile`.
+        A rule context must only contain alphanumeric characters.
+      example: mobile
+    filters:
+      type: string
+      description: |
+        Filters that trigger the rule.
+
+        You can add add filters using the syntax `facet:value` so that the rule is triggered, when the specific filter is selected.
+        You can use `filters` on its own or combine it with the `pattern` parameter.
+      example: 'genre:comedy'
 
 anchoring:
   type: string
-  description: Whether the pattern parameter matches the beginning (`startsWith`) or end (`endsWith`) of the query string, is an exact match (`is`), or a partial match (`contains`).
+  description: |
+    Which part of the search query the pattern should match:
+
+    - `startsWith`. The pattern must match the begginning of the query.
+    - `endsWith`. The pattern must match the end of the query.
+    - `is`. The pattern must match the query exactly.
+    - `contains`. The pattern must match anywhere in the query.
+
+    Empty queries are only allowed as pattern with `anchoring: is`.
   enum: [is, startsWith, endsWith, contains]
 
 consequence:
   type: object
-  description: >
-    [Consequences](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#consequences) of a rule.
+  description: |
+    Effect of the rule.
+
+    For more information, see [Consequences](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#consequences).
   additionalProperties: false
   properties:
     params:
       $ref: '#/consequenceParams'
     promote:
       type: array
-      description: Records to promote.
+      maxItems: 300
+      description: |
+        Records you want to pin to a specific position in the search results.
+
+        You can promote up to 300 records, either individually, or as groups of up to 100 records each.
       items:
         $ref: '#/promote'
     filterPromotes:
       type: boolean
       default: false
-      description: Only use in combination with the `promote` consequence. When `true`, promoted results will be restricted to match the filters of the current search. When `false`, the promoted results will show up regardless of the filters.
+      description: |
+        Whether promoted records must match an active filter for the consequence to be applied.
+
+        This ensures that user actions (filtering the search) are given a higher precendence.
+        For example, if you promote a record with the `color: red` attribute, and the user filters the search for `color: blue`,
+        the "red" record won't be shown.
     hide:
       type: array
-      description: Records to hide. By default, you can hide up to 50 records per rule.
+      maxItems: 50
+      description: Records you want to hide from the search results.
       items:
         title: consequenceHide
         type: object
-        description: Unique identifier of the record to hide.
+        description: Object ID of the record to hide.
         additionalProperties: false
         properties:
           objectID:
@@ -86,8 +126,12 @@ consequence:
         required:
           - objectID
     userData:
-      description: Custom JSON object that will be appended to the userData array in the response. This object isn't interpreted by the API. It's limited to 1kB of minified JSON.
-      example: {'settingID': 'f2a7b51e3503acc6a39b3784ffb84300','pluginVersion': '1.6.0'}
+      description: |
+        A JSON object with custom data that will be appended to the `userData` array in the response.
+        This object isn't interpreted by the API and is limited to 1&nbsp;kB of minified JSON.
+      example:
+        settingID: f2a7b51e3503acc6a39b3784ffb84300
+        pluginVersion: '1.6.0'
 
 consequenceParams:
   allOf:
@@ -101,14 +145,13 @@ promote:
     - $ref: '#/promoteObjectID'
 
 promoteObjectID:
+  title: objectID
   description: Record to promote.
   type: object
   additionalProperties: false
   properties:
     objectID:
-      type: string
-      example: '2b642cf64c587f50388eb1b8d047bf56'
-      description: Unique identifier of the record to promote.
+      $ref: '../../../../common/parameters.yml#/objectID'
     position:
       $ref: '#/promotePosition'
   required:
@@ -116,16 +159,22 @@ promoteObjectID:
     - objectID
 
 promoteObjectIDs:
+  title: objectIDs
   description: Records to promote.
   type: object
   additionalProperties: false
   properties:
     objectIDs:
       type: array
-      description: Unique identifiers of the records to promote.
-      example: ['3f31c087763a2ceec359b318fc3edef3','63c3c871e31a152d67df7720192fd752']
+      maxItems: 100
+      description: |
+        Object IDs of the records you want to promote.
+
+        The records are placed as a group at the `position`.
+        For example, if you want to promote four records to position `0`,
+        they will be the first four search results.
       items:
-        type: string
+        $ref: '../../../../common/parameters.yml#/objectID'
     position:
       $ref: '#/promotePosition'
   required:
@@ -134,12 +183,15 @@ promoteObjectIDs:
 
 promotePosition:
   type: integer
-  description: The position to promote the records to. If you pass objectIDs, the records are placed at this position as a group. For example, if you pronmote four objectIDs to position 0, the records take the first four positions.
+  description: Position in the search results where you want to show the promoted records.
   example: 0
 
 params:
   type: object
-  description: Additional search parameters.
+  description: |
+    Parameters to apply to this search.
+
+    You can use all search parameters, plus special `automaticFacetFilters`, `automaticOptionalFacetFilters`, and `query`.
   additionalProperties: false
   properties:
     query:
@@ -152,7 +204,11 @@ params:
       $ref: '../../../../common/schemas/IndexSettings.yml#/renderingContent'
 
 consequenceQuery:
-  description: When providing a string, it replaces the entire query string. When providing an object, it describes incremental edits to be made to the query string (but you can't do both).
+  description: |
+    Replace or edit the search query.
+
+    If `consequenceQuery` is a string, the entire search query is replaced with that string.
+    If `consequenceQuery` is an object, it describes incremental edits made to the query.
   oneOf:
     - $ref: '#/consequenceQueryObject'
     - type: string
@@ -162,12 +218,12 @@ consequenceQueryObject:
   additionalProperties: false
   properties:
     remove:
-      description: Words to remove.
+      description: Words to remove from the search query.
       type: array
       items:
         type: string
     edits:
-      description: Edits to apply.
+      description: Changes to make to the search query.
       type: array
       items:
         $ref: '#/edit'
@@ -182,7 +238,7 @@ edit:
       description: Text or patterns to remove from the query string.
       type: string
     insert:
-      description: Text that should be inserted in place of the removed text inside the query string.
+      description: Text to be added in place of the deleted text inside the query string.
       type: string
 
 editType:
@@ -191,7 +247,12 @@ editType:
   enum: [remove, replace]
 
 automaticFacetFilters:
-  description: Names of facets to which automatic filtering must be applied; they must match the facet name of a facet value placeholder in the query pattern.
+  description: |
+    Filter to be applied to the search.
+
+    You can use this to respond to search queries that match a facet value.
+    For example, if users search for "comedy", which matches a facet value of the "genre" facet,
+    you can filter the results to show the top-ranked comedy movies.
   oneOf:
     - type: array
       items:
@@ -201,25 +262,32 @@ automaticFacetFilters:
         type: string
 
 automaticOptionalFacetFilters:
-  description: Same syntax as `automaticFacetFilters`, but the engine treats the filters as optional.
+  description: Optional filters to be applied to the search.
   $ref: '#/automaticFacetFilters'
 
 automaticFacetFilter:
   type: object
-  description: Automatic facet Filter.
+  description: Filter or optional filter to be applied to the search.
   additionalProperties: false
   properties:
     facet:
       type: string
-      description: Attribute to filter on. This must match a facet placeholder in the Rule's pattern.
+      description: |
+        Facet name to be applied as filter.
+        The name must match placeholders in the `pattern` parameter.
+        For example, with `pattern: {facet:genre}`, `automaticFacetFilters` must be `genre`.
     score:
       type: integer
       default: 1
-      description: Score for the filter. Typically used for optional or disjunctive filters.
+      description: Filter scores to give different weights to individual filters.
     disjunctive:
       type: boolean
       default: false
-      description: Whether the filter is disjunctive (true) or conjunctive (false).
+      description: |
+        Whether the filter is disjunctive or conjunctive.
+
+        If true the filter has multiple matches, multiple occurences are combined with the logical `OR` operation.
+        If false, multiple occurences are combined with the logical `AND` operation.
   required:
     - facet
 
@@ -229,10 +297,10 @@ timeRange:
   properties:
     from:
       type: integer
-      description: Lower bound of the time range (Unix timestamp).
+      description: When the rule should start to be active, in Unix epoch time.
     until:
       type: integer
-      description: Upper bound of the time range (Unix timestamp).
+      description: When the rule should stop to be active, in Unix epoch time.
   required:
     - from
     - until
@@ -242,7 +310,7 @@ updatedRuleResponse:
   additionalProperties: false
   properties:
     objectID:
-      $ref: '../../../../common/parameters.yml#/objectID'
+      $ref: '../../../../common/parameters.yml#/ruleID'
     updatedAt:
       $ref: '../../../../common/responses/common.yml#/updatedAt'
     taskID:

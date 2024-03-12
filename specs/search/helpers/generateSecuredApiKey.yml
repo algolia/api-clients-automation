@@ -4,24 +4,31 @@ method:
     tags:
       - Api Keys
     operationId: generateSecuredApiKey
-    summary: Generate a secured API key without any calls to Algolia's servers.
-    description:
-      Generate a secured API key without any calls to Algolia's servers.
+    summary: Create secured API keys.
+    description: |
+      Generates a secured API key without any calls to Algolia's servers.
 
-      When you need to restrict the scope of an API key, generate a secured API key on your server, without any calls to Algolia.
-      You can't generate secured API keys from your Admin API key or from other secured API keys.
-      When you generate a secured API key, you can define several restrictions, such as how long the key is valid for and which indexes it can access. The more restrictions you set, the longer the key will be. If the key is longer than 500 characters, you may have problems using it on some networks.
-      If you want to limit the number of requests that can be made with a secured API key, you must also rate-limit the key that you use to generate it. You can create a rate-limited key in the Algolia dashboard or use the Add API key or Update API key methods of an API client.
+      Secured API keys are API keys that you generate on your server without any API request to Algolia.
+      Secured API keys help in environments where you can't easily update the client-side code, such as mobile apps,
+      or when you need to restrict access to a part of your index for every user.
+
+      When your users start searching, instead of using the Search API key, they request a short-lived secured API key from your server.
+      On your server, you use this method to create a secured API key, with any restrictions you'd like, such as filters, index access restrictions,
+      or expiration times. The API key gets longer the more restrictions you add.
+      Your users then use the secured API key to search with Algolia.
+
+      You can't create secured API keys from other secured API keys or from your Admin API key.
+      The generated API key can have the same restrictions as the parent API key, or be more restrictive.
     parameters:
       - in: query
         name: apiKey
-        description: The search-only API key that the secured API key will inherit its restrictions from.
+        description: API key from which the secured API key will inherit its restrictions.
         required: true
         schema:
           type: string
       - in: query
         name: restrictions
-        description: The options to add to the secured API key.
+        description: Restrictions to add to the API key.
         required: true
         schema:
           $ref: '#/securedAPIKeyRestrictions'
@@ -43,29 +50,40 @@ securedAPIKeyRestrictions:
       $ref: '../../common/schemas/SearchParams.yml#/searchParamsObject'
     filters:
       type: string
-      description: >
-        Filters that apply to every search made with the secured API key. You can add extra filters at search time with the filters query parameter.
-
-        For example, if you set the filter group:admin on your generated API key, and you add groups:press OR groups:visitors with the filters query parameter, your final search filter is equivalent to groups:admin AND (groups:press OR groups:visitors).
+      description: |
+        Filters that apply to every search made with the secured API key.
+        Extra filters added at search time will be combined with `AND`.
+        For example, if you set `group:admin` as fixed filter on your generated API key,
+        and add `groups:visitors` to the search query, the complete set of filters will be `group:admin AND groups:visitors`.
     validUntil:
       type: integer
       format: int64
-      description: Unix timestamp used to set the expiration date of the API key.
+      description: Timestamp in [Unix epoch time](https://en.wikipedia.org/wiki/Unix_time) when the API key should expire.
     restrictIndices:
       type: array
       items:
         type: string
-      description: Index names that can be queried.
+      description: |
+        Index names or patterns that this API key can access.
+        By default, an API key can access all indices in the same application.
+
+        You can use leading and trailing wildcard characters (`*`):
+
+        - `dev_*` matches all indices starting with "dev_".
+        - `*_dev` matches all indices ending with "_dev".
+        - `*_products_*` matches all indices containing "_products_".
     restrictSources:
       type: string
-      description: >
-        IPv4 network allowed to use the generated key. Use this to protect against API key leaking and reuse.
+      description: |
+        IP network that are allowed to use this key.
 
-        You can only provide a single source, but you can specify a range of IPs (for example, 192.168.1.0/24).
+        You can only add a single source, but you can provide a range of IP addresses.
+        Use this to protect against API key leaking and reuse.
+      example: '192.168.1.0/24'
     userToken:
       type: string
-      description: >
-        Unique user IP address.
+      description: |
+        Pseudonymous user identifier to restrict usage of this API key to specific users.
 
-        This can be useful when you want to impose a rate limit on specific users. By default, rate limits are set based on the IP address. This can become an issue when several users search from the same IP address. To avoid this, you can set a unique userToken for each user when generating their API key. This lets you restrict each user to a maximum number of API calls per hour, even if they share their IP with another user.
-        Specifying the userToken in a secured API key is also a good security practice as it ensures users don't change it. Many features like Analytics, Personalization, and Dynamic Re-ranking rely on the authenticity of user identifiers. Setting the userToken at the API key level ensures that downstream services work as expected and prevents abuse.
+        By default, rate limits are set based on IP addresses. This can be an issue if many users search from the same IP address.
+        To avoid this, add a user token to each generated API key.

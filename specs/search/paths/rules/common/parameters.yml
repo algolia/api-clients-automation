@@ -4,18 +4,17 @@ ClearExistingRules:
   required: false
   schema:
     type: boolean
-  description: Indicates whether existing rules should be deleted before adding this batch.
+  description: Whether existing rules should be deleted before adding this batch.
 
 ObjectIDRule:
   in: path
   name: objectID
   description: Unique identifier of a rule object.
-  example: 'a-rule-id'
   required: true
   schema:
-    type: string
+    $ref: '../../../../common/parameters.yml#/ruleID'
 
 query:
   type: string
-  description: Rule object query.
+  description: Search query for rules.
   default: ''

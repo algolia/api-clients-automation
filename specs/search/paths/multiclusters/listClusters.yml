@@ -5,7 +5,7 @@ get:
   x-acl:
     - admin
   summary: List clusters.
-  description: List the available clusters in a multi-cluster setup.
+  description: Lists the available clusters in a multi-cluster setup.
   responses:
     '200':
       description: OK

@@ -5,7 +5,7 @@ get:
   x-acl:
     - admin
   summary: List API keys.
-  description: List all API keys associated with your Algolia application, including their permissions and restrictions.
+  description: Lists all API keys associated with your Algolia application, including their permissions and restrictions.
   responses:
     '200':
       description: OK
@@ -38,13 +38,8 @@ post:
   operationId: addApiKey
   x-acl:
     - admin
-  summary: Add API key.
-  description: >
-    Add a new API key with specific permissions and restrictions.
-
-    The request must be authenticated with the admin API key.
-
-    The response returns an API key string.
+  summary: Create an API key.
+  description: Creates a new API key with specific permissions and restrictions.
   requestBody:
     required: true
     content:

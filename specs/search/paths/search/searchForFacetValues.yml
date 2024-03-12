@@ -7,14 +7,19 @@ post:
   x-acl:
     - search
   summary: Search for facet values.
-  description: >
-    [Search for a facet's values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values), optionally restricting the returned values to those contained in records matching other search criteria.
+  description: |
+    Searches for values of a specified facet attribute.
 
-    > **Note**: Pagination isn't supported (`page` and `hitsPerPage` are ignored). By default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.
+    - By default, facet values are sorted by decreasing count.
+      You can adjust this with the `sortFacetValueBy` parameter.
+    - Searching for facet values doesn't work if you have **more than 65 searchable facets and searchable attributes combined**.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - name: facetName
-      description: Facet name.
+      description: |
+        Facet attribute in which to search for values.
+
+        This attribute must be included in the `attributesForFaceting` index setting with the `searchable()` modifier.
       in: path
       required: true
       schema:

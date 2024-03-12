@@ -4,20 +4,22 @@ post:
   operationId: saveObject
   x-acl:
     - addObject
-  description: >
-    Add a record (object) to an index or replace it.
+  description: |
+    Adds a record to an index or replace it.
 
-    If the record doesn't contain an `objectID`, Algolia automatically adds it.
+    - If the record doesn't have an object ID, a new record with an auto-generated object ID is added to your index.
+    - If a record with the specified object ID exists, the existing record is replaced.
+    - If a record with the specified object ID doesn't exist, a new record is added to your index.
+    - If you add a record to an index that doesn't exist yet, a new index is created.
 
-    If you use an existing `objectID`, the existing record is replaced with the new one.
-
-    To add multiple records to your index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).
-  summary: Add or update a record.
+    To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partial).
+    To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
+  summary: Add or replace a record.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:
     required: true
-    description: The Algolia record.
+    description: The record, a schemaless object with attributes that are useful in the context of search and discovery.
     content:
       application/json:
         schema:
@@ -34,8 +36,8 @@ post:
             properties:
               createdAt:
                 type: string
-                description: Date of creation (ISO-8601 format).
-                example: '2023-06-29T15:15:40.747Z'
+                description: Timestamp when the record was added, in ISO 8601 format.
+                example: 2023-06-29T15:15:40.747Z
               taskID:
                 $ref: '../../../common/responses/common.yml#/taskID'
               objectID:
@@ -58,8 +60,19 @@ delete:
   operationId: deleteIndex
   x-acl:
     - deleteIndex
-  summary: Delete index.
-  description: Delete an existing index.
+  summary: Delete an index.
+  description: |
+    Deletes an index and all its settings.
+
+    - Deleting an index doesn't delete its analytics data.
+    - If you try to delete a non-existing index, the operation is ignored without warning.
+    - If the index you want to delete has replica indices, the replicas become independent indices.
+    - If the index you want to delete is a replica index, you must first unlink it from its primary index before you can delete it.
+      For more information, see [Delete replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas/).
+  externalDocs:
+    url: https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/delete-indices/
+    description: |
+      Related guide: Delete indices.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   responses:

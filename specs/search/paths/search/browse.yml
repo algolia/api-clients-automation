@@ -4,14 +4,18 @@ post:
   operationId: browse
   x-acl:
     - browse
-  summary: Get all records from an index.
-  description: >
-    Retrieve up to 1,000 records per call.
+  summary: Browse for records.
+  description: |
+    Retrieves records from an index, up to 1,000 per request.
 
-    Supports full-text search and filters. For better performance, it doesn't support:
+    While searching retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
+    browsing _just_ returns matching records.
+    This can be useful if you want to export your indices.
 
-    - The `distinct` query parameter
-    - Sorting by typos, proximity, words, or geographical distance.
+    - The Analytics API doesn't collect data when using `browse`.
+    - Records are ranked by attributes and custom ranking.
+    - Deduplication (`distinct`) is turned off.
+    - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:

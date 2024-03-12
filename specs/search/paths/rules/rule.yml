@@ -4,8 +4,11 @@ get:
   operationId: getRule
   x-acl:
     - settings
-  summary: Get a rule.
-  description: Get a rule by its `objectID`. To find the `objectID` for rules, use the [`search` operation](#tag/Rules/operation/searchRules).
+  summary: Retrieve a rule.
+  description: |
+    Retrieves a rule by its ID.
+    To find the object ID of rules, use the [`search` operation](#tag/Rules/operation/searchRules).
+
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: 'common/parameters.yml#/ObjectIDRule'
@@ -31,8 +34,12 @@ put:
   operationId: saveRule
   x-acl:
     - editSettings
-  summary: Create or update a rule.
-  description: To create or update more than one rule, use the [`batch` operation](#tag/Rules/operation/saveRules).
+  summary: Create or replace a rule.
+  description: |
+    If a rule with the specified object ID doesn't exist, it's created.
+    Otherwise, the existing rule is replaced.
+
+    To create or update more than one rule, use the [`batch` operation](#tag/Rules/operation/saveRules).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: 'common/parameters.yml#/ObjectIDRule'
@@ -66,7 +73,10 @@ delete:
   x-acl:
     - editSettings
   summary: Delete a rule.
-  description: Delete a rule by its `objectID`. To find the `objectID` for rules, use the [`search` operation](#tag/Rules/operation/searchRules).
+  description: |
+    Deletes a rule by its ID.
+    To find the object ID for rules,
+    use the [`search` operation](#tag/Rules/operation/searchRules).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: 'common/parameters.yml#/ObjectIDRule'

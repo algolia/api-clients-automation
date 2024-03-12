@@ -4,8 +4,8 @@ get:
   operationId: getDictionarySettings
   x-acl:
     - settings
-  description: Get the languages for which [stop words are turned off](#tag/Dictionaries/operation/setDictionarySettings).
-  summary: Get stop word settings.
+  summary: Retrieve dictionary settings.
+  description: Retrieves the languages for which standard dictionary entries are turned off.
   responses:
     '200':
       description: OK
@@ -35,8 +35,8 @@ put:
   operationId: setDictionarySettings
   x-acl:
     - editSettings
-  description: Set stop word settings for a specific language.
-  summary: Set stop word settings.
+  description: Turns standard stop word dictionary entries on or off for a given language.
+  summary: Update dictionary settings.
   requestBody:
     required: true
     content:
@@ -45,7 +45,8 @@ put:
           title: dictionarySettingsParams
           type: object
           additionalProperties: false
-          description: Enable or turn off the built-in Algolia stop words for a specific language.
+          description: |
+            Turn on or off the built-in Algolia stop words for a specific language.
           required:
             - disableStandardEntries
           properties:

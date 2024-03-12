@@ -58,7 +58,7 @@ searchTypeFacet:
   type: string
   enum: [facet]
   default: facet
-  description: >
+  description: |
     - `default`: perform a search query
     - `facet` [searches for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
 
@@ -66,6 +66,6 @@ searchTypeDefault:
   type: string
   enum: [default]
   default: default
-  description: >
+  description: |
     - `default`: perform a search query
     - `facet` [searches for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).

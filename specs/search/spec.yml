@@ -1,11 +1,86 @@
 openapi: 3.0.2
 info:
   title: Search API
-  description: |-
-    Use the Search REST API  to manage your data (indices and records), implement search, and improve relevance (with Rules, synonyms, and language dictionaries).
+  description: |
+    The Algolia Search API lets you search, configure, and mange your indices and records.
 
-    Although Algolia provides a REST API, you should use the official open source API [clients, libraries, and tools](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) instead.
-    There's no [SLA](https://www.algolia.com/policies/sla/) if you use the REST API directly.
+    # Client libraries
+
+    Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps.
+    The official API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/).
+
+    See: [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/)
+
+    # Base URLs
+
+    The base URLs for making requests to the Search API are:
+
+    - `https://{APPLICATION_ID}.algolia.net`
+    - `https://{APPLICATION_ID}-dsn.algolia.net`.
+      If your subscription includes a [Distributed Search Network](https://dashboard.algolia.com/infra),
+      this ensures that requests are sent to servers closest to users.
+
+    Both URLs provide high availability by distributing requests with load balancing.
+
+    **All requests must use HTTPS.**
+
+    # Retry strategy
+
+    To guarantee a high availability, implement a retry strategy for all API requests using the URLs of your servers as fallbacks:
+
+    - `https://{APPLICATION_ID}-1.algolianet.com`
+    - `https://{APPLICATION_ID}-2.algolianet.com`
+    - `https://{APPLICATION_ID}-3.algolianet.com`
+
+    These URLs use a different DNS provider than the primary URLs.
+    You should randomize this list to ensure an even load across the three servers.
+
+    All Algolia API clients implement this retry strategy.
+
+    # Authentication
+
+    To authenticate your API requests, add these headers:
+
+    <dl>
+    <dt><code>x-algolia-application-id</code></dt>
+    <dd>Your Algolia application ID.</dd>
+    <dt><code>x-algolia-api-key</code></dt>
+    <dd>
+    An API key with the necessary permissions to make the request.
+    The required access control list (ACL) to make a request is listed in each endpoint's reference.
+    </dd>
+    </dl>
+
+    You can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account).
+
+    # Request format
+
+    Depending on the endpoint, request bodies are either JSON objects or arrays of JSON objects,
+
+    # Parameters
+
+    Parameters are passed as query parameters for GET and DELETE requests,
+    and in the request body for POST and PUT requests.
+
+    Query parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).
+    Non-ASCII characters must be UTF-8 encoded.
+    Plus characters (`+`) are interpreted as spaces.
+    Arrays as query parameters must be one of:
+
+    - A comma-separated string: `attributesToRetrieve=title,description`
+    - A URL-encoded JSON array: `attributesToRetrieve=%5B%22title%22,%22description%22%D`
+
+    # Response status and errors
+
+    The Search API returns JSON responses.
+    Since JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.
+
+    Successful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.
+    Error responses have a `message` property with more information.
+
+    # Version
+
+    The current version of the Search API is version 1, as indicated by the `/1/` in each endpoint's URL.
   version: 1.0.0
 components:
   securitySchemes:
@@ -39,40 +114,89 @@ security:
     apiKey: []
 tags:
   - name: Advanced
-    description: Advanced operations.
+    description: Query your logs.
   - name: Api Keys
-    description: Manage your API keys.
+    x-displayName: API keys
+    description: |
+      Manage your API keys.
+
+      API requests must be authenticated with an API key.
+      API keys can have permissions (access control lists, ACL) and restrictions.
+    externalDocs:
+      url: https://www.algolia.com/doc/guides/security/api-keys/
+      description: |
+        Related guide: API keys.
+
   - name: Clusters
-    description: >
+    description: |
       Multi-cluster operations.
 
-      Algolia no longer offers [multi-cluster management](https://www.algolia.com/doc/guides/scaling/managing-multiple-clusters-mcm/).
-
-      - If you want to partition your data per user, use facets and secured API keys instead.
-      - If you need more data, consider upgrading to a bigger cluster to suit your needs. Contact [Algolia's support team](https://support.algolia.com/hc/en-us/requests/new) for details.
+      Algolia no longer offers multi-cluster management.
+    externalDocs:
+      url: https://www.algolia.com/doc/guides/scaling/managing-multiple-clusters-mcm/
+      description: |
+        Related guide: Multi-cluster management.
   - name: Dictionaries
-    description: Dictionary operations allow you to customize linguistic features such as [stop words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plurals](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), and [segmentation (compounds)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/).
+    description: |
+      Manage your dictionaries.
+
+      Customize language-specific settings, such as stop words, plurals, or word segmentation.
+
+      Dictionaries are application-wide.
+    externalDocs:
+      url: https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/
+      description: |
+        Related guide: Natural languages.
   - name: Indices
-    description: Manage indices, including listing them, checking and updating settings, deleting, copying, and renaming.
+    description: |
+      Manage your indices and index settings.
+
+      Indices are copies of your data that are stored on Algolia's servers.
+      They're optimal data structures for fast search and are made up of records and settings.
+    externalDocs:
+      url: https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/
+      description: |
+        Related guide: Manage your indices.
   - name: Records
-    description: Record operations.
+    description: |
+      Add, update, and delete records from your indices.
+
+      Records are individual items in your index.
+      When they match a search query, they're returned as search results, in the order determined by your ranking.
+      Records are schemaless JSON objects.
+    externalDocs:
+      url: https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/
+      description: |
+        Related guide: Prepare your records.
   - name: Rules
-    description: Rules operations.
+    description: |
+      Create, update, delete, and search for rules.
+
+      Rules are _if-then_ statements that you can use to curate search results.
+      Rules have _conditions_ which can trigger _consequences_.
+      Consequences are changes to the search results, such as changing the order of search results, or boosting a facet.
+      This can be useful for tuning specific queries or for merchandising.
+    externalDocs:
+      url: https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/
+      description: |
+        Related guide: Rules.
   - name: Search
-    description: Search operations.
+    description: Search one or more indices for matching records or facet values.
   - name: Synonyms
-    description: Synonym operations.
+    description: |
+      Create, update, delete, and search for synonyms.
+
+      Synonyms are terms that the search engine should consider equal.
+    externalDocs:
+      url: https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/
+      description: |
+        Related guide: Synonyms.
   - name: Vaults
-    description: >
-      Vault operations.
-
-      Algolia Vault allows you to restrict network-level access to your cluster to a specific set of IP addresses: for non-authorized IP addresses, the cluster is invisible.
-
-      You should authorize the IP addresses of team members who need to access the Alglolia dashboard, as it's also affected by the restricted list you set up.
-
-      To access this feature, [Algolia Vault](https://www.algolia.com/doc/guides/security/algolia-vault/) must be enabled on your server. Contact [Algolia's support team](https://support.algolia.com/hc/en-us/requests/new) for details.
-
-      > **Note**: The maximum number of allowed sources is 1,000.
+    description: Algolia Vault lets you restrict access to your clusters to specific IP addresses and provides disk-level encryption at rest.
+    externalDocs:
+      url: https://www.algolia.com/doc/guides/security/algolia-vault/
+      description: |
+        Related guide: Algolia Vault.
   - name: _model_index_settings
     x-displayName: Index settings
     description: |

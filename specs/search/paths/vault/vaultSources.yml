@@ -4,8 +4,8 @@ get:
   operationId: getSources
   x-acl:
     - admin
-  description: Get all allowed sources (IP addresses).
-  summary: Get all allowed IP addresses.
+  summary: List allowed sources.
+  description: Retrieves all allowed IP addresses with access to your application.
   responses:
     '200':
       description: OK
@@ -28,8 +28,8 @@ put:
   operationId: replaceSources
   x-acl:
     - admin
-  description: Replace all allowed sources.
-  summary: Replace all sources.
+  summary: Replace allowed sources.
+  description: Replaces the list of allowed sources.
   requestBody:
     required: true
     description: Allowed sources.
