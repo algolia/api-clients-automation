@@ -94,7 +94,7 @@ SourceSearch:
 
 SourceType:
   type: string
-  enum: ['bigcommerce', 'commercetools', 'json', 'csv', 'bigquery', 'docker']
+  enum: ['bigcommerce', 'commercetools', 'json', 'csv', 'bigquery', 'docker', 'ga4BigqueryExport']
 
 SourceCommercetools:
   type: object
@@ -261,6 +261,28 @@ SourceCSV:
   required:
     - url
 
+SourceGA4BigQueryExport:
+  type: object
+  additionalProperties: false
+  properties:
+    projectID:
+      type: string
+      description: GCP project ID that the BigQuery Export writes to.
+    datasetID:
+      type: string
+      description: BigQuery dataset ID that the BigQuery Export writes to.
+    tablePrefix:
+      type: string
+      description: Prefix of the tables that the BigQuery Export writes to (i.e. events_intraday_ for streaming, events_ for daily).
+  required:
+    - projectID
+    - datasetID
+    - tablePrefix
+  x-discriminator-fields:
+    - projectID
+    - datasetID
+    - tablePrefix
+
 SourceBigQuery:
   type: object
   additionalProperties: false
@@ -356,6 +378,7 @@ SourceInput:
     - $ref: '#/SourceJSON'
     - $ref: '#/SourceCSV'
     - $ref: '#/SourceBigQuery'
+    - $ref: '#/SourceGA4BigQueryExport'
     - $ref: '#/SourceDocker'
 
 SourceUpdateCommercetools:
@@ -388,6 +411,7 @@ SourceUpdateInput:
     - $ref: '#/SourceJSON'
     - $ref: '#/SourceCSV'
     - $ref: '#/SourceBigQuery'
+    - $ref: '#/SourceGA4BigQueryExport'
     - $ref: '#/SourceUpdateDocker'
 
 DockerSourceStream:
