@@ -11,11 +11,11 @@
   */
 package algoliasearch.recommend
 
-/** Settings for the semantic search part of NeuralSearch. Only used when `mode` is _neuralSearch_.
+/** Settings for the semantic search part of NeuralSearch. Only used when `mode` is `neuralSearch`.
   *
   * @param eventSources
-  *   Indices from which to collect click and conversion events. If null, the current index and replica group will be
-  *   used as the event source.
+  *   Indices from which to collect click and conversion events. If null, the current index and all its replicas are
+  *   used.
   */
 case class SemanticSearch(
     eventSources: Option[Seq[String]] = scala.None

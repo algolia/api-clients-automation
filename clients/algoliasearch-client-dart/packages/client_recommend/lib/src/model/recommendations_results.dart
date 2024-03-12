@@ -59,7 +59,7 @@ final class RecommendationsResults {
   @JsonKey(name: r'aroundLatLng')
   final String? aroundLatLng;
 
-  /// Automatically-computed radius.
+  /// Distance from a central coordinate provided by `aroundLatLng`.
   @JsonKey(name: r'automaticRadius')
   final String? automaticRadius;
 
@@ -81,7 +81,7 @@ final class RecommendationsResults {
   @JsonKey(name: r'exhaustiveTypo')
   final bool? exhaustiveTypo;
 
-  /// Mapping of each facet name to the corresponding facet counts.
+  /// Facet counts.
   @JsonKey(name: r'facets')
   final Map<String, Map<String, int>>? facets;
 
@@ -107,11 +107,11 @@ final class RecommendationsResults {
   @JsonKey(name: r'message')
   final String? message;
 
-  /// Number of hits the search query matched.
+  /// Number of results (hits).
   @JsonKey(name: r'nbHits')
   final int nbHits;
 
-  /// Number of pages of results for the current query.
+  /// Number of pages of results.
   @JsonKey(name: r'nbPages')
   final int nbPages;
 
@@ -119,7 +119,8 @@ final class RecommendationsResults {
   @JsonKey(name: r'nbSortedHits')
   final int? nbSortedHits;
 
-  /// Page to retrieve (the first page is `0`, not `1`).
+  /// Page of search results to retrieve.
+  // minimum: 0
   @JsonKey(name: r'page')
   final int page;
 
@@ -153,7 +154,7 @@ final class RecommendationsResults {
   @JsonKey(name: r'serverUsed')
   final String? serverUsed;
 
-  /// Lets you store custom data in your indices.
+  /// An object with custom data.  You can store up to 32&nbsp;kB as custom data.
   @JsonKey(name: r'userData')
   final Object? userData;
 
@@ -167,7 +168,7 @@ final class RecommendationsResults {
   @JsonKey(name: r'hits')
   final Iterable<dynamic> hits;
 
-  /// Text to search for in an index.
+  /// Search query.
   @JsonKey(name: r'query')
   final String? query;
 

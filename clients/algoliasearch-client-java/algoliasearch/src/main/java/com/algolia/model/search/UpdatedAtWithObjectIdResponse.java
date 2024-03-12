@@ -26,8 +26,8 @@ public class UpdatedAtWithObjectIdResponse {
 
   /**
    * Unique identifier of a task. A successful API response means that a task was added to a queue.
-   * It might not run immediately. You can check the task's progress with the `task` operation and
-   * this `taskID`.
+   * It might not run immediately. You can check the task's progress with the [`task`
+   * operation](#tag/Indices/operation/getTask) and this `taskID`.
    */
   @javax.annotation.Nullable
   public Long getTaskID() {
@@ -50,7 +50,7 @@ public class UpdatedAtWithObjectIdResponse {
     return this;
   }
 
-  /** Unique object identifier. */
+  /** Unique record identifier. */
   @javax.annotation.Nullable
   public String getObjectID() {
     return objectID;

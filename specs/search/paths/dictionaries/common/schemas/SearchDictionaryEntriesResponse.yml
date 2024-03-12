@@ -4,7 +4,7 @@ searchDictionaryEntriesResponse:
   properties:
     hits:
       type: array
-      description: The dictionary entries returned by the search.
+      description: Dictionary entries matching the search criteria.
       items:
         $ref: '#/dictionaryEntry'
     page:
@@ -13,6 +13,11 @@ searchDictionaryEntriesResponse:
       $ref: '../../../../common/schemas/SearchResponse.yml#/nbHits'
     nbPages:
       $ref: '../../../../common/schemas/SearchResponse.yml#/nbPages'
+  required:
+    - hits
+    - page
+    - nbHits
+    - nbPages
 
 dictionaryEntry:
   type: object
@@ -24,43 +29,28 @@ dictionaryEntry:
   properties:
     objectID:
       type: string
-      description: Unique identifier for a dictionary object.
-      example: 'under'
+      description: Unique identifier for the dictionary entry.
+      example: 828afd405e1f4fe950b6b98c2c43c032
     language:
       type: string
-      description: >
-        [Supported language ISO code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
-      example: 'de'
+      description: ISO code of a [supported language](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
+      example: de
     word:
       type: string
-      description: >
-        Dictionary entry word. Usage depends on the type of dictionary entry.
-
-        **`stopwordEntry`**
-
-        The stop word you want to add or update. If the entry already exists in Algolia's standard dictionary, you can override its behavior by adding it to the custom dictionary and setting its `state` to `disabled`.
-
-        **`compoundEntry`**
-
-        When `decomposition` is empty: adds `word` as a compound atom.
-        For example, atom “kino” decomposes the query “kopfkino” into "kopf" and "kino".
-        
-        When `decomposition` isn't empty: creates a decomposition exception.
-        For example, when decomposition is set to the ["hund", "hutte"] exception, "hundehutte" decomposes into “hund” and “hutte”, discarding the linking "e".
-      example: 'down'
+      description: Matching dictionary word for `stopwords` and `compounds` dictionaries.
+      example: the
     words:
       type: array
-      description: >
-        Compound dictionary [word declensions](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/).
-        
-        If the entry already exists in Algolia's standard dictionary, you can override its behavior by adding it to the custom dictionary and setting its `state` to `disabled`.
-      example: ['cheval','chevaux']
+      description: Matching words in the `plurals` dictionary including declensions.
+      example:
+        - cheval
+        - cheveaux
       items:
         type: string
     decomposition:
       type: array
-      description: For compound entries, governs the behavior of the `word` parameter.
-      example: ['kopf','schmerz','tablette']
+      description: Invividual components of a compound word in the `compounds` dictionary.
+      example: [kopf, schmerz, tablette]
       items:
         type: string
     state:

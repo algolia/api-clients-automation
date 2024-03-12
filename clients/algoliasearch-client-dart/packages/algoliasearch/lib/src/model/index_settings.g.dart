@@ -12,6 +12,8 @@ IndexSettings _$IndexSettingsFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = IndexSettings(
+          attributesForFaceting: $checkedConvert('attributesForFaceting',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           replicas: $checkedConvert('replicas',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           paginationLimitedTo:
@@ -50,8 +52,6 @@ IndexSettings _$IndexSettingsFromJson(Map<String, dynamic> json) =>
                   )),
           attributeForDistinct:
               $checkedConvert('attributeForDistinct', (v) => v as String?),
-          attributesForFaceting: $checkedConvert('attributesForFaceting',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           attributesToRetrieve: $checkedConvert('attributesToRetrieve',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           ranking: $checkedConvert('ranking',
@@ -158,6 +158,7 @@ Map<String, dynamic> _$IndexSettingsToJson(IndexSettings instance) {
     }
   }
 
+  writeNotNull('attributesForFaceting', instance.attributesForFaceting);
   writeNotNull('replicas', instance.replicas);
   writeNotNull('paginationLimitedTo', instance.paginationLimitedTo);
   writeNotNull('unretrievableAttributes', instance.unretrievableAttributes);
@@ -177,7 +178,6 @@ Map<String, dynamic> _$IndexSettingsToJson(IndexSettings instance) {
   writeNotNull('userData', instance.userData);
   writeNotNull('customNormalization', instance.customNormalization);
   writeNotNull('attributeForDistinct', instance.attributeForDistinct);
-  writeNotNull('attributesForFaceting', instance.attributesForFaceting);
   writeNotNull('attributesToRetrieve', instance.attributesToRetrieve);
   writeNotNull('ranking', instance.ranking);
   writeNotNull('customRanking', instance.customRanking);

@@ -46,7 +46,10 @@ public class SearchHits<T> {
     return this;
   }
 
-  /** Get hits */
+  /**
+   * Search results (hits). Hits are records from your index that match the search criteria,
+   * augmented with additional attributes, such as, for highlighting.
+   */
   @javax.annotation.Nonnull
   public List<T> getHits() {
     return hits;
@@ -57,7 +60,7 @@ public class SearchHits<T> {
     return this;
   }
 
-  /** Text to search for in an index. */
+  /** Search query. */
   @javax.annotation.Nonnull
   public String getQuery() {
     return query;

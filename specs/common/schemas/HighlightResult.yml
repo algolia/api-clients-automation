@@ -1,6 +1,6 @@
 highlightResultOption:
   type: object
-  description: Show highlighted section and words matched on a query.
+  description: Surround words that match the query with HTML tags for highlighting.
   additionalProperties: false
   properties:
     value:
@@ -9,7 +9,7 @@ highlightResultOption:
       $ref: '#/matchLevel'
     matchedWords:
       type: array
-      description: List of words from the query that matched the object.
+      description: List of matched words from the search query.
       example: ['action']
       items:
         type: string
@@ -23,23 +23,24 @@ highlightResultOption:
 
 highlightedValue:
   type: string
-  description: Markup text with `facetQuery` matches highlighted.
+  description: Highlighted attribute value, including HTML tags.
   example: '<em>George</em> <em>Clo</em>oney'
 
 matchLevel:
   type: string
-  description: Indicates how well the attribute matched the search query.
+  description: Whether the whole query string matches or only a part.
   enum: [none, partial, full]
 
 highlightResultOptionMap:
   type: object
-  description: Show highlighted section and words matched on a query.
+  description: Surround words that match the query with HTML tags for highlighting.
   additionalProperties:
+    x-additionalPropertiesName: attribute
     $ref: '#/highlightResultOption'
 
 highlightResultOptionArray:
   type: array
-  description: Show highlighted section and words matched on a query.
+  description: Surround words that match the query with HTML tags for highlighting.
   items:
     $ref: '#/highlightResultOption'
 
@@ -51,6 +52,7 @@ highlightResult:
 
 highlightResultMap:
   type: object
-  description: Show highlighted section and words matched on a query.
+  description: Surround words that match the query with HTML tags for highlighting.
   additionalProperties:
+    x-additionalPropertiesName: attribute
     $ref: '#/highlightResult'

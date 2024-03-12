@@ -2,13 +2,12 @@ post:
   tags:
     - Records
   operationId: multipleBatch
-  description: >
-    To reduce the time spent on network round trips, you can perform several write actions in a single request.
-    It's a multi-index version of the [`batch` operation](#tag/Records/operation/batch).
-    Actions are applied in the order they are specified.
+  description: |
+    Adds, updates, or deletes records in multiple indices with a single API request.
 
-    The supported actions are equivalent to the individual operations of the same name.
-  summary: Batch write operations on multiple indices.
+    - Actions are applied in the order they are specified.
+    - Actions are equivalent to the individual API requests of the same name.
+  summary: Batch indexing operations on multiple indices.
   requestBody:
     required: true
     content:
@@ -31,8 +30,6 @@ post:
                   body:
                     type: object
                     description: Operation arguments (varies with specified `action`).
-                    example: >
-                      {'requests':[{'action':'addObject','indexName':'contacts','body':{'name':'Betty Jane McCamey','company':'Vita Foods Inc.','email':'betty@mccamey.com'}},{'action':'addObject','indexName':'public_contacts','body':{'name':'Gayla Geimer','company': "Ortman McCain Co','email':'gayla@geimer.com'}}]}
                   indexName:
                     type: string
                     description: Index to target for this operation.
@@ -43,6 +40,23 @@ post:
                   - indexName
           required:
             - requests
+        examples:
+          batch:
+            summary: Batch indexing request to two indices.
+            value:
+              requests:
+                - action: addObject
+                  indexName: contacts
+                  body:
+                    name: Betty Jane McCamey
+                    company: Vita Foods Inc.
+                    email: betty@mccamey.com
+                - action: addObject
+                  indexName: public_contacts
+                  body:
+                    name: Gayla Geimer
+                    company: Ortman McCain Co.
+                    email: gayla@geimer.com
   responses:
     '200':
       description: OK
@@ -55,7 +69,7 @@ post:
             properties:
               taskID:
                 type: object
-                description: TaskIDs per index.
+                description: Task IDs. One for each index.
                 additionalProperties:
                   $ref: '../../../common/responses/common.yml#/taskID'
               objectIDs:

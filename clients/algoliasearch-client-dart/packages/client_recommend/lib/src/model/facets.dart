@@ -12,7 +12,7 @@ final class Facets {
     this.order,
   });
 
-  /// Pinned order of facet lists.
+  /// Explicit order of facets or facet values.  This setting lets you always show specific facets or facet values at the top of the list.
   @JsonKey(name: r'order')
   final List<String>? order;
 

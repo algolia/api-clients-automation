@@ -15,7 +15,7 @@ import org.json4s._
 
 sealed trait MatchLevel
 
-/** Indicates how well the attribute matched the search query.
+/** Whether the whole query string matches or only a part.
   */
 object MatchLevel {
   case object None extends MatchLevel {

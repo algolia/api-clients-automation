@@ -20,7 +20,7 @@ final class RecommendationsQuery {
     this.fallbackParameters,
   });
 
-  /// Algolia index name.
+  /// Index name.
   @JsonKey(name: r'indexName')
   final String indexName;
 
@@ -37,7 +37,7 @@ final class RecommendationsQuery {
   @JsonKey(name: r'model')
   final RecommendationModels model;
 
-  /// Unique object identifier.
+  /// Unique record identifier.
   @JsonKey(name: r'objectID')
   final String objectID;
 

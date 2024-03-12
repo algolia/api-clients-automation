@@ -72,6 +72,7 @@ export 'src/model/remove_words_if_no_results.dart';
 export 'src/model/rendering_content.dart';
 export 'src/model/rule.dart';
 export 'src/model/scope_type.dart';
+export 'src/model/search_dictionary_entries_response.dart';
 export 'src/model/search_for_facet_values_response.dart';
 export 'src/model/search_for_facets.dart';
 export 'src/model/search_for_facets_options.dart';

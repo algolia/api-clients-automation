@@ -24,7 +24,7 @@ public class BaseRecommendRequest {
     return this;
   }
 
-  /** Algolia index name. */
+  /** Index name. */
   @javax.annotation.Nonnull
   public String getIndexName() {
     return indexName;

@@ -2,16 +2,31 @@
   {
     "testName": "get searchDictionaryEntries results with minimal parameters",
     "parameters": {
-      "dictionaryName": "compounds",
+      "dictionaryName": "stopwords",
       "searchDictionaryEntriesParams": {
-        "query": "foo"
+        "query": "about"
       }
     },
     "request": {
-      "path": "/1/dictionaries/compounds/search",
+      "path": "/1/dictionaries/stopwords/search",
       "method": "POST",
       "body": {
-        "query": "foo"
+        "query": "about"
+      }
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "hits": [
+          {
+            "objectID": "86ef58032f47d976ca7130a896086783",
+            "language": "en",
+            "word": "about"
+          }
+        ],
+        "page": 0,
+        "nbHits": 1,
+        "nbPages": 1
       }
     }
   },

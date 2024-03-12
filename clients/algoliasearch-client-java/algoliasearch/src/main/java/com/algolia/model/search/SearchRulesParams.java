@@ -5,8 +5,6 @@ package com.algolia.model.search;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /** Rules search parameters. */
@@ -30,15 +28,12 @@ public class SearchRulesParams {
   @JsonProperty("enabled")
   private Boolean enabled;
 
-  @JsonProperty("requestOptions")
-  private List<Object> requestOptions;
-
   public SearchRulesParams setQuery(String query) {
     this.query = query;
     return this;
   }
 
-  /** Rule object query. */
+  /** Search query for rules. */
   @javax.annotation.Nullable
   public String getQuery() {
     return query;
@@ -60,10 +55,7 @@ public class SearchRulesParams {
     return this;
   }
 
-  /**
-   * Restricts responses to the specified [contextual
-   * rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
-   */
+  /** Only return rules that match the context (exact match). */
   @javax.annotation.Nullable
   public String getContext() {
     return context;
@@ -74,7 +66,7 @@ public class SearchRulesParams {
     return this;
   }
 
-  /** Requested page (the first page is page 0). minimum: 0 */
+  /** Requested page of the API response. minimum: 0 */
   @javax.annotation.Nullable
   public Integer getPage() {
     return page;
@@ -97,30 +89,12 @@ public class SearchRulesParams {
   }
 
   /**
-   * Restricts responses to enabled rules. When not specified (default), _all_ rules are retrieved.
+   * If `true`, return only enabled rules. If `false`, return only inactive rules. By default, _all_
+   * rules are returned.
    */
   @javax.annotation.Nullable
   public Boolean getEnabled() {
     return enabled;
-  }
-
-  public SearchRulesParams setRequestOptions(List<Object> requestOptions) {
-    this.requestOptions = requestOptions;
-    return this;
-  }
-
-  public SearchRulesParams addRequestOptions(Object requestOptionsItem) {
-    if (this.requestOptions == null) {
-      this.requestOptions = new ArrayList<>();
-    }
-    this.requestOptions.add(requestOptionsItem);
-    return this;
-  }
-
-  /** Request options to send with the API call. */
-  @javax.annotation.Nullable
-  public List<Object> getRequestOptions() {
-    return requestOptions;
   }
 
   @Override
@@ -138,14 +112,13 @@ public class SearchRulesParams {
       Objects.equals(this.context, searchRulesParams.context) &&
       Objects.equals(this.page, searchRulesParams.page) &&
       Objects.equals(this.hitsPerPage, searchRulesParams.hitsPerPage) &&
-      Objects.equals(this.enabled, searchRulesParams.enabled) &&
-      Objects.equals(this.requestOptions, searchRulesParams.requestOptions)
+      Objects.equals(this.enabled, searchRulesParams.enabled)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(query, anchoring, context, page, hitsPerPage, enabled, requestOptions);
+    return Objects.hash(query, anchoring, context, page, hitsPerPage, enabled);
   }
 
   @Override
@@ -158,7 +131,6 @@ public class SearchRulesParams {
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    hitsPerPage: ").append(toIndentedString(hitsPerPage)).append("\n");
     sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
-    sb.append("    requestOptions: ").append(toIndentedString(requestOptions)).append("\n");
     sb.append("}");
     return sb.toString();
   }

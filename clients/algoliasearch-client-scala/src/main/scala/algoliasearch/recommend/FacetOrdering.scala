@@ -11,10 +11,10 @@
   */
 package algoliasearch.recommend
 
-/** Defines the ordering of facets (widgets).
+/** Order of facet names and facet values in your UI.
   *
   * @param values
-  *   Ordering of facet values within an individual facet.
+  *   Order of facet values. One object for each facet.
   */
 case class FacetOrdering(
     facets: Option[Facets] = scala.None,

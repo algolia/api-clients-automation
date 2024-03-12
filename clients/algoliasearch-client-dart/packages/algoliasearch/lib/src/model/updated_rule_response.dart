@@ -14,7 +14,7 @@ final class UpdatedRuleResponse {
     required this.taskID,
   });
 
-  /// Unique object identifier.
+  /// Unique identifier of a rule object.
   @JsonKey(name: r'objectID')
   final String objectID;
 
@@ -22,7 +22,7 @@ final class UpdatedRuleResponse {
   @JsonKey(name: r'updatedAt')
   final String updatedAt;
 
-  /// Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the `task` operation and this `taskID`.
+  /// Unique identifier of a task.  A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.
   @JsonKey(name: r'taskID')
   final int taskID;
 

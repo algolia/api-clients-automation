@@ -1,8 +1,31 @@
-/** Search API Use the Search REST API to manage your data (indices and records), implement search, and improve
-  * relevance (with Rules, synonyms, and language dictionaries). Although Algolia provides a REST API, you should use
-  * the official open source API [clients, libraries, and
-  * tools](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) instead. There's no
-  * [SLA](https://www.algolia.com/policies/sla/) if you use the REST API directly.
+/** Search API The Algolia Search API lets you search, configure, and mange your indices and records. # Client libraries
+  * Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps. The official API
+  * clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/). See: [Algolia's
+  * ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) # Base URLs The
+  * base URLs for making requests to the Search API are: - `https://{APPLICATION_ID}.algolia.net` -
+  * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
+  * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
+  * URLs provide high availability by distributing requests with load balancing. **All requests must use HTTPS.** #
+  * Retry strategy To guarantee a high availability, implement a retry strategy for all API requests using the URLs of
+  * your servers as fallbacks: - `https://{APPLICATION_ID}-1.algolianet.com` -
+  * `https://{APPLICATION_ID}-2.algolianet.com` - `https://{APPLICATION_ID}-3.algolianet.com` These URLs use a different
+  * DNS provider than the primary URLs. You should randomize this list to ensure an even load across the three servers.
+  * All Algolia API clients implement this retry strategy. # Authentication To authenticate your API requests, add these
+  * headers: <dl> <dt><code>x-algolia-application-id</code></dt> <dd>Your Algolia application ID.</dd>
+  * <dt><code>x-algolia-api-key</code></dt> <dd> An API key with the necessary permissions to make the request. The
+  * required access control list (ACL) to make a request is listed in each endpoint's reference. </dd> </dl> You can
+  * find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account). # Request
+  * format Depending on the endpoint, request bodies are either JSON objects or arrays of JSON objects, # Parameters
+  * Parameters are passed as query parameters for GET and DELETE requests, and in the request body for POST and PUT
+  * requests. Query parameters must be
+  * [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding). Non-ASCII characters must be
+  * UTF-8 encoded. Plus characters (`+`) are interpreted as spaces. Arrays as query parameters must be one of: - A
+  * comma-separated string: `attributesToRetrieve=title,description` - A URL-encoded JSON array:
+  * `attributesToRetrieve=%5B%22title%22,%22description%22%D` # Response status and errors The Search API returns JSON
+  * responses. Since JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API
+  * response. Successful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are
+  * indicated by a `5xx` status. Error responses have a `message` property with more information. # Version The current
+  * version of the Search API is version 1, as indicated by the `/1/` in each endpoint's URL.
   *
   * The version of the OpenAPI document: 1.0.0
   *
@@ -20,41 +43,36 @@ import algoliasearch.search.Acl._
   * @param createdAt
   *   Timestamp of creation in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
   * @param acl
-  *   [Permissions](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl) associated with the
-  *   key.
+  *   Permissions that determine the type of API requests this key can make. The required ACL is listed in each
+  *   endpoint's reference. For more information, see [access control
+  *   list](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl).
   * @param description
-  *   Description of an API key for you and your team members.
+  *   Description of an API key to help you identify this API key.
   * @param indexes
-  *   Restricts this API key to a list of indices or index patterns. If the list is empty, all indices are allowed.
-  *   Specify either an exact index name or a pattern with a leading or trailing wildcard character (or both). For
-  *   example: - `dev_*` matches all indices starting with \"dev_\" - `*_dev` matches all indices ending with \"_dev\" -
-  *   `*_products_*` matches all indices containing \"_products_\".
+  *   Index names or patterns that this API key can access. By default, an API key can access all indices in the same
+  *   application. You can use leading and trailing wildcard characters (`*`): - `dev_*` matches all indices starting
+  *   with \"dev_\". - `*_dev` matches all indices ending with \"_dev\". - `*_products_*` matches all indices containing
+  *   \"_products_\".
   * @param maxHitsPerQuery
-  *   Maximum number of hits this API key can retrieve in one query. If zero, no limit is enforced. > **Note**: Use this
-  *   parameter to protect you from third-party attempts to retrieve your entire content by massively querying the
-  *   index.
+  *   Maximum number of results this API key can retrieve in one query. By default, there's no limit.
   * @param maxQueriesPerIPPerHour
-  *   Maximum number of API calls per hour allowed from a given IP address or [user
-  *   token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/). Each time an API call is performed
-  *   with this key, a check is performed. If there were more than the specified number of calls within the last hour,
-  *   the API returns an error with the status code `429` (Too Many Requests). > **Note**: Use this parameter to protect
-  *   you from third-party attempts to retrieve your entire content by massively querying the index.
+  *   Maximum number of API requests allowed per IP address or [user
+  *   token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/) per hour. If this limit is reached,
+  *   the API returns an error with status code `429`. By default, there's no limit.
   * @param queryParameters
-  *   Force some [query parameters](https://www.algolia.com/doc/api-reference/api-parameters/) to be applied for each
-  *   query made with this API key. It's a URL-encoded query string.
+  *   Query parameters to add when making API requests with this API key. To restrict this API key to specific IP
+  *   addresses, add the `restrictSources` parameter. You can only add a single source, but you can provide a range of
+  *   IP addresses. Creating an API key fails if the request is made from an IP address that's outside the restricted
+  *   range.
   * @param referers
-  *   Restrict this API key to specific
-  *   [referrers](https://www.algolia.com/doc/guides/security/api-keys/in-depth/api-key-restrictions/#http-referrers).
-  *   If empty, all referrers are allowed. For example: - `https://algolia.com/_*` matches all referrers starting with
-  *   \"https://algolia.com/\" - `*.algolia.com` matches all referrers ending with \".algolia.com\" - `*algolia.com*`
-  *   allows everything in the domain \"algolia.com\".
+  *   Allowed HTTP referrers for this API key. By default, all referrers are allowed. You can use leading and trailing
+  *   wildcard characters (`*`): - `https://algolia.com/_*` allows all referrers starting with \"https://algolia.com/\"
+  *   \- `*.algolia.com` allows all referrers ending with \".algolia.com\" - `*algolia.com*` allows all referrers in the
+  *   domain \"algolia.com\". Like all HTTP headers, referrers can be spoofed. Don't rely on them to secure your data.
+  *   For more information, see [HTTP referrer
+  *   restrictions](https://www.algolia.com/doc/guides/security/security-best-practices/#http-referrers-restrictions).
   * @param validity
-  *   Validity duration of a key (in seconds). The key will automatically be removed after this time has expired. The
-  *   default value of 0 never expires. Short-lived API keys are useful to grant temporary access to your data. For
-  *   example, in mobile apps, you can't [control when users update your
-  *   app](https://www.algolia.com/doc/guides/security/security-best-practices/#use-secured-api-keys-in-mobile-apps). So
-  *   instead of encoding keys into your app as you would for a web app, you should dynamically fetch them from your
-  *   mobile app's backend.
+  *   Duration (in seconds) after which the API key expires. By default, API keys don't expire.
   */
 case class GetApiKeyResponse(
     value: Option[String] = scala.None,

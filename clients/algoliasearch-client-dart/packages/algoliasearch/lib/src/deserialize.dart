@@ -65,6 +65,7 @@ import 'package:algoliasearch/src/model/remove_words_if_no_results.dart';
 import 'package:algoliasearch/src/model/rendering_content.dart';
 import 'package:algoliasearch/src/model/rule.dart';
 import 'package:algoliasearch/src/model/scope_type.dart';
+import 'package:algoliasearch/src/model/search_dictionary_entries_response.dart';
 import 'package:algoliasearch/src/model/search_for_facet_values_response.dart';
 import 'package:algoliasearch/src/model/search_for_facets.dart';
 import 'package:algoliasearch/src/model/search_for_facets_options.dart';
@@ -279,6 +280,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return Rule.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'ScopeType':
       return ScopeType.fromJson(value) as ReturnType;
+    case 'SearchDictionaryEntriesResponse':
+      return SearchDictionaryEntriesResponse.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'SearchForFacetValuesResponse':
       return SearchForFacetValuesResponse.fromJson(
           value as Map<String, dynamic>) as ReturnType;

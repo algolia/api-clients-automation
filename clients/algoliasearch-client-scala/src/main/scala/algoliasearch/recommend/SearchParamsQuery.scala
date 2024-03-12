@@ -14,7 +14,7 @@ package algoliasearch.recommend
 /** SearchParamsQuery
   *
   * @param query
-  *   Text to search for in an index.
+  *   Search query.
   */
 case class SearchParamsQuery(
     query: Option[String] = scala.None

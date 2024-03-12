@@ -24,7 +24,7 @@ public class HasPendingMappingsResponse {
     return this;
   }
 
-  /** Indicates whether there are clusters undergoing migration, creation, or deletion. */
+  /** Whether there are clusters undergoing migration, creation, or deletion. */
   @javax.annotation.Nonnull
   public Boolean getPending() {
     return pending;

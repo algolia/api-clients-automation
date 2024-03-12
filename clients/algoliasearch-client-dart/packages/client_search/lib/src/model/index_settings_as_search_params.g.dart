@@ -13,8 +13,6 @@ IndexSettingsAsSearchParams _$IndexSettingsAsSearchParamsFromJson(
       json,
       ($checkedConvert) {
         final val = IndexSettingsAsSearchParams(
-          attributesForFaceting: $checkedConvert('attributesForFaceting',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           attributesToRetrieve: $checkedConvert('attributesToRetrieve',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           ranking: $checkedConvert('ranking',
@@ -122,7 +120,6 @@ Map<String, dynamic> _$IndexSettingsAsSearchParamsToJson(
     }
   }
 
-  writeNotNull('attributesForFaceting', instance.attributesForFaceting);
   writeNotNull('attributesToRetrieve', instance.attributesToRetrieve);
   writeNotNull('ranking', instance.ranking);
   writeNotNull('customRanking', instance.customRanking);

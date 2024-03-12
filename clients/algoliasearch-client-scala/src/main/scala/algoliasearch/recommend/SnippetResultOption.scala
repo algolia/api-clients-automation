@@ -13,10 +13,10 @@ package algoliasearch.recommend
 
 import algoliasearch.recommend.MatchLevel._
 
-/** Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
+/** Snippets that show the context around a matching search query.
   *
   * @param value
-  *   Markup text with `facetQuery` matches highlighted.
+  *   Highlighted attribute value, including HTML tags.
   */
 case class SnippetResultOption(
     value: String,

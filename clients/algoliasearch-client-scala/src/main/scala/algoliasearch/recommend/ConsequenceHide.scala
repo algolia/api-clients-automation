@@ -11,10 +11,10 @@
   */
 package algoliasearch.recommend
 
-/** Unique identifier of the record to hide.
+/** Object ID of the record to hide.
   *
   * @param objectID
-  *   Unique object identifier.
+  *   Unique record identifier.
   */
 case class ConsequenceHide(
     objectID: String

@@ -30,7 +30,7 @@ public class SearchRecommendRulesParams {
     return this;
   }
 
-  /** Full-text query. */
+  /** Search query. */
   @javax.annotation.Nullable
   public String getQuery() {
     return query;
@@ -55,7 +55,7 @@ public class SearchRecommendRulesParams {
     return this;
   }
 
-  /** Requested page (the first page is page 0). minimum: 0 */
+  /** Requested page of the API response. minimum: 0 */
   @javax.annotation.Nullable
   public Integer getPage() {
     return page;

@@ -20,7 +20,7 @@ final class RecommendationsHits {
   @JsonKey(name: r'hits')
   final Iterable<dynamic> hits;
 
-  /// Text to search for in an index.
+  /// Search query.
   @JsonKey(name: r'query')
   final String? query;
 

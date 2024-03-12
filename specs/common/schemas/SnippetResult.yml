@@ -1,6 +1,6 @@
 snippetResultOption:
   type: object
-  description: Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
+  description: Snippets that show the context around a matching search query.
   additionalProperties: false
   properties:
     value:
@@ -13,13 +13,14 @@ snippetResultOption:
 
 snippetResultOptionMap:
   type: object
-  description: Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
+  description: Snippets that show the context around a matching search query.
   additionalProperties:
+    x-additionalPropertiesName: attribute
     $ref: '#/snippetResultOption'
 
 snippetResultOptionArray:
   type: array
-  description: Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
+  description: Snippets that show the context around a matching search query.
   items:
     $ref: '#/snippetResultOption'
 
@@ -31,6 +32,7 @@ snippetResult:
 
 snippetResultMap:
   type: object
-  description: Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
+  description: Snippets that show the context around a matching search query.
   additionalProperties:
+    x-additionalPropertiesName: attribute
     $ref: '#/snippetResult'

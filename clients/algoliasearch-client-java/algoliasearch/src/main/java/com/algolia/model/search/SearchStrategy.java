@@ -7,8 +7,9 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
 /**
- * - `none`: executes all queries. - `stopIfEnoughMatches`: executes queries one by one, stopping
- * further query execution as soon as a query matches at least the `hitsPerPage` number of results.
+ * Strategy for multiple search queries: - `none`. Run all queries. - `stopIfEnoughMatches`. Run the
+ * queries one by one, stopping as soon as a query matches at least the `hitsPerPage` number of
+ * results.
  */
 public enum SearchStrategy {
   NONE("none"),

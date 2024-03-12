@@ -33,7 +33,7 @@ public class UserHit {
     return this;
   }
 
-  /** userID of the user. */
+  /** User ID. */
   @javax.annotation.Nonnull
   public String getUserID() {
     return userID;

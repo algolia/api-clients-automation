@@ -17,7 +17,7 @@ final class BuiltInOperation {
   @JsonKey(name: r'_operation')
   final BuiltInOperationType operation;
 
-  /// Value that corresponds to the operation, for example an `Increment` or `Decrement` step, `Add` or `Remove` value.
+  /// Value that corresponds to the operation, for example an `Increment` or `Decrement` step, or an `Add` or `Remove` value.
   @JsonKey(name: r'value')
   final String value;
 

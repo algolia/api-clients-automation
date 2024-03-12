@@ -18,7 +18,7 @@ public class CreatedAtResponse {
     return this;
   }
 
-  /** Timestamp of creation in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format. */
+  /** Timestamp of creation in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format. */
   @javax.annotation.Nonnull
   public String getCreatedAt() {
     return createdAt;

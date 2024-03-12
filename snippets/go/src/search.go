@@ -1493,8 +1493,8 @@ func SnippetForSearchDictionaryEntriesOfSearch() {
 
 	// Call the API
 	resp, err := client.SearchDictionaryEntries(client.NewApiSearchDictionaryEntriesRequest(
-		search.DictionaryType("compounds"),
-		search.NewEmptySearchDictionaryEntriesParams().SetQuery("foo"),
+		search.DictionaryType("stopwords"),
+		search.NewEmptySearchDictionaryEntriesParams().SetQuery("about"),
 	))
 	if err != nil {
 		// handle the eventual error

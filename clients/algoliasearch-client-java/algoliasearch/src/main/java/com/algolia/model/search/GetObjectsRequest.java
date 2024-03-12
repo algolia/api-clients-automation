@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** Record retrieval operation. */
+/** Request body for retrieving records. */
 public class GetObjectsRequest {
 
   @JsonProperty("attributesToRetrieve")
@@ -45,7 +45,7 @@ public class GetObjectsRequest {
     return this;
   }
 
-  /** Record's objectID. */
+  /** Object ID for the record to retrieve. */
   @javax.annotation.Nonnull
   public String getObjectID() {
     return objectID;
@@ -56,7 +56,7 @@ public class GetObjectsRequest {
     return this;
   }
 
-  /** Name of the index containing the required records. */
+  /** Index from which to retrieve the records. */
   @javax.annotation.Nonnull
   public String getIndexName() {
     return indexName;

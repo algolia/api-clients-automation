@@ -778,7 +778,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.searchDictionaryEntries(DictionaryType.fromValue("compounds"), new SearchDictionaryEntriesParams().setQuery("foo"));
+    client.searchDictionaryEntries(DictionaryType.fromValue("stopwords"), new SearchDictionaryEntriesParams().setQuery("about"));
     // SEPARATOR<
   }
 

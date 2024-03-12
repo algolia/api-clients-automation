@@ -16,7 +16,7 @@ package algoliasearch.analytics
   * @param count
   *   Number of occurrences.
   * @param nbHits
-  *   Number of hits the search query matched.
+  *   Number of results (hits).
   */
 case class SearchNoResultEvent(
     search: String,

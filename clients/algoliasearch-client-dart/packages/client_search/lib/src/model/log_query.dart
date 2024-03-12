@@ -18,7 +18,7 @@ final class LogQuery {
   @JsonKey(name: r'index_name')
   final String? indexName;
 
-  /// User identifier.
+  /// A user identifier.
   @JsonKey(name: r'user_token')
   final String? userToken;
 

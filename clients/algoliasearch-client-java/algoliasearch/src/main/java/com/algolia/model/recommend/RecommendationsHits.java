@@ -42,7 +42,7 @@ public class RecommendationsHits {
     return this;
   }
 
-  /** Text to search for in an index. */
+  /** Search query. */
   @javax.annotation.Nullable
   public String getQuery() {
     return query;

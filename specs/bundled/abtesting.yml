@@ -32,14 +32,15 @@ components:
     Offset:
       in: query
       name: offset
-      description: Position of the starting record. Used for paging. 0 is the first record.
+      description: Position of the first item to return.
       schema:
         type: integer
         default: 0
+        minimum: 0
     Limit:
       in: query
       name: limit
-      description: Number of records to return (page size).
+      description: Number of items to return.
       schema:
         type: integer
         default: 10
@@ -440,9 +441,10 @@ components:
       description: >
         Unique identifier of a task.
 
+
         A successful API response means that a task was added to a queue. It
         might not run immediately. You can check the task's progress with the
-        `task` operation and this `taskID`.
+        [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.
     ABTestResponse:
       type: object
       additionalProperties: false

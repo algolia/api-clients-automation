@@ -193,9 +193,9 @@ final class RecommendClient implements ApiClient {
   ///   - editSettings
   ///
   /// Parameters:
-  /// * [indexName] Index on which to perform the request.
+  /// * [indexName] Name of the index on which to perform the operation.
   /// * [model] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
-  /// * [objectID] Unique record (object) identifier.
+  /// * [objectID] Unique record identifier.
   /// * [requestOptions] additional request configuration.
   Future<DeletedAtResponse> deleteRecommendRule({
     required String indexName,
@@ -237,9 +237,9 @@ final class RecommendClient implements ApiClient {
   ///   - settings
   ///
   /// Parameters:
-  /// * [indexName] Index on which to perform the request.
+  /// * [indexName] Name of the index on which to perform the operation.
   /// * [model] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
-  /// * [objectID] Unique record (object) identifier.
+  /// * [objectID] Unique record identifier.
   /// * [requestOptions] additional request configuration.
   Future<RuleResponse> getRecommendRule({
     required String indexName,
@@ -281,7 +281,7 @@ final class RecommendClient implements ApiClient {
   ///   - editSettings
   ///
   /// Parameters:
-  /// * [indexName] Index on which to perform the request.
+  /// * [indexName] Name of the index on which to perform the operation.
   /// * [model] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
   /// * [taskID] Unique identifier of a task. Numeric value (up to 64bits).
   /// * [requestOptions] additional request configuration.
@@ -350,7 +350,7 @@ final class RecommendClient implements ApiClient {
   ///   - settings
   ///
   /// Parameters:
-  /// * [indexName] Index on which to perform the request.
+  /// * [indexName] Name of the index on which to perform the operation.
   /// * [model] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
   /// * [searchRecommendRulesParams]
   /// * [requestOptions] additional request configuration.

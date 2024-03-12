@@ -46,7 +46,7 @@ public class SearchNoResultEvent {
     return this;
   }
 
-  /** Number of hits the search query matched. */
+  /** Number of results (hits). */
   @javax.annotation.Nonnull
   public Integer getNbHits() {
     return nbHits;

@@ -1157,9 +1157,9 @@ class SnippetSearchClient {
 
     // Call the API
     val res = client.searchDictionaryEntries(
-      dictionaryName = DictionaryType.withName("compounds"),
+      dictionaryName = DictionaryType.withName("stopwords"),
       searchDictionaryEntriesParams = SearchDictionaryEntriesParams(
-        query = "foo"
+        query = "about"
       )
     )
 

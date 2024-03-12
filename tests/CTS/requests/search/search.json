@@ -363,9 +363,6 @@
           "aroundPrecision": 0,
           "aroundRadius": "all",
           "attributeCriteriaComputedByMinProximity": true,
-          "attributesForFaceting": [
-            ""
-          ],
           "attributesToHighlight": [
             ""
           ],
@@ -392,10 +389,6 @@
           "enableReRanking": true,
           "enableRules": true,
           "exactOnSingleWordQuery": "attribute",
-          "explain": [
-            "foo",
-            "bar"
-          ],
           "facetFilters": [
             ""
           ],
@@ -545,9 +538,6 @@
             "aroundPrecision": 0,
             "aroundRadius": "all",
             "attributeCriteriaComputedByMinProximity": true,
-            "attributesForFaceting": [
-              ""
-            ],
             "attributesToHighlight": [
               ""
             ],
@@ -574,10 +564,6 @@
             "enableReRanking": true,
             "enableRules": true,
             "exactOnSingleWordQuery": "attribute",
-            "explain": [
-              "foo",
-              "bar"
-            ],
             "facetFilters": [
               ""
             ],

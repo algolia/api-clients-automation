@@ -4,11 +4,12 @@ post:
   operationId: deleteBy
   x-acl:
     - deleteIndex
-  summary: Delete all records matching a query.
-  description: >
-    This operation doesn't support all the query options, only its filters (numeric, facet, or tag) and geo queries.
+  summary: Delete records matching a query.
+  description: |
+    This operation doesn't accept empty queries or filters.
 
-    It doesn't accept empty filters or queries.
+    It's more efficient to get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse),
+    and then delete the records using the [`batch` operation](tag/Records/operation/batch).
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:

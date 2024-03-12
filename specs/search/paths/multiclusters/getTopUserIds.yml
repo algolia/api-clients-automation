@@ -4,11 +4,11 @@ get:
   operationId: getTopUserIds
   x-acl:
     - admin
-  summary: Get top userID.
-  description: >
+  summary: Get top user IDs.
+  description: |
     Get the IDs of the 10 users with the highest number of records per cluster.
 
-    Since it can take up to a few seconds to get the data from the different clusters,
+    Since it can take a few seconds to get the data from the different clusters,
     the response isn't real-time.
   responses:
     '200':
@@ -26,6 +26,7 @@ get:
                 items:
                   type: object
                   additionalProperties:
+                    x-additionalPropertiesName: cluster
                     type: array
                     items:
                       $ref: '../../common/schemas/UserId.yml#/userId'

@@ -1253,8 +1253,8 @@ class SnippetSearchClient
 
         // Call the API
         $response = $client->searchDictionaryEntries(
-            'compounds',
-            ['query' => 'foo',
+            'stopwords',
+            ['query' => 'about',
             ],
         );
 

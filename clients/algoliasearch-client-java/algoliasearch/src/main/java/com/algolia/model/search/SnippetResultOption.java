@@ -7,10 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/**
- * Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet
- * is non-empty.
- */
+/** Snippets that show the context around a matching search query. */
 @JsonDeserialize(as = SnippetResultOption.class)
 public class SnippetResultOption implements SnippetResult {
 
@@ -25,7 +22,7 @@ public class SnippetResultOption implements SnippetResult {
     return this;
   }
 
-  /** Markup text with `facetQuery` matches highlighted. */
+  /** Highlighted attribute value, including HTML tags. */
   @javax.annotation.Nonnull
   public String getValue() {
     return value;

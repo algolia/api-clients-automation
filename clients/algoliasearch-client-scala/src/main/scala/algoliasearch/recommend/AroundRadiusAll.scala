@@ -15,7 +15,7 @@ import org.json4s._
 
 sealed trait AroundRadiusAll extends AroundRadiusTrait
 
-/** AroundRadiusAll enumeration
+/** Return all records with a valid `_geoloc` attribute. Don't filter by distance.
   */
 object AroundRadiusAll {
   case object All extends AroundRadiusAll {

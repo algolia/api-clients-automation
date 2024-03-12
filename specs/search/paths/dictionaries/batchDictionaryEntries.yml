@@ -4,8 +4,8 @@ post:
   operationId: batchDictionaryEntries
   x-acl:
     - editSettings
-  description: Add or remove a batch of dictionary entries.
-  summary: Batch dictionary entries.
+  description: Adds or deletes multiple entries from your plurals, segmentation, or stop word dictionaries.
+  summary: Add or delete dictionary entries.
   parameters:
     - $ref: 'common/parameters.yml#/DictionaryName'
   requestBody:
@@ -14,8 +14,7 @@ post:
       application/json:
         schema:
           title: batchDictionaryEntriesParams
-          description: >
-            `batchDictionaryEntries` parameters.
+          description: Request body for updating dictionary entries.
           type: object
           required:
             - requests
@@ -24,10 +23,10 @@ post:
             clearExistingDictionaryEntries:
               type: boolean
               default: false
-              description: Incidates whether to replace all custom entries in the dictionary with the ones sent with this request.
+              description: Whether to replace all custom entries in the dictionary with the ones sent with this request.
             requests:
               type: array
-              description: Operations to batch.
+              description: List of additions and deletions to your dictionaries.
               items:
                 title: batchDictionaryEntriesRequest
                 type: object

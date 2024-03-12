@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** Custom entries for a dictionary. */
+/** Dictionary type. If `null`, this dictionary type isn't supported for the language. */
 public class DictionaryLanguage {
 
   @JsonProperty("nbCustomEntries")
@@ -18,10 +18,7 @@ public class DictionaryLanguage {
     return this;
   }
 
-  /**
-   * If `0`, the dictionary hasn't been customized and only contains standard entries provided by
-   * Algolia. If `null`, that feature isn't available or isn't supported for that language.
-   */
+  /** Number of custom dictionary entries. */
   @javax.annotation.Nullable
   public Integer getNbCustomEntries() {
     return nbCustomEntries;

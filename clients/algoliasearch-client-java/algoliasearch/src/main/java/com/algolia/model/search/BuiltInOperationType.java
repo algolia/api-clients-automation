@@ -6,7 +6,7 @@ package com.algolia.model.search;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Operation to apply to the attribute. */
+/** How to change the attribute. */
 public enum BuiltInOperationType {
   INCREMENT("Increment"),
 

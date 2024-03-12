@@ -13,9 +13,11 @@ final class AroundPrecisionFromValueInner {
     this.value,
   });
 
+  /// Lower boundary of a range in meters. The Geo ranking criterion considers all records within the range to be equal.
   @JsonKey(name: r'from')
   final int? from;
 
+  /// Upper boundary of a range in meters. The Geo ranking criterion considers all records within the range to be equal.
   @JsonKey(name: r'value')
   final int? value;
 

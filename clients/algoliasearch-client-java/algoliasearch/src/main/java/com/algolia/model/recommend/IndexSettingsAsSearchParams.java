@@ -12,9 +12,6 @@ import java.util.Objects;
 /** IndexSettingsAsSearchParams */
 public class IndexSettingsAsSearchParams {
 
-  @JsonProperty("attributesForFaceting")
-  private List<String> attributesForFaceting;
-
   @JsonProperty("attributesToRetrieve")
   private List<String> attributesToRetrieve;
 
@@ -147,31 +144,6 @@ public class IndexSettingsAsSearchParams {
   @JsonProperty("reRankingApplyFilter")
   private ReRankingApplyFilter reRankingApplyFilter;
 
-  public IndexSettingsAsSearchParams setAttributesForFaceting(List<String> attributesForFaceting) {
-    this.attributesForFaceting = attributesForFaceting;
-    return this;
-  }
-
-  public IndexSettingsAsSearchParams addAttributesForFaceting(String attributesForFacetingItem) {
-    if (this.attributesForFaceting == null) {
-      this.attributesForFaceting = new ArrayList<>();
-    }
-    this.attributesForFaceting.add(attributesForFacetingItem);
-    return this;
-  }
-
-  /**
-   * Attributes used for
-   * [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/) and
-   * the
-   * [modifiers](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/#modifiers)
-   * that can be applied: `filterOnly`, `searchable`, and `afterDistinct`.
-   */
-  @javax.annotation.Nullable
-  public List<String> getAttributesForFaceting() {
-    return attributesForFaceting;
-  }
-
   public IndexSettingsAsSearchParams setAttributesToRetrieve(List<String> attributesToRetrieve) {
     this.attributesToRetrieve = attributesToRetrieve;
     return this;
@@ -187,7 +159,10 @@ public class IndexSettingsAsSearchParams {
 
   /**
    * Attributes to include in the API response. To reduce the size of your response, you can
-   * retrieve only some of the attributes. By default, the response includes all attributes.
+   * retrieve only some of the attributes. - `*` retrieves all attributes, except attributes
+   * included in the `customRanking` and `unretrievableAttributes` settings. - To retrieve all
+   * attributes except a specific one, prefix the attribute with a dash and combine it with the `*`:
+   * `[\"*\", \"-ATTRIBUTE\"]`. - The `objectID` attribute is always included.
    */
   @javax.annotation.Nullable
   public List<String> getAttributesToRetrieve() {
@@ -208,8 +183,23 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Determines the order in which Algolia [returns your
-   * results](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/).
+   * Determines the order in which Algolia returns your results. By default, each entry corresponds
+   * to a [ranking
+   * criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/).
+   * The tie-breaking algorithm sequentially applies each criterion in the order they're specified.
+   * If you configure a replica index for [sorting by an
+   * attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute/),
+   * you put the sorting attribute at the top of the list. **Modifiers**
+   *
+   * <dl>
+   *   <dt><code>asc(\"ATTRIBUTE\")</code>
+   *   <dd>Sort the index by the values of an attribute, in ascending order.
+   *   <dt><code>desc(\"ATTRIBUTE\")</code>
+   *   <dd>Sort the index by the values of an attribute, in descending order.
+   * </dl>
+   *
+   * Before you modify the default setting, you should test your changes in the dashboard, and by
+   * [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/).
    */
   @javax.annotation.Nullable
   public List<String> getRanking() {
@@ -230,9 +220,22 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Specifies the [Custom ranking
-   * criterion](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/). Use
-   * the `asc` and `desc` modifiers to specify the ranking order: ascending or descending.
+   * Attributes to use as [custom
+   * ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/). The
+   * custom ranking attributes decide which items are shown first if the other ranking criteria are
+   * equal. Records with missing values for your selected custom ranking attributes are always
+   * sorted last. Boolean attributes are sorted based on their alphabetical order. **Modifiers**
+   *
+   * <dl>
+   *   <dt><code>asc(\"ATTRIBUTE\")</code>
+   *   <dd>Sort the index by the values of an attribute, in ascending order.
+   *   <dt><code>desc(\"ATTRIBUTE\")</code>
+   *   <dd>Sort the index by the values of an attribute, in descending order.
+   * </dl>
+   *
+   * If you use two or more custom ranking attributes, [reduce the
+   * precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/)
+   * of your first attributes, or the other attributes will never be applied.
    */
   @javax.annotation.Nullable
   public List<String> getCustomRanking() {
@@ -244,7 +247,12 @@ public class IndexSettingsAsSearchParams {
     return this;
   }
 
-  /** Relevancy threshold below which less relevant results aren't included in the results. */
+  /**
+   * Relevancy threshold below which less relevant results aren't included in the results. You can
+   * only set `relevancyStrictness` on [virtual replica
+   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas).
+   * Use this setting to strike a balance between the relevance and number of returned results.
+   */
   @javax.annotation.Nullable
   public Integer getRelevancyStrictness() {
     return relevancyStrictness;
@@ -264,8 +272,12 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Attributes to highlight. Strings that match the search query in the attributes are highlighted
-   * by surrounding them with HTML tags (`highlightPreTag` and `highlightPostTag`).
+   * Attributes to highlight. By default, all searchable attributes are highlighted. Use `*` to
+   * highlight all attributes or use an empty array `[]` to turn off highlighting. With
+   * highlighting, strings that match the search query are surrounded by HTML tags defined by
+   * `highlightPreTag` and `highlightPostTag`. You can use this to visually highlight matching parts
+   * of a search query in your UI. For more information, see [Highlighting and
+   * snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js/).
    */
   @javax.annotation.Nullable
   public List<String> getAttributesToHighlight() {
@@ -286,9 +298,10 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Attributes to _snippet_. 'Snippeting' is shortening the attribute to a certain number of words.
-   * If not specified, the attribute is shortened to the 10 words around the matching string but you
-   * can specify the number. For example: `body:20`.
+   * Attributes for which to enable snippets. Snippets provide additional context to matched words.
+   * If you enable snippets, they include 10 words, including the matched word. The matched word
+   * will also be wrapped by HTML tags for highlighting. You can adjust the number of words with the
+   * following notation: `ATTRIBUTE:NUMBER`, where `NUMBER` is the number of words to be extracted.
    */
   @javax.annotation.Nullable
   public List<String> getAttributesToSnippet() {
@@ -300,7 +313,7 @@ public class IndexSettingsAsSearchParams {
     return this;
   }
 
-  /** HTML string to insert before the highlighted parts in all highlight and snippet results. */
+  /** HTML tag to insert before the highlighted parts in all highlighted results and snippets. */
   @javax.annotation.Nullable
   public String getHighlightPreTag() {
     return highlightPreTag;
@@ -311,7 +324,7 @@ public class IndexSettingsAsSearchParams {
     return this;
   }
 
-  /** HTML string to insert after the highlighted parts in all highlight and snippet results. */
+  /** HTML tag to insert after the highlighted parts in all highlighted results and snippets. */
   @javax.annotation.Nullable
   public String getHighlightPostTag() {
     return highlightPostTag;
@@ -333,7 +346,10 @@ public class IndexSettingsAsSearchParams {
     return this;
   }
 
-  /** Restrict highlighting and snippeting to items that matched the query. */
+  /**
+   * Whether to restrict highlighting and snippeting to items that at least partially matched the
+   * search query. By default, all items are highlighted and snippeted.
+   */
   @javax.annotation.Nullable
   public Boolean getRestrictHighlightAndSnippetArrays() {
     return restrictHighlightAndSnippetArrays;
@@ -356,7 +372,7 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Minimum number of characters a word in the query string must contain to accept matches with
+   * Minimum number of characters a word in the search query must contain to accept matches with
    * [one
    * typo](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).
    */
@@ -371,7 +387,7 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Minimum number of characters a word in the query string must contain to accept matches with
+   * Minimum number of characters a word in the search query must contain to accept matches with
    * [two
    * typos](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).
    */
@@ -396,7 +412,10 @@ public class IndexSettingsAsSearchParams {
     return this;
   }
 
-  /** Whether to allow typos on numbers (\"numeric tokens\") in the query string. */
+  /**
+   * Whether to allow typos on numbers in the search query. Turn off this setting to reduce the
+   * number of irrelevant matches when searching in large sets of similar numbers.
+   */
   @javax.annotation.Nullable
   public Boolean getAllowTyposOnNumericTokens() {
     return allowTyposOnNumericTokens;
@@ -418,6 +437,12 @@ public class IndexSettingsAsSearchParams {
   /**
    * Attributes for which you want to turn off [typo
    * tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
+   * Returning only exact matches can help when: - [Searching in hyphenated
+   * attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/).
+   * - Reducing the number of matches when you have too many. This can happen with attributes that
+   * are long blocks of text, such as product descriptions. Consider alternatives such as
+   * `disableTypoToleranceOnWords` or adding synonyms if your attributes have intentional unusual
+   * spellings that might look like typos.
    */
   @javax.annotation.Nullable
   public List<String> getDisableTypoToleranceOnAttributes() {
@@ -452,8 +477,9 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Characters that the engine shouldn't automatically
-   * [normalize](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
+   * Characters for which diacritics should be preserved. By default, Algolia removes diacritics
+   * from letters. For example, `é` becomes `e`. If this causes issues in your search, you can
+   * specify characters that should keep their diacritics.
    */
   @javax.annotation.Nullable
   public String getKeepDiacriticsOnCharacters() {
@@ -474,10 +500,18 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Sets your user's search language. This adjusts language-specific settings and features such as
-   * `ignorePlurals`, `removeStopWords`, and
+   * [ISO code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) for language-specific
+   * settings such as plurals, stop words, and word-detection dictionaries. This setting sets a
+   * default list of languages used by the `removeStopWords` and `ignorePlurals` settings. This
+   * setting also sets a dictionary for word detection in the logogram-based
    * [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk)
-   * word detection.
+   * languages. To support this, you must place the CJK language **first**. **You should always
+   * specify a query language.** If you don't specify an indexing language, the search engine uses
+   * all [supported
+   * languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),
+   * or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This
+   * can lead to unexpected search results. For more information, see [Language-specific
+   * configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
    */
   @javax.annotation.Nullable
   public List<String> getQueryLanguages() {
@@ -490,9 +524,10 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * [Splits compound
-   * words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words)
-   * into their component word parts in the query.
+   * Whether to split compound words into their building blocks. For more information, see [Word
+   * segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words).
+   * Word segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and
+   * Norwegian.
    */
   @javax.annotation.Nullable
   public Boolean getDecompoundQuery() {
@@ -504,10 +539,7 @@ public class IndexSettingsAsSearchParams {
     return this;
   }
 
-  /**
-   * Incidates whether
-   * [Rules](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/) are enabled.
-   */
+  /** Whether to enable rules. */
   @javax.annotation.Nullable
   public Boolean getEnableRules() {
     return enableRules;
@@ -518,11 +550,7 @@ public class IndexSettingsAsSearchParams {
     return this;
   }
 
-  /**
-   * Incidates whether
-   * [Personalization](https://www.algolia.com/doc/guides/personalization/what-is-personalization/)
-   * is enabled.
-   */
+  /** Whether to enable Personalization. */
   @javax.annotation.Nullable
   public Boolean getEnablePersonalization() {
     return enablePersonalization;
@@ -578,8 +606,8 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Enables the [advanced query
-   * syntax](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#advanced-syntax).
+   * Whether to support phrase matching and excluding words from search queries. Use the
+   * `advancedSyntaxFeatures` parameter to control which feature is supported.
    */
   @javax.annotation.Nullable
   public Boolean getAdvancedSyntax() {
@@ -600,9 +628,21 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Words which should be considered
-   * [optional](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words)
-   * when found in a query.
+   * Words that should be considered optional when found in the query. By default, records must
+   * match all words in the search query to be included in the search results. Adding optional words
+   * can help to increase the number of search results by running an additional search query that
+   * doesn't include the optional words. For example, if the search query is \"action video\" and
+   * \"video\" is an optional word, the search engine runs two queries. One for \"action video\" and
+   * one for \"action\". Records that match all words are ranked higher. For a search query with 4
+   * or more words **and** all its words are optional, the number of matched words required for a
+   * record to be included in the search results increases for every 1,000 records: - If
+   * `optionalWords` has less than 10 words, the required number of matched words increases by 1:
+   * results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words. - If
+   * `optionalWords` has 10 or more words, the number of required matched words increases by the
+   * number of optional words dividied by 5 (rounded down). For example, with 18 optional words:
+   * results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words. For more
+   * information, see [Optional
+   * words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
    */
   @javax.annotation.Nullable
   public List<String> getOptionalWords() {
@@ -623,8 +663,12 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Attributes for which you want to [turn off the exact ranking
+   * Searchable attributes for which you want to [turn off the Exact ranking
    * criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).
+   * This can be useful for attributes with long values, where the likelyhood of an exact match is
+   * high, such as product descriptions. Turning off the Exact ranking criterion for these
+   * attributes favors exact matching on other attributes. This reduces the impact of individual
+   * attributes with a lot of content on ranking.
    */
   @javax.annotation.Nullable
   public List<String> getDisableExactOnAttributes() {
@@ -656,8 +700,20 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Alternatives that should be considered an exact match by [the exact ranking
-   * criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).
+   * Alternatives of query words that should be considered as exact matches by the Exact ranking
+   * criterion.
+   *
+   * <dl>
+   *   <dt><code>ignorePlurals</code>
+   *   <dd>Plurals and similar declensions added by the `ignorePlurals` setting are considered exact
+   *       matches.
+   *   <dt><code>singleWordSynonym</code>
+   *   <dd>Single-word synonyms, such as \"NY/NYC\" are considered exact matches.
+   *   <dt><code>multiWordsSynonym</code>
+   *   <dd>Multi-word synonyms, such as \"NY/New York\" are considered exact matches.
+   * </dl>
+   *
+   * .
    */
   @javax.annotation.Nullable
   public List<AlternativesAsExact> getAlternativesAsExact() {
@@ -678,8 +734,18 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Allows you to specify which advanced syntax features are active when `advancedSyntax` is
-   * enabled.
+   * Advanced search syntax features you want to support.
+   *
+   * <dl>
+   *   <dt><code>exactPhrase</code>
+   *   <dd>Phrases in quotes must match exactly. For example, `sparkly blue \"iPhone case\"` only
+   *       returns records with the exact string \"iPhone case\".
+   *   <dt><code>excludeWords</code>
+   *   <dd>Query words prefixed with a `-` must not occur in a record. For example, `search -engine`
+   *       matches records that contain \"search\" but not \"engine\".
+   * </dl>
+   *
+   * This setting only has an effect if `advancedSyntax` is true.
    */
   @javax.annotation.Nullable
   public List<AdvancedSyntaxFeatures> getAdvancedSyntaxFeatures() {
@@ -703,8 +769,12 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Whether to highlight and snippet the original word that matches the synonym or the synonym
-   * itself.
+   * Whether to replace a highlighted word with the matched synonym. By default, the original words
+   * are highlighted even if a synonym matches. For example, with `home` as a synonym for `house`
+   * and a search for `home`, records matching either \"home\" or \"house\" are included in the
+   * search results, and either \"home\" or \"house\" are highlighted. With
+   * `replaceSynonymsInHighlight` set to `true`, a search for `home` still matches the same records,
+   * but all occurences of \"house\" are replaced by \"home\" in the highlighted response.
    */
   @javax.annotation.Nullable
   public Boolean getReplaceSynonymsInHighlight() {
@@ -717,9 +787,11 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Precision of the [proximity ranking
-   * criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity).
-   * minimum: 1 maximum: 7
+   * Minimum proximity score for two matching words. This adjusts the [Proximity ranking
+   * criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity)
+   * by equally scoring matches that are farther apart. For example, if `minProximity` is 2,
+   * neighboring matches and matches with one word between them would have the same score. minimum:
+   * 1 maximum: 7
    */
   @javax.annotation.Nullable
   public Integer getMinProximity() {
@@ -739,7 +811,13 @@ public class IndexSettingsAsSearchParams {
     return this;
   }
 
-  /** Attributes to include in the API response for search and browse queries. */
+  /**
+   * Properties to include in the API response of `search` and `browse` requests. By default, all
+   * response properties are included. To reduce the response size, you can select, which attributes
+   * should be included. You can't exclude these properties: `message`, `warning`, `cursor`,
+   * `serverUsed`, `indexUsed`, `abTestVariantID`, `parsedQuery`, or any property triggered by the
+   * `getRankingInfo` parameter. Don't exclude properties that you might need in your search UI.
+   */
   @javax.annotation.Nullable
   public List<String> getResponseFields() {
     return responseFields;
@@ -751,7 +829,7 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Maximum number of facet hits to return when [searching for facet
+   * Maximum number of facet values to return when [searching for facet
    * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
    * maximum: 100
    */
@@ -765,7 +843,7 @@ public class IndexSettingsAsSearchParams {
     return this;
   }
 
-  /** Maximum number of facet values to return for each facet. */
+  /** Maximum number of facet values to return for each facet. maximum: 1000 */
   @javax.annotation.Nullable
   public Integer getMaxValuesPerFacet() {
     return maxValuesPerFacet;
@@ -776,7 +854,21 @@ public class IndexSettingsAsSearchParams {
     return this;
   }
 
-  /** Controls how facet values are fetched. */
+  /**
+   * Order in which to retrieve facet values.
+   *
+   * <dl>
+   *   <dt><code>count</code>
+   *   <dd>Facet values are retrieved by decreasing count. The count is the number of matching
+   *       records containing this facet value.
+   *   <dt><code>alpha</code>
+   *   <dd>Retrieve facet values alphabetically.
+   * </dl>
+   *
+   * This setting doesn't influence how facet values are displayed in your UI (see
+   * `renderingContent`). For more information, see [facet value
+   * display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js/).
+   */
   @javax.annotation.Nullable
   public String getSortFacetValuesBy() {
     return sortFacetValuesBy;
@@ -788,10 +880,11 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * When the [Attribute criterion is ranked above
-   * Proximity](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#attribute-and-proximity-combinations)
-   * in your ranking formula, Proximity is used to select which searchable attribute is matched in
-   * the Attribute ranking stage.
+   * Whether the best matching attribute should be determined by minimum proximity. This setting
+   * only affects ranking if the Attribute ranking criterion comes before Proximity in the `ranking`
+   * setting. If true, the best matching attribute is selected based on the minimum proximity of
+   * multiple matches. Otherwise, the best matching attribute is determined by the order in the
+   * `searchableAttributes` setting.
    */
   @javax.annotation.Nullable
   public Boolean getAttributeCriteriaComputedByMinProximity() {
@@ -815,8 +908,9 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * Indicates whether this search will use [Dynamic
-   * Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/).
+   * Whether this search will use [Dynamic
+   * Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/). This setting only has
+   * an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
    */
   @javax.annotation.Nullable
   public Boolean getEnableReRanking() {
@@ -844,7 +938,6 @@ public class IndexSettingsAsSearchParams {
     }
     IndexSettingsAsSearchParams indexSettingsAsSearchParams = (IndexSettingsAsSearchParams) o;
     return (
-      Objects.equals(this.attributesForFaceting, indexSettingsAsSearchParams.attributesForFaceting) &&
       Objects.equals(this.attributesToRetrieve, indexSettingsAsSearchParams.attributesToRetrieve) &&
       Objects.equals(this.ranking, indexSettingsAsSearchParams.ranking) &&
       Objects.equals(this.customRanking, indexSettingsAsSearchParams.customRanking) &&
@@ -895,7 +988,6 @@ public class IndexSettingsAsSearchParams {
   @Override
   public int hashCode() {
     return Objects.hash(
-      attributesForFaceting,
       attributesToRetrieve,
       ranking,
       customRanking,
@@ -947,7 +1039,6 @@ public class IndexSettingsAsSearchParams {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class IndexSettingsAsSearchParams {\n");
-    sb.append("    attributesForFaceting: ").append(toIndentedString(attributesForFaceting)).append("\n");
     sb.append("    attributesToRetrieve: ").append(toIndentedString(attributesToRetrieve)).append("\n");
     sb.append("    ranking: ").append(toIndentedString(ranking)).append("\n");
     sb.append("    customRanking: ").append(toIndentedString(customRanking)).append("\n");

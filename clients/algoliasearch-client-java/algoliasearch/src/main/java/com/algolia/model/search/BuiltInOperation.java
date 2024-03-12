@@ -7,9 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/**
- * To update an attribute without pushing the entire record, you can use these built-in operations.
- */
+/** Update to perform on the attribute. */
 @JsonDeserialize(as = BuiltInOperation.class)
 public class BuiltInOperation implements AttributeToUpdate {
 
@@ -36,8 +34,8 @@ public class BuiltInOperation implements AttributeToUpdate {
   }
 
   /**
-   * Value that corresponds to the operation, for example an `Increment` or `Decrement` step, `Add`
-   * or `Remove` value.
+   * Value that corresponds to the operation, for example an `Increment` or `Decrement` step, or an
+   * `Add` or `Remove` value.
    */
   @javax.annotation.Nonnull
   public String getValue() {

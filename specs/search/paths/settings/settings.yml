@@ -4,8 +4,8 @@ get:
   operationId: getSettings
   x-acl:
     - search
-  description: Return an object containing an index's [configuration settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/).
-  summary: Get index settings.
+  description: Retrieves an object with non-null index settings.
+  summary: Retrieve index settings.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   responses:
@@ -30,7 +30,13 @@ put:
   operationId: setSettings
   x-acl:
     - editSettings
-  description: Update the specified [index settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). Specifying null for a setting resets it to its default value.
+  description: |
+    Update the specified index settings.
+
+    Index settings that you don't specify are left unchanged.
+    Specify `null` to reset a setting to its default value.
+
+    For best performance, update the index settings before you add new records to your index.
   summary: Update index settings.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'

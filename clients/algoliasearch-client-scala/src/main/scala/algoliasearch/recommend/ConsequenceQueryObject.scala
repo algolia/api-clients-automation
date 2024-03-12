@@ -14,9 +14,9 @@ package algoliasearch.recommend
 /** ConsequenceQueryObject
   *
   * @param remove
-  *   Words to remove.
+  *   Words to remove from the search query.
   * @param edits
-  *   Edits to apply.
+  *   Changes to make to the search query.
   */
 case class ConsequenceQueryObject(
     remove: Option[Seq[String]] = scala.None,

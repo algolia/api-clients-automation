@@ -80,13 +80,13 @@ final class SearchClient implements ApiClient {
     );
   }
 
-  /// Send multiple search queries to one or more indices.
+  /// Sends multiple search request to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.
   ///
   /// Required API Key ACLs:
   ///   - search
   ///
   /// Parameters:
-  /// * [searchMethodParams] Query requests and strategies. Results will be received in the same order as the queries.
+  /// * [searchMethodParams] Muli-search request body. Results are returned in the same order as the requests.
   /// * [requestOptions] additional request configuration.
   Future<SearchResponses> search({
     required SearchMethodParams searchMethodParams,

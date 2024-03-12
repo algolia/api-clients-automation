@@ -26,19 +26,23 @@ final class RankingInfo {
     this.promotedByReRanking,
   });
 
-  /// This field is reserved for advanced usage.
+  /// Whether a filter matched the query.
+  // minimum: 0
   @JsonKey(name: r'filters')
   final int filters;
 
-  /// Position of the most important matched attribute in the attributes to index list.
+  /// Position of the first matched word in the best matching attribute of the record.
+  // minimum: 0
   @JsonKey(name: r'firstMatchedWord')
   final int firstMatchedWord;
 
   /// Distance between the geo location in the search query and the best matching geo location in the record, divided by the geo precision (in meters).
+  // minimum: 0
   @JsonKey(name: r'geoDistance')
   final int geoDistance;
 
   /// Precision used when computing the geo distance, in meters.
+  // minimum: 1
   @JsonKey(name: r'geoPrecision')
   final int? geoPrecision;
 
@@ -49,30 +53,34 @@ final class RankingInfo {
   final Personalization? personalization;
 
   /// Number of exactly matched words.
+  // minimum: 0
   @JsonKey(name: r'nbExactWords')
   final int nbExactWords;
 
   /// Number of typos encountered when matching the record.
+  // minimum: 0
   @JsonKey(name: r'nbTypos')
   final int nbTypos;
 
-  /// Present and set to true if a Rule promoted the hit.
+  /// Whether the record was promoted by a rule.
   @JsonKey(name: r'promoted')
   final bool promoted;
 
-  /// When the query contains more than one word, the sum of the distances between matched words (in meters).
+  /// Number of words between multiple matches in the query plus 1. For single word queries, `proximityDistance` is 0.
+  // minimum: 0
   @JsonKey(name: r'proximityDistance')
   final int? proximityDistance;
 
-  /// Custom ranking for the object, expressed as a single integer value.
+  /// Overall ranking of the record, expressed as a single integer. This attribute is internal.
   @JsonKey(name: r'userScore')
   final int userScore;
 
-  /// Number of matched words, including prefixes and typos.
+  /// Number of matched words.
+  // minimum: 1
   @JsonKey(name: r'words')
   final int words;
 
-  /// Wether the record are promoted by the re-ranking strategy.
+  /// Whether the record is re-ranked.
   @JsonKey(name: r'promotedByReRanking')
   final bool? promotedByReRanking;
 

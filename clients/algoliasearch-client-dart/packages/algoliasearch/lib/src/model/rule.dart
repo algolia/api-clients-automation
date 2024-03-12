@@ -20,26 +20,26 @@ final class Rule {
     this.validity,
   });
 
-  /// Unique identifier for a rule object.
+  /// Unique identifier of a rule object.
   @JsonKey(name: r'objectID')
   final String objectID;
 
-  /// [Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions) required to activate a rule. You can use up to 25 conditions per rule.
+  /// Conditions that trigger a rule.  Some consequences require specific conditions or don't require any condition. For more information, see [Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions).
   @JsonKey(name: r'conditions')
   final List<Condition>? conditions;
 
   @JsonKey(name: r'consequence')
   final Consequence? consequence;
 
-  /// Description of the rule's purpose. This can be helpful for display in the Algolia dashboard.
+  /// Description of the rule's purpose to help you distinguish between different rules.
   @JsonKey(name: r'description')
   final String? description;
 
-  /// Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.
+  /// Whether the rule is active.
   @JsonKey(name: r'enabled')
   final bool? enabled;
 
-  /// If you specify a validity period, the rule _only_ applies only during that period. If specified, the array must not be empty.
+  /// Time periods when the rule is active.
   @JsonKey(name: r'validity')
   final List<TimeRange>? validity;
 
