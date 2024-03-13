@@ -2,12 +2,7 @@
 import * as core from '@actions/core';
 
 import { CLIENTS, createClientName, GENERATORS, LANGUAGES } from '../../common.js';
-import {
-  getClientsConfigField,
-  getLanguageFolder,
-  getTestExtension,
-  getTestOutputFolder,
-} from '../../config.js';
+import { getLanguageFolder, getTestExtension, getTestOutputFolder } from '../../config.js';
 
 import { COMMON_DEPENDENCIES, DEPENDENCIES } from './setRunVariables.js';
 import type { ClientMatrix, CreateMatrix, ToRunMatrix } from './types.js';
@@ -102,12 +97,11 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         testsToStore = `${testsToStore} ${testsRootFolder}/build.gradle`;
         break;
       case 'javascript':
-        const npmNamespace = getClientsConfigField('javascript', 'npmNamespace');
         const packageNames = matrix[language].toRun.map((client) => {
           const packageName = GENERATORS[`${language}-${client}`].additionalProperties.packageName;
 
           // `algoliasearch` is not preceded by `@algolia`
-          return client === 'algoliasearch' ? packageName : `${npmNamespace}/${packageName}`;
+          return client === 'algoliasearch' ? packageName : `@algolia/${packageName}`;
         });
 
         buildCommand = `cd ${matrix[language].path} && yarn build:many '{${packageNames.join(

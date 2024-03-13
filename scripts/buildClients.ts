@@ -2,7 +2,7 @@
 import * as fsp from 'fs/promises';
 
 import { run, toAbsolutePath } from './common.js';
-import { getClientsConfigField, getLanguageFolder } from './config.js';
+import { getLanguageFolder } from './config.js';
 import { createSpinner } from './spinners.js';
 import type { Generator, Language } from './types.js';
 
@@ -17,9 +17,8 @@ async function buildClient(language: Language, gens: Generator[]): Promise<void>
       await run('dotnet build --configuration Release', { cwd, language });
       break;
     case 'javascript':
-      const npmNamespace = getClientsConfigField('javascript', 'npmNamespace');
       const packageNames = gens.map(({ additionalProperties: { packageName } }) =>
-        packageName === 'algoliasearch' ? packageName : `${npmNamespace}/${packageName}`,
+        packageName === 'algoliasearch' ? packageName : `@algolia/${packageName}`,
       );
 
       await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install', { cwd });

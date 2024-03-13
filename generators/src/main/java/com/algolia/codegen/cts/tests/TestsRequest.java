@@ -4,6 +4,7 @@ import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
 import java.io.File;
 import java.util.*;
+import org.apache.commons.lang3.ArrayUtils;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.CodegenResponse;
@@ -19,10 +20,32 @@ public class TestsRequest extends TestsGenerator {
     String clientName = client;
     // This special case allow us to read the `search` CTS to generated the tests for the
     // `lite` client, which is only available in Javascript
-    if ((language.equals("javascript") || language.equals("dart")) && client.equals("algoliasearch")) {
+    if (client.equals("algoliasearch")) {
       clientName = "search";
     }
-    return super.loadCTS("requests", clientName, Request[].class);
+
+    Map<String, Request[]> baseCTS = super.loadCTS("requests", clientName, Request[].class);
+
+    // The algoliasearch client bundles many client and therefore should provide tests for all the
+    // subsequent specs
+    if (client.equals("algoliasearch")) {
+      Map<String, Request[]> recommendCTS = super.loadCTS("requests", "recommend", Request[].class);
+      for (Map.Entry<String, Request[]> entry : recommendCTS.entrySet()) {
+        String operation = entry.getKey();
+        // custom methods are common to every clients, we don't want duplicate tests
+        if (operation.startsWith("custom")) {
+          continue;
+        }
+
+        if (baseCTS.containsKey(operation)) {
+          baseCTS.put(operation, ArrayUtils.addAll(baseCTS.get(operation), entry.getValue()));
+        } else {
+          baseCTS.put(operation, entry.getValue());
+        }
+      }
+    }
+
+    return baseCTS;
   }
 
   @Override
@@ -70,7 +93,9 @@ public class TestsRequest extends TestsGenerator {
         throw new CTSException(
           "operationId '" +
           operationId +
-          "' does not exist in the tests suite, please create the file:" +
+          "' does not exist in the " +
+          client +
+          " tests suite, please create the file:" +
           " 'tests/CTS/requests/" +
           client +
           "/" +

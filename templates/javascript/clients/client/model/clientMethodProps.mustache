@@ -11,7 +11,7 @@ import { {{classname}} } from '{{filename}}';
 
 {{! Imports for the helpers method of the search client }}
 {{#isSearchClient}}
-import type { CreateIterablePromise } from '{{{npmNamespace}}}/client-common';
+import type { CreateIterablePromise } from '@algolia/client-common';
 import type { Action } from './action';
 import type { UpdatedAtResponse } from './updatedAtResponse';
 {{/isSearchClient}}

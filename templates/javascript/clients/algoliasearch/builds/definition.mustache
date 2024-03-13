@@ -1,28 +1,6 @@
-import type { PersonalizationClient } from '@algolia/client-personalization';
-import type { AnalyticsClient } from '@algolia/client-analytics';
-import type { AbtestingClient } from '@algolia/client-abtesting';
-
-import type { Region as AnalyticsRegion } from '{{{npmNamespace}}}/client-analytics/src/analyticsClient';
-import { createAnalyticsClient, REGIONS as analyticsRegions } from '{{{npmNamespace}}}/client-analytics/src/analyticsClient';
-
-import type { Region as AbtestingRegion } from '{{{npmNamespace}}}/client-abtesting/src/abtestingClient';
-import { createAbtestingClient, REGIONS as abtestingRegions } from '{{{npmNamespace}}}/client-abtesting/src/abtestingClient';
-
-import type { Region as PersonalizationRegion } from '{{{npmNamespace}}}/client-personalization/src/personalizationClient';
-import { createPersonalizationClient, REGIONS as personalizationRegions } from '{{{npmNamespace}}}/client-personalization/src/personalizationClient';
-import { createSearchClient, apiClientVersion as searchClientVersion } from '{{{npmNamespace}}}/client-search/src/searchClient';
-
-import type { serializeQueryParameters  } from '{{{npmNamespace}}}/client-common';
-import type {} from '{{{npmNamespace}}}/client-common';
-import type { InitClientOptions, InitClientRegion, GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions } from "./models"
-
-{{#nodeSearchHelpers}}
-import {createHmac} from 'crypto';
-{{/nodeSearchHelpers}}
+import { createHmac } from 'crypto';
 
 import {
-  ClientOptions,
-  CreateClientOptions,
   DEFAULT_CONNECT_TIMEOUT_BROWSER,
   DEFAULT_CONNECT_TIMEOUT_NODE,
   DEFAULT_READ_TIMEOUT_BROWSER,
@@ -33,11 +11,45 @@ import {
   createFallbackableCache,
   createMemoryCache,
   createNullCache,
-} from '{{{npmNamespace}}}/client-common';
+  serializeQueryParameters,
+} from '@algolia/client-common';
+import type { AbtestingClient } from '@algolia/client-abtesting';
+import type { Region as AbtestingRegion } from '@algolia/client-abtesting/src/abtestingClient';
+import {
+  createAbtestingClient,
+  REGIONS as abtestingRegions,
+} from '@algolia/client-abtesting/src/abtestingClient';
+import type { AnalyticsClient } from '@algolia/client-analytics';
+import {
+  createAnalyticsClient,
+  REGIONS as analyticsRegions,
+} from '@algolia/client-analytics/src/analyticsClient';
+import type { Region as AnalyticsRegion } from '@algolia/client-analytics/src/analyticsClient';
+import type {
+  ClientOptions,
+  CreateClientOptions,
+} from '@algolia/client-common';
+import type { PersonalizationClient } from '@algolia/client-personalization';
+import type { Region as PersonalizationRegion } from '@algolia/client-personalization/src/personalizationClient';
+import {
+  createPersonalizationClient,
+  REGIONS as personalizationRegions,
+} from '@algolia/client-personalization/src/personalizationClient';
+import {
+  createSearchClient,
+  apiClientVersion as searchClientVersion,
+} from '@algolia/client-search/src/searchClient';
+import type { RecommendClient } from '@algolia/recommend';
+import { createRecommendClient } from '@algolia/recommend/src/recommendClient';
+import { createXhrRequester } from '@algolia/requester-browser-xhr';
+import { createHttpRequester } from '@algolia/requester-node-http';
 
-import { createHttpRequester } from '{{{npmNamespace}}}/requester-node-http';
-
-import { createXhrRequester } from '{{{npmNamespace}}}/requester-browser-xhr';
+import type {
+  InitClientOptions,
+  InitClientRegion,
+  GenerateSecuredApiKeyOptions,
+  GetSecuredApiKeyRemainingValidityOptions,
+} from './models';
 
 export * from './models';
 

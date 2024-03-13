@@ -248,7 +248,6 @@ As well as lambdas to transform strings:
 If specific values are needed for a specific languages, or custom generated files, they can be added using a custom CTS manager:
 
 - [javascript](https://github.com/algolia/api-clients-automation/blob/main/generators/src/main/java/com/algolia/codegen/cts/manager/JavaScriptCTSManager.java)
-  - `npmNamespace`: the npm namespace
   - `utilsPackageVersion`: the utils version to import
   - `import`: the name of the package or library to import
 - [java](https://github.com/algolia/api-clients-automation/blob/main/generators/src/main/java/com/algolia/codegen/cts/manager/JavaCTSManager.java)

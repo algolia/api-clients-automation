@@ -124,7 +124,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/recommend@workspace:packages/recommend":
+"@algolia/recommend@npm:5.0.0-alpha.106, @algolia/recommend@workspace:packages/recommend":
   version: 0.0.0-use.local
   resolution: "@algolia/recommend@workspace:packages/recommend"
   dependencies:
@@ -3119,6 +3119,7 @@ __metadata:
     "@algolia/client-common": "npm:5.0.0-alpha.107"
     "@algolia/client-personalization": "npm:5.0.0-alpha.106"
     "@algolia/client-search": "npm:5.0.0-alpha.106"
+    "@algolia/recommend": "npm:5.0.0-alpha.106"
     "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.107"
     "@algolia/requester-node-http": "npm:5.0.0-alpha.107"
     "@babel/preset-env": "npm:7.24.0"

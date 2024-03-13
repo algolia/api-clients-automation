@@ -1,5 +1,7 @@
 // {{{generationBanner}}}
 
+import type { InitClientOptions, InitClientRegion {{#nodeSearchHelpers}}, GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions {{/nodeSearchHelpers}} } from "./models"
+
 {{> algoliasearch/builds/definition}}
   const commonOptions: CreateClientOptions = {
     apiKey,
@@ -27,9 +29,10 @@
     get _ua(): string {
       return this.transporter.algoliaAgent.value;
     },
+    initAbtesting,
     initAnalytics,
     initPersonalization,
-    initAbtesting,
+    initRecommend,
     {{#nodeSearchHelpers}}
     {{> client/api/nodeHelpers}}
     {{/nodeSearchHelpers}}

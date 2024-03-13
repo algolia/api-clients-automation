@@ -158,7 +158,6 @@
       }
     ],
     "folder": "clients/algoliasearch-client-javascript",
-    "npmNamespace": "@algolia",
     "gitRepoId": "algoliasearch-client-javascript",
     "packageVersion": "5.0.0-alpha.108",
     "modelFolder": "model",

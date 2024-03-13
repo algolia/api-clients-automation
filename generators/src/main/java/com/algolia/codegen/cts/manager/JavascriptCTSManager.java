@@ -21,10 +21,7 @@ public class JavascriptCTSManager implements CTSManager {
 
   @Override
   public void addDataToBundle(Map<String, Object> bundle) throws GeneratorException {
-    String npmNamespace = Helpers.getClientConfigField("javascript", "npmNamespace");
-
     bundle.put("utilsPackageVersion", Helpers.getPackageJsonVersion("client-common"));
-    bundle.put("npmNamespace", npmNamespace);
 
     List<Map<String, String>> clients = new ArrayList<>();
     String importName = "";
@@ -35,7 +32,7 @@ public class JavascriptCTSManager implements CTSManager {
       String output = c.get("output").asText();
       String packageName = output.substring(output.lastIndexOf("/") + 1);
       if (!packageName.equals("algoliasearch")) {
-        packageName = npmNamespace + "/" + packageName;
+        packageName = "@algolia/" + packageName;
       }
 
       clients.add(Map.of("packageName", packageName, "packagePath", "link:../../../" + output.replace("#{cwd}/", "")));

@@ -6,9 +6,9 @@ import * as dotenv from 'dotenv';
 dotenv.config({path:'../../.env'});
 {{/hasE2E}}
 import { {{client}} } from '{{{import}}}';
-import { echoRequester } from '{{{npmNamespace}}}/requester-node-http';
-import type { EchoResponse } from '{{{npmNamespace}}}/client-common';
-import type { RequestOptions } from '{{{npmNamespace}}}/client-common';
+import { echoRequester } from '@algolia/requester-node-http';
+import type { EchoResponse } from '@algolia/client-common';
+import type { RequestOptions } from '@algolia/client-common';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';

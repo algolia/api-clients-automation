@@ -6,7 +6,7 @@
   "author": "Algolia",
   "types": "./index.d.ts",
   {{^isAlgoliasearchClient}}
-  "name": "{{{npmNamespace}}}/{{packageName}}",
+  "name": "@algolia/{{packageName}}",
   "description": "JavaScript client for {{packageName}}",
   "jsdelivr": "./dist/{{packageName}}.umd.js",
   "unpkg": "./dist/{{packageName}}.umd.js",
@@ -40,9 +40,9 @@
     "clean": "rm -rf ./dist || true"
   },
   "dependencies": {
-    "{{{npmNamespace}}}/client-common": "{{utilsPackageVersion}}",
-    "{{{npmNamespace}}}/requester-browser-xhr": "{{utilsPackageVersion}}",
-    "{{{npmNamespace}}}/requester-node-http": "{{utilsPackageVersion}}"
+    "@algolia/client-common": "{{utilsPackageVersion}}",
+    "@algolia/requester-browser-xhr": "{{utilsPackageVersion}}",
+    "@algolia/requester-node-http": "{{utilsPackageVersion}}"
   },
   "devDependencies": {
     "@types/node": "20.11.25",
@@ -106,13 +106,15 @@
     "test": "jest"
   },
   "dependencies": {
-    "{{{npmNamespace}}}/client-analytics": "{{analyticsVersion}}",
-    "{{{npmNamespace}}}/client-abtesting": "{{abtestingVersion}}",
-    "{{{npmNamespace}}}/client-personalization": "{{personalizationVersion}}",
-    "{{{npmNamespace}}}/client-search": "{{searchVersion}}",
-    "{{{npmNamespace}}}/client-common": "{{utilsPackageVersion}}",
-    "{{{npmNamespace}}}/requester-browser-xhr": "{{utilsPackageVersion}}",
-    "{{{npmNamespace}}}/requester-node-http": "{{utilsPackageVersion}}"
+    "@algolia/client-analytics": "{{analyticsVersion}}",
+    "@algolia/client-abtesting": "{{abtestingVersion}}",
+    "@algolia/client-personalization": "{{personalizationVersion}}",
+    "@algolia/recommend": "{{recommendVersion}}",
+    "@algolia/client-search": "{{searchVersion}}",
+    "@algolia/client-common": "{{utilsPackageVersion}}",
+    "@algolia/recommend": "{{recommendVersion}}",
+    "@algolia/requester-browser-xhr": "{{utilsPackageVersion}}",
+    "@algolia/requester-node-http": "{{utilsPackageVersion}}"
   },
   "devDependencies": {
     "@babel/preset-env": "7.24.0",
