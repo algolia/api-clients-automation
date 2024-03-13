@@ -16,7 +16,10 @@ public enum class ActionType(public val value: kotlin.String) {
   Save("save"),
 
   @SerialName(value = "partial")
-  Partial("partial");
+  Partial("partial"),
+
+  @SerialName(value = "append")
+  Append("append");
 
   override fun toString(): kotlin.String = value
 }

@@ -48,6 +48,17 @@ public interface SourceInput {
           LOGGER.finest("Failed to deserialize oneOf SourceBigQuery (error: " + e.getMessage() + ") (type: SourceBigQuery)");
         }
       }
+      // deserialize SourceGA4BigQueryExport
+      if (tree.isObject() && tree.has("projectID") && tree.has("datasetID") && tree.has("tablePrefix")) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(SourceGA4BigQueryExport.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf SourceGA4BigQueryExport (error: " + e.getMessage() + ") (type: SourceGA4BigQueryExport)"
+          );
+        }
+      }
       // deserialize SourceJSON
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {

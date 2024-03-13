@@ -18,7 +18,9 @@ public enum SourceType {
 
   BIGQUERY("bigquery"),
 
-  DOCKER("docker");
+  DOCKER("docker"),
+
+  GA_4BIGQUERY_EXPORT("ga4BigqueryExport");
 
   private final String value;
 

@@ -13,7 +13,7 @@ sealed trait TriggerType
 
 /** The type of the task reflect how it can be used: - onDemand: a task that runs manually - schedule: a task that runs
   * regularly, following a given cron expression - subscription: a task that runs after a subscription event is received
-  * from an integration (e.g. Webhook).
+  * from an integration (e.g. Webhook). - streaming: a task that runs continuously.
   */
 object TriggerType {
   case object OnDemand extends TriggerType {
@@ -25,7 +25,10 @@ object TriggerType {
   case object Subscription extends TriggerType {
     override def toString = "subscription"
   }
-  val values: Seq[TriggerType] = Seq(OnDemand, Schedule, Subscription)
+  case object Streaming extends TriggerType {
+    override def toString = "streaming"
+  }
+  val values: Seq[TriggerType] = Seq(OnDemand, Schedule, Subscription, Streaming)
 
   def withName(name: String): TriggerType = TriggerType.values
     .find(_.toString == name)

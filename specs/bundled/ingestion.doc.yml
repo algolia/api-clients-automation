@@ -179,7 +179,7 @@ components:
         description: An array of actions to perform on the Algolia index.
         items:
           $ref: '#/components/schemas/ActionType'
-        example: save,replace
+        example: save,replace,partial,append
     enabled:
       name: enabled
       in: query
@@ -190,7 +190,7 @@ components:
     sourceID:
       name: sourceID
       in: query
-      description: The sourceIDs of the tasks to retrive.
+      description: The sourceIDs of the tasks to retrieve.
       required: false
       style: form
       explode: false
@@ -201,7 +201,7 @@ components:
     destinationID:
       name: destinationID
       in: query
-      description: The destinationIDs of the tasks to retrive.
+      description: The destinationIDs of the tasks to retrieve.
       required: false
       style: form
       explode: false
@@ -220,7 +220,7 @@ components:
         type: array
         items:
           $ref: '#/components/schemas/TriggerType'
-        example: onDemand,schedule
+        example: onDemand,schedule,subscription,streaming
     taskParameters_sort:
       name: sort
       in: query
@@ -792,6 +792,7 @@ components:
         - csv
         - bigquery
         - docker
+        - ga4BigqueryExport
     sourceSortKeys:
       type: string
       description: Used to sort the Source list endpoint.
@@ -1012,6 +1013,29 @@ components:
         - datasetID
       x-discriminator-fields:
         - projectID
+    SourceGA4BigQueryExport:
+      type: object
+      additionalProperties: false
+      properties:
+        projectID:
+          type: string
+          description: GCP project ID that the BigQuery Export writes to.
+        datasetID:
+          type: string
+          description: BigQuery dataset ID that the BigQuery Export writes to.
+        tablePrefix:
+          type: string
+          description: >-
+            Prefix of the tables that the BigQuery Export writes to (i.e.
+            events_intraday_ for streaming, events_ for daily).
+      required:
+        - projectID
+        - datasetID
+        - tablePrefix
+      x-discriminator-fields:
+        - projectID
+        - datasetID
+        - tablePrefix
     DockerImageType:
       type: string
       enum:
@@ -1056,6 +1080,7 @@ components:
         - $ref: '#/components/schemas/SourceJSON'
         - $ref: '#/components/schemas/SourceCSV'
         - $ref: '#/components/schemas/SourceBigQuery'
+        - $ref: '#/components/schemas/SourceGA4BigQueryExport'
         - $ref: '#/components/schemas/SourceDocker'
     Source:
       type: object
@@ -1171,6 +1196,7 @@ components:
         - $ref: '#/components/schemas/SourceJSON'
         - $ref: '#/components/schemas/SourceCSV'
         - $ref: '#/components/schemas/SourceBigQuery'
+        - $ref: '#/components/schemas/SourceGA4BigQueryExport'
         - $ref: '#/components/schemas/SourceUpdateDocker'
     SourceUpdate:
       type: object
@@ -1210,6 +1236,7 @@ components:
         - replace
         - save
         - partial
+        - append
     TriggerType:
       type: string
       description: |
@@ -1217,10 +1244,12 @@ components:
           - onDemand: a task that runs manually
           - schedule: a task that runs regularly, following a given cron expression
           - subscription: a task that runs after a subscription event is received from an integration (e.g. Webhook).
+          - streaming: a task that runs continuously.
       enum:
         - onDemand
         - schedule
         - subscription
+        - streaming
     taskSortKeys:
       type: string
       description: Used to sort the Task list endpoint.
@@ -1296,11 +1325,26 @@ components:
           $ref: '#/components/schemas/SubscriptionTriggerType'
       required:
         - type
+    StreamingTriggerType:
+      type: string
+      description: A task that runs continuously.
+      enum:
+        - streaming
+    StreamingTrigger:
+      type: object
+      additionalProperties: false
+      description: The trigger input for a task of type 'streaming'.
+      properties:
+        type:
+          $ref: '#/components/schemas/StreamingTriggerType'
+      required:
+        - type
     Trigger:
       oneOf:
         - $ref: '#/components/schemas/OnDemandTrigger'
         - $ref: '#/components/schemas/ScheduleTrigger'
         - $ref: '#/components/schemas/SubscriptionTrigger'
+        - $ref: '#/components/schemas/StreamingTrigger'
     MappingFieldDirective:
       type: object
       additionalProperties: false
@@ -1396,10 +1440,23 @@ components:
           $ref: '#/components/schemas/MappingInput'
       required:
         - timeframe
+    StreamingUtilsInput:
+      type: object
+      additionalProperties: false
+      description: >-
+        The input for a `streaming` task whose source is of type
+        `ga4BigqueryExport` and for which extracted data is continuously
+        streamed.
+      properties:
+        mapping:
+          $ref: '#/components/schemas/MappingInput'
+      required:
+        - mapping
     TaskInput:
       oneOf:
         - $ref: '#/components/schemas/OnDemandDateUtilsInput'
         - $ref: '#/components/schemas/ScheduleDateUtilsInput'
+        - $ref: '#/components/schemas/StreamingUtilsInput'
     failureThreshold:
       type: integer
       minimum: 0
@@ -1467,6 +1524,7 @@ components:
         - $ref: '#/components/schemas/OnDemandTriggerInput'
         - $ref: '#/components/schemas/ScheduleTriggerInput'
         - $ref: '#/components/schemas/SubscriptionTrigger'
+        - $ref: '#/components/schemas/StreamingTrigger'
     TaskCreate:
       type: object
       additionalProperties: false

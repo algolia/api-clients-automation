@@ -32,7 +32,10 @@ object SourceType {
   case object Docker extends SourceType {
     override def toString = "docker"
   }
-  val values: Seq[SourceType] = Seq(Bigcommerce, Commercetools, Json, Csv, Bigquery, Docker)
+  case object Ga4BigqueryExport extends SourceType {
+    override def toString = "ga4BigqueryExport"
+  }
+  val values: Seq[SourceType] = Seq(Bigcommerce, Commercetools, Json, Csv, Bigquery, Docker, Ga4BigqueryExport)
 
   def withName(name: String): SourceType = SourceType.values
     .find(_.toString == name)
