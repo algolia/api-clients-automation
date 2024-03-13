@@ -126,26 +126,24 @@ post:
                     - price: 19.99
                       quantity: 1
                   currency: EUR
-          # Having this throws warning for the OpenAPI validation.
-          # I think it's because the schema can't be uniquely resolved.
-          # Purchased:
-          #   summary: Purchase event.
-          #   value:
-          #     events:
-          #       - eventName: Products Purchased
-          #         eventType: conversion
-          #         eventSubtype: purchase
-          #         index: test-index
-          #         userToken: anonymous-user-1
-          #         authenticatedUserToken: user-1
-          #         objectIDs: ['product-1', 'product-2']
-          #         objectData:
-          #           - price: 49.99
-          #             quantity: 1
-          #           - price: 9.99
-          #             quantity: 2
-          #         currency: USD
-          #         value: 69.97
+          Purchased:
+            summary: Purchase event.
+            value:
+              events:
+                - eventName: Products Purchased
+                  eventType: conversion
+                  eventSubtype: purchase
+                  index: test-index
+                  userToken: anonymous-user-1
+                  authenticatedUserToken: user-1
+                  objectIDs: ['product-1', 'product-2']
+                  objectData:
+                    - price: 49.99
+                      quantity: 1
+                    - price: 9.99
+                      quantity: 2
+                  currency: USD
+                  value: 69.97
           ClickFilter:
             summary: Click event with filters.
             value:
