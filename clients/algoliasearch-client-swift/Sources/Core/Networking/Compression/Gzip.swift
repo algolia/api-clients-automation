@@ -5,6 +5,8 @@
 //  Created by Algolia on 16/02/2024.
 //
 
+// This has been partly inspired by jp1024/GzipSwift, which is not compatible with the latest XCode version anymore.
+
 import Foundation
 import zlib
 
@@ -45,51 +47,23 @@ public extension Data {
 
     func compress() throws -> Data? {
         let chunkSize = 4096
-        let strategy: Int32 = 0
-        let compressionLevel: Int32 = -1
-        let memoryLevel: Int32 = 8
-
-        // do the dual-buffer thing
-        var inBuffer = [UInt8](repeating: 0, count: chunkSize)
-        let inBufferPointer = UnsafeMutableBufferPointer(start: &inBuffer, count: chunkSize)
-        var outBuffer = [UInt8](repeating: 0, count: chunkSize)
-        let outBufferPointer = UnsafeMutableBufferPointer(start: &outBuffer, count: chunkSize)
-
-        // pre-fill the inBuffer
-        let countInBuffer: Int = Swift.min(chunkSize, self.count)
-        let copiedByteCount: Int = self.copyBytes(to: inBufferPointer, from: 0 ..< countInBuffer)
+        let compressionLevel: Int32 = Z_DEFAULT_COMPRESSION
 
         // init the stream
-        var stream = z_stream(
-            next_in: inBufferPointer.baseAddress,
-            avail_in: UInt32(copiedByteCount),
-            total_in: 0,
-            next_out: nil,
-            avail_out: 0,
-            total_out: 0,
-            msg: nil,
-            state: nil,
-            zalloc: nil,
-            zfree: nil,
-            opaque: nil,
-            data_type: 0,
-            adler: 0,
-            reserved: 0
-        )
-        let windowBits: Int32 = -MAX_WBITS
-        let result = deflateInit2_(
+        var stream = z_stream()
+        var result = deflateInit2_(
             &stream,
             compressionLevel,
             Z_DEFLATED,
-            windowBits,
-            memoryLevel,
-            strategy,
+            MAX_WBITS + 16,
+            MAX_MEM_LEVEL,
+            Z_DEFAULT_STRATEGY,
             ZLIB_VERSION,
             Int32(MemoryLayout<z_stream>.size)
         )
         // check for init errors
-        if result != Z_OK {
-            throw AlgoliaError.runtimeError("Unable to compress data: \(result)")
+        guard result == Z_OK else {
+            throw AlgoliaError.runtimeError("Unable to init compression stream: \(result)")
         }
         // defer clean up
         defer {
@@ -97,33 +71,47 @@ public extension Data {
         }
 
         // loop over buffers
-        var compressedData = Data()
-        var streamStatus: Int32 = Z_OK
-        while streamStatus == Z_OK {
-            // always provide at least a whole buffer of data
-            let readBytes = Int(stream.total_in)
-            let countInBuffer: Int = Swift.min(chunkSize, self.count - readBytes)
-            let copiedByteCount: Int = self.copyBytes(
-                to: inBufferPointer,
-                from: readBytes ..< (readBytes + countInBuffer)
-            )
-            stream.next_in = inBufferPointer.baseAddress
-            stream.avail_in = UInt32(copiedByteCount)
-            stream.next_out = outBufferPointer.baseAddress
-            stream.avail_out = UInt32(chunkSize)
-            // actual deflation
-            let previousTotalOut = Int(stream.total_out)
-            streamStatus = deflate(&stream, copiedByteCount > 0 ? Z_NO_FLUSH : Z_FINISH)
-            // check for errors
-            if streamStatus != Z_OK, streamStatus != Z_STREAM_END, streamStatus != Z_BUF_ERROR {
-                throw AlgoliaError.runtimeError("Failure while compressing data stream: \(streamStatus)")
+        var compressedData = Data(capacity: chunkSize)
+        repeat {
+            if Int(stream.total_out) >= compressedData.count {
+                compressedData.count += chunkSize
             }
-            // always copy out all written bytes
-            let newOutByteCount = Int(stream.total_out) - previousTotalOut
-            compressedData.append(&outBuffer, count: newOutByteCount)
+
+            let inputCount = self.count
+            let outputCount = compressedData.count
+
+            self.withUnsafeBytes { (inputPointer: UnsafeRawBufferPointer) in
+                stream
+                    .next_in = UnsafeMutablePointer<Bytef>(
+                        mutating: inputPointer.bindMemory(to: Bytef.self)
+                            .baseAddress!
+                    ).advanced(by: Int(stream.total_in))
+                stream.avail_in = uInt(inputCount) - uInt(stream.total_in)
+
+                compressedData.withUnsafeMutableBytes { (outputPointer: UnsafeMutableRawBufferPointer) in
+                    stream.next_out = outputPointer.bindMemory(to: Bytef.self).baseAddress!
+                        .advanced(by: Int(stream.total_out))
+                    stream.avail_out = uInt(outputCount) - uInt(stream.total_out)
+
+                    result = deflate(&stream, Z_FINISH)
+
+                    stream.next_out = nil
+                }
+
+                stream.next_in = nil
+            }
+
+        } while stream.avail_out == 0 && result != Z_STREAM_END
+
+        guard deflateEnd(&stream) == Z_OK, result == Z_STREAM_END else {
+            throw AlgoliaError
+                .runtimeError(
+                    Optional(UnsafePointer<CChar>(stream.msg))?
+                        .flatMap(String.init(validatingUTF8:)) ?? "Unknown gzip error"
+                )
         }
-        inBuffer = []
-        outBuffer = []
+
+        compressedData.count = Int(stream.total_out)
 
         return compressedData
     }
