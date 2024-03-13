@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-/** The total price of a product, including any discounts, in units of `currency`. */
+/** Total price of a product, including any discounts, in units of `currency`. */
 @JsonDeserialize(using = Price.Deserializer.class)
 public interface Price {
   // Price as Double wrapper.

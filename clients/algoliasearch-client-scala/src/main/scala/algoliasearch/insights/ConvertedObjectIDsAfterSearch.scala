@@ -1,6 +1,24 @@
-/** Insights API The Algolia Insights API lets you collect events related to your search and discovery experience.
-  * Events represent actions that users take on your app or website. They unlock powerful features, such as
-  * recommendations, personalization, smarter search results, and analytics that help you optimize your user experience.
+/** Insights API The Insights API lets you collect events related to your search and discovery experience. Events
+  * represent user interactions with your app or website. They unlock powerful features, such as recommendations,
+  * personalization, smarter search results, and analytics that help you optimize your user experience. # Client
+  * libraries Use Algolia's API clients, libraries, and integrations to collect events from your UI and send them to the
+  * Insights API. See: [Algolia's
+  * ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) # Base URLs The
+  * base URLs for making requests to the Insights API are: - `https://insights.us.algolia.io`
+  * (`https://insights.algolia.io` is an alias) - `https://insights.de.algolia.io` **All requests must use HTTPS.** #
+  * Authentication To authenticate your API requests, add these headers: <dl>
+  * <dt><code>x-algolia-application-id</code></dt> <dd>Your Algolia application ID.</dd>
+  * <dt><code>x-algolia-api-key</code></dt> <dd> An API key with the necessary permissions to make the request. The
+  * required access control list (ACL) to make a request is listed in each endpoint's reference. </dd> </dl> You can
+  * find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account). # Request
+  * format Request bodies must be JSON objects. # Response status and errors Response bodies are JSON objects. Deleting
+  * a user token returns an empty response body with rate-limiting information as headers. Successful responses return a
+  * `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status. Error responses
+  * have a `message` property with more information. The Insights API doesn't validate if the event parameters such as
+  * `indexName`, `objectIDs`, or `userToken`, correspond to anything in the Search API. It justs checks if they're
+  * formatted correctly. Check the [Events](https://dashboard.algolia.com/events/health) health section, whether your
+  * events can be used for Algolia features such as Analytics, or Dynamic Re-Ranking. # Version The current version of
+  * the Insights API is version 1, as indicated by the `/1/` in each endpoint's URL.
   *
   * The version of the OpenAPI document: 1.0.0
   *
@@ -16,26 +34,28 @@ import algoliasearch.insights.ConversionEvent._
   * you're building your category pages with Algolia, you'll also use this event.
   *
   * @param eventName
-  *   The name of the event, up to 64 ASCII characters. Consider naming events consistently—for example, by adopting
-  *   Segment's
+  *   Event name, up to 64 ASCII characters. Consider naming events consistently—for example, by adopting Segment's
   *   [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
   *   framework.
   * @param index
-  *   The name of an Algolia index.
+  *   Index name to which the event's items belong.
   * @param objectIDs
-  *   The object IDs of the records that are part of the event.
+  *   Object IDs of the records that are part of the event.
   * @param queryID
   *   Unique identifier for a search query. The query ID is required for events related to search or browse requests. If
   *   you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response.
   * @param userToken
-  *   An anonymous or pseudonymous user identifier. > **Note**: Never include personally identifiable information in
-  *   user tokens.
+  *   Anonymous or pseudonymous user identifier. Don't use personally identifiable information in user tokens. For more
+  *   information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
   * @param authenticatedUserToken
-  *   An identifier for authenticated users. > **Note**: Never include personally identifiable information in user
-  *   tokens.
+  *   Identifier for authenticated users. When the user signs in, you can get an identifier from your system and send it
+  *   as `authenticatedUserToken`. This lets you keep using the `userToken` from before the user signed in, while
+  *   providing a reliable way to identify users across sessions. Don't use personally identifiable information in user
+  *   tokens. For more information, see [User
+  *   token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
   * @param timestamp
-  *   The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default,
-  *   the Insights API uses the time it receives an event as its timestamp.
+  *   Timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the
+  *   Insights API uses the time it receives an event as its timestamp.
   */
 case class ConvertedObjectIDsAfterSearch(
     eventName: String,

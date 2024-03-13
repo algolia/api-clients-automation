@@ -165,12 +165,12 @@ class InsightsClient(
     execute[T](request, requestOptions)
   }
 
-  /** Delete all events related to a certain user token from events metrics and analytics. To delete a personalization
-    * user profile, see [Delete a user
-    * profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
+  /** Deletes all events related to the specified user token from events metrics and analytics. To delete a
+    * personalization user profile, see [Delete a user
+    * profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
     *
     * @param userToken
-    *   The user token for which to delete all associated events.
+    *   User token for which to delete all associated events.
     */
   def deleteUserToken(userToken: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -185,8 +185,8 @@ class InsightsClient(
     execute[Unit](request, requestOptions)
   }
 
-  /** Send a list of events to the Insights API. You can include up to 1,000 events in a single request, but the request
-    * body must be smaller than 2&nbsp;MB.
+  /** Sends a list of events to the Insights API. You can include up to 1,000 events in a single request, but the
+    * request body must be smaller than 2&nbsp;MB.
     */
   def pushEvents(insightsEvents: InsightsEvents, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext

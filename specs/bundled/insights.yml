@@ -1,13 +1,116 @@
 openapi: 3.0.2
 info:
   title: Insights API
-  description: >-
-    The Algolia Insights API lets you collect events related to your search and
-    discovery experience. Events represent actions that users take on your app
-    or website. They unlock powerful features, such as recommendations,
-    personalization, smarter search results, and analytics that help you
-    optimize your user experience.
+  description: >
+    The Insights API lets you collect events related to your search and
+    discovery experience.
+
+    Events represent user interactions with your app or website.
+
+    They unlock powerful features, such as recommendations, personalization,
+    smarter search results,
+
+    and analytics that help you optimize your user experience.
+
+
+    # Client libraries
+
+
+    Use Algolia's API clients, libraries, and integrations to collect events
+    from your UI and send them to the Insights API.
+
+    See: [Algolia's
+    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/)
+
+
+    # Base URLs
+
+
+    The base URLs for making requests to the Insights API are:
+
+
+    - `https://insights.us.algolia.io` (`https://insights.algolia.io` is an
+    alias)
+
+    - `https://insights.de.algolia.io`
+
+
+    **All requests must use HTTPS.**
+
+
+    # Authentication
+
+
+    To authenticate your API requests, add these headers:
+
+
+    <dl>
+
+    <dt><code>x-algolia-application-id</code></dt>
+
+    <dd>Your Algolia application ID.</dd>
+
+    <dt><code>x-algolia-api-key</code></dt>
+
+    <dd>
+
+    An API key with the necessary permissions to make the request.
+
+    The required access control list (ACL) to make a request is listed in each
+    endpoint's reference.
+
+    </dd>
+
+    </dl>
+
+
+    You can find your application ID and API key in the [Algolia
+    dashboard](https://dashboard.algolia.com/account).
+
+
+    # Request format
+
+
+    Request bodies must be JSON objects.
+
+
+    # Response status and errors
+
+
+    Response bodies are JSON objects.
+
+    Deleting a user token returns an empty response body with rate-limiting
+    information as headers.
+
+
+    Successful responses return a `2xx` status. Client errors return a `4xx`
+    status. Server errors are indicated by a `5xx` status.
+
+    Error responses have a `message` property with more information.
+
+
+    The Insights API doesn't validate if the event parameters such as
+    `indexName`, `objectIDs`, or `userToken`,
+
+    correspond to anything in the Search API. It justs checks if they're
+    formatted correctly.
+
+    Check the [Events](https://dashboard.algolia.com/events/health) health
+    section,
+
+    whether your events can be used for Algolia features such as Analytics, or
+    Dynamic Re-Ranking.
+
+
+    # Version
+
+
+    The current version of the Insights API is version 1, as indicated by the
+    `/1/` in each endpoint's URL.
   version: 1.0.0
+externalDocs:
+  url: https://www.algolia.com/doc/guides/sending-events/getting-started/
+  description: Events
 components:
   securitySchemes:
     appId:
@@ -49,7 +152,7 @@ components:
       maxLength: 64
       pattern: '[\x20-\x7E]{1,64}'
       description: >
-        The name of the event, up to 64 ASCII characters.
+        Event name, up to 64 ASCII characters.
 
 
         Consider naming events consistently—for example, by adopting Segment's
@@ -64,11 +167,11 @@ components:
         - click
     index:
       type: string
-      description: The name of an Algolia index.
+      description: Index name to which the event's items belong.
       example: YourIndexName
     objectIDs:
       type: array
-      description: The object IDs of the records that are part of the event.
+      description: Object IDs of the records that are part of the event.
       items:
         type: string
       minItems: 1
@@ -85,9 +188,8 @@ components:
       minItems: 1
       maxItems: 20
       description: |
-        The position of the clicked item the search results.
+        Position of the clicked item the search results.
 
-        The first search result has a position of 1 (not 0).
         You must provide 1 `position` for each `objectID`.
       example:
         - 1
@@ -114,11 +216,13 @@ components:
       maxLength: 129
       pattern: '[a-zA-Z0-9_=/+-]{1,129}'
       description: >
-        An anonymous or pseudonymous user identifier.
+        Anonymous or pseudonymous user identifier.
 
 
-        > **Note**: Never include personally identifiable information in user
-        tokens.
+        Don't use personally identifiable information in user tokens.
+
+        For more information, see [User
+        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
       example: test-user-1
     authenticatedUserToken:
       type: string
@@ -126,17 +230,25 @@ components:
       maxLength: 129
       pattern: '[a-zA-Z0-9_=/+-]{1,129}'
       description: >
-        An identifier for authenticated users.
+        Identifier for authenticated users.
 
 
-        > **Note**: Never include personally identifiable information in user
-        tokens.
+        When the user signs in, you can get an identifier from your system and
+        send it as `authenticatedUserToken`.
+
+        This lets you keep using the `userToken` from before the user signed in,
+        while providing a reliable way to identify users across sessions.
+
+        Don't use personally identifiable information in user tokens.
+
+        For more information, see [User
+        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
       example: c6a52c02-d0c7-4b53-8ce3-2b8fd202f3f9
     timestamp:
       type: integer
       format: int64
       description: >
-        The timestamp of the event in milliseconds in [Unix epoch
+        Timestamp of the event in milliseconds in [Unix epoch
         time](https://wikipedia.org/wiki/Unix_time).
 
         By default, the Insights API uses the time it receives an event as its
@@ -193,14 +305,13 @@ components:
         - addToCart
     currency:
       type: string
-      format: ISO 4217
       description: >-
         Three-letter [currency
         code](https://www.iso.org/iso-4217-currency-codes.html).
       example: EUR
     price:
-      description: >
-        The total price of a product, including any discounts, in units of
+      description: >-
+        Total price of a product, including any discounts, in units of
         `currency`.
       oneOf:
         - type: number
@@ -213,14 +324,12 @@ components:
       format: int32
       example: 2
       description: >
-        The quantity of a product that has been purchased or added to the cart.
+        Quantity of a product that has been purchased or added to the cart.
 
-        The total value of a purchase is the sum of `quantity` multiplied with
-        the `price` for each purchased item.
+        The total purchase value is the sum of `quantity` multiplied with the
+        `price` for each purchased item.
     discount:
-      description: >
-        The absolute value of the discount for this product, in units of
-        `currency`.
+      description: Absolute value of the discount for this product, in units of `currency`.
       oneOf:
         - type: number
           format: double
@@ -600,9 +709,10 @@ components:
     filters:
       type: array
       description: |
-        Facet filters.
+        Applied facet filters.
 
-        Each facet filter string must be URL-encoded, such as, `discount:10%25`.
+        Facet filters are `facet:value` pairs.
+        Facet values must be URL-encoded, such as, `discount:10%25`.
       items:
         type: string
       minItems: 1
@@ -927,7 +1037,7 @@ paths:
       operationId: pushEvents
       summary: Send events.
       description: |
-        Send a list of events to the Insights API.
+        Sends a list of events to the Insights API.
 
         You can include up to 1,000 events in a single request,
         but the request body must be smaller than 2&nbsp;MB.
@@ -945,14 +1055,7 @@ paths:
                 events:
                   type: array
                   description: >
-                    List of click and conversion events.
-
-
-                    An event is an object representing a user interaction.
-
-                    Events have attributes that describe the interaction,
-
-                    such as an event name, a type, or a user token.
+                    Click and conversion events.
 
 
                     **All** events must be valid, otherwise the API returns an
@@ -1376,40 +1479,34 @@ paths:
       operationId: deleteUserToken
       summary: Delete user token.
       description: >
-        Delete all events related to a certain user token from events metrics
-        and analytics.
+        Deletes all events related to the specified user token from events
+        metrics and analytics.
 
         To delete a personalization user profile, see [Delete a user
-        profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
+        profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
       parameters:
         - name: userToken
           in: path
-          description: The user token for which to delete all associated events.
+          description: User token for which to delete all associated events.
           required: true
           schema:
-            type: string
-            minLength: 1
-            maxLength: 129
-            pattern: '[a-zA-Z0-9_=/+]{1,129}'
-            example: test-user-1
+            $ref: '#/components/schemas/userToken'
       responses:
         '204':
           description: No content.
           headers:
             x-ratelimit-limit:
-              description: >-
-                The current rate limit. The maximum number of requests you can
-                make to this endpoint.
+              description: Maximum number of requests you can make to this endpoint.
               schema:
                 type: integer
             x-ratelimit-remaining:
               description: >-
-                The number of remaining API requests you can make to this
-                endpoint before reaching the rate limit.
+                Number of remaining API requests you can make to this endpoint
+                before reaching the rate limit.
               schema:
                 type: integer
             x-ratelimit-reset:
-              description: The timestamp in Unix epoch time when the rate limit will reset.
+              description: Timestamp in Unix epoch time when the rate limit will reset.
               schema:
                 type: integer
         '422':
