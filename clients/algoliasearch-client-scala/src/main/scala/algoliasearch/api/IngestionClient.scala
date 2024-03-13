@@ -858,9 +858,9 @@ class IngestionClient(
     * @param enabled
     *   Whether the task is enabled or not.
     * @param sourceID
-    *   The sourceIDs of the tasks to retrive.
+    *   The sourceIDs of the tasks to retrieve.
     * @param destinationID
-    *   The destinationIDs of the tasks to retrive.
+    *   The destinationIDs of the tasks to retrieve.
     * @param triggerType
     *   The trigger type of the task.
     * @param sort

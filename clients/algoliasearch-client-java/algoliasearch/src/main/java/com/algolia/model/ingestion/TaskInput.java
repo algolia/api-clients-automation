@@ -43,6 +43,15 @@ public interface TaskInput {
           );
         }
       }
+      // deserialize StreamingUtilsInput
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(StreamingUtilsInput.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf StreamingUtilsInput (error: " + e.getMessage() + ") (type: StreamingUtilsInput)");
+        }
+      }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
     }
 

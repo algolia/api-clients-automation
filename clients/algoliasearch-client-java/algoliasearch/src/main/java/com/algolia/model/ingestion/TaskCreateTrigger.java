@@ -48,6 +48,15 @@ public interface TaskCreateTrigger {
           LOGGER.finest("Failed to deserialize oneOf SubscriptionTrigger (error: " + e.getMessage() + ") (type: SubscriptionTrigger)");
         }
       }
+      // deserialize StreamingTrigger
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(StreamingTrigger.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf StreamingTrigger (error: " + e.getMessage() + ") (type: StreamingTrigger)");
+        }
+      }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
     }
 

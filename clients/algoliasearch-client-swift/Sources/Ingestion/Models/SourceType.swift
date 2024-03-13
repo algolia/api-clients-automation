@@ -12,4 +12,5 @@ public enum SourceType: String, Codable, CaseIterable {
     case csv
     case bigquery
     case docker
+    case ga4BigqueryExport
 }
