@@ -1,3 +1,9 @@
+## [1.6.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.5.1...1.6.0)
+
+- [0f8d4432b](https://github.com/algolia/api-clients-automation/commit/0f8d4432b) feat(specs): insights api reference ([#2859](https://github.com/algolia/api-clients-automation/pull/2859)) by [@kai687](https://github.com/kai687/)
+- [c324c06bd](https://github.com/algolia/api-clients-automation/commit/c324c06bd) feat(specs): add ga4BigqueryExport, streaming and append options to task inputs ([#2858](https://github.com/algolia/api-clients-automation/pull/2858)) by [@JasonBerry](https://github.com/JasonBerry/)
+- [156fd9e69](https://github.com/algolia/api-clients-automation/commit/156fd9e69) feat(specs): improve API reference documentation ([#2831](https://github.com/algolia/api-clients-automation/pull/2831)) by [@kai687](https://github.com/kai687/)
+
 ## [1.5.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.5.0...1.5.1)
 
 - [a138c2fef](https://github.com/algolia/api-clients-automation/commit/a138c2fef) fix(specs): add `queryID` to search response ([#2801](https://github.com/algolia/api-clients-automation/pull/2801)) by [@aallam](https://github.com/aallam/)
