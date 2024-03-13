@@ -7,7 +7,7 @@
   */
 package algoliasearch.ingestion
 
-import algoliasearch.ingestion.SubscriptionTriggerType._
+import algoliasearch.ingestion.StreamingTriggerType._
 
 import org.json4s._
 
@@ -27,6 +27,7 @@ object TriggerSerializer extends Serializer[Trigger] {
         case value: JObject => Extraction.extract[OnDemandTrigger](value)
         case value: JObject => Extraction.extract[ScheduleTrigger](value)
         case value: JObject => Extraction.extract[SubscriptionTrigger](value)
+        case value: JObject => Extraction.extract[StreamingTrigger](value)
         case _              => throw new MappingException("Can't convert " + json + " to Trigger")
       }
   }
@@ -36,6 +37,7 @@ object TriggerSerializer extends Serializer[Trigger] {
       case value: OnDemandTrigger     => Extraction.decompose(value)(format - this)
       case value: ScheduleTrigger     => Extraction.decompose(value)(format - this)
       case value: SubscriptionTrigger => Extraction.decompose(value)(format - this)
+      case value: StreamingTrigger    => Extraction.decompose(value)(format - this)
     }
   }
 }

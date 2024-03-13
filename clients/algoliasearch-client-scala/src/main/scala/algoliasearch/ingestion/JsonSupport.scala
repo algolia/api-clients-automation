@@ -37,6 +37,7 @@ object JsonSupport {
     new ScheduleTriggerTypeSerializer() :+
     new SourceSortKeysSerializer() :+
     new SourceTypeSerializer() :+
+    new StreamingTriggerTypeSerializer() :+
     new SubscriptionTriggerTypeSerializer() :+
     new TaskSortKeysSerializer() :+
     new TriggerTypeSerializer()

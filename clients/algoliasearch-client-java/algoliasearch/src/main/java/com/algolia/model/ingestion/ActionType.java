@@ -12,7 +12,9 @@ public enum ActionType {
 
   SAVE("save"),
 
-  PARTIAL("partial");
+  PARTIAL("partial"),
+
+  APPEND("append");
 
   private final String value;
 

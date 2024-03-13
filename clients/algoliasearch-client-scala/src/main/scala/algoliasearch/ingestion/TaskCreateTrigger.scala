@@ -7,7 +7,7 @@
   */
 package algoliasearch.ingestion
 
-import algoliasearch.ingestion.SubscriptionTriggerType._
+import algoliasearch.ingestion.StreamingTriggerType._
 
 import org.json4s._
 
@@ -27,6 +27,7 @@ object TaskCreateTriggerSerializer extends Serializer[TaskCreateTrigger] {
         case value: JObject => Extraction.extract[OnDemandTriggerInput](value)
         case value: JObject => Extraction.extract[ScheduleTriggerInput](value)
         case value: JObject => Extraction.extract[SubscriptionTrigger](value)
+        case value: JObject => Extraction.extract[StreamingTrigger](value)
         case _              => throw new MappingException("Can't convert " + json + " to TaskCreateTrigger")
       }
   }
@@ -36,6 +37,7 @@ object TaskCreateTriggerSerializer extends Serializer[TaskCreateTrigger] {
       case value: OnDemandTriggerInput => Extraction.decompose(value)(format - this)
       case value: ScheduleTriggerInput => Extraction.decompose(value)(format - this)
       case value: SubscriptionTrigger  => Extraction.decompose(value)(format - this)
+      case value: StreamingTrigger     => Extraction.decompose(value)(format - this)
     }
   }
 }

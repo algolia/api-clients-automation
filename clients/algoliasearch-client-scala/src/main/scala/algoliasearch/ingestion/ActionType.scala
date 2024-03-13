@@ -23,7 +23,10 @@ object ActionType {
   case object Partial extends ActionType {
     override def toString = "partial"
   }
-  val values: Seq[ActionType] = Seq(Replace, Save, Partial)
+  case object Append extends ActionType {
+    override def toString = "append"
+  }
+  val values: Seq[ActionType] = Seq(Replace, Save, Partial, Append)
 
   def withName(name: String): ActionType = ActionType.values
     .find(_.toString == name)

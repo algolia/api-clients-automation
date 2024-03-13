@@ -21,6 +21,8 @@ class ActionType
 
     public const PARTIAL = 'partial';
 
+    public const APPEND = 'append';
+
     /**
      * Gets allowable values of the enum.
      *
@@ -32,6 +34,7 @@ class ActionType
             self::REPLACE,
             self::SAVE,
             self::PARTIAL,
+            self::APPEND,
         ];
     }
 }

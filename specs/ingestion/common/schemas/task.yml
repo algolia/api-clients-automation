@@ -41,6 +41,7 @@ Trigger:
     - $ref: '#/OnDemandTrigger'
     - $ref: '#/ScheduleTrigger'
     - $ref: '#/SubscriptionTrigger'
+    - $ref: '#/StreamingTrigger'
 
 TaskCreate:
   type: object
@@ -76,6 +77,7 @@ TaskCreateTrigger:
     - $ref: '#/OnDemandTriggerInput'
     - $ref: '#/ScheduleTriggerInput'
     - $ref: '#/SubscriptionTrigger'
+    - $ref: '#/StreamingTrigger'
 
 TaskCreateResponse:
   type: object
@@ -134,12 +136,13 @@ TaskSearch:
 ActionType:
   type: string
   description: The action to perform on the Algolia index.
-  enum: ['replace', 'save', 'partial']
+  enum: ['replace', 'save', 'partial', 'append']
 
 TaskInput:
   oneOf:
     - $ref: '#/OnDemandDateUtilsInput'
     - $ref: '#/ScheduleDateUtilsInput'
+    - $ref: '#/StreamingUtilsInput'
 
 TriggerInput:
   type: object
@@ -168,7 +171,8 @@ TriggerType:
       - onDemand: a task that runs manually
       - schedule: a task that runs regularly, following a given cron expression
       - subscription: a task that runs after a subscription event is received from an integration (e.g. Webhook).
-  enum: ['onDemand', 'schedule', 'subscription']
+      - streaming: a task that runs continuously.
+  enum: ['onDemand', 'schedule', 'subscription', 'streaming']
 
 # schedule trigger
 
@@ -264,6 +268,23 @@ SubscriptionTrigger:
   required:
     - type
 
+# streaming trigger
+
+StreamingTriggerType:
+  type: string
+  description: A task that runs continuously.
+  enum: ['streaming']
+
+StreamingTrigger:
+  type: object
+  additionalProperties: false
+  description: The trigger input for a task of type 'streaming'.
+  properties:
+    type:
+      $ref: '#/StreamingTriggerType'
+  required:
+    - type
+
 # Task input
 
 MappingFieldDirective:
@@ -352,6 +373,16 @@ ScheduleDateUtilsInput:
       $ref: '#/MappingInput'
   required:
     - timeframe
+
+StreamingUtilsInput:
+  type: object
+  additionalProperties: false
+  description: The input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which extracted data is continuously streamed.
+  properties:
+    mapping:
+      $ref: '#/MappingInput'
+  required:
+    - mapping
 
 failureThreshold:
   type: integer

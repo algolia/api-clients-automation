@@ -18,12 +18,12 @@ action:
     description: An array of actions to perform on the Algolia index.
     items:
       $ref: './schemas/task.yml#/ActionType'
-    example: save,replace
+    example: save,replace,partial,append
 
 sourceID:
   name: sourceID
   in: query
-  description: The sourceIDs of the tasks to retrive.
+  description: The sourceIDs of the tasks to retrieve.
   required: false
   style: form
   explode: false
@@ -35,7 +35,7 @@ sourceID:
 destinationID:
   name: destinationID
   in: query
-  description: The destinationIDs of the tasks to retrive.
+  description: The destinationIDs of the tasks to retrieve.
   required: false
   style: form
   explode: false
@@ -55,7 +55,7 @@ triggerType:
     type: array
     items:
       $ref: './schemas/task.yml#/TriggerType'
-    example: onDemand,schedule
+    example: onDemand,schedule,subscription,streaming
 
 sort:
   name: sort

@@ -17,7 +17,7 @@ class TaskCreateTrigger extends \Algolia\AlgoliaSearch\Model\AbstractModel imple
      * @var string[]
      */
     protected static $modelTypes = [
-        'type' => '\Algolia\AlgoliaSearch\Model\Ingestion\SubscriptionTriggerType',
+        'type' => '\Algolia\AlgoliaSearch\Model\Ingestion\StreamingTriggerType',
         'cron' => 'string',
     ];
 
@@ -168,7 +168,7 @@ class TaskCreateTrigger extends \Algolia\AlgoliaSearch\Model\AbstractModel imple
     /**
      * Gets type.
      *
-     * @return \Algolia\AlgoliaSearch\Model\Ingestion\SubscriptionTriggerType
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\StreamingTriggerType
      */
     public function getType()
     {
@@ -178,7 +178,7 @@ class TaskCreateTrigger extends \Algolia\AlgoliaSearch\Model\AbstractModel imple
     /**
      * Sets type.
      *
-     * @param \Algolia\AlgoliaSearch\Model\Ingestion\SubscriptionTriggerType $type type
+     * @param \Algolia\AlgoliaSearch\Model\Ingestion\StreamingTriggerType $type type
      *
      * @return self
      */

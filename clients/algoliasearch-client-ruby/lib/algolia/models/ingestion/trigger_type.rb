@@ -9,9 +9,10 @@ module Algolia
       ON_DEMAND = "onDemand".freeze
       SCHEDULE = "schedule".freeze
       SUBSCRIPTION = "subscription".freeze
+      STREAMING = "streaming".freeze
 
       def self.all_vars
-        @all_vars ||= [ON_DEMAND, SCHEDULE, SUBSCRIPTION].freeze
+        @all_vars ||= [ON_DEMAND, SCHEDULE, SUBSCRIPTION, STREAMING].freeze
       end
 
       # Builds the enum from string

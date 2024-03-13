@@ -166,6 +166,9 @@ class TaskInput extends \Algolia\AlgoliaSearch\Model\AbstractModel implements Mo
         if (!isset($this->container['endDate']) || null === $this->container['endDate']) {
             $invalidProperties[] = "'endDate' can't be null";
         }
+        if (!isset($this->container['mapping']) || null === $this->container['mapping']) {
+            $invalidProperties[] = "'mapping' can't be null";
+        }
         if (!isset($this->container['timeframe']) || null === $this->container['timeframe']) {
             $invalidProperties[] = "'timeframe' can't be null";
         }
@@ -242,7 +245,7 @@ class TaskInput extends \Algolia\AlgoliaSearch\Model\AbstractModel implements Mo
     /**
      * Gets mapping.
      *
-     * @return null|\Algolia\AlgoliaSearch\Model\Ingestion\MappingInput
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\MappingInput
      */
     public function getMapping()
     {
@@ -252,7 +255,7 @@ class TaskInput extends \Algolia\AlgoliaSearch\Model\AbstractModel implements Mo
     /**
      * Sets mapping.
      *
-     * @param null|\Algolia\AlgoliaSearch\Model\Ingestion\MappingInput $mapping mapping
+     * @param \Algolia\AlgoliaSearch\Model\Ingestion\MappingInput $mapping mapping
      *
      * @return self
      */

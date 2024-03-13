@@ -9,14 +9,17 @@ import com.fasterxml.jackson.databind.annotation.*;
 /**
  * The type of the task reflect how it can be used: - onDemand: a task that runs manually -
  * schedule: a task that runs regularly, following a given cron expression - subscription: a task
- * that runs after a subscription event is received from an integration (e.g. Webhook).
+ * that runs after a subscription event is received from an integration (e.g. Webhook). - streaming:
+ * a task that runs continuously.
  */
 public enum TriggerType {
   ON_DEMAND("onDemand"),
 
   SCHEDULE("schedule"),
 
-  SUBSCRIPTION("subscription");
+  SUBSCRIPTION("subscription"),
+
+  STREAMING("streaming");
 
   private final String value;
 

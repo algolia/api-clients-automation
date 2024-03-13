@@ -24,6 +24,7 @@ object TaskInputSerializer extends Serializer[TaskInput] {
       json match {
         case value: JObject => Extraction.extract[OnDemandDateUtilsInput](value)
         case value: JObject => Extraction.extract[ScheduleDateUtilsInput](value)
+        case value: JObject => Extraction.extract[StreamingUtilsInput](value)
         case _              => throw new MappingException("Can't convert " + json + " to TaskInput")
       }
   }
@@ -32,6 +33,7 @@ object TaskInputSerializer extends Serializer[TaskInput] {
     value match {
       case value: OnDemandDateUtilsInput => Extraction.decompose(value)(format - this)
       case value: ScheduleDateUtilsInput => Extraction.decompose(value)(format - this)
+      case value: StreamingUtilsInput    => Extraction.decompose(value)(format - this)
     }
   }
 }

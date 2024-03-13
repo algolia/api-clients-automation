@@ -31,21 +31,26 @@ object SourceInputSerializer extends Serializer[SourceInput] {
         case value: JObject if value.obj.exists(_._1 == "projectKey") => Extraction.extract[SourceCommercetools](value)
         case value: JObject if value.obj.exists(_._1 == "storeHash")  => Extraction.extract[SourceBigCommerce](value)
         case value: JObject if value.obj.exists(_._1 == "projectID")  => Extraction.extract[SourceBigQuery](value)
-        case value: JObject                                           => Extraction.extract[SourceJSON](value)
-        case value: JObject                                           => Extraction.extract[SourceCSV](value)
-        case value: JObject                                           => Extraction.extract[SourceDocker](value)
-        case _ => throw new MappingException("Can't convert " + json + " to SourceInput")
+        case value: JObject
+            if value.obj.exists(_._1 == "projectID") && value.obj
+              .exists(_._1 == "datasetID") && value.obj.exists(_._1 == "tablePrefix") =>
+          Extraction.extract[SourceGA4BigQueryExport](value)
+        case value: JObject => Extraction.extract[SourceJSON](value)
+        case value: JObject => Extraction.extract[SourceCSV](value)
+        case value: JObject => Extraction.extract[SourceDocker](value)
+        case _              => throw new MappingException("Can't convert " + json + " to SourceInput")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: SourceInput =>
     value match {
-      case value: SourceCommercetools => Extraction.decompose(value)(format - this)
-      case value: SourceBigCommerce   => Extraction.decompose(value)(format - this)
-      case value: SourceBigQuery      => Extraction.decompose(value)(format - this)
-      case value: SourceJSON          => Extraction.decompose(value)(format - this)
-      case value: SourceCSV           => Extraction.decompose(value)(format - this)
-      case value: SourceDocker        => Extraction.decompose(value)(format - this)
+      case value: SourceCommercetools     => Extraction.decompose(value)(format - this)
+      case value: SourceBigCommerce       => Extraction.decompose(value)(format - this)
+      case value: SourceBigQuery          => Extraction.decompose(value)(format - this)
+      case value: SourceGA4BigQueryExport => Extraction.decompose(value)(format - this)
+      case value: SourceJSON              => Extraction.decompose(value)(format - this)
+      case value: SourceCSV               => Extraction.decompose(value)(format - this)
+      case value: SourceDocker            => Extraction.decompose(value)(format - this)
     }
   }
 }
