@@ -56,8 +56,8 @@ public class PurchasedObjectIDs implements EventsItems {
   }
 
   /**
-   * The name of the event, up to 64 ASCII characters. Consider naming events consistently—for
-   * example, by adopting Segment's
+   * Event name, up to 64 ASCII characters. Consider naming events consistently—for example, by
+   * adopting Segment's
    * [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
    * framework.
    */
@@ -93,7 +93,7 @@ public class PurchasedObjectIDs implements EventsItems {
     return this;
   }
 
-  /** The name of an Algolia index. */
+  /** Index name to which the event's items belong. */
   @javax.annotation.Nonnull
   public String getIndex() {
     return index;
@@ -109,7 +109,7 @@ public class PurchasedObjectIDs implements EventsItems {
     return this;
   }
 
-  /** The object IDs of the records that are part of the event. */
+  /** Object IDs of the records that are part of the event. */
   @javax.annotation.Nonnull
   public List<String> getObjectIDs() {
     return objectIDs;
@@ -121,8 +121,9 @@ public class PurchasedObjectIDs implements EventsItems {
   }
 
   /**
-   * An anonymous or pseudonymous user identifier. > **Note**: Never include personally identifiable
-   * information in user tokens.
+   * Anonymous or pseudonymous user identifier. Don't use personally identifiable information in
+   * user tokens. For more information, see [User
+   * token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
    */
   @javax.annotation.Nonnull
   public String getUserToken() {
@@ -135,8 +136,11 @@ public class PurchasedObjectIDs implements EventsItems {
   }
 
   /**
-   * An identifier for authenticated users. > **Note**: Never include personally identifiable
-   * information in user tokens.
+   * Identifier for authenticated users. When the user signs in, you can get an identifier from your
+   * system and send it as `authenticatedUserToken`. This lets you keep using the `userToken` from
+   * before the user signed in, while providing a reliable way to identify users across sessions.
+   * Don't use personally identifiable information in user tokens. For more information, see [User
+   * token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
    */
   @javax.annotation.Nullable
   public String getAuthenticatedUserToken() {
@@ -182,7 +186,7 @@ public class PurchasedObjectIDs implements EventsItems {
   }
 
   /**
-   * The timestamp of the event in milliseconds in [Unix epoch
+   * Timestamp of the event in milliseconds in [Unix epoch
    * time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it
    * receives an event as its timestamp.
    */

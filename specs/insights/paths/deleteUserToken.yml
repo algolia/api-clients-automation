@@ -4,33 +4,29 @@ delete:
   operationId: deleteUserToken
   summary: Delete user token.
   description: |
-    Delete all events related to a certain user token from events metrics and analytics.
-    To delete a personalization user profile, see [Delete a user profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
+    Deletes all events related to the specified user token from events metrics and analytics.
+    To delete a personalization user profile, see [Delete a user profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
   parameters:
     - name: userToken
       in: path
-      description: The user token for which to delete all associated events.
+      description: User token for which to delete all associated events.
       required: true
       schema:
-        type: string
-        minLength: 1
-        maxLength: 129
-        pattern: '[a-zA-Z0-9_=/+]{1,129}'
-        example: test-user-1
+        $ref: '../common/schemas/EventAttributes.yml#/userToken'
   responses:
     '204':
       description: No content.
       headers:
         x-ratelimit-limit:
-          description: The current rate limit. The maximum number of requests you can make to this endpoint.
+          description: Maximum number of requests you can make to this endpoint.
           schema:
             type: integer
         x-ratelimit-remaining:
-          description: The number of remaining API requests you can make to this endpoint before reaching the rate limit.
+          description: Number of remaining API requests you can make to this endpoint before reaching the rate limit.
           schema:
             type: integer
         x-ratelimit-reset:
-          description: The timestamp in Unix epoch time when the rate limit will reset.
+          description: Timestamp in Unix epoch time when the rate limit will reset.
           schema:
             type: integer
 

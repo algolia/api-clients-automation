@@ -479,11 +479,11 @@ public class InsightsClient extends ApiClient {
   }
 
   /**
-   * Delete all events related to a certain user token from events metrics and analytics. To delete
-   * a personalization user profile, see [Delete a user
-   * profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
+   * Deletes all events related to the specified user token from events metrics and analytics. To
+   * delete a personalization user profile, see [Delete a user
+   * profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
    *
-   * @param userToken The user token for which to delete all associated events. (required)
+   * @param userToken User token for which to delete all associated events. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -494,11 +494,11 @@ public class InsightsClient extends ApiClient {
   }
 
   /**
-   * Delete all events related to a certain user token from events metrics and analytics. To delete
-   * a personalization user profile, see [Delete a user
-   * profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
+   * Deletes all events related to the specified user token from events metrics and analytics. To
+   * delete a personalization user profile, see [Delete a user
+   * profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
    *
-   * @param userToken The user token for which to delete all associated events. (required)
+   * @param userToken User token for which to delete all associated events. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public void deleteUserToken(@Nonnull String userToken) throws AlgoliaRuntimeException {
@@ -506,11 +506,11 @@ public class InsightsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete all events related to a certain user token from events metrics and
+   * (asynchronously) Deletes all events related to the specified user token from events metrics and
    * analytics. To delete a personalization user profile, see [Delete a user
-   * profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
+   * profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
    *
-   * @param userToken The user token for which to delete all associated events. (required)
+   * @param userToken User token for which to delete all associated events. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -524,11 +524,11 @@ public class InsightsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete all events related to a certain user token from events metrics and
+   * (asynchronously) Deletes all events related to the specified user token from events metrics and
    * analytics. To delete a personalization user profile, see [Delete a user
-   * profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
+   * profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
    *
-   * @param userToken The user token for which to delete all associated events. (required)
+   * @param userToken User token for which to delete all associated events. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Void> deleteUserTokenAsync(@Nonnull String userToken) throws AlgoliaRuntimeException {
@@ -536,7 +536,7 @@ public class InsightsClient extends ApiClient {
   }
 
   /**
-   * Send a list of events to the Insights API. You can include up to 1,000 events in a single
+   * Sends a list of events to the Insights API. You can include up to 1,000 events in a single
    * request, but the request body must be smaller than 2&nbsp;MB.
    *
    * @param insightsEvents (required)
@@ -549,7 +549,7 @@ public class InsightsClient extends ApiClient {
   }
 
   /**
-   * Send a list of events to the Insights API. You can include up to 1,000 events in a single
+   * Sends a list of events to the Insights API. You can include up to 1,000 events in a single
    * request, but the request body must be smaller than 2&nbsp;MB.
    *
    * @param insightsEvents (required)
@@ -560,7 +560,7 @@ public class InsightsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Send a list of events to the Insights API. You can include up to 1,000 events
+   * (asynchronously) Sends a list of events to the Insights API. You can include up to 1,000 events
    * in a single request, but the request body must be smaller than 2&nbsp;MB.
    *
    * @param insightsEvents (required)
@@ -577,7 +577,7 @@ public class InsightsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Send a list of events to the Insights API. You can include up to 1,000 events
+   * (asynchronously) Sends a list of events to the Insights API. You can include up to 1,000 events
    * in a single request, but the request body must be smaller than 2&nbsp;MB.
    *
    * @param insightsEvents (required)
