@@ -41,11 +41,19 @@ function getSpecsForNavBar() {
   return getSpecFiles().map((specFile) => {
     /** @type {import('@docusaurus/theme-common').NavbarItem} */
     return {
-      label: specFile.fileName,
+      label: getLabel(specFile.fileName),
       href: specFile.route,
       className: 'header-restapi',
     };
   });
+}
+
+function getLabel(str) {
+  const dict = {
+    abtesting: 'A/B Testing',
+    'query-suggestions': 'Query Suggestions',
+  };
+  return dict[str] || str;
 }
 
 /** @type {import('@docusaurus/types').Config} */
