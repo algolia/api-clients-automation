@@ -55,7 +55,7 @@ public extension Data {
             &stream,
             compressionLevel,
             Z_DEFLATED,
-            MAX_WBITS + 16,
+            -MAX_WBITS,
             MAX_MEM_LEVEL,
             Z_DEFAULT_STRATEGY,
             ZLIB_VERSION,
