@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** AroundPrecisionFromValueInner */
+/** Range object with lower and upper values in meters to define custom ranges. */
 public class AroundPrecisionFromValueInner {
 
   @JsonProperty("from")
@@ -21,7 +21,10 @@ public class AroundPrecisionFromValueInner {
     return this;
   }
 
-  /** Get from */
+  /**
+   * Lower boundary of a range in meters. The Geo ranking criterion considers all records within the
+   * range to be equal.
+   */
   @javax.annotation.Nullable
   public Integer getFrom() {
     return from;
@@ -32,7 +35,10 @@ public class AroundPrecisionFromValueInner {
     return this;
   }
 
-  /** Get value */
+  /**
+   * Upper boundary of a range in meters. The Geo ranking criterion considers all records within the
+   * range to be equal.
+   */
   @javax.annotation.Nullable
   public Integer getValue() {
     return value;

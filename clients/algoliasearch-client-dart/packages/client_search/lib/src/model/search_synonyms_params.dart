@@ -16,14 +16,15 @@ final class SearchSynonymsParams {
     this.hitsPerPage,
   });
 
-  /// Text to search for in an index.
+  /// Search query.
   @JsonKey(name: r'query')
   final String? query;
 
   @JsonKey(name: r'type')
   final SynonymType? type;
 
-  /// Page to retrieve (the first page is `0`, not `1`).
+  /// Page of search results to retrieve.
+  // minimum: 0
   @JsonKey(name: r'page')
   final int? page;
 

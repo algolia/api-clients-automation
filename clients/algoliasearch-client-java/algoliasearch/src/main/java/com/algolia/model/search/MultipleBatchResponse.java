@@ -30,7 +30,7 @@ public class MultipleBatchResponse {
     return this;
   }
 
-  /** TaskIDs per index. */
+  /** Task IDs. One for each index. */
   @javax.annotation.Nonnull
   public Map<String, Long> getTaskID() {
     return taskID;
@@ -46,7 +46,7 @@ public class MultipleBatchResponse {
     return this;
   }
 
-  /** Unique object (record) identifiers. */
+  /** Unique record identifiers. */
   @javax.annotation.Nonnull
   public List<String> getObjectIDs() {
     return objectIDs;

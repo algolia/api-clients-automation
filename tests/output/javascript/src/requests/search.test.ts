@@ -1903,7 +1903,6 @@ describe('search', () => {
           aroundPrecision: 0,
           aroundRadius: 'all',
           attributeCriteriaComputedByMinProximity: true,
-          attributesForFaceting: [''],
           attributesToHighlight: [''],
           attributesToRetrieve: [''],
           attributesToSnippet: [''],
@@ -1918,7 +1917,6 @@ describe('search', () => {
           enableReRanking: true,
           enableRules: true,
           exactOnSingleWordQuery: 'attribute',
-          explain: ['foo', 'bar'],
           facetFilters: [''],
           facetingAfterDistinct: true,
           facets: [''],
@@ -2000,7 +1998,6 @@ describe('search', () => {
           aroundPrecision: 0,
           aroundRadius: 'all',
           attributeCriteriaComputedByMinProximity: true,
-          attributesForFaceting: [''],
           attributesToHighlight: [''],
           attributesToRetrieve: [''],
           attributesToSnippet: [''],
@@ -2015,7 +2012,6 @@ describe('search', () => {
           enableReRanking: true,
           enableRules: true,
           exactOnSingleWordQuery: 'attribute',
-          explain: ['foo', 'bar'],
           facetFilters: [''],
           facetingAfterDistinct: true,
           facets: [''],
@@ -2087,14 +2083,34 @@ describe('search', () => {
 describe('searchDictionaryEntries', () => {
   test('get searchDictionaryEntries results with minimal parameters', async () => {
     const req = (await client.searchDictionaryEntries({
-      dictionaryName: 'compounds',
-      searchDictionaryEntriesParams: { query: 'foo' },
+      dictionaryName: 'stopwords',
+      searchDictionaryEntriesParams: { query: 'about' },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/dictionaries/compounds/search');
+    expect(req.path).toEqual('/1/dictionaries/stopwords/search');
     expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({ query: 'foo' });
+    expect(req.data).toEqual({ query: 'about' });
     expect(req.searchParams).toStrictEqual(undefined);
+
+    const resp = await e2eClient.searchDictionaryEntries({
+      dictionaryName: 'stopwords',
+      searchDictionaryEntriesParams: { query: 'about' },
+    });
+
+    const expectedBody = {
+      hits: [
+        {
+          objectID: '86ef58032f47d976ca7130a896086783',
+          language: 'en',
+          word: 'about',
+        },
+      ],
+      page: 0,
+      nbHits: 1,
+      nbPages: 1,
+    };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
   });
 
   test('get searchDictionaryEntries results with all parameters', async () => {

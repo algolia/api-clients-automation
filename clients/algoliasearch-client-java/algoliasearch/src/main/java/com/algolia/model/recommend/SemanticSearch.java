@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Settings for the semantic search part of NeuralSearch. Only used when `mode` is _neuralSearch_.
+ * Settings for the semantic search part of NeuralSearch. Only used when `mode` is `neuralSearch`.
  */
 public class SemanticSearch {
 
@@ -31,8 +31,8 @@ public class SemanticSearch {
   }
 
   /**
-   * Indices from which to collect click and conversion events. If null, the current index and
-   * replica group will be used as the event source.
+   * Indices from which to collect click and conversion events. If null, the current index and all
+   * its replicas are used.
    */
   @javax.annotation.Nullable
   public List<String> getEventSources() {

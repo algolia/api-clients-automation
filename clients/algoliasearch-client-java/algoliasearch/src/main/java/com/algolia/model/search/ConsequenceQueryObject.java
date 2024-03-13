@@ -32,7 +32,7 @@ public class ConsequenceQueryObject implements ConsequenceQuery {
     return this;
   }
 
-  /** Words to remove. */
+  /** Words to remove from the search query. */
   @javax.annotation.Nullable
   public List<String> getRemove() {
     return remove;
@@ -51,7 +51,7 @@ public class ConsequenceQueryObject implements ConsequenceQuery {
     return this;
   }
 
-  /** Edits to apply. */
+  /** Changes to make to the search query. */
   @javax.annotation.Nullable
   public List<Edit> getEdits() {
     return edits;

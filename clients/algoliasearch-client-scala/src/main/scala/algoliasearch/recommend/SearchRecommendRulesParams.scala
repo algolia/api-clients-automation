@@ -14,12 +14,12 @@ package algoliasearch.recommend
 /** Recommend rules search parameters.
   *
   * @param query
-  *   Full-text query.
+  *   Search query.
   * @param context
   *   Restricts responses to the specified [contextual
   *   rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
   * @param page
-  *   Requested page (the first page is page 0).
+  *   Requested page of the API response.
   * @param hitsPerPage
   *   Maximum number of hits per page.
   * @param enabled

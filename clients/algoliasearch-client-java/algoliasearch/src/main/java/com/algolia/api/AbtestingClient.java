@@ -635,9 +635,8 @@ public class AbtestingClient extends ApiClient {
   /**
    * List all A/B tests.
    *
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
-   * @param limit Number of records to return (page size). (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. (optional, default to 10)
    * @param indexPrefix Only return A/B tests for indices starting with this prefix. (optional)
    * @param indexSuffix Only return A/B tests for indices ending with this suffix. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -657,9 +656,8 @@ public class AbtestingClient extends ApiClient {
   /**
    * List all A/B tests.
    *
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
-   * @param limit Number of records to return (page size). (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. (optional, default to 10)
    * @param indexPrefix Only return A/B tests for indices starting with this prefix. (optional)
    * @param indexSuffix Only return A/B tests for indices ending with this suffix. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -692,9 +690,8 @@ public class AbtestingClient extends ApiClient {
   /**
    * (asynchronously) List all A/B tests.
    *
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
-   * @param limit Number of records to return (page size). (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. (optional, default to 10)
    * @param indexPrefix Only return A/B tests for indices starting with this prefix. (optional)
    * @param indexSuffix Only return A/B tests for indices ending with this suffix. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -723,9 +720,8 @@ public class AbtestingClient extends ApiClient {
   /**
    * (asynchronously) List all A/B tests.
    *
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
-   * @param limit Number of records to return (page size). (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
+   * @param limit Number of items to return. (optional, default to 10)
    * @param indexPrefix Only return A/B tests for indices starting with this prefix. (optional)
    * @param indexSuffix Only return A/B tests for indices ending with this suffix. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call

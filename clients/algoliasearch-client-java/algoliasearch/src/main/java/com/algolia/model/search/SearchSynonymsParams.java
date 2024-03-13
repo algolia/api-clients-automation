@@ -27,7 +27,7 @@ public class SearchSynonymsParams {
     return this;
   }
 
-  /** Text to search for in an index. */
+  /** Search query. */
   @javax.annotation.Nullable
   public String getQuery() {
     return query;
@@ -49,7 +49,7 @@ public class SearchSynonymsParams {
     return this;
   }
 
-  /** Page to retrieve (the first page is `0`, not `1`). */
+  /** Page of search results to retrieve. minimum: 0 */
   @javax.annotation.Nullable
   public Integer getPage() {
     return page;

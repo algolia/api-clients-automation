@@ -13,8 +13,8 @@ package algoliasearch.recommend
 
 import org.json4s._
 
-/** When [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) is enabled, only records that
-  * match these filters will be affected by Dynamic Re-Ranking.
+/** Restrict [Dynamic Re-ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) to records that match these
+  * filters.
   */
 sealed trait ReRankingApplyFilter
 

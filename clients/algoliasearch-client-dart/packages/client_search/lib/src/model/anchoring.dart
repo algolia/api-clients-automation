@@ -2,7 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:json_annotation/json_annotation.dart';
 
-/// Whether the pattern parameter matches the beginning (`startsWith`) or end (`endsWith`) of the query string, is an exact match (`is`), or a partial match (`contains`).
+/// Which part of the search query the pattern should match:  - `startsWith`. The pattern must match the begginning of the query. - `endsWith`. The pattern must match the end of the query. - `is`. The pattern must match the query exactly. - `contains`. The pattern must match anywhere in the query.  Empty queries are only allowed as pattern with `anchoring: is`.
 @JsonEnum(valueField: 'raw')
 enum Anchoring {
   is_(r'is'),

@@ -21,11 +21,12 @@ final class SearchUserIdsResponse {
   @JsonKey(name: r'hits')
   final List<UserHit> hits;
 
-  /// Number of hits the search query matched.
+  /// Number of results (hits).
   @JsonKey(name: r'nbHits')
   final int nbHits;
 
-  /// Page to retrieve (the first page is `0`, not `1`).
+  /// Page of search results to retrieve.
+  // minimum: 0
   @JsonKey(name: r'page')
   final int page;
 

@@ -15,6 +15,7 @@ final class SearchForFacetValuesResponse {
     this.processingTimeMS,
   });
 
+  /// Matching facet values.
   @JsonKey(name: r'facetHits')
   final List<FacetHits> facetHits;
 

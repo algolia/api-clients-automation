@@ -14,11 +14,11 @@ final class BatchDictionaryEntriesParams {
     required this.requests,
   });
 
-  /// Incidates whether to replace all custom entries in the dictionary with the ones sent with this request.
+  /// Whether to replace all custom entries in the dictionary with the ones sent with this request.
   @JsonKey(name: r'clearExistingDictionaryEntries')
   final bool? clearExistingDictionaryEntries;
 
-  /// Operations to batch.
+  /// List of additions and deletions to your dictionaries.
   @JsonKey(name: r'requests')
   final List<BatchDictionaryEntriesRequest> requests;
 

@@ -2,7 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:json_annotation/json_annotation.dart';
 
-/// Indicates how well the attribute matched the search query.
+/// Whether the whole query string matches or only a part.
 @JsonEnum(valueField: 'raw')
 enum MatchLevel {
   none(r'none'),

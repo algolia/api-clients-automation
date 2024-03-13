@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** Unique identifier of the record to hide. */
+/** Object ID of the record to hide. */
 public class ConsequenceHide {
 
   @JsonProperty("objectID")
@@ -18,7 +18,7 @@ public class ConsequenceHide {
     return this;
   }
 
-  /** Unique object identifier. */
+  /** Unique record identifier. */
   @javax.annotation.Nonnull
   public String getObjectID() {
     return objectID;

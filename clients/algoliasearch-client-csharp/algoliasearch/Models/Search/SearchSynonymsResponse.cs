@@ -27,8 +27,8 @@ public partial class SearchSynonymsResponse
   /// <summary>
   /// Initializes a new instance of the SearchSynonymsResponse class.
   /// </summary>
-  /// <param name="hits">Synonym objects. (required).</param>
-  /// <param name="nbHits">Number of hits the search query matched. (required).</param>
+  /// <param name="hits">Matching synonyms. (required).</param>
+  /// <param name="nbHits">Number of results (hits). (required).</param>
   public SearchSynonymsResponse(List<SynonymHit> hits, int nbHits)
   {
     Hits = hits ?? throw new ArgumentNullException(nameof(hits));
@@ -37,16 +37,16 @@ public partial class SearchSynonymsResponse
   }
 
   /// <summary>
-  /// Synonym objects.
+  /// Matching synonyms.
   /// </summary>
-  /// <value>Synonym objects.</value>
+  /// <value>Matching synonyms.</value>
   [JsonPropertyName("hits")]
   public List<SynonymHit> Hits { get; set; }
 
   /// <summary>
-  /// Number of hits the search query matched.
+  /// Number of results (hits).
   /// </summary>
-  /// <value>Number of hits the search query matched.</value>
+  /// <value>Number of results (hits).</value>
   [JsonPropertyName("nbHits")]
   public int NbHits { get; set; }
 

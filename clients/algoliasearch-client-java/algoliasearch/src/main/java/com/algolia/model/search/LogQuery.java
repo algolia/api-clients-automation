@@ -35,7 +35,7 @@ public class LogQuery {
     return this;
   }
 
-  /** User identifier. */
+  /** A user identifier. */
   @javax.annotation.Nullable
   public String getUserToken() {
     return userToken;

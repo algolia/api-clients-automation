@@ -13,11 +13,11 @@ final class TimeRange {
     required this.until,
   });
 
-  /// Lower bound of the time range (Unix timestamp).
+  /// When the rule should start to be active, in Unix epoch time.
   @JsonKey(name: r'from')
   final int from;
 
-  /// Upper bound of the time range (Unix timestamp).
+  /// When the rule should stop to be active, in Unix epoch time.
   @JsonKey(name: r'until')
   final int until;
 

@@ -14,7 +14,7 @@ final class UpdatedAtWithObjectIdResponse {
     this.objectID,
   });
 
-  /// Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the `task` operation and this `taskID`.
+  /// Unique identifier of a task.  A successful API response means that a task was added to a queue. It might not run immediately. You can check the task's progress with the [`task` operation](#tag/Indices/operation/getTask) and this `taskID`.
   @JsonKey(name: r'taskID')
   final int? taskID;
 
@@ -22,7 +22,7 @@ final class UpdatedAtWithObjectIdResponse {
   @JsonKey(name: r'updatedAt')
   final String? updatedAt;
 
-  /// Unique object identifier.
+  /// Unique record identifier.
   @JsonKey(name: r'objectID')
   final String? objectID;
 

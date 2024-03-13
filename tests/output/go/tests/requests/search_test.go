@@ -1806,15 +1806,13 @@ func TestSearch_Search(t *testing.T) {
 					search.NewEmptySearchForHits().SetAdvancedSyntax(true).SetAdvancedSyntaxFeatures(
 						[]search.AdvancedSyntaxFeatures{search.AdvancedSyntaxFeatures("exactPhrase")}).SetAllowTyposOnNumericTokens(true).SetAlternativesAsExact(
 						[]search.AlternativesAsExact{search.AlternativesAsExact("multiWordsSynonym")}).SetAnalytics(true).SetAnalyticsTags(
-						[]string{""}).SetAroundLatLng("").SetAroundLatLngViaIP(true).SetAroundPrecision(search.Int32AsAroundPrecision(0)).SetAroundRadius(search.AroundRadiusAllAsAroundRadius(search.AroundRadiusAll("all"))).SetAttributeCriteriaComputedByMinProximity(true).SetAttributesForFaceting(
-						[]string{""}).SetAttributesToHighlight(
+						[]string{""}).SetAroundLatLng("").SetAroundLatLngViaIP(true).SetAroundPrecision(search.Int32AsAroundPrecision(0)).SetAroundRadius(search.AroundRadiusAllAsAroundRadius(search.AroundRadiusAll("all"))).SetAttributeCriteriaComputedByMinProximity(true).SetAttributesToHighlight(
 						[]string{""}).SetAttributesToRetrieve(
 						[]string{""}).SetAttributesToSnippet(
 						[]string{""}).SetClickAnalytics(true).SetCustomRanking(
 						[]string{""}).SetDecompoundQuery(true).SetDisableExactOnAttributes(
 						[]string{""}).SetDisableTypoToleranceOnAttributes(
-						[]string{""}).SetDistinct(search.Int32AsDistinct(0)).SetEnableABTest(true).SetEnablePersonalization(true).SetEnableReRanking(true).SetEnableRules(true).SetExactOnSingleWordQuery(search.ExactOnSingleWordQuery("attribute")).SetExplain(
-						[]string{"foo", "bar"}).SetFacetFilters(search.ArrayOfMixedSearchFiltersAsFacetFilters(
+						[]string{""}).SetDistinct(search.Int32AsDistinct(0)).SetEnableABTest(true).SetEnablePersonalization(true).SetEnableReRanking(true).SetEnableRules(true).SetExactOnSingleWordQuery(search.ExactOnSingleWordQuery("attribute")).SetFacetFilters(search.ArrayOfMixedSearchFiltersAsFacetFilters(
 						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("")})).SetFacetingAfterDistinct(true).SetFacets(
 						[]string{""}).SetFilters("").SetGetRankingInfo(true).SetHighlightPostTag("").SetHighlightPreTag("").SetHitsPerPage(1).SetIgnorePlurals(search.BoolAsIgnorePlurals(false)).SetIndexName("theIndexName").SetInsideBoundingBox(
 						[][]float64{
@@ -1846,7 +1844,7 @@ func TestSearch_Search(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesForFaceting":[""],"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","explain":["foo","bar"],"facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":[""],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":[""],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}`)
 	})
 }
 
@@ -1856,16 +1854,42 @@ func TestSearch_SearchDictionaryEntries(t *testing.T) {
 
 	t.Run("get searchDictionaryEntries results with minimal parameters", func(t *testing.T) {
 		_, err := client.SearchDictionaryEntries(client.NewApiSearchDictionaryEntriesRequest(
-			search.DictionaryType("compounds"),
-			search.NewEmptySearchDictionaryEntriesParams().SetQuery("foo"),
+			search.DictionaryType("stopwords"),
+			search.NewEmptySearchDictionaryEntriesParams().SetQuery("about"),
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/dictionaries/compounds/search", echo.Path)
+		require.Equal(t, "/1/dictionaries/stopwords/search", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"query":"foo"}`)
+		ja.Assertf(*echo.Body, `{"query":"about"}`)
+		clientE2E := createE2ESearchClient(t)
+		res, err := clientE2E.SearchDictionaryEntries(client.NewApiSearchDictionaryEntriesRequest(
+			search.DictionaryType("stopwords"),
+			search.NewEmptySearchDictionaryEntriesParams().SetQuery("about"),
+		))
+		require.NoError(t, err)
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `{"hits":[{"objectID":"86ef58032f47d976ca7130a896086783","language":"en","word":"about"}],"page":0,"nbHits":1,"nbPages":1}`
+		var expectedBody any
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jaE2E := jsonassert.New(t)
+		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
 	})
 	t.Run("get searchDictionaryEntries results with all parameters", func(t *testing.T) {
 		_, err := client.SearchDictionaryEntries(client.NewApiSearchDictionaryEntriesRequest(

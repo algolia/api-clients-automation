@@ -20,7 +20,7 @@ final class BaseRecommendationsQuery {
   @JsonKey(name: r'model')
   final RecommendationModels model;
 
-  /// Unique object identifier.
+  /// Unique record identifier.
   @JsonKey(name: r'objectID')
   final String objectID;
 

@@ -23,7 +23,8 @@ final class SearchUserIdsParams {
   @JsonKey(name: r'clusterName')
   final String? clusterName;
 
-  /// Page to retrieve (the first page is `0`, not `1`).
+  /// Page of search results to retrieve.
+  // minimum: 0
   @JsonKey(name: r'page')
   final int? page;
 

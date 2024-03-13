@@ -175,7 +175,7 @@ class HasPendingMappingsResponse extends \Algolia\AlgoliaSearch\Model\AbstractMo
     /**
      * Sets pending.
      *
-     * @param bool $pending indicates whether there are clusters undergoing migration, creation, or deletion
+     * @param bool $pending whether there are clusters undergoing migration, creation, or deletion
      *
      * @return self
      */

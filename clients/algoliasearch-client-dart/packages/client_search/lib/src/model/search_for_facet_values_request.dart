@@ -22,7 +22,7 @@ final class SearchForFacetValuesRequest {
   @JsonKey(name: r'facetQuery')
   final String? facetQuery;
 
-  /// Maximum number of facet hits to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
+  /// Maximum number of facet values to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
   // maximum: 100
   @JsonKey(name: r'maxFacetHits')
   final int? maxFacetHits;

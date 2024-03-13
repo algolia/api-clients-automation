@@ -18,11 +18,11 @@ final class FacetHits {
   @JsonKey(name: r'value')
   final String value;
 
-  /// Markup text with `facetQuery` matches highlighted.
+  /// Highlighted attribute value, including HTML tags.
   @JsonKey(name: r'highlighted')
   final String highlighted;
 
-  /// Number of records containing this facet value. This takes into account the extra search parameters specified in the query. Like for a regular search query, the [counts may not be exhaustive](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
+  /// Number of records with this facet value. [The count may be approximated](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
   @JsonKey(name: r'count')
   final int count;
 

@@ -48,8 +48,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Add a new API key with specific permissions and restrictions. The request must be authenticated
-   * with the admin API key. The response returns an API key string.
+   * Creates a new API key with specific permissions and restrictions.
    *
    * @param apiKey (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -61,8 +60,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Add a new API key with specific permissions and restrictions. The request must be authenticated
-   * with the admin API key. The response returns an API key string.
+   * Creates a new API key with specific permissions and restrictions.
    *
    * @param apiKey (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -72,8 +70,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Add a new API key with specific permissions and restrictions. The request must
-   * be authenticated with the admin API key. The response returns an API key string.
+   * (asynchronously) Creates a new API key with specific permissions and restrictions.
    *
    * @param apiKey (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -90,8 +87,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Add a new API key with specific permissions and restrictions. The request must
-   * be authenticated with the admin API key. The response returns an API key string.
+   * (asynchronously) Creates a new API key with specific permissions and restrictions.
    *
    * @param apiKey (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -101,14 +97,15 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * If you use an existing `objectID`, the existing record will be replaced with the new one. To
-   * update only some attributes of an existing record, use the [`partial`
-   * operation](#tag/Records/operation/partialUpdateObject) instead. To add multiple records to your
-   * index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).
+   * If a record with the specified object ID exists, the existing record is replaced. Otherwise, a
+   * new record is added to the index. To update _some_ attributes of an existing record, use the
+   * [`partial` operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or
+   * replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
-   * @param body Algolia record. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
+   * @param body The record, a schemaless object with attributes that are useful in the context of
+   *     search and discovery. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -123,14 +120,15 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * If you use an existing `objectID`, the existing record will be replaced with the new one. To
-   * update only some attributes of an existing record, use the [`partial`
-   * operation](#tag/Records/operation/partialUpdateObject) instead. To add multiple records to your
-   * index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).
+   * If a record with the specified object ID exists, the existing record is replaced. Otherwise, a
+   * new record is added to the index. To update _some_ attributes of an existing record, use the
+   * [`partial` operation](#tag/Records/operation/partialUpdateObject) instead. To add, update, or
+   * replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
-   * @param body Algolia record. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
+   * @param body The record, a schemaless object with attributes that are useful in the context of
+   *     search and discovery. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public UpdatedAtWithObjectIdResponse addOrUpdateObject(@Nonnull String indexName, @Nonnull String objectID, @Nonnull Object body)
@@ -139,14 +137,16 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) If you use an existing `objectID`, the existing record will be replaced with
-   * the new one. To update only some attributes of an existing record, use the [`partial`
-   * operation](#tag/Records/operation/partialUpdateObject) instead. To add multiple records to your
-   * index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).
+   * (asynchronously) If a record with the specified object ID exists, the existing record is
+   * replaced. Otherwise, a new record is added to the index. To update _some_ attributes of an
+   * existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject)
+   * instead. To add, update, or replace multiple records, use the [`batch`
+   * operation](#tag/Records/operation/batch).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
-   * @param body Algolia record. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
+   * @param body The record, a schemaless object with attributes that are useful in the context of
+   *     search and discovery. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -173,14 +173,16 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) If you use an existing `objectID`, the existing record will be replaced with
-   * the new one. To update only some attributes of an existing record, use the [`partial`
-   * operation](#tag/Records/operation/partialUpdateObject) instead. To add multiple records to your
-   * index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).
+   * (asynchronously) If a record with the specified object ID exists, the existing record is
+   * replaced. Otherwise, a new record is added to the index. To update _some_ attributes of an
+   * existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject)
+   * instead. To add, update, or replace multiple records, use the [`batch`
+   * operation](#tag/Records/operation/batch).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
-   * @param body Algolia record. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
+   * @param body The record, a schemaless object with attributes that are useful in the context of
+   *     search and discovery. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<UpdatedAtWithObjectIdResponse> addOrUpdateObjectAsync(
@@ -192,7 +194,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Add a source to the list of allowed sources.
+   * Adds a source to the list of allowed sources.
    *
    * @param source Source to add. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -204,7 +206,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Add a source to the list of allowed sources.
+   * Adds a source to the list of allowed sources.
    *
    * @param source Source to add. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -214,7 +216,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Add a source to the list of allowed sources.
+   * (asynchronously) Adds a source to the list of allowed sources.
    *
    * @param source Source to add. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -230,7 +232,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Add a source to the list of allowed sources.
+   * (asynchronously) Adds a source to the list of allowed sources.
    *
    * @param source Source to add. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -240,10 +242,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Assign or move a user ID to a cluster. The time it takes to move a user is proportional to the
-   * amount of data linked to the user ID.
+   * Assigns or moves a user ID to a cluster. The time it takes to move a user is proportional to
+   * the amount of data linked to the user ID.
    *
-   * @param xAlgoliaUserID userID to assign. (required)
+   * @param xAlgoliaUserID User ID to assign. (required)
    * @param assignUserIdParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -258,10 +260,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Assign or move a user ID to a cluster. The time it takes to move a user is proportional to the
-   * amount of data linked to the user ID.
+   * Assigns or moves a user ID to a cluster. The time it takes to move a user is proportional to
+   * the amount of data linked to the user ID.
    *
-   * @param xAlgoliaUserID userID to assign. (required)
+   * @param xAlgoliaUserID User ID to assign. (required)
    * @param assignUserIdParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -271,10 +273,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Assign or move a user ID to a cluster. The time it takes to move a user is
+   * (asynchronously) Assigns or moves a user ID to a cluster. The time it takes to move a user is
    * proportional to the amount of data linked to the user ID.
    *
-   * @param xAlgoliaUserID userID to assign. (required)
+   * @param xAlgoliaUserID User ID to assign. (required)
    * @param assignUserIdParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -300,10 +302,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Assign or move a user ID to a cluster. The time it takes to move a user is
+   * (asynchronously) Assigns or moves a user ID to a cluster. The time it takes to move a user is
    * proportional to the amount of data linked to the user ID.
    *
-   * @param xAlgoliaUserID userID to assign. (required)
+   * @param xAlgoliaUserID User ID to assign. (required)
    * @param assignUserIdParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -315,11 +317,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * To reduce the time spent on network round trips, you can perform several write actions in a
-   * single API call. Actions are applied in the order they are specified. The supported `action`s
-   * are equivalent to the individual operations of the same name.
+   * Adds, updates, or deletes records in one index with a single API request. Batching index
+   * updates reduces latency and increases data integrity. - Actions are applied in the order
+   * they're specified. - Actions are equivalent to the individual API requests of the same name.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param batchWriteParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -331,11 +333,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * To reduce the time spent on network round trips, you can perform several write actions in a
-   * single API call. Actions are applied in the order they are specified. The supported `action`s
-   * are equivalent to the individual operations of the same name.
+   * Adds, updates, or deletes records in one index with a single API request. Batching index
+   * updates reduces latency and increases data integrity. - Actions are applied in the order
+   * they're specified. - Actions are equivalent to the individual API requests of the same name.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param batchWriteParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -344,11 +346,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To reduce the time spent on network round trips, you can perform several write
-   * actions in a single API call. Actions are applied in the order they are specified. The
-   * supported `action`s are equivalent to the individual operations of the same name.
+   * (asynchronously) Adds, updates, or deletes records in one index with a single API request.
+   * Batching index updates reduces latency and increases data integrity. - Actions are applied in
+   * the order they're specified. - Actions are equivalent to the individual API requests of the
+   * same name.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param batchWriteParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -373,11 +376,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To reduce the time spent on network round trips, you can perform several write
-   * actions in a single API call. Actions are applied in the order they are specified. The
-   * supported `action`s are equivalent to the individual operations of the same name.
+   * (asynchronously) Adds, updates, or deletes records in one index with a single API request.
+   * Batching index updates reduces latency and increases data integrity. - Actions are applied in
+   * the order they're specified. - Actions are equivalent to the individual API requests of the
+   * same name.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param batchWriteParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -387,9 +391,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Assign multiple user IDs to a cluster. **You can't _move_ users with this operation.**.
+   * Assigns multiple user IDs to a cluster. **You can't move users with this operation**.
    *
-   * @param xAlgoliaUserID userID to assign. (required)
+   * @param xAlgoliaUserID User ID to assign. (required)
    * @param batchAssignUserIdsParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -404,9 +408,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Assign multiple user IDs to a cluster. **You can't _move_ users with this operation.**.
+   * Assigns multiple user IDs to a cluster. **You can't move users with this operation**.
    *
-   * @param xAlgoliaUserID userID to assign. (required)
+   * @param xAlgoliaUserID User ID to assign. (required)
    * @param batchAssignUserIdsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -416,10 +420,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Assign multiple user IDs to a cluster. **You can't _move_ users with this
-   * operation.**.
+   * (asynchronously) Assigns multiple user IDs to a cluster. **You can't move users with this
+   * operation**.
    *
-   * @param xAlgoliaUserID userID to assign. (required)
+   * @param xAlgoliaUserID User ID to assign. (required)
    * @param batchAssignUserIdsParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -448,10 +452,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Assign multiple user IDs to a cluster. **You can't _move_ users with this
-   * operation.**.
+   * (asynchronously) Assigns multiple user IDs to a cluster. **You can't move users with this
+   * operation**.
    *
-   * @param xAlgoliaUserID userID to assign. (required)
+   * @param xAlgoliaUserID User ID to assign. (required)
    * @param batchAssignUserIdsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -463,9 +467,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Add or remove a batch of dictionary entries.
+   * Adds or deletes multiple entries from your plurals, segmentation, or stop word dictionaries.
    *
-   * @param dictionaryName Dictionary to search in. (required)
+   * @param dictionaryName Dictionary type in which to search. (required)
    * @param batchDictionaryEntriesParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -480,9 +484,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Add or remove a batch of dictionary entries.
+   * Adds or deletes multiple entries from your plurals, segmentation, or stop word dictionaries.
    *
-   * @param dictionaryName Dictionary to search in. (required)
+   * @param dictionaryName Dictionary type in which to search. (required)
    * @param batchDictionaryEntriesParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -494,9 +498,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Add or remove a batch of dictionary entries.
+   * (asynchronously) Adds or deletes multiple entries from your plurals, segmentation, or stop word
+   * dictionaries.
    *
-   * @param dictionaryName Dictionary to search in. (required)
+   * @param dictionaryName Dictionary type in which to search. (required)
    * @param batchDictionaryEntriesParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -524,9 +529,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Add or remove a batch of dictionary entries.
+   * (asynchronously) Adds or deletes multiple entries from your plurals, segmentation, or stop word
+   * dictionaries.
    *
-   * @param dictionaryName Dictionary to search in. (required)
+   * @param dictionaryName Dictionary type in which to search. (required)
    * @param batchDictionaryEntriesParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -538,11 +544,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Retrieve up to 1,000 records per call. Supports full-text search and filters. For better
-   * performance, it doesn't support: - The `distinct` query parameter - Sorting by typos,
-   * proximity, words, or geographical distance.
+   * Retrieves records from an index, up to 1,000 per request. While searching retrieves _hits_
+   * (records augmented with attributes for highlighting and ranking details), browsing _just_
+   * returns matching records. This can be useful if you want to export your indices. - The
+   * Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and
+   * custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking for:
+   * typo-tolerance, number of matched words, proximity, geo distance.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -559,11 +568,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Retrieve up to 1,000 records per call. Supports full-text search and filters. For better
-   * performance, it doesn't support: - The `distinct` query parameter - Sorting by typos,
-   * proximity, words, or geographical distance.
+   * Retrieves records from an index, up to 1,000 per request. While searching retrieves _hits_
+   * (records augmented with attributes for highlighting and ranking details), browsing _just_
+   * returns matching records. This can be useful if you want to export your indices. - The
+   * Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and
+   * custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking for:
+   * typo-tolerance, number of matched words, proximity, geo distance.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -574,11 +586,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Retrieve up to 1,000 records per call. Supports full-text search and filters. For better
-   * performance, it doesn't support: - The `distinct` query parameter - Sorting by typos,
-   * proximity, words, or geographical distance.
+   * Retrieves records from an index, up to 1,000 per request. While searching retrieves _hits_
+   * (records augmented with attributes for highlighting and ranking details), browsing _just_
+   * returns matching records. This can be useful if you want to export your indices. - The
+   * Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and
+   * custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking for:
+   * typo-tolerance, number of matched words, proximity, geo distance.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -590,11 +605,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Retrieve up to 1,000 records per call. Supports full-text search and filters. For better
-   * performance, it doesn't support: - The `distinct` query parameter - Sorting by typos,
-   * proximity, words, or geographical distance.
+   * Retrieves records from an index, up to 1,000 per request. While searching retrieves _hits_
+   * (records augmented with attributes for highlighting and ranking details), browsing _just_
+   * returns matching records. This can be useful if you want to export your indices. - The
+   * Analytics API doesn't collect data when using `browse`. - Records are ranked by attributes and
+   * custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking for:
+   * typo-tolerance, number of matched words, proximity, geo distance.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -603,11 +621,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieve up to 1,000 records per call. Supports full-text search and filters.
-   * For better performance, it doesn't support: - The `distinct` query parameter - Sorting by
-   * typos, proximity, words, or geographical distance.
+   * (asynchronously) Retrieves records from an index, up to 1,000 per request. While searching
+   * retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
+   * browsing _just_ returns matching records. This can be useful if you want to export your
+   * indices. - The Analytics API doesn't collect data when using `browse`. - Records are ranked by
+   * attributes and custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking
+   * for: typo-tolerance, number of matched words, proximity, geo distance.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -632,11 +653,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieve up to 1,000 records per call. Supports full-text search and filters.
-   * For better performance, it doesn't support: - The `distinct` query parameter - Sorting by
-   * typos, proximity, words, or geographical distance.
+   * (asynchronously) Retrieves records from an index, up to 1,000 per request. While searching
+   * retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
+   * browsing _just_ returns matching records. This can be useful if you want to export your
+   * indices. - The Analytics API doesn't collect data when using `browse`. - Records are ranked by
+   * attributes and custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking
+   * for: typo-tolerance, number of matched words, proximity, geo distance.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param browseParams (optional)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -647,11 +671,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieve up to 1,000 records per call. Supports full-text search and filters.
-   * For better performance, it doesn't support: - The `distinct` query parameter - Sorting by
-   * typos, proximity, words, or geographical distance.
+   * (asynchronously) Retrieves records from an index, up to 1,000 per request. While searching
+   * retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
+   * browsing _just_ returns matching records. This can be useful if you want to export your
+   * indices. - The Analytics API doesn't collect data when using `browse`. - Records are ranked by
+   * attributes and custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking
+   * for: typo-tolerance, number of matched words, proximity, geo distance.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -663,11 +690,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieve up to 1,000 records per call. Supports full-text search and filters.
-   * For better performance, it doesn't support: - The `distinct` query parameter - Sorting by
-   * typos, proximity, words, or geographical distance.
+   * (asynchronously) Retrieves records from an index, up to 1,000 per request. While searching
+   * retrieves _hits_ (records augmented with attributes for highlighting and ranking details),
+   * browsing _just_ returns matching records. This can be useful if you want to export your
+   * indices. - The Analytics API doesn't collect data when using `browse`. - Records are ranked by
+   * attributes and custom ranking. - Deduplication (`distinct`) is turned off. - There's no ranking
+   * for: typo-tolerance, number of matched words, proximity, geo distance.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -677,9 +707,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete the records but leave settings and index-specific API keys untouched.
+   * Deletes only the records from an index while keeping settings, synonyms, and rules.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -689,9 +719,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete the records but leave settings and index-specific API keys untouched.
+   * Deletes only the records from an index while keeping settings, synonyms, and rules.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public UpdatedAtResponse clearObjects(@Nonnull String indexName) throws AlgoliaRuntimeException {
@@ -699,9 +729,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete the records but leave settings and index-specific API keys untouched.
+   * (asynchronously) Deletes only the records from an index while keeping settings, synonyms, and
+   * rules.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -715,9 +746,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete the records but leave settings and index-specific API keys untouched.
+   * (asynchronously) Deletes only the records from an index while keeping settings, synonyms, and
+   * rules.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<UpdatedAtResponse> clearObjectsAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
@@ -725,11 +757,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete all rules in the index.
+   * Deletes all rules from the index.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -740,11 +771,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete all rules in the index.
+   * Deletes all rules from the index.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public UpdatedAtResponse clearRules(@Nonnull String indexName, Boolean forwardToReplicas) throws AlgoliaRuntimeException {
@@ -752,9 +782,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete all rules in the index.
+   * Deletes all rules from the index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -764,9 +794,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete all rules in the index.
+   * Deletes all rules from the index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public UpdatedAtResponse clearRules(@Nonnull String indexName) throws AlgoliaRuntimeException {
@@ -774,11 +804,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete all rules in the index.
+   * (asynchronously) Deletes all rules from the index.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -800,11 +829,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete all rules in the index.
+   * (asynchronously) Deletes all rules from the index.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<UpdatedAtResponse> clearRulesAsync(@Nonnull String indexName, Boolean forwardToReplicas)
@@ -813,9 +841,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete all rules in the index.
+   * (asynchronously) Deletes all rules from the index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -826,9 +854,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete all rules in the index.
+   * (asynchronously) Deletes all rules from the index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<UpdatedAtResponse> clearRulesAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
@@ -836,11 +864,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete all synonyms in the index.
+   * Deletes all synonyms from the index.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -851,11 +878,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete all synonyms in the index.
+   * Deletes all synonyms from the index.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public UpdatedAtResponse clearSynonyms(@Nonnull String indexName, Boolean forwardToReplicas) throws AlgoliaRuntimeException {
@@ -863,9 +889,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete all synonyms in the index.
+   * Deletes all synonyms from the index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -875,9 +901,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete all synonyms in the index.
+   * Deletes all synonyms from the index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public UpdatedAtResponse clearSynonyms(@Nonnull String indexName) throws AlgoliaRuntimeException {
@@ -885,11 +911,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete all synonyms in the index.
+   * (asynchronously) Deletes all synonyms from the index.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -911,11 +936,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete all synonyms in the index.
+   * (asynchronously) Deletes all synonyms from the index.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<UpdatedAtResponse> clearSynonymsAsync(@Nonnull String indexName, Boolean forwardToReplicas)
@@ -924,9 +948,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete all synonyms in the index.
+   * (asynchronously) Deletes all synonyms from the index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -937,9 +961,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete all synonyms in the index.
+   * (asynchronously) Deletes all synonyms from the index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<UpdatedAtResponse> clearSynonymsAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
@@ -1365,7 +1389,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete an existing API key. The request must be authenticated with the admin API key.
+   * Deletes the API key.
    *
    * @param key API key. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1377,7 +1401,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete an existing API key. The request must be authenticated with the admin API key.
+   * Deletes the API key.
    *
    * @param key API key. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1387,8 +1411,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete an existing API key. The request must be authenticated with the admin
-   * API key.
+   * (asynchronously) Deletes the API key.
    *
    * @param key API key. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1405,8 +1428,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete an existing API key. The request must be authenticated with the admin
-   * API key.
+   * (asynchronously) Deletes the API key.
    *
    * @param key API key. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1416,10 +1438,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * This operation doesn't support all the query options, only its filters (numeric, facet, or tag)
-   * and geo queries. It doesn't accept empty filters or queries.
+   * This operation doesn't accept empty queries or filters. It's more efficient to get a list of
+   * object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the
+   * records using the [`batch` operation](tag/Records/operation/batch).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param deleteByParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1431,10 +1454,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * This operation doesn't support all the query options, only its filters (numeric, facet, or tag)
-   * and geo queries. It doesn't accept empty filters or queries.
+   * This operation doesn't accept empty queries or filters. It's more efficient to get a list of
+   * object IDs with the [`browse` operation](#tag/Search/operation/browse), and then delete the
+   * records using the [`batch` operation](tag/Records/operation/batch).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param deleteByParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1443,10 +1467,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This operation doesn't support all the query options, only its filters
-   * (numeric, facet, or tag) and geo queries. It doesn't accept empty filters or queries.
+   * (asynchronously) This operation doesn't accept empty queries or filters. It's more efficient to
+   * get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then
+   * delete the records using the [`batch` operation](tag/Records/operation/batch).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param deleteByParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1471,10 +1496,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This operation doesn't support all the query options, only its filters
-   * (numeric, facet, or tag) and geo queries. It doesn't accept empty filters or queries.
+   * (asynchronously) This operation doesn't accept empty queries or filters. It's more efficient to
+   * get a list of object IDs with the [`browse` operation](#tag/Search/operation/browse), and then
+   * delete the records using the [`batch` operation](tag/Records/operation/batch).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param deleteByParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1484,9 +1510,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete an existing index.
+   * Deletes an index and all its settings. - Deleting an index doesn't delete its analytics data. -
+   * If you try to delete a non-existing index, the operation is ignored without warning. - If the
+   * index you want to delete has replica indices, the replicas become independent indices. - If the
+   * index you want to delete is a replica index, you must first unlink it from its primary index
+   * before you can delete it. For more information, see [Delete replica
+   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1496,9 +1527,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete an existing index.
+   * Deletes an index and all its settings. - Deleting an index doesn't delete its analytics data. -
+   * If you try to delete a non-existing index, the operation is ignored without warning. - If the
+   * index you want to delete has replica indices, the replicas become independent indices. - If the
+   * index you want to delete is a replica index, you must first unlink it from its primary index
+   * before you can delete it. For more information, see [Delete replica
+   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public DeletedAtResponse deleteIndex(@Nonnull String indexName) throws AlgoliaRuntimeException {
@@ -1506,9 +1542,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete an existing index.
+   * (asynchronously) Deletes an index and all its settings. - Deleting an index doesn't delete its
+   * analytics data. - If you try to delete a non-existing index, the operation is ignored without
+   * warning. - If the index you want to delete has replica indices, the replicas become independent
+   * indices. - If the index you want to delete is a replica index, you must first unlink it from
+   * its primary index before you can delete it. For more information, see [Delete replica
+   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1522,9 +1563,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete an existing index.
+   * (asynchronously) Deletes an index and all its settings. - Deleting an index doesn't delete its
+   * analytics data. - If you try to delete a non-existing index, the operation is ignored without
+   * warning. - If the index you want to delete has replica indices, the replicas become independent
+   * indices. - If the index you want to delete is a replica index, you must first unlink it from
+   * its primary index before you can delete it. For more information, see [Delete replica
+   * indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/deleting-replicas/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<DeletedAtResponse> deleteIndexAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
@@ -1532,11 +1578,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * To delete a set of records matching a query, use the [`deleteByQuery`
-   * operation](#tag/Records/operation/deleteBy) instead.
+   * Deletes a record by its object ID. To delete more than one record, use the [`batch`
+   * operation](#tag/Records/operation/batch). To delete records matching a query, use the
+   * [`deleteByQuery` operation](#tag/Records/operation/deleteBy).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1547,11 +1594,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * To delete a set of records matching a query, use the [`deleteByQuery`
-   * operation](#tag/Records/operation/deleteBy) instead.
+   * Deletes a record by its object ID. To delete more than one record, use the [`batch`
+   * operation](#tag/Records/operation/batch). To delete records matching a query, use the
+   * [`deleteByQuery` operation](#tag/Records/operation/deleteBy).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public DeletedAtResponse deleteObject(@Nonnull String indexName, @Nonnull String objectID) throws AlgoliaRuntimeException {
@@ -1559,11 +1607,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To delete a set of records matching a query, use the [`deleteByQuery`
-   * operation](#tag/Records/operation/deleteBy) instead.
+   * (asynchronously) Deletes a record by its object ID. To delete more than one record, use the
+   * [`batch` operation](#tag/Records/operation/batch). To delete records matching a query, use the
+   * [`deleteByQuery` operation](#tag/Records/operation/deleteBy).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1586,11 +1635,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To delete a set of records matching a query, use the [`deleteByQuery`
-   * operation](#tag/Records/operation/deleteBy) instead.
+   * (asynchronously) Deletes a record by its object ID. To delete more than one record, use the
+   * [`batch` operation](#tag/Records/operation/batch). To delete records matching a query, use the
+   * [`deleteByQuery` operation](#tag/Records/operation/deleteBy).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<DeletedAtResponse> deleteObjectAsync(@Nonnull String indexName, @Nonnull String objectID)
@@ -1599,13 +1649,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete a rule by its `objectID`. To find the `objectID` for rules, use the [`search`
+   * Deletes a rule by its ID. To find the object ID for rules, use the [`search`
    * operation](#tag/Rules/operation/searchRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1620,13 +1669,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete a rule by its `objectID`. To find the `objectID` for rules, use the [`search`
+   * Deletes a rule by its ID. To find the object ID for rules, use the [`search`
    * operation](#tag/Rules/operation/searchRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public UpdatedAtResponse deleteRule(@Nonnull String indexName, @Nonnull String objectID, Boolean forwardToReplicas)
@@ -1635,10 +1683,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete a rule by its `objectID`. To find the `objectID` for rules, use the [`search`
+   * Deletes a rule by its ID. To find the object ID for rules, use the [`search`
    * operation](#tag/Rules/operation/searchRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1650,10 +1698,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete a rule by its `objectID`. To find the `objectID` for rules, use the [`search`
+   * Deletes a rule by its ID. To find the object ID for rules, use the [`search`
    * operation](#tag/Rules/operation/searchRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1662,13 +1710,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a rule by its `objectID`. To find the `objectID` for rules, use the
-   * [`search` operation](#tag/Rules/operation/searchRules).
+   * (asynchronously) Deletes a rule by its ID. To find the object ID for rules, use the [`search`
+   * operation](#tag/Rules/operation/searchRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1693,13 +1740,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a rule by its `objectID`. To find the `objectID` for rules, use the
-   * [`search` operation](#tag/Rules/operation/searchRules).
+   * (asynchronously) Deletes a rule by its ID. To find the object ID for rules, use the [`search`
+   * operation](#tag/Rules/operation/searchRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<UpdatedAtResponse> deleteRuleAsync(
@@ -1711,10 +1757,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a rule by its `objectID`. To find the `objectID` for rules, use the
-   * [`search` operation](#tag/Rules/operation/searchRules).
+   * (asynchronously) Deletes a rule by its ID. To find the object ID for rules, use the [`search`
+   * operation](#tag/Rules/operation/searchRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1729,10 +1775,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a rule by its `objectID`. To find the `objectID` for rules, use the
-   * [`search` operation](#tag/Rules/operation/searchRules).
+   * (asynchronously) Deletes a rule by its ID. To find the object ID for rules, use the [`search`
+   * operation](#tag/Rules/operation/searchRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1742,7 +1788,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Remove a source from the list of allowed sources.
+   * Deletes a source from the list of allowed sources.
    *
    * @param source IP address range of the source. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1754,7 +1800,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Remove a source from the list of allowed sources.
+   * Deletes a source from the list of allowed sources.
    *
    * @param source IP address range of the source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1764,7 +1810,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Remove a source from the list of allowed sources.
+   * (asynchronously) Deletes a source from the list of allowed sources.
    *
    * @param source IP address range of the source. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1780,7 +1826,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Remove a source from the list of allowed sources.
+   * (asynchronously) Deletes a source from the list of allowed sources.
    *
    * @param source IP address range of the source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1790,13 +1836,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete a synonym by its `objectID`. To find the object IDs of your synonyms, use the [`search`
+   * Deletes a synonym by its ID. To find the object IDs of your synonyms, use the [`search`
    * operation](#tag/Synonyms/operation/searchSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1811,13 +1856,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete a synonym by its `objectID`. To find the object IDs of your synonyms, use the [`search`
+   * Deletes a synonym by its ID. To find the object IDs of your synonyms, use the [`search`
    * operation](#tag/Synonyms/operation/searchSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public DeletedAtResponse deleteSynonym(@Nonnull String indexName, @Nonnull String objectID, Boolean forwardToReplicas)
@@ -1826,10 +1870,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete a synonym by its `objectID`. To find the object IDs of your synonyms, use the [`search`
+   * Deletes a synonym by its ID. To find the object IDs of your synonyms, use the [`search`
    * operation](#tag/Synonyms/operation/searchSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1841,10 +1885,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Delete a synonym by its `objectID`. To find the object IDs of your synonyms, use the [`search`
+   * Deletes a synonym by its ID. To find the object IDs of your synonyms, use the [`search`
    * operation](#tag/Synonyms/operation/searchSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1853,13 +1897,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a synonym by its `objectID`. To find the object IDs of your synonyms,
-   * use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+   * (asynchronously) Deletes a synonym by its ID. To find the object IDs of your synonyms, use the
+   * [`search` operation](#tag/Synonyms/operation/searchSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1884,13 +1927,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a synonym by its `objectID`. To find the object IDs of your synonyms,
-   * use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+   * (asynchronously) Deletes a synonym by its ID. To find the object IDs of your synonyms, use the
+   * [`search` operation](#tag/Synonyms/operation/searchSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<DeletedAtResponse> deleteSynonymAsync(
@@ -1902,10 +1944,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a synonym by its `objectID`. To find the object IDs of your synonyms,
-   * use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+   * (asynchronously) Deletes a synonym by its ID. To find the object IDs of your synonyms, use the
+   * [`search` operation](#tag/Synonyms/operation/searchSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1920,10 +1962,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a synonym by its `objectID`. To find the object IDs of your synonyms,
-   * use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
+   * (asynchronously) Deletes a synonym by its ID. To find the object IDs of your synonyms, use the
+   * [`search` operation](#tag/Synonyms/operation/searchSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1933,9 +1975,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Get the permissions and restrictions of a specific API key. When authenticating with the admin
-   * API key, you can request information for any of your application's keys. When authenticating
-   * with other API keys, you can only retrieve information for that key.
+   * Gets the permissions and restrictions of an API key. When authenticating with the admin API
+   * key, you can request information for any of your application's keys. When authenticating with
+   * other API keys, you can only retrieve information for that key.
    *
    * @param key API key. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1947,9 +1989,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Get the permissions and restrictions of a specific API key. When authenticating with the admin
-   * API key, you can request information for any of your application's keys. When authenticating
-   * with other API keys, you can only retrieve information for that key.
+   * Gets the permissions and restrictions of an API key. When authenticating with the admin API
+   * key, you can request information for any of your application's keys. When authenticating with
+   * other API keys, you can only retrieve information for that key.
    *
    * @param key API key. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1959,10 +2001,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get the permissions and restrictions of a specific API key. When
-   * authenticating with the admin API key, you can request information for any of your
-   * application's keys. When authenticating with other API keys, you can only retrieve information
-   * for that key.
+   * (asynchronously) Gets the permissions and restrictions of an API key. When authenticating with
+   * the admin API key, you can request information for any of your application's keys. When
+   * authenticating with other API keys, you can only retrieve information for that key.
    *
    * @param key API key. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1979,10 +2020,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get the permissions and restrictions of a specific API key. When
-   * authenticating with the admin API key, you can request information for any of your
-   * application's keys. When authenticating with other API keys, you can only retrieve information
-   * for that key.
+   * (asynchronously) Gets the permissions and restrictions of an API key. When authenticating with
+   * the admin API key, you can request information for any of your application's keys. When
+   * authenticating with other API keys, you can only retrieve information for that key.
    *
    * @param key API key. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1992,14 +2032,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Lists Algolia's [supported
-   * languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/)
-   * and any customizations applied to each language's [stop
-   * word](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/),
-   * [plural](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/),
-   * and [segmentation
-   * (compound)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/)
-   * features.
+   * Lists supported languages with their supported dictionary types and number of custom entries.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2010,14 +2043,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Lists Algolia's [supported
-   * languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/)
-   * and any customizations applied to each language's [stop
-   * word](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/),
-   * [plural](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/),
-   * and [segmentation
-   * (compound)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/)
-   * features.
+   * Lists supported languages with their supported dictionary types and number of custom entries.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2026,14 +2052,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Lists Algolia's [supported
-   * languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/)
-   * and any customizations applied to each language's [stop
-   * word](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/),
-   * [plural](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/),
-   * and [segmentation
-   * (compound)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/)
-   * features.
+   * (asynchronously) Lists supported languages with their supported dictionary types and number of
+   * custom entries.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2047,14 +2067,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Lists Algolia's [supported
-   * languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/)
-   * and any customizations applied to each language's [stop
-   * word](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/),
-   * [plural](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/),
-   * and [segmentation
-   * (compound)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/)
-   * features.
+   * (asynchronously) Lists supported languages with their supported dictionary types and number of
+   * custom entries.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2063,8 +2077,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Get the languages for which [stop words are turned
-   * off](#tag/Dictionaries/operation/setDictionarySettings).
+   * Retrieves the languages for which standard dictionary entries are turned off.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2075,8 +2088,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Get the languages for which [stop words are turned
-   * off](#tag/Dictionaries/operation/setDictionarySettings).
+   * Retrieves the languages for which standard dictionary entries are turned off.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2085,8 +2097,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get the languages for which [stop words are turned
-   * off](#tag/Dictionaries/operation/setDictionarySettings).
+   * (asynchronously) Retrieves the languages for which standard dictionary entries are turned off.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2100,8 +2111,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get the languages for which [stop words are turned
-   * off](#tag/Dictionaries/operation/setDictionarySettings).
+   * (asynchronously) Retrieves the languages for which standard dictionary entries are turned off.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2111,20 +2121,18 @@ public class SearchClient extends ApiClient {
 
   /**
    * The request must be authenticated by an API key with the [`logs`
-   * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). Logs are
-   * held for the last seven days. There's also a logging limit of 1,000 API calls per server. This
-   * request counts towards your [operations
+   * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). - Logs are
+   * held for the last seven days. - Up to 1,000 API requests per server are logged. - This request
+   * counts towards your [operations
    * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
-   * but doesn't appear in the logs itself. > **Note**: To fetch the logs for a Distributed Search
-   * Network (DSN) cluster, target the [DSN's
-   * endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).
+   * but doesn't appear in the logs itself.
    *
-   * @param offset First log entry to retrieve. Sorted by decreasing date with 0 being the most
-   *     recent. (optional, default to 0)
+   * @param offset First log entry to retrieve. The most recent entries are listed first. (optional,
+   *     default to 0)
    * @param length Maximum number of entries to retrieve. (optional, default to 10)
-   * @param indexName Index for which log entries should be retrieved. When omitted, log entries are
-   *     retrieved for all indices. (optional)
-   * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved.
+   * @param indexName Index for which to retrieve log entries. By default, log entries are retrieved
+   *     for all indices. (optional)
+   * @param type Type of log entries to retrieve. By default, all log entries are retrieved.
    *     (optional, default to all)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2137,20 +2145,18 @@ public class SearchClient extends ApiClient {
 
   /**
    * The request must be authenticated by an API key with the [`logs`
-   * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). Logs are
-   * held for the last seven days. There's also a logging limit of 1,000 API calls per server. This
-   * request counts towards your [operations
+   * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). - Logs are
+   * held for the last seven days. - Up to 1,000 API requests per server are logged. - This request
+   * counts towards your [operations
    * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
-   * but doesn't appear in the logs itself. > **Note**: To fetch the logs for a Distributed Search
-   * Network (DSN) cluster, target the [DSN's
-   * endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).
+   * but doesn't appear in the logs itself.
    *
-   * @param offset First log entry to retrieve. Sorted by decreasing date with 0 being the most
-   *     recent. (optional, default to 0)
+   * @param offset First log entry to retrieve. The most recent entries are listed first. (optional,
+   *     default to 0)
    * @param length Maximum number of entries to retrieve. (optional, default to 10)
-   * @param indexName Index for which log entries should be retrieved. When omitted, log entries are
-   *     retrieved for all indices. (optional)
-   * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved.
+   * @param indexName Index for which to retrieve log entries. By default, log entries are retrieved
+   *     for all indices. (optional)
+   * @param type Type of log entries to retrieve. By default, all log entries are retrieved.
    *     (optional, default to all)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2160,13 +2166,11 @@ public class SearchClient extends ApiClient {
 
   /**
    * The request must be authenticated by an API key with the [`logs`
-   * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). Logs are
-   * held for the last seven days. There's also a logging limit of 1,000 API calls per server. This
-   * request counts towards your [operations
+   * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). - Logs are
+   * held for the last seven days. - Up to 1,000 API requests per server are logged. - This request
+   * counts towards your [operations
    * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
-   * but doesn't appear in the logs itself. > **Note**: To fetch the logs for a Distributed Search
-   * Network (DSN) cluster, target the [DSN's
-   * endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).
+   * but doesn't appear in the logs itself.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2178,13 +2182,11 @@ public class SearchClient extends ApiClient {
 
   /**
    * The request must be authenticated by an API key with the [`logs`
-   * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). Logs are
-   * held for the last seven days. There's also a logging limit of 1,000 API calls per server. This
-   * request counts towards your [operations
+   * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). - Logs are
+   * held for the last seven days. - Up to 1,000 API requests per server are logged. - This request
+   * counts towards your [operations
    * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
-   * but doesn't appear in the logs itself. > **Note**: To fetch the logs for a Distributed Search
-   * Network (DSN) cluster, target the [DSN's
-   * endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).
+   * but doesn't appear in the logs itself.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2194,20 +2196,18 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) The request must be authenticated by an API key with the [`logs`
-   * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). Logs are
-   * held for the last seven days. There's also a logging limit of 1,000 API calls per server. This
-   * request counts towards your [operations
+   * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). - Logs are
+   * held for the last seven days. - Up to 1,000 API requests per server are logged. - This request
+   * counts towards your [operations
    * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
-   * but doesn't appear in the logs itself. > **Note**: To fetch the logs for a Distributed Search
-   * Network (DSN) cluster, target the [DSN's
-   * endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).
+   * but doesn't appear in the logs itself.
    *
-   * @param offset First log entry to retrieve. Sorted by decreasing date with 0 being the most
-   *     recent. (optional, default to 0)
+   * @param offset First log entry to retrieve. The most recent entries are listed first. (optional,
+   *     default to 0)
    * @param length Maximum number of entries to retrieve. (optional, default to 10)
-   * @param indexName Index for which log entries should be retrieved. When omitted, log entries are
-   *     retrieved for all indices. (optional)
-   * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved.
+   * @param indexName Index for which to retrieve log entries. By default, log entries are retrieved
+   *     for all indices. (optional)
+   * @param type Type of log entries to retrieve. By default, all log entries are retrieved.
    *     (optional, default to all)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2234,20 +2234,18 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) The request must be authenticated by an API key with the [`logs`
-   * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). Logs are
-   * held for the last seven days. There's also a logging limit of 1,000 API calls per server. This
-   * request counts towards your [operations
+   * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). - Logs are
+   * held for the last seven days. - Up to 1,000 API requests per server are logged. - This request
+   * counts towards your [operations
    * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
-   * but doesn't appear in the logs itself. > **Note**: To fetch the logs for a Distributed Search
-   * Network (DSN) cluster, target the [DSN's
-   * endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).
+   * but doesn't appear in the logs itself.
    *
-   * @param offset First log entry to retrieve. Sorted by decreasing date with 0 being the most
-   *     recent. (optional, default to 0)
+   * @param offset First log entry to retrieve. The most recent entries are listed first. (optional,
+   *     default to 0)
    * @param length Maximum number of entries to retrieve. (optional, default to 10)
-   * @param indexName Index for which log entries should be retrieved. When omitted, log entries are
-   *     retrieved for all indices. (optional)
-   * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved.
+   * @param indexName Index for which to retrieve log entries. By default, log entries are retrieved
+   *     for all indices. (optional)
+   * @param type Type of log entries to retrieve. By default, all log entries are retrieved.
    *     (optional, default to all)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2258,13 +2256,11 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) The request must be authenticated by an API key with the [`logs`
-   * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). Logs are
-   * held for the last seven days. There's also a logging limit of 1,000 API calls per server. This
-   * request counts towards your [operations
+   * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). - Logs are
+   * held for the last seven days. - Up to 1,000 API requests per server are logged. - This request
+   * counts towards your [operations
    * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
-   * but doesn't appear in the logs itself. > **Note**: To fetch the logs for a Distributed Search
-   * Network (DSN) cluster, target the [DSN's
-   * endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).
+   * but doesn't appear in the logs itself.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2276,13 +2272,11 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) The request must be authenticated by an API key with the [`logs`
-   * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). Logs are
-   * held for the last seven days. There's also a logging limit of 1,000 API calls per server. This
-   * request counts towards your [operations
+   * ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). - Logs are
+   * held for the last seven days. - Up to 1,000 API requests per server are logged. - This request
+   * counts towards your [operations
    * quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
-   * but doesn't appear in the logs itself. > **Note**: To fetch the logs for a Distributed Search
-   * Network (DSN) cluster, target the [DSN's
-   * endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).
+   * but doesn't appear in the logs itself.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2291,14 +2285,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * To get more than one record, use the [`objects` operation](#tag/Records/operation/getObjects).
+   * Retrieves one record by its object ID. To retrieve more than one record, use the [`objects`
+   * operation](#tag/Records/operation/getObjects).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
    * @param attributesToRetrieve Attributes to include with the records in the response. This is
    *     useful to reduce the size of the API response. By default, all retrievable attributes are
-   *     returned. `objectID` is always retrieved, even when not specified.
-   *     [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/)
+   *     returned. `objectID` is always retrieved. Attributes included in `unretrievableAttributes`
    *     won't be retrieved unless the request is authenticated with the admin API key. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2314,14 +2308,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * To get more than one record, use the [`objects` operation](#tag/Records/operation/getObjects).
+   * Retrieves one record by its object ID. To retrieve more than one record, use the [`objects`
+   * operation](#tag/Records/operation/getObjects).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
    * @param attributesToRetrieve Attributes to include with the records in the response. This is
    *     useful to reduce the size of the API response. By default, all retrievable attributes are
-   *     returned. `objectID` is always retrieved, even when not specified.
-   *     [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/)
+   *     returned. `objectID` is always retrieved. Attributes included in `unretrievableAttributes`
    *     won't be retrieved unless the request is authenticated with the admin API key. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2331,10 +2325,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * To get more than one record, use the [`objects` operation](#tag/Records/operation/getObjects).
+   * Retrieves one record by its object ID. To retrieve more than one record, use the [`objects`
+   * operation](#tag/Records/operation/getObjects).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2345,10 +2340,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * To get more than one record, use the [`objects` operation](#tag/Records/operation/getObjects).
+   * Retrieves one record by its object ID. To retrieve more than one record, use the [`objects`
+   * operation](#tag/Records/operation/getObjects).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Map<String, String> getObject(@Nonnull String indexName, @Nonnull String objectID) throws AlgoliaRuntimeException {
@@ -2356,15 +2352,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To get more than one record, use the [`objects`
-   * operation](#tag/Records/operation/getObjects).
+   * (asynchronously) Retrieves one record by its object ID. To retrieve more than one record, use
+   * the [`objects` operation](#tag/Records/operation/getObjects).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
    * @param attributesToRetrieve Attributes to include with the records in the response. This is
    *     useful to reduce the size of the API response. By default, all retrievable attributes are
-   *     returned. `objectID` is always retrieved, even when not specified.
-   *     [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/)
+   *     returned. `objectID` is always retrieved. Attributes included in `unretrievableAttributes`
    *     won't be retrieved unless the request is authenticated with the admin API key. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2390,15 +2385,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To get more than one record, use the [`objects`
-   * operation](#tag/Records/operation/getObjects).
+   * (asynchronously) Retrieves one record by its object ID. To retrieve more than one record, use
+   * the [`objects` operation](#tag/Records/operation/getObjects).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
    * @param attributesToRetrieve Attributes to include with the records in the response. This is
    *     useful to reduce the size of the API response. By default, all retrievable attributes are
-   *     returned. `objectID` is always retrieved, even when not specified.
-   *     [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/)
+   *     returned. `objectID` is always retrieved. Attributes included in `unretrievableAttributes`
    *     won't be retrieved unless the request is authenticated with the admin API key. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2411,11 +2405,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To get more than one record, use the [`objects`
-   * operation](#tag/Records/operation/getObjects).
+   * (asynchronously) Retrieves one record by its object ID. To retrieve more than one record, use
+   * the [`objects` operation](#tag/Records/operation/getObjects).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2429,11 +2423,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To get more than one record, use the [`objects`
-   * operation](#tag/Records/operation/getObjects).
+   * (asynchronously) Retrieves one record by its object ID. To retrieve more than one record, use
+   * the [`objects` operation](#tag/Records/operation/getObjects).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Map<String, String>> getObjectAsync(@Nonnull String indexName, @Nonnull String objectID)
@@ -2442,8 +2436,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Retrieve one or more records, potentially from different indices, in a single API operation.
-   * Results will be received in the same order as the requests.
+   * Retrieves one or more records, potentially from different indices. Records are returned in the
+   * same order as the requests.
    *
    * @param getObjectsParams Request object. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -2460,8 +2454,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Retrieve one or more records, potentially from different indices, in a single API operation.
-   * Results will be received in the same order as the requests.
+   * Retrieves one or more records, potentially from different indices. Records are returned in the
+   * same order as the requests.
    *
    * @param getObjectsParams Request object. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -2473,8 +2467,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieve one or more records, potentially from different indices, in a single
-   * API operation. Results will be received in the same order as the requests.
+   * (asynchronously) Retrieves one or more records, potentially from different indices. Records are
+   * returned in the same order as the requests.
    *
    * @param getObjectsParams Request object. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -2500,8 +2494,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieve one or more records, potentially from different indices, in a single
-   * API operation. Results will be received in the same order as the requests.
+   * (asynchronously) Retrieves one or more records, potentially from different indices. Records are
+   * returned in the same order as the requests.
    *
    * @param getObjectsParams Request object. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
@@ -2513,10 +2507,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Get a rule by its `objectID`. To find the `objectID` for rules, use the [`search`
+   * Retrieves a rule by its ID. To find the object ID of rules, use the [`search`
    * operation](#tag/Rules/operation/searchRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2527,10 +2521,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Get a rule by its `objectID`. To find the `objectID` for rules, use the [`search`
+   * Retrieves a rule by its ID. To find the object ID of rules, use the [`search`
    * operation](#tag/Rules/operation/searchRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2539,10 +2533,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a rule by its `objectID`. To find the `objectID` for rules, use the
-   * [`search` operation](#tag/Rules/operation/searchRules).
+   * (asynchronously) Retrieves a rule by its ID. To find the object ID of rules, use the [`search`
+   * operation](#tag/Rules/operation/searchRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2563,10 +2557,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a rule by its `objectID`. To find the `objectID` for rules, use the
-   * [`search` operation](#tag/Rules/operation/searchRules).
+   * (asynchronously) Retrieves a rule by its ID. To find the object ID of rules, use the [`search`
+   * operation](#tag/Rules/operation/searchRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2575,10 +2569,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Return an object containing an index's [configuration
-   * settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/).
+   * Retrieves an object with non-null index settings.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2588,10 +2581,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Return an object containing an index's [configuration
-   * settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/).
+   * Retrieves an object with non-null index settings.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public IndexSettings getSettings(@Nonnull String indexName) throws AlgoliaRuntimeException {
@@ -2599,10 +2591,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return an object containing an index's [configuration
-   * settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/).
+   * (asynchronously) Retrieves an object with non-null index settings.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2616,10 +2607,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return an object containing an index's [configuration
-   * settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/).
+   * (asynchronously) Retrieves an object with non-null index settings.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<IndexSettings> getSettingsAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
@@ -2627,7 +2617,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Get all allowed sources (IP addresses).
+   * Retrieves all allowed IP addresses with access to your application.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2638,7 +2628,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Get all allowed sources (IP addresses).
+   * Retrieves all allowed IP addresses with access to your application.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2647,7 +2637,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get all allowed sources (IP addresses).
+   * (asynchronously) Retrieves all allowed IP addresses with access to your application.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2660,7 +2650,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get all allowed sources (IP addresses).
+   * (asynchronously) Retrieves all allowed IP addresses with access to your application.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2669,10 +2659,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Get a syonym by its `objectID`. To find the object IDs for your synonyms, use the [`search`
+   * Retrieves a syonym by its ID. To find the object IDs for your synonyms, use the [`search`
    * operation](#tag/Synonyms/operation/searchSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2684,10 +2674,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Get a syonym by its `objectID`. To find the object IDs for your synonyms, use the [`search`
+   * Retrieves a syonym by its ID. To find the object IDs for your synonyms, use the [`search`
    * operation](#tag/Synonyms/operation/searchSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2696,10 +2686,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a syonym by its `objectID`. To find the object IDs for your synonyms, use
+   * (asynchronously) Retrieves a syonym by its ID. To find the object IDs for your synonyms, use
    * the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2720,10 +2710,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a syonym by its `objectID`. To find the object IDs for your synonyms, use
+   * (asynchronously) Retrieves a syonym by its ID. To find the object IDs for your synonyms, use
    * the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2732,10 +2722,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Some operations, such as copying an index, will respond with a `taskID` value. Use this value
-   * here to check the status of that task.
+   * Checks the status of a given task. Indexing tasks are asynchronous. When you add, update, or
+   * delete records or indices, a task is created on a queue and completed depending on the load on
+   * the server. The indexing tasks' responses include a task ID that you can use to check the
+   * status.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param taskID Unique task identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2747,10 +2739,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Some operations, such as copying an index, will respond with a `taskID` value. Use this value
-   * here to check the status of that task.
+   * Checks the status of a given task. Indexing tasks are asynchronous. When you add, update, or
+   * delete records or indices, a task is created on a queue and completed depending on the load on
+   * the server. The indexing tasks' responses include a task ID that you can use to check the
+   * status.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param taskID Unique task identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2759,10 +2753,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Some operations, such as copying an index, will respond with a `taskID` value.
-   * Use this value here to check the status of that task.
+   * (asynchronously) Checks the status of a given task. Indexing tasks are asynchronous. When you
+   * add, update, or delete records or indices, a task is created on a queue and completed depending
+   * on the load on the server. The indexing tasks' responses include a task ID that you can use to
+   * check the status.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param taskID Unique task identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2779,10 +2775,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Some operations, such as copying an index, will respond with a `taskID` value.
-   * Use this value here to check the status of that task.
+   * (asynchronously) Checks the status of a given task. Indexing tasks are asynchronous. When you
+   * add, update, or delete records or indices, a task is created on a queue and completed depending
+   * on the load on the server. The indexing tasks' responses include a task ID that you can use to
+   * check the status.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param taskID Unique task identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2791,8 +2789,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Get the IDs of the 10 users with the highest number of records per cluster. Since it can take
-   * up to a few seconds to get the data from the different clusters, the response isn't real-time.
+   * Get the IDs of the 10 users with the highest number of records per cluster. Since it can take a
+   * few seconds to get the data from the different clusters, the response isn't real-time.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2803,8 +2801,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Get the IDs of the 10 users with the highest number of records per cluster. Since it can take
-   * up to a few seconds to get the data from the different clusters, the response isn't real-time.
+   * Get the IDs of the 10 users with the highest number of records per cluster. Since it can take a
+   * few seconds to get the data from the different clusters, the response isn't real-time.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2814,8 +2812,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Get the IDs of the 10 users with the highest number of records per cluster.
-   * Since it can take up to a few seconds to get the data from the different clusters, the response
-   * isn't real-time.
+   * Since it can take a few seconds to get the data from the different clusters, the response isn't
+   * real-time.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2829,8 +2827,8 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Get the IDs of the 10 users with the highest number of records per cluster.
-   * Since it can take up to a few seconds to get the data from the different clusters, the response
-   * isn't real-time.
+   * Since it can take a few seconds to get the data from the different clusters, the response isn't
+   * real-time.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2839,10 +2837,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Returns the userID data stored in the mapping. Since it can take up to a few seconds to get the
-   * data from the different clusters, the response isn't real-time.
+   * Returns the user ID data stored in the mapping. Since it can take a few seconds to get the data
+   * from the different clusters, the response isn't real-time.
    *
-   * @param userID userID to assign. (required)
+   * @param userID User ID to assign. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2852,10 +2850,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Returns the userID data stored in the mapping. Since it can take up to a few seconds to get the
-   * data from the different clusters, the response isn't real-time.
+   * Returns the user ID data stored in the mapping. Since it can take a few seconds to get the data
+   * from the different clusters, the response isn't real-time.
    *
-   * @param userID userID to assign. (required)
+   * @param userID User ID to assign. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public UserId getUserId(@Nonnull String userID) throws AlgoliaRuntimeException {
@@ -2863,10 +2861,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the userID data stored in the mapping. Since it can take up to a few
+   * (asynchronously) Returns the user ID data stored in the mapping. Since it can take a few
    * seconds to get the data from the different clusters, the response isn't real-time.
    *
-   * @param userID userID to assign. (required)
+   * @param userID User ID to assign. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2879,10 +2877,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the userID data stored in the mapping. Since it can take up to a few
+   * (asynchronously) Returns the user ID data stored in the mapping. Since it can take a few
    * seconds to get the data from the different clusters, the response isn't real-time.
    *
-   * @param userID userID to assign. (required)
+   * @param userID User ID to assign. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<UserId> getUserIdAsync(@Nonnull String userID) throws AlgoliaRuntimeException {
@@ -2894,8 +2892,8 @@ public class SearchClient extends ApiClient {
    * users from one cluster to another is complete, this operation retrieves the status of the
    * process.
    *
-   * @param getClusters Indicates whether to include the cluster's pending mapping state in the
-   *     response. (optional)
+   * @param getClusters Whether to include the cluster's pending mapping state in the response.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2909,8 +2907,8 @@ public class SearchClient extends ApiClient {
    * users from one cluster to another is complete, this operation retrieves the status of the
    * process.
    *
-   * @param getClusters Indicates whether to include the cluster's pending mapping state in the
-   *     response. (optional)
+   * @param getClusters Whether to include the cluster's pending mapping state in the response.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public HasPendingMappingsResponse hasPendingMappings(Boolean getClusters) throws AlgoliaRuntimeException {
@@ -2946,8 +2944,8 @@ public class SearchClient extends ApiClient {
    * users or migrating users from one cluster to another is complete, this operation retrieves the
    * status of the process.
    *
-   * @param getClusters Indicates whether to include the cluster's pending mapping state in the
-   *     response. (optional)
+   * @param getClusters Whether to include the cluster's pending mapping state in the response.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2968,8 +2966,8 @@ public class SearchClient extends ApiClient {
    * users or migrating users from one cluster to another is complete, this operation retrieves the
    * status of the process.
    *
-   * @param getClusters Indicates whether to include the cluster's pending mapping state in the
-   *     response. (optional)
+   * @param getClusters Whether to include the cluster's pending mapping state in the response.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<HasPendingMappingsResponse> hasPendingMappingsAsync(Boolean getClusters) throws AlgoliaRuntimeException {
@@ -3002,7 +3000,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * List all API keys associated with your Algolia application, including their permissions and
+   * Lists all API keys associated with your Algolia application, including their permissions and
    * restrictions.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3014,7 +3012,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * List all API keys associated with your Algolia application, including their permissions and
+   * Lists all API keys associated with your Algolia application, including their permissions and
    * restrictions.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3024,7 +3022,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List all API keys associated with your Algolia application, including their
+   * (asynchronously) Lists all API keys associated with your Algolia application, including their
    * permissions and restrictions.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3038,7 +3036,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List all API keys associated with your Algolia application, including their
+   * (asynchronously) Lists all API keys associated with your Algolia application, including their
    * permissions and restrictions.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3048,7 +3046,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * List the available clusters in a multi-cluster setup.
+   * Lists the available clusters in a multi-cluster setup.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -3059,7 +3057,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * List the available clusters in a multi-cluster setup.
+   * Lists the available clusters in a multi-cluster setup.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -3068,7 +3066,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List the available clusters in a multi-cluster setup.
+   * (asynchronously) Lists the available clusters in a multi-cluster setup.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -3081,7 +3079,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List the available clusters in a multi-cluster setup.
+   * (asynchronously) Lists the available clusters in a multi-cluster setup.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -3090,12 +3088,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * List indices in an Algolia application.
+   * Lists all indices in the current Algolia application. The request follows any index
+   * restrictions of the API key you use to make the request.
    *
-   * @param page Returns the requested page number. The page size is determined by the `hitsPerPage`
-   *     parameter. You can see the number of available pages in the `nbPages` response attribute.
-   *     When `page` is null, the API response is not paginated. (optional)
-   * @param hitsPerPage Maximum number of hits per page. (optional, default to 100)
+   * @param page Requested page of the API response. If `null`, the API response is not paginated.
+   *     (optional)
+   * @param hitsPerPage Number of hits per page. (optional, default to 100)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3105,12 +3103,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * List indices in an Algolia application.
+   * Lists all indices in the current Algolia application. The request follows any index
+   * restrictions of the API key you use to make the request.
    *
-   * @param page Returns the requested page number. The page size is determined by the `hitsPerPage`
-   *     parameter. You can see the number of available pages in the `nbPages` response attribute.
-   *     When `page` is null, the API response is not paginated. (optional)
-   * @param hitsPerPage Maximum number of hits per page. (optional, default to 100)
+   * @param page Requested page of the API response. If `null`, the API response is not paginated.
+   *     (optional)
+   * @param hitsPerPage Number of hits per page. (optional, default to 100)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListIndicesResponse listIndices(Integer page, Integer hitsPerPage) throws AlgoliaRuntimeException {
@@ -3118,7 +3116,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * List indices in an Algolia application.
+   * Lists all indices in the current Algolia application. The request follows any index
+   * restrictions of the API key you use to make the request.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -3129,7 +3128,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * List indices in an Algolia application.
+   * Lists all indices in the current Algolia application. The request follows any index
+   * restrictions of the API key you use to make the request.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -3138,12 +3138,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List indices in an Algolia application.
+   * (asynchronously) Lists all indices in the current Algolia application. The request follows any
+   * index restrictions of the API key you use to make the request.
    *
-   * @param page Returns the requested page number. The page size is determined by the `hitsPerPage`
-   *     parameter. You can see the number of available pages in the `nbPages` response attribute.
-   *     When `page` is null, the API response is not paginated. (optional)
-   * @param hitsPerPage Maximum number of hits per page. (optional, default to 100)
+   * @param page Requested page of the API response. If `null`, the API response is not paginated.
+   *     (optional)
+   * @param hitsPerPage Number of hits per page. (optional, default to 100)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3161,12 +3161,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List indices in an Algolia application.
+   * (asynchronously) Lists all indices in the current Algolia application. The request follows any
+   * index restrictions of the API key you use to make the request.
    *
-   * @param page Returns the requested page number. The page size is determined by the `hitsPerPage`
-   *     parameter. You can see the number of available pages in the `nbPages` response attribute.
-   *     When `page` is null, the API response is not paginated. (optional)
-   * @param hitsPerPage Maximum number of hits per page. (optional, default to 100)
+   * @param page Requested page of the API response. If `null`, the API response is not paginated.
+   *     (optional)
+   * @param hitsPerPage Number of hits per page. (optional, default to 100)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListIndicesResponse> listIndicesAsync(Integer page, Integer hitsPerPage) throws AlgoliaRuntimeException {
@@ -3174,7 +3174,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List indices in an Algolia application.
+   * (asynchronously) Lists all indices in the current Algolia application. The request follows any
+   * index restrictions of the API key you use to make the request.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -3185,7 +3186,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List indices in an Algolia application.
+   * (asynchronously) Lists all indices in the current Algolia application. The request follows any
+   * index restrictions of the API key you use to make the request.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -3194,13 +3196,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * List the userIDs assigned to a multi-cluster application. Since it can take up to a few seconds
-   * to get the data from the different clusters, the response isn't real-time.
+   * Lists the userIDs assigned to a multi-cluster application. Since it can take a few seconds to
+   * get the data from the different clusters, the response isn't real-time.
    *
-   * @param page Returns the requested page number. The page size is determined by the `hitsPerPage`
-   *     parameter. You can see the number of available pages in the `nbPages` response attribute.
-   *     When `page` is null, the API response is not paginated. (optional)
-   * @param hitsPerPage Maximum number of hits per page. (optional, default to 100)
+   * @param page Requested page of the API response. If `null`, the API response is not paginated.
+   *     (optional)
+   * @param hitsPerPage Number of hits per page. (optional, default to 100)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3210,13 +3211,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * List the userIDs assigned to a multi-cluster application. Since it can take up to a few seconds
-   * to get the data from the different clusters, the response isn't real-time.
+   * Lists the userIDs assigned to a multi-cluster application. Since it can take a few seconds to
+   * get the data from the different clusters, the response isn't real-time.
    *
-   * @param page Returns the requested page number. The page size is determined by the `hitsPerPage`
-   *     parameter. You can see the number of available pages in the `nbPages` response attribute.
-   *     When `page` is null, the API response is not paginated. (optional)
-   * @param hitsPerPage Maximum number of hits per page. (optional, default to 100)
+   * @param page Requested page of the API response. If `null`, the API response is not paginated.
+   *     (optional)
+   * @param hitsPerPage Number of hits per page. (optional, default to 100)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListUserIdsResponse listUserIds(Integer page, Integer hitsPerPage) throws AlgoliaRuntimeException {
@@ -3224,8 +3224,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * List the userIDs assigned to a multi-cluster application. Since it can take up to a few seconds
-   * to get the data from the different clusters, the response isn't real-time.
+   * Lists the userIDs assigned to a multi-cluster application. Since it can take a few seconds to
+   * get the data from the different clusters, the response isn't real-time.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -3236,8 +3236,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * List the userIDs assigned to a multi-cluster application. Since it can take up to a few seconds
-   * to get the data from the different clusters, the response isn't real-time.
+   * Lists the userIDs assigned to a multi-cluster application. Since it can take a few seconds to
+   * get the data from the different clusters, the response isn't real-time.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -3246,13 +3246,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List the userIDs assigned to a multi-cluster application. Since it can take up
-   * to a few seconds to get the data from the different clusters, the response isn't real-time.
+   * (asynchronously) Lists the userIDs assigned to a multi-cluster application. Since it can take a
+   * few seconds to get the data from the different clusters, the response isn't real-time.
    *
-   * @param page Returns the requested page number. The page size is determined by the `hitsPerPage`
-   *     parameter. You can see the number of available pages in the `nbPages` response attribute.
-   *     When `page` is null, the API response is not paginated. (optional)
-   * @param hitsPerPage Maximum number of hits per page. (optional, default to 100)
+   * @param page Requested page of the API response. If `null`, the API response is not paginated.
+   *     (optional)
+   * @param hitsPerPage Number of hits per page. (optional, default to 100)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3270,13 +3269,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List the userIDs assigned to a multi-cluster application. Since it can take up
-   * to a few seconds to get the data from the different clusters, the response isn't real-time.
+   * (asynchronously) Lists the userIDs assigned to a multi-cluster application. Since it can take a
+   * few seconds to get the data from the different clusters, the response isn't real-time.
    *
-   * @param page Returns the requested page number. The page size is determined by the `hitsPerPage`
-   *     parameter. You can see the number of available pages in the `nbPages` response attribute.
-   *     When `page` is null, the API response is not paginated. (optional)
-   * @param hitsPerPage Maximum number of hits per page. (optional, default to 100)
+   * @param page Requested page of the API response. If `null`, the API response is not paginated.
+   *     (optional)
+   * @param hitsPerPage Number of hits per page. (optional, default to 100)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListUserIdsResponse> listUserIdsAsync(Integer page, Integer hitsPerPage) throws AlgoliaRuntimeException {
@@ -3284,8 +3282,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List the userIDs assigned to a multi-cluster application. Since it can take up
-   * to a few seconds to get the data from the different clusters, the response isn't real-time.
+   * (asynchronously) Lists the userIDs assigned to a multi-cluster application. Since it can take a
+   * few seconds to get the data from the different clusters, the response isn't real-time.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -3296,8 +3294,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List the userIDs assigned to a multi-cluster application. Since it can take up
-   * to a few seconds to get the data from the different clusters, the response isn't real-time.
+   * (asynchronously) Lists the userIDs assigned to a multi-cluster application. Since it can take a
+   * few seconds to get the data from the different clusters, the response isn't real-time.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -3306,10 +3304,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * To reduce the time spent on network round trips, you can perform several write actions in a
-   * single request. It's a multi-index version of the [`batch`
-   * operation](#tag/Records/operation/batch). Actions are applied in the order they are specified.
-   * The supported actions are equivalent to the individual operations of the same name.
+   * Adds, updates, or deletes records in multiple indices with a single API request. - Actions are
+   * applied in the order they are specified. - Actions are equivalent to the individual API
+   * requests of the same name.
    *
    * @param batchParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3322,10 +3319,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * To reduce the time spent on network round trips, you can perform several write actions in a
-   * single request. It's a multi-index version of the [`batch`
-   * operation](#tag/Records/operation/batch). Actions are applied in the order they are specified.
-   * The supported actions are equivalent to the individual operations of the same name.
+   * Adds, updates, or deletes records in multiple indices with a single API request. - Actions are
+   * applied in the order they are specified. - Actions are equivalent to the individual API
+   * requests of the same name.
    *
    * @param batchParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3335,10 +3331,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To reduce the time spent on network round trips, you can perform several write
-   * actions in a single request. It's a multi-index version of the [`batch`
-   * operation](#tag/Records/operation/batch). Actions are applied in the order they are specified.
-   * The supported actions are equivalent to the individual operations of the same name.
+   * (asynchronously) Adds, updates, or deletes records in multiple indices with a single API
+   * request. - Actions are applied in the order they are specified. - Actions are equivalent to the
+   * individual API requests of the same name.
    *
    * @param batchParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3354,10 +3349,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To reduce the time spent on network round trips, you can perform several write
-   * actions in a single request. It's a multi-index version of the [`batch`
-   * operation](#tag/Records/operation/batch). Actions are applied in the order they are specified.
-   * The supported actions are equivalent to the individual operations of the same name.
+   * (asynchronously) Adds, updates, or deletes records in multiple indices with a single API
+   * request. - Actions are applied in the order they are specified. - Actions are equivalent to the
+   * individual API requests of the same name.
    *
    * @param batchParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3367,18 +3361,24 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * This `operation`, _copy_ or _move_, will copy or move a source index's (`IndexName`) records,
-   * settings, synonyms, and rules to a `destination` index. If the destination index exists, it
-   * will be replaced, except for index-specific API keys and analytics data. If the destination
-   * index doesn't exist, it will be created. The choice between moving or copying an index depends
-   * on your needs. Choose: - **Move** to rename an index. - **Copy** to create a new index with the
-   * same records and configuration as an existing one. > **Note**: When considering copying or
-   * moving, be aware of the [rate
-   * limitations](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits)
-   * on these processes and the [impact on your analytics
-   * data](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/concepts/indices-analytics/).
+   * Copies or moves (renames) an index within the same Algolia application. - Existing destination
+   * indices are overwritten, except for index-specific API keys and analytics data. - If the
+   * destination index doesn't exist yet, it'll be created. **Copy** - Copying a source index that
+   * doesn't exist creates a new index with 0 records and default settings. - The API keys of the
+   * source index are merged with the existing keys in the destination index. - You can't copy the
+   * `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index
+   * that already has replicas. - Be aware of the [size
+   * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
+   * - Related guide: [Copy
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
+   * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
+   * When moving an index, the analytics data keep their original name and a new set of analytics
+   * data is started for the new name. To access the original analytics in the dashboard, create an
+   * index with the original name. - If the destination index has replicas, moving will overwrite
+   * the existing index and copy the data to the replica indices. - Related guide: [Move
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param operationIndexParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -3393,18 +3393,24 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * This `operation`, _copy_ or _move_, will copy or move a source index's (`IndexName`) records,
-   * settings, synonyms, and rules to a `destination` index. If the destination index exists, it
-   * will be replaced, except for index-specific API keys and analytics data. If the destination
-   * index doesn't exist, it will be created. The choice between moving or copying an index depends
-   * on your needs. Choose: - **Move** to rename an index. - **Copy** to create a new index with the
-   * same records and configuration as an existing one. > **Note**: When considering copying or
-   * moving, be aware of the [rate
-   * limitations](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits)
-   * on these processes and the [impact on your analytics
-   * data](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/concepts/indices-analytics/).
+   * Copies or moves (renames) an index within the same Algolia application. - Existing destination
+   * indices are overwritten, except for index-specific API keys and analytics data. - If the
+   * destination index doesn't exist yet, it'll be created. **Copy** - Copying a source index that
+   * doesn't exist creates a new index with 0 records and default settings. - The API keys of the
+   * source index are merged with the existing keys in the destination index. - You can't copy the
+   * `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index
+   * that already has replicas. - Be aware of the [size
+   * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
+   * - Related guide: [Copy
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
+   * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
+   * When moving an index, the analytics data keep their original name and a new set of analytics
+   * data is started for the new name. To access the original analytics in the dashboard, create an
+   * index with the original name. - If the destination index has replicas, moving will overwrite
+   * the existing index and copy the data to the replica indices. - Related guide: [Move
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param operationIndexParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -3414,18 +3420,24 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This `operation`, _copy_ or _move_, will copy or move a source index's
-   * (`IndexName`) records, settings, synonyms, and rules to a `destination` index. If the
-   * destination index exists, it will be replaced, except for index-specific API keys and analytics
-   * data. If the destination index doesn't exist, it will be created. The choice between moving or
-   * copying an index depends on your needs. Choose: - **Move** to rename an index. - **Copy** to
-   * create a new index with the same records and configuration as an existing one. > **Note**: When
-   * considering copying or moving, be aware of the [rate
-   * limitations](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits)
-   * on these processes and the [impact on your analytics
-   * data](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/concepts/indices-analytics/).
+   * (asynchronously) Copies or moves (renames) an index within the same Algolia application. -
+   * Existing destination indices are overwritten, except for index-specific API keys and analytics
+   * data. - If the destination index doesn't exist yet, it'll be created. **Copy** - Copying a
+   * source index that doesn't exist creates a new index with 0 records and default settings. - The
+   * API keys of the source index are merged with the existing keys in the destination index. - You
+   * can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a
+   * destination index that already has replicas. - Be aware of the [size
+   * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
+   * - Related guide: [Copy
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
+   * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
+   * When moving an index, the analytics data keep their original name and a new set of analytics
+   * data is started for the new name. To access the original analytics in the dashboard, create an
+   * index with the original name. - If the destination index has replicas, moving will overwrite
+   * the existing index and copy the data to the replica indices. - Related guide: [Move
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param operationIndexParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -3450,18 +3462,24 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) This `operation`, _copy_ or _move_, will copy or move a source index's
-   * (`IndexName`) records, settings, synonyms, and rules to a `destination` index. If the
-   * destination index exists, it will be replaced, except for index-specific API keys and analytics
-   * data. If the destination index doesn't exist, it will be created. The choice between moving or
-   * copying an index depends on your needs. Choose: - **Move** to rename an index. - **Copy** to
-   * create a new index with the same records and configuration as an existing one. > **Note**: When
-   * considering copying or moving, be aware of the [rate
-   * limitations](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits)
-   * on these processes and the [impact on your analytics
-   * data](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/concepts/indices-analytics/).
+   * (asynchronously) Copies or moves (renames) an index within the same Algolia application. -
+   * Existing destination indices are overwritten, except for index-specific API keys and analytics
+   * data. - If the destination index doesn't exist yet, it'll be created. **Copy** - Copying a
+   * source index that doesn't exist creates a new index with 0 records and default settings. - The
+   * API keys of the source index are merged with the existing keys in the destination index. - You
+   * can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a
+   * destination index that already has replicas. - Be aware of the [size
+   * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
+   * - Related guide: [Copy
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
+   * **Move** - Moving a source index that doesn't exist is ignored without returning an error. -
+   * When moving an index, the analytics data keep their original name and a new set of analytics
+   * data is started for the new name. To access the original analytics in the dashboard, create an
+   * index with the original name. - If the destination index has replicas, moving will overwrite
+   * the existing index and copy the data to the replica indices. - Related guide: [Move
+   * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param operationIndexParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -3473,16 +3491,17 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Add new attributes or update current ones in an existing record. You can use any first-level
-   * attribute but not nested attributes. If you specify a [nested
-   * attribute](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/creating-and-using-nested-attributes/),
-   * the engine treats it as a replacement for its first-level ancestor.
+   * Adds new attributes to a record, or update existing ones. - If a record with the specified
+   * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
+   * - If the index doesn't exist yet, this method creates a new index. - You can use any
+   * first-level attribute but not nested attributes. If you specify a nested attribute, the engine
+   * treats it as a replacement for its first-level ancestor.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
-   * @param attributesToUpdate Object with attributes to update. (required)
-   * @param createIfNotExists Indicates whether to create a new record if it doesn't exist yet.
-   *     (optional, default to true)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
+   * @param attributesToUpdate Attributes with their values. (required)
+   * @param createIfNotExists Whether to create a new record if it doesn't exist. (optional, default
+   *     to true)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3498,16 +3517,17 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Add new attributes or update current ones in an existing record. You can use any first-level
-   * attribute but not nested attributes. If you specify a [nested
-   * attribute](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/creating-and-using-nested-attributes/),
-   * the engine treats it as a replacement for its first-level ancestor.
+   * Adds new attributes to a record, or update existing ones. - If a record with the specified
+   * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
+   * - If the index doesn't exist yet, this method creates a new index. - You can use any
+   * first-level attribute but not nested attributes. If you specify a nested attribute, the engine
+   * treats it as a replacement for its first-level ancestor.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
-   * @param attributesToUpdate Object with attributes to update. (required)
-   * @param createIfNotExists Indicates whether to create a new record if it doesn't exist yet.
-   *     (optional, default to true)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
+   * @param attributesToUpdate Attributes with their values. (required)
+   * @param createIfNotExists Whether to create a new record if it doesn't exist. (optional, default
+   *     to true)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public UpdatedAtWithObjectIdResponse partialUpdateObject(
@@ -3520,14 +3540,15 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Add new attributes or update current ones in an existing record. You can use any first-level
-   * attribute but not nested attributes. If you specify a [nested
-   * attribute](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/creating-and-using-nested-attributes/),
-   * the engine treats it as a replacement for its first-level ancestor.
+   * Adds new attributes to a record, or update existing ones. - If a record with the specified
+   * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
+   * - If the index doesn't exist yet, this method creates a new index. - You can use any
+   * first-level attribute but not nested attributes. If you specify a nested attribute, the engine
+   * treats it as a replacement for its first-level ancestor.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
-   * @param attributesToUpdate Object with attributes to update. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
+   * @param attributesToUpdate Attributes with their values. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3542,14 +3563,15 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Add new attributes or update current ones in an existing record. You can use any first-level
-   * attribute but not nested attributes. If you specify a [nested
-   * attribute](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/creating-and-using-nested-attributes/),
-   * the engine treats it as a replacement for its first-level ancestor.
+   * Adds new attributes to a record, or update existing ones. - If a record with the specified
+   * object ID doesn't exist, a new record is added to the index **if** `createIfNotExists` is true.
+   * - If the index doesn't exist yet, this method creates a new index. - You can use any
+   * first-level attribute but not nested attributes. If you specify a nested attribute, the engine
+   * treats it as a replacement for its first-level ancestor.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
-   * @param attributesToUpdate Object with attributes to update. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
+   * @param attributesToUpdate Attributes with their values. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public UpdatedAtWithObjectIdResponse partialUpdateObject(
@@ -3561,16 +3583,17 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Add new attributes or update current ones in an existing record. You can use
-   * any first-level attribute but not nested attributes. If you specify a [nested
-   * attribute](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/creating-and-using-nested-attributes/),
-   * the engine treats it as a replacement for its first-level ancestor.
+   * (asynchronously) Adds new attributes to a record, or update existing ones. - If a record with
+   * the specified object ID doesn't exist, a new record is added to the index **if**
+   * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
+   * - You can use any first-level attribute but not nested attributes. If you specify a nested
+   * attribute, the engine treats it as a replacement for its first-level ancestor.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
-   * @param attributesToUpdate Object with attributes to update. (required)
-   * @param createIfNotExists Indicates whether to create a new record if it doesn't exist yet.
-   *     (optional, default to true)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
+   * @param attributesToUpdate Attributes with their values. (required)
+   * @param createIfNotExists Whether to create a new record if it doesn't exist. (optional, default
+   *     to true)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3599,16 +3622,17 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Add new attributes or update current ones in an existing record. You can use
-   * any first-level attribute but not nested attributes. If you specify a [nested
-   * attribute](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/creating-and-using-nested-attributes/),
-   * the engine treats it as a replacement for its first-level ancestor.
+   * (asynchronously) Adds new attributes to a record, or update existing ones. - If a record with
+   * the specified object ID doesn't exist, a new record is added to the index **if**
+   * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
+   * - You can use any first-level attribute but not nested attributes. If you specify a nested
+   * attribute, the engine treats it as a replacement for its first-level ancestor.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
-   * @param attributesToUpdate Object with attributes to update. (required)
-   * @param createIfNotExists Indicates whether to create a new record if it doesn't exist yet.
-   *     (optional, default to true)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
+   * @param attributesToUpdate Attributes with their values. (required)
+   * @param createIfNotExists Whether to create a new record if it doesn't exist. (optional, default
+   *     to true)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<UpdatedAtWithObjectIdResponse> partialUpdateObjectAsync(
@@ -3621,14 +3645,15 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Add new attributes or update current ones in an existing record. You can use
-   * any first-level attribute but not nested attributes. If you specify a [nested
-   * attribute](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/creating-and-using-nested-attributes/),
-   * the engine treats it as a replacement for its first-level ancestor.
+   * (asynchronously) Adds new attributes to a record, or update existing ones. - If a record with
+   * the specified object ID doesn't exist, a new record is added to the index **if**
+   * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
+   * - You can use any first-level attribute but not nested attributes. If you specify a nested
+   * attribute, the engine treats it as a replacement for its first-level ancestor.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
-   * @param attributesToUpdate Object with attributes to update. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
+   * @param attributesToUpdate Attributes with their values. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3643,14 +3668,15 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Add new attributes or update current ones in an existing record. You can use
-   * any first-level attribute but not nested attributes. If you specify a [nested
-   * attribute](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/creating-and-using-nested-attributes/),
-   * the engine treats it as a replacement for its first-level ancestor.
+   * (asynchronously) Adds new attributes to a record, or update existing ones. - If a record with
+   * the specified object ID doesn't exist, a new record is added to the index **if**
+   * `createIfNotExists` is true. - If the index doesn't exist yet, this method creates a new index.
+   * - You can use any first-level attribute but not nested attributes. If you specify a nested
+   * attribute, the engine treats it as a replacement for its first-level ancestor.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param objectID Unique record (object) identifier. (required)
-   * @param attributesToUpdate Object with attributes to update. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param objectID Unique record identifier. (required)
+   * @param attributesToUpdate Attributes with their values. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<UpdatedAtWithObjectIdResponse> partialUpdateObjectAsync(
@@ -3662,9 +3688,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Remove a userID and its associated data from the multi-clusters.
+   * Deletes a user ID and its associated data from the clusters.
    *
-   * @param userID userID to assign. (required)
+   * @param userID User ID to assign. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3674,9 +3700,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Remove a userID and its associated data from the multi-clusters.
+   * Deletes a user ID and its associated data from the clusters.
    *
-   * @param userID userID to assign. (required)
+   * @param userID User ID to assign. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RemoveUserIdResponse removeUserId(@Nonnull String userID) throws AlgoliaRuntimeException {
@@ -3684,9 +3710,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Remove a userID and its associated data from the multi-clusters.
+   * (asynchronously) Deletes a user ID and its associated data from the clusters.
    *
-   * @param userID userID to assign. (required)
+   * @param userID User ID to assign. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3700,9 +3726,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Remove a userID and its associated data from the multi-clusters.
+   * (asynchronously) Deletes a user ID and its associated data from the clusters.
    *
-   * @param userID userID to assign. (required)
+   * @param userID User ID to assign. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RemoveUserIdResponse> removeUserIdAsync(@Nonnull String userID) throws AlgoliaRuntimeException {
@@ -3710,7 +3736,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Replace all allowed sources.
+   * Replaces the list of allowed sources.
    *
    * @param source Allowed sources. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3722,7 +3748,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Replace all allowed sources.
+   * Replaces the list of allowed sources.
    *
    * @param source Allowed sources. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3732,7 +3758,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Replace all allowed sources.
+   * (asynchronously) Replaces the list of allowed sources.
    *
    * @param source Allowed sources. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3748,7 +3774,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Replace all allowed sources.
+   * (asynchronously) Replaces the list of allowed sources.
    *
    * @param source Allowed sources. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3758,8 +3784,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Restore a deleted API key, along with its associated permissions. The request must be
-   * authenticated with the admin API key.
+   * Restores a deleted API key. Restoring resets the `validity` attribute to `0`. Algolia stores up
+   * to 1,000 API keys per application. If you create more, the oldest API keys are deleted and
+   * can't be restored.
    *
    * @param key API key. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3771,8 +3798,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Restore a deleted API key, along with its associated permissions. The request must be
-   * authenticated with the admin API key.
+   * Restores a deleted API key. Restoring resets the `validity` attribute to `0`. Algolia stores up
+   * to 1,000 API keys per application. If you create more, the oldest API keys are deleted and
+   * can't be restored.
    *
    * @param key API key. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3782,8 +3810,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Restore a deleted API key, along with its associated permissions. The request
-   * must be authenticated with the admin API key.
+   * (asynchronously) Restores a deleted API key. Restoring resets the `validity` attribute to `0`.
+   * Algolia stores up to 1,000 API keys per application. If you create more, the oldest API keys
+   * are deleted and can't be restored.
    *
    * @param key API key. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3800,8 +3829,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Restore a deleted API key, along with its associated permissions. The request
-   * must be authenticated with the admin API key.
+   * (asynchronously) Restores a deleted API key. Restoring resets the `validity` attribute to `0`.
+   * Algolia stores up to 1,000 API keys per application. If you create more, the oldest API keys
+   * are deleted and can't be restored.
    *
    * @param key API key. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3811,13 +3841,17 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Add a record (object) to an index or replace it. If the record doesn't contain an `objectID`,
-   * Algolia automatically adds it. If you use an existing `objectID`, the existing record is
-   * replaced with the new one. To add multiple records to your index in a single API request, use
-   * the [`batch` operation](#tag/Records/operation/batch).
+   * Adds a record to an index or replace it. - If the record doesn't have an object ID, a new
+   * record with an auto-generated object ID is added to your index. - If a record with the
+   * specified object ID exists, the existing record is replaced. - If a record with the specified
+   * object ID doesn't exist, a new record is added to your index. - If you add a record to an index
+   * that doesn't exist yet, a new index is created. To update _some_ attributes of a record, use
+   * the [`partial` operation](#tag/Records/operation/partial). To add, update, or replace multiple
+   * records, use the [`batch` operation](#tag/Records/operation/batch).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param body The Algolia record. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param body The record, a schemaless object with attributes that are useful in the context of
+   *     search and discovery. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3828,13 +3862,17 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Add a record (object) to an index or replace it. If the record doesn't contain an `objectID`,
-   * Algolia automatically adds it. If you use an existing `objectID`, the existing record is
-   * replaced with the new one. To add multiple records to your index in a single API request, use
-   * the [`batch` operation](#tag/Records/operation/batch).
+   * Adds a record to an index or replace it. - If the record doesn't have an object ID, a new
+   * record with an auto-generated object ID is added to your index. - If a record with the
+   * specified object ID exists, the existing record is replaced. - If a record with the specified
+   * object ID doesn't exist, a new record is added to your index. - If you add a record to an index
+   * that doesn't exist yet, a new index is created. To update _some_ attributes of a record, use
+   * the [`partial` operation](#tag/Records/operation/partial). To add, update, or replace multiple
+   * records, use the [`batch` operation](#tag/Records/operation/batch).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param body The Algolia record. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param body The record, a schemaless object with attributes that are useful in the context of
+   *     search and discovery. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public SaveObjectResponse saveObject(@Nonnull String indexName, @Nonnull Object body) throws AlgoliaRuntimeException {
@@ -3842,13 +3880,17 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Add a record (object) to an index or replace it. If the record doesn't contain
-   * an `objectID`, Algolia automatically adds it. If you use an existing `objectID`, the existing
-   * record is replaced with the new one. To add multiple records to your index in a single API
-   * request, use the [`batch` operation](#tag/Records/operation/batch).
+   * (asynchronously) Adds a record to an index or replace it. - If the record doesn't have an
+   * object ID, a new record with an auto-generated object ID is added to your index. - If a record
+   * with the specified object ID exists, the existing record is replaced. - If a record with the
+   * specified object ID doesn't exist, a new record is added to your index. - If you add a record
+   * to an index that doesn't exist yet, a new index is created. To update _some_ attributes of a
+   * record, use the [`partial` operation](#tag/Records/operation/partial). To add, update, or
+   * replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param body The Algolia record. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param body The record, a schemaless object with attributes that are useful in the context of
+   *     search and discovery. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3867,13 +3909,17 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Add a record (object) to an index or replace it. If the record doesn't contain
-   * an `objectID`, Algolia automatically adds it. If you use an existing `objectID`, the existing
-   * record is replaced with the new one. To add multiple records to your index in a single API
-   * request, use the [`batch` operation](#tag/Records/operation/batch).
+   * (asynchronously) Adds a record to an index or replace it. - If the record doesn't have an
+   * object ID, a new record with an auto-generated object ID is added to your index. - If a record
+   * with the specified object ID exists, the existing record is replaced. - If a record with the
+   * specified object ID doesn't exist, a new record is added to your index. - If you add a record
+   * to an index that doesn't exist yet, a new index is created. To update _some_ attributes of a
+   * record, use the [`partial` operation](#tag/Records/operation/partial). To add, update, or
+   * replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param body The Algolia record. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param body The record, a schemaless object with attributes that are useful in the context of
+   *     search and discovery. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<SaveObjectResponse> saveObjectAsync(@Nonnull String indexName, @Nonnull Object body)
@@ -3882,14 +3928,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * To create or update more than one rule, use the [`batch`
+   * If a rule with the specified object ID doesn't exist, it's created. Otherwise, the existing
+   * rule is replaced. To create or update more than one rule, use the [`batch`
    * operation](#tag/Rules/operation/saveRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
    * @param rule (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3905,14 +3951,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * To create or update more than one rule, use the [`batch`
+   * If a rule with the specified object ID doesn't exist, it's created. Otherwise, the existing
+   * rule is replaced. To create or update more than one rule, use the [`batch`
    * operation](#tag/Rules/operation/saveRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
    * @param rule (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public UpdatedRuleResponse saveRule(@Nonnull String indexName, @Nonnull String objectID, @Nonnull Rule rule, Boolean forwardToReplicas)
@@ -3921,10 +3967,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * To create or update more than one rule, use the [`batch`
+   * If a rule with the specified object ID doesn't exist, it's created. Otherwise, the existing
+   * rule is replaced. To create or update more than one rule, use the [`batch`
    * operation](#tag/Rules/operation/saveRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
    * @param rule (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3941,10 +3988,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * To create or update more than one rule, use the [`batch`
+   * If a rule with the specified object ID doesn't exist, it's created. Otherwise, the existing
+   * rule is replaced. To create or update more than one rule, use the [`batch`
    * operation](#tag/Rules/operation/saveRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
    * @param rule (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3955,14 +4003,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To create or update more than one rule, use the [`batch`
+   * (asynchronously) If a rule with the specified object ID doesn't exist, it's created. Otherwise,
+   * the existing rule is replaced. To create or update more than one rule, use the [`batch`
    * operation](#tag/Rules/operation/saveRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
    * @param rule (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3991,14 +4039,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To create or update more than one rule, use the [`batch`
+   * (asynchronously) If a rule with the specified object ID doesn't exist, it's created. Otherwise,
+   * the existing rule is replaced. To create or update more than one rule, use the [`batch`
    * operation](#tag/Rules/operation/saveRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
    * @param rule (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<UpdatedRuleResponse> saveRuleAsync(
@@ -4011,10 +4059,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To create or update more than one rule, use the [`batch`
+   * (asynchronously) If a rule with the specified object ID doesn't exist, it's created. Otherwise,
+   * the existing rule is replaced. To create or update more than one rule, use the [`batch`
    * operation](#tag/Rules/operation/saveRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
    * @param rule (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -4031,10 +4080,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) To create or update more than one rule, use the [`batch`
+   * (asynchronously) If a rule with the specified object ID doesn't exist, it's created. Otherwise,
+   * the existing rule is replaced. To create or update more than one rule, use the [`batch`
    * operation](#tag/Rules/operation/saveRules).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a rule object. (required)
    * @param rule (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4045,14 +4095,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Create or update multiple rules.
+   * Create or update multiple rules. If a rule with the specified object ID doesn't exist, Algolia
+   * creates a new one. Otherwise, existing rules are replaced.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
-   * @param clearExistingRules Indicates whether existing rules should be deleted before adding this
-   *     batch. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
+   * @param clearExistingRules Whether existing rules should be deleted before adding this batch.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4068,14 +4118,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Create or update multiple rules.
+   * Create or update multiple rules. If a rule with the specified object ID doesn't exist, Algolia
+   * creates a new one. Otherwise, existing rules are replaced.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
-   * @param clearExistingRules Indicates whether existing rules should be deleted before adding this
-   *     batch. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
+   * @param clearExistingRules Whether existing rules should be deleted before adding this batch.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public UpdatedAtResponse saveRules(
@@ -4088,9 +4138,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Create or update multiple rules.
+   * Create or update multiple rules. If a rule with the specified object ID doesn't exist, Algolia
+   * creates a new one. Otherwise, existing rules are replaced.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -4102,9 +4153,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Create or update multiple rules.
+   * Create or update multiple rules. If a rule with the specified object ID doesn't exist, Algolia
+   * creates a new one. Otherwise, existing rules are replaced.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -4113,14 +4165,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update multiple rules.
+   * (asynchronously) Create or update multiple rules. If a rule with the specified object ID
+   * doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
-   * @param clearExistingRules Indicates whether existing rules should be deleted before adding this
-   *     batch. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
+   * @param clearExistingRules Whether existing rules should be deleted before adding this batch.
+   *     (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4148,14 +4200,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update multiple rules.
+   * (asynchronously) Create or update multiple rules. If a rule with the specified object ID
+   * doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
-   * @param clearExistingRules Indicates whether existing rules should be deleted before adding this
-   *     batch. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
+   * @param clearExistingRules Whether existing rules should be deleted before adding this batch.
+   *     (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<UpdatedAtResponse> saveRulesAsync(
@@ -4168,9 +4220,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update multiple rules.
+   * (asynchronously) Create or update multiple rules. If a rule with the specified object ID
+   * doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -4185,9 +4238,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update multiple rules.
+   * (asynchronously) Create or update multiple rules. If a rule with the specified object ID
+   * doesn't exist, Algolia creates a new one. Otherwise, existing rules are replaced.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param rules (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -4197,18 +4251,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Add a
-   * [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms)
-   * to an index or replace it. If the synonym `objectID` doesn't exist, Algolia adds a new one. If
-   * you use an existing synonym `objectID`, the existing synonym is replaced with the new one. To
-   * add multiple synonyms in a single API request, use the [`batch`
-   * operation](#tag/Synonyms/operation/saveSynonyms).
+   * If a synonym with the specified object ID doesn't exist, Algolia adds a new one. Otherwise, the
+   * existing synonym is replaced. To add multiple synonyms in a single API request, use the
+   * [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
    * @param synonymHit (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4224,18 +4274,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Add a
-   * [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms)
-   * to an index or replace it. If the synonym `objectID` doesn't exist, Algolia adds a new one. If
-   * you use an existing synonym `objectID`, the existing synonym is replaced with the new one. To
-   * add multiple synonyms in a single API request, use the [`batch`
-   * operation](#tag/Synonyms/operation/saveSynonyms).
+   * If a synonym with the specified object ID doesn't exist, Algolia adds a new one. Otherwise, the
+   * existing synonym is replaced. To add multiple synonyms in a single API request, use the
+   * [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
    * @param synonymHit (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public SaveSynonymResponse saveSynonym(
@@ -4248,14 +4294,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Add a
-   * [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms)
-   * to an index or replace it. If the synonym `objectID` doesn't exist, Algolia adds a new one. If
-   * you use an existing synonym `objectID`, the existing synonym is replaced with the new one. To
-   * add multiple synonyms in a single API request, use the [`batch`
-   * operation](#tag/Synonyms/operation/saveSynonyms).
+   * If a synonym with the specified object ID doesn't exist, Algolia adds a new one. Otherwise, the
+   * existing synonym is replaced. To add multiple synonyms in a single API request, use the
+   * [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
    * @param synonymHit (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -4272,14 +4315,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Add a
-   * [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms)
-   * to an index or replace it. If the synonym `objectID` doesn't exist, Algolia adds a new one. If
-   * you use an existing synonym `objectID`, the existing synonym is replaced with the new one. To
-   * add multiple synonyms in a single API request, use the [`batch`
-   * operation](#tag/Synonyms/operation/saveSynonyms).
+   * If a synonym with the specified object ID doesn't exist, Algolia adds a new one. Otherwise, the
+   * existing synonym is replaced. To add multiple synonyms in a single API request, use the
+   * [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
    * @param synonymHit (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4290,18 +4330,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Add a
-   * [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms)
-   * to an index or replace it. If the synonym `objectID` doesn't exist, Algolia adds a new one. If
-   * you use an existing synonym `objectID`, the existing synonym is replaced with the new one. To
-   * add multiple synonyms in a single API request, use the [`batch`
-   * operation](#tag/Synonyms/operation/saveSynonyms).
+   * (asynchronously) If a synonym with the specified object ID doesn't exist, Algolia adds a new
+   * one. Otherwise, the existing synonym is replaced. To add multiple synonyms in a single API
+   * request, use the [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
    * @param synonymHit (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4330,18 +4366,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Add a
-   * [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms)
-   * to an index or replace it. If the synonym `objectID` doesn't exist, Algolia adds a new one. If
-   * you use an existing synonym `objectID`, the existing synonym is replaced with the new one. To
-   * add multiple synonyms in a single API request, use the [`batch`
-   * operation](#tag/Synonyms/operation/saveSynonyms).
+   * (asynchronously) If a synonym with the specified object ID doesn't exist, Algolia adds a new
+   * one. Otherwise, the existing synonym is replaced. To add multiple synonyms in a single API
+   * request, use the [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
    * @param synonymHit (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<SaveSynonymResponse> saveSynonymAsync(
@@ -4354,14 +4386,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Add a
-   * [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms)
-   * to an index or replace it. If the synonym `objectID` doesn't exist, Algolia adds a new one. If
-   * you use an existing synonym `objectID`, the existing synonym is replaced with the new one. To
-   * add multiple synonyms in a single API request, use the [`batch`
-   * operation](#tag/Synonyms/operation/saveSynonyms).
+   * (asynchronously) If a synonym with the specified object ID doesn't exist, Algolia adds a new
+   * one. Otherwise, the existing synonym is replaced. To add multiple synonyms in a single API
+   * request, use the [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
    * @param synonymHit (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -4378,14 +4407,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Add a
-   * [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms)
-   * to an index or replace it. If the synonym `objectID` doesn't exist, Algolia adds a new one. If
-   * you use an existing synonym `objectID`, the existing synonym is replaced with the new one. To
-   * add multiple synonyms in a single API request, use the [`batch`
-   * operation](#tag/Synonyms/operation/saveSynonyms).
+   * (asynchronously) If a synonym with the specified object ID doesn't exist, Algolia adds a new
+   * one. Otherwise, the existing synonym is replaced. To add multiple synonyms in a single API
+   * request, use the [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param objectID Unique identifier of a synonym object. (required)
    * @param synonymHit (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4399,14 +4425,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Create or update multiple synonyms.
+   * If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing
+   * synonyms are replaced.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
-   * @param replaceExistingSynonyms Indicates whether to replace all synonyms in the index with the
-   *     ones sent with this request. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
+   * @param replaceExistingSynonyms Whether to replace all synonyms in the index with the ones sent
+   *     with this request. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4422,14 +4448,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Create or update multiple synonyms.
+   * If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing
+   * synonyms are replaced.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
-   * @param replaceExistingSynonyms Indicates whether to replace all synonyms in the index with the
-   *     ones sent with this request. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
+   * @param replaceExistingSynonyms Whether to replace all synonyms in the index with the ones sent
+   *     with this request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public UpdatedAtResponse saveSynonyms(
@@ -4442,9 +4468,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Create or update multiple synonyms.
+   * If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing
+   * synonyms are replaced.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -4456,9 +4483,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Create or update multiple synonyms.
+   * If a synonym with the `objectID` doesn't exist, Algolia adds a new one. Otherwise, existing
+   * synonyms are replaced.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -4467,14 +4495,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update multiple synonyms.
+   * (asynchronously) If a synonym with the `objectID` doesn't exist, Algolia adds a new one.
+   * Otherwise, existing synonyms are replaced.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
-   * @param replaceExistingSynonyms Indicates whether to replace all synonyms in the index with the
-   *     ones sent with this request. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
+   * @param replaceExistingSynonyms Whether to replace all synonyms in the index with the ones sent
+   *     with this request. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4502,14 +4530,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update multiple synonyms.
+   * (asynchronously) If a synonym with the `objectID` doesn't exist, Algolia adds a new one.
+   * Otherwise, existing synonyms are replaced.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
-   * @param replaceExistingSynonyms Indicates whether to replace all synonyms in the index with the
-   *     ones sent with this request. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
+   * @param replaceExistingSynonyms Whether to replace all synonyms in the index with the ones sent
+   *     with this request. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<UpdatedAtResponse> saveSynonymsAsync(
@@ -4522,9 +4550,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update multiple synonyms.
+   * (asynchronously) If a synonym with the `objectID` doesn't exist, Algolia adds a new one.
+   * Otherwise, existing synonyms are replaced.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -4539,9 +4568,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create or update multiple synonyms.
+   * (asynchronously) If a synonym with the `objectID` doesn't exist, Algolia adds a new one.
+   * Otherwise, existing synonyms are replaced.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param synonymHit (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -4551,10 +4581,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Send multiple search queries to one or more indices.
+   * Sends multiple search request to one or more indices. This can be useful in these cases: -
+   * Different indices for different purposes, such as, one index for products, another one for
+   * marketing content. - Multiple searches to the same index—for example, with different filters.
    *
-   * @param searchMethodParams Query requests and strategies. Results will be received in the same
-   *     order as the queries. (required)
+   * @param searchMethodParams Muli-search request body. Results are returned in the same order as
+   *     the requests. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -4566,10 +4598,12 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Send multiple search queries to one or more indices.
+   * Sends multiple search request to one or more indices. This can be useful in these cases: -
+   * Different indices for different purposes, such as, one index for products, another one for
+   * marketing content. - Multiple searches to the same index—for example, with different filters.
    *
-   * @param searchMethodParams Query requests and strategies. Results will be received in the same
-   *     order as the queries. (required)
+   * @param searchMethodParams Muli-search request body. Results are returned in the same order as
+   *     the requests. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -4578,10 +4612,13 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Send multiple search queries to one or more indices.
+   * (asynchronously) Sends multiple search request to one or more indices. This can be useful in
+   * these cases: - Different indices for different purposes, such as, one index for products,
+   * another one for marketing content. - Multiple searches to the same index—for example, with
+   * different filters.
    *
-   * @param searchMethodParams Query requests and strategies. Results will be received in the same
-   *     order as the queries. (required)
+   * @param searchMethodParams Muli-search request body. Results are returned in the same order as
+   *     the requests. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -4605,10 +4642,13 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Send multiple search queries to one or more indices.
+   * (asynchronously) Sends multiple search request to one or more indices. This can be useful in
+   * these cases: - Different indices for different purposes, such as, one index for products,
+   * another one for marketing content. - Multiple searches to the same index—for example, with
+   * different filters.
    *
-   * @param searchMethodParams Query requests and strategies. Results will be received in the same
-   *     order as the queries. (required)
+   * @param searchMethodParams Muli-search request body. Results are returned in the same order as
+   *     the requests. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -4618,22 +4658,15 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Search for standard and
-   * [custom](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/)
-   * entries in the [stop
-   * words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/),
-   * [plurals](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/),
-   * or [segmentation
-   * (compounds)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/)
-   * dictionaries.
+   * Searches for standard and custom dictionary entries.
    *
-   * @param dictionaryName Dictionary to search in. (required)
+   * @param dictionaryName Dictionary type in which to search. (required)
    * @param searchDictionaryEntriesParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public UpdatedAtResponse searchDictionaryEntries(
+  public SearchDictionaryEntriesResponse searchDictionaryEntries(
     @Nonnull DictionaryType dictionaryName,
     @Nonnull SearchDictionaryEntriesParams searchDictionaryEntriesParams,
     RequestOptions requestOptions
@@ -4642,20 +4675,13 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Search for standard and
-   * [custom](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/)
-   * entries in the [stop
-   * words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/),
-   * [plurals](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/),
-   * or [segmentation
-   * (compounds)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/)
-   * dictionaries.
+   * Searches for standard and custom dictionary entries.
    *
-   * @param dictionaryName Dictionary to search in. (required)
+   * @param dictionaryName Dictionary type in which to search. (required)
    * @param searchDictionaryEntriesParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public UpdatedAtResponse searchDictionaryEntries(
+  public SearchDictionaryEntriesResponse searchDictionaryEntries(
     @Nonnull DictionaryType dictionaryName,
     @Nonnull SearchDictionaryEntriesParams searchDictionaryEntriesParams
   ) throws AlgoliaRuntimeException {
@@ -4663,22 +4689,15 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Search for standard and
-   * [custom](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/)
-   * entries in the [stop
-   * words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/),
-   * [plurals](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/),
-   * or [segmentation
-   * (compounds)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/)
-   * dictionaries.
+   * (asynchronously) Searches for standard and custom dictionary entries.
    *
-   * @param dictionaryName Dictionary to search in. (required)
+   * @param dictionaryName Dictionary type in which to search. (required)
    * @param searchDictionaryEntriesParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<UpdatedAtResponse> searchDictionaryEntriesAsync(
+  public CompletableFuture<SearchDictionaryEntriesResponse> searchDictionaryEntriesAsync(
     @Nonnull DictionaryType dictionaryName,
     @Nonnull SearchDictionaryEntriesParams searchDictionaryEntriesParams,
     RequestOptions requestOptions
@@ -4697,24 +4716,17 @@ public class SearchClient extends ApiClient {
       .setBody(searchDictionaryEntriesParams)
       .setRead(true)
       .build();
-    return executeAsync(request, requestOptions, new TypeReference<UpdatedAtResponse>() {});
+    return executeAsync(request, requestOptions, new TypeReference<SearchDictionaryEntriesResponse>() {});
   }
 
   /**
-   * (asynchronously) Search for standard and
-   * [custom](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/)
-   * entries in the [stop
-   * words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/),
-   * [plurals](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/),
-   * or [segmentation
-   * (compounds)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/)
-   * dictionaries.
+   * (asynchronously) Searches for standard and custom dictionary entries.
    *
-   * @param dictionaryName Dictionary to search in. (required)
+   * @param dictionaryName Dictionary type in which to search. (required)
    * @param searchDictionaryEntriesParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<UpdatedAtResponse> searchDictionaryEntriesAsync(
+  public CompletableFuture<SearchDictionaryEntriesResponse> searchDictionaryEntriesAsync(
     @Nonnull DictionaryType dictionaryName,
     @Nonnull SearchDictionaryEntriesParams searchDictionaryEntriesParams
   ) throws AlgoliaRuntimeException {
@@ -4722,14 +4734,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * [Search for a facet's
-   * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values),
-   * optionally restricting the returned values to those contained in records matching other search
-   * criteria. > **Note**: Pagination isn't supported (`page` and `hitsPerPage` are ignored). By
-   * default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.
+   * Searches for values of a specified facet attribute. - By default, facet values are sorted by
+   * decreasing count. You can adjust this with the `sortFacetValueBy` parameter. - Searching for
+   * facet values doesn't work if you have **more than 65 searchable facets and searchable
+   * attributes combined**.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param facetName Facet name. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param facetName Facet attribute in which to search for values. This attribute must be included
+   *     in the `attributesForFaceting` index setting with the `searchable()` modifier. (required)
    * @param searchForFacetValuesRequest (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -4745,14 +4757,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * [Search for a facet's
-   * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values),
-   * optionally restricting the returned values to those contained in records matching other search
-   * criteria. > **Note**: Pagination isn't supported (`page` and `hitsPerPage` are ignored). By
-   * default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.
+   * Searches for values of a specified facet attribute. - By default, facet values are sorted by
+   * decreasing count. You can adjust this with the `sortFacetValueBy` parameter. - Searching for
+   * facet values doesn't work if you have **more than 65 searchable facets and searchable
+   * attributes combined**.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param facetName Facet name. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param facetName Facet attribute in which to search for values. This attribute must be included
+   *     in the `attributesForFaceting` index setting with the `searchable()` modifier. (required)
    * @param searchForFacetValuesRequest (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -4765,14 +4777,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * [Search for a facet's
-   * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values),
-   * optionally restricting the returned values to those contained in records matching other search
-   * criteria. > **Note**: Pagination isn't supported (`page` and `hitsPerPage` are ignored). By
-   * default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.
+   * Searches for values of a specified facet attribute. - By default, facet values are sorted by
+   * decreasing count. You can adjust this with the `sortFacetValueBy` parameter. - Searching for
+   * facet values doesn't work if you have **more than 65 searchable facets and searchable
+   * attributes combined**.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param facetName Facet name. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param facetName Facet attribute in which to search for values. This attribute must be included
+   *     in the `attributesForFaceting` index setting with the `searchable()` modifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4786,14 +4798,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * [Search for a facet's
-   * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values),
-   * optionally restricting the returned values to those contained in records matching other search
-   * criteria. > **Note**: Pagination isn't supported (`page` and `hitsPerPage` are ignored). By
-   * default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.
+   * Searches for values of a specified facet attribute. - By default, facet values are sorted by
+   * decreasing count. You can adjust this with the `sortFacetValueBy` parameter. - Searching for
+   * facet values doesn't work if you have **more than 65 searchable facets and searchable
+   * attributes combined**.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param facetName Facet name. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param facetName Facet attribute in which to search for values. This attribute must be included
+   *     in the `attributesForFaceting` index setting with the `searchable()` modifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public SearchForFacetValuesResponse searchForFacetValues(@Nonnull String indexName, @Nonnull String facetName)
@@ -4802,14 +4814,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) [Search for a facet's
-   * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values),
-   * optionally restricting the returned values to those contained in records matching other search
-   * criteria. > **Note**: Pagination isn't supported (`page` and `hitsPerPage` are ignored). By
-   * default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.
+   * (asynchronously) Searches for values of a specified facet attribute. - By default, facet values
+   * are sorted by decreasing count. You can adjust this with the `sortFacetValueBy` parameter. -
+   * Searching for facet values doesn't work if you have **more than 65 searchable facets and
+   * searchable attributes combined**.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param facetName Facet name. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param facetName Facet attribute in which to search for values. This attribute must be included
+   *     in the `attributesForFaceting` index setting with the `searchable()` modifier. (required)
    * @param searchForFacetValuesRequest (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -4836,14 +4848,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) [Search for a facet's
-   * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values),
-   * optionally restricting the returned values to those contained in records matching other search
-   * criteria. > **Note**: Pagination isn't supported (`page` and `hitsPerPage` are ignored). By
-   * default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.
+   * (asynchronously) Searches for values of a specified facet attribute. - By default, facet values
+   * are sorted by decreasing count. You can adjust this with the `sortFacetValueBy` parameter. -
+   * Searching for facet values doesn't work if you have **more than 65 searchable facets and
+   * searchable attributes combined**.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param facetName Facet name. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param facetName Facet attribute in which to search for values. This attribute must be included
+   *     in the `attributesForFaceting` index setting with the `searchable()` modifier. (required)
    * @param searchForFacetValuesRequest (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -4856,14 +4868,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) [Search for a facet's
-   * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values),
-   * optionally restricting the returned values to those contained in records matching other search
-   * criteria. > **Note**: Pagination isn't supported (`page` and `hitsPerPage` are ignored). By
-   * default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.
+   * (asynchronously) Searches for values of a specified facet attribute. - By default, facet values
+   * are sorted by decreasing count. You can adjust this with the `sortFacetValueBy` parameter. -
+   * Searching for facet values doesn't work if you have **more than 65 searchable facets and
+   * searchable attributes combined**.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param facetName Facet name. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param facetName Facet attribute in which to search for values. This attribute must be included
+   *     in the `attributesForFaceting` index setting with the `searchable()` modifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4877,14 +4889,14 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) [Search for a facet's
-   * values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values),
-   * optionally restricting the returned values to those contained in records matching other search
-   * criteria. > **Note**: Pagination isn't supported (`page` and `hitsPerPage` are ignored). By
-   * default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.
+   * (asynchronously) Searches for values of a specified facet attribute. - By default, facet values
+   * are sorted by decreasing count. You can adjust this with the `sortFacetValueBy` parameter. -
+   * Searching for facet values doesn't work if you have **more than 65 searchable facets and
+   * searchable attributes combined**.
    *
-   * @param indexName Index on which to perform the request. (required)
-   * @param facetName Facet name. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
+   * @param facetName Facet attribute in which to search for values. This attribute must be included
+   *     in the `attributesForFaceting` index setting with the `searchable()` modifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<SearchForFacetValuesResponse> searchForFacetValuesAsync(@Nonnull String indexName, @Nonnull String facetName)
@@ -4893,10 +4905,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Search for rules in your index. You can control the search with parameters. To list all rules,
-   * send an empty request body.
+   * Searches for rules in your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param searchRulesParams (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -4908,10 +4919,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Search for rules in your index. You can control the search with parameters. To list all rules,
-   * send an empty request body.
+   * Searches for rules in your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param searchRulesParams (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -4920,10 +4930,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Search for rules in your index. You can control the search with parameters. To list all rules,
-   * send an empty request body.
+   * Searches for rules in your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4933,10 +4942,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Search for rules in your index. You can control the search with parameters. To list all rules,
-   * send an empty request body.
+   * Searches for rules in your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public SearchRulesResponse searchRules(@Nonnull String indexName) throws AlgoliaRuntimeException {
@@ -4944,10 +4952,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Search for rules in your index. You can control the search with parameters. To
-   * list all rules, send an empty request body.
+   * (asynchronously) Searches for rules in your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param searchRulesParams (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -4971,10 +4978,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Search for rules in your index. You can control the search with parameters. To
-   * list all rules, send an empty request body.
+   * (asynchronously) Searches for rules in your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param searchRulesParams (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -4984,10 +4990,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Search for rules in your index. You can control the search with parameters. To
-   * list all rules, send an empty request body.
+   * (asynchronously) Searches for rules in your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -4998,10 +5003,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Search for rules in your index. You can control the search with parameters. To
-   * list all rules, send an empty request body.
+   * (asynchronously) Searches for rules in your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<SearchRulesResponse> searchRulesAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
@@ -5009,9 +5013,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Return records that match the query.
+   * Searches a single index and return matching search results (_hits_). This method lets you
+   * retrieve up to 1,000 hits. If you need more, use the [`browse`
+   * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param searchParams (optional)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -5028,9 +5034,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Return records that match the query.
+   * Searches a single index and return matching search results (_hits_). This method lets you
+   * retrieve up to 1,000 hits. If you need more, use the [`browse`
+   * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param searchParams (optional)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -5041,9 +5049,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Return records that match the query.
+   * Searches a single index and return matching search results (_hits_). This method lets you
+   * retrieve up to 1,000 hits. If you need more, use the [`browse`
+   * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -5055,9 +5065,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Return records that match the query.
+   * Searches a single index and return matching search results (_hits_). This method lets you
+   * retrieve up to 1,000 hits. If you need more, use the [`browse`
+   * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -5066,9 +5078,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return records that match the query.
+   * (asynchronously) Searches a single index and return matching search results (_hits_). This
+   * method lets you retrieve up to 1,000 hits. If you need more, use the [`browse`
+   * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param searchParams (optional)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -5094,9 +5108,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return records that match the query.
+   * (asynchronously) Searches a single index and return matching search results (_hits_). This
+   * method lets you retrieve up to 1,000 hits. If you need more, use the [`browse`
+   * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param searchParams (optional)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -5110,9 +5126,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return records that match the query.
+   * (asynchronously) Searches a single index and return matching search results (_hits_). This
+   * method lets you retrieve up to 1,000 hits. If you need more, use the [`browse`
+   * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -5127,9 +5145,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return records that match the query.
+   * (asynchronously) Searches a single index and return matching search results (_hits_). This
+   * method lets you retrieve up to 1,000 hits. If you need more, use the [`browse`
+   * operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param innerType The class held by the index, could be your custom class or {@link Object}.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -5139,10 +5159,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Search for synonyms in your index. You can control and filter the search with parameters. To
-   * get all synonyms, send an empty request body.
+   * Searches for synonyms in your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param searchSynonymsParams Body of the `searchSynonyms` operation. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -5157,10 +5176,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Search for synonyms in your index. You can control and filter the search with parameters. To
-   * get all synonyms, send an empty request body.
+   * Searches for synonyms in your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param searchSynonymsParams Body of the `searchSynonyms` operation. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -5170,10 +5188,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Search for synonyms in your index. You can control and filter the search with parameters. To
-   * get all synonyms, send an empty request body.
+   * Searches for synonyms in your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -5183,10 +5200,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Search for synonyms in your index. You can control and filter the search with parameters. To
-   * get all synonyms, send an empty request body.
+   * Searches for synonyms in your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public SearchSynonymsResponse searchSynonyms(@Nonnull String indexName) throws AlgoliaRuntimeException {
@@ -5194,10 +5210,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Search for synonyms in your index. You can control and filter the search with
-   * parameters. To get all synonyms, send an empty request body.
+   * (asynchronously) Searches for synonyms in your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param searchSynonymsParams Body of the `searchSynonyms` operation. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -5221,10 +5236,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Search for synonyms in your index. You can control and filter the search with
-   * parameters. To get all synonyms, send an empty request body.
+   * (asynchronously) Searches for synonyms in your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param searchSynonymsParams Body of the `searchSynonyms` operation. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -5236,10 +5250,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Search for synonyms in your index. You can control and filter the search with
-   * parameters. To get all synonyms, send an empty request body.
+   * (asynchronously) Searches for synonyms in your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -5250,10 +5263,9 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Search for synonyms in your index. You can control and filter the search with
-   * parameters. To get all synonyms, send an empty request body.
+   * (asynchronously) Searches for synonyms in your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<SearchSynonymsResponse> searchSynonymsAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
@@ -5261,11 +5273,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Since it can take up to a few seconds to get the data from the different clusters, the response
-   * isn't real-time. To ensure rapid updates, the user IDs index isn't built at the same time as
-   * the mapping. Instead, it's built every 12 hours, at the same time as the update of user ID
-   * usage. For example, if you add or move a user ID, the search will show an old value until the
-   * next time the mapping is rebuilt (every 12 hours).
+   * Since it can take a few seconds to get the data from the different clusters, the response isn't
+   * real-time. To ensure rapid updates, the user IDs index isn't built at the same time as the
+   * mapping. Instead, it's built every 12 hours, at the same time as the update of user ID usage.
+   * For example, if you add or move a user ID, the search will show an old value until the next
+   * time the mapping is rebuilt (every 12 hours).
    *
    * @param searchUserIdsParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -5278,11 +5290,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Since it can take up to a few seconds to get the data from the different clusters, the response
-   * isn't real-time. To ensure rapid updates, the user IDs index isn't built at the same time as
-   * the mapping. Instead, it's built every 12 hours, at the same time as the update of user ID
-   * usage. For example, if you add or move a user ID, the search will show an old value until the
-   * next time the mapping is rebuilt (every 12 hours).
+   * Since it can take a few seconds to get the data from the different clusters, the response isn't
+   * real-time. To ensure rapid updates, the user IDs index isn't built at the same time as the
+   * mapping. Instead, it's built every 12 hours, at the same time as the update of user ID usage.
+   * For example, if you add or move a user ID, the search will show an old value until the next
+   * time the mapping is rebuilt (every 12 hours).
    *
    * @param searchUserIdsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -5292,11 +5304,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Since it can take up to a few seconds to get the data from the different
-   * clusters, the response isn't real-time. To ensure rapid updates, the user IDs index isn't built
-   * at the same time as the mapping. Instead, it's built every 12 hours, at the same time as the
-   * update of user ID usage. For example, if you add or move a user ID, the search will show an old
-   * value until the next time the mapping is rebuilt (every 12 hours).
+   * (asynchronously) Since it can take a few seconds to get the data from the different clusters,
+   * the response isn't real-time. To ensure rapid updates, the user IDs index isn't built at the
+   * same time as the mapping. Instead, it's built every 12 hours, at the same time as the update of
+   * user ID usage. For example, if you add or move a user ID, the search will show an old value
+   * until the next time the mapping is rebuilt (every 12 hours).
    *
    * @param searchUserIdsParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -5320,11 +5332,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Since it can take up to a few seconds to get the data from the different
-   * clusters, the response isn't real-time. To ensure rapid updates, the user IDs index isn't built
-   * at the same time as the mapping. Instead, it's built every 12 hours, at the same time as the
-   * update of user ID usage. For example, if you add or move a user ID, the search will show an old
-   * value until the next time the mapping is rebuilt (every 12 hours).
+   * (asynchronously) Since it can take a few seconds to get the data from the different clusters,
+   * the response isn't real-time. To ensure rapid updates, the user IDs index isn't built at the
+   * same time as the mapping. Instead, it's built every 12 hours, at the same time as the update of
+   * user ID usage. For example, if you add or move a user ID, the search will show an old value
+   * until the next time the mapping is rebuilt (every 12 hours).
    *
    * @param searchUserIdsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -5335,7 +5347,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Set stop word settings for a specific language.
+   * Turns standard stop word dictionary entries on or off for a given language.
    *
    * @param dictionarySettingsParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -5348,7 +5360,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Set stop word settings for a specific language.
+   * Turns standard stop word dictionary entries on or off for a given language.
    *
    * @param dictionarySettingsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -5359,7 +5371,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Set stop word settings for a specific language.
+   * (asynchronously) Turns standard stop word dictionary entries on or off for a given language.
    *
    * @param dictionarySettingsParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -5385,7 +5397,7 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Set stop word settings for a specific language.
+   * (asynchronously) Turns standard stop word dictionary entries on or off for a given language.
    *
    * @param dictionarySettingsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -5396,14 +5408,13 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Update the specified [index
-   * settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). Specifying null
-   * for a setting resets it to its default value.
+   * Update the specified index settings. Index settings that you don't specify are left unchanged.
+   * Specify `null` to reset a setting to its default value. For best performance, update the index
+   * settings before you add new records to your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param indexSettings (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -5418,14 +5429,13 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Update the specified [index
-   * settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). Specifying null
-   * for a setting resets it to its default value.
+   * Update the specified index settings. Index settings that you don't specify are left unchanged.
+   * Specify `null` to reset a setting to its default value. For best performance, update the index
+   * settings before you add new records to your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param indexSettings (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public UpdatedAtResponse setSettings(@Nonnull String indexName, @Nonnull IndexSettings indexSettings, Boolean forwardToReplicas)
@@ -5434,11 +5444,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Update the specified [index
-   * settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). Specifying null
-   * for a setting resets it to its default value.
+   * Update the specified index settings. Index settings that you don't specify are left unchanged.
+   * Specify `null` to reset a setting to its default value. For best performance, update the index
+   * settings before you add new records to your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param indexSettings (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -5450,11 +5460,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Update the specified [index
-   * settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). Specifying null
-   * for a setting resets it to its default value.
+   * Update the specified index settings. Index settings that you don't specify are left unchanged.
+   * Specify `null` to reset a setting to its default value. For best performance, update the index
+   * settings before you add new records to your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param indexSettings (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -5463,14 +5473,13 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Update the specified [index
-   * settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). Specifying null
-   * for a setting resets it to its default value.
+   * (asynchronously) Update the specified index settings. Index settings that you don't specify are
+   * left unchanged. Specify `null` to reset a setting to its default value. For best performance,
+   * update the index settings before you add new records to your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param indexSettings (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -5496,14 +5505,13 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Update the specified [index
-   * settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). Specifying null
-   * for a setting resets it to its default value.
+   * (asynchronously) Update the specified index settings. Index settings that you don't specify are
+   * left unchanged. Specify `null` to reset a setting to its default value. For best performance,
+   * update the index settings before you add new records to your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param indexSettings (required)
-   * @param forwardToReplicas Indicates whether changed index settings are forwarded to the replica
-   *     indices. (optional)
+   * @param forwardToReplicas Whether changes are applied to replica indices. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<UpdatedAtResponse> setSettingsAsync(
@@ -5515,11 +5523,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Update the specified [index
-   * settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). Specifying null
-   * for a setting resets it to its default value.
+   * (asynchronously) Update the specified index settings. Index settings that you don't specify are
+   * left unchanged. Specify `null` to reset a setting to its default value. For best performance,
+   * update the index settings before you add new records to your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param indexSettings (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -5534,11 +5542,11 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Update the specified [index
-   * settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). Specifying null
-   * for a setting resets it to its default value.
+   * (asynchronously) Update the specified index settings. Index settings that you don't specify are
+   * left unchanged. Specify `null` to reset a setting to its default value. For best performance,
+   * update the index settings before you add new records to your index.
    *
-   * @param indexName Index on which to perform the request. (required)
+   * @param indexName Name of the index on which to perform the operation. (required)
    * @param indexSettings (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -5548,8 +5556,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Replace the permissions of an existing API key. Any unspecified parameter resets that
-   * permission to its default value. The request must be authenticated with the admin API key.
+   * Replaces the permissions of an existing API key. Any unspecified attribute resets that
+   * attribute to its default value.
    *
    * @param key API key. (required)
    * @param apiKey (required)
@@ -5563,8 +5571,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Replace the permissions of an existing API key. Any unspecified parameter resets that
-   * permission to its default value. The request must be authenticated with the admin API key.
+   * Replaces the permissions of an existing API key. Any unspecified attribute resets that
+   * attribute to its default value.
    *
    * @param key API key. (required)
    * @param apiKey (required)
@@ -5575,9 +5583,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Replace the permissions of an existing API key. Any unspecified parameter
-   * resets that permission to its default value. The request must be authenticated with the admin
-   * API key.
+   * (asynchronously) Replaces the permissions of an existing API key. Any unspecified attribute
+   * resets that attribute to its default value.
    *
    * @param key API key. (required)
    * @param apiKey (required)
@@ -5599,9 +5606,8 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Replace the permissions of an existing API key. Any unspecified parameter
-   * resets that permission to its default value. The request must be authenticated with the admin
-   * API key.
+   * (asynchronously) Replaces the permissions of an existing API key. Any unspecified attribute
+   * resets that attribute to its default value.
    *
    * @param key API key. (required)
    * @param apiKey (required)

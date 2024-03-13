@@ -34,7 +34,7 @@ public class SearchRulesResponse {
     return this;
   }
 
-  /** Fetched rules. */
+  /** Rules that matched the search criteria. */
   @javax.annotation.Nonnull
   public List<Rule> getHits() {
     return hits;
@@ -45,7 +45,7 @@ public class SearchRulesResponse {
     return this;
   }
 
-  /** Number of fetched rules. */
+  /** Number of rules that matched the search criteria. */
   @javax.annotation.Nonnull
   public Integer getNbHits() {
     return nbHits;

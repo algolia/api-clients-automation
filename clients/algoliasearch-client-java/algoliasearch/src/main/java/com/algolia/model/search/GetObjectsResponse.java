@@ -25,7 +25,7 @@ public class GetObjectsResponse<T> {
     return this;
   }
 
-  /** Retrieved results. */
+  /** Retrieved records. */
   @javax.annotation.Nonnull
   public List<T> getResults() {
     return results;

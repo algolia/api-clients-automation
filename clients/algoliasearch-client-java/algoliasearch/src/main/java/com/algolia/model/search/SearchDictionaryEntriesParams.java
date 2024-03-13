@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** `searchDictionaryEntries` parameters. */
+/** Search parameter. */
 public class SearchDictionaryEntriesParams {
 
   @JsonProperty("query")
@@ -27,7 +27,7 @@ public class SearchDictionaryEntriesParams {
     return this;
   }
 
-  /** Text to search for in an index. */
+  /** Search query. */
   @javax.annotation.Nonnull
   public String getQuery() {
     return query;
@@ -38,7 +38,7 @@ public class SearchDictionaryEntriesParams {
     return this;
   }
 
-  /** Page to retrieve (the first page is `0`, not `1`). */
+  /** Page of search results to retrieve. minimum: 0 */
   @javax.annotation.Nullable
   public Integer getPage() {
     return page;
@@ -61,8 +61,8 @@ public class SearchDictionaryEntriesParams {
   }
 
   /**
-   * [Supported language ISO
-   * code](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
+   * ISO code of a [supported
+   * language](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
    */
   @javax.annotation.Nullable
   public String getLanguage() {

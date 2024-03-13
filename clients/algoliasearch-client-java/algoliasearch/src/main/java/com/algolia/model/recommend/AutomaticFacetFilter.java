@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** Automatic facet Filter. */
+/** Filter or optional filter to be applied to the search. */
 public class AutomaticFacetFilter {
 
   @JsonProperty("facet")
@@ -24,7 +24,10 @@ public class AutomaticFacetFilter {
     return this;
   }
 
-  /** Attribute to filter on. This must match a facet placeholder in the Rule's pattern. */
+  /**
+   * Facet name to be applied as filter. The name must match placeholders in the `pattern`
+   * parameter. For example, with `pattern: {facet:genre}`, `automaticFacetFilters` must be `genre`.
+   */
   @javax.annotation.Nonnull
   public String getFacet() {
     return facet;
@@ -35,7 +38,7 @@ public class AutomaticFacetFilter {
     return this;
   }
 
-  /** Score for the filter. Typically used for optional or disjunctive filters. */
+  /** Filter scores to give different weights to individual filters. */
   @javax.annotation.Nullable
   public Integer getScore() {
     return score;
@@ -46,7 +49,11 @@ public class AutomaticFacetFilter {
     return this;
   }
 
-  /** Whether the filter is disjunctive (true) or conjunctive (false). */
+  /**
+   * Whether the filter is disjunctive or conjunctive. If true the filter has multiple matches,
+   * multiple occurences are combined with the logical `OR` operation. If false, multiple occurences
+   * are combined with the logical `AND` operation.
+   */
   @javax.annotation.Nullable
   public Boolean getDisjunctive() {
     return disjunctive;

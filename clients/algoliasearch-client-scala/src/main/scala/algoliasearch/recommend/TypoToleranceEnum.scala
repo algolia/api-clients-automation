@@ -15,7 +15,10 @@ import org.json4s._
 
 sealed trait TypoToleranceEnum extends TypoToleranceTrait
 
-/** TypoToleranceEnum enumeration
+/**   - `min`. Return matches with the lowest number of typos. For example, if you have matches without typos, only
+  *     include those. But if there are no matches without typos (with 1 typo), include matches with 1 typo (2 typos). -
+  *     `strict`. Return matches with the two lowest numbers of typos. With `strict`, the Typo ranking criterion is
+  *     applied first in the `ranking` setting.
   */
 object TypoToleranceEnum {
   case object Min extends TypoToleranceEnum {

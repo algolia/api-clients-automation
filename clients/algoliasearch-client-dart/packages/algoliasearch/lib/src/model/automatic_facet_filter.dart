@@ -14,15 +14,15 @@ final class AutomaticFacetFilter {
     this.disjunctive,
   });
 
-  /// Attribute to filter on. This must match a facet placeholder in the Rule's pattern.
+  /// Facet name to be applied as filter. The name must match placeholders in the `pattern` parameter. For example, with `pattern: {facet:genre}`, `automaticFacetFilters` must be `genre`.
   @JsonKey(name: r'facet')
   final String facet;
 
-  /// Score for the filter. Typically used for optional or disjunctive filters.
+  /// Filter scores to give different weights to individual filters.
   @JsonKey(name: r'score')
   final int? score;
 
-  /// Whether the filter is disjunctive (true) or conjunctive (false).
+  /// Whether the filter is disjunctive or conjunctive.  If true the filter has multiple matches, multiple occurences are combined with the logical `OR` operation. If false, multiple occurences are combined with the logical `AND` operation.
   @JsonKey(name: r'disjunctive')
   final bool? disjunctive;
 

@@ -1050,9 +1050,9 @@ class SnippetSearchClient {
 
     // Call the API
     var response = client.searchDictionaryEntries(
-      dictionaryName = DictionaryType.entries.first { it.value == "compounds" },
+      dictionaryName = DictionaryType.entries.first { it.value == "stopwords" },
       searchDictionaryEntriesParams = SearchDictionaryEntriesParams(
-        query = "foo",
+        query = "about",
       ),
     )
 

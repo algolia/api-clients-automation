@@ -14,8 +14,8 @@ package algoliasearch.recommend
 /** BaseRecommendedForYouQueryParameters
   *
   * @param userToken
-  *   Associates a [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/) with the current
-  *   search.
+  *   Unique pseudonymous or anonymous user identifier. This helps with analytics and click and conversion events. For
+  *   more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
   */
 case class BaseRecommendedForYouQueryParameters(
     userToken: String

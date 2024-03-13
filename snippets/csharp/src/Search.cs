@@ -1047,8 +1047,8 @@ public class SnippetSearchClient
 
     // Call the API
     var response = await client.SearchDictionaryEntriesAsync(
-      Enum.Parse<DictionaryType>("Compounds"),
-      new SearchDictionaryEntriesParams { Query = "foo", }
+      Enum.Parse<DictionaryType>("Stopwords"),
+      new SearchDictionaryEntriesParams { Query = "about", }
     );
     // SEPARATOR<
   }

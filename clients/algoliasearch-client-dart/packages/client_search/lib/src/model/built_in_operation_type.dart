@@ -2,7 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:json_annotation/json_annotation.dart';
 
-/// Operation to apply to the attribute.
+/// How to change the attribute.
 @JsonEnum(valueField: 'raw')
 enum BuiltInOperationType {
   increment(r'Increment'),

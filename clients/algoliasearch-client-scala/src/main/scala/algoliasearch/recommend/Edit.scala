@@ -18,7 +18,7 @@ import algoliasearch.recommend.EditType._
   * @param delete
   *   Text or patterns to remove from the query string.
   * @param insert
-  *   Text that should be inserted in place of the removed text inside the query string.
+  *   Text to be added in place of the deleted text inside the query string.
   */
 case class Edit(
     `type`: Option[EditType] = scala.None,

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** Show highlighted section and words matched on a query. */
+/** Surround words that match the query with HTML tags for highlighting. */
 @JsonDeserialize(as = HighlightResultOption.class)
 public class HighlightResultOption implements HighlightResult {
 
@@ -30,7 +30,7 @@ public class HighlightResultOption implements HighlightResult {
     return this;
   }
 
-  /** Markup text with `facetQuery` matches highlighted. */
+  /** Highlighted attribute value, including HTML tags. */
   @javax.annotation.Nonnull
   public String getValue() {
     return value;
@@ -57,7 +57,7 @@ public class HighlightResultOption implements HighlightResult {
     return this;
   }
 
-  /** List of words from the query that matched the object. */
+  /** List of matched words from the search query. */
   @javax.annotation.Nonnull
   public List<String> getMatchedWords() {
     return matchedWords;

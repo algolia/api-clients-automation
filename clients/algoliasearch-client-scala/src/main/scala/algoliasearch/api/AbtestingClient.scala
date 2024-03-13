@@ -235,9 +235,9 @@ class AbtestingClient(
     *   - analytics
     *
     * @param offset
-    *   Position of the starting record. Used for paging. 0 is the first record.
+    *   Position of the first item to return.
     * @param limit
-    *   Number of records to return (page size).
+    *   Number of items to return.
     * @param indexPrefix
     *   Only return A/B tests for indices starting with this prefix.
     * @param indexSuffix

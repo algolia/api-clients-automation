@@ -38,7 +38,7 @@ components:
     Index:
       in: query
       name: index
-      description: Index name to target.
+      description: Index name.
       required: true
       schema:
         type: string
@@ -56,21 +56,19 @@ components:
     StartDate:
       in: query
       name: startDate
-      description: >-
-        Start date (a string in the format `YYYY-MM-DD`) of the period to
-        analyze.
+      description: Start date (`YYYY-MM-DD`) of the period to analyze.
       schema:
         type: string
+        format: date
         example: '2022-09-19'
-        pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
     EndDate:
       in: query
       name: endDate
-      description: End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+      description: End date (`YYYY-MM-DD`) of the period to analyze.
       schema:
         type: string
+        format: date
         example: '2023-01-21'
-        pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
     OrderBy:
       in: query
       name: orderBy
@@ -87,17 +85,18 @@ components:
     Limit:
       in: query
       name: limit
-      description: Number of records to return (page size).
+      description: Number of items to return.
       schema:
         type: integer
         default: 10
     Offset:
       in: query
       name: offset
-      description: Position of the starting record. Used for paging. 0 is the first record.
+      description: Position of the first item to return.
       schema:
         type: integer
         default: 0
+        minimum: 0
     Tags:
       name: tags
       in: query
@@ -165,7 +164,7 @@ components:
       example: 504
     nbHits:
       type: integer
-      description: Number of hits the search query matched.
+      description: Number of results (hits).
       example: 20
     topSearchesResponse:
       type: object

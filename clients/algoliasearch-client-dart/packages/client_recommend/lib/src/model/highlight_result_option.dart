@@ -16,14 +16,14 @@ final class HighlightResultOption {
     this.fullyHighlighted,
   });
 
-  /// Markup text with `facetQuery` matches highlighted.
+  /// Highlighted attribute value, including HTML tags.
   @JsonKey(name: r'value')
   final String value;
 
   @JsonKey(name: r'matchLevel')
   final MatchLevel matchLevel;
 
-  /// List of words from the query that matched the object.
+  /// List of matched words from the search query.
   @JsonKey(name: r'matchedWords')
   final List<String> matchedWords;
 

@@ -38,7 +38,7 @@ public class BaseRecommendationsQuery {
     return this;
   }
 
-  /** Unique object identifier. */
+  /** Unique record identifier. */
   @javax.annotation.Nonnull
   public String getObjectID() {
     return objectID;

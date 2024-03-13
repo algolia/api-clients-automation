@@ -30,7 +30,7 @@ package algoliasearch.analytics
   * @param conversionCount
   *   Number of converted clicks.
   * @param nbHits
-  *   Number of hits the search query matched.
+  *   Number of results (hits).
   */
 case class TopSearchWithAnalytics(
     search: String,

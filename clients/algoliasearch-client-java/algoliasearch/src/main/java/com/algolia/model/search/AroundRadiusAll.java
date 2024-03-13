@@ -6,7 +6,7 @@ package com.algolia.model.search;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Gets or Sets aroundRadiusAll */
+/** Return all records with a valid `_geoloc` attribute. Don't filter by distance. */
 @JsonDeserialize(as = AroundRadiusAll.class)
 public enum AroundRadiusAll implements AroundRadius {
   ALL("all");

@@ -190,11 +190,11 @@ class AnalyticsClient(
     *   - analytics
     *
     * @param index
-    *   Index name to target.
+    *   Index name.
     * @param startDate
-    *   Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
-    *   End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param tags
     *   Filter analytics on the
     *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
@@ -230,11 +230,11 @@ class AnalyticsClient(
     *   - analytics
     *
     * @param index
-    *   Index name to target.
+    *   Index name.
     * @param startDate
-    *   Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
-    *   End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param tags
     *   Filter analytics on the
     *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
@@ -269,11 +269,11 @@ class AnalyticsClient(
     *   - analytics
     *
     * @param index
-    *   Index name to target.
+    *   Index name.
     * @param startDate
-    *   Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
-    *   End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param tags
     *   Filter analytics on the
     *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
@@ -307,11 +307,11 @@ class AnalyticsClient(
     *   - analytics
     *
     * @param index
-    *   Index name to target.
+    *   Index name.
     * @param startDate
-    *   Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
-    *   End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param tags
     *   Filter analytics on the
     *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
@@ -346,11 +346,11 @@ class AnalyticsClient(
     *   - analytics
     *
     * @param index
-    *   Index name to target.
+    *   Index name.
     * @param startDate
-    *   Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
-    *   End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param tags
     *   Filter analytics on the
     *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
@@ -384,11 +384,11 @@ class AnalyticsClient(
     *   - analytics
     *
     * @param index
-    *   Index name to target.
+    *   Index name.
     * @param startDate
-    *   Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
-    *   End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param tags
     *   Filter analytics on the
     *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
@@ -422,11 +422,11 @@ class AnalyticsClient(
     *   - analytics
     *
     * @param index
-    *   Index name to target.
+    *   Index name.
     * @param startDate
-    *   Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
-    *   End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param tags
     *   Filter analytics on the
     *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
@@ -460,15 +460,15 @@ class AnalyticsClient(
     *   - analytics
     *
     * @param index
-    *   Index name to target.
+    *   Index name.
     * @param startDate
-    *   Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
-    *   End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param limit
-    *   Number of records to return (page size).
+    *   Number of items to return.
     * @param offset
-    *   Position of the starting record. Used for paging. 0 is the first record.
+    *   Position of the first item to return.
     * @param tags
     *   Filter analytics on the
     *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
@@ -506,15 +506,15 @@ class AnalyticsClient(
     *   - analytics
     *
     * @param index
-    *   Index name to target.
+    *   Index name.
     * @param startDate
-    *   Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
-    *   End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param limit
-    *   Number of records to return (page size).
+    *   Number of items to return.
     * @param offset
-    *   Position of the starting record. Used for paging. 0 is the first record.
+    *   Position of the first item to return.
     * @param tags
     *   Filter analytics on the
     *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
@@ -554,7 +554,7 @@ class AnalyticsClient(
     *   - analytics
     *
     * @param index
-    *   Index name to target.
+    *   Index name.
     */
   def getStatus(index: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -576,15 +576,15 @@ class AnalyticsClient(
     *   - analytics
     *
     * @param index
-    *   Index name to target.
+    *   Index name.
     * @param startDate
-    *   Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
-    *   End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param limit
-    *   Number of records to return (page size).
+    *   Number of items to return.
     * @param offset
-    *   Position of the starting record. Used for paging. 0 is the first record.
+    *   Position of the first item to return.
     * @param tags
     *   Filter analytics on the
     *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
@@ -624,17 +624,17 @@ class AnalyticsClient(
     *   - analytics
     *
     * @param index
-    *   Index name to target.
+    *   Index name.
     * @param search
     *   User query.
     * @param startDate
-    *   Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
-    *   End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param limit
-    *   Number of records to return (page size).
+    *   Number of items to return.
     * @param offset
-    *   Position of the starting record. Used for paging. 0 is the first record.
+    *   Position of the first item to return.
     * @param tags
     *   Filter analytics on the
     *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
@@ -676,17 +676,17 @@ class AnalyticsClient(
     * @param attribute
     *   Attribute name.
     * @param index
-    *   Index name to target.
+    *   Index name.
     * @param search
     *   User query.
     * @param startDate
-    *   Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
-    *   End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param limit
-    *   Number of records to return (page size).
+    *   Number of items to return.
     * @param offset
-    *   Position of the starting record. Used for paging. 0 is the first record.
+    *   Position of the first item to return.
     * @param tags
     *   Filter analytics on the
     *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
@@ -729,17 +729,17 @@ class AnalyticsClient(
     *   - analytics
     *
     * @param index
-    *   Index name to target.
+    *   Index name.
     * @param search
     *   User query.
     * @param startDate
-    *   Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
-    *   End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param limit
-    *   Number of records to return (page size).
+    *   Number of items to return.
     * @param offset
-    *   Position of the starting record. Used for paging. 0 is the first record.
+    *   Position of the first item to return.
     * @param tags
     *   Filter analytics on the
     *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
@@ -779,20 +779,20 @@ class AnalyticsClient(
     *   - analytics
     *
     * @param index
-    *   Index name to target.
+    *   Index name.
     * @param search
     *   User query.
     * @param clickAnalytics
     *   Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/)
     *   rates for a search.
     * @param startDate
-    *   Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
-    *   End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param limit
-    *   Number of records to return (page size).
+    *   Number of items to return.
     * @param offset
-    *   Position of the starting record. Used for paging. 0 is the first record.
+    *   Position of the first item to return.
     * @param tags
     *   Filter analytics on the
     *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
@@ -834,22 +834,22 @@ class AnalyticsClient(
     *   - analytics
     *
     * @param index
-    *   Index name to target.
+    *   Index name.
     * @param clickAnalytics
     *   Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/)
     *   rates for a search.
     * @param startDate
-    *   Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
-    *   End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param orderBy
     *   Reorder the results.
     * @param direction
     *   Sorting direction of the results: ascending or descending.
     * @param limit
-    *   Number of records to return (page size).
+    *   Number of items to return.
     * @param offset
-    *   Position of the starting record. Used for paging. 0 is the first record.
+    *   Position of the first item to return.
     * @param tags
     *   Filter analytics on the
     *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
@@ -893,11 +893,11 @@ class AnalyticsClient(
     *   - analytics
     *
     * @param index
-    *   Index name to target.
+    *   Index name.
     * @param startDate
-    *   Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
-    *   End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+    *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param tags
     *   Filter analytics on the
     *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.

@@ -16,7 +16,7 @@ final class SearchRecommendRulesParams {
     this.enabled,
   });
 
-  /// Full-text query.
+  /// Search query.
   @JsonKey(name: r'query')
   final String? query;
 
@@ -24,7 +24,7 @@ final class SearchRecommendRulesParams {
   @JsonKey(name: r'context')
   final String? context;
 
-  /// Requested page (the first page is page 0).
+  /// Requested page of the API response.
   // minimum: 0
   @JsonKey(name: r'page')
   final int? page;

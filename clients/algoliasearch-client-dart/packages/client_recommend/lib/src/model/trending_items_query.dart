@@ -21,7 +21,7 @@ final class TrendingItemsQuery {
     this.fallbackParameters,
   });
 
-  /// Algolia index name.
+  /// Index name.
   @JsonKey(name: r'indexName')
   final String indexName;
 

@@ -1100,8 +1100,8 @@ def snippet_for_search_dictionary_entries
 
   # Call the API
   resp = client.search_dictionary_entries(
-    'compounds',
-    SearchDictionaryEntriesParams.new(query: "foo")
+    'stopwords',
+    SearchDictionaryEntriesParams.new(query: "about")
   )
 
   # use the class directly

@@ -7,7 +7,10 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** Additional search parameters. */
+/**
+ * Parameters to apply to this search. You can use all search parameters, plus special
+ * `automaticFacetFilters`, `automaticOptionalFacetFilters`, and `query`.
+ */
 public class Params {
 
   @JsonProperty("query")

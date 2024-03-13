@@ -1631,7 +1631,6 @@ class TestSearchClient < Test::Unit::TestCase
           around_precision: 0,
           around_radius: 'all',
           attribute_criteria_computed_by_min_proximity: true,
-          attributes_for_faceting: [""],
           attributes_to_highlight: [""],
           attributes_to_retrieve: [""],
           attributes_to_snippet: [""],
@@ -1646,9 +1645,6 @@ class TestSearchClient < Test::Unit::TestCase
           enable_re_ranking: true,
           enable_rules: true,
           exact_on_single_word_query: 'attribute',
-          explain: [
-            "foo", "bar"
-          ],
           facet_filters: [""],
           faceting_after_distinct: true,
           facets: [""],
@@ -1659,8 +1655,13 @@ class TestSearchClient < Test::Unit::TestCase
           hits_per_page: 1,
           ignore_plurals: false,
           index_name: "theIndexName",
-          inside_bounding_box: [[47.3165, 4.9665, 47.3424, 5.0201],
-            [40.9234, 2.1185, 38.643, 1.9916]],
+          inside_bounding_box: [
+            [47.3165,
+              4.9665,
+              47.3424,
+              5.0201],
+            [40.9234, 2.1185, 38.643, 1.9916]
+          ],
           inside_polygon: [[47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9],
             [40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104]],
           keep_diacritics_on_characters: "",
@@ -1718,22 +1719,35 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesForFaceting":[""],"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","explain":["foo","bar"],"facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":[""],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}'), JSON.parse(req.body)
+      JSON.parse('{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":[""],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}'), JSON.parse(req.body)
     )
   end
 
   # get searchDictionaryEntries results with minimal parameters
   def test_search_dictionary_entries0
     req = @client.search_dictionary_entries_with_http_info(
-      'compounds',
-      SearchDictionaryEntriesParams.new(query: "foo")
+      'stopwords',
+      SearchDictionaryEntriesParams.new(query: "about")
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/dictionaries/compounds/search', req.path)
+    assert_equal('/1/dictionaries/stopwords/search', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse('{"query":"foo"}'), JSON.parse(req.body))
+    assert_equal(JSON.parse('{"query":"about"}'), JSON.parse(req.body))
+
+    res = @e2e_client.search_dictionary_entries_with_http_info(
+      'stopwords',
+      SearchDictionaryEntriesParams.new(query: "about")
+    )
+
+    assert_equal(res.status, 200)
+    res = @e2e_client.search_dictionary_entries(
+      'stopwords',
+      SearchDictionaryEntriesParams.new(query: "about")
+    )
+    expected_body = JSON.parse('{"hits":[{"objectID":"86ef58032f47d976ca7130a896086783","language":"en","word":"about"}],"page":0,"nbHits":1,"nbPages":1}')
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
   # get searchDictionaryEntries results with all parameters

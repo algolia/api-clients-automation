@@ -22,12 +22,20 @@ public class Condition {
   @JsonProperty("context")
   private String context;
 
+  @JsonProperty("filters")
+  private String filters;
+
   public Condition setPattern(String pattern) {
     this.pattern = pattern;
     return this;
   }
 
-  /** Query pattern syntax. */
+  /**
+   * Query pattern that triggers the rule. You can use either a literal string, or a special pattern
+   * `{facet:ATTRIBUTE}`, where `ATTRIBUTE` is a facet name. The rule is triggered if the query
+   * matches the literal string or a value of the specified facet. For example, with `pattern:
+   * {facet:genre}`, the rule is triggered when users search for a genre, such as \"comedy\".
+   */
   @javax.annotation.Nullable
   public String getPattern() {
     return pattern;
@@ -49,7 +57,7 @@ public class Condition {
     return this;
   }
 
-  /** Whether the pattern matches on plurals, synonyms, and typos. */
+  /** Whether the pattern should match plurals, synonyms, and typos. */
   @javax.annotation.Nullable
   public Boolean getAlternatives() {
     return alternatives;
@@ -60,10 +68,30 @@ public class Condition {
     return this;
   }
 
-  /** Rule context format: [A-Za-z0-9_-]+). */
+  /**
+   * An additional restriction that only triggers the rule, when the search has the same value as
+   * `ruleContexts` parameter. For example, if `context: mobile`, the rule is only triggered when
+   * the search request has a matching `ruleContexts: mobile`. A rule context must only contain
+   * alphanumeric characters.
+   */
   @javax.annotation.Nullable
   public String getContext() {
     return context;
+  }
+
+  public Condition setFilters(String filters) {
+    this.filters = filters;
+    return this;
+  }
+
+  /**
+   * Filters that trigger the rule. You can add add filters using the syntax `facet:value` so that
+   * the rule is triggered, when the specific filter is selected. You can use `filters` on its own
+   * or combine it with the `pattern` parameter.
+   */
+  @javax.annotation.Nullable
+  public String getFilters() {
+    return filters;
   }
 
   @Override
@@ -79,13 +107,14 @@ public class Condition {
       Objects.equals(this.pattern, condition.pattern) &&
       Objects.equals(this.anchoring, condition.anchoring) &&
       Objects.equals(this.alternatives, condition.alternatives) &&
-      Objects.equals(this.context, condition.context)
+      Objects.equals(this.context, condition.context) &&
+      Objects.equals(this.filters, condition.filters)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(pattern, anchoring, alternatives, context);
+    return Objects.hash(pattern, anchoring, alternatives, context, filters);
   }
 
   @Override
@@ -96,6 +125,7 @@ public class Condition {
     sb.append("    anchoring: ").append(toIndentedString(anchoring)).append("\n");
     sb.append("    alternatives: ").append(toIndentedString(alternatives)).append("\n");
     sb.append("    context: ").append(toIndentedString(context)).append("\n");
+    sb.append("    filters: ").append(toIndentedString(filters)).append("\n");
     sb.append("}");
     return sb.toString();
   }

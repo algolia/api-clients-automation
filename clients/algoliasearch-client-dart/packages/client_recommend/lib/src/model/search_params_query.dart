@@ -12,7 +12,7 @@ final class SearchParamsQuery {
     this.query,
   });
 
-  /// Text to search for in an index.
+  /// Search query.
   @JsonKey(name: r'query')
   final String? query;
 

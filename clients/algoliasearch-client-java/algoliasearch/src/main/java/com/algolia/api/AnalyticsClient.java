@@ -484,11 +484,9 @@ public class AnalyticsClient extends ApiClient {
    * receive any click events for tracked searches. A _tracked_ search is a search request where the
    * `clickAnalytics` parameter is `true`.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -513,11 +511,9 @@ public class AnalyticsClient extends ApiClient {
    * receive any click events for tracked searches. A _tracked_ search is a search request where the
    * `clickAnalytics` parameter is `true`.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -535,7 +531,7 @@ public class AnalyticsClient extends ApiClient {
    * receive any click events for tracked searches. A _tracked_ search is a search request where the
    * `clickAnalytics` parameter is `true`.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -551,7 +547,7 @@ public class AnalyticsClient extends ApiClient {
    * receive any click events for tracked searches. A _tracked_ search is a search request where the
    * `clickAnalytics` parameter is `true`.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetAverageClickPositionResponse getAverageClickPosition(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -564,11 +560,9 @@ public class AnalyticsClient extends ApiClient {
    * Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search
    * request where the `clickAnalytics` parameter is `true`.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -604,11 +598,9 @@ public class AnalyticsClient extends ApiClient {
    * Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search
    * request where the `clickAnalytics` parameter is `true`.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -630,7 +622,7 @@ public class AnalyticsClient extends ApiClient {
    * Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search
    * request where the `clickAnalytics` parameter is `true`.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -648,7 +640,7 @@ public class AnalyticsClient extends ApiClient {
    * Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search
    * request where the `clickAnalytics` parameter is `true`.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetAverageClickPositionResponse> getAverageClickPositionAsync(@Nonnull String index)
@@ -662,11 +654,9 @@ public class AnalyticsClient extends ApiClient {
    * receive any click events for tracked searches. A _tracked_ search is a search request where the
    * `clickAnalytics` parameter is `true`.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -691,11 +681,9 @@ public class AnalyticsClient extends ApiClient {
    * receive any click events for tracked searches. A _tracked_ search is a search request where the
    * `clickAnalytics` parameter is `true`.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -713,7 +701,7 @@ public class AnalyticsClient extends ApiClient {
    * receive any click events for tracked searches. A _tracked_ search is a search request where the
    * `clickAnalytics` parameter is `true`.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -728,7 +716,7 @@ public class AnalyticsClient extends ApiClient {
    * receive any click events for tracked searches. A _tracked_ search is a search request where the
    * `clickAnalytics` parameter is `true`.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetClickPositionsResponse getClickPositions(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -741,11 +729,9 @@ public class AnalyticsClient extends ApiClient {
    * didn't receive any click events for tracked searches. A _tracked_ search is a search request
    * where the `clickAnalytics` parameter is `true`.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -781,11 +767,9 @@ public class AnalyticsClient extends ApiClient {
    * didn't receive any click events for tracked searches. A _tracked_ search is a search request
    * where the `clickAnalytics` parameter is `true`.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -807,7 +791,7 @@ public class AnalyticsClient extends ApiClient {
    * didn't receive any click events for tracked searches. A _tracked_ search is a search request
    * where the `clickAnalytics` parameter is `true`.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -823,7 +807,7 @@ public class AnalyticsClient extends ApiClient {
    * didn't receive any click events for tracked searches. A _tracked_ search is a search request
    * where the `clickAnalytics` parameter is `true`.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetClickPositionsResponse> getClickPositionsAsync(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -834,11 +818,9 @@ public class AnalyticsClient extends ApiClient {
    * Returns a [click-through rate
    * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -861,11 +843,9 @@ public class AnalyticsClient extends ApiClient {
    * Returns a [click-through rate
    * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -881,7 +861,7 @@ public class AnalyticsClient extends ApiClient {
    * Returns a [click-through rate
    * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -895,7 +875,7 @@ public class AnalyticsClient extends ApiClient {
    * Returns a [click-through rate
    * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetClickThroughRateResponse getClickThroughRate(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -906,11 +886,9 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Returns a [click-through rate
    * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -944,11 +922,9 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Returns a [click-through rate
    * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -968,7 +944,7 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Returns a [click-through rate
    * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -982,7 +958,7 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Returns a [click-through rate
    * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetClickThroughRateResponse> getClickThroughRateAsync(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -993,11 +969,9 @@ public class AnalyticsClient extends ApiClient {
    * Return a [conversion
    * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1020,11 +994,9 @@ public class AnalyticsClient extends ApiClient {
    * Return a [conversion
    * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1040,7 +1012,7 @@ public class AnalyticsClient extends ApiClient {
    * Return a [conversion
    * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1054,7 +1026,7 @@ public class AnalyticsClient extends ApiClient {
    * Return a [conversion
    * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetConversationRateResponse getConversationRate(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -1065,11 +1037,9 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Return a [conversion
    * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1103,11 +1073,9 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Return a [conversion
    * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1127,7 +1095,7 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Return a [conversion
    * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1141,7 +1109,7 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Return a [conversion
    * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetConversationRateResponse> getConversationRateAsync(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -1153,11 +1121,9 @@ public class AnalyticsClient extends ApiClient {
    * the complete given time range, as well as a value per day. It also returns the count of
    * searches and searches without clicks.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1181,11 +1147,9 @@ public class AnalyticsClient extends ApiClient {
    * the complete given time range, as well as a value per day. It also returns the count of
    * searches and searches without clicks.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1202,7 +1166,7 @@ public class AnalyticsClient extends ApiClient {
    * the complete given time range, as well as a value per day. It also returns the count of
    * searches and searches without clicks.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1216,7 +1180,7 @@ public class AnalyticsClient extends ApiClient {
    * the complete given time range, as well as a value per day. It also returns the count of
    * searches and searches without clicks.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetNoClickRateResponse getNoClickRate(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -1228,11 +1192,9 @@ public class AnalyticsClient extends ApiClient {
    * returns a value for the complete given time range, as well as a value per day. It also returns
    * the count of searches and searches without clicks.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1267,11 +1229,9 @@ public class AnalyticsClient extends ApiClient {
    * returns a value for the complete given time range, as well as a value per day. It also returns
    * the count of searches and searches without clicks.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1292,7 +1252,7 @@ public class AnalyticsClient extends ApiClient {
    * returns a value for the complete given time range, as well as a value per day. It also returns
    * the count of searches and searches without clicks.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1307,7 +1267,7 @@ public class AnalyticsClient extends ApiClient {
    * returns a value for the complete given time range, as well as a value per day. It also returns
    * the count of searches and searches without clicks.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetNoClickRateResponse> getNoClickRateAsync(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -1317,11 +1277,9 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Returns the rate at which searches didn't return any results.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1343,11 +1301,9 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Returns the rate at which searches didn't return any results.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1362,7 +1318,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Returns the rate at which searches didn't return any results.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1374,7 +1330,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Returns the rate at which searches didn't return any results.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetNoResultsRateResponse getNoResultsRate(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -1384,11 +1340,9 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns the rate at which searches didn't return any results.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1421,11 +1375,9 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns the rate at which searches didn't return any results.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1444,7 +1396,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns the rate at which searches didn't return any results.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1457,7 +1409,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns the rate at which searches didn't return any results.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetNoResultsRateResponse> getNoResultsRateAsync(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -1467,11 +1419,9 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Returns the number of searches within a time range.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1493,11 +1443,9 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Returns the number of searches within a time range.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1512,7 +1460,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Returns the number of searches within a time range.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1524,7 +1472,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Returns the number of searches within a time range.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetSearchesCountResponse getSearchesCount(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -1534,11 +1482,9 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns the number of searches within a time range.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1571,11 +1517,9 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns the number of searches within a time range.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1594,7 +1538,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns the number of searches within a time range.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1607,7 +1551,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns the number of searches within a time range.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetSearchesCountResponse> getSearchesCountAsync(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -1617,14 +1561,11 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Return the most popular of the last 1,000 searches that didn't lead to any clicks.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1648,14 +1589,11 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Return the most popular of the last 1,000 searches that didn't lead to any clicks.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1676,7 +1614,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Return the most popular of the last 1,000 searches that didn't lead to any clicks.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1689,7 +1627,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Return the most popular of the last 1,000 searches that didn't lead to any clicks.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetSearchesNoClicksResponse getSearchesNoClicks(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -1700,14 +1638,11 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Return the most popular of the last 1,000 searches that didn't lead to any
    * clicks.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1745,14 +1680,11 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Return the most popular of the last 1,000 searches that didn't lead to any
    * clicks.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1774,7 +1706,7 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Return the most popular of the last 1,000 searches that didn't lead to any
    * clicks.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1788,7 +1720,7 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Return the most popular of the last 1,000 searches that didn't lead to any
    * clicks.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetSearchesNoClicksResponse> getSearchesNoClicksAsync(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -1798,14 +1730,11 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Returns the most popular of the latest 1,000 searches that didn't return any results.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1829,14 +1758,11 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Returns the most popular of the latest 1,000 searches that didn't return any results.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1857,7 +1783,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Returns the most popular of the latest 1,000 searches that didn't return any results.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1870,7 +1796,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Returns the most popular of the latest 1,000 searches that didn't return any results.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetSearchesNoResultsResponse getSearchesNoResults(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -1881,14 +1807,11 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Returns the most popular of the latest 1,000 searches that didn't return any
    * results.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1926,14 +1849,11 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Returns the most popular of the latest 1,000 searches that didn't return any
    * results.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -1955,7 +1875,7 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Returns the most popular of the latest 1,000 searches that didn't return any
    * results.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1969,7 +1889,7 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Returns the most popular of the latest 1,000 searches that didn't return any
    * results.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetSearchesNoResultsResponse> getSearchesNoResultsAsync(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -1981,7 +1901,7 @@ public class AnalyticsClient extends ApiClient {
    * created or no search has been performed yet, `updatedAt` will be `null`. > **Note**: The
    * Analytics API is updated every 5&nbsp;minutes.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1995,7 +1915,7 @@ public class AnalyticsClient extends ApiClient {
    * created or no search has been performed yet, `updatedAt` will be `null`. > **Note**: The
    * Analytics API is updated every 5&nbsp;minutes.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetStatusResponse getStatus(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -2007,7 +1927,7 @@ public class AnalyticsClient extends ApiClient {
    * has been recently created or no search has been performed yet, `updatedAt` will be `null`. >
    * **Note**: The Analytics API is updated every 5&nbsp;minutes.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2025,7 +1945,7 @@ public class AnalyticsClient extends ApiClient {
    * has been recently created or no search has been performed yet, `updatedAt` will be `null`. >
    * **Note**: The Analytics API is updated every 5&nbsp;minutes.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetStatusResponse> getStatusAsync(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -2035,14 +1955,11 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Returns top countries. Limited to the 1,000 most frequent ones.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -2066,14 +1983,11 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Returns top countries. Limited to the 1,000 most frequent ones.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -2094,7 +2008,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Returns top countries. Limited to the 1,000 most frequent ones.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2106,7 +2020,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Returns top countries. Limited to the 1,000 most frequent ones.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopCountriesResponse getTopCountries(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -2116,14 +2030,11 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns top countries. Limited to the 1,000 most frequent ones.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -2160,14 +2071,11 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns top countries. Limited to the 1,000 most frequent ones.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -2188,7 +2096,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns top countries. Limited to the 1,000 most frequent ones.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2201,7 +2109,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Returns top countries. Limited to the 1,000 most frequent ones.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopCountriesResponse> getTopCountriesAsync(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -2213,15 +2121,12 @@ public class AnalyticsClient extends ApiClient {
    * attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in
    * the 1,000 most recently used filters.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param search User query. (optional)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -2248,15 +2153,12 @@ public class AnalyticsClient extends ApiClient {
    * attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in
    * the 1,000 most recently used filters.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param search User query. (optional)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -2280,7 +2182,7 @@ public class AnalyticsClient extends ApiClient {
    * attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in
    * the 1,000 most recently used filters.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2295,7 +2197,7 @@ public class AnalyticsClient extends ApiClient {
    * attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in
    * the 1,000 most recently used filters.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopFilterAttributesResponse getTopFilterAttributes(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -2307,15 +2209,12 @@ public class AnalyticsClient extends ApiClient {
    * attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in
    * the 1,000 most recently used filters.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param search User query. (optional)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -2356,15 +2255,12 @@ public class AnalyticsClient extends ApiClient {
    * attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in
    * the 1,000 most recently used filters.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param search User query. (optional)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -2388,7 +2284,7 @@ public class AnalyticsClient extends ApiClient {
    * attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in
    * the 1,000 most recently used filters.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2405,7 +2301,7 @@ public class AnalyticsClient extends ApiClient {
    * attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in
    * the 1,000 most recently used filters.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopFilterAttributesResponse> getTopFilterAttributesAsync(@Nonnull String index)
@@ -2418,15 +2314,12 @@ public class AnalyticsClient extends ApiClient {
    * filters.
    *
    * @param attribute Attribute name. (required)
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param search User query. (optional)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -2456,15 +2349,12 @@ public class AnalyticsClient extends ApiClient {
    * filters.
    *
    * @param attribute Attribute name. (required)
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param search User query. (optional)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -2489,7 +2379,7 @@ public class AnalyticsClient extends ApiClient {
    * filters.
    *
    * @param attribute Attribute name. (required)
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2507,7 +2397,7 @@ public class AnalyticsClient extends ApiClient {
    * filters.
    *
    * @param attribute Attribute name. (required)
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopFilterForAttributeResponse getTopFilterForAttribute(@Nonnull String attribute, @Nonnull String index)
@@ -2520,15 +2410,12 @@ public class AnalyticsClient extends ApiClient {
    * recently used filters.
    *
    * @param attribute Attribute name. (required)
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param search User query. (optional)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -2572,15 +2459,12 @@ public class AnalyticsClient extends ApiClient {
    * recently used filters.
    *
    * @param attribute Attribute name. (required)
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param search User query. (optional)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -2605,7 +2489,7 @@ public class AnalyticsClient extends ApiClient {
    * recently used filters.
    *
    * @param attribute Attribute name. (required)
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2623,7 +2507,7 @@ public class AnalyticsClient extends ApiClient {
    * recently used filters.
    *
    * @param attribute Attribute name. (required)
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopFilterForAttributeResponse> getTopFilterForAttributeAsync(
@@ -2637,15 +2521,12 @@ public class AnalyticsClient extends ApiClient {
    * Returns top filters for filter-enabled searches that don't return results. Limited to the 1,000
    * most recently used filters.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param search User query. (optional)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -2671,15 +2552,12 @@ public class AnalyticsClient extends ApiClient {
    * Returns top filters for filter-enabled searches that don't return results. Limited to the 1,000
    * most recently used filters.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param search User query. (optional)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -2702,7 +2580,7 @@ public class AnalyticsClient extends ApiClient {
    * Returns top filters for filter-enabled searches that don't return results. Limited to the 1,000
    * most recently used filters.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2716,7 +2594,7 @@ public class AnalyticsClient extends ApiClient {
    * Returns top filters for filter-enabled searches that don't return results. Limited to the 1,000
    * most recently used filters.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopFiltersNoResultsResponse getTopFiltersNoResults(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -2727,15 +2605,12 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Returns top filters for filter-enabled searches that don't return results.
    * Limited to the 1,000 most recently used filters.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param search User query. (optional)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -2775,15 +2650,12 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Returns top filters for filter-enabled searches that don't return results.
    * Limited to the 1,000 most recently used filters.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param search User query. (optional)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -2806,7 +2678,7 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Returns top filters for filter-enabled searches that don't return results.
    * Limited to the 1,000 most recently used filters.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2822,7 +2694,7 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Returns top filters for filter-enabled searches that don't return results.
    * Limited to the 1,000 most recently used filters.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopFiltersNoResultsResponse> getTopFiltersNoResultsAsync(@Nonnull String index)
@@ -2833,18 +2705,15 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Return the most popular clicked results in the last 1,000 searches.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param search User query. (optional)
    * @param clickAnalytics Whether to include [click and
    *     conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a
    *     search. (optional, default to false)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -2870,18 +2739,15 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Return the most popular clicked results in the last 1,000 searches.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param search User query. (optional)
    * @param clickAnalytics Whether to include [click and
    *     conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a
    *     search. (optional, default to false)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -2904,7 +2770,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Return the most popular clicked results in the last 1,000 searches.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2916,7 +2782,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Return the most popular clicked results in the last 1,000 searches.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopHitsResponse getTopHits(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -2926,18 +2792,15 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Return the most popular clicked results in the last 1,000 searches.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param search User query. (optional)
    * @param clickAnalytics Whether to include [click and
    *     conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a
    *     search. (optional, default to false)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -2978,18 +2841,15 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Return the most popular clicked results in the last 1,000 searches.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param search User query. (optional)
    * @param clickAnalytics Whether to include [click and
    *     conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a
    *     search. (optional, default to false)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -3012,7 +2872,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Return the most popular clicked results in the last 1,000 searches.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3025,7 +2885,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Return the most popular clicked results in the last 1,000 searches.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopHitsResponse> getTopHitsAsync(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -3036,20 +2896,17 @@ public class AnalyticsClient extends ApiClient {
    * Returns the most popular of the latest 1,000 searches. For each search, also returns the number
    * of hits.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param clickAnalytics Whether to include [click and
    *     conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a
    *     search. (optional, default to false)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param orderBy Reorder the results. (optional, default to searchCount)
    * @param direction Sorting direction of the results: ascending or descending. (optional, default
    *     to asc)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -3079,20 +2936,17 @@ public class AnalyticsClient extends ApiClient {
    * Returns the most popular of the latest 1,000 searches. For each search, also returns the number
    * of hits.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param clickAnalytics Whether to include [click and
    *     conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a
    *     search. (optional, default to false)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param orderBy Reorder the results. (optional, default to searchCount)
    * @param direction Sorting direction of the results: ascending or descending. (optional, default
    *     to asc)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -3117,7 +2971,7 @@ public class AnalyticsClient extends ApiClient {
    * Returns the most popular of the latest 1,000 searches. For each search, also returns the number
    * of hits.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3130,7 +2984,7 @@ public class AnalyticsClient extends ApiClient {
    * Returns the most popular of the latest 1,000 searches. For each search, also returns the number
    * of hits.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopSearchesResponse getTopSearches(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -3141,20 +2995,17 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Returns the most popular of the latest 1,000 searches. For each search, also
    * returns the number of hits.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param clickAnalytics Whether to include [click and
    *     conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a
    *     search. (optional, default to false)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param orderBy Reorder the results. (optional, default to searchCount)
    * @param direction Sorting direction of the results: ascending or descending. (optional, default
    *     to asc)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -3198,20 +3049,17 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Returns the most popular of the latest 1,000 searches. For each search, also
    * returns the number of hits.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param clickAnalytics Whether to include [click and
    *     conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a
    *     search. (optional, default to false)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param orderBy Reorder the results. (optional, default to searchCount)
    * @param direction Sorting direction of the results: ascending or descending. (optional, default
    *     to asc)
-   * @param limit Number of records to return (page size). (optional, default to 10)
-   * @param offset Position of the starting record. Used for paging. 0 is the first record.
-   *     (optional, default to 0)
+   * @param limit Number of items to return. (optional, default to 10)
+   * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -3236,7 +3084,7 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Returns the most popular of the latest 1,000 searches. For each search, also
    * returns the number of hits.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3250,7 +3098,7 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Returns the most popular of the latest 1,000 searches. For each search, also
    * returns the number of hits.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopSearchesResponse> getTopSearchesAsync(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -3260,11 +3108,9 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Return the count of unique users.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -3286,11 +3132,9 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Return the count of unique users.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -3305,7 +3149,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Return the count of unique users.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3317,7 +3161,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * Return the count of unique users.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetUsersCountResponse getUsersCount(@Nonnull String index) throws AlgoliaRuntimeException {
@@ -3327,11 +3171,9 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Return the count of unique users.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -3364,11 +3206,9 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Return the count of unique users.
    *
-   * @param index Index name to target. (required)
-   * @param startDate Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
-   * @param endDate End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-   *     (optional)
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param tags Filter analytics on the
    *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
    *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
@@ -3383,7 +3223,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Return the count of unique users.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3396,7 +3236,7 @@ public class AnalyticsClient extends ApiClient {
   /**
    * (asynchronously) Return the count of unique users.
    *
-   * @param index Index name to target. (required)
+   * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetUsersCountResponse> getUsersCountAsync(@Nonnull String index) throws AlgoliaRuntimeException {

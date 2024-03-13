@@ -17,7 +17,7 @@ final class TrendingFacetsQuery {
     this.model,
   });
 
-  /// Algolia index name.
+  /// Index name.
   @JsonKey(name: r'indexName')
   final String indexName;
 

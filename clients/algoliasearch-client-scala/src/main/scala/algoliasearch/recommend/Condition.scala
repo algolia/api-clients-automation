@@ -16,15 +16,25 @@ import algoliasearch.recommend.Anchoring._
 /** Condition
   *
   * @param pattern
-  *   Query pattern syntax.
+  *   Query pattern that triggers the rule. You can use either a literal string, or a special pattern
+  *   `{facet:ATTRIBUTE}`, where `ATTRIBUTE` is a facet name. The rule is triggered if the query matches the literal
+  *   string or a value of the specified facet. For example, with `pattern: {facet:genre}`, the rule is triggered when
+  *   users search for a genre, such as \"comedy\".
   * @param alternatives
-  *   Whether the pattern matches on plurals, synonyms, and typos.
+  *   Whether the pattern should match plurals, synonyms, and typos.
   * @param context
-  *   Rule context format: [A-Za-z0-9_-]+).
+  *   An additional restriction that only triggers the rule, when the search has the same value as `ruleContexts`
+  *   parameter. For example, if `context: mobile`, the rule is only triggered when the search request has a matching
+  *   `ruleContexts: mobile`. A rule context must only contain alphanumeric characters.
+  * @param filters
+  *   Filters that trigger the rule. You can add add filters using the syntax `facet:value` so that the rule is
+  *   triggered, when the specific filter is selected. You can use `filters` on its own or combine it with the `pattern`
+  *   parameter.
   */
 case class Condition(
     pattern: Option[String] = scala.None,
     anchoring: Option[Anchoring] = scala.None,
     alternatives: Option[Boolean] = scala.None,
-    context: Option[String] = scala.None
+    context: Option[String] = scala.None,
+    filters: Option[String] = scala.None
 )

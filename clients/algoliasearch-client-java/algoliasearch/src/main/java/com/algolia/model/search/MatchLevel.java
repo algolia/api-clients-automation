@@ -6,7 +6,7 @@ package com.algolia.model.search;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Indicates how well the attribute matched the search query. */
+/** Whether the whole query string matches or only a part. */
 public enum MatchLevel {
   NONE("none"),
 
