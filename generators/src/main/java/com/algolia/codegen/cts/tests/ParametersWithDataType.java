@@ -136,7 +136,7 @@ public class ParametersWithDataType {
     }
 
     if (language.equals("swift")) {
-      parent = AlgoliaSwiftGenerator.prefixReservedModelName(parent, client);
+      finalParamName = AlgoliaSwiftGenerator.removeReservedModelNamePrefix(paramName, client);
     }
 
     testOutput.put("key", finalParamName);
@@ -179,8 +179,7 @@ public class ParametersWithDataType {
     }
 
     if (language.equals("swift")) {
-      parent = AlgoliaSwiftGenerator.prefixReservedModelName(parent, client);
-      finalParamName = AlgoliaSwiftGenerator.removeReservedModelNamePrefix(finalParamName, client);
+      finalParamName = AlgoliaSwiftGenerator.removeReservedModelNamePrefix(paramName, client);
     }
 
     Map<String, Object> testOutput = createDefaultOutput();
@@ -309,6 +308,11 @@ public class ParametersWithDataType {
       // find a discriminator to handle oneOf
       CodegenModel model = (CodegenModel) spec;
       IJsonSchemaValidationProperties match = findMatchingOneOf(param, model);
+
+      if (language.equals("swift")) {
+        paramName = AlgoliaSwiftGenerator.prefixReservedModelName(paramName, client);
+      }
+
       testOutput.putAll(traverseParams(paramName, param, match, parent, suffix, isParentFreeFormObject));
 
       HashMap<String, Object> oneOfModel = new HashMap<>();
