@@ -12,7 +12,6 @@ delete:
       description: User token for which to delete all associated events.
       required: true
       schema:
-        type: string
         $ref: '../common/schemas/EventAttributes.yml#/userToken'
   responses:
     '204':
