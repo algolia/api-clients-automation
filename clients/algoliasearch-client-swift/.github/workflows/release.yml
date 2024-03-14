@@ -77,10 +77,7 @@ jobs:
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
 
-      - name: Publish tag on GitHub
+      - name: Publish release on Github
         run: |
           set -eo pipefail
-          git config --local user.email "accounts+algolia-api-client-bot@algolia.com"
-          git config --local user.name "Algolia Bot"
-          git tag -a ${{ steps.versions.outputs.RELEASE_VERSION }} ${{ github.sha }}
-          git push origin ${{ steps.versions.outputs.RELEASE_VERSION }}
+          gh release create ${{ steps.versions.outputs.RELEASE_VERSION }} --title ${{ steps.versions.outputs.RELEASE_VERSION }} -F CHANGELOG.md --target ${{ github.sha }}
