@@ -1,0 +1,86 @@
+name: Release package
+
+on:
+  push:
+    branches:
+      - next
+
+jobs:
+  test_macos:
+    name: Test on macOS
+    runs-on: macos-latest
+    if: "startsWith(github.event.head_commit.message, 'chore: release')"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get versions
+        id: versions
+        shell: bash
+        run: |
+          echo "SWIFT_VERSION=$(cat config/.swift-version)" >> $GITHUB_OUTPUT
+
+      - name: Install Swift
+        uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: ${{ steps.versions.outputs.SWIFT_VERSION }}
+
+      - name: Install Swift dependencies
+        run: swift package resolve
+
+      - name: Test Swift package
+        run: swift test
+
+  release:
+    name: Publish on CocoaPods
+    runs-on: ubuntu-22.04
+    needs:
+      - test_macos
+    if: "startsWith(github.event.head_commit.message, 'chore: release')"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get versions
+        id: versions
+        shell: bash
+        run: |
+          echo "RELEASE_VERSION=$(cat clients/algoliasearch-client-swift/AlgoliaSearchClient.podspec | grep -Po "(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.(?P<patch>0|[1-9]\d*)(?:-(?P<prerelease>(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?")" >> $GITHUB_OUTPUT
+          echo "SWIFT_VERSION=$(cat config/.swift-version)" >> $GITHUB_OUTPUT
+
+      - name: Install Swift
+        uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: ${{ steps.versions.outputs.SWIFT_VERSION }}
+
+      - name: Install Swift dependencies
+        run: swift package resolve
+
+      - name: Test Swift package on Linux
+        run: swift test
+
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.3
+          bundler-cache: true
+
+      - name: Install CocoaPods
+        run: gem install cocoapods
+
+      - name: Publish on CocoaPods
+        run: |
+          set -eo pipefail
+          pod trunk push --allow-warnings --verbose
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+
+      - name: Publish tag on GitHub
+        run: |
+          set -eo pipefail
+          git config --local user.email "accounts+algolia-api-client-bot@algolia.com"
+          git config --local user.name "Algolia Bot"
+          git tag -a ${{ steps.versions.outputs.RELEASE_VERSION }} ${{ github.sha }}
+          git push origin ${{ steps.versions.outputs.RELEASE_VERSION }}
