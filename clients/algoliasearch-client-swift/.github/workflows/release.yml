@@ -47,7 +47,7 @@ jobs:
         id: versions
         shell: bash
         run: |
-          echo "RELEASE_VERSION=$(cat clients/algoliasearch-client-swift/AlgoliaSearchClient.podspec | grep -Po "(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.(?P<patch>0|[1-9]\d*)(?:-(?P<prerelease>(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?")" >> $GITHUB_OUTPUT
+          echo "RELEASE_VERSION=$(cat AlgoliaSearchClient.podspec | grep -Po "(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.(?P<patch>0|[1-9]\d*)(?:-(?P<prerelease>(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?")" >> $GITHUB_OUTPUT
           echo "SWIFT_VERSION=$(cat config/.swift-version)" >> $GITHUB_OUTPUT
 
       - name: Install Swift
