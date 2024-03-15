@@ -9,7 +9,7 @@ jobs:
   test_macos:
     name: Test on macOS
     runs-on: macos-latest
-    if: "startsWith(github.event.head_commit.message, 'chore: test swift release')"
+    if: "startsWith(github.event.head_commit.message, 'chore: generated code for commit')"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -19,7 +19,7 @@ jobs:
         id: versions
         shell: bash
         run: |
-          echo "SWIFT_VERSION=$(cat Package.swift | head -n 1 | sed 's/ //g' | cut -d : -f 2)" >> $GITHUB_OUTPUT
+          echo "SWIFT_VERSION=$(cat clients/algoliasearch-client-swift/Package.swift | head -n 1 | sed 's/ //g' | cut -d : -f 2)" >> $GITHUB_OUTPUT
 
       - name: Install Swift
         uses: swift-actions/setup-swift@v1
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs:
       - test_macos
-    if: "startsWith(github.event.head_commit.message, 'chore: test swift release')"
+    if: "startsWith(github.event.head_commit.message, 'chore: generated code for commit')"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -47,8 +47,8 @@ jobs:
         id: versions
         shell: bash
         run: |
-          echo "RELEASE_VERSION=$(cat AlgoliaSearchClient.podspec | grep s.version | sed 's/ //g' | cut -d \' -f 2)" >> $GITHUB_OUTPUT
-          echo "SWIFT_VERSION=$(cat Package.swift | head -n 1 | sed 's/ //g' | cut -d : -f 2)" >> $GITHUB_OUTPUT
+          echo "RELEASE_VERSION=$(cat clients/algoliasearch-client-swift/AlgoliaSearchClient.podspec | grep s.version | sed 's/ //g' | cut -d \' -f 2)" >> $GITHUB_OUTPUT
+          echo "SWIFT_VERSION=$(cat clients/algoliasearch-client-swift/Package.swift | head -n 1 | sed 's/ //g' | cut -d : -f 2)" >> $GITHUB_OUTPUT
 
       - name: Install Swift
         uses: swift-actions/setup-swift@v1
@@ -73,13 +73,13 @@ jobs:
       - name: Publish on CocoaPods
         run: |
           set -eo pipefail
-          pod trunk push --allow-warnings --verbose
+          pod trunk push --allow-warnings --verbose clients/algoliasearch-client-swift/AlgoliaSearchClient.podspec
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
 
       - name: Publish release on Github
         run: |
           set -eo pipefail
-          gh release create ${{ steps.versions.outputs.RELEASE_VERSION }} --title ${{ steps.versions.outputs.RELEASE_VERSION }} -F CHANGELOG.md --target ${{ github.sha }}
+          gh release create ${{ steps.versions.outputs.RELEASE_VERSION }} --title ${{ steps.versions.outputs.RELEASE_VERSION }} -F clients/algoliasearch-client-swift/CHANGELOG.md --target ${{ github.sha }}
         env:
           GH_TOKEN: ${{ github.token }}
