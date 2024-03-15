@@ -30,7 +30,7 @@ jobs:
         run: cd clients/algoliasearch-client-swift && swift package resolve
 
       - name: Test Swift package
-        run: clients/algoliasearch-client-swift && swift test
+        run: cd clients/algoliasearch-client-swift && swift test
 
   release:
     name: Publish on CocoaPods
