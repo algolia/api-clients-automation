@@ -1,10 +1,22 @@
 openapi: 3.0.2
 info:
   title: Analytics API
-  description: >
-    The Analytics API lets you review your search, and click and conversion analytics.
+  description: |
+    The Analytics API gives you access to metrics related to your Algolia search experience.
 
-    > **Note**: The API key in the `X-Algolia-API-Key` header requires the [`analytics` ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl).
+    # Availability
+
+    Access to this API is available as part of the Premium or Elevate plans.
+
+    # Base URLs
+
+    The base URLs for making requests to the Analytics API are:
+
+    - `https://analytics.us.algolia.com` (alias: `https://analytics.algolia.com`)
+    - `https://analytics.de.algolia.com`
+
+    Use the URL that matches your [analytics region](https://dashboard.algolia.com/account/infrastructure/analytics).
+
   version: 1.0.0
 components:
   securitySchemes:
