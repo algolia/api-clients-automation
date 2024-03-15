@@ -27,10 +27,10 @@ jobs:
           swift-version: ${{ steps.versions.outputs.SWIFT_VERSION }}
 
       - name: Install Swift dependencies
-        run: swift package resolve
+        run: cd clients/algoliasearch-client-swift && swift package resolve
 
       - name: Test Swift package
-        run: swift test
+        run: clients/algoliasearch-client-swift && swift test
 
   release:
     name: Publish on CocoaPods
@@ -56,10 +56,10 @@ jobs:
           swift-version: ${{ steps.versions.outputs.SWIFT_VERSION }}
 
       - name: Install Swift dependencies
-        run: swift package resolve
+        run: cd clients/algoliasearch-client-swift && swift package resolve
 
       - name: Test Swift package on Linux
-        run: swift test
+        run: cd clients/algoliasearch-client-swift && swift test
 
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
@@ -68,18 +68,18 @@ jobs:
           bundler-cache: true
 
       - name: Install CocoaPods
-        run: gem install cocoapods
+        run: cd clients/algoliasearch-client-swift && gem install cocoapods
 
       - name: Publish on CocoaPods
         run: |
           set -eo pipefail
-          pod trunk push --allow-warnings --verbose clients/algoliasearch-client-swift/AlgoliaSearchClient.podspec
+          pod lib lint --allow-warnings --verbose clients/algoliasearch-client-swift/AlgoliaSearchClient.podspec
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
 
       - name: Publish release on Github
         run: |
           set -eo pipefail
-          gh release create ${{ steps.versions.outputs.RELEASE_VERSION }} --title ${{ steps.versions.outputs.RELEASE_VERSION }} -F clients/algoliasearch-client-swift/CHANGELOG.md --target ${{ github.sha }}
+          gh release create ${{ steps.versions.outputs.RELEASE_VERSION }} --title ${{ steps.versions.outputs.RELEASE_VERSION }} -F clients/algoliasearch-client-swift/CHANGELOG.md --target ${{ github.sha }} --draft
         env:
           GH_TOKEN: ${{ github.token }}
