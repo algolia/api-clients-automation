@@ -132,7 +132,7 @@
       "indexName": "theIndexName",
       "indexSettings": {
         "removeStopWords": [
-          "algolia"
+          "fr"
         ]
       },
       "forwardToReplicas": true
@@ -142,7 +142,7 @@
       "method": "PUT",
       "body": {
         "removeStopWords": [
-          "algolia"
+          "fr"
         ]
       },
       "queryParameters": {
