@@ -3,13 +3,13 @@ name: Release package
 on:
   push:
     branches:
-      - next
+      - generated/feat/swift-release-process
 
 jobs:
   test_macos:
     name: Test on macOS
     runs-on: macos-latest
-    if: "startsWith(github.event.head_commit.message, 'chore: release')"
+    if: "startsWith(github.event.head_commit.message, 'chore: test swift release')"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs:
       - test_macos
-    if: "startsWith(github.event.head_commit.message, 'chore: release')"
+    if: "startsWith(github.event.head_commit.message, 'chore: test swift release')"
     steps:
       - uses: actions/checkout@v4
         with:
