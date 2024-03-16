@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@types/node": "20.11.28",
-    "rollup": "4.12.1",
+    "rollup": "4.13.0",
     "typescript": "5.4.2"
   },
   "engines": {
