@@ -42,16 +42,7 @@ info:
     # Rate limits
 
     You can make up to **100 requests per minute per app** to the Analytics API.
-    The response includes these headers with information about the limits:
-
-    <dl>
-    <dt><code>x-ratelimit-limit</code></dt>
-    <dd>Number of requests allowed per minute.</dd>
-    <dt><code>x-ratelimit-remaining</code></dt>
-    <dd>Number of requests you can make in the current time period.</dd>
-    <dt><code>x-ratelimit-reset</code></dt>
-    <dd>Timestamp in Unix epoch time, when the rate limit will reset.</dd>
-    </dl>
+    The response includes headers with information about the limits.
 
     # Parameters
 

@@ -1,0 +1,34 @@
+[
+  {
+    "testName": "get getAddToCartRate with minimal parameters",
+    "parameters": {
+      "index": "index"
+    },
+    "request": {
+      "path": "/2/conversions/addToCartRate",
+      "method": "GET",
+      "queryParameters": {
+        "index": "index"
+      }
+    }
+  },
+  {
+    "testName": "get getAddToCartRate with all parameters",
+    "parameters": {
+      "index": "index",
+      "startDate": "1999-09-19",
+      "endDate": "2001-01-01",
+      "tags": "tag"
+    },
+    "request": {
+      "path": "/2/conversions/AddToCartRate",
+      "method": "GET",
+      "queryParameters": {
+        "index": "index",
+        "startDate": "1999-09-19",
+        "endDate": "2001-01-01",
+        "tags": "tag"
+      }
+    }
+  }
+]
