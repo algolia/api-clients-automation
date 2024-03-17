@@ -1,12 +1,12 @@
 get:
   tags:
-    - search
-  operationId: getSearchesCount
+    - click
+  operationId: getRevenue
   x-acl:
     - analytics
-  summary: Retrieve number of searches.
+  summary: Retrieve conversion rate.
   description: |
-    Retrieves the number of searches within a time range, including a daily breakdown.
+    Retrieves the conversion rate for all of your searches with at least one conversion event, including a daily breakdown.
 
     By default, the analyzed period includes the last eight days including the current day.
   parameters:
@@ -17,40 +17,45 @@ get:
   responses:
     '200':
       description: OK
-      headers:
-        x-ratelimit-limit:
-          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
-        x-ratelimit-remaining:
-          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
-        x-ratelimit-reset:
-          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:
-            title: getSearchesCountResponse
+            title: getConversationRateResponse
             type: object
             additionalProperties: false
             required:
               - dates
-              - count
+              - trackedSearchCount
+              - conversionCount
+              - rate
             properties:
-              count:
-                $ref: '../../../common/parameters.yml#/count'
+              rate:
+                $ref: '../../common/parameters.yml#/conversionRate'
+              trackedSearchCount:
+                $ref: '../../../common/parameters.yml#/trackedSearchCount'
+              conversionCount:
+                $ref: '../../common/parameters.yml#/conversionCount'
               dates:
                 type: array
-                description: Daily number of searches.
+                description: Daily conversion rates.
                 items:
                   type: object
-                  title: dailySearches
+                  title: dailyConversionRates
                   additionalProperties: false
                   required:
+                    - rate
+                    - trackedSearchCount
+                    - conversionCount
                     - date
-                    - count
                   properties:
+                    rate:
+                      $ref: '../../common/parameters.yml#/conversionRate'
+                    trackedSearchCount:
+                      $ref: '../../../common/parameters.yml#/trackedSearchCount'
+                    conversionCount:
+                      $ref: '../../common/parameters.yml#/conversionCount'
                     date:
                       $ref: '../../common/parameters.yml#/date'
-                    count:
-                      $ref: '../../../common/parameters.yml#/count'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

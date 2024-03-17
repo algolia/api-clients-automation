@@ -1,15 +1,13 @@
 get:
   tags:
     - click
-  operationId: getAverageClickPosition
+  operationId: getAddToCartRate
   x-acl:
     - analytics
-  summary: Retrieve average click position.
+  summary: Retrieve add-to-cart rate.
   description: |
-    Retrieves the average click position of your search results, including a daily breakdown.
+    Retrieves the add-to-cart rate for all of your searches with at least one add-to-cart event, including a daily breakdown.
 
-    The average click position is the average of all clicked search results' positions.
-    For example, if users only ever click on the first result for any search, the average click position is 1.
     By default, the analyzed period includes the last eight days including the current day.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
@@ -29,34 +27,40 @@ get:
       content:
         application/json:
           schema:
-            title: getAverageClickPositionResponse
+            title: getAddToCartRateResponse
             type: object
             additionalProperties: false
             required:
-              - average
-              - clickCount
               - dates
+              - trackedSearchCount
+              - addToCartCount
+              - rate
             properties:
-              average:
-                $ref: '../../common/parameters.yml#/averageClickPosition'
-              clickCount:
-                $ref: '../../common/parameters.yml#/clickCount'
+              rate:
+                $ref: '../../common/parameters.yml#/addToCartRate'
+              trackedSearchCount:
+                $ref: '../../../common/parameters.yml#/trackedSearchCount'
+              addToCartCount:
+                $ref: '../../common/parameters.yml#/addToCartCount'
               dates:
                 type: array
-                description: Daily average click positions.
+                description: Daily add-to-cart rates.
                 items:
                   type: object
-                  title: dailyAverageClicks
+                  title: dailyAddToCartRates
                   additionalProperties: false
                   required:
-                    - average
-                    - clickCount
+                    - rate
+                    - trackedSearchCount
+                    - addToCartCount
                     - date
                   properties:
-                    average:
-                      $ref: '../../common/parameters.yml#/averageClickPosition'
-                    clickCount:
-                      $ref: '../../common/parameters.yml#/clickCount'
+                    rate:
+                      $ref: '../../common/parameters.yml#/addToCartRate'
+                    trackedSearchCount:
+                      $ref: '../../../common/parameters.yml#/trackedSearchCount'
+                    addToCartCount:
+                      $ref: '../../common/parameters.yml#/addToCartCount'
                     date:
                       $ref: '../../common/parameters.yml#/date'
     '400':

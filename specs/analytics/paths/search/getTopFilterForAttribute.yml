@@ -1,11 +1,14 @@
 get:
   tags:
-    - search
+    - filter
   operationId: getTopFilterForAttribute
   x-acl:
     - analytics
-  summary: Get top filter values for an attribute.
-  description: Returns the most popular filter values for an attribute in the 1,000 most recently used filters.
+  summary: Retrieve top filter values.
+  description: |
+    Retrieves the most frequent filter (facet) values for a filter attribute.
+
+    These are attributes of your records that you included in the `attributesForFaceting` setting.
   parameters:
     - $ref: '../../common/parameters.yml#/Attribute'
     - $ref: '../../../common/parameters.yml#/Index'
@@ -18,6 +21,13 @@ get:
   responses:
     '200':
       description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:

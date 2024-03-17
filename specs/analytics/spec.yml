@@ -1,4 +1,8 @@
 openapi: 3.0.2
+externalDocs:
+  url: https://www.algolia.com/doc/guides/search-analytics/overview/
+  description: |
+    Related guide: Search analytics.
 info:
   title: Analytics API
   description: |
@@ -6,7 +10,7 @@ info:
 
     # Availability
 
-    Access to this API is available as part of the Premium or Elevate plans.
+    Access to this API is available as part of the [Premium or Elevate plans](https://www.algolia.com/pricing).
 
     # Base URLs
 
@@ -17,7 +21,57 @@ info:
 
     Use the URL that matches your [analytics region](https://dashboard.algolia.com/account/infrastructure/analytics).
 
-  version: 1.0.0
+    **All requests must use HTTPS.**
+
+    # Authentication
+
+    To authenticate your API requests, add these headers:
+
+    <dl>
+    <dt><code>x-algolia-application-id</code></dt>
+    <dd>Your Algolia application ID.</dd>
+    <dt><code>x-algolia-api-key</code></dt>
+    <dd>
+    An API key with the necessary permissions to make the request.
+    The required access control list (ACL) to make a request is listed in each endpoint's reference.
+    </dd>
+    </dl>
+
+    You can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account).
+
+    # Rate limits
+
+    You can make up to **100 requests per minute per app** to the Analytics API.
+    The response includes these headers with information about the limits:
+
+    <dl>
+    <dt><code>x-ratelimit-limit</code></dt>
+    <dd>Number of requests allowed per minute.</dd>
+    <dt><code>x-ratelimit-remaining</code></dt>
+    <dd>Number of requests you can make in the current time period.</dd>
+    <dt><code>x-ratelimit-reset</code></dt>
+    <dd>Timestamp in Unix epoch time, when the rate limit will reset.</dd>
+    </dl>
+
+    # Parameters
+
+    Query parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).
+    Non-ASCII characters must be UTF-8 encoded.
+    Plus characters (`+`) are interpreted as spaces.
+
+    # Response status and errors
+
+    The Analytics API returns JSON responses.
+    Since JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.
+
+    Successful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.
+    Error responses have a `message` property with more information.
+
+    # Version
+
+    The current version of the Analytics API is version 2, as indicated by the `/2/` in each endpoint's URL.
+
+  version: 2.0.0
 components:
   securitySchemes:
     appId:
@@ -37,23 +91,39 @@ security:
   - appId: []
     apiKey: []
 tags:
-  - name: advanced
-    x-displayName: Advanced
-    description: Advanced operations.
   - name: click
-    x-displayName: Click Analytics
-    description: Get all click analytics.
+    x-displayName: Clicks
+    description: |
+      Metrics related to click and conversion events,
+      such as click- and conversion rates for your search results.
+  - name: filter
+    x-displayName: Filters
+    description: Metrics related to filters.
+  - name: revenue
+    x-displayName: Revenue
+    description: Metrics related to revenue.
   - name: search
-    x-displayName: Search Analytics
-    description: Get all search analytics.
+    x-displayName: Searches
+    description: |
+      Metrics related to searches and search results,
+      such as the no-results rate or the most frequent search queries.
+  - name: status
+    x-displayName: Status
+    description: Check the status of the Analytics API.
+  - name: user
+    x-displayName: Users
+    description: Metrics related to the users of your search.
 x-tagGroups:
-  - name: General
+  - name: Metrics
     tags:
       - search
       - click
-  - name: Others
+      - revenue
+      - filter
+      - user
+  - name: Other
     tags:
-      - advanced
+      - status
 paths:
   # ######################
   # ### Custom request ###
@@ -100,6 +170,12 @@ paths:
     $ref: 'paths/click/getClickThroughRate.yml'
   /2/conversions/conversionRate:
     $ref: 'paths/click/getConversionRate.yml'
+  /2/conversions/addToCartRate:
+    $ref: 'paths/click/getAddToCartRate.yml'
+  /2/conversions/purchaseRate:
+    $ref: 'paths/click/getPurchaseRate.yml'
+  /2/conversions/revenue:
+    $ref: 'paths/revenue/getRevenue.yml'
 
   # ########################
   # ### Status Endpoints ###

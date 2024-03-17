@@ -1,12 +1,13 @@
 topSearchesResponse:
   type: object
+  title: Top searches
   additionalProperties: false
   required:
     - searches
   properties:
     searches:
       type: array
-      description: Top searches with their hits count.
+      description: Most popular searches and their number of search results (hits).
       items:
         type: object
         title: topSearch
@@ -25,13 +26,14 @@ topSearchesResponse:
 
 topSearchesResponseWithAnalytics:
   type: object
+  title: Top searches with click analytics
   additionalProperties: false
   required:
     - searches
   properties:
     searches:
       type: array
-      description: Top searches with their hits count and analytics.
+      description: Most popular searches and their associated click and conversion metrics.
       items:
         type: object
         title: topSearchWithAnalytics
@@ -42,6 +44,7 @@ topSearchesResponseWithAnalytics:
           - nbHits
           - clickThroughRate
           - averageClickPosition
+          - clickPositions
           - conversionRate
           - trackedSearchCount
           - clickCount
@@ -52,9 +55,11 @@ topSearchesResponseWithAnalytics:
           count:
             $ref: '../parameters.yml#/count'
           clickThroughRate:
-            $ref: '../parameters.yml#/rate'
+            $ref: '../parameters.yml#/clickThroughRate'
           averageClickPosition:
             $ref: '../parameters.yml#/averageClickPosition'
+          clickPositions:
+            $ref: '../parameters.yml#/clickPositions'
           conversionRate:
             $ref: '../parameters.yml#/conversionRate'
           trackedSearchCount:
@@ -66,7 +71,70 @@ topSearchesResponseWithAnalytics:
           nbHits:
             $ref: '../../../search/common/schemas/SearchResponse.yml#/nbHits'
 
+topSearchesResponseWithRevenueAnalytics:
+  type: object
+  title: Top searches with revenue analytics
+  additionalProperties: false
+  required:
+    - searches
+  properties:
+    searches:
+      type: array
+      description: Most popular searches, including their click and revenue metrics.
+      items:
+        type: object
+        title: topSearchWithRevenueAnalytics
+        additionalProperties: false
+        required:
+          - search
+          - count
+          - nbHits
+          - clickThroughRate
+          - averageClickPosition
+          - clickPositions
+          - conversionRate
+          - trackedSearchCount
+          - clickCount
+          - conversionCount
+          - currencies
+          - addToCartRate
+          - addToCartCount
+          - purchaseRate
+          - purchaseCount
+        properties:
+          search:
+            $ref: '../parameters.yml#/search'
+          count:
+            $ref: '../parameters.yml#/count'
+          clickThroughRate:
+            $ref: '../parameters.yml#/clickThroughRate'
+          averageClickPosition:
+            $ref: '../parameters.yml#/averageClickPosition'
+          clickPositions:
+            $ref: '../parameters.yml#/clickPositions'
+          conversionRate:
+            $ref: '../parameters.yml#/conversionRate'
+          trackedSearchCount:
+            $ref: '../../../common/parameters.yml#/trackedSearchCount'
+          clickCount:
+            $ref: '../parameters.yml#/clickCount'
+          conversionCount:
+            $ref: '../parameters.yml#/conversionCount'
+          nbHits:
+            $ref: '../../../search/common/schemas/SearchResponse.yml#/nbHits'
+          currencies:
+            $ref: '../parameters.yml#/currencies'
+          addToCartRate:
+            $ref: '../parameters.yml#/addToCartRate'
+          addToCartCount:
+            $ref: '../parameters.yml#/addToCartCount'
+          purchaseRate:
+            $ref: '../parameters.yml#/purchaseRate'
+          purchaseCount:
+            $ref: '../parameters.yml#/purchaseCount'
+
 getTopSearchesResponse:
   oneOf:
     - $ref: '#/topSearchesResponse'
     - $ref: '#/topSearchesResponseWithAnalytics'
+    - $ref: '#/topSearchesResponseWithRevenueAnalytics'

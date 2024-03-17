@@ -6,7 +6,7 @@ getTopFilterAttributesResponse:
   properties:
     attributes:
       type: array
-      description: Filterable attributes.
+      description: Most frequent filters.
       items:
         $ref: '#/getTopFilterAttribute'
 

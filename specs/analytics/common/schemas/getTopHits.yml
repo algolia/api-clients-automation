@@ -1,12 +1,13 @@
 topHitsResponse:
   type: object
+  title: Top search results
   additionalProperties: false
   required:
     - hits
   properties:
     hits:
       type: array
-      description: Top hits.
+      description: Most frequent search results.
       items:
         type: object
         title: topHit
@@ -22,13 +23,14 @@ topHitsResponse:
 
 topHitsResponseWithAnalytics:
   type: object
+  title: Top search results with click analytics
   additionalProperties: false
   required:
     - hits
   properties:
     hits:
       type: array
-      description: Top hits.
+      description: Most frequent search results with click and conversion metrics.
       items:
         type: object
         title: topHitWithAnalytics
@@ -38,7 +40,7 @@ topHitsResponseWithAnalytics:
           - count
           - clickThroughRate
           - conversionRate
-          - trackedSearchCount
+          - trackedHitCount
           - clickCount
           - conversionCount
         properties:
@@ -47,17 +49,71 @@ topHitsResponseWithAnalytics:
           count:
             $ref: '../../../common/parameters.yml#/count'
           clickThroughRate:
-            $ref: '../parameters.yml#/rate'
+            $ref: '../parameters.yml#/clickThroughRate'
           conversionRate:
             $ref: '../parameters.yml#/conversionRate'
-          trackedSearchCount:
+          trackedHitCount:
             $ref: '../../../common/parameters.yml#/trackedSearchCount'
           clickCount:
             $ref: '../parameters.yml#/clickCount'
           conversionCount:
             $ref: '../parameters.yml#/conversionCount'
 
+topHitsResponseWithRevenueAnalytics:
+  type: object
+  title: Top search results with revenue analytics
+  additionalProperties: false
+  required:
+    - hits
+  properties:
+    hits:
+      type: array
+      description: Most frequent search results with click, conversion, and revenue metrics.
+      items:
+        type: object
+        title: topHitWithRevenueAnalytics
+        additionalProperties: false
+        required:
+          - hit
+          - count
+          - clickThroughRate
+          - conversionRate
+          - trackedHitCount
+          - clickCount
+          - conversionCount
+          - purchaseCount
+          - addToCartCount
+          - purchaseRate
+          - addToCartRate
+          - currencies
+        properties:
+          hit:
+            $ref: '../parameters.yml#/hit'
+          count:
+            $ref: '../../../common/parameters.yml#/count'
+          clickThroughRate:
+            $ref: '../parameters.yml#/clickThroughRate'
+          conversionRate:
+            $ref: '../parameters.yml#/conversionRate'
+          trackedHitCount:
+            $ref: '../../../common/parameters.yml#/trackedSearchCount'
+          clickCount:
+            $ref: '../parameters.yml#/clickCount'
+          conversionCount:
+            $ref: '../parameters.yml#/conversionCount'
+          addToCartRate:
+            $ref: '../parameters.yml#/addToCartRate'
+          addToCartCount:
+            $ref: '../parameters.yml#/addToCartCount'
+          purchaseRate:
+            $ref: '../parameters.yml#/purchaseRate'
+          purchaseCount:
+            $ref: '../parameters.yml#/purchaseCount'
+          currencies:
+            $ref: '../parameters.yml#/currencies'
+
 getTopHitsResponse:
   oneOf:
     - $ref: '#/topHitsResponse'
     - $ref: '#/topHitsResponseWithAnalytics'
+    - $ref: '#/topHitsResponseWithRevenueAnalytics'
