@@ -194,7 +194,7 @@ runs:
     # Swift deps
     - name: Install swift
       if: ${{ inputs.language == 'swift' }}
-      uses: swift-actions/setup-swift@v1
+      uses: swift-actions/setup-swift@v2
       with:
         swift-version: ${{ steps.versions.outputs.SWIFT_VERSION }}
 

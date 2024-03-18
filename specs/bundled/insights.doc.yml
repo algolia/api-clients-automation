@@ -108,791 +108,6 @@ info:
     The current version of the Insights API is version 1, as indicated by the
     `/1/` in each endpoint's URL.
   version: 1.0.0
-externalDocs:
-  url: https://www.algolia.com/doc/guides/sending-events/getting-started/
-  description: Events
-components:
-  securitySchemes:
-    appId:
-      type: apiKey
-      in: header
-      name: X-Algolia-Application-Id
-    apiKey:
-      type: apiKey
-      in: header
-      name: X-Algolia-API-Key
-  parameters:
-    PathInPath:
-      name: path
-      in: path
-      description: Path of the endpoint, anything after "/1" must be specified.
-      required: true
-      schema:
-        type: string
-        example: /keys
-    Parameters:
-      name: parameters
-      in: query
-      description: Query parameters to apply to the current query.
-      schema:
-        type: object
-        additionalProperties: true
-  schemas:
-    ErrorBase:
-      description: Error.
-      type: object
-      additionalProperties: true
-      properties:
-        message:
-          type: string
-          example: Invalid Application-Id or API-Key
-    eventName:
-      type: string
-      minLength: 1
-      maxLength: 64
-      pattern: '[\x20-\x7E]{1,64}'
-      description: >
-        Event name, up to 64 ASCII characters.
-
-
-        Consider naming events consistently—for example, by adopting Segment's
-
-        [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
-
-        framework.
-      example: Product Clicked
-    ClickEvent:
-      type: string
-      enum:
-        - click
-    index:
-      type: string
-      description: Index name to which the event's items belong.
-      example: YourIndexName
-    objectIDs:
-      type: array
-      description: Object IDs of the records that are part of the event.
-      items:
-        type: string
-      minItems: 1
-      maxItems: 20
-      example:
-        - object-1
-        - object-2
-        - object-3
-    positions:
-      type: array
-      items:
-        type: integer
-      minimum: 1
-      minItems: 1
-      maxItems: 20
-      description: |
-        Position of the clicked item the search results.
-
-        You must provide 1 `position` for each `objectID`.
-      example:
-        - 1
-        - 2
-        - 5
-    queryID:
-      type: string
-      pattern: '[0-9a-f]{32}'
-      minLength: 32
-      maxLength: 32
-      description: >
-        Unique identifier for a search query.
-
-
-        The query ID is required for events related to search or browse
-        requests.
-
-        If you add `clickAnalytics: true` as a search request parameter, the
-        query ID is included in the API response.
-      example: 3e48cd0616e466948dd85abf5c3fbbe2
-    userToken:
-      type: string
-      minLength: 1
-      maxLength: 129
-      pattern: '[a-zA-Z0-9_=/+-]{1,129}'
-      description: >
-        Anonymous or pseudonymous user identifier.
-
-
-        Don't use personally identifiable information in user tokens.
-
-        For more information, see [User
-        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
-      example: test-user-1
-    authenticatedUserToken:
-      type: string
-      minLength: 1
-      maxLength: 129
-      pattern: '[a-zA-Z0-9_=/+-]{1,129}'
-      description: >
-        Identifier for authenticated users.
-
-
-        When the user signs in, you can get an identifier from your system and
-        send it as `authenticatedUserToken`.
-
-        This lets you keep using the `userToken` from before the user signed in,
-        while providing a reliable way to identify users across sessions.
-
-        Don't use personally identifiable information in user tokens.
-
-        For more information, see [User
-        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
-      example: c6a52c02-d0c7-4b53-8ce3-2b8fd202f3f9
-    timestamp:
-      type: integer
-      format: int64
-      description: >
-        Timestamp of the event in milliseconds in [Unix epoch
-        time](https://wikipedia.org/wiki/Unix_time).
-
-        By default, the Insights API uses the time it receives an event as its
-        timestamp.
-      example: 1687193127
-    ClickedObjectIDsAfterSearch:
-      type: object
-      title: Clicked object IDs after search
-      description: |
-        Click event after an Algolia request.
-
-        Use this event to track when users click items in the search results.
-        If you're building your category pages with Algolia,
-        you'll also use this event.
-      additionalProperties: false
-      properties:
-        eventName:
-          $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ClickEvent'
-        index:
-          $ref: '#/components/schemas/index'
-        objectIDs:
-          $ref: '#/components/schemas/objectIDs'
-        positions:
-          $ref: '#/components/schemas/positions'
-        queryID:
-          $ref: '#/components/schemas/queryID'
-        userToken:
-          $ref: '#/components/schemas/userToken'
-        authenticatedUserToken:
-          $ref: '#/components/schemas/authenticatedUserToken'
-        timestamp:
-          $ref: '#/components/schemas/timestamp'
-      required:
-        - eventName
-        - eventType
-        - index
-        - objectIDs
-        - positions
-        - queryID
-        - userToken
-      x-discriminator-fields:
-        - positions
-        - queryID
-        - eventType
-    ConversionEvent:
-      type: string
-      enum:
-        - conversion
-    AddToCartEvent:
-      type: string
-      enum:
-        - addToCart
-    currency:
-      type: string
-      description: >-
-        Three-letter [currency
-        code](https://www.iso.org/iso-4217-currency-codes.html).
-      example: EUR
-    price:
-      description: >-
-        Total price of a product, including any discounts, in units of
-        `currency`.
-      oneOf:
-        - type: number
-          format: double
-          example: 9.99
-        - type: string
-          example: '9.99'
-    quantity:
-      type: integer
-      format: int32
-      example: 2
-      description: >
-        Quantity of a product that has been purchased or added to the cart.
-
-        The total purchase value is the sum of `quantity` multiplied with the
-        `price` for each purchased item.
-    discount:
-      description: Absolute value of the discount for this product, in units of `currency`.
-      oneOf:
-        - type: number
-          format: double
-          example: 20
-        - type: string
-          example: '20'
-    objectDataAfterSearch:
-      type: object
-      additionalProperties: false
-      properties:
-        queryID:
-          type: string
-          pattern: '[0-9a-f]{32}'
-          minLength: 32
-          maxLength: 32
-          description: >-
-            Unique identifier for a search query, used to track purchase events
-            with multiple records that originate from different searches.
-          example: 3e48cd0616e466948dd85abf5c3fbbe2
-        price:
-          $ref: '#/components/schemas/price'
-        quantity:
-          $ref: '#/components/schemas/quantity'
-        discount:
-          $ref: '#/components/schemas/discount'
-    objectDataAfterSearchList:
-      type: array
-      description: >
-        Extra information about the records involved in a purchase or
-        add-to-cart events.
-
-
-        If provided, it must be the same length as `objectIDs`.
-      items:
-        $ref: '#/components/schemas/objectDataAfterSearch'
-      minItems: 1
-      maxItems: 20
-    value:
-      description: Total monetary value of this event in units of `currency`.
-      oneOf:
-        - type: number
-          format: double
-          example: 1000
-        - type: string
-          example: '1000.00'
-    AddedToCartObjectIDsAfterSearch:
-      type: object
-      title: Added to cart object IDs after search
-      description: >
-        Use this event to track when users add items to their shopping cart
-        after a previous Algolia request.
-
-        If you're building your category pages with Algolia, you'll also use
-        this event.
-      additionalProperties: false
-      properties:
-        eventName:
-          $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ConversionEvent'
-        eventSubtype:
-          $ref: '#/components/schemas/AddToCartEvent'
-        index:
-          $ref: '#/components/schemas/index'
-        queryID:
-          $ref: '#/components/schemas/queryID'
-        objectIDs:
-          $ref: '#/components/schemas/objectIDs'
-        userToken:
-          $ref: '#/components/schemas/userToken'
-        authenticatedUserToken:
-          $ref: '#/components/schemas/authenticatedUserToken'
-        currency:
-          $ref: '#/components/schemas/currency'
-        objectData:
-          $ref: '#/components/schemas/objectDataAfterSearchList'
-        timestamp:
-          $ref: '#/components/schemas/timestamp'
-        value:
-          $ref: '#/components/schemas/value'
-      required:
-        - eventName
-        - eventType
-        - eventSubtype
-        - queryID
-        - index
-        - objectIDs
-        - userToken
-      x-discriminator-fields:
-        - eventType
-        - eventSubtype
-        - queryID
-        - objectIDs
-    PurchaseEvent:
-      type: string
-      enum:
-        - purchase
-    PurchasedObjectIDsAfterSearch:
-      type: object
-      title: Purchased object IDs after search
-      description: >
-        Use this event to track when users make a purchase after a previous
-        Algolia request.
-
-        If you're building your category pages with Algolia, you'll also use
-        this event.
-      additionalProperties: false
-      properties:
-        eventName:
-          $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ConversionEvent'
-        eventSubtype:
-          $ref: '#/components/schemas/PurchaseEvent'
-        index:
-          $ref: '#/components/schemas/index'
-        objectIDs:
-          $ref: '#/components/schemas/objectIDs'
-        userToken:
-          $ref: '#/components/schemas/userToken'
-        authenticatedUserToken:
-          $ref: '#/components/schemas/authenticatedUserToken'
-        currency:
-          $ref: '#/components/schemas/currency'
-        objectData:
-          $ref: '#/components/schemas/objectDataAfterSearchList'
-        timestamp:
-          $ref: '#/components/schemas/timestamp'
-        value:
-          $ref: '#/components/schemas/value'
-      required:
-        - eventName
-        - eventType
-        - eventSubtype
-        - index
-        - objectIDs
-        - userToken
-      x-discriminator-fields:
-        - eventType
-        - eventSubtype
-        - objectIDs
-        - objectData
-    ConvertedObjectIDsAfterSearch:
-      type: object
-      title: Converted object IDs after search
-      description: >
-        Use this event to track when users convert after a previous Algolia
-        request.
-
-        For example, a user clicks on an item in the search results to view the
-        product detail page.
-
-        Then, the user adds the item to their shopping cart.
-
-
-        If you're building your category pages with Algolia,
-
-        you'll also use this event.
-      additionalProperties: false
-      properties:
-        eventName:
-          $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ConversionEvent'
-        index:
-          $ref: '#/components/schemas/index'
-        objectIDs:
-          $ref: '#/components/schemas/objectIDs'
-        queryID:
-          $ref: '#/components/schemas/queryID'
-        userToken:
-          $ref: '#/components/schemas/userToken'
-        authenticatedUserToken:
-          $ref: '#/components/schemas/authenticatedUserToken'
-        timestamp:
-          $ref: '#/components/schemas/timestamp'
-      required:
-        - eventName
-        - eventType
-        - index
-        - objectIDs
-        - queryID
-        - userToken
-      x-discriminator-fields:
-        - queryID
-        - eventType
-    ClickedObjectIDs:
-      type: object
-      title: Clicked object IDs
-      description: >
-        Use this event to track when users click items unrelated to a previous
-        Algolia request.
-
-        For example, if you don't use Algolia to build your category pages, use
-        this event.
-
-
-        To track click events related to Algolia requests, use the "Clicked
-        object IDs after search" event.
-      additionalProperties: false
-      properties:
-        eventName:
-          $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ClickEvent'
-        index:
-          $ref: '#/components/schemas/index'
-        objectIDs:
-          $ref: '#/components/schemas/objectIDs'
-        userToken:
-          $ref: '#/components/schemas/userToken'
-        authenticatedUserToken:
-          $ref: '#/components/schemas/authenticatedUserToken'
-        timestamp:
-          $ref: '#/components/schemas/timestamp'
-      required:
-        - eventName
-        - eventType
-        - index
-        - objectIDs
-        - userToken
-      x-discriminator-fields:
-        - eventType
-        - objectIDs
-    objectData:
-      type: object
-      additionalProperties: false
-      properties:
-        price:
-          $ref: '#/components/schemas/price'
-        quantity:
-          $ref: '#/components/schemas/quantity'
-        discount:
-          $ref: '#/components/schemas/discount'
-    objectDataList:
-      type: array
-      description: >
-        Extra information about the records involved in a purchase or
-        add-to-cart event.
-
-
-        If specified, it must have the same length as `objectIDs`.
-      items:
-        $ref: '#/components/schemas/objectData'
-      minItems: 1
-      maxItems: 20
-    PurchasedObjectIDs:
-      type: object
-      title: Purchased object IDs
-      description: >
-        Use this event to track when users make a purchase unrelated to a
-        previous Algolia request. For example, if you don't use Algolia to build
-        your category pages, use this event.
-
-
-        To track purchase events related to Algolia requests, use the "Purchased
-        object IDs after search" event.
-      additionalProperties: false
-      properties:
-        eventName:
-          $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ConversionEvent'
-        eventSubtype:
-          $ref: '#/components/schemas/PurchaseEvent'
-        index:
-          $ref: '#/components/schemas/index'
-        objectIDs:
-          $ref: '#/components/schemas/objectIDs'
-        userToken:
-          $ref: '#/components/schemas/userToken'
-        authenticatedUserToken:
-          $ref: '#/components/schemas/authenticatedUserToken'
-        currency:
-          $ref: '#/components/schemas/currency'
-        objectData:
-          $ref: '#/components/schemas/objectDataList'
-        timestamp:
-          $ref: '#/components/schemas/timestamp'
-        value:
-          $ref: '#/components/schemas/value'
-      required:
-        - eventName
-        - eventType
-        - eventSubtype
-        - index
-        - objectIDs
-        - userToken
-      x-discriminator-fields:
-        - eventType
-        - eventSubtype
-        - objectIDs
-    AddedToCartObjectIDs:
-      type: object
-      title: Added to cart object IDs
-      description: >
-        Use this event to track when users add items to their shopping cart
-        unrelated to a previous Algolia request. For example, if you don't use
-        Algolia to build your category pages, use this event.
-
-
-        To track add-to-cart events related to Algolia requests, use the "Added
-        to cart object IDs after search" event.
-      additionalProperties: false
-      properties:
-        eventName:
-          $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ConversionEvent'
-        eventSubtype:
-          $ref: '#/components/schemas/AddToCartEvent'
-        index:
-          $ref: '#/components/schemas/index'
-        objectIDs:
-          $ref: '#/components/schemas/objectIDs'
-        userToken:
-          $ref: '#/components/schemas/userToken'
-        authenticatedUserToken:
-          $ref: '#/components/schemas/authenticatedUserToken'
-        currency:
-          $ref: '#/components/schemas/currency'
-        objectData:
-          $ref: '#/components/schemas/objectDataList'
-        timestamp:
-          $ref: '#/components/schemas/timestamp'
-        value:
-          $ref: '#/components/schemas/value'
-      required:
-        - eventName
-        - eventType
-        - eventSubtype
-        - index
-        - objectIDs
-        - userToken
-      x-discriminator-fields:
-        - eventType
-        - eventSubtype
-        - objectIDs
-    ConvertedObjectIDs:
-      type: object
-      title: Converted object IDs
-      description: >
-        Use this event to track when users convert on items unrelated to a
-        previous Algolia request.
-
-        For example, if you don't use Algolia to build your category pages, use
-        this event.
-
-
-        To track conversion events related to Algolia requests, use the
-        "Converted object IDs after search" event.
-      additionalProperties: false
-      properties:
-        eventName:
-          $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ConversionEvent'
-        index:
-          $ref: '#/components/schemas/index'
-        objectIDs:
-          $ref: '#/components/schemas/objectIDs'
-        userToken:
-          $ref: '#/components/schemas/userToken'
-        authenticatedUserToken:
-          $ref: '#/components/schemas/authenticatedUserToken'
-        timestamp:
-          $ref: '#/components/schemas/timestamp'
-      required:
-        - eventName
-        - eventType
-        - index
-        - objectIDs
-        - userToken
-      x-discriminator-fields:
-        - eventType
-        - objectIDs
-    filters:
-      type: array
-      description: |
-        Applied facet filters.
-
-        Facet filters are `facet:value` pairs.
-        Facet values must be URL-encoded, such as, `discount:10%25`.
-      items:
-        type: string
-      minItems: 1
-      maxItems: 20
-      example:
-        - brand:apple
-    ClickedFilters:
-      type: object
-      title: Clicked filters
-      description: >-
-        Use this event to track when users click facet filters in your user
-        interface.
-      additionalProperties: false
-      properties:
-        eventName:
-          $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ClickEvent'
-        index:
-          $ref: '#/components/schemas/index'
-        filters:
-          $ref: '#/components/schemas/filters'
-        userToken:
-          $ref: '#/components/schemas/userToken'
-        authenticatedUserToken:
-          $ref: '#/components/schemas/authenticatedUserToken'
-        timestamp:
-          $ref: '#/components/schemas/timestamp'
-      required:
-        - eventName
-        - eventType
-        - index
-        - filters
-        - userToken
-      x-discriminator-fields:
-        - eventType
-        - filters
-    ConvertedFilters:
-      type: object
-      title: Converted filters
-      additionalProperties: false
-      properties:
-        eventName:
-          $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ConversionEvent'
-        index:
-          $ref: '#/components/schemas/index'
-        filters:
-          $ref: '#/components/schemas/filters'
-        userToken:
-          $ref: '#/components/schemas/userToken'
-        authenticatedUserToken:
-          $ref: '#/components/schemas/authenticatedUserToken'
-        timestamp:
-          $ref: '#/components/schemas/timestamp'
-      required:
-        - eventName
-        - eventType
-        - index
-        - filters
-        - userToken
-      x-discriminator-fields:
-        - eventType
-        - filters
-    ViewEvent:
-      type: string
-      enum:
-        - view
-    ViewedObjectIDs:
-      type: object
-      title: Viewed object IDs
-      description: Use this event to track when users viewed items in the search results.
-      additionalProperties: false
-      properties:
-        eventName:
-          $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ViewEvent'
-        index:
-          $ref: '#/components/schemas/index'
-        objectIDs:
-          $ref: '#/components/schemas/objectIDs'
-        userToken:
-          $ref: '#/components/schemas/userToken'
-        authenticatedUserToken:
-          $ref: '#/components/schemas/authenticatedUserToken'
-        timestamp:
-          $ref: '#/components/schemas/timestamp'
-      required:
-        - eventName
-        - eventType
-        - index
-        - objectIDs
-        - userToken
-      x-discriminator-fields:
-        - eventType
-        - objectIDs
-    ViewedFilters:
-      type: object
-      title: Viewed filters
-      description: |
-        Use this method to capture active filters.
-        For example, when browsing a category page,
-        users see content filtered on that specific category.
-      additionalProperties: false
-      properties:
-        eventName:
-          $ref: '#/components/schemas/eventName'
-        eventType:
-          $ref: '#/components/schemas/ViewEvent'
-        index:
-          $ref: '#/components/schemas/index'
-        filters:
-          $ref: '#/components/schemas/filters'
-        userToken:
-          $ref: '#/components/schemas/userToken'
-        authenticatedUserToken:
-          $ref: '#/components/schemas/authenticatedUserToken'
-        timestamp:
-          $ref: '#/components/schemas/timestamp'
-      required:
-        - eventName
-        - eventType
-        - index
-        - filters
-        - userToken
-      x-discriminator-fields:
-        - eventType
-        - filters
-    EventsItems:
-      oneOf:
-        - $ref: '#/components/schemas/ClickedObjectIDsAfterSearch'
-        - $ref: '#/components/schemas/AddedToCartObjectIDsAfterSearch'
-        - $ref: '#/components/schemas/PurchasedObjectIDsAfterSearch'
-        - $ref: '#/components/schemas/ConvertedObjectIDsAfterSearch'
-        - $ref: '#/components/schemas/ClickedObjectIDs'
-        - $ref: '#/components/schemas/PurchasedObjectIDs'
-        - $ref: '#/components/schemas/AddedToCartObjectIDs'
-        - $ref: '#/components/schemas/ConvertedObjectIDs'
-        - $ref: '#/components/schemas/ClickedFilters'
-        - $ref: '#/components/schemas/ConvertedFilters'
-        - $ref: '#/components/schemas/ViewedObjectIDs'
-        - $ref: '#/components/schemas/ViewedFilters'
-    EventsResponse:
-      type: object
-      description: The response of the Insights API.
-      additionalProperties: false
-      properties:
-        message:
-          type: string
-          description: Details about the response, such as error messages.
-        status:
-          type: integer
-          description: The HTTP status code of the response.
-  responses:
-    BadRequest:
-      description: Bad request or request arguments.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    FeatureNotEnabled:
-      description: This feature is not enabled on your Algolia account.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    MethodNotAllowed:
-      description: Method not allowed with this API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    IndexNotFound:
-      description: Index not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
 servers:
   - url: https://insights.{region}.algolia.io
     variables:
@@ -915,11 +130,9 @@ tags:
     x-displayName: User tokens
     description: |
       Delete events related to a specific user token.
-x-tagGroups:
-  - name: General
-    tags:
-      - events
-      - usertokens
+externalDocs:
+  url: https://www.algolia.com/doc/guides/sending-events/getting-started/
+  description: Events
 paths:
   /1{path}:
     get:
@@ -2813,3 +2026,790 @@ paths:
             // Call the API
 
             _ = try await client.deleteUserToken(userToken: "test-user-1")
+components:
+  securitySchemes:
+    appId:
+      type: apiKey
+      in: header
+      name: X-Algolia-Application-Id
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-Algolia-API-Key
+  parameters:
+    PathInPath:
+      name: path
+      in: path
+      description: Path of the endpoint, anything after "/1" must be specified.
+      required: true
+      schema:
+        type: string
+        example: /keys
+    Parameters:
+      name: parameters
+      in: query
+      description: Query parameters to apply to the current query.
+      schema:
+        type: object
+        additionalProperties: true
+  schemas:
+    ErrorBase:
+      description: Error.
+      type: object
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
+    eventName:
+      type: string
+      minLength: 1
+      maxLength: 64
+      pattern: '[\x20-\x7E]{1,64}'
+      description: >
+        Event name, up to 64 ASCII characters.
+
+
+        Consider naming events consistently—for example, by adopting Segment's
+
+        [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
+
+        framework.
+      example: Product Clicked
+    ClickEvent:
+      type: string
+      enum:
+        - click
+    index:
+      type: string
+      description: Index name to which the event's items belong.
+      example: YourIndexName
+    objectIDs:
+      type: array
+      description: Object IDs of the records that are part of the event.
+      items:
+        type: string
+      minItems: 1
+      maxItems: 20
+      example:
+        - object-1
+        - object-2
+        - object-3
+    positions:
+      type: array
+      items:
+        type: integer
+      minimum: 1
+      minItems: 1
+      maxItems: 20
+      description: |
+        Position of the clicked item the search results.
+
+        You must provide 1 `position` for each `objectID`.
+      example:
+        - 1
+        - 2
+        - 5
+    queryID:
+      type: string
+      pattern: '[0-9a-f]{32}'
+      minLength: 32
+      maxLength: 32
+      description: >
+        Unique identifier for a search query.
+
+
+        The query ID is required for events related to search or browse
+        requests.
+
+        If you add `clickAnalytics: true` as a search request parameter, the
+        query ID is included in the API response.
+      example: 3e48cd0616e466948dd85abf5c3fbbe2
+    userToken:
+      type: string
+      minLength: 1
+      maxLength: 129
+      pattern: '[a-zA-Z0-9_=/+-]{1,129}'
+      description: >
+        Anonymous or pseudonymous user identifier.
+
+
+        Don't use personally identifiable information in user tokens.
+
+        For more information, see [User
+        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+      example: test-user-1
+    authenticatedUserToken:
+      type: string
+      minLength: 1
+      maxLength: 129
+      pattern: '[a-zA-Z0-9_=/+-]{1,129}'
+      description: >
+        Identifier for authenticated users.
+
+
+        When the user signs in, you can get an identifier from your system and
+        send it as `authenticatedUserToken`.
+
+        This lets you keep using the `userToken` from before the user signed in,
+        while providing a reliable way to identify users across sessions.
+
+        Don't use personally identifiable information in user tokens.
+
+        For more information, see [User
+        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+      example: c6a52c02-d0c7-4b53-8ce3-2b8fd202f3f9
+    timestamp:
+      type: integer
+      format: int64
+      description: >
+        Timestamp of the event in milliseconds in [Unix epoch
+        time](https://wikipedia.org/wiki/Unix_time).
+
+        By default, the Insights API uses the time it receives an event as its
+        timestamp.
+      example: 1687193127
+    ClickedObjectIDsAfterSearch:
+      type: object
+      title: Clicked object IDs after search
+      description: |
+        Click event after an Algolia request.
+
+        Use this event to track when users click items in the search results.
+        If you're building your category pages with Algolia,
+        you'll also use this event.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ClickEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+        positions:
+          $ref: '#/components/schemas/positions'
+        queryID:
+          $ref: '#/components/schemas/queryID'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+      required:
+        - eventName
+        - eventType
+        - index
+        - objectIDs
+        - positions
+        - queryID
+        - userToken
+      x-discriminator-fields:
+        - positions
+        - queryID
+        - eventType
+    ConversionEvent:
+      type: string
+      enum:
+        - conversion
+    AddToCartEvent:
+      type: string
+      enum:
+        - addToCart
+    currency:
+      type: string
+      description: >-
+        Three-letter [currency
+        code](https://www.iso.org/iso-4217-currency-codes.html).
+      example: EUR
+    price:
+      description: >-
+        Total price of a product, including any discounts, in units of
+        `currency`.
+      oneOf:
+        - type: number
+          format: double
+          example: 9.99
+        - type: string
+          example: '9.99'
+    quantity:
+      type: integer
+      format: int32
+      example: 2
+      description: >
+        Quantity of a product that has been purchased or added to the cart.
+
+        The total purchase value is the sum of `quantity` multiplied with the
+        `price` for each purchased item.
+    discount:
+      description: Absolute value of the discount for this product, in units of `currency`.
+      oneOf:
+        - type: number
+          format: double
+          example: 20
+        - type: string
+          example: '20'
+    objectDataAfterSearch:
+      type: object
+      additionalProperties: false
+      properties:
+        queryID:
+          type: string
+          pattern: '[0-9a-f]{32}'
+          minLength: 32
+          maxLength: 32
+          description: >-
+            Unique identifier for a search query, used to track purchase events
+            with multiple records that originate from different searches.
+          example: 3e48cd0616e466948dd85abf5c3fbbe2
+        price:
+          $ref: '#/components/schemas/price'
+        quantity:
+          $ref: '#/components/schemas/quantity'
+        discount:
+          $ref: '#/components/schemas/discount'
+    objectDataAfterSearchList:
+      type: array
+      description: >
+        Extra information about the records involved in a purchase or
+        add-to-cart events.
+
+
+        If provided, it must be the same length as `objectIDs`.
+      items:
+        $ref: '#/components/schemas/objectDataAfterSearch'
+      minItems: 1
+      maxItems: 20
+    value:
+      description: Total monetary value of this event in units of `currency`.
+      oneOf:
+        - type: number
+          format: double
+          example: 1000
+        - type: string
+          example: '1000.00'
+    AddedToCartObjectIDsAfterSearch:
+      type: object
+      title: Added to cart object IDs after search
+      description: >
+        Use this event to track when users add items to their shopping cart
+        after a previous Algolia request.
+
+        If you're building your category pages with Algolia, you'll also use
+        this event.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
+        eventSubtype:
+          $ref: '#/components/schemas/AddToCartEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        queryID:
+          $ref: '#/components/schemas/queryID'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        currency:
+          $ref: '#/components/schemas/currency'
+        objectData:
+          $ref: '#/components/schemas/objectDataAfterSearchList'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+        value:
+          $ref: '#/components/schemas/value'
+      required:
+        - eventName
+        - eventType
+        - eventSubtype
+        - queryID
+        - index
+        - objectIDs
+        - userToken
+      x-discriminator-fields:
+        - eventType
+        - eventSubtype
+        - queryID
+        - objectIDs
+    PurchaseEvent:
+      type: string
+      enum:
+        - purchase
+    PurchasedObjectIDsAfterSearch:
+      type: object
+      title: Purchased object IDs after search
+      description: >
+        Use this event to track when users make a purchase after a previous
+        Algolia request.
+
+        If you're building your category pages with Algolia, you'll also use
+        this event.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
+        eventSubtype:
+          $ref: '#/components/schemas/PurchaseEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        currency:
+          $ref: '#/components/schemas/currency'
+        objectData:
+          $ref: '#/components/schemas/objectDataAfterSearchList'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+        value:
+          $ref: '#/components/schemas/value'
+      required:
+        - eventName
+        - eventType
+        - eventSubtype
+        - index
+        - objectIDs
+        - userToken
+      x-discriminator-fields:
+        - eventType
+        - eventSubtype
+        - objectIDs
+        - objectData
+    ConvertedObjectIDsAfterSearch:
+      type: object
+      title: Converted object IDs after search
+      description: >
+        Use this event to track when users convert after a previous Algolia
+        request.
+
+        For example, a user clicks on an item in the search results to view the
+        product detail page.
+
+        Then, the user adds the item to their shopping cart.
+
+
+        If you're building your category pages with Algolia,
+
+        you'll also use this event.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+        queryID:
+          $ref: '#/components/schemas/queryID'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+      required:
+        - eventName
+        - eventType
+        - index
+        - objectIDs
+        - queryID
+        - userToken
+      x-discriminator-fields:
+        - queryID
+        - eventType
+    ClickedObjectIDs:
+      type: object
+      title: Clicked object IDs
+      description: >
+        Use this event to track when users click items unrelated to a previous
+        Algolia request.
+
+        For example, if you don't use Algolia to build your category pages, use
+        this event.
+
+
+        To track click events related to Algolia requests, use the "Clicked
+        object IDs after search" event.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ClickEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+      required:
+        - eventName
+        - eventType
+        - index
+        - objectIDs
+        - userToken
+      x-discriminator-fields:
+        - eventType
+        - objectIDs
+    objectData:
+      type: object
+      additionalProperties: false
+      properties:
+        price:
+          $ref: '#/components/schemas/price'
+        quantity:
+          $ref: '#/components/schemas/quantity'
+        discount:
+          $ref: '#/components/schemas/discount'
+    objectDataList:
+      type: array
+      description: >
+        Extra information about the records involved in a purchase or
+        add-to-cart event.
+
+
+        If specified, it must have the same length as `objectIDs`.
+      items:
+        $ref: '#/components/schemas/objectData'
+      minItems: 1
+      maxItems: 20
+    PurchasedObjectIDs:
+      type: object
+      title: Purchased object IDs
+      description: >
+        Use this event to track when users make a purchase unrelated to a
+        previous Algolia request. For example, if you don't use Algolia to build
+        your category pages, use this event.
+
+
+        To track purchase events related to Algolia requests, use the "Purchased
+        object IDs after search" event.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
+        eventSubtype:
+          $ref: '#/components/schemas/PurchaseEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        currency:
+          $ref: '#/components/schemas/currency'
+        objectData:
+          $ref: '#/components/schemas/objectDataList'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+        value:
+          $ref: '#/components/schemas/value'
+      required:
+        - eventName
+        - eventType
+        - eventSubtype
+        - index
+        - objectIDs
+        - userToken
+      x-discriminator-fields:
+        - eventType
+        - eventSubtype
+        - objectIDs
+    AddedToCartObjectIDs:
+      type: object
+      title: Added to cart object IDs
+      description: >
+        Use this event to track when users add items to their shopping cart
+        unrelated to a previous Algolia request. For example, if you don't use
+        Algolia to build your category pages, use this event.
+
+
+        To track add-to-cart events related to Algolia requests, use the "Added
+        to cart object IDs after search" event.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
+        eventSubtype:
+          $ref: '#/components/schemas/AddToCartEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        currency:
+          $ref: '#/components/schemas/currency'
+        objectData:
+          $ref: '#/components/schemas/objectDataList'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+        value:
+          $ref: '#/components/schemas/value'
+      required:
+        - eventName
+        - eventType
+        - eventSubtype
+        - index
+        - objectIDs
+        - userToken
+      x-discriminator-fields:
+        - eventType
+        - eventSubtype
+        - objectIDs
+    ConvertedObjectIDs:
+      type: object
+      title: Converted object IDs
+      description: >
+        Use this event to track when users convert on items unrelated to a
+        previous Algolia request.
+
+        For example, if you don't use Algolia to build your category pages, use
+        this event.
+
+
+        To track conversion events related to Algolia requests, use the
+        "Converted object IDs after search" event.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+      required:
+        - eventName
+        - eventType
+        - index
+        - objectIDs
+        - userToken
+      x-discriminator-fields:
+        - eventType
+        - objectIDs
+    filters:
+      type: array
+      description: |
+        Applied facet filters.
+
+        Facet filters are `facet:value` pairs.
+        Facet values must be URL-encoded, such as, `discount:10%25`.
+      items:
+        type: string
+      minItems: 1
+      maxItems: 20
+      example:
+        - brand:apple
+    ClickedFilters:
+      type: object
+      title: Clicked filters
+      description: >-
+        Use this event to track when users click facet filters in your user
+        interface.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ClickEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        filters:
+          $ref: '#/components/schemas/filters'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+      required:
+        - eventName
+        - eventType
+        - index
+        - filters
+        - userToken
+      x-discriminator-fields:
+        - eventType
+        - filters
+    ConvertedFilters:
+      type: object
+      title: Converted filters
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ConversionEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        filters:
+          $ref: '#/components/schemas/filters'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+      required:
+        - eventName
+        - eventType
+        - index
+        - filters
+        - userToken
+      x-discriminator-fields:
+        - eventType
+        - filters
+    ViewEvent:
+      type: string
+      enum:
+        - view
+    ViewedObjectIDs:
+      type: object
+      title: Viewed object IDs
+      description: Use this event to track when users viewed items in the search results.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ViewEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+      required:
+        - eventName
+        - eventType
+        - index
+        - objectIDs
+        - userToken
+      x-discriminator-fields:
+        - eventType
+        - objectIDs
+    ViewedFilters:
+      type: object
+      title: Viewed filters
+      description: |
+        Use this method to capture active filters.
+        For example, when browsing a category page,
+        users see content filtered on that specific category.
+      additionalProperties: false
+      properties:
+        eventName:
+          $ref: '#/components/schemas/eventName'
+        eventType:
+          $ref: '#/components/schemas/ViewEvent'
+        index:
+          $ref: '#/components/schemas/index'
+        filters:
+          $ref: '#/components/schemas/filters'
+        userToken:
+          $ref: '#/components/schemas/userToken'
+        authenticatedUserToken:
+          $ref: '#/components/schemas/authenticatedUserToken'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+      required:
+        - eventName
+        - eventType
+        - index
+        - filters
+        - userToken
+      x-discriminator-fields:
+        - eventType
+        - filters
+    EventsItems:
+      oneOf:
+        - $ref: '#/components/schemas/ClickedObjectIDsAfterSearch'
+        - $ref: '#/components/schemas/AddedToCartObjectIDsAfterSearch'
+        - $ref: '#/components/schemas/PurchasedObjectIDsAfterSearch'
+        - $ref: '#/components/schemas/ConvertedObjectIDsAfterSearch'
+        - $ref: '#/components/schemas/ClickedObjectIDs'
+        - $ref: '#/components/schemas/PurchasedObjectIDs'
+        - $ref: '#/components/schemas/AddedToCartObjectIDs'
+        - $ref: '#/components/schemas/ConvertedObjectIDs'
+        - $ref: '#/components/schemas/ClickedFilters'
+        - $ref: '#/components/schemas/ConvertedFilters'
+        - $ref: '#/components/schemas/ViewedObjectIDs'
+        - $ref: '#/components/schemas/ViewedFilters'
+    EventsResponse:
+      type: object
+      description: The response of the Insights API.
+      additionalProperties: false
+      properties:
+        message:
+          type: string
+          description: Details about the response, such as error messages.
+        status:
+          type: integer
+          description: The HTTP status code of the response.
+  responses:
+    BadRequest:
+      description: Bad request or request arguments.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    FeatureNotEnabled:
+      description: This feature is not enabled on your Algolia account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    MethodNotAllowed:
+      description: Method not allowed with this API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    IndexNotFound:
+      description: Index not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+x-tagGroups:
+  - name: General
+    tags:
+      - events
+      - usertokens
