@@ -790,7 +790,6 @@ maxFacetHits:
 reRankingApplyFilter:
   description: |
     Restrict [Dynamic Re-ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) to records that match these filters.
-  nullable: true
   oneOf:
     - $ref: './SearchParams.yml#/listOfSearchFilters'
     - type: string
@@ -1098,14 +1097,15 @@ semanticSearch:
     Only used when `mode` is `neuralSearch`.
   properties:
     eventSources:
-      description: |
-        Indices from which to collect click and conversion events.
+      oneOf:
+        - type: array
+          description: |
+            Indices from which to collect click and conversion events.
 
-        If null, the current index and all its replicas are used.
-      nullable: true
-      type: array
-      items:
-        type: string
+            If null, the current index and all its replicas are used.
+          items:
+            type: string
+        - type: 'null'
 
 supportedLanguage:
   type: string

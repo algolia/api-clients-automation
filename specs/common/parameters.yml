@@ -59,9 +59,10 @@ Page:
     Requested page of the API response.
     If `null`, the API response is not paginated.
   schema:
-    type: integer
-    minimum: 0
-    nullable: true
+    oneOf:
+      - type: integer
+        minimum: 0
+      - type: 'null'
     default: null
 
 PageDefault0:
@@ -71,9 +72,10 @@ PageDefault0:
     Requested page of the API response.
     If `null`, the API response is not paginated.
   schema:
-    type: integer
-    nullable: true
-    minimum: 0
+    oneOf:
+      - type: integer
+        minimum: 0
+      - type: 'null'
     default: 0
 
 HitsPerPage:
@@ -139,10 +141,11 @@ page:
   description: Requested page of the API response.
 
 trackedSearchCount:
-  type: integer
-  example: 2
-  nullable: true
-  description: Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
+  oneOf:
+    - type: integer
+      example: 2
+      description: Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
+    - type: 'null'
 
 count:
   description: Number of occurrences.
