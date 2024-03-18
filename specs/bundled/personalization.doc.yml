@@ -3,135 +3,6 @@ info:
   title: Personalization API
   description: API powering the Personalization feature of Algolia.
   version: 1.0.0
-components:
-  securitySchemes:
-    appId:
-      type: apiKey
-      in: header
-      name: X-Algolia-Application-Id
-    apiKey:
-      type: apiKey
-      in: header
-      name: X-Algolia-API-Key
-  parameters:
-    PathInPath:
-      name: path
-      in: path
-      description: Path of the endpoint, anything after "/1" must be specified.
-      required: true
-      schema:
-        type: string
-        example: /keys
-    Parameters:
-      name: parameters
-      in: query
-      description: Query parameters to apply to the current query.
-      schema:
-        type: object
-        additionalProperties: true
-    UserToken:
-      name: userToken
-      in: path
-      required: true
-      description: >-
-        userToken representing the user for which to fetch the Personalization
-        profile.
-      schema:
-        type: string
-  schemas:
-    ErrorBase:
-      description: Error.
-      type: object
-      additionalProperties: true
-      properties:
-        message:
-          type: string
-          example: Invalid Application-Id or API-Key
-    userToken:
-      type: string
-      description: >-
-        userToken representing the user for which to fetch the Personalization
-        profile.
-    score:
-      type: integer
-      description: The score for the event.
-    eventScoring:
-      type: object
-      additionalProperties: false
-      required:
-        - score
-        - eventName
-        - eventType
-      properties:
-        score:
-          $ref: '#/components/schemas/score'
-        eventName:
-          type: string
-          description: The name of the event.
-        eventType:
-          type: string
-          description: The type of the event.
-    facetScoring:
-      type: object
-      additionalProperties: false
-      required:
-        - score
-        - facetName
-      properties:
-        score:
-          $ref: '#/components/schemas/score'
-        facetName:
-          type: string
-          description: The name of the facet.
-    personalizationStrategyParams:
-      type: object
-      additionalProperties: false
-      required:
-        - eventScoring
-        - facetScoring
-        - personalizationImpact
-      properties:
-        eventScoring:
-          type: array
-          description: Scores associated with the events.
-          items:
-            $ref: '#/components/schemas/eventScoring'
-        facetScoring:
-          type: array
-          description: Scores associated with the facets.
-          items:
-            $ref: '#/components/schemas/facetScoring'
-        personalizationImpact:
-          type: integer
-          description: >-
-            The impact that personalization has on search results: a number
-            between 0 (personalization disabled) and 100 (personalization fully
-            enabled).
-  responses:
-    BadRequest:
-      description: Bad request or request arguments.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    FeatureNotEnabled:
-      description: This feature is not enabled on your Algolia account.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    MethodNotAllowed:
-      description: Method not allowed with this API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    IndexNotFound:
-      description: Index not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
 servers:
   - url: https://personalization.{region}.algolia.com
     variables:
@@ -150,11 +21,6 @@ tags:
   - name: strategies
     x-displayName: Strategies
     description: Manage personalization strategies.
-x-tagGroups:
-  - name: General
-    tags:
-      - profiles
-      - strategies
 paths:
   /1{path}:
     get:
@@ -1909,3 +1775,137 @@ paths:
                 facetScoring: [FacetScoring(score: 42, facetName: "Event")],
                 personalizationImpact: 42
             ))
+components:
+  securitySchemes:
+    appId:
+      type: apiKey
+      in: header
+      name: X-Algolia-Application-Id
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-Algolia-API-Key
+  parameters:
+    PathInPath:
+      name: path
+      in: path
+      description: Path of the endpoint, anything after "/1" must be specified.
+      required: true
+      schema:
+        type: string
+        example: /keys
+    Parameters:
+      name: parameters
+      in: query
+      description: Query parameters to apply to the current query.
+      schema:
+        type: object
+        additionalProperties: true
+    UserToken:
+      name: userToken
+      in: path
+      required: true
+      description: >-
+        userToken representing the user for which to fetch the Personalization
+        profile.
+      schema:
+        type: string
+  schemas:
+    ErrorBase:
+      description: Error.
+      type: object
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
+    userToken:
+      type: string
+      description: >-
+        userToken representing the user for which to fetch the Personalization
+        profile.
+    score:
+      type: integer
+      description: The score for the event.
+    eventScoring:
+      type: object
+      additionalProperties: false
+      required:
+        - score
+        - eventName
+        - eventType
+      properties:
+        score:
+          $ref: '#/components/schemas/score'
+        eventName:
+          type: string
+          description: The name of the event.
+        eventType:
+          type: string
+          description: The type of the event.
+    facetScoring:
+      type: object
+      additionalProperties: false
+      required:
+        - score
+        - facetName
+      properties:
+        score:
+          $ref: '#/components/schemas/score'
+        facetName:
+          type: string
+          description: The name of the facet.
+    personalizationStrategyParams:
+      type: object
+      additionalProperties: false
+      required:
+        - eventScoring
+        - facetScoring
+        - personalizationImpact
+      properties:
+        eventScoring:
+          type: array
+          description: Scores associated with the events.
+          items:
+            $ref: '#/components/schemas/eventScoring'
+        facetScoring:
+          type: array
+          description: Scores associated with the facets.
+          items:
+            $ref: '#/components/schemas/facetScoring'
+        personalizationImpact:
+          type: integer
+          description: >-
+            The impact that personalization has on search results: a number
+            between 0 (personalization disabled) and 100 (personalization fully
+            enabled).
+  responses:
+    BadRequest:
+      description: Bad request or request arguments.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    FeatureNotEnabled:
+      description: This feature is not enabled on your Algolia account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    MethodNotAllowed:
+      description: Method not allowed with this API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    IndexNotFound:
+      description: Index not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+x-tagGroups:
+  - name: General
+    tags:
+      - profiles
+      - strategies
