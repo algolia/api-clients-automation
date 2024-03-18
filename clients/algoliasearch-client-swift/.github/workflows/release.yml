@@ -19,7 +19,7 @@ jobs:
         id: versions
         shell: bash
         run: |
-          echo "RELEASE_VERSION=$(cat AlgoliaSearchClient.podspec | grep s.version | sed 's/ //g' | cut -d \' -f 2)" >> $GITHUB_OUTPUT
+          echo "RELEASE_VERSION=$(grep "s.version = " AlgoliaSearchClient.podspec | cut -d "'" -f2)" >> $GITHUB_OUTPUT
 
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
