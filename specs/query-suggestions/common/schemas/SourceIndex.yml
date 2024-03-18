@@ -36,7 +36,7 @@ properties:
         example:
           - {'attribute': 'category', 'amount': 3}
           - {'attribute': 'brand', 'amount': 2}
-          
+
       - type: 'null'
   minHits:
     type: integer
@@ -57,19 +57,17 @@ properties:
   generate:
     type: array
     items:
-      oneOf:
-        - type: array
-          items:
-            type: string
-          description: |
-            Facets used for generating query suggestions from facet values.
+      type: array
+      items:
+        type: string
+      description: |
+        Facets used for generating query suggestions from facet values.
 
-            For example, if you set `generate: ["color", "brand"]`, combinations from the facet values are added as query suggestions,
-            such as "blue adidas", "red adidas", "blue nike", "red nike", etc.
+        For example, if you set `generate: ["color", "brand"]`, combinations from the facet values are added as query suggestions,
+        such as "blue adidas", "red adidas", "blue nike", "red nike", etc.
 
-            You can include nested lists.
-          example: ['color', 'brand']
-        - type: 'null'
+        You can include nested lists.
+      example: ['color', 'brand']
   external:
     oneOf:
       - type: array
