@@ -333,10 +333,8 @@ public class ParametersWithDataType {
         useExplicitName = Helpers.shouldUseExplicitOneOfName(model.oneOf);
       }
 
-      if (language.equals("swift")) {
-        typeName = getTransformedParamName(typeName);
-        baseType = getTransformedParamName(baseType);
-      }
+      typeName = getTransformedParamName(typeName);
+      baseType = getTransformedParamName(baseType);
 
       oneOfModel.put("parentClassName", Helpers.capitalize(baseType));
       oneOfModel.put("type", typeName);
