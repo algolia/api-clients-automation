@@ -45,15 +45,17 @@ get:
                 type: string
                 description: The ID of the task that is currently blocking the Crawler.
               lastReindexStartedAt:
-                type: string
-                nullable: true
-                description: The date when the last complete reindex was started. Will be null if no reindex was ever done.
-                example: '2019-05-10T08:16:47.920Z'
+                oneOf:
+                  - type: string
+                    description: The date when the last complete reindex was started. Will be null if no reindex was ever done.
+                    example: '2019-05-10T08:16:47.920Z'
+                  - type: 'null'
               lastReindexEndedAt:
-                type: string
-                nullable: true
-                description: The date when the last complete reindex finished. Can be null if the reindex is still running.
-                example: null
+                oneOf:
+                  - type: string
+                    description: The date when the last complete reindex finished. Can be null if the reindex is still running.
+                    example: null
+                  - type: 'null'
               config:
                 $ref: '../common/parameters.yml#/Configuration'
             required:

@@ -1,6 +1,6 @@
 import type { Rule } from 'eslint';
 
-import { isBLockScalar, isPairWithKey, isScalar } from '../utils';
+import { isBlockScalar, isPairWithKey, isScalar } from '../utils';
 
 export const singleQuoteRef: Rule.RuleModule = {
   meta: {
@@ -30,7 +30,7 @@ export const singleQuoteRef: Rule.RuleModule = {
           // that's what we want
           return;
         }
-        if (isBLockScalar(node.value)) {
+        if (isBlockScalar(node.value)) {
           // another rule should take care of that case
           return;
         }

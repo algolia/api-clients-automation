@@ -1,9 +1,10 @@
 ABTests:
-  nullable: true
-  type: array
-  description: A/B tests.
-  items:
-    $ref: '#/ABTest'
+  oneOf:
+    - type: array
+      description: A/B tests.
+      items:
+        $ref: '#/ABTest'
+    - type: 'null'
 
 ABTest:
   type: object
@@ -12,44 +13,49 @@ ABTest:
     abTestID:
       $ref: '../parameters.yml#/abTestID'
     clickSignificance:
-      type: number
-      format: double
-      nullable: true
-      description: >
-        [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on click data. A value of 0.95 or over is considered to be _significant_.
-      example: 1
+      oneOf:
+        - type: number
+          format: double
+          description: >
+            [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on click data. A value of 0.95 or over is considered to be _significant_.
+          example: 1
+        - type: 'null'
     conversionSignificance:
-      type: number
-      format: double
-      nullable: true
-      description: >
-        [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on conversion. A value of 0.95 or over is considered to be _significant_.
-      example: 1
+      oneOf:
+        - type: number
+          format: double
+          description: >
+            [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on conversion. A value of 0.95 or over is considered to be _significant_.
+          example: 1
+        - type: 'null'
     addToCartSignificance:
-      type: number
-      format: double
-      nullable: true
-      description: >
-        [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on add-to-cart data. A value of 0.95 or over is considered to be _significant_.
-      example: 1
+      oneOf:
+        - type: number
+          format: double
+          description: >
+            [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on add-to-cart data. A value of 0.95 or over is considered to be _significant_.
+          example: 1
+        - type: 'null'
     purchaseSignificance:
-      type: number
-      format: double
-      nullable: true
-      description: >
-        [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on purchase data. A value of 0.95 or over is considered to be _significant_.
-      example: 1
+      oneOf:
+        - type: number
+          format: double
+          description: >
+            [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on purchase data. A value of 0.95 or over is considered to be _significant_.
+          example: 1
+        - type: 'null'
     revenueSignificance:
-      type: object
-      additionalProperties:
-        type: number
-        format: double
-      nullable: true
-      description: >
-        [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on revenue data. A value of 0.95 or over is considered to be _significant_.
-      example:
-        USD: 1
-        EUR: 0.87
+      oneOf:
+        - type: object
+          additionalProperties:
+            type: number
+            format: double
+          description: >
+            [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on revenue data. A value of 0.95 or over is considered to be _significant_.
+          example:
+            USD: 1
+            EUR: 0.87
+        - type: 'null'
     updatedAt:
       $ref: '../parameters.yml#/updatedAt'
     createdAt:

@@ -106,10 +106,11 @@ AuthenticationType:
   enum: ['googleServiceAccount', 'basic', 'apiKey', 'oauth', 'algolia']
 
 Platform:
-  type: string
-  nullable: true
-  description: Describe which platform the Authentication is used for.
-  enum: ['bigcommerce', 'commercetools']
+  oneOf:
+    - type: string
+      description: Describe which platform the Authentication is used for.
+      enum: ['bigcommerce', 'commercetools']
+    - type: 'null'
 
 AuthGoogleServiceAccountPartial:
   type: object
