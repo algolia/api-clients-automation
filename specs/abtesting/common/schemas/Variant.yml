@@ -102,7 +102,6 @@ variant:
     - userCount
     - trackedUserCount
     - trafficPercentage
-    - trackedSearchCount
     - searchCount
     - noResultCount
     - index
