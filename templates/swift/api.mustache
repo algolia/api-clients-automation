@@ -1,10 +1,9 @@
 {{#operations}}// {{{generationBanner}}}
 
-import AnyCodable
 import Foundation
-import Core
-
-typealias Client = {{classname}}
+#if canImport(Core)
+    import Core
+#endif
 
 {{#description}}
 /**
@@ -12,24 +11,24 @@ typealias Client = {{classname}}
 */{{/description}}
 {{#objcCompatible}}@objcMembers {{/objcCompatible}}open class {{classname}}{{#objcCompatible}} : NSObject{{/objcCompatible}} {
 
-    private var configuration: Configuration
+    private var configuration: {{classname}}Configuration
     private var transporter: Transporter
 
     var appID: String {
         self.configuration.appID
     }
 
-    public init(configuration: Configuration, transporter: Transporter) {
+    public init(configuration: {{classname}}Configuration, transporter: Transporter) {
         self.configuration = configuration
         self.transporter = transporter
     }
 
-    public convenience init(configuration: Configuration) {
+    public convenience init(configuration: {{classname}}Configuration) {
         self.init(configuration: configuration, transporter: Transporter(configuration: configuration))
     }
 
     public convenience init(appID: String, apiKey: String{{#hasRegionalHost}}, region: Region{{#fallbackToAliasHost}}?{{/fallbackToAliasHost}}{{/hasRegionalHost}}) throws {
-        self.init(configuration: try Configuration(appID: appID, apiKey: apiKey{{#hasRegionalHost}}, region: region{{/hasRegionalHost}}))
+        self.init(configuration: try {{classname}}Configuration(appID: appID, apiKey: apiKey{{#hasRegionalHost}}, region: region{{/hasRegionalHost}}))
     }
 
 {{#operation}}
@@ -123,7 +122,7 @@ typealias Client = {{classname}}
           let body: AnyCodable? = nil
         {{/bodyParam}}
         {{#hasQueryParams}}
-        let queryParameters = {{#x-is-custom-request}}parameters{{/x-is-custom-request}}{{^x-is-custom-request}}[{{^queryParams}}:{{/queryParams}}
+        let queryParameters{{#x-is-custom-request}}: [String: AnyCodable]? = parameters{{/x-is-custom-request}}{{^x-is-custom-request}}: [String: Any?] = [{{^queryParams}}:{{/queryParams}}
             {{#queryParams}}
             {{> _param}},
             {{/queryParams}}

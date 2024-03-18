@@ -1,5 +1,6 @@
 package com.algolia.codegen.cts.tests;
 
+import com.algolia.codegen.AlgoliaSwiftGenerator;
 import com.algolia.codegen.exceptions.*;
 import com.algolia.codegen.utils.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -17,10 +18,12 @@ public class ParametersWithDataType {
 
   private final Map<String, CodegenModel> models;
   private final String language;
+  private final String client;
 
-  public ParametersWithDataType(Map<String, CodegenModel> models, String language) {
+  public ParametersWithDataType(Map<String, CodegenModel> models, String language, String client) {
     this.models = models;
     this.language = language;
+    this.client = client;
   }
 
   public void enhanceParameters(Map<String, Object> parameters, Map<String, Object> bundle)
@@ -121,16 +124,7 @@ public class ParametersWithDataType {
       isCodegenModel = spec instanceof CodegenModel;
     }
 
-    String finalParamName = paramName;
-    if (language.equals("java") && paramName.startsWith("_")) {
-      finalParamName = paramName.substring(1);
-    }
-
-    // type is a reserved keyword in go, we need to add more generic way to handle reversed keywords
-    // for all languages.
-    if (language.equals("go") && paramName.equals("type")) {
-      finalParamName = "type_";
-    }
+    String finalParamName = getFinalParamName(paramName);
 
     testOutput.put("key", finalParamName);
     testOutput.put("isKeyAllUpperCase", StringUtils.isAllUpperCase(finalParamName));
@@ -166,10 +160,7 @@ public class ParametersWithDataType {
 
   /** Same method but with inference only */
   private Map<String, Object> traverseParamsWithoutSpec(String paramName, Object param, String parent, int suffix) throws CTSException {
-    String finalParamName = paramName;
-    if (language.equals("java") && paramName.startsWith("_")) {
-      finalParamName = paramName.substring(1);
-    }
+    String finalParamName = getFinalParamName(paramName);
 
     Map<String, Object> testOutput = createDefaultOutput();
     testOutput.put("key", finalParamName);
@@ -196,6 +187,19 @@ public class ParametersWithDataType {
       handlePrimitive(param, testOutput, null);
     }
     return testOutput;
+  }
+
+  private String getFinalParamName(String paramName) {
+    switch (language) {
+      case "java":
+        return paramName.startsWith("_") ? paramName.substring(1) : paramName;
+      case "go":
+        return paramName.equals("type") ? "type_" : paramName;
+      case "swift":
+        return AlgoliaSwiftGenerator.removeReservedModelNamePrefix(paramName, client);
+    }
+
+    return paramName;
   }
 
   private Map<String, Object> createDefaultOutput() {
@@ -297,6 +301,9 @@ public class ParametersWithDataType {
       // find a discriminator to handle oneOf
       CodegenModel model = (CodegenModel) spec;
       IJsonSchemaValidationProperties match = findMatchingOneOf(param, model);
+
+      paramName = getTransformedParamName(paramName);
+
       testOutput.putAll(traverseParams(paramName, param, match, parent, suffix, isParentFreeFormObject));
 
       HashMap<String, Object> oneOfModel = new HashMap<>();
@@ -325,6 +332,9 @@ public class ParametersWithDataType {
       } else {
         useExplicitName = Helpers.shouldUseExplicitOneOfName(model.oneOf);
       }
+
+      typeName = getTransformedParamName(typeName);
+      baseType = getTransformedParamName(baseType);
 
       oneOfModel.put("parentClassName", Helpers.capitalize(baseType));
       oneOfModel.put("type", typeName);
@@ -401,6 +411,13 @@ public class ParametersWithDataType {
     testOutput.put("isObject", true);
     testOutput.put("value", values);
     testOutput.put("additionalProperties", additionalPropertyValues);
+  }
+
+  private String getTransformedParamName(String paramName) {
+    if (language.equals("swift")) {
+      paramName = AlgoliaSwiftGenerator.prefixReservedModelName(paramName, client);
+    }
+    return paramName;
   }
 
   private void handleObject(String paramName, Object param, Map<String, Object> testOutput, boolean isSimpleObject, int suffix)
@@ -512,12 +529,16 @@ public class ParametersWithDataType {
           case "Object":
             return "map[string]any";
         }
+        break;
       case "swift":
         switch (objectName) {
           case "List":
             return "array";
+          default:
+            return Helpers.capitalize(getTransformedParamName(objectName));
         }
     }
+
     return Helpers.capitalize(objectName);
   }
 

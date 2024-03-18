@@ -1,12 +1,13 @@
 //
-//  SearchHelpers.swift
+//  SearchClientExtension.swift
 //
 //
 //  Created by Algolia on 26/02/2024.
 //
 
-import AnyCodable
-import Core
+#if canImport(Core)
+    import Core
+#endif
 import Foundation
 
 public extension SearchClient {
@@ -34,7 +35,7 @@ public extension SearchClient {
                 try await self.getTask(indexName: indexName, taskID: taskID, requestOptions: requestOptions)
             },
             validate: { response in
-                response.status == TaskStatus.published
+                response.status == SearchTaskStatus.published
             },
             aggregator: { _ in
                 retryCount += 1

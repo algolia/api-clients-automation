@@ -16,6 +16,9 @@ import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.media.StringSchema;
 import io.swagger.v3.oas.models.servers.Server;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.StringUtils;
@@ -29,6 +32,78 @@ import org.openapitools.codegen.utils.ModelUtils;
 
 public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
 
+  private static final List<String> reservedModelNames = List.of(
+    "advancedsyntaxfeatures",
+    "alternativesasexact",
+    "anchoring",
+    "aroundprecision",
+    "aroundprecisionfromvalueinner",
+    "aroundradius",
+    "aroundradiusall",
+    "automaticfacetfilter",
+    "automaticfacetfilters",
+    "basesearchparams",
+    "basesearchparamswithoutquery",
+    "basesearchresponse",
+    "condition",
+    "configuration",
+    "consequence",
+    "consequencehide",
+    "consequenceparams",
+    "consequencequery",
+    "consequencequeryobject",
+    "deletedatresponse",
+    "distinct",
+    "edit",
+    "edittype",
+    "errorbase",
+    "exactonsinglewordquery",
+    "exhaustive",
+    "facetfilters",
+    "facetordering",
+    "facets",
+    "facetsstats",
+    "highlightresult",
+    "highlightresultoption",
+    "ignoreplurals",
+    "indexsettingsassearchparams",
+    "languages",
+    "matchlevel",
+    "matchedgeolocation",
+    "mixedsearchfilters",
+    "mode",
+    "numericfilters",
+    "optionalfilters",
+    "params",
+    "personalization",
+    "promote",
+    "promoteobjectid",
+    "promoteobjectids",
+    "querytype",
+    "rankinginfo",
+    "rerankingapplyfilter",
+    "redirect",
+    "redirectruleindexmetadata",
+    "redirectruleindexmetadatadata",
+    "region",
+    "removestopwords",
+    "removewordsifnoresults",
+    "renderingcontent",
+    "searchparams",
+    "searchparamsobject",
+    "searchparamsquery",
+    "semanticsearch",
+    "snippetresult",
+    "snippetresultoption",
+    "sortremainingby",
+    "source",
+    "tagfilters",
+    "taskstatus",
+    "typotolerance",
+    "typotoleranceenum",
+    "value"
+  );
+
   // This is used for the CTS generation
   private static final AlgoliaSwiftGenerator INSTANCE = new AlgoliaSwiftGenerator();
 
@@ -40,6 +115,38 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     }
 
     return INSTANCE.isReservedWord(text) ? INSTANCE.escapeReservedWord(text) : text;
+  }
+
+  public static Boolean isReservedModelName(String name) {
+    return reservedModelNames.contains(name.toLowerCase());
+  }
+
+  public static String prefixReservedModelName(String name, String client) {
+    if (name == null || name.isEmpty()) {
+      return name;
+    }
+
+    var camelizedName = camelize(name);
+    if (isReservedModelName(camelizedName)) {
+      return INSTANCE.getClientName(client) + Helpers.capitalize(camelizedName);
+    }
+
+    return name;
+  }
+
+  public static String removeReservedModelNamePrefix(String name, String client) {
+    if (name == null || name.isEmpty()) {
+      return name;
+    }
+
+    var camelizedName = camelize(name, LOWERCASE_FIRST_LETTER);
+    var clientName = camelize(INSTANCE.getClientName(client), LOWERCASE_FIRST_LETTER);
+    var trimmedName = camelize(camelizedName.replaceFirst(clientName, ""), LOWERCASE_FIRST_LETTER);
+    if (isReservedModelName(trimmedName)) {
+      return trimmedName;
+    }
+
+    return name;
   }
 
   private String CLIENT;
@@ -60,6 +167,13 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     // We will use the default URLSession library coming from the Foundation package to handle HTTP
     // requests
     setLibrary(LIBRARY_URLSESSION);
+
+    try {
+      additionalProperties.put("swiftVersion", Files.readString(Paths.get("config/.swift-version")).trim());
+    } catch (IOException e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
 
     additionalProperties.put("isSearchClient", CLIENT.equals("search"));
     additionalProperties.put(CodegenConstants.EXCLUDE_TESTS, true);
@@ -86,7 +200,9 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
 
     super.processOpts();
 
-    supportingFiles.add(new SupportingFile("client_configuration.mustache", sourceFolder, "Configuration.swift"));
+    supportingFiles.add(
+      new SupportingFile("client_configuration.mustache", sourceFolder, getClientName(CLIENT) + "ClientConfiguration.swift")
+    );
     supportingFiles.add(new SupportingFile("Package.mustache", "Package.swift"));
     supportingFiles.add(new SupportingFile("podspec.mustache", projectName + ".podspec"));
     supportingFiles.add(
@@ -335,5 +451,26 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
       WordUtils.capitalizeFully(StringUtils.lowerCase(value), separators).replaceAll("[-_ :\\(\\)]", ""),
       LOWERCASE_FIRST_LETTER
     );
+  }
+
+  @Override
+  public String toModelName(String name) {
+    var sanitizedName = this.sanitizeName(name);
+    var camelizedName = camelize(sanitizedName);
+    if (isReservedModelName(camelizedName)) {
+      return prefixReservedModelName(camelizedName, CLIENT);
+    }
+
+    return super.toModelName(name);
+  }
+
+  @Override
+  public String toParamName(String name) {
+    var trimmedName = camelize(name.replaceFirst(getClientName(CLIENT), ""), LOWERCASE_FIRST_LETTER);
+    if (isReservedModelName(trimmedName)) {
+      return trimmedName;
+    }
+
+    return super.toParamName(name);
   }
 }

@@ -5,16 +5,11 @@
 //  Created by Algolia on 26/01/2024.
 //
 
-import AnyCodable
+import Core
 import Foundation
 import XCTest
 
-#if canImport(AnyCodable)
-    public typealias TestNullObject = [String: AnyCodable]
-#else
-    public typealias TestNullObject = [String: Any]
-#endif
-
+public typealias TestNullObject = [String: AnyCodable]
 public typealias TestNullString = String
 
 public extension Data {
