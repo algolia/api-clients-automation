@@ -17,6 +17,7 @@ import algoliasearch.recommend.ExactOnSingleWordQuery._
 import algoliasearch.recommend.Mode._
 import algoliasearch.recommend.QueryType._
 import algoliasearch.recommend.RemoveWordsIfNoResults._
+import algoliasearch.recommend.SupportedLanguage._
 
 /** IndexSettingsAsSearchParams
   *
@@ -96,10 +97,9 @@ import algoliasearch.recommend.RemoveWordsIfNoResults._
   *   example, `é` becomes `e`. If this causes issues in your search, you can specify characters that should keep their
   *   diacritics.
   * @param queryLanguages
-  *   [ISO code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) for language-specific settings such as
-  *   plurals, stop words, and word-detection dictionaries. This setting sets a default list of languages used by the
-  *   `removeStopWords` and `ignorePlurals` settings. This setting also sets a dictionary for word detection in the
-  *   logogram-based
+  *   Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection
+  *   dictionaries. This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals`
+  *   settings. This setting also sets a dictionary for word detection in the logogram-based
   *   [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk)
   *   languages. To support this, you must place the CJK language **first**. **You should always specify a query
   *   language.** If you don't specify an indexing language, the search engine uses all [supported
@@ -206,7 +206,7 @@ case class IndexSettingsAsSearchParams(
     ignorePlurals: Option[IgnorePlurals] = scala.None,
     removeStopWords: Option[RemoveStopWords] = scala.None,
     keepDiacriticsOnCharacters: Option[String] = scala.None,
-    queryLanguages: Option[Seq[String]] = scala.None,
+    queryLanguages: Option[Seq[SupportedLanguage]] = scala.None,
     decompoundQuery: Option[Boolean] = scala.None,
     enableRules: Option[Boolean] = scala.None,
     enablePersonalization: Option[Boolean] = scala.None,

@@ -13,9 +13,7 @@ final class PersonalizationClientSnippet {
         let client = try PersonalizationClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customDelete(
-            path: "/test/minimal"
-        )
+        _ = try await client.customDelete(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -28,9 +26,7 @@ final class PersonalizationClientSnippet {
         let client = try PersonalizationClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customGet(
-            path: "/test/minimal"
-        )
+        _ = try await client.customGet(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -43,9 +39,7 @@ final class PersonalizationClientSnippet {
         let client = try PersonalizationClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPost(
-            path: "/test/minimal"
-        )
+        _ = try await client.customPost(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -58,9 +52,7 @@ final class PersonalizationClientSnippet {
         let client = try PersonalizationClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPut(
-            path: "/test/minimal"
-        )
+        _ = try await client.customPut(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -73,9 +65,7 @@ final class PersonalizationClientSnippet {
         let client = try PersonalizationClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.deleteUserProfile(
-            userToken: "UserToken"
-        )
+        _ = try await client.deleteUserProfile(userToken: "UserToken")
         // SEPARATOR<
     }
 
@@ -101,9 +91,7 @@ final class PersonalizationClientSnippet {
         let client = try PersonalizationClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getUserTokenProfile(
-            userToken: "UserToken"
-        )
+        _ = try await client.getUserTokenProfile(userToken: "UserToken")
         // SEPARATOR<
     }
 
@@ -116,24 +104,11 @@ final class PersonalizationClientSnippet {
         let client = try PersonalizationClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.setPersonalizationStrategy(
-            personalizationStrategyParams: PersonalizationStrategyParams(
-                eventScoring: [
-                    EventScoring(
-                        score: 42,
-                        eventName: "Algolia",
-                        eventType: "Event"
-                    ),
-                ],
-                facetScoring: [
-                    FacetScoring(
-                        score: 42,
-                        facetName: "Event"
-                    ),
-                ],
-                personalizationImpact: 42
-            )
-        )
+        _ = try await client.setPersonalizationStrategy(personalizationStrategyParams: PersonalizationStrategyParams(
+            eventScoring: [EventScoring(score: 42, eventName: "Algolia", eventType: "Event")],
+            facetScoring: [FacetScoring(score: 42, facetName: "Event")],
+            personalizationImpact: 42
+        ))
         // SEPARATOR<
     }
 }

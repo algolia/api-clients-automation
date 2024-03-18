@@ -29,7 +29,7 @@ post:
             hitsPerPage:
               $ref: '../../../common/schemas/IndexSettings.yml#/hitsPerPage'
             language:
-              $ref: 'common/parameters.yml#/language'
+              $ref: '../../../common/schemas/IndexSettings.yml#/supportedLanguage'
   responses:
     '200':
       description: OK

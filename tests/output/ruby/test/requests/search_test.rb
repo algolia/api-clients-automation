@@ -280,12 +280,12 @@ class TestSearchClient < Test::Unit::TestCase
             action: 'addEntry',
             body: DictionaryEntry.new(
               object_id: "1",
-              language: "en"
+              language: 'en'
             )
           ),
           BatchDictionaryEntriesRequest.new(
             action: 'deleteEntry',
-            body: DictionaryEntry.new(object_id: "2", language: "fr")
+            body: DictionaryEntry.new(object_id: "2", language: 'fr')
           )
         ]
       )
@@ -311,7 +311,7 @@ class TestSearchClient < Test::Unit::TestCase
             action: 'addEntry',
             body: DictionaryEntry.new(
               object_id: "1",
-              language: "en",
+              language: 'en',
               word: "fancy",
               words: ["believe", "algolia"],
               decomposition: ["trust", "algolia"],
@@ -322,7 +322,7 @@ class TestSearchClient < Test::Unit::TestCase
             action: 'deleteEntry',
             body: DictionaryEntry.new(
               object_id: "2",
-              language: "fr",
+              language: 'fr',
               word: "humility",
               words: ["candor", "algolia"],
               decomposition: ["grit", "algolia"],
@@ -349,7 +349,7 @@ class TestSearchClient < Test::Unit::TestCase
       BatchDictionaryEntriesParams.new(
         requests: [BatchDictionaryEntriesRequest.new(
           action: 'addEntry',
-          body: DictionaryEntry.new(object_id: "1", language: "en", additional: "try me")
+          body: DictionaryEntry.new(object_id: "1", language: 'en', additional: "try me")
         )]
       )
     )
@@ -1680,7 +1680,7 @@ class TestSearchClient < Test::Unit::TestCase
           percentile_computation: true,
           personalization_impact: 0,
           query: "",
-          query_languages: [""],
+          query_languages: ['fr'],
           query_type: 'prefixAll',
           ranking: [""],
           re_ranking_apply_filter: [""],
@@ -1719,7 +1719,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":[""],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}'), JSON.parse(req.body)
+      JSON.parse('{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":["fr"],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}'), JSON.parse(req.body)
     )
   end
 
@@ -1754,7 +1754,7 @@ class TestSearchClient < Test::Unit::TestCase
   def test_search_dictionary_entries1
     req = @client.search_dictionary_entries_with_http_info(
       'compounds',
-      SearchDictionaryEntriesParams.new(query: "foo", page: 4, hits_per_page: 2, language: "fr")
+      SearchDictionaryEntriesParams.new(query: "foo", page: 4, hits_per_page: 2, language: 'fr')
     )
 
     assert_equal(:post, req.method)
@@ -2065,7 +2065,7 @@ class TestSearchClient < Test::Unit::TestCase
   def test_set_settings4
     req = @client.set_settings_with_http_info(
       "theIndexName",
-      IndexSettings.new(ignore_plurals: ["algolia"]),
+      IndexSettings.new(ignore_plurals: ['fr']),
       true
     )
 
@@ -2073,7 +2073,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal('/1/indexes/theIndexName/settings', req.path)
     assert_equal({ 'forwardToReplicas': "true" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse('{"ignorePlurals":["algolia"]}'), JSON.parse(req.body))
+    assert_equal(JSON.parse('{"ignorePlurals":["fr"]}'), JSON.parse(req.body))
   end
 
   # setSettings allow boolean `removeStopWords`
@@ -2095,7 +2095,7 @@ class TestSearchClient < Test::Unit::TestCase
   def test_set_settings6
     req = @client.set_settings_with_http_info(
       "theIndexName",
-      IndexSettings.new(remove_stop_words: ["algolia"]),
+      IndexSettings.new(remove_stop_words: ['fr']),
       true
     )
 
@@ -2103,7 +2103,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal('/1/indexes/theIndexName/settings', req.path)
     assert_equal({ 'forwardToReplicas': "true" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-    assert_equal(JSON.parse('{"removeStopWords":["algolia"]}'), JSON.parse(req.body))
+    assert_equal(JSON.parse('{"removeStopWords":["fr"]}'), JSON.parse(req.body))
   end
 
   # setSettings allow boolean `distinct`
@@ -2171,7 +2171,7 @@ class TestSearchClient < Test::Unit::TestCase
         highlight_post_tag: "</span>",
         hits_per_page: 10,
         ignore_plurals: false,
-        index_languages: ["algolia"],
+        index_languages: ['fr'],
         keep_diacritics_on_characters: "abc",
         max_facet_hits: 20,
         max_values_per_facet: 30,
@@ -2182,7 +2182,7 @@ class TestSearchClient < Test::Unit::TestCase
         numeric_attributes_for_filtering: ["algolia"],
         optional_words: ["myspace"],
         pagination_limited_to: 0,
-        query_languages: ["algolia"],
+        query_languages: ['fr'],
         query_type: 'prefixLast',
         ranking: ["geo"],
         re_ranking_apply_filter: "mySearch:filters",
@@ -2218,7 +2218,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["algolia"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["algolia"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}'), JSON.parse(req.body)
+      JSON.parse('{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["fr"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["fr"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}'), JSON.parse(req.body)
     )
   end
 

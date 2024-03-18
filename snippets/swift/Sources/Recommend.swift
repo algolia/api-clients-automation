@@ -13,9 +13,7 @@ final class RecommendClientSnippet {
         let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customDelete(
-            path: "/test/minimal"
-        )
+        _ = try await client.customDelete(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -28,9 +26,7 @@ final class RecommendClientSnippet {
         let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customGet(
-            path: "/test/minimal"
-        )
+        _ = try await client.customGet(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -43,9 +39,7 @@ final class RecommendClientSnippet {
         let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customPost(
-            path: "/test/minimal"
-        )
+        _ = try await client.customPost(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -58,9 +52,7 @@ final class RecommendClientSnippet {
         let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customPut(
-            path: "/test/minimal"
-        )
+        _ = try await client.customPut(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -125,21 +117,15 @@ final class RecommendClientSnippet {
 
         // Call the API
         _ = try await client
-            .getRecommendations(
-                getRecommendationsParams: GetRecommendationsParams(
-                    requests: [
-                        RecommendationsRequest
-                            .recommendationsQuery(
-                                RecommendationsQuery(
-                                    indexName: "indexName",
-                                    threshold: 42,
-                                    model: RecommendationModels.relatedProducts,
-                                    objectID: "objectID"
-                                )
-                            ),
-                    ]
-                )
-            )
+            .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [
+                RecommendationsRequest
+                    .recommendationsQuery(RecommendationsQuery(
+                        indexName: "indexName",
+                        threshold: 42,
+                        model: RecommendationModels.relatedProducts,
+                        objectID: "objectID"
+                    )),
+            ]))
         // SEPARATOR<
     }
 
@@ -152,10 +138,7 @@ final class RecommendClientSnippet {
         let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.searchRecommendRules(
-            indexName: "indexName",
-            model: RecommendModels.relatedProducts
-        )
+        _ = try await client.searchRecommendRules(indexName: "indexName", model: RecommendModels.relatedProducts)
         // SEPARATOR<
     }
 }

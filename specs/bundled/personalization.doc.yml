@@ -349,9 +349,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customGet(
-                path: "/test/minimal"
-            )
+            _ = try await client.customGet(path: "/test/minimal")
     post:
       operationId: customPost
       requestBody:
@@ -550,9 +548,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPost(
-                path: "/test/minimal"
-            )
+            _ = try await client.customPost(path: "/test/minimal")
     put:
       operationId: customPut
       requestBody:
@@ -751,9 +747,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPut(
-                path: "/test/minimal"
-            )
+            _ = try await client.customPut(path: "/test/minimal")
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API.
@@ -952,9 +946,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customDelete(
-                path: "/test/minimal"
-            )
+            _ = try await client.customDelete(path: "/test/minimal")
   /1/profiles/personalization/{userToken}:
     get:
       tags:
@@ -1182,9 +1174,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getUserTokenProfile(
-                userToken: "UserToken"
-            )
+            _ = try await client.getUserTokenProfile(userToken: "UserToken")
   /1/profiles/{userToken}:
     delete:
       tags:
@@ -1415,9 +1405,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.deleteUserProfile(
-                userToken: "UserToken"
-            )
+            _ = try await client.deleteUserProfile(userToken: "UserToken")
   /1/strategies/personalization:
     get:
       tags:
@@ -1914,21 +1902,10 @@ paths:
 
             // Call the API
 
-            _ = try await client.setPersonalizationStrategy(
-                personalizationStrategyParams: PersonalizationStrategyParams(
-                    eventScoring: [
-                        EventScoring(
-                            score: 42,
-                            eventName: "Algolia",
-                            eventType: "Event"
-                        ),
-                    ],
-                    facetScoring: [
-                        FacetScoring(
-                            score: 42,
-                            facetName: "Event"
-                        ),
-                    ],
-                    personalizationImpact: 42
-                )
-            )
+            _ = try await
+            client.setPersonalizationStrategy(personalizationStrategyParams:
+            PersonalizationStrategyParams(
+                eventScoring: [EventScoring(score: 42, eventName: "Algolia", eventType: "Event")],
+                facetScoring: [FacetScoring(score: 42, facetName: "Event")],
+                personalizationImpact: 42
+            ))

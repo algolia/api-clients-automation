@@ -73,7 +73,7 @@ internal class {{classname}}Serializer : JsonContentPolymorphicSerializer<{{clas
             element is JsonObject -> {{classname}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value.serializer()
             {{/isMap}}
             {{#isArray}}
-            element{{#items}}{{#isModel}}.isJsonArrayOfObjects{{/isModel}}{{#isPrimitiveType}}.isJsonArrayOfPrimitives{{/isPrimitiveType}}{{#isModel}}{{#isPrimitiveType}} is JsonArray{{/isPrimitiveType}}{{/isModel}}{{/items}} -> {{{classname}}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value.serializer()
+            element{{#items}}{{#isModel}}.isJsonArrayOfObjects{{/isModel}}{{#isPrimitiveType}}.isJsonArrayOfPrimitives{{/isPrimitiveType}}{{^isModel}}{{^isPrimitiveType}} is JsonArray{{/isPrimitiveType}}{{/isModel}}{{/items}} -> {{{classname}}}.{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}Value.serializer()
             {{/isArray}}
             {{#isEnumRef}}
             element.isString -> {{{datatypeWithEnum}}}.serializer()

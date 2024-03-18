@@ -35,6 +35,7 @@
 package algoliasearch.search
 
 import algoliasearch.search.DictionaryEntryState._
+import algoliasearch.search.SupportedLanguage._
 
 import org.json4s.MonadicJValue.jvalueToMonadic
 import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, TypeInfo}
@@ -43,9 +44,6 @@ import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, Typ
   *
   * @param objectID
   *   Unique identifier for the dictionary entry.
-  * @param language
-  *   ISO code of a [supported
-  *   language](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
   * @param word
   *   Matching dictionary word for `stopwords` and `compounds` dictionaries.
   * @param words
@@ -55,7 +53,7 @@ import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, Typ
   */
 case class DictionaryEntry(
     objectID: String,
-    language: String,
+    language: SupportedLanguage,
     word: Option[String] = scala.None,
     words: Option[Seq[String]] = scala.None,
     decomposition: Option[Seq[String]] = scala.None,

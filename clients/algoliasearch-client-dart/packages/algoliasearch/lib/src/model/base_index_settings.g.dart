@@ -30,8 +30,11 @@ BaseIndexSettings _$BaseIndexSettingsFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           decompoundedAttributes:
               $checkedConvert('decompoundedAttributes', (v) => v),
-          indexLanguages: $checkedConvert('indexLanguages',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          indexLanguages: $checkedConvert(
+              'indexLanguages',
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => $enumDecode(_$SupportedLanguageEnumMap, e))
+                  .toList()),
           disablePrefixOnAttributes: $checkedConvert(
               'disablePrefixOnAttributes',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
@@ -75,7 +78,8 @@ Map<String, dynamic> _$BaseIndexSettingsToJson(BaseIndexSettings instance) {
   writeNotNull('attributesToTransliterate', instance.attributesToTransliterate);
   writeNotNull('camelCaseAttributes', instance.camelCaseAttributes);
   writeNotNull('decompoundedAttributes', instance.decompoundedAttributes);
-  writeNotNull('indexLanguages', instance.indexLanguages);
+  writeNotNull('indexLanguages',
+      instance.indexLanguages?.map((e) => e.toJson()).toList());
   writeNotNull('disablePrefixOnAttributes', instance.disablePrefixOnAttributes);
   writeNotNull('allowCompressionOfIntegerArray',
       instance.allowCompressionOfIntegerArray);
@@ -88,3 +92,74 @@ Map<String, dynamic> _$BaseIndexSettingsToJson(BaseIndexSettings instance) {
   writeNotNull('attributeForDistinct', instance.attributeForDistinct);
   return val;
 }
+
+const _$SupportedLanguageEnumMap = {
+  SupportedLanguage.af: 'af',
+  SupportedLanguage.ar: 'ar',
+  SupportedLanguage.az: 'az',
+  SupportedLanguage.bg: 'bg',
+  SupportedLanguage.bn: 'bn',
+  SupportedLanguage.ca: 'ca',
+  SupportedLanguage.cs: 'cs',
+  SupportedLanguage.cy: 'cy',
+  SupportedLanguage.da: 'da',
+  SupportedLanguage.de: 'de',
+  SupportedLanguage.el: 'el',
+  SupportedLanguage.en: 'en',
+  SupportedLanguage.eo: 'eo',
+  SupportedLanguage.es: 'es',
+  SupportedLanguage.et: 'et',
+  SupportedLanguage.eu: 'eu',
+  SupportedLanguage.fa: 'fa',
+  SupportedLanguage.fi: 'fi',
+  SupportedLanguage.fo: 'fo',
+  SupportedLanguage.fr: 'fr',
+  SupportedLanguage.ga: 'ga',
+  SupportedLanguage.gl: 'gl',
+  SupportedLanguage.he: 'he',
+  SupportedLanguage.hi: 'hi',
+  SupportedLanguage.hu: 'hu',
+  SupportedLanguage.hy: 'hy',
+  SupportedLanguage.id: 'id',
+  SupportedLanguage.is_: 'is',
+  SupportedLanguage.it: 'it',
+  SupportedLanguage.ja: 'ja',
+  SupportedLanguage.ka: 'ka',
+  SupportedLanguage.kk: 'kk',
+  SupportedLanguage.ko: 'ko',
+  SupportedLanguage.ku: 'ku',
+  SupportedLanguage.ky: 'ky',
+  SupportedLanguage.lt: 'lt',
+  SupportedLanguage.lv: 'lv',
+  SupportedLanguage.mi: 'mi',
+  SupportedLanguage.mn: 'mn',
+  SupportedLanguage.mr: 'mr',
+  SupportedLanguage.ms: 'ms',
+  SupportedLanguage.mt: 'mt',
+  SupportedLanguage.nb: 'nb',
+  SupportedLanguage.nl: 'nl',
+  SupportedLanguage.no: 'no',
+  SupportedLanguage.ns: 'ns',
+  SupportedLanguage.pl: 'pl',
+  SupportedLanguage.ps: 'ps',
+  SupportedLanguage.pt: 'pt',
+  SupportedLanguage.ptBr: 'pt-br',
+  SupportedLanguage.qu: 'qu',
+  SupportedLanguage.ro: 'ro',
+  SupportedLanguage.ru: 'ru',
+  SupportedLanguage.sk: 'sk',
+  SupportedLanguage.sq: 'sq',
+  SupportedLanguage.sv: 'sv',
+  SupportedLanguage.sw: 'sw',
+  SupportedLanguage.ta: 'ta',
+  SupportedLanguage.te: 'te',
+  SupportedLanguage.th: 'th',
+  SupportedLanguage.tl: 'tl',
+  SupportedLanguage.tn: 'tn',
+  SupportedLanguage.tr: 'tr',
+  SupportedLanguage.tt: 'tt',
+  SupportedLanguage.uk: 'uk',
+  SupportedLanguage.ur: 'ur',
+  SupportedLanguage.uz: 'uz',
+  SupportedLanguage.zh: 'zh',
+};

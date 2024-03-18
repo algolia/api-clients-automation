@@ -715,9 +715,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customGet(
-                path: "/test/minimal"
-            )
+            _ = try await client.customGet(path: "/test/minimal")
     post:
       operationId: customPost
       requestBody:
@@ -919,9 +917,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPost(
-                path: "/test/minimal"
-            )
+            _ = try await client.customPost(path: "/test/minimal")
     put:
       operationId: customPut
       requestBody:
@@ -1123,9 +1119,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPut(
-                path: "/test/minimal"
-            )
+            _ = try await client.customPut(path: "/test/minimal")
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API.
@@ -1327,9 +1321,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customDelete(
-                path: "/test/minimal"
-            )
+            _ = try await client.customDelete(path: "/test/minimal")
   /2/searches:
     get:
       tags:
@@ -1540,9 +1532,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getTopSearches(
-                index: "index"
-            )
+            _ = try await client.getTopSearches(index: "index")
   /2/searches/count:
     get:
       tags:
@@ -1769,9 +1759,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getSearchesCount(
-                index: "index"
-            )
+            _ = try await client.getSearchesCount(index: "index")
   /2/searches/noResults:
     get:
       tags:
@@ -2008,9 +1996,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getSearchesNoResults(
-                index: "index"
-            )
+            _ = try await client.getSearchesNoResults(index: "index")
   /2/searches/noClicks:
     get:
       tags:
@@ -2247,9 +2233,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getSearchesNoClicks(
-                index: "index"
-            )
+            _ = try await client.getSearchesNoClicks(index: "index")
   /2/searches/noResultRate:
     get:
       tags:
@@ -2490,9 +2474,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getNoResultsRate(
-                index: "index"
-            )
+            _ = try await client.getNoResultsRate(index: "index")
   /2/searches/noClickRate:
     get:
       tags:
@@ -2737,9 +2719,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getNoClickRate(
-                index: "index"
-            )
+            _ = try await client.getNoClickRate(index: "index")
   /2/hits:
     get:
       tags:
@@ -2946,9 +2926,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getTopHits(
-                index: "index"
-            )
+            _ = try await client.getTopHits(index: "index")
   /2/users/count:
     get:
       tags:
@@ -3174,9 +3152,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getUsersCount(
-                index: "index"
-            )
+            _ = try await client.getUsersCount(index: "index")
   /2/filters:
     get:
       tags:
@@ -3392,9 +3368,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getTopFilterAttributes(
-                index: "index"
-            )
+            _ = try await client.getTopFilterAttributes(index: "index")
   /2/filters/{attribute}:
     get:
       tags:
@@ -3615,10 +3589,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.getTopFilterForAttribute(
-                attribute: "myAttribute",
-                index: "index"
-            )
+            _ = try await client.getTopFilterForAttribute(attribute:
+            "myAttribute", index: "index")
   /2/filters/noResults:
     get:
       tags:
@@ -3833,9 +3805,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getTopFiltersNoResults(
-                index: "index"
-            )
+            _ = try await client.getTopFiltersNoResults(index: "index")
   /2/countries:
     get:
       tags:
@@ -4063,9 +4033,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getTopCountries(
-                index: "index"
-            )
+            _ = try await client.getTopCountries(index: "index")
   /2/clicks/averageClickPosition:
     get:
       tags:
@@ -4311,9 +4279,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getAverageClickPosition(
-                index: "index"
-            )
+            _ = try await client.getAverageClickPosition(index: "index")
   /2/clicks/positions:
     get:
       tags:
@@ -4559,9 +4525,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getClickPositions(
-                index: "index"
-            )
+            _ = try await client.getClickPositions(index: "index")
   /2/clicks/clickThroughRate:
     get:
       tags:
@@ -4808,9 +4772,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getClickThroughRate(
-                index: "index"
-            )
+            _ = try await client.getClickThroughRate(index: "index")
   /2/conversions/conversionRate:
     get:
       tags:
@@ -5057,9 +5019,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getConversationRate(
-                index: "index"
-            )
+            _ = try await client.getConversationRate(index: "index")
   /2/status:
     get:
       tags:
@@ -5271,6 +5231,4 @@ paths:
 
             // Call the API
 
-            _ = try await client.getStatus(
-                index: "index"
-            )
+            _ = try await client.getStatus(index: "index")

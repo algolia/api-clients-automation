@@ -34,6 +34,8 @@
   */
 package algoliasearch.search
 
+import algoliasearch.search.SupportedLanguage._
+
 /** Search parameter.
   *
   * @param query
@@ -42,13 +44,10 @@ package algoliasearch.search
   *   Page of search results to retrieve.
   * @param hitsPerPage
   *   Number of hits per page.
-  * @param language
-  *   ISO code of a [supported
-  *   language](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
   */
 case class SearchDictionaryEntriesParams(
     query: String,
     page: Option[Int] = scala.None,
     hitsPerPage: Option[Int] = scala.None,
-    language: Option[String] = scala.None
+    language: Option[SupportedLanguage] = scala.None
 )

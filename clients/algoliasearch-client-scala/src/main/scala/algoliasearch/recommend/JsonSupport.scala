@@ -29,6 +29,7 @@ object JsonSupport {
     new RecommendedForYouModelSerializer() :+
     new RemoveWordsIfNoResultsSerializer() :+
     new SortRemainingBySerializer() :+
+    new SupportedLanguageSerializer() :+
     new TaskStatusSerializer() :+
     new TrendingFacetsModelSerializer() :+
     new TrendingItemsModelSerializer() :+

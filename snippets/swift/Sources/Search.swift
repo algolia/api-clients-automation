@@ -13,18 +13,13 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.addApiKey(
-            apiKey: ApiKey(
-                acl: [
-                    Acl.search,
-                    Acl.addObject,
-                ],
-                description: "my new api key",
-                maxHitsPerQuery: 20,
-                maxQueriesPerIPPerHour: 100,
-                validity: 300
-            )
-        )
+        _ = try await client.addApiKey(apiKey: ApiKey(
+            acl: [Acl.search, Acl.addObject],
+            description: "my new api key",
+            maxHitsPerQuery: 20,
+            maxQueriesPerIPPerHour: 100,
+            validity: 300
+        ))
         // SEPARATOR<
     }
 
@@ -37,13 +32,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.addOrUpdateObject(
-            indexName: "indexName",
-            objectID: "uniqueID",
-            body: [
-                "key": "value",
-            ]
-        )
+        _ = try await client.addOrUpdateObject(indexName: "indexName", objectID: "uniqueID", body: ["key": "value"])
         // SEPARATOR<
     }
 
@@ -56,12 +45,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.appendSource(
-            source: Source(
-                source: "theSource",
-                description: "theDescription"
-            )
-        )
+        _ = try await client.appendSource(source: Source(source: "theSource", description: "theDescription"))
         // SEPARATOR<
     }
 
@@ -76,9 +60,7 @@ final class SearchClientSnippet {
         // Call the API
         _ = try await client.assignUserId(
             xAlgoliaUserID: "userID",
-            assignUserIdParams: AssignUserIdParams(
-                cluster: "theCluster"
-            )
+            assignUserIdParams: AssignUserIdParams(cluster: "theCluster")
         )
         // SEPARATOR<
     }
@@ -94,16 +76,10 @@ final class SearchClientSnippet {
         // Call the API
         _ = try await client.batch(
             indexName: "theIndexName",
-            batchWriteParams: BatchWriteParams(
-                requests: [
-                    BatchRequest(
-                        action: Action.addObject,
-                        body: [
-                            "key": "value",
-                        ]
-                    ),
-                ]
-            )
+            batchWriteParams: BatchWriteParams(requests: [BatchRequest(
+                action: Action.addObject,
+                body: ["key": "value"]
+            )])
         )
         // SEPARATOR<
     }
@@ -119,13 +95,7 @@ final class SearchClientSnippet {
         // Call the API
         _ = try await client.batchAssignUserIds(
             xAlgoliaUserID: "userID",
-            batchAssignUserIdsParams: BatchAssignUserIdsParams(
-                cluster: "theCluster",
-                users: [
-                    "user1",
-                    "user2",
-                ]
-            )
+            batchAssignUserIdsParams: BatchAssignUserIdsParams(cluster: "theCluster", users: ["user1", "user2"])
         )
         // SEPARATOR<
     }
@@ -141,24 +111,16 @@ final class SearchClientSnippet {
         // Call the API
         _ = try await client.batchDictionaryEntries(
             dictionaryName: DictionaryType.compounds,
-            batchDictionaryEntriesParams: BatchDictionaryEntriesParams(
-                requests: [
-                    BatchDictionaryEntriesRequest(
-                        action: DictionaryAction.addEntry,
-                        body: DictionaryEntry(
-                            objectID: "1",
-                            language: "en"
-                        )
-                    ),
-                    BatchDictionaryEntriesRequest(
-                        action: DictionaryAction.deleteEntry,
-                        body: DictionaryEntry(
-                            objectID: "2",
-                            language: "fr"
-                        )
-                    ),
-                ]
-            )
+            batchDictionaryEntriesParams: BatchDictionaryEntriesParams(requests: [
+                BatchDictionaryEntriesRequest(action: DictionaryAction.addEntry, body: DictionaryEntry(
+                    objectID: "1",
+                    language: SupportedLanguage.en
+                )),
+                BatchDictionaryEntriesRequest(
+                    action: DictionaryAction.deleteEntry,
+                    body: DictionaryEntry(objectID: "2", language: SupportedLanguage.fr)
+                ),
+            ])
         )
         // SEPARATOR<
     }
@@ -172,9 +134,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.browse(
-            indexName: "cts_e2e_browse"
-        )
+        _ = try await client.browse(indexName: "cts_e2e_browse")
         // SEPARATOR<
     }
 
@@ -187,9 +147,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.clearObjects(
-            indexName: "theIndexName"
-        )
+        _ = try await client.clearObjects(indexName: "theIndexName")
         // SEPARATOR<
     }
 
@@ -202,9 +160,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.clearRules(
-            indexName: "indexName"
-        )
+        _ = try await client.clearRules(indexName: "indexName")
         // SEPARATOR<
     }
 
@@ -217,9 +173,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.clearSynonyms(
-            indexName: "indexName"
-        )
+        _ = try await client.clearSynonyms(indexName: "indexName")
         // SEPARATOR<
     }
 
@@ -232,9 +186,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customDelete(
-            path: "/test/minimal"
-        )
+        _ = try await client.customDelete(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -247,9 +199,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customGet(
-            path: "/test/minimal"
-        )
+        _ = try await client.customGet(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -262,9 +212,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customPost(
-            path: "/test/minimal"
-        )
+        _ = try await client.customPost(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -277,9 +225,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customPut(
-            path: "/test/minimal"
-        )
+        _ = try await client.customPut(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -292,9 +238,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.deleteApiKey(
-            key: "myTestApiKey"
-        )
+        _ = try await client.deleteApiKey(key: "myTestApiKey")
         // SEPARATOR<
     }
 
@@ -309,9 +253,7 @@ final class SearchClientSnippet {
         // Call the API
         _ = try await client.deleteBy(
             indexName: "theIndexName",
-            deleteByParams: DeleteByParams(
-                filters: "brand:brandName"
-            )
+            deleteByParams: DeleteByParams(filters: "brand:brandName")
         )
         // SEPARATOR<
     }
@@ -325,9 +267,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.deleteIndex(
-            indexName: "theIndexName"
-        )
+        _ = try await client.deleteIndex(indexName: "theIndexName")
         // SEPARATOR<
     }
 
@@ -340,10 +280,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.deleteObject(
-            indexName: "theIndexName",
-            objectID: "uniqueID"
-        )
+        _ = try await client.deleteObject(indexName: "theIndexName", objectID: "uniqueID")
         // SEPARATOR<
     }
 
@@ -356,10 +293,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.deleteRule(
-            indexName: "indexName",
-            objectID: "id1"
-        )
+        _ = try await client.deleteRule(indexName: "indexName", objectID: "id1")
         // SEPARATOR<
     }
 
@@ -372,9 +306,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.deleteSource(
-            source: "theSource"
-        )
+        _ = try await client.deleteSource(source: "theSource")
         // SEPARATOR<
     }
 
@@ -387,10 +319,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.deleteSynonym(
-            indexName: "indexName",
-            objectID: "id1"
-        )
+        _ = try await client.deleteSynonym(indexName: "indexName", objectID: "id1")
         // SEPARATOR<
     }
 
@@ -403,9 +332,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getApiKey(
-            key: "myTestApiKey"
-        )
+        _ = try await client.getApiKey(key: "myTestApiKey")
         // SEPARATOR<
     }
 
@@ -460,10 +387,7 @@ final class SearchClientSnippet {
         _ = try await client.getObject(
             indexName: "theIndexName",
             objectID: "uniqueID",
-            attributesToRetrieve: [
-                "attr1",
-                "attr2",
-            ]
+            attributesToRetrieve: ["attr1", "attr2"]
         )
         // SEPARATOR<
     }
@@ -477,20 +401,11 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getObjects(
-            getObjectsParams: GetObjectsParams(
-                requests: [
-                    GetObjectsRequest(
-                        attributesToRetrieve: [
-                            "attr1",
-                            "attr2",
-                        ],
-                        objectID: "uniqueID",
-                        indexName: "theIndexName"
-                    ),
-                ]
-            )
-        )
+        _ = try await client.getObjects(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(
+            attributesToRetrieve: ["attr1", "attr2"],
+            objectID: "uniqueID",
+            indexName: "theIndexName"
+        )]))
         // SEPARATOR<
     }
 
@@ -503,10 +418,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getRule(
-            indexName: "indexName",
-            objectID: "id1"
-        )
+        _ = try await client.getRule(indexName: "indexName", objectID: "id1")
         // SEPARATOR<
     }
 
@@ -519,9 +431,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getSettings(
-            indexName: "cts_e2e_settings"
-        )
+        _ = try await client.getSettings(indexName: "cts_e2e_settings")
         // SEPARATOR<
     }
 
@@ -547,10 +457,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getSynonym(
-            indexName: "indexName",
-            objectID: "id1"
-        )
+        _ = try await client.getSynonym(indexName: "indexName", objectID: "id1")
         // SEPARATOR<
     }
 
@@ -563,10 +470,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getTask(
-            indexName: "theIndexName",
-            taskID: Int64(123)
-        )
+        _ = try await client.getTask(indexName: "theIndexName", taskID: Int64(123))
         // SEPARATOR<
     }
 
@@ -592,9 +496,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getUserId(
-            userID: "uniqueID"
-        )
+        _ = try await client.getUserId(userID: "uniqueID")
         // SEPARATOR<
     }
 
@@ -672,19 +574,11 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.multipleBatch(
-            batchParams: BatchParams(
-                requests: [
-                    MultipleBatchRequest(
-                        action: Action.addObject,
-                        body: [
-                            "key": "value",
-                        ],
-                        indexName: "theIndexName"
-                    ),
-                ]
-            )
-        )
+        _ = try await client.multipleBatch(batchParams: BatchParams(requests: [MultipleBatchRequest(
+            action: Action.addObject,
+            body: ["key": "value"],
+            indexName: "theIndexName"
+        )]))
         // SEPARATOR<
     }
 
@@ -702,10 +596,7 @@ final class SearchClientSnippet {
             operationIndexParams: OperationIndexParams(
                 operation: OperationType.copy,
                 destination: "dest",
-                scope: [
-                    ScopeType.rules,
-                    ScopeType.settings,
-                ]
+                scope: [ScopeType.rules, ScopeType.settings]
             )
         )
         // SEPARATOR<
@@ -723,11 +614,11 @@ final class SearchClientSnippet {
         _ = try await client.partialUpdateObject(
             indexName: "theIndexName",
             objectID: "uniqueID",
-            attributesToUpdate: ["id1": AttributeToUpdate.string("test"
-            ), "id2": AttributeToUpdate.builtInOperation(BuiltInOperation(operation: BuiltInOperationType.addUnique,
-                                                                          value: "test2"
-                )
-            )],
+            attributesToUpdate: [
+                "id1": AttributeToUpdate.string("test"),
+                "id2": AttributeToUpdate
+                    .builtInOperation(BuiltInOperation(operation: BuiltInOperationType.addUnique, value: "test2")),
+            ],
             createIfNotExists: true
         )
         // SEPARATOR<
@@ -742,9 +633,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.removeUserId(
-            userID: "uniqueID"
-        )
+        _ = try await client.removeUserId(userID: "uniqueID")
         // SEPARATOR<
     }
 
@@ -757,14 +646,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.replaceSources(
-            source: [
-                Source(
-                    source: "theSource",
-                    description: "theDescription"
-                ),
-            ]
-        )
+        _ = try await client.replaceSources(source: [Source(source: "theSource", description: "theDescription")])
         // SEPARATOR<
     }
 
@@ -777,9 +659,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.restoreApiKey(
-            key: "myApiKey"
-        )
+        _ = try await client.restoreApiKey(key: "myApiKey")
         // SEPARATOR<
     }
 
@@ -792,13 +672,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.saveObject(
-            indexName: "theIndexName",
-            body: [
-                "objectID": "id",
-                "test": "val",
-            ]
-        )
+        _ = try await client.saveObject(indexName: "theIndexName", body: ["objectID": "id", "test": "val"])
         // SEPARATOR<
     }
 
@@ -814,15 +688,7 @@ final class SearchClientSnippet {
         _ = try await client.saveRule(
             indexName: "indexName",
             objectID: "id1",
-            rule: Rule(
-                objectID: "id1",
-                conditions: [
-                    Condition(
-                        pattern: "apple",
-                        anchoring: Anchoring.contains
-                    ),
-                ]
-            )
+            rule: Rule(objectID: "id1", conditions: [Condition(pattern: "apple", anchoring: Anchoring.contains)])
         )
         // SEPARATOR<
     }
@@ -841,21 +707,11 @@ final class SearchClientSnippet {
             rules: [
                 Rule(
                     objectID: "a-rule-id",
-                    conditions: [
-                        Condition(
-                            pattern: "smartphone",
-                            anchoring: Anchoring.contains
-                        ),
-                    ]
+                    conditions: [Condition(pattern: "smartphone", anchoring: Anchoring.contains)]
                 ),
                 Rule(
                     objectID: "a-second-rule-id",
-                    conditions: [
-                        Condition(
-                            pattern: "apple",
-                            anchoring: Anchoring.contains
-                        ),
-                    ]
+                    conditions: [Condition(pattern: "apple", anchoring: Anchoring.contains)]
                 ),
             ]
         )
@@ -874,15 +730,7 @@ final class SearchClientSnippet {
         _ = try await client.saveSynonym(
             indexName: "indexName",
             objectID: "id1",
-            synonymHit: SynonymHit(
-                objectID: "id1",
-                type: SynonymType.synonym,
-                synonyms: [
-                    "car",
-                    "vehicule",
-                    "auto",
-                ]
-            ),
+            synonymHit: SynonymHit(objectID: "id1", type: SynonymType.synonym, synonyms: ["car", "vehicule", "auto"]),
             forwardToReplicas: true
         )
         // SEPARATOR<
@@ -900,23 +748,11 @@ final class SearchClientSnippet {
         _ = try await client.saveSynonyms(
             indexName: "indexName",
             synonymHit: [
-                SynonymHit(
-                    objectID: "id1",
-                    type: SynonymType.synonym,
-                    synonyms: [
-                        "car",
-                        "vehicule",
-                        "auto",
-                    ]
-                ),
+                SynonymHit(objectID: "id1", type: SynonymType.synonym, synonyms: ["car", "vehicule", "auto"]),
                 SynonymHit(
                     objectID: "id2",
                     type: SynonymType.onewaysynonym,
-                    synonyms: [
-                        "ephone",
-                        "aphone",
-                        "yphone",
-                    ],
+                    synonyms: ["ephone", "aphone", "yphone"],
                     input: "iphone"
                 ),
             ],
@@ -936,18 +772,10 @@ final class SearchClientSnippet {
 
         // Call the API
         _ = try await client
-            .search(
-                searchMethodParams: SearchMethodParams(
-                    requests: [
-                        SearchQuery
-                            .searchForHits(
-                                SearchForHits(
-                                    indexName: "cts_e2e_search_empty_index"
-                                )
-                            ),
-                    ]
-                )
-            )
+            .search(searchMethodParams: SearchMethodParams(requests: [
+                SearchQuery
+                    .searchForHits(SearchForHits(indexName: "cts_e2e_search_empty_index")),
+            ]))
         // SEPARATOR<
     }
 
@@ -962,9 +790,7 @@ final class SearchClientSnippet {
         // Call the API
         _ = try await client.searchDictionaryEntries(
             dictionaryName: DictionaryType.stopwords,
-            searchDictionaryEntriesParams: SearchDictionaryEntriesParams(
-                query: "about"
-            )
+            searchDictionaryEntriesParams: SearchDictionaryEntriesParams(query: "about")
         )
         // SEPARATOR<
     }
@@ -978,10 +804,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.searchForFacetValues(
-            indexName: "indexName",
-            facetName: "facetName"
-        )
+        _ = try await client.searchForFacetValues(indexName: "indexName", facetName: "facetName")
         // SEPARATOR<
     }
 
@@ -996,9 +819,7 @@ final class SearchClientSnippet {
         // Call the API
         _ = try await client.searchRules(
             indexName: "indexName",
-            searchRulesParams: SearchRulesParams(
-                query: "something"
-            )
+            searchRulesParams: SearchRulesParams(query: "something")
         )
         // SEPARATOR<
     }
@@ -1012,9 +833,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.searchSingleIndex(
-            indexName: "indexName"
-        )
+        _ = try await client.searchSingleIndex(indexName: "indexName")
         // SEPARATOR<
     }
 
@@ -1027,9 +846,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.searchSynonyms(
-            indexName: "indexName"
-        )
+        _ = try await client.searchSynonyms(indexName: "indexName")
         // SEPARATOR<
     }
 
@@ -1042,14 +859,12 @@ final class SearchClientSnippet {
         let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.searchUserIds(
-            searchUserIdsParams: SearchUserIdsParams(
-                query: "test",
-                clusterName: "theClusterName",
-                page: 5,
-                hitsPerPage: 10
-            )
-        )
+        _ = try await client.searchUserIds(searchUserIdsParams: SearchUserIdsParams(
+            query: "test",
+            clusterName: "theClusterName",
+            page: 5,
+            hitsPerPage: 10
+        ))
         // SEPARATOR<
     }
 
@@ -1064,15 +879,11 @@ final class SearchClientSnippet {
         // Call the API
         _ = try await client
             .setDictionarySettings(
-                dictionarySettingsParams: DictionarySettingsParams(
-                    disableStandardEntries: StandardEntries(
-                        plurals: [
-                            "fr": false,
-                            "en": false,
-                            "ru": true,
-                        ]
-                    )
-                )
+                dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(plurals: [
+                    "fr": false,
+                    "en": false,
+                    "ru": true,
+                ]))
             )
         // SEPARATOR<
     }
@@ -1088,9 +899,7 @@ final class SearchClientSnippet {
         // Call the API
         _ = try await client.setSettings(
             indexName: "cts_e2e_settings",
-            indexSettings: IndexSettings(
-                paginationLimitedTo: 10
-            ),
+            indexSettings: IndexSettings(paginationLimitedTo: 10),
             forwardToReplicas: true
         )
         // SEPARATOR<
@@ -1108,10 +917,7 @@ final class SearchClientSnippet {
         _ = try await client.updateApiKey(
             key: "myApiKey",
             apiKey: ApiKey(
-                acl: [
-                    Acl.search,
-                    Acl.addObject,
-                ],
+                acl: [Acl.search, Acl.addObject],
                 maxHitsPerQuery: 20,
                 maxQueriesPerIPPerHour: 100,
                 validity: 300

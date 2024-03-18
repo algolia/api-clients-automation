@@ -645,9 +645,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customGet(
-                path: "/test/minimal"
-            )
+            _ = try await client.customGet(path: "/test/minimal")
     post:
       operationId: customPost
       requestBody:
@@ -840,9 +838,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPost(
-                path: "/test/minimal"
-            )
+            _ = try await client.customPost(path: "/test/minimal")
     put:
       operationId: customPut
       requestBody:
@@ -1035,9 +1031,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPut(
-                path: "/test/minimal"
-            )
+            _ = try await client.customPut(path: "/test/minimal")
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API.
@@ -1230,9 +1224,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customDelete(
-                path: "/test/minimal"
-            )
+            _ = try await client.customDelete(path: "/test/minimal")
   /1/configs:
     get:
       tags:
@@ -1762,38 +1754,17 @@ paths:
 
             // Call the API
 
-            _ = try await client.createConfig(
-                querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex(
+            _ = try await client
+                .createConfig(querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex(
                     indexName: "theIndexName",
-                    sourceIndices: [
-                        SourceIndex(
-                            indexName: "testIndex",
-                            facets: [
-                                Facet(
-                                    attribute: "test"
-                                ),
-                            ],
-                            generate: [
-                                [
-                                    "facetA",
-                                    "facetB",
-                                ],
-                                [
-                                    "facetC",
-                                ],
-                            ]
-                        ),
-                    ],
-                    languages: Languages.arrayOfString(
-                        [
-                            "french",
-                        ]
-                    ),
-                    exclude: [
-                        "test",
-                    ]
-                )
-            )
+                    sourceIndices: [SourceIndex(
+                        indexName: "testIndex",
+                        facets: [Facet(attribute: "test")],
+                        generate: [["facetA", "facetB"], ["facetC"]]
+                    )],
+                    languages: Languages.arrayOfString(["french"]),
+                    exclude: ["test"]
+                ))
   /1/configs/{indexName}:
     get:
       tags:
@@ -1988,9 +1959,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.getConfig(
-                indexName: "cts_e2e_browse_query_suggestions"
-            )
+            _ = try await client.getConfig(indexName:
+            "cts_e2e_browse_query_suggestions")
     put:
       tags:
         - configurations
@@ -2343,33 +2313,13 @@ paths:
             _ = try await client.updateConfig(
                 indexName: "theIndexName",
                 querySuggestionsConfiguration: QuerySuggestionsConfiguration(
-                    sourceIndices: [
-                        SourceIndex(
-                            indexName: "testIndex",
-                            facets: [
-                                Facet(
-                                    attribute: "test"
-                                ),
-                            ],
-                            generate: [
-                                [
-                                    "facetA",
-                                    "facetB",
-                                ],
-                                [
-                                    "facetC",
-                                ],
-                            ]
-                        ),
-                    ],
-                    languages: Languages.arrayOfString(
-                        [
-                            "french",
-                        ]
-                    ),
-                    exclude: [
-                        "test",
-                    ]
+                    sourceIndices: [SourceIndex(
+                        indexName: "testIndex",
+                        facets: [Facet(attribute: "test")],
+                        generate: [["facetA", "facetB"], ["facetC"]]
+                    )],
+                    languages: Languages.arrayOfString(["french"]),
+                    exclude: ["test"]
                 )
             )
     delete:
@@ -2576,9 +2526,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.deleteConfig(
-                indexName: "theIndexName"
-            )
+            _ = try await client.deleteConfig(indexName: "theIndexName")
   /1/configs/{indexName}/status:
     get:
       tags:
@@ -2801,9 +2749,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getConfigStatus(
-                indexName: "theIndexName"
-            )
+            _ = try await client.getConfigStatus(indexName: "theIndexName")
   /1/logs/{indexName}:
     get:
       tags:
@@ -3023,6 +2969,4 @@ paths:
 
             // Call the API
 
-            _ = try await client.getLogFile(
-                indexName: "theIndexName"
-            )
+            _ = try await client.getLogFile(indexName: "theIndexName")

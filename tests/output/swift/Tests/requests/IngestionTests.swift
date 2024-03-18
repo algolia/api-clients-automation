@@ -58,19 +58,11 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.createAuthenticationWithHTTPInfo(
-            authenticationCreate: AuthenticationCreate(
-                type: AuthenticationType.oauth,
-                name: "authName",
-                input: AuthInput.authOAuth(
-                    AuthOAuth(
-                        url: "http://test.oauth",
-                        clientId: "myID",
-                        clientSecret: "mySecret"
-                    )
-                )
-            )
-        )
+        let response = try await client.createAuthenticationWithHTTPInfo(authenticationCreate: AuthenticationCreate(
+            type: AuthenticationType.oauth,
+            name: "authName",
+            input: AuthInput.authOAuth(AuthOAuth(url: "http://test.oauth", clientId: "myID", clientSecret: "mySecret"))
+        ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -100,18 +92,11 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.createAuthenticationWithHTTPInfo(
-            authenticationCreate: AuthenticationCreate(
-                type: AuthenticationType.algolia,
-                name: "authName",
-                input: AuthInput.authAlgolia(
-                    AuthAlgolia(
-                        appID: "myappID",
-                        apiKey: "randomApiKey"
-                    )
-                )
-            )
-        )
+        let response = try await client.createAuthenticationWithHTTPInfo(authenticationCreate: AuthenticationCreate(
+            type: AuthenticationType.algolia,
+            name: "authName",
+            input: AuthInput.authAlgolia(AuthAlgolia(appID: "myappID", apiKey: "randomApiKey"))
+        ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -141,18 +126,12 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.createDestinationWithHTTPInfo(
-            destinationCreate: DestinationCreate(
-                type: DestinationType.search,
-                name: "destinationName",
-                input: DestinationInput.destinationIndexPrefix(
-                    DestinationIndexPrefix(
-                        indexPrefix: "prefix_"
-                    )
-                ),
-                authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-            )
-        )
+        let response = try await client.createDestinationWithHTTPInfo(destinationCreate: DestinationCreate(
+            type: DestinationType.search,
+            name: "destinationName",
+            input: DestinationInput.destinationIndexPrefix(DestinationIndexPrefix(indexPrefix: "prefix_")),
+            authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -182,25 +161,17 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.createSourceWithHTTPInfo(
-            sourceCreate: SourceCreate(
-                type: SourceType.commercetools,
-                name: "sourceName",
-                input: SourceInput.sourceCommercetools(
-                    SourceCommercetools(
-                        storeKeys: [
-                            "myStore",
-                        ],
-                        locales: [
-                            "de",
-                        ],
-                        url: "http://commercetools.com",
-                        projectKey: "keyID"
-                    )
-                ),
-                authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-            )
-        )
+        let response = try await client.createSourceWithHTTPInfo(sourceCreate: SourceCreate(
+            type: SourceType.commercetools,
+            name: "sourceName",
+            input: SourceInput.sourceCommercetools(SourceCommercetools(
+                storeKeys: ["myStore"],
+                locales: ["de"],
+                url: "http://commercetools.com",
+                projectKey: "keyID"
+            )),
+            authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -230,18 +201,12 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.createTaskWithHTTPInfo(
-            taskCreate: TaskCreate(
-                sourceID: "search",
-                destinationID: "destinationName",
-                trigger: TaskCreateTrigger.onDemandTriggerInput(
-                    OnDemandTriggerInput(
-                        type: OnDemandTriggerType.onDemand
-                    )
-                ),
-                action: ActionType.replace
-            )
-        )
+        let response = try await client.createTaskWithHTTPInfo(taskCreate: TaskCreate(
+            sourceID: "search",
+            destinationID: "destinationName",
+            trigger: TaskCreateTrigger.onDemandTriggerInput(OnDemandTriggerInput(type: OnDemandTriggerType.onDemand)),
+            action: ActionType.replace
+        ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -271,19 +236,15 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.createTaskWithHTTPInfo(
-            taskCreate: TaskCreate(
-                sourceID: "search",
-                destinationID: "destinationName",
-                trigger: TaskCreateTrigger.scheduleTriggerInput(
-                    ScheduleTriggerInput(
-                        type: ScheduleTriggerType.schedule,
-                        cron: "* * * * *"
-                    )
-                ),
-                action: ActionType.replace
-            )
-        )
+        let response = try await client.createTaskWithHTTPInfo(taskCreate: TaskCreate(
+            sourceID: "search",
+            destinationID: "destinationName",
+            trigger: TaskCreateTrigger.scheduleTriggerInput(ScheduleTriggerInput(
+                type: ScheduleTriggerType.schedule,
+                cron: "* * * * *"
+            )),
+            action: ActionType.replace
+        ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -313,18 +274,12 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.createTaskWithHTTPInfo(
-            taskCreate: TaskCreate(
-                sourceID: "search",
-                destinationID: "destinationName",
-                trigger: TaskCreateTrigger.onDemandTriggerInput(
-                    OnDemandTriggerInput(
-                        type: OnDemandTriggerType.onDemand
-                    )
-                ),
-                action: ActionType.replace
-            )
-        )
+        let response = try await client.createTaskWithHTTPInfo(taskCreate: TaskCreate(
+            sourceID: "search",
+            destinationID: "destinationName",
+            trigger: TaskCreateTrigger.onDemandTriggerInput(OnDemandTriggerInput(type: OnDemandTriggerType.onDemand)),
+            action: ActionType.replace
+        ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -354,9 +309,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customDeleteWithHTTPInfo(
-            path: "/test/minimal"
-        )
+        let response = try await client.customDeleteWithHTTPInfo(path: "/test/minimal")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -380,9 +333,7 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let response = try await client.customDeleteWithHTTPInfo(
             path: "/test/all",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ]
+            parameters: ["query": AnyCodable("parameters")]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -411,9 +362,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customGetWithHTTPInfo(
-            path: "/test/minimal"
-        )
+        let response = try await client.customGetWithHTTPInfo(path: "/test/minimal")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -437,9 +386,7 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let response = try await client.customGetWithHTTPInfo(
             path: "/test/all",
-            parameters: [
-                "query": AnyCodable("parameters with space"),
-            ]
+            parameters: ["query": AnyCodable("parameters with space")]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -469,23 +416,14 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            headers: [
-                "x-header-1": "spaces are left alone",
-            ],
+            headers: ["x-header-1": "spaces are left alone"],
 
-            queryParameters: [
-                "query": "parameters with space",
-                "and an array": ["array",
-                                 "with spaces",
-                ],
-            ]
+            queryParameters: ["query": "parameters with space", "and an array": ["array", "with spaces"]]
         )
 
         let response = try await client.customGetWithHTTPInfo(
             path: "/test/all",
-            parameters: [
-                "query": AnyCodable("to be overriden"),
-            ],
+            parameters: ["query": AnyCodable("to be overriden")],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -527,9 +465,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(
-            path: "/test/minimal"
-        )
+        let response = try await client.customPostWithHTTPInfo(path: "/test/minimal")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -559,12 +495,8 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/all",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "body": "parameters",
-            ]
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["body": "parameters"]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -600,19 +532,13 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "query": "myQueryParameter",
-            ]
+            queryParameters: ["query": "myQueryParameter"]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -649,19 +575,13 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "query2": "myQueryParameter",
-            ]
+            queryParameters: ["query2": "myQueryParameter"]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -701,19 +621,13 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            headers: [
-                "x-algolia-api-key": "myApiKey",
-            ]
+            headers: ["x-algolia-api-key": "myApiKey"]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -758,19 +672,13 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            headers: [
-                "x-algolia-api-key": "myApiKey",
-            ]
+            headers: ["x-algolia-api-key": "myApiKey"]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -815,19 +723,13 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "isItWorking": true,
-            ]
+            queryParameters: ["isItWorking": true]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -867,19 +769,13 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "myParam": 2,
-            ]
+            queryParameters: ["myParam": 2]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -919,21 +815,13 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "myParam": ["b and c",
-                            "d",
-                ],
-            ]
+            queryParameters: ["myParam": ["b and c", "d"]]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -973,22 +861,13 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "myParam": [true,
-                            true,
-                            false,
-                ],
-            ]
+            queryParameters: ["myParam": [true, true, false]]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -1028,21 +907,13 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "myParam": [1,
-                            2,
-                ],
-            ]
+            queryParameters: ["myParam": [1, 2]]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -1081,9 +952,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPutWithHTTPInfo(
-            path: "/test/minimal"
-        )
+        let response = try await client.customPutWithHTTPInfo(path: "/test/minimal")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1113,12 +982,8 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let response = try await client.customPutWithHTTPInfo(
             path: "/test/all",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "body": "parameters",
-            ]
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["body": "parameters"]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1154,9 +1019,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let response = try await client
-            .deleteAuthenticationWithHTTPInfo(
-                authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-            )
+            .deleteAuthenticationWithHTTPInfo(authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1179,9 +1042,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let response = try await client
-            .deleteDestinationWithHTTPInfo(
-                destinationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-            )
+            .deleteDestinationWithHTTPInfo(destinationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1203,9 +1064,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.deleteSourceWithHTTPInfo(
-            sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-        )
+        let response = try await client.deleteSourceWithHTTPInfo(sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1227,9 +1086,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.deleteTaskWithHTTPInfo(
-            taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-        )
+        let response = try await client.deleteTaskWithHTTPInfo(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1251,9 +1108,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.disableTaskWithHTTPInfo(
-            taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-        )
+        let response = try await client.disableTaskWithHTTPInfo(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1277,9 +1132,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.enableTaskWithHTTPInfo(
-            taskID: "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
-        )
+        let response = try await client.enableTaskWithHTTPInfo(taskID: "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1297,9 +1150,7 @@ final class IngestionClientRequestsTests: XCTestCase {
             return
         }
 
-        let e2eResponse = try await e2eClient.enableTaskWithHTTPInfo(
-            taskID: "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
-        )
+        let e2eResponse = try await e2eClient.enableTaskWithHTTPInfo(taskID: "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
         let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
         let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
 
@@ -1324,9 +1175,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let response = try await client
-            .getAuthenticationWithHTTPInfo(
-                authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-            )
+            .getAuthenticationWithHTTPInfo(authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1373,13 +1222,8 @@ final class IngestionClientRequestsTests: XCTestCase {
         let response = try await client.getAuthenticationsWithHTTPInfo(
             itemsPerPage: 10,
             page: 1,
-            type: [
-                AuthenticationType.basic,
-                AuthenticationType.algolia,
-            ],
-            platform: [PlatformWithNone.platformNone(
-                PlatformNone.`none`
-            )],
+            type: [AuthenticationType.basic, AuthenticationType.algolia],
+            platform: [PlatformWithNone.platformNone(PlatformNone.`none`)],
             sort: AuthenticationSortKeys.createdAt,
             order: OrderKeys.desc
         )
@@ -1411,13 +1255,8 @@ final class IngestionClientRequestsTests: XCTestCase {
         let e2eResponse = try await e2eClient.getAuthenticationsWithHTTPInfo(
             itemsPerPage: 10,
             page: 1,
-            type: [
-                AuthenticationType.basic,
-                AuthenticationType.algolia,
-            ],
-            platform: [PlatformWithNone.platformNone(
-                PlatformNone.`none`
-            )],
+            type: [AuthenticationType.basic, AuthenticationType.algolia],
+            platform: [PlatformWithNone.platformNone(PlatformNone.`none`)],
             sort: AuthenticationSortKeys.createdAt,
             order: OrderKeys.desc
         )
@@ -1445,9 +1284,8 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getDestinationWithHTTPInfo(
-            destinationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-        )
+        let response = try await client
+            .getDestinationWithHTTPInfo(destinationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1492,9 +1330,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let response = try await client
-            .getDockerSourceStreamsWithHTTPInfo(
-                sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-            )
+            .getDockerSourceStreamsWithHTTPInfo(sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1544,9 +1380,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getEventsWithHTTPInfo(
-            runID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-        )
+        let response = try await client.getEventsWithHTTPInfo(runID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1568,9 +1402,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getRunWithHTTPInfo(
-            runID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-        )
+        let response = try await client.getRunWithHTTPInfo(runID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1614,9 +1446,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getSourceWithHTTPInfo(
-            sourceID: "75eeb306-51d3-4e5e-a279-3c92bd8893ac"
-        )
+        let response = try await client.getSourceWithHTTPInfo(sourceID: "75eeb306-51d3-4e5e-a279-3c92bd8893ac")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1632,9 +1462,7 @@ final class IngestionClientRequestsTests: XCTestCase {
             return
         }
 
-        let e2eResponse = try await e2eClient.getSourceWithHTTPInfo(
-            sourceID: "75eeb306-51d3-4e5e-a279-3c92bd8893ac"
-        )
+        let e2eResponse = try await e2eClient.getSourceWithHTTPInfo(sourceID: "75eeb306-51d3-4e5e-a279-3c92bd8893ac")
         let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
         let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
 
@@ -1681,9 +1509,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getTaskWithHTTPInfo(
-            taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-        )
+        let response = try await client.getTaskWithHTTPInfo(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1727,9 +1553,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.runTaskWithHTTPInfo(
-            taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-        )
+        let response = try await client.runTaskWithHTTPInfo(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1754,14 +1578,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let response = try await client
-            .searchAuthenticationsWithHTTPInfo(
-                authenticationSearch: AuthenticationSearch(
-                    authenticationIDs: [
-                        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                        "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                    ]
-                )
-            )
+            .searchAuthenticationsWithHTTPInfo(authenticationSearch: AuthenticationSearch(authenticationIDs: [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+            ]))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1792,14 +1612,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let response = try await client
-            .searchDestinationsWithHTTPInfo(
-                destinationSearch: DestinationSearch(
-                    destinationIDs: [
-                        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                        "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                    ]
-                )
-            )
+            .searchDestinationsWithHTTPInfo(destinationSearch: DestinationSearch(destinationIDs: [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+            ]))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1829,14 +1645,10 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchSourcesWithHTTPInfo(
-            sourceSearch: SourceSearch(
-                sourceIDs: [
-                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                ]
-            )
-        )
+        let response = try await client.searchSourcesWithHTTPInfo(sourceSearch: SourceSearch(sourceIDs: [
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+        ]))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1866,15 +1678,11 @@ final class IngestionClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchTasksWithHTTPInfo(
-            taskSearch: TaskSearch(
-                taskIDs: [
-                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-                ]
-            )
-        )
+        let response = try await client.searchTasksWithHTTPInfo(taskSearch: TaskSearch(taskIDs: [
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+            "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+        ]))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1898,15 +1706,11 @@ final class IngestionClientRequestsTests: XCTestCase {
             return
         }
 
-        let e2eResponse = try await e2eClient.searchTasksWithHTTPInfo(
-            taskSearch: TaskSearch(
-                taskIDs: [
-                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
-                ]
-            )
-        )
+        let e2eResponse = try await e2eClient.searchTasksWithHTTPInfo(taskSearch: TaskSearch(taskIDs: [
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+            "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+        ]))
         let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
         let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
 
@@ -1932,9 +1736,7 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let response = try await client
-            .triggerDockerSourceDiscoverWithHTTPInfo(
-                sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-            )
+            .triggerDockerSourceDiscoverWithHTTPInfo(sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1960,9 +1762,7 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let response = try await client.updateAuthenticationWithHTTPInfo(
             authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            authenticationUpdate: AuthenticationUpdate(
-                name: "newName"
-            )
+            authenticationUpdate: AuthenticationUpdate(name: "newName")
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1993,9 +1793,7 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let response = try await client.updateDestinationWithHTTPInfo(
             destinationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            destinationUpdate: DestinationUpdate(
-                name: "newName"
-            )
+            destinationUpdate: DestinationUpdate(name: "newName")
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -2026,9 +1824,7 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let response = try await client.updateSourceWithHTTPInfo(
             sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            sourceUpdate: SourceUpdate(
-                name: "newName"
-            )
+            sourceUpdate: SourceUpdate(name: "newName")
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -2059,9 +1855,7 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let response = try await client.updateTaskWithHTTPInfo(
             taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            taskUpdate: TaskUpdate(
-                enabled: false
-            )
+            taskUpdate: TaskUpdate(enabled: false)
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)

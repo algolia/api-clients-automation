@@ -13,9 +13,7 @@ final class MonitoringClientSnippet {
         let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customDelete(
-            path: "/test/minimal"
-        )
+        _ = try await client.customDelete(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -28,9 +26,7 @@ final class MonitoringClientSnippet {
         let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customGet(
-            path: "/test/minimal"
-        )
+        _ = try await client.customGet(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -43,9 +39,7 @@ final class MonitoringClientSnippet {
         let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customPost(
-            path: "/test/minimal"
-        )
+        _ = try await client.customPost(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -58,9 +52,7 @@ final class MonitoringClientSnippet {
         let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customPut(
-            path: "/test/minimal"
-        )
+        _ = try await client.customPut(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -73,9 +65,7 @@ final class MonitoringClientSnippet {
         let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getClusterIncidents(
-            clusters: "c1-de"
-        )
+        _ = try await client.getClusterIncidents(clusters: "c1-de")
         // SEPARATOR<
     }
 
@@ -88,9 +78,7 @@ final class MonitoringClientSnippet {
         let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getClusterStatus(
-            clusters: "c1-de"
-        )
+        _ = try await client.getClusterStatus(clusters: "c1-de")
         // SEPARATOR<
     }
 
@@ -116,9 +104,7 @@ final class MonitoringClientSnippet {
         let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getIndexingTime(
-            clusters: "c1-de"
-        )
+        _ = try await client.getIndexingTime(clusters: "c1-de")
         // SEPARATOR<
     }
 
@@ -144,9 +130,7 @@ final class MonitoringClientSnippet {
         let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getLatency(
-            clusters: "c1-de"
-        )
+        _ = try await client.getLatency(clusters: "c1-de")
         // SEPARATOR<
     }
 
@@ -159,10 +143,7 @@ final class MonitoringClientSnippet {
         let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getMetrics(
-            metric: Metric.avgBuildTime,
-            period: Period.minute
-        )
+        _ = try await client.getMetrics(metric: Metric.avgBuildTime, period: Period.minute)
         // SEPARATOR<
     }
 
@@ -175,9 +156,7 @@ final class MonitoringClientSnippet {
         let client = try MonitoringClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getReachability(
-            clusters: "c1-de"
-        )
+        _ = try await client.getReachability(clusters: "c1-de")
         // SEPARATOR<
     }
 
