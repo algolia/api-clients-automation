@@ -1,6 +1,5 @@
 import XCTest
 
-import AnyCodable
 import DotEnv
 import Utils
 
@@ -50,7 +49,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// createConfig0
     func testCreateConfigTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -66,7 +65,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
                     facets: [Facet(attribute: "test")],
                     generate: [["facetA", "facetB"], ["facetC"]]
                 )],
-                languages: Languages.arrayOfString(["french"]),
+                languages: QuerySuggestionsLanguages.arrayOfString(["french"]),
                 exclude: ["test"]
             ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -90,7 +89,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// allow del method for a custom path with minimal parameters
     func testCustomDeleteTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -112,7 +111,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// allow del method for a custom path with all parameters
     func testCustomDeleteTest1() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -143,7 +142,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// allow get method for a custom path with minimal parameters
     func testCustomGetTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -165,7 +164,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// allow get method for a custom path with all parameters
     func testCustomGetTest1() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -196,7 +195,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions should be escaped too
     func testCustomGetTest2() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -246,7 +245,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// allow post method for a custom path with minimal parameters
     func testCustomPostTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -274,7 +273,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// allow post method for a custom path with all parameters
     func testCustomPostTest1() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -312,7 +311,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions can override default query parameters
     func testCustomPostTest2() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -355,7 +354,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions merges query parameters with default ones
     func testCustomPostTest3() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -401,7 +400,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions can override default headers
     func testCustomPostTest4() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -452,7 +451,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions merges headers with default ones
     func testCustomPostTest5() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -503,7 +502,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts booleans
     func testCustomPostTest6() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -549,7 +548,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts integers
     func testCustomPostTest7() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -595,7 +594,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of string
     func testCustomPostTest8() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -641,7 +640,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of booleans
     func testCustomPostTest9() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -687,7 +686,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of integers
     func testCustomPostTest10() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -733,7 +732,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// allow put method for a custom path with minimal parameters
     func testCustomPutTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -761,7 +760,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// allow put method for a custom path with all parameters
     func testCustomPutTest1() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -799,7 +798,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// deleteConfig0
     func testDeleteConfigTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -821,7 +820,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// getAllConfigs0
     func testGetAllConfigsTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -843,7 +842,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// Retrieve QS config e2e
     func testGetConfigTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -884,7 +883,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// getConfigStatus0
     func testGetConfigStatusTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -906,7 +905,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// getLogFile0
     func testGetLogFileTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -928,7 +927,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// updateConfig0
     func testUpdateConfigTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -938,13 +937,13 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
         let response = try await client.updateConfigWithHTTPInfo(
             indexName: "theIndexName",
-            querySuggestionsConfiguration: QuerySuggestionsConfiguration(
+            configuration: QuerySuggestionsConfiguration(
                 sourceIndices: [SourceIndex(
                     indexName: "testIndex",
                     facets: [Facet(attribute: "test")],
                     generate: [["facetA", "facetB"], ["facetC"]]
                 )],
-                languages: Languages.arrayOfString(["french"]),
+                languages: QuerySuggestionsLanguages.arrayOfString(["french"]),
                 exclude: ["test"]
             )
         )

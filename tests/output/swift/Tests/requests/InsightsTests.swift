@@ -1,6 +1,5 @@
 import XCTest
 
-import AnyCodable
 import DotEnv
 import Utils
 
@@ -50,7 +49,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// allow del method for a custom path with minimal parameters
     func testCustomDeleteTest0() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -72,7 +71,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// allow del method for a custom path with all parameters
     func testCustomDeleteTest1() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -103,7 +102,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// allow get method for a custom path with minimal parameters
     func testCustomGetTest0() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -125,7 +124,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// allow get method for a custom path with all parameters
     func testCustomGetTest1() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -156,7 +155,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// requestOptions should be escaped too
     func testCustomGetTest2() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -206,7 +205,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// allow post method for a custom path with minimal parameters
     func testCustomPostTest0() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -234,7 +233,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// allow post method for a custom path with all parameters
     func testCustomPostTest1() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -272,7 +271,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// requestOptions can override default query parameters
     func testCustomPostTest2() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -315,7 +314,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// requestOptions merges query parameters with default ones
     func testCustomPostTest3() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -361,7 +360,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// requestOptions can override default headers
     func testCustomPostTest4() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -412,7 +411,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// requestOptions merges headers with default ones
     func testCustomPostTest5() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -463,7 +462,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts booleans
     func testCustomPostTest6() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -509,7 +508,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts integers
     func testCustomPostTest7() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -555,7 +554,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of string
     func testCustomPostTest8() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -601,7 +600,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of booleans
     func testCustomPostTest9() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -647,7 +646,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of integers
     func testCustomPostTest10() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -693,7 +692,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// allow put method for a custom path with minimal parameters
     func testCustomPutTest0() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -721,7 +720,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// allow put method for a custom path with all parameters
     func testCustomPutTest1() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -759,7 +758,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// deleteUserToken0
     func testDeleteUserTokenTest0() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -781,7 +780,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// pushEvents0
     func testPushEventsTest0() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -825,7 +824,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// Many events type
     func testPushEventsTest1() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -910,7 +909,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// ConvertedObjectIDsAfterSearch
     func testPushEventsTest2() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -953,7 +952,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// ViewedObjectIDs
     func testPushEventsTest3() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us
@@ -992,7 +991,7 @@ final class InsightsClientRequestsTests: XCTestCase {
 
     /// AddedToCartObjectIDs
     func testPushEventsTest4() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: InsightsClientRequestsTests.APPLICATION_ID,
             apiKey: InsightsClientRequestsTests.API_KEY,
             region: Region.us

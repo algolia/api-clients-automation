@@ -1,6 +1,5 @@
 import XCTest
 
-import AnyCodable
 import Utils
 
 @testable import Core
@@ -12,10 +11,7 @@ final class MonitoringClientClientTests: XCTestCase {
 
     /// calls api with correct user agent
     func testCommonApiTest0() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY
-        )
+        let configuration = try MonitoringClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = MonitoringClient(configuration: configuration, transporter: transporter)
 
@@ -42,10 +38,7 @@ final class MonitoringClientClientTests: XCTestCase {
 
     /// calls api with default read timeouts
     func testCommonApiTest1() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY
-        )
+        let configuration = try MonitoringClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = MonitoringClient(configuration: configuration, transporter: transporter)
 
@@ -60,10 +53,7 @@ final class MonitoringClientClientTests: XCTestCase {
 
     /// calls api with default write timeouts
     func testCommonApiTest2() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY
-        )
+        let configuration = try MonitoringClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = MonitoringClient(configuration: configuration, transporter: transporter)
 
@@ -78,10 +68,7 @@ final class MonitoringClientClientTests: XCTestCase {
 
     /// use the correct host
     func testParametersTest0() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
-            appID: "my-app-id",
-            apiKey: "my-api-key"
-        )
+        let configuration = try MonitoringClientConfiguration(appID: "my-app-id", apiKey: "my-api-key")
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = MonitoringClient(configuration: configuration, transporter: transporter)
         let response = try await client.customDeleteWithHTTPInfo(

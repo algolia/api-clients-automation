@@ -1,6 +1,5 @@
 import XCTest
 
-import AnyCodable
 import Utils
 
 @testable import Core
@@ -12,10 +11,7 @@ final class RecommendClientClientTests: XCTestCase {
 
     /// calls api with correct read host
     func testApiTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
-            appID: "test-app-id",
-            apiKey: "test-api-key"
-        )
+        let configuration = try RecommendClientConfiguration(appID: "test-app-id", apiKey: "test-api-key")
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
         let response = try await client.customGetWithHTTPInfo(
@@ -29,10 +25,7 @@ final class RecommendClientClientTests: XCTestCase {
 
     /// calls api with correct write host
     func testApiTest1() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
-            appID: "test-app-id",
-            apiKey: "test-api-key"
-        )
+        let configuration = try RecommendClientConfiguration(appID: "test-app-id", apiKey: "test-api-key")
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
         let response = try await client.customPostWithHTTPInfo(
@@ -46,10 +39,7 @@ final class RecommendClientClientTests: XCTestCase {
 
     /// calls api with correct user agent
     func testCommonApiTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY
-        )
+        let configuration = try RecommendClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -76,10 +66,7 @@ final class RecommendClientClientTests: XCTestCase {
 
     /// calls api with default read timeouts
     func testCommonApiTest1() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY
-        )
+        let configuration = try RecommendClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
@@ -94,10 +81,7 @@ final class RecommendClientClientTests: XCTestCase {
 
     /// calls api with default write timeouts
     func testCommonApiTest2() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY
-        )
+        let configuration = try RecommendClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 

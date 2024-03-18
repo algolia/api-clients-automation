@@ -1,6 +1,6 @@
-import AnyCodable
-
-import Core
+#if canImport(Core)
+    import Core
+#endif
 import Search
 
 final class SearchClientSnippet {
@@ -10,7 +10,7 @@ final class SearchClientSnippet {
     func snippetForAddApiKey() async throws {
         // >SEPARATOR addApiKey
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.addApiKey(apiKey: ApiKey(
@@ -29,7 +29,7 @@ final class SearchClientSnippet {
     func snippetForAddOrUpdateObject() async throws {
         // >SEPARATOR addOrUpdateObject
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.addOrUpdateObject(indexName: "indexName", objectID: "uniqueID", body: ["key": "value"])
@@ -42,10 +42,10 @@ final class SearchClientSnippet {
     func snippetForAppendSource() async throws {
         // >SEPARATOR appendSource
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.appendSource(source: Source(source: "theSource", description: "theDescription"))
+        _ = try await client.appendSource(source: SearchSource(source: "theSource", description: "theDescription"))
         // SEPARATOR<
     }
 
@@ -55,7 +55,7 @@ final class SearchClientSnippet {
     func snippetForAssignUserId() async throws {
         // >SEPARATOR assignUserId
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.assignUserId(
@@ -71,7 +71,7 @@ final class SearchClientSnippet {
     func snippetForBatch() async throws {
         // >SEPARATOR batch
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.batch(
@@ -90,7 +90,7 @@ final class SearchClientSnippet {
     func snippetForBatchAssignUserIds() async throws {
         // >SEPARATOR batchAssignUserIds
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.batchAssignUserIds(
@@ -106,7 +106,7 @@ final class SearchClientSnippet {
     func snippetForBatchDictionaryEntries() async throws {
         // >SEPARATOR batchDictionaryEntries
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.batchDictionaryEntries(
@@ -131,7 +131,7 @@ final class SearchClientSnippet {
     func snippetForBrowse() async throws {
         // >SEPARATOR browse
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.browse(indexName: "cts_e2e_browse")
@@ -144,7 +144,7 @@ final class SearchClientSnippet {
     func snippetForClearObjects() async throws {
         // >SEPARATOR clearObjects
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.clearObjects(indexName: "theIndexName")
@@ -157,7 +157,7 @@ final class SearchClientSnippet {
     func snippetForClearRules() async throws {
         // >SEPARATOR clearRules
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.clearRules(indexName: "indexName")
@@ -170,7 +170,7 @@ final class SearchClientSnippet {
     func snippetForClearSynonyms() async throws {
         // >SEPARATOR clearSynonyms
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.clearSynonyms(indexName: "indexName")
@@ -183,7 +183,7 @@ final class SearchClientSnippet {
     func snippetForCustomDelete() async throws {
         // >SEPARATOR customDelete
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.customDelete(path: "/test/minimal")
@@ -196,7 +196,7 @@ final class SearchClientSnippet {
     func snippetForCustomGet() async throws {
         // >SEPARATOR customGet
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.customGet(path: "/test/minimal")
@@ -209,7 +209,7 @@ final class SearchClientSnippet {
     func snippetForCustomPost() async throws {
         // >SEPARATOR customPost
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.customPost(path: "/test/minimal")
@@ -222,7 +222,7 @@ final class SearchClientSnippet {
     func snippetForCustomPut() async throws {
         // >SEPARATOR customPut
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.customPut(path: "/test/minimal")
@@ -235,7 +235,7 @@ final class SearchClientSnippet {
     func snippetForDeleteApiKey() async throws {
         // >SEPARATOR deleteApiKey
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.deleteApiKey(key: "myTestApiKey")
@@ -248,7 +248,7 @@ final class SearchClientSnippet {
     func snippetForDeleteBy() async throws {
         // >SEPARATOR deleteBy
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.deleteBy(
@@ -264,7 +264,7 @@ final class SearchClientSnippet {
     func snippetForDeleteIndex() async throws {
         // >SEPARATOR deleteIndex
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.deleteIndex(indexName: "theIndexName")
@@ -277,7 +277,7 @@ final class SearchClientSnippet {
     func snippetForDeleteObject() async throws {
         // >SEPARATOR deleteObject
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.deleteObject(indexName: "theIndexName", objectID: "uniqueID")
@@ -290,7 +290,7 @@ final class SearchClientSnippet {
     func snippetForDeleteRule() async throws {
         // >SEPARATOR deleteRule
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.deleteRule(indexName: "indexName", objectID: "id1")
@@ -303,7 +303,7 @@ final class SearchClientSnippet {
     func snippetForDeleteSource() async throws {
         // >SEPARATOR deleteSource
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.deleteSource(source: "theSource")
@@ -316,7 +316,7 @@ final class SearchClientSnippet {
     func snippetForDeleteSynonym() async throws {
         // >SEPARATOR deleteSynonym
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.deleteSynonym(indexName: "indexName", objectID: "id1")
@@ -329,7 +329,7 @@ final class SearchClientSnippet {
     func snippetForGetApiKey() async throws {
         // >SEPARATOR getApiKey
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.getApiKey(key: "myTestApiKey")
@@ -342,7 +342,7 @@ final class SearchClientSnippet {
     func snippetForGetDictionaryLanguages() async throws {
         // >SEPARATOR getDictionaryLanguages
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.getDictionaryLanguages()
@@ -355,7 +355,7 @@ final class SearchClientSnippet {
     func snippetForGetDictionarySettings() async throws {
         // >SEPARATOR getDictionarySettings
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.getDictionarySettings()
@@ -368,7 +368,7 @@ final class SearchClientSnippet {
     func snippetForGetLogs() async throws {
         // >SEPARATOR getLogs
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.getLogs()
@@ -381,7 +381,7 @@ final class SearchClientSnippet {
     func snippetForGetObject() async throws {
         // >SEPARATOR getObject
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.getObject(
@@ -398,7 +398,7 @@ final class SearchClientSnippet {
     func snippetForGetObjects() async throws {
         // >SEPARATOR getObjects
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.getObjects(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(
@@ -415,7 +415,7 @@ final class SearchClientSnippet {
     func snippetForGetRule() async throws {
         // >SEPARATOR getRule
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.getRule(indexName: "indexName", objectID: "id1")
@@ -428,7 +428,7 @@ final class SearchClientSnippet {
     func snippetForGetSettings() async throws {
         // >SEPARATOR getSettings
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.getSettings(indexName: "cts_e2e_settings")
@@ -441,7 +441,7 @@ final class SearchClientSnippet {
     func snippetForGetSources() async throws {
         // >SEPARATOR getSources
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.getSources()
@@ -454,7 +454,7 @@ final class SearchClientSnippet {
     func snippetForGetSynonym() async throws {
         // >SEPARATOR getSynonym
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.getSynonym(indexName: "indexName", objectID: "id1")
@@ -467,7 +467,7 @@ final class SearchClientSnippet {
     func snippetForGetTask() async throws {
         // >SEPARATOR getTask
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.getTask(indexName: "theIndexName", taskID: Int64(123))
@@ -480,7 +480,7 @@ final class SearchClientSnippet {
     func snippetForGetTopUserIds() async throws {
         // >SEPARATOR getTopUserIds
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.getTopUserIds()
@@ -493,7 +493,7 @@ final class SearchClientSnippet {
     func snippetForGetUserId() async throws {
         // >SEPARATOR getUserId
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.getUserId(userID: "uniqueID")
@@ -506,7 +506,7 @@ final class SearchClientSnippet {
     func snippetForHasPendingMappings() async throws {
         // >SEPARATOR hasPendingMappings
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.hasPendingMappings()
@@ -519,7 +519,7 @@ final class SearchClientSnippet {
     func snippetForListApiKeys() async throws {
         // >SEPARATOR listApiKeys
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.listApiKeys()
@@ -532,7 +532,7 @@ final class SearchClientSnippet {
     func snippetForListClusters() async throws {
         // >SEPARATOR listClusters
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.listClusters()
@@ -545,7 +545,7 @@ final class SearchClientSnippet {
     func snippetForListIndices() async throws {
         // >SEPARATOR listIndices
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.listIndices()
@@ -558,7 +558,7 @@ final class SearchClientSnippet {
     func snippetForListUserIds() async throws {
         // >SEPARATOR listUserIds
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.listUserIds()
@@ -571,7 +571,7 @@ final class SearchClientSnippet {
     func snippetForMultipleBatch() async throws {
         // >SEPARATOR multipleBatch
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.multipleBatch(batchParams: BatchParams(requests: [MultipleBatchRequest(
@@ -588,7 +588,7 @@ final class SearchClientSnippet {
     func snippetForOperationIndex() async throws {
         // >SEPARATOR operationIndex
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.operationIndex(
@@ -608,7 +608,7 @@ final class SearchClientSnippet {
     func snippetForPartialUpdateObject() async throws {
         // >SEPARATOR partialUpdateObject
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.partialUpdateObject(
@@ -630,7 +630,7 @@ final class SearchClientSnippet {
     func snippetForRemoveUserId() async throws {
         // >SEPARATOR removeUserId
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.removeUserId(userID: "uniqueID")
@@ -643,10 +643,10 @@ final class SearchClientSnippet {
     func snippetForReplaceSources() async throws {
         // >SEPARATOR replaceSources
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.replaceSources(source: [Source(source: "theSource", description: "theDescription")])
+        _ = try await client.replaceSources(source: [SearchSource(source: "theSource", description: "theDescription")])
         // SEPARATOR<
     }
 
@@ -656,7 +656,7 @@ final class SearchClientSnippet {
     func snippetForRestoreApiKey() async throws {
         // >SEPARATOR restoreApiKey
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.restoreApiKey(key: "myApiKey")
@@ -669,7 +669,7 @@ final class SearchClientSnippet {
     func snippetForSaveObject() async throws {
         // >SEPARATOR saveObject
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.saveObject(indexName: "theIndexName", body: ["objectID": "id", "test": "val"])
@@ -682,13 +682,16 @@ final class SearchClientSnippet {
     func snippetForSaveRule() async throws {
         // >SEPARATOR saveRule
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.saveRule(
             indexName: "indexName",
             objectID: "id1",
-            rule: Rule(objectID: "id1", conditions: [Condition(pattern: "apple", anchoring: Anchoring.contains)])
+            rule: Rule(
+                objectID: "id1",
+                conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)]
+            )
         )
         // SEPARATOR<
     }
@@ -699,7 +702,7 @@ final class SearchClientSnippet {
     func snippetForSaveRules() async throws {
         // >SEPARATOR saveRules
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.saveRules(
@@ -707,11 +710,11 @@ final class SearchClientSnippet {
             rules: [
                 Rule(
                     objectID: "a-rule-id",
-                    conditions: [Condition(pattern: "smartphone", anchoring: Anchoring.contains)]
+                    conditions: [SearchCondition(pattern: "smartphone", anchoring: SearchAnchoring.contains)]
                 ),
                 Rule(
                     objectID: "a-second-rule-id",
-                    conditions: [Condition(pattern: "apple", anchoring: Anchoring.contains)]
+                    conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)]
                 ),
             ]
         )
@@ -724,7 +727,7 @@ final class SearchClientSnippet {
     func snippetForSaveSynonym() async throws {
         // >SEPARATOR saveSynonym
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.saveSynonym(
@@ -742,7 +745,7 @@ final class SearchClientSnippet {
     func snippetForSaveSynonyms() async throws {
         // >SEPARATOR saveSynonyms
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.saveSynonyms(
@@ -768,7 +771,7 @@ final class SearchClientSnippet {
     func snippetForSearch() async throws {
         // >SEPARATOR search
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client
@@ -785,7 +788,7 @@ final class SearchClientSnippet {
     func snippetForSearchDictionaryEntries() async throws {
         // >SEPARATOR searchDictionaryEntries
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.searchDictionaryEntries(
@@ -801,7 +804,7 @@ final class SearchClientSnippet {
     func snippetForSearchForFacetValues() async throws {
         // >SEPARATOR searchForFacetValues
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.searchForFacetValues(indexName: "indexName", facetName: "facetName")
@@ -814,7 +817,7 @@ final class SearchClientSnippet {
     func snippetForSearchRules() async throws {
         // >SEPARATOR searchRules
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.searchRules(
@@ -830,7 +833,7 @@ final class SearchClientSnippet {
     func snippetForSearchSingleIndex() async throws {
         // >SEPARATOR searchSingleIndex
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.searchSingleIndex(indexName: "indexName")
@@ -843,7 +846,7 @@ final class SearchClientSnippet {
     func snippetForSearchSynonyms() async throws {
         // >SEPARATOR searchSynonyms
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.searchSynonyms(indexName: "indexName")
@@ -856,7 +859,7 @@ final class SearchClientSnippet {
     func snippetForSearchUserIds() async throws {
         // >SEPARATOR searchUserIds
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.searchUserIds(searchUserIdsParams: SearchUserIdsParams(
@@ -874,7 +877,7 @@ final class SearchClientSnippet {
     func snippetForSetDictionarySettings() async throws {
         // >SEPARATOR setDictionarySettings
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client
@@ -894,7 +897,7 @@ final class SearchClientSnippet {
     func snippetForSetSettings() async throws {
         // >SEPARATOR setSettings
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.setSettings(
@@ -911,7 +914,7 @@ final class SearchClientSnippet {
     func snippetForUpdateApiKey() async throws {
         // >SEPARATOR updateApiKey
         // Initialize the client
-        let client = try SearchClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.updateApiKey(

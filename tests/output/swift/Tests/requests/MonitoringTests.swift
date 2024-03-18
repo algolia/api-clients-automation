@@ -1,6 +1,5 @@
 import XCTest
 
-import AnyCodable
 import Utils
 
 @testable import Core
@@ -12,7 +11,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// allow del method for a custom path with minimal parameters
     func testCustomDeleteTest0() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -33,7 +32,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// allow del method for a custom path with all parameters
     func testCustomDeleteTest1() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -63,7 +62,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// allow get method for a custom path with minimal parameters
     func testCustomGetTest0() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -84,7 +83,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// allow get method for a custom path with all parameters
     func testCustomGetTest1() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -114,7 +113,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// requestOptions should be escaped too
     func testCustomGetTest2() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -163,7 +162,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// allow post method for a custom path with minimal parameters
     func testCustomPostTest0() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -190,7 +189,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// allow post method for a custom path with all parameters
     func testCustomPostTest1() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -227,7 +226,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// requestOptions can override default query parameters
     func testCustomPostTest2() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -269,7 +268,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// requestOptions merges query parameters with default ones
     func testCustomPostTest3() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -314,7 +313,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// requestOptions can override default headers
     func testCustomPostTest4() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -364,7 +363,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// requestOptions merges headers with default ones
     func testCustomPostTest5() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -414,7 +413,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts booleans
     func testCustomPostTest6() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -459,7 +458,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts integers
     func testCustomPostTest7() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -504,7 +503,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of string
     func testCustomPostTest8() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -549,7 +548,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of booleans
     func testCustomPostTest9() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -594,7 +593,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of integers
     func testCustomPostTest10() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -639,7 +638,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// allow put method for a custom path with minimal parameters
     func testCustomPutTest0() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -666,7 +665,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// allow put method for a custom path with all parameters
     func testCustomPutTest1() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -703,7 +702,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// getClusterIncidents
     func testGetClusterIncidentsTest0() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -724,7 +723,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// getClusterStatus
     func testGetClusterStatusTest0() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -745,7 +744,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// getIncidents
     func testGetIncidentsTest0() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -766,7 +765,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// getIndexingTime
     func testGetIndexingTimeTest0() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -787,7 +786,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// getInventory
     func testGetInventoryTest0() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -808,7 +807,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// getLatency
     func testGetLatencyTest0() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -829,7 +828,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// getMetrics
     func testGetMetricsTest0() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -850,7 +849,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// getReachability
     func testGetReachabilityTest0() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )
@@ -871,7 +870,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
 
     /// getStatus
     func testGetStatusTest0() async throws {
-        let configuration: Monitoring.Configuration = try Monitoring.Configuration(
+        let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
         )

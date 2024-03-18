@@ -1,6 +1,5 @@
 import XCTest
 
-import AnyCodable
 import Utils
 
 @testable import Core
@@ -12,11 +11,7 @@ final class IngestionClientClientTests: XCTestCase {
 
     /// calls api with correct user agent
     func testCommonApiTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY,
-            region: Region.us
-        )
+        let configuration = try IngestionClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -43,11 +38,7 @@ final class IngestionClientClientTests: XCTestCase {
 
     /// calls api with default read timeouts
     func testCommonApiTest1() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY,
-            region: Region.us
-        )
+        let configuration = try IngestionClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -62,11 +53,7 @@ final class IngestionClientClientTests: XCTestCase {
 
     /// calls api with default write timeouts
     func testCommonApiTest2() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY,
-            region: Region.us
-        )
+        let configuration = try IngestionClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
@@ -81,7 +68,7 @@ final class IngestionClientClientTests: XCTestCase {
 
     /// uses the correct region
     func testParametersTest0() async throws {
-        let configuration: Ingestion.Configuration = try Ingestion.Configuration(
+        let configuration = try IngestionClientConfiguration(
             appID: "my-app-id",
             apiKey: "my-api-key",
             region: Region(rawValue: "us")
@@ -100,7 +87,7 @@ final class IngestionClientClientTests: XCTestCase {
     /// throws when incorrect region is given
     func testParametersTest1() async throws {
         do {
-            let configuration: Ingestion.Configuration = try Ingestion.Configuration(
+            let configuration = try IngestionClientConfiguration(
                 appID: "my-app-id",
                 apiKey: "my-api-key",
                 region: Region(rawValue: "not_a_region")

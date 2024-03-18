@@ -1,7 +1,7 @@
-import AnyCodable
-
+#if canImport(Core)
+    import Core
+#endif
 import Analytics
-import Core
 
 final class AnalyticsClientSnippet {
     /// Snippet for the customDelete method.
@@ -10,7 +10,7 @@ final class AnalyticsClientSnippet {
     func snippetForCustomDelete() async throws {
         // >SEPARATOR customDelete
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.customDelete(path: "/test/minimal")
@@ -23,7 +23,7 @@ final class AnalyticsClientSnippet {
     func snippetForCustomGet() async throws {
         // >SEPARATOR customGet
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.customGet(path: "/test/minimal")
@@ -36,7 +36,7 @@ final class AnalyticsClientSnippet {
     func snippetForCustomPost() async throws {
         // >SEPARATOR customPost
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.customPost(path: "/test/minimal")
@@ -49,7 +49,7 @@ final class AnalyticsClientSnippet {
     func snippetForCustomPut() async throws {
         // >SEPARATOR customPut
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.customPut(path: "/test/minimal")
@@ -62,7 +62,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetAverageClickPosition() async throws {
         // >SEPARATOR getAverageClickPosition
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getAverageClickPosition(index: "index")
@@ -75,7 +75,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetClickPositions() async throws {
         // >SEPARATOR getClickPositions
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getClickPositions(index: "index")
@@ -88,7 +88,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetClickThroughRate() async throws {
         // >SEPARATOR getClickThroughRate
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getClickThroughRate(index: "index")
@@ -101,7 +101,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetConversationRate() async throws {
         // >SEPARATOR getConversationRate
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getConversationRate(index: "index")
@@ -114,7 +114,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetNoClickRate() async throws {
         // >SEPARATOR getNoClickRate
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getNoClickRate(index: "index")
@@ -127,7 +127,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetNoResultsRate() async throws {
         // >SEPARATOR getNoResultsRate
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getNoResultsRate(index: "index")
@@ -140,7 +140,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetSearchesCount() async throws {
         // >SEPARATOR getSearchesCount
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getSearchesCount(index: "index")
@@ -153,7 +153,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetSearchesNoClicks() async throws {
         // >SEPARATOR getSearchesNoClicks
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getSearchesNoClicks(index: "index")
@@ -166,7 +166,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetSearchesNoResults() async throws {
         // >SEPARATOR getSearchesNoResults
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getSearchesNoResults(index: "index")
@@ -179,7 +179,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetStatus() async throws {
         // >SEPARATOR getStatus
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getStatus(index: "index")
@@ -192,7 +192,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetTopCountries() async throws {
         // >SEPARATOR getTopCountries
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getTopCountries(index: "index")
@@ -205,7 +205,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetTopFilterAttributes() async throws {
         // >SEPARATOR getTopFilterAttributes
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getTopFilterAttributes(index: "index")
@@ -218,7 +218,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetTopFilterForAttribute() async throws {
         // >SEPARATOR getTopFilterForAttribute
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getTopFilterForAttribute(attribute: "myAttribute", index: "index")
@@ -231,7 +231,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetTopFiltersNoResults() async throws {
         // >SEPARATOR getTopFiltersNoResults
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getTopFiltersNoResults(index: "index")
@@ -244,7 +244,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetTopHits() async throws {
         // >SEPARATOR getTopHits
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getTopHits(index: "index")
@@ -257,7 +257,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetTopSearches() async throws {
         // >SEPARATOR getTopSearches
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getTopSearches(index: "index")
@@ -270,7 +270,7 @@ final class AnalyticsClientSnippet {
     func snippetForGetUsersCount() async throws {
         // >SEPARATOR getUsersCount
         // Initialize the client
-        let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getUsersCount(index: "index")

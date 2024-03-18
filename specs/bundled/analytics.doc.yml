@@ -222,7 +222,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -424,7 +424,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -626,7 +626,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -828,7 +828,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -1039,7 +1039,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -1266,7 +1266,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -1503,7 +1503,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -1740,7 +1740,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -1981,7 +1981,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -2226,7 +2226,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -2433,7 +2433,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -2659,7 +2659,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -2875,7 +2875,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -3096,7 +3096,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -3312,7 +3312,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -3540,7 +3540,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -3786,7 +3786,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -4032,7 +4032,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -4279,7 +4279,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -4526,7 +4526,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -4738,7 +4738,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 

@@ -1,6 +1,5 @@
 import XCTest
 
-import AnyCodable
 import Utils
 
 @testable import Core
@@ -12,7 +11,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// allow del method for a custom path with minimal parameters
     func testCustomDeleteTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -33,7 +32,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// allow del method for a custom path with all parameters
     func testCustomDeleteTest1() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -63,7 +62,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// allow get method for a custom path with minimal parameters
     func testCustomGetTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -84,7 +83,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// allow get method for a custom path with all parameters
     func testCustomGetTest1() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -114,7 +113,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// requestOptions should be escaped too
     func testCustomGetTest2() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -163,7 +162,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// allow post method for a custom path with minimal parameters
     func testCustomPostTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -190,7 +189,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// allow post method for a custom path with all parameters
     func testCustomPostTest1() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -227,7 +226,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// requestOptions can override default query parameters
     func testCustomPostTest2() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -269,7 +268,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// requestOptions merges query parameters with default ones
     func testCustomPostTest3() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -314,7 +313,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// requestOptions can override default headers
     func testCustomPostTest4() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -364,7 +363,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// requestOptions merges headers with default ones
     func testCustomPostTest5() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -414,7 +413,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts booleans
     func testCustomPostTest6() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -459,7 +458,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts integers
     func testCustomPostTest7() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -504,7 +503,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of string
     func testCustomPostTest8() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -549,7 +548,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of booleans
     func testCustomPostTest9() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -594,7 +593,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of integers
     func testCustomPostTest10() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -639,7 +638,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// allow put method for a custom path with minimal parameters
     func testCustomPutTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -666,7 +665,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// allow put method for a custom path with all parameters
     func testCustomPutTest1() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -703,7 +702,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// deleteRecommendRule0
     func testDeleteRecommendRuleTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -728,7 +727,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// getRecommendRule0
     func testGetRecommendRuleTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -753,7 +752,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// getRecommendStatus0
     func testGetRecommendStatusTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -778,7 +777,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// get recommendations for recommend model with minimal parameters
     func testGetRecommendationsTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -818,7 +817,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// get recommendations for recommend model with all parameters
     func testGetRecommendationsTest1() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -835,15 +834,18 @@ final class RecommendClientRequestsTests: XCTestCase {
                             maxRecommendations: 10,
                             model: RecommendationModels.relatedProducts,
                             objectID: "objectID",
-                            queryParameters: SearchParamsObject(
+                            queryParameters: RecommendSearchParamsObject(
                                 query: "myQuery",
-                                facetFilters: FacetFilters
-                                    .arrayOfMixedSearchFilters([MixedSearchFilters.string("query")])
+                                facetFilters: RecommendFacetFilters
+                                    .arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters.string("query")])
                             ),
-                            fallbackParameters: SearchParamsObject(
+                            fallbackParameters: RecommendSearchParamsObject(
                                 query: "myQuery",
-                                facetFilters: FacetFilters
-                                    .arrayOfMixedSearchFilters([MixedSearchFilters.string("fallback")])
+                                facetFilters: RecommendFacetFilters
+                                    .arrayOfRecommendMixedSearchFilters([
+                                        RecommendMixedSearchFilters
+                                            .string("fallback"),
+                                    ])
                             )
                         )),
                 ])
@@ -869,7 +871,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// get recommendations for trending model with minimal parameters
     func testGetRecommendationsTest2() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -908,7 +910,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// get recommendations for trending model with all parameters
     func testGetRecommendationsTest3() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -926,15 +928,18 @@ final class RecommendClientRequestsTests: XCTestCase {
                             facetName: "myFacetName",
                             facetValue: "myFacetValue",
                             model: TrendingItemsModel.trendingItems,
-                            queryParameters: SearchParamsObject(
+                            queryParameters: RecommendSearchParamsObject(
                                 query: "myQuery",
-                                facetFilters: FacetFilters
-                                    .arrayOfMixedSearchFilters([MixedSearchFilters.string("query")])
+                                facetFilters: RecommendFacetFilters
+                                    .arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters.string("query")])
                             ),
-                            fallbackParameters: SearchParamsObject(
+                            fallbackParameters: RecommendSearchParamsObject(
                                 query: "myQuery",
-                                facetFilters: FacetFilters
-                                    .arrayOfMixedSearchFilters([MixedSearchFilters.string("fallback")])
+                                facetFilters: RecommendFacetFilters
+                                    .arrayOfRecommendMixedSearchFilters([
+                                        RecommendMixedSearchFilters
+                                            .string("fallback"),
+                                    ])
                             )
                         )),
                 ])
@@ -960,7 +965,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// get multiple recommendations with minimal parameters
     func testGetRecommendationsTest4() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -1003,7 +1008,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// get multiple recommendations with all parameters
     func testGetRecommendationsTest5() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -1018,13 +1023,15 @@ final class RecommendClientRequestsTests: XCTestCase {
                     maxRecommendations: 10,
                     model: RecommendationModels.relatedProducts,
                     objectID: "objectID1",
-                    queryParameters: SearchParamsObject(
+                    queryParameters: RecommendSearchParamsObject(
                         query: "myQuery",
-                        facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("query1")])
+                        facetFilters: RecommendFacetFilters
+                            .arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters.string("query1")])
                     ),
-                    fallbackParameters: SearchParamsObject(
+                    fallbackParameters: RecommendSearchParamsObject(
                         query: "myQuery",
-                        facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("fallback1")])
+                        facetFilters: RecommendFacetFilters
+                            .arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters.string("fallback1")])
                     )
                 )),
                 RecommendationsRequest.recommendationsQuery(RecommendationsQuery(
@@ -1033,13 +1040,15 @@ final class RecommendClientRequestsTests: XCTestCase {
                     maxRecommendations: 10,
                     model: RecommendationModels.relatedProducts,
                     objectID: "objectID2",
-                    queryParameters: SearchParamsObject(
+                    queryParameters: RecommendSearchParamsObject(
                         query: "myQuery",
-                        facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("query2")])
+                        facetFilters: RecommendFacetFilters
+                            .arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters.string("query2")])
                     ),
-                    fallbackParameters: SearchParamsObject(
+                    fallbackParameters: RecommendSearchParamsObject(
                         query: "myQuery",
-                        facetFilters: FacetFilters.arrayOfMixedSearchFilters([MixedSearchFilters.string("fallback2")])
+                        facetFilters: RecommendFacetFilters
+                            .arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters.string("fallback2")])
                     )
                 )),
             ]))
@@ -1064,7 +1073,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// get frequently bought together recommendations
     func testGetRecommendationsTest6() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )
@@ -1104,7 +1113,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
     /// searchRecommendRules0
     func testSearchRecommendRulesTest0() async throws {
-        let configuration: Recommend.Configuration = try Recommend.Configuration(
+        let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
         )

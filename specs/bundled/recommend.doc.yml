@@ -223,7 +223,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -419,7 +419,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -615,7 +615,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -811,7 +811,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -1131,7 +1131,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -1366,7 +1366,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -1591,7 +1591,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -1835,7 +1835,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -2107,7 +2107,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
