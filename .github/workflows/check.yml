@@ -406,10 +406,10 @@ jobs:
       - setup
       - client_gen
       - client_gen_javascript
-      - cts_swift_macos
+      - swift_cts_macos
     if: |
       always() &&
-      (needs.cts_swift_macos.result == 'success' || needs.cts_swift_macos.result == 'skipped') &&
+      (needs.swift_cts_macos.result == 'success' || needs.swift_cts_macos.result == 'skipped') &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     outputs:
