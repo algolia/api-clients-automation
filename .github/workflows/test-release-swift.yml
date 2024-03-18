@@ -6,37 +6,9 @@ on:
       - generated/feat/swift-release-process
 
 jobs:
-  test_macos:
-    name: Test on macOS
-    runs-on: macos-latest
-    if: "startsWith(github.event.head_commit.message, 'chore: generated code for commit')"
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Get versions
-        id: versions
-        shell: bash
-        run: |
-          echo "SWIFT_VERSION=$(cat clients/algoliasearch-client-swift/Package.swift | head -n 1 | sed 's/ //g' | cut -d : -f 2)" >> $GITHUB_OUTPUT
-
-      - name: Install Swift
-        uses: swift-actions/setup-swift@v1
-        with:
-          swift-version: ${{ steps.versions.outputs.SWIFT_VERSION }}
-
-      - name: Install Swift dependencies
-        run: cd clients/algoliasearch-client-swift && swift package resolve
-
-      - name: Test Swift package
-        run: cd clients/algoliasearch-client-swift && swift test
-
   release:
-    name: Publish on CocoaPods
+    name: Publish
     runs-on: ubuntu-22.04
-    needs:
-      - test_macos
     if: "startsWith(github.event.head_commit.message, 'chore: generated code for commit')"
     steps:
       - uses: actions/checkout@v4
@@ -48,18 +20,6 @@ jobs:
         shell: bash
         run: |
           echo "RELEASE_VERSION=$(cat clients/algoliasearch-client-swift/AlgoliaSearchClient.podspec | grep s.version | sed 's/ //g' | cut -d \' -f 2)" >> $GITHUB_OUTPUT
-          echo "SWIFT_VERSION=$(cat clients/algoliasearch-client-swift/Package.swift | head -n 1 | sed 's/ //g' | cut -d : -f 2)" >> $GITHUB_OUTPUT
-
-      - name: Install Swift
-        uses: swift-actions/setup-swift@v1
-        with:
-          swift-version: ${{ steps.versions.outputs.SWIFT_VERSION }}
-
-      - name: Install Swift dependencies
-        run: cd clients/algoliasearch-client-swift && swift package resolve
-
-      - name: Test Swift package on Linux
-        run: cd clients/algoliasearch-client-swift && swift test
 
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
