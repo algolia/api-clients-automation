@@ -43,7 +43,10 @@
                 "description": "",
                 "index": "cts_e2e_search_facet",
                 "purchaseCount": 0,
-                "trafficPercentage": 25
+                "searchCount": 100,
+                "trackedSearchCount": 50,
+                "trafficPercentage": 25,
+                "userCount": 1
               },
               {
                 "addToCartCount": 0,
@@ -52,7 +55,10 @@
                 "description": "",
                 "index": "cts_e2e abtest",
                 "purchaseCount": 0,
-                "trafficPercentage": 75
+                "searchCount": 100,
+                "trackedSearchCount": 60,
+                "trafficPercentage": 75,
+                "userCount": 2
               }
             ]
           }
