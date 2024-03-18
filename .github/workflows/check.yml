@@ -365,13 +365,12 @@ jobs:
       - specs
       - scripts
     if: |
+      matrix.client.language == 'swift' &&
+      github.ref == 'refs/heads/main' &&
       always() &&
       needs.setup.outputs.RUN_GEN == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJSON(needs.setup.outputs.GEN_MATRIX) }}
     env:
       ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
       ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
