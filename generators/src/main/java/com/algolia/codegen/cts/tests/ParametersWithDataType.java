@@ -302,9 +302,7 @@ public class ParametersWithDataType {
       CodegenModel model = (CodegenModel) spec;
       IJsonSchemaValidationProperties match = findMatchingOneOf(param, model);
 
-      if (language.equals("swift")) {
-        paramName = AlgoliaSwiftGenerator.prefixReservedModelName(paramName, client);
-      }
+      paramName = getOriginalParamName(paramName);
 
       testOutput.putAll(traverseParams(paramName, param, match, parent, suffix, isParentFreeFormObject));
 
@@ -415,6 +413,13 @@ public class ParametersWithDataType {
     testOutput.put("isObject", true);
     testOutput.put("value", values);
     testOutput.put("additionalProperties", additionalPropertyValues);
+  }
+
+  private String getOriginalParamName(String paramName) {
+    if (language.equals("swift")) {
+      paramName = AlgoliaSwiftGenerator.prefixReservedModelName(paramName, client);
+    }
+    return paramName;
   }
 
   private void handleObject(String paramName, Object param, Map<String, Object> testOutput, boolean isSimpleObject, int suffix)
