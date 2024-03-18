@@ -33,75 +33,75 @@ import org.openapitools.codegen.utils.ModelUtils;
 public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
 
   private static final List<String> reservedModelNames = List.of(
-    "AdvancedSyntaxFeatures",
-    "AlternativesAsExact",
-    "Anchoring",
-    "AroundPrecision",
-    "AroundPrecisionFromValueInner",
-    "AroundRadius",
-    "AroundRadiusAll",
-    "AutomaticFacetFilter",
-    "AutomaticFacetFilters",
-    "BaseSearchParams",
-    "BaseSearchParamsWithoutQuery",
-    "BaseSearchResponse",
-    "Condition",
-    "Configuration",
-    "Consequence",
-    "ConsequenceHide",
-    "ConsequenceParams",
-    "ConsequenceQuery",
-    "ConsequenceQueryObject",
-    "DeletedAtResponse",
-    "Distinct",
-    "Edit",
-    "EditType",
-    "ErrorBase",
-    "ExactOnSingleWordQuery",
-    "Exhaustive",
-    "FacetFilters",
-    "FacetOrdering",
-    "Facets",
-    "FacetsStats",
-    "HighlightResult",
-    "HighlightResultOption",
-    "IgnorePlurals",
-    "IndexSettingsAsSearchParams",
-    "Languages",
-    "MatchLevel",
-    "MatchedGeoLocation",
-    "MixedSearchFilters",
-    "Mode",
-    "NumericFilters",
-    "OptionalFilters",
-    "Params",
-    "Personalization",
-    "Promote",
-    "PromoteObjectID",
-    "PromoteObjectIDs",
-    "QueryType",
-    "RankingInfo",
-    "ReRankingApplyFilter",
-    "Redirect",
-    "RedirectRuleIndexMetadata",
-    "RedirectRuleIndexMetadataData",
-    "Region",
-    "RemoveStopWords",
-    "RemoveWordsIfNoResults",
-    "RenderingContent",
-    "SearchParams",
-    "SearchParamsObject",
-    "SearchParamsQuery",
-    "SemanticSearch",
-    "SnippetResult",
-    "SnippetResultOption",
-    "SortRemainingBy",
-    "Source",
-    "TagFilters",
-    "TaskStatus",
-    "TypoTolerance",
-    "TypoToleranceEnum",
-    "Value"
+    "advancedsyntaxfeatures",
+    "alternativesasexact",
+    "anchoring",
+    "aroundprecision",
+    "aroundprecisionfromvalueinner",
+    "aroundradius",
+    "aroundradiusall",
+    "automaticfacetfilter",
+    "automaticfacetfilters",
+    "basesearchparams",
+    "basesearchparamswithoutquery",
+    "basesearchresponse",
+    "condition",
+    "configuration",
+    "consequence",
+    "consequencehide",
+    "consequenceparams",
+    "consequencequery",
+    "consequencequeryobject",
+    "deletedatresponse",
+    "distinct",
+    "edit",
+    "edittype",
+    "errorbase",
+    "exactonsinglewordquery",
+    "exhaustive",
+    "facetfilters",
+    "facetordering",
+    "facets",
+    "facetsstats",
+    "highlightresult",
+    "highlightresultoption",
+    "ignoreplurals",
+    "indexsettingsassearchparams",
+    "languages",
+    "matchlevel",
+    "matchedgeolocation",
+    "mixedsearchfilters",
+    "mode",
+    "numericfilters",
+    "optionalfilters",
+    "params",
+    "personalization",
+    "promote",
+    "promoteobjectid",
+    "promoteobjectids",
+    "querytype",
+    "rankinginfo",
+    "rerankingapplyfilter",
+    "redirect",
+    "redirectruleindexmetadata",
+    "redirectruleindexmetadatadata",
+    "region",
+    "removestopwords",
+    "removewordsifnoresults",
+    "renderingcontent",
+    "searchparams",
+    "searchparamsobject",
+    "searchparamsquery",
+    "semanticsearch",
+    "snippetresult",
+    "snippetresultoption",
+    "sortremainingby",
+    "source",
+    "tagfilters",
+    "taskstatus",
+    "typotolerance",
+    "typotoleranceenum",
+    "value"
   );
 
   // This is used for the CTS generation
@@ -118,9 +118,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   }
 
   public static Boolean isReservedModelName(String name) {
-    return (
-      AlgoliaSwiftGenerator.reservedModelNames.contains(name) || AlgoliaSwiftGenerator.reservedModelNames.contains(Helpers.capitalize(name))
-    );
+    return reservedModelNames.contains(name.toLowerCase());
   }
 
   public static String prefixReservedModelName(String name, String client) {
@@ -129,7 +127,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     }
 
     var camelizedName = camelize(name);
-    if (AlgoliaSwiftGenerator.isReservedModelName(camelizedName)) {
+    if (isReservedModelName(camelizedName)) {
       return INSTANCE.getClientName(client) + Helpers.capitalize(camelizedName);
     }
 
@@ -144,7 +142,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     var camelizedName = camelize(name, LOWERCASE_FIRST_LETTER);
     var clientName = camelize(INSTANCE.getClientName(client), LOWERCASE_FIRST_LETTER);
     var trimmedName = camelize(camelizedName.replaceFirst(clientName, ""), LOWERCASE_FIRST_LETTER);
-    if (AlgoliaSwiftGenerator.isReservedModelName(trimmedName)) {
+    if (isReservedModelName(trimmedName)) {
       return trimmedName;
     }
 
@@ -459,8 +457,8 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   public String toModelName(String name) {
     var sanitizedName = this.sanitizeName(name);
     var camelizedName = camelize(sanitizedName);
-    if (AlgoliaSwiftGenerator.isReservedModelName(camelizedName)) {
-      return AlgoliaSwiftGenerator.prefixReservedModelName(camelizedName, CLIENT);
+    if (isReservedModelName(camelizedName)) {
+      return prefixReservedModelName(camelizedName, CLIENT);
     }
 
     return super.toModelName(name);
@@ -469,7 +467,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   @Override
   public String toParamName(String name) {
     var trimmedName = camelize(name.replaceFirst(getClientName(CLIENT), ""), LOWERCASE_FIRST_LETTER);
-    if (AlgoliaSwiftGenerator.isReservedModelName(trimmedName)) {
+    if (isReservedModelName(trimmedName)) {
       return trimmedName;
     }
 

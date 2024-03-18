@@ -124,20 +124,7 @@ public class ParametersWithDataType {
       isCodegenModel = spec instanceof CodegenModel;
     }
 
-    String finalParamName = paramName;
-    if (language.equals("java") && paramName.startsWith("_")) {
-      finalParamName = paramName.substring(1);
-    }
-
-    // type is a reserved keyword in go, we need to add more generic way to handle reversed keywords
-    // for all languages.
-    if (language.equals("go") && paramName.equals("type")) {
-      finalParamName = "type_";
-    }
-
-    if (language.equals("swift")) {
-      finalParamName = AlgoliaSwiftGenerator.removeReservedModelNamePrefix(paramName, client);
-    }
+    String finalParamName = getFinalParamName(paramName);
 
     testOutput.put("key", finalParamName);
     testOutput.put("isKeyAllUpperCase", StringUtils.isAllUpperCase(finalParamName));
@@ -173,14 +160,7 @@ public class ParametersWithDataType {
 
   /** Same method but with inference only */
   private Map<String, Object> traverseParamsWithoutSpec(String paramName, Object param, String parent, int suffix) throws CTSException {
-    String finalParamName = paramName;
-    if (language.equals("java") && paramName.startsWith("_")) {
-      finalParamName = paramName.substring(1);
-    }
-
-    if (language.equals("swift")) {
-      finalParamName = AlgoliaSwiftGenerator.removeReservedModelNamePrefix(paramName, client);
-    }
+    String finalParamName = getFinalParamName(paramName);
 
     Map<String, Object> testOutput = createDefaultOutput();
     testOutput.put("key", finalParamName);
@@ -207,6 +187,19 @@ public class ParametersWithDataType {
       handlePrimitive(param, testOutput, null);
     }
     return testOutput;
+  }
+
+  private String getFinalParamName(String paramName) {
+    switch (language) {
+      case "java":
+        return paramName.startsWith("_") ? paramName.substring(1) : paramName;
+      case "go":
+        return paramName.equals("type") ? "type_" : paramName;
+      case "swift":
+        return AlgoliaSwiftGenerator.removeReservedModelNamePrefix(paramName, client);
+    }
+
+    return paramName;
   }
 
   private Map<String, Object> createDefaultOutput() {
