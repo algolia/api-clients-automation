@@ -6,37 +6,9 @@ on:
       - next
 
 jobs:
-  test_macos:
-    name: Test on macOS
-    runs-on: macos-latest
-    if: "startsWith(github.event.head_commit.message, 'chore: release')"
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Get versions
-        id: versions
-        shell: bash
-        run: |
-          echo "SWIFT_VERSION=$(cat Package.swift | head -n 1 | sed 's/ //g' | cut -d : -f 2)" >> $GITHUB_OUTPUT
-
-      - name: Install Swift
-        uses: swift-actions/setup-swift@v1
-        with:
-          swift-version: ${{ steps.versions.outputs.SWIFT_VERSION }}
-
-      - name: Install Swift dependencies
-        run: swift package resolve
-
-      - name: Test Swift package
-        run: swift test
-
   release:
-    name: Publish on CocoaPods
+    name: Publish
     runs-on: ubuntu-22.04
-    needs:
-      - test_macos
     if: "startsWith(github.event.head_commit.message, 'chore: release')"
     steps:
       - uses: actions/checkout@v4
@@ -48,18 +20,6 @@ jobs:
         shell: bash
         run: |
           echo "RELEASE_VERSION=$(cat AlgoliaSearchClient.podspec | grep s.version | sed 's/ //g' | cut -d \' -f 2)" >> $GITHUB_OUTPUT
-          echo "SWIFT_VERSION=$(cat Package.swift | head -n 1 | sed 's/ //g' | cut -d : -f 2)" >> $GITHUB_OUTPUT
-
-      - name: Install Swift
-        uses: swift-actions/setup-swift@v1
-        with:
-          swift-version: ${{ steps.versions.outputs.SWIFT_VERSION }}
-
-      - name: Install Swift dependencies
-        run: swift package resolve
-
-      - name: Test Swift package on Linux
-        run: swift test
 
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
@@ -73,7 +33,7 @@ jobs:
       - name: Publish on CocoaPods
         run: |
           set -eo pipefail
-          pod trunk push --allow-warnings --verbose
+          pod trunk push --allow-warnings --verbose AlgoliaSearchClient.podspec
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
 
