@@ -36,6 +36,20 @@ async function restoreSpecs(): Promise<void> {
   core.info(`Downloaded artifact to ${res.downloadPath}`);
 }
 
+async function restoreLanguage(language: string): Promise<void> {
+  const artifact = new DefaultArtifactClient();
+  const artifacts = await artifact.listArtifacts();
+  const langArtifact = artifacts.artifacts.find((a) => a.name === `clients-${language}`);
+  if (langArtifact === undefined) {
+    throw new Error(`No ${language} artifact found`);
+  }
+
+  await download(artifact, langArtifact.id);
+  await io.rmRF(`clients/algoliasearch-client-${language}`);
+  await exec(`unzip -q -o clients-${language}.zip`);
+  await io.rmRF(`clients-${language}.zip`);
+}
+
 async function restoreLanguages(): Promise<void> {
   const artifact = new DefaultArtifactClient();
   const artifacts = await artifact.listArtifacts();
@@ -56,6 +70,12 @@ async function run(): Promise<void> {
     } else if (actionType === 'all') {
       await restoreSpecs();
       await restoreLanguages();
+    } else if (actionType === 'languages') {
+      const languages = core.getMultilineInput('languages');
+      await restoreSpecs();
+      for (const language of languages) {
+        await restoreLanguage(language);
+      }
     } else {
       throw new Error(`Unknown type: ${actionType}`);
     }

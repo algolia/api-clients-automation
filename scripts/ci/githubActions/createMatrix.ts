@@ -144,7 +144,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
   // If the base branch is `main`, we also run the swift tests on macOS
   const swiftData = clientMatrix.client.find((c) => c.language === 'swift');
   if (swiftData) {
-    core.setOutput('SWIFT_DATA', swiftData);
+    core.setOutput('SWIFT_DATA', JSON.stringify(swiftData));
     core.setOutput('RUN_MACOS_SWIFT_CTS', true);
   }
 

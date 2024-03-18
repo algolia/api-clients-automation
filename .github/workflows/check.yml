@@ -381,7 +381,9 @@ jobs:
       - name: Download artifacts
         uses: ./scripts/ci/actions/restore-artifacts
         with:
-          type: all
+          type: languages
+          languages: |
+            swift
 
       - name: Setup
         uses: ./.github/actions/setup
