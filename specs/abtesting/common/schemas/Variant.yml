@@ -9,19 +9,40 @@ variant:
   additionalProperties: false
   properties:
     addToCartCount:
-      $ref: '../../../analytics/common/parameters.yml#/addToCartCount'
+      type: integer
+      description: Number of add-to-cart events for this variant.
+      example: 0
     addToCartRate:
-      $ref: '../../../analytics/common/parameters.yml#/addToCartRate'
+      type: number
+      format: double
+      nullable: true
+      description: Variant's [add-to-cart rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#add-to-cart-rate).
+      example: 0.0
     averageClickPosition:
-      $ref: '../../../analytics/common/parameters.yml#/averageClickPosition'
+      type: integer
+      nullable: true
+      description: Variant's [average click position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position).
+      example: 0
     clickCount:
-      $ref: '../../../analytics/common/parameters.yml#/clickCount'
+      type: integer
+      description: Number of click events for this variant.
+      example: 65131
     clickThroughRate:
-      $ref: '../../../analytics/common/parameters.yml#/clickThroughRate'
+      type: number
+      format: double
+      nullable: true
+      description: Variant's [click-through rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+      example: 0.22219857724813036
     conversionCount:
-      $ref: '../../../analytics/common/parameters.yml#/conversionCount'
+      type: integer
+      description: Number of click events for this variant.
+      example: 4785
     conversionRate:
-      $ref: '../../../analytics/common/parameters.yml#/conversionRate'
+      type: number
+      format: double
+      nullable: true
+      description: Variant's [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+      example: 0.14546725846658964
     currencies:
       $ref: '../parameters.yml#/currencies'
     description:
@@ -35,27 +56,37 @@ variant:
     index:
       $ref: '../parameters.yml#/index'
     noResultCount:
-      $ref: '../../../analytics/common/parameters.yml#/noResultCount'
+      type: integer
+      nullable: true
+      description: Number of [searches without results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results) for that variant.
+      example: 0
     purchaseCount:
-      $ref: '../../../analytics/common/parameters.yml#/purchaseCount'
+      type: integer
+      description: Number of purchase events for this variant.
+      example: 0
     purchaseRate:
-      $ref: '../../../analytics/common/parameters.yml#/purchaseRate'
+      type: number
+      format: double
+      nullable: true
+      description: Variant's [purchase rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#purchase-rate).
+      example: 0.0
     searchCount:
-      $ref: '../../../analytics/common/parameters.yml#/count'
+      type: integer
+      nullable: true
+      description: Number of searches carried out during the A/B test.
+      example: 86269
     trackedSearchCount:
-      $ref: '../../../analytics/common/parameters.yml#/trackedSearchCount'
+      $ref: '../../../common/parameters.yml#/trackedSearchCount'
     trafficPercentage:
       $ref: '../parameters.yml#/trafficPercentage'
     userCount:
       type: integer
-      minimum: 0
-      default: 0
+      nullable: true
       description: Number of users during the A/B test.
       example: 55501
     trackedUserCount:
       type: integer
-      minimum: 0
-      default: 0
+      nullable: true
       description: Number of users that performed a tracked search during the A/B test.
       example: 55501
   required:
