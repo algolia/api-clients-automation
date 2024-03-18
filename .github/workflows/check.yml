@@ -95,6 +95,7 @@ jobs:
       GEN_MATRIX: ${{ steps.gen-matrix.outputs.GEN_MATRIX }}
       JAVASCRIPT_DATA: ${{ steps.gen-matrix.outputs.JAVASCRIPT_DATA }}
       RUN_GEN_JAVASCRIPT: ${{ steps.gen-matrix.outputs.RUN_GEN_JAVASCRIPT }}
+      RUN_MACOS_SWIFT_CTS: ${{ steps.gen-matrix.outputs.RUN_MACOS_SWIFT_CTS }}
 
   scripts:
     runs-on: ubuntu-22.04
