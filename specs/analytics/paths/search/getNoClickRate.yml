@@ -39,7 +39,7 @@ get:
               rate:
                 $ref: '../../common/parameters.yml#/noClickRate'
               count:
-                $ref: '../../../common/parameters.yml#/trackedSearchCount'
+                $ref: '../../common/parameters.yml#/trackedSearchCount'
               noClickCount:
                 $ref: '../../common/parameters.yml#/noClickCount'
               dates:
@@ -58,7 +58,7 @@ get:
                     rate:
                       $ref: '../../common/parameters.yml#/noClickRate'
                     count:
-                      $ref: '../../../common/parameters.yml#/trackedSearchCount'
+                      $ref: '../../common/parameters.yml#/trackedSearchCount'
                     noClickCount:
                       $ref: '../../common/parameters.yml#/noClickCount'
                     date:

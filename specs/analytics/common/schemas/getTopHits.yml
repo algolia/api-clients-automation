@@ -53,7 +53,7 @@ topHitsResponseWithAnalytics:
           conversionRate:
             $ref: '../parameters.yml#/conversionRate'
           trackedHitCount:
-            $ref: '../../../common/parameters.yml#/trackedSearchCount'
+            $ref: '../parameters.yml#/trackedSearchCount'
           clickCount:
             $ref: '../parameters.yml#/clickCount'
           conversionCount:
@@ -96,7 +96,7 @@ topHitsResponseWithRevenueAnalytics:
           conversionRate:
             $ref: '../parameters.yml#/conversionRate'
           trackedHitCount:
-            $ref: '../../../common/parameters.yml#/trackedSearchCount'
+            $ref: '../parameters.yml#/trackedSearchCount'
           clickCount:
             $ref: '../parameters.yml#/clickCount'
           conversionCount:

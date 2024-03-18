@@ -67,6 +67,12 @@ count:
   type: integer
   example: 504
 
+trackedSearchCount:
+  type: integer
+  example: 2
+  default: 0
+  description: Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
+
 noResultCount:
   description: Number of searches without any results.
   type: integer

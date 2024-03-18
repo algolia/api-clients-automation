@@ -136,12 +136,6 @@ page:
   minimum: 0
   description: Requested page of the API response.
 
-trackedSearchCount:
-  type: integer
-  example: 2
-  default: 0
-  description: Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
-
 count:
   description: Number of occurrences.
   example: 2
