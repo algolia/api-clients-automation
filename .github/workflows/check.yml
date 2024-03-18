@@ -95,6 +95,8 @@ jobs:
       GEN_MATRIX: ${{ steps.gen-matrix.outputs.GEN_MATRIX }}
       JAVASCRIPT_DATA: ${{ steps.gen-matrix.outputs.JAVASCRIPT_DATA }}
       RUN_GEN_JAVASCRIPT: ${{ steps.gen-matrix.outputs.RUN_GEN_JAVASCRIPT }}
+
+      SWIFT_DATA: ${{ steps.gen-matrix.outputs.SWIFT_DATA }}
       RUN_MACOS_SWIFT_CTS: ${{ steps.gen-matrix.outputs.RUN_MACOS_SWIFT_CTS }}
 
   scripts:
@@ -372,9 +374,6 @@ jobs:
       needs.setup.outputs.RUN_MACOS_SWIFT_CTS == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJSON(needs.setup.outputs.GEN_MATRIX) }}
     env:
       ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
       ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
@@ -390,16 +389,16 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
         with:
-          language: ${{ matrix.client.language }}
+          language: swift
 
       - name: Generate clients
-        run: yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
+        run: yarn cli generate swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
 
       - name: Generate CTS
-        run: yarn cli cts generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
+        run: yarn cli cts generate swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
 
       - name: Run CTS
-        run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }}
+        run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
 
   codegen:
     runs-on: ubuntu-22.04
