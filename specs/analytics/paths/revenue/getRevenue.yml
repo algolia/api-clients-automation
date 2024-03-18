@@ -4,10 +4,11 @@ get:
   operationId: getRevenue
   x-acl:
     - analytics
-  summary: Retrieve conversion rate.
+  summary: Retrieve revenue data.
   description: |
-    Retrieves the conversion rate for all of your searches with at least one conversion event, including a daily breakdown.
+    Retrieves revenue-related metrics, such as the total revenue or the average order value.
 
+    To retrieve revenue-related metrics, sent purchase events.
     By default, the analyzed period includes the last eight days including the current day.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
@@ -20,40 +21,28 @@ get:
       content:
         application/json:
           schema:
-            title: getConversationRateResponse
+            title: getRevenue
             type: object
             additionalProperties: false
             required:
+              - currencies
               - dates
-              - trackedSearchCount
-              - conversionCount
-              - rate
             properties:
-              rate:
-                $ref: '../../common/parameters.yml#/conversionRate'
-              trackedSearchCount:
-                $ref: '../../../common/parameters.yml#/trackedSearchCount'
-              conversionCount:
-                $ref: '../../common/parameters.yml#/conversionCount'
+              currencies:
+                $ref: '../../common/parameters.yml#/currencies'
               dates:
                 type: array
-                description: Daily conversion rates.
+                description: Daily revenue.
                 items:
                   type: object
-                  title: dailyConversionRates
+                  title: dailyRevenue
                   additionalProperties: false
                   required:
-                    - rate
-                    - trackedSearchCount
-                    - conversionCount
+                    - currencies
                     - date
                   properties:
-                    rate:
-                      $ref: '../../common/parameters.yml#/conversionRate'
-                    trackedSearchCount:
-                      $ref: '../../../common/parameters.yml#/trackedSearchCount'
-                    conversionCount:
-                      $ref: '../../common/parameters.yml#/conversionCount'
+                    currencies:
+                      $ref: '../../common/parameters.yml#/currencies'
                     date:
                       $ref: '../../common/parameters.yml#/date'
     '400':

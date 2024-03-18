@@ -1,7 +1,7 @@
 get:
   tags:
     - click
-  operationId: getConversationRate
+  operationId: getConversionRate
   x-acl:
     - analytics
   summary: Retrieve conversion rate.
@@ -27,7 +27,7 @@ get:
       content:
         application/json:
           schema:
-            title: getConversationRateResponse
+            title: getConversionRateResponse
             type: object
             additionalProperties: false
             required:
