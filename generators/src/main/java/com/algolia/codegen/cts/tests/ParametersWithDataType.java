@@ -385,8 +385,7 @@ public class ParametersWithDataType {
       var orderedParams = spec.getVars().stream().map(v -> v.baseName).toList();
 
       // Create a map to store the indices of each string in orderedParams
-      Map<String, Integer> indexMap = IntStream
-        .range(0, orderedParams.size())
+      Map<String, Integer> indexMap = IntStream.range(0, orderedParams.size())
         .boxed()
         .collect(Collectors.toMap(orderedParams::get, i -> i));
 

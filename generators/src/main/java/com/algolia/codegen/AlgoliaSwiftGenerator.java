@@ -96,29 +96,30 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
       )
     );
 
-    supportingFiles.removeIf(file ->
-      file.getTemplateFile().equals("gitignore.mustache") ||
-      file.getTemplateFile().equals("Package.swift.mustache") ||
-      file.getTemplateFile().equals("CodableHelper.mustache") ||
-      file.getTemplateFile().equals("JSONDataEncoding.mustache") ||
-      file.getTemplateFile().equals("JSONEncodingHelper.mustache") ||
-      file.getTemplateFile().equals("SynchronizedDictionary.mustache") ||
-      file.getTemplateFile().equals("APIHelper.mustache") ||
-      file.getTemplateFile().equals("Models.mustache") ||
-      file.getTemplateFile().equals("Configuration.mustache") ||
-      file.getTemplateFile().equals("Extensions.mustache") ||
-      file.getTemplateFile().equals("OpenISO8601DateFormatter.mustache") ||
-      file.getTemplateFile().equals("OpenAPIDateWithoutTime.mustache") ||
-      file.getTemplateFile().equals("APIs.mustache") ||
-      file.getTemplateFile().equals("Validation.mustache") ||
-      file.getTemplateFile().equals("AlamofireImplementations.mustache") ||
-      file.getTemplateFile().equals("URLSessionImplementations.mustache") ||
-      file.getTemplateFile().equals("README.mustache") ||
-      file.getTemplateFile().equals("git_push.sh.mustache") ||
-      file.getTemplateFile().equals("Cartfile.mustache") ||
-      file.getTemplateFile().equals("XcodeGen.mustache") ||
-      file.getTemplateFile().equals("swiftformat.mustache") ||
-      file.getTemplateFile().equals("Podspec.mustache")
+    supportingFiles.removeIf(
+      file ->
+        file.getTemplateFile().equals("gitignore.mustache") ||
+        file.getTemplateFile().equals("Package.swift.mustache") ||
+        file.getTemplateFile().equals("CodableHelper.mustache") ||
+        file.getTemplateFile().equals("JSONDataEncoding.mustache") ||
+        file.getTemplateFile().equals("JSONEncodingHelper.mustache") ||
+        file.getTemplateFile().equals("SynchronizedDictionary.mustache") ||
+        file.getTemplateFile().equals("APIHelper.mustache") ||
+        file.getTemplateFile().equals("Models.mustache") ||
+        file.getTemplateFile().equals("Configuration.mustache") ||
+        file.getTemplateFile().equals("Extensions.mustache") ||
+        file.getTemplateFile().equals("OpenISO8601DateFormatter.mustache") ||
+        file.getTemplateFile().equals("OpenAPIDateWithoutTime.mustache") ||
+        file.getTemplateFile().equals("APIs.mustache") ||
+        file.getTemplateFile().equals("Validation.mustache") ||
+        file.getTemplateFile().equals("AlamofireImplementations.mustache") ||
+        file.getTemplateFile().equals("URLSessionImplementations.mustache") ||
+        file.getTemplateFile().equals("README.mustache") ||
+        file.getTemplateFile().equals("git_push.sh.mustache") ||
+        file.getTemplateFile().equals("Cartfile.mustache") ||
+        file.getTemplateFile().equals("XcodeGen.mustache") ||
+        file.getTemplateFile().equals("swiftformat.mustache") ||
+        file.getTemplateFile().equals("Podspec.mustache")
     );
 
     reservedWords.add("LogLevel");
@@ -245,8 +246,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
       // additionalproperties: true
       Schema<?> inner = ModelUtils.getAdditionalProperties(target);
       if (inner == null) {
-        Logger
-          .getGlobal()
+        Logger.getGlobal()
           .warning("`" + p.getName() + "` (map property) does not have a proper inner type defined. Default to" + " type:string");
         inner = new StringSchema().description("TODO default missing map inner type to string");
         p.setAdditionalProperties(inner);

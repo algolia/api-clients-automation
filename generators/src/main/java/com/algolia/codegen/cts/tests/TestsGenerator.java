@@ -71,11 +71,10 @@ public abstract class TestsGenerator {
 
   private String injectVariables(String json) {
     long threeDays = 3 * 24 * 60 * 60 * 1000;
-    json =
-      json
-        .replace("${{languageCased}}", languageCased())
-        .replace("${{clientPascalCase}}", Helpers.capitalize(Helpers.camelize(client)))
-        .replace("\"${{nowRounded}}\"", String.valueOf(Math.round(System.currentTimeMillis() / threeDays) * threeDays));
+    json = json
+      .replace("${{languageCased}}", languageCased())
+      .replace("${{clientPascalCase}}", Helpers.capitalize(Helpers.camelize(client)))
+      .replace("\"${{nowRounded}}\"", String.valueOf(Math.round(System.currentTimeMillis() / threeDays) * threeDays));
 
     if (!language.equals("javascript") && !"true".equals(System.getenv("CI"))) {
       // hack for docker on mac, the `network=host` does not work so we need to use
