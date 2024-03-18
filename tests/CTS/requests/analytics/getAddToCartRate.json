@@ -21,7 +21,7 @@
       "tags": "tag"
     },
     "request": {
-      "path": "/2/conversions/AddToCartRate",
+      "path": "/2/conversions/addToCartRate",
       "method": "GET",
       "queryParameters": {
         "index": "index",
