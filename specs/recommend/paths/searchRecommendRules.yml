@@ -31,10 +31,11 @@ post:
             hitsPerPage:
               $ref: '../../common/parameters.yml#/hitsPerPage'
             enabled:
-              type: boolean
-              nullable: true
-              default: null
-              description: Restricts responses to enabled rules. When absent (default), _all_ rules are retrieved.
+              oneOf:
+                - type: boolean
+                  default: null
+                  description: Restricts responses to enabled rules. When absent (default), _all_ rules are retrieved.
+                - type: 'null'
   responses:
     '200':
       description: OK
