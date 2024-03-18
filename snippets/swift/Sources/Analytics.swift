@@ -13,9 +13,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customDelete(
-            path: "/test/minimal"
-        )
+        _ = try await client.customDelete(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -28,9 +26,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customGet(
-            path: "/test/minimal"
-        )
+        _ = try await client.customGet(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -43,9 +39,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPost(
-            path: "/test/minimal"
-        )
+        _ = try await client.customPost(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -58,9 +52,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPut(
-            path: "/test/minimal"
-        )
+        _ = try await client.customPut(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -73,9 +65,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getAverageClickPosition(
-            index: "index"
-        )
+        _ = try await client.getAverageClickPosition(index: "index")
         // SEPARATOR<
     }
 
@@ -88,9 +78,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getClickPositions(
-            index: "index"
-        )
+        _ = try await client.getClickPositions(index: "index")
         // SEPARATOR<
     }
 
@@ -103,9 +91,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getClickThroughRate(
-            index: "index"
-        )
+        _ = try await client.getClickThroughRate(index: "index")
         // SEPARATOR<
     }
 
@@ -118,9 +104,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getConversationRate(
-            index: "index"
-        )
+        _ = try await client.getConversationRate(index: "index")
         // SEPARATOR<
     }
 
@@ -133,9 +117,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getNoClickRate(
-            index: "index"
-        )
+        _ = try await client.getNoClickRate(index: "index")
         // SEPARATOR<
     }
 
@@ -148,9 +130,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getNoResultsRate(
-            index: "index"
-        )
+        _ = try await client.getNoResultsRate(index: "index")
         // SEPARATOR<
     }
 
@@ -163,9 +143,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getSearchesCount(
-            index: "index"
-        )
+        _ = try await client.getSearchesCount(index: "index")
         // SEPARATOR<
     }
 
@@ -178,9 +156,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getSearchesNoClicks(
-            index: "index"
-        )
+        _ = try await client.getSearchesNoClicks(index: "index")
         // SEPARATOR<
     }
 
@@ -193,9 +169,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getSearchesNoResults(
-            index: "index"
-        )
+        _ = try await client.getSearchesNoResults(index: "index")
         // SEPARATOR<
     }
 
@@ -208,9 +182,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getStatus(
-            index: "index"
-        )
+        _ = try await client.getStatus(index: "index")
         // SEPARATOR<
     }
 
@@ -223,9 +195,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getTopCountries(
-            index: "index"
-        )
+        _ = try await client.getTopCountries(index: "index")
         // SEPARATOR<
     }
 
@@ -238,9 +208,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getTopFilterAttributes(
-            index: "index"
-        )
+        _ = try await client.getTopFilterAttributes(index: "index")
         // SEPARATOR<
     }
 
@@ -253,10 +221,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getTopFilterForAttribute(
-            attribute: "myAttribute",
-            index: "index"
-        )
+        _ = try await client.getTopFilterForAttribute(attribute: "myAttribute", index: "index")
         // SEPARATOR<
     }
 
@@ -269,9 +234,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getTopFiltersNoResults(
-            index: "index"
-        )
+        _ = try await client.getTopFiltersNoResults(index: "index")
         // SEPARATOR<
     }
 
@@ -284,9 +247,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getTopHits(
-            index: "index"
-        )
+        _ = try await client.getTopHits(index: "index")
         // SEPARATOR<
     }
 
@@ -299,9 +260,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getTopSearches(
-            index: "index"
-        )
+        _ = try await client.getTopSearches(index: "index")
         // SEPARATOR<
     }
 
@@ -314,9 +273,7 @@ final class AnalyticsClientSnippet {
         let client = try AnalyticsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getUsersCount(
-            index: "index"
-        )
+        _ = try await client.getUsersCount(index: "index")
         // SEPARATOR<
     }
 }

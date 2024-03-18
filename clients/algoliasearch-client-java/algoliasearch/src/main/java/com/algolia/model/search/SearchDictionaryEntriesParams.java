@@ -20,7 +20,7 @@ public class SearchDictionaryEntriesParams {
   private Integer hitsPerPage;
 
   @JsonProperty("language")
-  private String language;
+  private SupportedLanguage language;
 
   public SearchDictionaryEntriesParams setQuery(String query) {
     this.query = query;
@@ -55,17 +55,14 @@ public class SearchDictionaryEntriesParams {
     return hitsPerPage;
   }
 
-  public SearchDictionaryEntriesParams setLanguage(String language) {
+  public SearchDictionaryEntriesParams setLanguage(SupportedLanguage language) {
     this.language = language;
     return this;
   }
 
-  /**
-   * ISO code of a [supported
-   * language](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
-   */
+  /** Get language */
   @javax.annotation.Nullable
-  public String getLanguage() {
+  public SupportedLanguage getLanguage() {
     return language;
   }
 

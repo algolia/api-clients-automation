@@ -775,6 +775,78 @@ components:
         - $ref: '#/components/schemas/typoToleranceEnum'
       x-categories:
         - Typos
+    supportedLanguage:
+      type: string
+      description: ISO code for a supported language.
+      enum:
+        - af
+        - ar
+        - az
+        - bg
+        - bn
+        - ca
+        - cs
+        - cy
+        - da
+        - de
+        - el
+        - en
+        - eo
+        - es
+        - et
+        - eu
+        - fa
+        - fi
+        - fo
+        - fr
+        - ga
+        - gl
+        - he
+        - hi
+        - hu
+        - hy
+        - id
+        - is
+        - it
+        - ja
+        - ka
+        - kk
+        - ko
+        - ku
+        - ky
+        - lt
+        - lv
+        - mi
+        - mn
+        - mr
+        - ms
+        - mt
+        - nb
+        - nl
+        - 'no'
+        - ns
+        - pl
+        - ps
+        - pt
+        - pt-br
+        - qu
+        - ro
+        - ru
+        - sk
+        - sq
+        - sv
+        - sw
+        - ta
+        - te
+        - th
+        - tl
+        - tn
+        - tr
+        - tt
+        - uk
+        - ur
+        - uz
+        - zh
     ignorePlurals:
       description: |
         Treat singular, plurals, and other forms of declensions as equivalent.
@@ -784,11 +856,11 @@ components:
         - es
       oneOf:
         - type: array
+          description: |
+            ISO code for languages for which this feature should be active.
+            This overrides languages you set with `queryLanguages`.
           items:
-            type: string
-            description: |
-              ISO code for languages for which this feature should be active.
-              This overrides languages you set with `queryLanguages`.
+            $ref: '#/components/schemas/supportedLanguage'
         - type: boolean
           description: >
             If true, `ignorePlurals` is active for all languages included in
@@ -817,11 +889,11 @@ components:
         - es
       oneOf:
         - type: array
+          description: >-
+            ISO code for languages for which stop words should be removed. This
+            overrides languages you set in `queryLanguges`.
           items:
-            type: string
-            description: >-
-              ISO code for languages for which stop words should be removed.
-              This overrides languages you set in `queryLanguges`.
+            $ref: '#/components/schemas/supportedLanguage'
         - type: boolean
           default: false
           description: >
@@ -1466,14 +1538,12 @@ components:
         queryLanguages:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/supportedLanguage'
           example:
             - es
           description: >
-            [ISO
-            code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes)
-            for language-specific settings such as plurals, stop words, and
-            word-detection dictionaries.
+            Languages for language-specific query processing steps such as
+            plurals, stop-word removal, and word-detection dictionaries.
 
 
             This setting sets a default list of languages used by the
@@ -1485,7 +1555,6 @@ components:
             languages.
 
             To support this, you must place the CJK language **first**.
-
 
 
             **You should always specify a query language.**

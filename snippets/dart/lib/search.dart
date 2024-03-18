@@ -143,14 +143,14 @@ void snippetForbatchDictionaryEntries() async {
           action: DictionaryAction.fromJson("addEntry"),
           body: DictionaryEntry(
             objectID: "1",
-            language: "en",
+            language: SupportedLanguage.fromJson("en"),
           ),
         ),
         BatchDictionaryEntriesRequest(
           action: DictionaryAction.fromJson("deleteEntry"),
           body: DictionaryEntry(
             objectID: "2",
-            language: "fr",
+            language: SupportedLanguage.fromJson("fr"),
           ),
         ),
       ],

@@ -90,25 +90,17 @@ final class InsightsClientClientTests: XCTestCase {
         let client = InsightsClient(configuration: configuration, transporter: transporter)
         let response = try await client.pushEventsWithHTTPInfo(
             insightsEvents: InsightsEvents(
-                events: [EventsItems.clickedObjectIDsAfterSearch(
-                    ClickedObjectIDsAfterSearch(
-                        eventName: "Product Clicked",
-                        eventType: ClickEvent.click,
-                        index: "products",
-                        objectIDs: [
-                            "9780545139700",
-                            "9780439784542",
-                        ],
-                        positions: [
-                            7,
-                            6,
-                        ],
-                        queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
-                        userToken: "user-123456",
-                        authenticatedUserToken: "user-123456",
-                        timestamp: Int64(1_641_290_601_962)
-                    )
-                )]
+                events: [EventsItems.clickedObjectIDsAfterSearch(ClickedObjectIDsAfterSearch(
+                    eventName: "Product Clicked",
+                    eventType: ClickEvent.click,
+                    index: "products",
+                    objectIDs: ["9780545139700", "9780439784542"],
+                    positions: [7, 6],
+                    queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
+                    userToken: "user-123456",
+                    authenticatedUserToken: "user-123456",
+                    timestamp: Int64(1_641_290_601_962)
+                ))]
             )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)

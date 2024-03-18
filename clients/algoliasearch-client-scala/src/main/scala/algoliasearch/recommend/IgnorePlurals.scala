@@ -11,6 +11,8 @@
   */
 package algoliasearch.recommend
 
+import algoliasearch.recommend.SupportedLanguage._
+
 import org.json4s._
 
 /** Treat singular, plurals, and other forms of declensions as equivalent. You should only use this feature for the
@@ -20,11 +22,11 @@ sealed trait IgnorePlurals
 
 object IgnorePlurals {
 
-  case class SeqOfString(value: Seq[String]) extends IgnorePlurals
+  case class SeqOfSupportedLanguage(value: Seq[SupportedLanguage]) extends IgnorePlurals
   case class BooleanValue(value: Boolean) extends IgnorePlurals
 
-  def apply(value: Seq[String]): IgnorePlurals = {
-    IgnorePlurals.SeqOfString(value)
+  def apply(value: Seq[SupportedLanguage]): IgnorePlurals = {
+    IgnorePlurals.SeqOfSupportedLanguage(value)
   }
   def apply(value: Boolean): IgnorePlurals = {
     IgnorePlurals.BooleanValue(value)
@@ -36,16 +38,17 @@ object IgnorePluralsSerializer extends Serializer[IgnorePlurals] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[IgnorePlurals] =>
       json match {
-        case JArray(value) if value.forall(_.isInstanceOf[JArray]) => IgnorePlurals.SeqOfString(value.map(_.extract))
-        case JBool(value)                                          => IgnorePlurals.BooleanValue(value)
-        case _ => throw new MappingException("Can't convert " + json + " to IgnorePlurals")
+        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
+          IgnorePlurals.SeqOfSupportedLanguage(value.map(_.extract))
+        case JBool(value) => IgnorePlurals.BooleanValue(value)
+        case _            => throw new MappingException("Can't convert " + json + " to IgnorePlurals")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: IgnorePlurals =>
     value match {
-      case IgnorePlurals.SeqOfString(value)  => JArray(value.map(Extraction.decompose).toList)
-      case IgnorePlurals.BooleanValue(value) => JBool(value)
+      case IgnorePlurals.SeqOfSupportedLanguage(value) => JArray(value.map(Extraction.decompose).toList)
+      case IgnorePlurals.BooleanValue(value)           => JBool(value)
     }
   }
 }

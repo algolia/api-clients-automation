@@ -21,9 +21,9 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = RemoveStopWords.Deserializer.class)
 public interface RemoveStopWords {
-  // RemoveStopWords as List<String> wrapper.
-  static RemoveStopWords of(List<String> value) {
-    return new ListOfStringWrapper(value);
+  // RemoveStopWords as List<SupportedLanguage> wrapper.
+  static RemoveStopWords of(List<SupportedLanguage> value) {
+    return new ListOfSupportedLanguageWrapper(value);
   }
 
   // RemoveStopWords as Boolean wrapper.
@@ -31,24 +31,24 @@ public interface RemoveStopWords {
     return new BooleanWrapper(value);
   }
 
-  // RemoveStopWords as List<String> wrapper.
-  @JsonSerialize(using = ListOfStringWrapper.Serializer.class)
-  class ListOfStringWrapper implements RemoveStopWords {
+  // RemoveStopWords as List<SupportedLanguage> wrapper.
+  @JsonSerialize(using = ListOfSupportedLanguageWrapper.Serializer.class)
+  class ListOfSupportedLanguageWrapper implements RemoveStopWords {
 
-    private final List<String> value;
+    private final List<SupportedLanguage> value;
 
-    ListOfStringWrapper(List<String> value) {
+    ListOfSupportedLanguageWrapper(List<SupportedLanguage> value) {
       this.value = value;
     }
 
-    public List<String> getValue() {
+    public List<SupportedLanguage> getValue() {
       return value;
     }
 
-    static class Serializer extends JsonSerializer<ListOfStringWrapper> {
+    static class Serializer extends JsonSerializer<ListOfSupportedLanguageWrapper> {
 
       @Override
-      public void serialize(ListOfStringWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+      public void serialize(ListOfSupportedLanguageWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeObject(value.getValue());
       }
     }
@@ -84,14 +84,16 @@ public interface RemoveStopWords {
     @Override
     public RemoveStopWords deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-      // deserialize List<String>
+      // deserialize List<SupportedLanguage>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          List<String> value = parser.readValueAs(new TypeReference<List<String>>() {});
-          return new RemoveStopWords.ListOfStringWrapper(value);
+          List<SupportedLanguage> value = parser.readValueAs(new TypeReference<List<SupportedLanguage>>() {});
+          return new RemoveStopWords.ListOfSupportedLanguageWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf List<String> (error: " + e.getMessage() + ") (type: List<String>)");
+          LOGGER.finest(
+            "Failed to deserialize oneOf List<SupportedLanguage> (error: " + e.getMessage() + ") (type: List<SupportedLanguage>)"
+          );
         }
       }
       // deserialize Boolean

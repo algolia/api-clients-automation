@@ -1951,7 +1951,7 @@ describe('search', () => {
           percentileComputation: true,
           personalizationImpact: 0,
           query: '',
-          queryLanguages: [''],
+          queryLanguages: ['fr'],
           queryType: 'prefixAll',
           ranking: [''],
           reRankingApplyFilter: [''],
@@ -2046,7 +2046,7 @@ describe('search', () => {
           percentileComputation: true,
           personalizationImpact: 0,
           query: '',
-          queryLanguages: [''],
+          queryLanguages: ['fr'],
           queryType: 'prefixAll',
           ranking: [''],
           reRankingApplyFilter: [''],
@@ -2435,13 +2435,13 @@ describe('setSettings', () => {
   test('setSettings allow list of string `ignorePlurals`', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
-      indexSettings: { ignorePlurals: ['algolia'] },
+      indexSettings: { ignorePlurals: ['fr'] },
       forwardToReplicas: true,
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/theIndexName/settings');
     expect(req.method).toEqual('PUT');
-    expect(req.data).toEqual({ ignorePlurals: ['algolia'] });
+    expect(req.data).toEqual({ ignorePlurals: ['fr'] });
     expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
   });
 
@@ -2461,13 +2461,13 @@ describe('setSettings', () => {
   test('setSettings allow list of string `removeStopWords`', async () => {
     const req = (await client.setSettings({
       indexName: 'theIndexName',
-      indexSettings: { removeStopWords: ['algolia'] },
+      indexSettings: { removeStopWords: ['fr'] },
       forwardToReplicas: true,
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/indexes/theIndexName/settings');
     expect(req.method).toEqual('PUT');
-    expect(req.data).toEqual({ removeStopWords: ['algolia'] });
+    expect(req.data).toEqual({ removeStopWords: ['fr'] });
     expect(req.searchParams).toStrictEqual({ forwardToReplicas: 'true' });
   });
 
@@ -2531,7 +2531,7 @@ describe('setSettings', () => {
         highlightPostTag: '</span>',
         hitsPerPage: 10,
         ignorePlurals: false,
-        indexLanguages: ['algolia'],
+        indexLanguages: ['fr'],
         keepDiacriticsOnCharacters: 'abc',
         maxFacetHits: 20,
         maxValuesPerFacet: 30,
@@ -2542,7 +2542,7 @@ describe('setSettings', () => {
         numericAttributesForFiltering: ['algolia'],
         optionalWords: ['myspace'],
         paginationLimitedTo: 0,
-        queryLanguages: ['algolia'],
+        queryLanguages: ['fr'],
         queryType: 'prefixLast',
         ranking: ['geo'],
         reRankingApplyFilter: 'mySearch:filters',
@@ -2603,7 +2603,7 @@ describe('setSettings', () => {
       highlightPostTag: '</span>',
       hitsPerPage: 10,
       ignorePlurals: false,
-      indexLanguages: ['algolia'],
+      indexLanguages: ['fr'],
       keepDiacriticsOnCharacters: 'abc',
       maxFacetHits: 20,
       maxValuesPerFacet: 30,
@@ -2614,7 +2614,7 @@ describe('setSettings', () => {
       numericAttributesForFiltering: ['algolia'],
       optionalWords: ['myspace'],
       paginationLimitedTo: 0,
-      queryLanguages: ['algolia'],
+      queryLanguages: ['fr'],
       queryType: 'prefixLast',
       ranking: ['geo'],
       reRankingApplyFilter: 'mySearch:filters',

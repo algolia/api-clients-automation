@@ -959,6 +959,78 @@ components:
         - $ref: '#/components/schemas/typoToleranceEnum'
       x-categories:
         - Typos
+    supportedLanguage:
+      type: string
+      description: ISO code for a supported language.
+      enum:
+        - af
+        - ar
+        - az
+        - bg
+        - bn
+        - ca
+        - cs
+        - cy
+        - da
+        - de
+        - el
+        - en
+        - eo
+        - es
+        - et
+        - eu
+        - fa
+        - fi
+        - fo
+        - fr
+        - ga
+        - gl
+        - he
+        - hi
+        - hu
+        - hy
+        - id
+        - is
+        - it
+        - ja
+        - ka
+        - kk
+        - ko
+        - ku
+        - ky
+        - lt
+        - lv
+        - mi
+        - mn
+        - mr
+        - ms
+        - mt
+        - nb
+        - nl
+        - 'no'
+        - ns
+        - pl
+        - ps
+        - pt
+        - pt-br
+        - qu
+        - ro
+        - ru
+        - sk
+        - sq
+        - sv
+        - sw
+        - ta
+        - te
+        - th
+        - tl
+        - tn
+        - tr
+        - tt
+        - uk
+        - ur
+        - uz
+        - zh
     ignorePlurals:
       description: |
         Treat singular, plurals, and other forms of declensions as equivalent.
@@ -968,11 +1040,11 @@ components:
         - es
       oneOf:
         - type: array
+          description: |
+            ISO code for languages for which this feature should be active.
+            This overrides languages you set with `queryLanguages`.
           items:
-            type: string
-            description: |
-              ISO code for languages for which this feature should be active.
-              This overrides languages you set with `queryLanguages`.
+            $ref: '#/components/schemas/supportedLanguage'
         - type: boolean
           description: >
             If true, `ignorePlurals` is active for all languages included in
@@ -1001,11 +1073,11 @@ components:
         - es
       oneOf:
         - type: array
+          description: >-
+            ISO code for languages for which stop words should be removed. This
+            overrides languages you set in `queryLanguges`.
           items:
-            type: string
-            description: >-
-              ISO code for languages for which stop words should be removed.
-              This overrides languages you set in `queryLanguges`.
+            $ref: '#/components/schemas/supportedLanguage'
         - type: boolean
           default: false
           description: >
@@ -1650,14 +1722,12 @@ components:
         queryLanguages:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/supportedLanguage'
           example:
             - es
           description: >
-            [ISO
-            code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes)
-            for language-specific settings such as plurals, stop words, and
-            word-detection dictionaries.
+            Languages for language-specific query processing steps such as
+            plurals, stop-word removal, and word-detection dictionaries.
 
 
             This setting sets a default list of languages used by the
@@ -1669,7 +1739,6 @@ components:
             languages.
 
             To support this, you must place the CJK language **first**.
-
 
 
             **You should always specify a query language.**
@@ -3037,13 +3106,11 @@ components:
         indexLanguages:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/supportedLanguage'
           example:
             - ja
           description: >
-            [ISO
-            code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes)
-            for a language for language-specific processing steps, such as word
+            Languages for language-specific processing steps, such as word
             detection and dictionary settings.
 
 
@@ -3934,11 +4001,7 @@ components:
           description: Unique identifier for the dictionary entry.
           example: 828afd405e1f4fe950b6b98c2c43c032
         language:
-          type: string
-          description: >-
-            ISO code of a [supported
-            language](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
-          example: de
+          $ref: '#/components/schemas/supportedLanguage'
         word:
           type: string
           description: >-
@@ -3966,12 +4029,6 @@ components:
             type: string
         state:
           $ref: '#/components/schemas/dictionaryEntryState'
-    language:
-      description: >-
-        ISO code of a [supported
-        language](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
-      example: en
-      type: string
     searchDictionaryEntriesResponse:
       type: object
       additionalProperties: false
@@ -4717,9 +4774,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customGet(
-                path: "/test/minimal"
-            )
+            _ = try await client.customGet(path: "/test/minimal")
     post:
       operationId: customPost
       requestBody:
@@ -4907,9 +4962,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPost(
-                path: "/test/minimal"
-            )
+            _ = try await client.customPost(path: "/test/minimal")
     put:
       operationId: customPut
       requestBody:
@@ -5097,9 +5150,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPut(
-                path: "/test/minimal"
-            )
+            _ = try await client.customPut(path: "/test/minimal")
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API.
@@ -5287,9 +5338,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customDelete(
-                path: "/test/minimal"
-            )
+            _ = try await client.customDelete(path: "/test/minimal")
   /1/indexes/{indexName}/query:
     post:
       tags:
@@ -5505,9 +5554,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.searchSingleIndex(
-                indexName: "indexName"
-            )
+            _ = try await client.searchSingleIndex(indexName: "indexName")
   /1/indexes/*/queries:
     post:
       tags:
@@ -5786,18 +5833,10 @@ paths:
             // Call the API
 
             _ = try await client
-                .search(
-                    searchMethodParams: SearchMethodParams(
-                        requests: [
-                            SearchQuery
-                                .searchForHits(
-                                    SearchForHits(
-                                        indexName: "cts_e2e_search_empty_index"
-                                    )
-                                ),
-                        ]
-                    )
-                )
+                .search(searchMethodParams: SearchMethodParams(requests: [
+                    SearchQuery
+                        .searchForHits(SearchForHits(indexName: "cts_e2e_search_empty_index")),
+                ]))
   /1/indexes/{indexName}/facets/{facetName}/query:
     post:
       tags:
@@ -6034,10 +6073,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.searchForFacetValues(
-                indexName: "indexName",
-                facetName: "facetName"
-            )
+            _ = try await client.searchForFacetValues(indexName: "indexName",
+            facetName: "facetName")
   /1/indexes/{indexName}/browse:
     post:
       tags:
@@ -6253,9 +6290,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.browse(
-                indexName: "cts_e2e_browse"
-            )
+            _ = try await client.browse(indexName: "cts_e2e_browse")
   /1/indexes/{indexName}:
     post:
       tags:
@@ -6522,13 +6557,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.saveObject(
-                indexName: "theIndexName",
-                body: [
-                    "objectID": "id",
-                    "test": "val",
-                ]
-            )
+            _ = try await client.saveObject(indexName: "theIndexName", body:
+            ["objectID": "id", "test": "val"])
     delete:
       tags:
         - Indices
@@ -6734,9 +6764,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.deleteIndex(
-                indexName: "theIndexName"
-            )
+            _ = try await client.deleteIndex(indexName: "theIndexName")
   /1/indexes/{indexName}/{objectID}:
     get:
       tags:
@@ -6994,10 +7022,7 @@ paths:
             _ = try await client.getObject(
                 indexName: "theIndexName",
                 objectID: "uniqueID",
-                attributesToRetrieve: [
-                    "attr1",
-                    "attr2",
-                ]
+                attributesToRetrieve: ["attr1", "attr2"]
             )
     put:
       tags:
@@ -7245,13 +7270,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.addOrUpdateObject(
-                indexName: "indexName",
-                objectID: "uniqueID",
-                body: [
-                    "key": "value",
-                ]
-            )
+            _ = try await client.addOrUpdateObject(indexName: "indexName",
+            objectID: "uniqueID", body: ["key": "value"])
     delete:
       tags:
         - Records
@@ -7450,10 +7470,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.deleteObject(
-                indexName: "theIndexName",
-                objectID: "uniqueID"
-            )
+            _ = try await client.deleteObject(indexName: "theIndexName",
+            objectID: "uniqueID")
   /1/indexes/{indexName}/deleteByQuery:
     post:
       tags:
@@ -7681,9 +7699,7 @@ paths:
 
             _ = try await client.deleteBy(
                 indexName: "theIndexName",
-                deleteByParams: DeleteByParams(
-                    filters: "brand:brandName"
-                )
+                deleteByParams: DeleteByParams(filters: "brand:brandName")
             )
   /1/indexes/{indexName}/clear:
     post:
@@ -7874,9 +7890,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.clearObjects(
-                indexName: "theIndexName"
-            )
+            _ = try await client.clearObjects(indexName: "theIndexName")
   /1/indexes/{indexName}/{objectID}/partial:
     post:
       tags:
@@ -8179,11 +8193,11 @@ paths:
             _ = try await client.partialUpdateObject(
                 indexName: "theIndexName",
                 objectID: "uniqueID",
-                attributesToUpdate: ["id1": AttributeToUpdate.string("test"
-                ), "id2": AttributeToUpdate.builtInOperation(BuiltInOperation(operation: BuiltInOperationType.addUnique,
-                                                                              value: "test2"
-                    )
-                )],
+                attributesToUpdate: [
+                    "id1": AttributeToUpdate.string("test"),
+                    "id2": AttributeToUpdate
+                        .builtInOperation(BuiltInOperation(operation: BuiltInOperationType.addUnique, value: "test2")),
+                ],
                 createIfNotExists: true
             )
   /1/indexes/{indexName}/batch:
@@ -8513,16 +8527,10 @@ paths:
 
             _ = try await client.batch(
                 indexName: "theIndexName",
-                batchWriteParams: BatchWriteParams(
-                    requests: [
-                        BatchRequest(
-                            action: Action.addObject,
-                            body: [
-                                "key": "value",
-                            ]
-                        ),
-                    ]
-                )
+                batchWriteParams: BatchWriteParams(requests: [BatchRequest(
+                    action: Action.addObject,
+                    body: ["key": "value"]
+                )])
             )
   /1/indexes/*/batch:
     post:
@@ -8859,19 +8867,12 @@ paths:
 
             // Call the API
 
-            _ = try await client.multipleBatch(
-                batchParams: BatchParams(
-                    requests: [
-                        MultipleBatchRequest(
-                            action: Action.addObject,
-                            body: [
-                                "key": "value",
-                            ],
-                            indexName: "theIndexName"
-                        ),
-                    ]
-                )
-            )
+            _ = try await client.multipleBatch(batchParams:
+            BatchParams(requests: [MultipleBatchRequest(
+                action: Action.addObject,
+                body: ["key": "value"],
+                indexName: "theIndexName"
+            )]))
   /1/indexes/*/objects:
     post:
       tags:
@@ -9206,20 +9207,12 @@ paths:
 
             // Call the API
 
-            _ = try await client.getObjects(
-                getObjectsParams: GetObjectsParams(
-                    requests: [
-                        GetObjectsRequest(
-                            attributesToRetrieve: [
-                                "attr1",
-                                "attr2",
-                            ],
-                            objectID: "uniqueID",
-                            indexName: "theIndexName"
-                        ),
-                    ]
-                )
-            )
+            _ = try await client.getObjects(getObjectsParams:
+            GetObjectsParams(requests: [GetObjectsRequest(
+                attributesToRetrieve: ["attr1", "attr2"],
+                objectID: "uniqueID",
+                indexName: "theIndexName"
+            )]))
   /1/indexes/{indexName}/settings:
     get:
       tags:
@@ -9411,9 +9404,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getSettings(
-                indexName: "cts_e2e_settings"
-            )
+            _ = try await client.getSettings(indexName: "cts_e2e_settings")
     put:
       tags:
         - Indices
@@ -9646,9 +9637,7 @@ paths:
 
             _ = try await client.setSettings(
                 indexName: "cts_e2e_settings",
-                indexSettings: IndexSettings(
-                    paginationLimitedTo: 10
-                ),
+                indexSettings: IndexSettings(paginationLimitedTo: 10),
                 forwardToReplicas: true
             )
   /1/indexes/{indexName}/synonyms/{objectID}:
@@ -9848,10 +9837,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.getSynonym(
-                indexName: "indexName",
-                objectID: "id1"
-            )
+            _ = try await client.getSynonym(indexName: "indexName", objectID:
+            "id1")
     put:
       tags:
         - Synonyms
@@ -10146,15 +10133,7 @@ paths:
             _ = try await client.saveSynonym(
                 indexName: "indexName",
                 objectID: "id1",
-                synonymHit: SynonymHit(
-                    objectID: "id1",
-                    type: SynonymType.synonym,
-                    synonyms: [
-                        "car",
-                        "vehicule",
-                        "auto",
-                    ]
-                ),
+                synonymHit: SynonymHit(objectID: "id1", type: SynonymType.synonym, synonyms: ["car", "vehicule", "auto"]),
                 forwardToReplicas: true
             )
     delete:
@@ -10351,10 +10330,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.deleteSynonym(
-                indexName: "indexName",
-                objectID: "id1"
-            )
+            _ = try await client.deleteSynonym(indexName: "indexName", objectID:
+            "id1")
   /1/indexes/{indexName}/synonyms/batch:
     post:
       tags:
@@ -10714,23 +10691,11 @@ paths:
             _ = try await client.saveSynonyms(
                 indexName: "indexName",
                 synonymHit: [
-                    SynonymHit(
-                        objectID: "id1",
-                        type: SynonymType.synonym,
-                        synonyms: [
-                            "car",
-                            "vehicule",
-                            "auto",
-                        ]
-                    ),
+                    SynonymHit(objectID: "id1", type: SynonymType.synonym, synonyms: ["car", "vehicule", "auto"]),
                     SynonymHit(
                         objectID: "id2",
                         type: SynonymType.onewaysynonym,
-                        synonyms: [
-                            "ephone",
-                            "aphone",
-                            "yphone",
-                        ],
+                        synonyms: ["ephone", "aphone", "yphone"],
                         input: "iphone"
                     ),
                 ],
@@ -10925,9 +10890,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.clearSynonyms(
-                indexName: "indexName"
-            )
+            _ = try await client.clearSynonyms(indexName: "indexName")
   /1/indexes/{indexName}/synonyms/search:
     post:
       tags:
@@ -11146,9 +11109,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.searchSynonyms(
-                indexName: "indexName"
-            )
+            _ = try await client.searchSynonyms(indexName: "indexName")
   /1/keys:
     get:
       tags:
@@ -11594,18 +11555,13 @@ paths:
 
             // Call the API
 
-            _ = try await client.addApiKey(
-                apiKey: ApiKey(
-                    acl: [
-                        Acl.search,
-                        Acl.addObject,
-                    ],
-                    description: "my new api key",
-                    maxHitsPerQuery: 20,
-                    maxQueriesPerIPPerHour: 100,
-                    validity: 300
-                )
-            )
+            _ = try await client.addApiKey(apiKey: ApiKey(
+                acl: [Acl.search, Acl.addObject],
+                description: "my new api key",
+                maxHitsPerQuery: 20,
+                maxQueriesPerIPPerHour: 100,
+                validity: 300
+            ))
   /1/keys/{key}:
     get:
       tags:
@@ -11797,9 +11753,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getApiKey(
-                key: "myTestApiKey"
-            )
+            _ = try await client.getApiKey(key: "myTestApiKey")
     put:
       tags:
         - Api Keys
@@ -12079,10 +12033,7 @@ paths:
             _ = try await client.updateApiKey(
                 key: "myApiKey",
                 apiKey: ApiKey(
-                    acl: [
-                        Acl.search,
-                        Acl.addObject,
-                    ],
+                    acl: [Acl.search, Acl.addObject],
                     maxHitsPerQuery: 20,
                     maxQueriesPerIPPerHour: 100,
                     validity: 300
@@ -12279,9 +12230,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.deleteApiKey(
-                key: "myTestApiKey"
-            )
+            _ = try await client.deleteApiKey(key: "myTestApiKey")
   /1/keys/{key}/restore:
     post:
       tags:
@@ -12477,9 +12426,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.restoreApiKey(
-                key: "myApiKey"
-            )
+            _ = try await client.restoreApiKey(key: "myApiKey")
   /1/indexes/{indexName}/rules/{objectID}:
     get:
       tags:
@@ -12678,10 +12625,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.getRule(
-                indexName: "indexName",
-                objectID: "id1"
-            )
+            _ = try await client.getRule(indexName: "indexName", objectID:
+            "id1")
     put:
       tags:
         - Rules
@@ -12967,15 +12912,7 @@ paths:
             _ = try await client.saveRule(
                 indexName: "indexName",
                 objectID: "id1",
-                rule: Rule(
-                    objectID: "id1",
-                    conditions: [
-                        Condition(
-                            pattern: "apple",
-                            anchoring: Anchoring.contains
-                        ),
-                    ]
-                )
+                rule: Rule(objectID: "id1", conditions: [Condition(pattern: "apple", anchoring: Anchoring.contains)])
             )
     delete:
       tags:
@@ -13170,10 +13107,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.deleteRule(
-                indexName: "indexName",
-                objectID: "id1"
-            )
+            _ = try await client.deleteRule(indexName: "indexName", objectID:
+            "id1")
   /1/indexes/{indexName}/rules/batch:
     post:
       tags:
@@ -13541,21 +13476,11 @@ paths:
                 rules: [
                     Rule(
                         objectID: "a-rule-id",
-                        conditions: [
-                            Condition(
-                                pattern: "smartphone",
-                                anchoring: Anchoring.contains
-                            ),
-                        ]
+                        conditions: [Condition(pattern: "smartphone", anchoring: Anchoring.contains)]
                     ),
                     Rule(
                         objectID: "a-second-rule-id",
-                        conditions: [
-                            Condition(
-                                pattern: "apple",
-                                anchoring: Anchoring.contains
-                            ),
-                        ]
+                        conditions: [Condition(pattern: "apple", anchoring: Anchoring.contains)]
                     ),
                 ]
             )
@@ -13747,9 +13672,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.clearRules(
-                indexName: "indexName"
-            )
+            _ = try await client.clearRules(indexName: "indexName")
   /1/indexes/{indexName}/rules/search:
     post:
       tags:
@@ -14022,9 +13945,7 @@ paths:
 
             _ = try await client.searchRules(
                 indexName: "indexName",
-                searchRulesParams: SearchRulesParams(
-                    query: "something"
-                )
+                searchRulesParams: SearchRulesParams(query: "something")
             )
   /1/dictionaries/{dictionaryName}/batch:
     post:
@@ -14103,12 +14024,20 @@ paths:
                   new BatchDictionaryEntriesRequest
                   {
                     Action = Enum.Parse<DictionaryAction>("AddEntry"),
-                    Body = new DictionaryEntry { ObjectID = "1", Language = "en", },
+                    Body = new DictionaryEntry
+                    {
+                      ObjectID = "1",
+                      Language = Enum.Parse<SupportedLanguage>("En"),
+                    },
                   },
                   new BatchDictionaryEntriesRequest
                   {
                     Action = Enum.Parse<DictionaryAction>("DeleteEntry"),
-                    Body = new DictionaryEntry { ObjectID = "2", Language = "fr", },
+                    Body = new DictionaryEntry
+                    {
+                      ObjectID = "2",
+                      Language = Enum.Parse<SupportedLanguage>("Fr"),
+                    },
                   }
                 },
               }
@@ -14131,14 +14060,14 @@ paths:
                     action: DictionaryAction.fromJson("addEntry"),
                     body: DictionaryEntry(
                       objectID: "1",
-                      language: "en",
+                      language: SupportedLanguage.fromJson("en"),
                     ),
                   ),
                   BatchDictionaryEntriesRequest(
                     action: DictionaryAction.fromJson("deleteEntry"),
                     body: DictionaryEntry(
                       objectID: "2",
-                      language: "fr",
+                      language: SupportedLanguage.fromJson("fr"),
                     ),
                   ),
                 ],
@@ -14163,8 +14092,8 @@ paths:
               search.DictionaryType("compounds"),
               search.NewEmptyBatchDictionaryEntriesParams().SetRequests(
                 []search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
-                  search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage("en")), *search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("deleteEntry")).SetBody(
-                  search.NewEmptyDictionaryEntry().SetObjectID("2").SetLanguage("fr"))}),
+                  search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en"))), *search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("deleteEntry")).SetBody(
+                  search.NewEmptyDictionaryEntry().SetObjectID("2").SetLanguage(search.SupportedLanguage("fr")))}),
             ))
 
             if err != nil {
@@ -14193,10 +14122,10 @@ paths:
                   List.of(
                     new BatchDictionaryEntriesRequest()
                       .setAction(DictionaryAction.fromValue("addEntry"))
-                      .setBody(new DictionaryEntry().setObjectID("1").setLanguage("en")),
+                      .setBody(new DictionaryEntry().setObjectID("1").setLanguage(SupportedLanguage.fromValue("en"))),
                     new BatchDictionaryEntriesRequest()
                       .setAction(DictionaryAction.fromValue("deleteEntry"))
-                      .setBody(new DictionaryEntry().setObjectID("2").setLanguage("fr"))
+                      .setBody(new DictionaryEntry().setObjectID("2").setLanguage(SupportedLanguage.fromValue("fr")))
                   )
                 )
             );
@@ -14236,14 +14165,14 @@ paths:
                     action = DictionaryAction.entries.first { it.value == "addEntry" },
                     body = DictionaryEntry(
                       objectID = "1",
-                      language = "en",
+                      language = SupportedLanguage.entries.first { it.value == "en" },
                     ),
                   ),
                   BatchDictionaryEntriesRequest(
                     action = DictionaryAction.entries.first { it.value == "deleteEntry" },
                     body = DictionaryEntry(
                       objectID = "2",
-                      language = "fr",
+                      language = SupportedLanguage.entries.first { it.value == "fr" },
                     ),
                   ),
                 ),
@@ -14334,12 +14263,12 @@ paths:
                     action: 'addEntry',
                     body: DictionaryEntry.new(
                       object_id: "1",
-                      language: "en"
+                      language: 'en'
                     )
                   ),
                   BatchDictionaryEntriesRequest.new(
                     action: 'deleteEntry',
-                    body: DictionaryEntry.new(object_id: "2", language: "fr")
+                    body: DictionaryEntry.new(object_id: "2", language: 'fr')
                   )
                 ]
               )
@@ -14368,14 +14297,14 @@ paths:
                     action = DictionaryAction.withName("addEntry"),
                     body = DictionaryEntry(
                       objectID = "1",
-                      language = "en"
+                      language = SupportedLanguage.withName("en")
                     )
                   ),
                   BatchDictionaryEntriesRequest(
                     action = DictionaryAction.withName("deleteEntry"),
                     body = DictionaryEntry(
                       objectID = "2",
-                      language = "fr"
+                      language = SupportedLanguage.withName("fr")
                     )
                   )
                 )
@@ -14398,24 +14327,16 @@ paths:
 
             _ = try await client.batchDictionaryEntries(
                 dictionaryName: DictionaryType.compounds,
-                batchDictionaryEntriesParams: BatchDictionaryEntriesParams(
-                    requests: [
-                        BatchDictionaryEntriesRequest(
-                            action: DictionaryAction.addEntry,
-                            body: DictionaryEntry(
-                                objectID: "1",
-                                language: "en"
-                            )
-                        ),
-                        BatchDictionaryEntriesRequest(
-                            action: DictionaryAction.deleteEntry,
-                            body: DictionaryEntry(
-                                objectID: "2",
-                                language: "fr"
-                            )
-                        ),
-                    ]
-                )
+                batchDictionaryEntriesParams: BatchDictionaryEntriesParams(requests: [
+                    BatchDictionaryEntriesRequest(action: DictionaryAction.addEntry, body: DictionaryEntry(
+                        objectID: "1",
+                        language: SupportedLanguage.en
+                    )),
+                    BatchDictionaryEntriesRequest(
+                        action: DictionaryAction.deleteEntry,
+                        body: DictionaryEntry(objectID: "2", language: SupportedLanguage.fr)
+                    ),
+                ])
             )
   /1/dictionaries/{dictionaryName}/search:
     post:
@@ -14449,7 +14370,7 @@ paths:
                 hitsPerPage:
                   $ref: '#/components/schemas/hitsPerPage'
                 language:
-                  $ref: '#/components/schemas/language'
+                  $ref: '#/components/schemas/supportedLanguage'
       responses:
         '200':
           description: OK
@@ -14659,9 +14580,7 @@ paths:
 
             _ = try await client.searchDictionaryEntries(
                 dictionaryName: DictionaryType.stopwords,
-                searchDictionaryEntriesParams: SearchDictionaryEntriesParams(
-                    query: "about"
-                )
+                searchDictionaryEntriesParams: SearchDictionaryEntriesParams(query: "about")
             )
   /1/dictionaries/*/settings:
     get:
@@ -15109,15 +15028,11 @@ paths:
 
             _ = try await client
                 .setDictionarySettings(
-                    dictionarySettingsParams: DictionarySettingsParams(
-                        disableStandardEntries: StandardEntries(
-                            plurals: [
-                                "fr": false,
-                                "en": false,
-                                "ru": true,
-                            ]
-                        )
-                    )
+                    dictionarySettingsParams: DictionarySettingsParams(disableStandardEntries: StandardEntries(plurals: [
+                        "fr": false,
+                        "en": false,
+                        "ru": true,
+                    ]))
                 )
   /1/dictionaries/*/languages:
     get:
@@ -15535,9 +15450,7 @@ paths:
 
             _ = try await client.assignUserId(
                 xAlgoliaUserID: "userID",
-                assignUserIdParams: AssignUserIdParams(
-                    cluster: "theCluster"
-                )
+                assignUserIdParams: AssignUserIdParams(cluster: "theCluster")
             )
     get:
       tags:
@@ -15999,13 +15912,7 @@ paths:
 
             _ = try await client.batchAssignUserIds(
                 xAlgoliaUserID: "userID",
-                batchAssignUserIdsParams: BatchAssignUserIdsParams(
-                    cluster: "theCluster",
-                    users: [
-                        "user1",
-                        "user2",
-                    ]
-                )
+                batchAssignUserIdsParams: BatchAssignUserIdsParams(cluster: "theCluster", users: ["user1", "user2"])
             )
   /1/clusters/mapping/top:
     get:
@@ -16399,9 +16306,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getUserId(
-                userID: "uniqueID"
-            )
+            _ = try await client.getUserId(userID: "uniqueID")
     delete:
       tags:
         - Clusters
@@ -16593,9 +16498,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.removeUserId(
-                userID: "uniqueID"
-            )
+            _ = try await client.removeUserId(userID: "uniqueID")
   /1/clusters:
     get:
       tags:
@@ -17102,14 +17005,13 @@ paths:
 
             // Call the API
 
-            _ = try await client.searchUserIds(
-                searchUserIdsParams: SearchUserIdsParams(
-                    query: "test",
-                    clusterName: "theClusterName",
-                    page: 5,
-                    hitsPerPage: 10
-                )
-            )
+            _ = try await client.searchUserIds(searchUserIdsParams:
+            SearchUserIdsParams(
+                query: "test",
+                clusterName: "theClusterName",
+                page: 5,
+                hitsPerPage: 10
+            ))
   /1/clusters/mapping/pending:
     get:
       tags:
@@ -17738,14 +17640,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.replaceSources(
-                source: [
-                    Source(
-                        source: "theSource",
-                        description: "theDescription"
-                    ),
-                ]
-            )
+            _ = try await client.replaceSources(source: [Source(source:
+            "theSource", description: "theDescription")])
   /1/security/sources/append:
     post:
       tags:
@@ -17958,12 +17854,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.appendSource(
-                source: Source(
-                    source: "theSource",
-                    description: "theDescription"
-                )
-            )
+            _ = try await client.appendSource(source: Source(source:
+            "theSource", description: "theDescription"))
   /1/security/sources/{source}:
     delete:
       tags:
@@ -18162,9 +18054,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.deleteSource(
-                source: "theSource"
-            )
+            _ = try await client.deleteSource(source: "theSource")
   /1/logs:
     get:
       tags:
@@ -18740,10 +18630,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.getTask(
-                indexName: "theIndexName",
-                taskID: Int64(123)
-            )
+            _ = try await client.getTask(indexName: "theIndexName", taskID:
+            Int64(123))
   /1/indexes/{indexName}/operation:
     post:
       tags:
@@ -19074,10 +18962,7 @@ paths:
                 operationIndexParams: OperationIndexParams(
                     operation: OperationType.copy,
                     destination: "dest",
-                    scope: [
-                        ScopeType.rules,
-                        ScopeType.settings,
-                    ]
+                    scope: [ScopeType.rules, ScopeType.settings]
                 )
             )
   /1/indexes:

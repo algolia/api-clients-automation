@@ -95,6 +95,7 @@ export 'src/model/snippet_result_option.dart';
 export 'src/model/sort_remaining_by.dart';
 export 'src/model/source.dart';
 export 'src/model/standard_entries.dart';
+export 'src/model/supported_language.dart';
 export 'src/model/synonym_hit.dart';
 export 'src/model/synonym_type.dart';
 export 'src/model/task_status.dart';

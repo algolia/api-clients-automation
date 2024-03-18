@@ -200,8 +200,8 @@ func SnippetForBatchDictionaryEntriesOfSearch() {
 		search.DictionaryType("compounds"),
 		search.NewEmptyBatchDictionaryEntriesParams().SetRequests(
 			[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
-				search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage("en")), *search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("deleteEntry")).SetBody(
-				search.NewEmptyDictionaryEntry().SetObjectID("2").SetLanguage("fr"))}),
+				search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en"))), *search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("deleteEntry")).SetBody(
+				search.NewEmptyDictionaryEntry().SetObjectID("2").SetLanguage(search.SupportedLanguage("fr")))}),
 	))
 	if err != nil {
 		// handle the eventual error

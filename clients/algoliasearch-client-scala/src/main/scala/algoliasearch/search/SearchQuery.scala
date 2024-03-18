@@ -41,6 +41,7 @@ import algoliasearch.search.Mode._
 import algoliasearch.search.QueryType._
 import algoliasearch.search.RemoveWordsIfNoResults._
 import algoliasearch.search.SearchTypeFacet._
+import algoliasearch.search.SupportedLanguage._
 
 import org.json4s._
 

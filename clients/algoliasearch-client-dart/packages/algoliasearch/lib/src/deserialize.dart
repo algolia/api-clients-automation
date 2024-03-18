@@ -88,6 +88,7 @@ import 'package:algoliasearch/src/model/snippet_result_option.dart';
 import 'package:algoliasearch/src/model/sort_remaining_by.dart';
 import 'package:algoliasearch/src/model/source.dart';
 import 'package:algoliasearch/src/model/standard_entries.dart';
+import 'package:algoliasearch/src/model/supported_language.dart';
 import 'package:algoliasearch/src/model/synonym_hit.dart';
 import 'package:algoliasearch/src/model/synonym_type.dart';
 import 'package:algoliasearch/src/model/task_status.dart';
@@ -343,6 +344,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'StandardEntries':
       return StandardEntries.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'SupportedLanguage':
+      return SupportedLanguage.fromJson(value) as ReturnType;
     case 'SynonymHit':
       return SynonymHit.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'SynonymType':
