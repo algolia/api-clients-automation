@@ -364,6 +364,7 @@ jobs:
     timeout-minutes: 20
     runs-on: macos-latest
     needs:
+      - setup
       - client_gen
     if: |
       always() &&
