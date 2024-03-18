@@ -282,9 +282,9 @@ jobs:
           path: clients-javascript.zip
 
   client_gen:
-    name: Generate ${{ matrix.client.language }} client on ${{ matrix.client.runsOn }}
+    name: Generate ${{ fromJSON(needs.setup.outputs.GEN_MATRIX).client.language }} client on ${{ fromJSON(needs.setup.outputs.GEN_MATRIX).client.runsOn }}
     timeout-minutes: 20
-    runs-on: ${{ matrix.client.runsOn }}
+    runs-on: ${{ fromJSON(needs.setup.outputs.GEN_MATRIX).client.runsOn }}
     needs:
       - setup
       - specs
@@ -294,7 +294,7 @@ jobs:
       needs.setup.outputs.RUN_GEN == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure') &&
-      ${{ matrix.client.runsIf || true }}
+      ${{ fromJSON(needs.setup.outputs.GEN_MATRIX).client.runsIf || true }}
     strategy:
       fail-fast: false
       matrix: ${{ fromJSON(needs.setup.outputs.GEN_MATRIX) }}
