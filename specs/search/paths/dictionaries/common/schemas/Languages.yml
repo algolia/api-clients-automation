@@ -15,11 +15,12 @@ languages:
       $ref: '#/dictionaryLanguage'
 
 dictionaryLanguage:
-  type: object
-  additionalProperties: false
-  nullable: true
-  description: Dictionary type. If `null`, this dictionary type isn't supported for the language.
-  properties:
-    nbCustomEntries:
-      description: Number of custom dictionary entries.
-      type: integer
+  oneOf:
+    - type: object
+      additionalProperties: false
+      description: Dictionary type. If `null`, this dictionary type isn't supported for the language.
+      properties:
+        nbCustomEntries:
+          description: Number of custom dictionary entries.
+          type: integer
+    - type: 'null'

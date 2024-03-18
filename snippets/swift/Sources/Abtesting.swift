@@ -1,7 +1,7 @@
-import AnyCodable
-
+#if canImport(Core)
+    import Core
+#endif
 import Abtesting
-import Core
 
 final class AbtestingClientSnippet {
     /// Snippet for the addABTests method.
@@ -10,26 +10,17 @@ final class AbtestingClientSnippet {
     func snippetForAddABTests() async throws {
         // >SEPARATOR addABTests
         // Initialize the client
-        let client = try AbtestingClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.addABTests(
-            addABTestsRequest: AddABTestsRequest(
-                name: "myABTest",
-                variants: [AddABTestsVariant.abTestsVariant(
-                    AbTestsVariant(
-                        index: "AB_TEST_1",
-                        trafficPercentage: 30
-                    )
-                ), AddABTestsVariant.abTestsVariant(
-                    AbTestsVariant(
-                        index: "AB_TEST_2",
-                        trafficPercentage: 50
-                    )
-                )],
-                endAt: "2022-12-31T00:00:00.000Z"
-            )
-        )
+        _ = try await client.addABTests(addABTestsRequest: AddABTestsRequest(
+            name: "myABTest",
+            variants: [
+                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_1", trafficPercentage: 30)),
+                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_2", trafficPercentage: 50)),
+            ],
+            endAt: "2022-12-31T00:00:00.000Z"
+        ))
         // SEPARATOR<
     }
 
@@ -39,12 +30,10 @@ final class AbtestingClientSnippet {
     func snippetForCustomDelete() async throws {
         // >SEPARATOR customDelete
         // Initialize the client
-        let client = try AbtestingClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customDelete(
-            path: "/test/minimal"
-        )
+        _ = try await client.customDelete(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -54,12 +43,10 @@ final class AbtestingClientSnippet {
     func snippetForCustomGet() async throws {
         // >SEPARATOR customGet
         // Initialize the client
-        let client = try AbtestingClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customGet(
-            path: "/test/minimal"
-        )
+        _ = try await client.customGet(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -69,12 +56,10 @@ final class AbtestingClientSnippet {
     func snippetForCustomPost() async throws {
         // >SEPARATOR customPost
         // Initialize the client
-        let client = try AbtestingClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPost(
-            path: "/test/minimal"
-        )
+        _ = try await client.customPost(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -84,12 +69,10 @@ final class AbtestingClientSnippet {
     func snippetForCustomPut() async throws {
         // >SEPARATOR customPut
         // Initialize the client
-        let client = try AbtestingClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPut(
-            path: "/test/minimal"
-        )
+        _ = try await client.customPut(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -99,12 +82,10 @@ final class AbtestingClientSnippet {
     func snippetForDeleteABTest() async throws {
         // >SEPARATOR deleteABTest
         // Initialize the client
-        let client = try AbtestingClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.deleteABTest(
-            id: 42
-        )
+        _ = try await client.deleteABTest(id: 42)
         // SEPARATOR<
     }
 
@@ -114,12 +95,10 @@ final class AbtestingClientSnippet {
     func snippetForGetABTest() async throws {
         // >SEPARATOR getABTest
         // Initialize the client
-        let client = try AbtestingClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getABTest(
-            id: 42
-        )
+        _ = try await client.getABTest(id: 42)
         // SEPARATOR<
     }
 
@@ -129,7 +108,7 @@ final class AbtestingClientSnippet {
     func snippetForListABTests() async throws {
         // >SEPARATOR listABTests
         // Initialize the client
-        let client = try AbtestingClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.listABTests()
@@ -142,12 +121,10 @@ final class AbtestingClientSnippet {
     func snippetForStopABTest() async throws {
         // >SEPARATOR stopABTest
         // Initialize the client
-        let client = try AbtestingClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.stopABTest(
-            id: 42
-        )
+        _ = try await client.stopABTest(id: 42)
         // SEPARATOR<
     }
 }

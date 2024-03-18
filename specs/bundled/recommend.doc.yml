@@ -10,6 +10,2111 @@ info:
     to interact with the Recommend API. Using the HTTP endpoints directly is not
     covered by the [SLA](https://www.algolia.com/policies/sla/).
   version: 1.0.0
+servers:
+  - url: https://{appId}.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-1.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-2.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-3.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-dsn.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+security:
+  - appId: []
+    apiKey: []
+tags:
+  - name: recommendations
+    x-displayName: Recommend
+    description: Manage recommendations.
+paths:
+  /1{path}:
+    get:
+      operationId: customGet
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.CustomGetAsync("/test/minimal");
+        - lang: Dart
+          source: >
+            // Initialize the client
+
+            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
+            'YOUR_API_KEY');
+
+
+            // Call the API
+
+            final response = await client.customGet(
+              path: "/test/minimal",
+            );
+        - lang: Go
+          source: |
+            // Initialize the client
+            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.CustomGet(client.NewApiCustomGetRequest(
+              "/test/minimal",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            RecommendClient client = new RecommendClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.customGet("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.customGet({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.customGet(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->customGet(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.custom_get(
+                path="/test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::RecommendClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.custom_get("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.customGet[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.customGet(path: "/test/minimal")
+    post:
+      operationId: customPost
+      requestBody:
+        description: Parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.CustomPostAsync("/test/minimal");
+        - lang: Dart
+          source: >
+            // Initialize the client
+
+            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
+            'YOUR_API_KEY');
+
+
+            // Call the API
+
+            final response = await client.customPost(
+              path: "/test/minimal",
+            );
+        - lang: Go
+          source: |
+            // Initialize the client
+            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.CustomPost(client.NewApiCustomPostRequest(
+              "/test/minimal",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            RecommendClient client = new RecommendClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.customPost("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.customPost({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.customPost(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->customPost(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.custom_post(
+                path="/test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::RecommendClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.custom_post("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.customPost[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.customPost(path: "/test/minimal")
+    put:
+      operationId: customPut
+      requestBody:
+        description: Parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.CustomPutAsync("/test/minimal");
+        - lang: Dart
+          source: >
+            // Initialize the client
+
+            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
+            'YOUR_API_KEY');
+
+
+            // Call the API
+
+            final response = await client.customPut(
+              path: "/test/minimal",
+            );
+        - lang: Go
+          source: |
+            // Initialize the client
+            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.CustomPut(client.NewApiCustomPutRequest(
+              "/test/minimal",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            RecommendClient client = new RecommendClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.customPut("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.customPut({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.customPut(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->customPut(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.custom_put(
+                path="/test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::RecommendClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.custom_put("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.customPut[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.customPut(path: "/test/minimal")
+    delete:
+      operationId: customDelete
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.CustomDeleteAsync("/test/minimal");
+        - lang: Dart
+          source: >
+            // Initialize the client
+
+            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
+            'YOUR_API_KEY');
+
+
+            // Call the API
+
+            final response = await client.customDelete(
+              path: "/test/minimal",
+            );
+        - lang: Go
+          source: |
+            // Initialize the client
+            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+              "/test/minimal",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            RecommendClient client = new RecommendClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.customDelete("/test/minimal");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.customDelete({ path: '/test/minimal'
+            });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.customDelete(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->customDelete(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.custom_delete(
+                path="/test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::RecommendClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.custom_delete("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.customDelete[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.customDelete(path: "/test/minimal")
+  /1/indexes/*/recommendations:
+    post:
+      tags:
+        - recommendations
+      operationId: getRecommendations
+      x-use-read-transporter: true
+      x-cacheable: true
+      x-acl:
+        - search
+      summary: Get recommendations and trending items.
+      description: |
+        Returns results from either recommendation or trending models:
+
+          - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models
+          - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              title: getRecommendationsParams
+              description: Recommend parameters.
+              type: object
+              additionalProperties: false
+              properties:
+                requests:
+                  type: array
+                  description: >-
+                    Request parameters depend on the model (recommendations or
+                    trending).
+                  items:
+                    $ref: '#/components/schemas/recommendationsRequest'
+              required:
+                - requests
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: getRecommendationsResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/recommendationsResults'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.GetRecommendationsAsync(
+              new GetRecommendationsParams
+              {
+                Requests = new List<RecommendationsRequest>
+                {
+                  new RecommendationsRequest(
+                    new RecommendationsQuery
+                    {
+                      IndexName = "indexName",
+                      ObjectID = "objectID",
+                      Model = Enum.Parse<RecommendationModels>("RelatedProducts"),
+                      Threshold = 42,
+                    }
+                  )
+                },
+              }
+            );
+        - lang: Dart
+          source: >
+            // Initialize the client
+
+            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
+            'YOUR_API_KEY');
+
+
+            // Call the API
+
+            final response = await client.getRecommendations(
+              getRecommendationsParams: GetRecommendationsParams(
+                requests: [
+                  RecommendationsQuery(
+                    indexName: "indexName",
+                    objectID: "objectID",
+                    model: RecommendationModels.fromJson("related-products"),
+                    threshold: 42,
+                  ),
+                ],
+              ),
+            );
+        - lang: Go
+          source: >
+            // Initialize the client
+
+            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetRecommendations(client.NewApiGetRecommendationsRequest(
+
+              recommend.NewEmptyGetRecommendationsParams().SetRequests(
+                []recommend.RecommendationsRequest{*recommend.RecommendationsQueryAsRecommendationsRequest(
+                  recommend.NewEmptyRecommendationsQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RecommendationModels("related-products")).SetThreshold(42))}),
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            RecommendClient client = new RecommendClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.getRecommendations(
+              new GetRecommendationsParams()
+                .setRequests(
+                  List.of(
+                    new RecommendationsQuery()
+                      .setIndexName("indexName")
+                      .setObjectID("objectID")
+                      .setModel(RecommendationModels.fromValue("related-products"))
+                      .setThreshold(42)
+                  )
+                )
+            );
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.getRecommendations({
+              requests: [
+                {
+                  indexName: 'indexName',
+                  objectID: 'objectID',
+                  model: 'related-products',
+                  threshold: 42,
+                },
+              ],
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.getRecommendations(
+              getRecommendationsParams = GetRecommendationsParams(
+                requests = listOf(
+                  RecommendationsQuery(
+                    indexName = "indexName",
+                    objectID = "objectID",
+                    model = RecommendationModels.entries.first { it.value == "related-products" },
+                    threshold = 42,
+                  ),
+                ),
+              ),
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->getRecommendations(
+                ['requests' => [
+                    ['indexName' => 'indexName',
+                        'objectID' => 'objectID',
+                        'model' => 'related-products',
+                        'threshold' => 42,
+                    ],
+                ],
+                ],
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.get_recommendations(
+                get_recommendations_params={
+                    "requests": [
+                        {
+                            "indexName": "indexName",
+                            "objectID": "objectID",
+                            "model": "related-products",
+                            "threshold": 42,
+                        },
+                    ],
+                },
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::RecommendClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.get_recommendations(
+              GetRecommendationsParams.new(
+                requests: [RecommendationsQuery.new(
+                  index_name: "indexName", object_id: "objectID", model: 'related-products', threshold: 42
+                )]
+              )
+            )
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.getRecommendations(
+              getRecommendationsParams = GetRecommendationsParams(
+                requests = Seq(
+                  RecommendationsQuery(
+                    indexName = "indexName",
+                    objectID = "objectID",
+                    model = RecommendationModels.withName("related-products"),
+                    threshold = Some(42)
+                  )
+                )
+              )
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client
+                .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [
+                    RecommendationsRequest
+                        .recommendationsQuery(RecommendationsQuery(
+                            indexName: "indexName",
+                            threshold: 42,
+                            model: RecommendationModels.relatedProducts,
+                            objectID: "objectID"
+                        )),
+                ]))
+  /1/indexes/{indexName}/{model}/recommend/rules/{objectID}:
+    get:
+      tags:
+        - recommendations
+      operationId: getRecommendRule
+      x-acl:
+        - settings
+      summary: Get a Recommend rule.
+      description: >-
+        Return a [Recommend
+        rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+      parameters:
+        - $ref: '#/components/parameters/IndexName'
+        - $ref: '#/components/parameters/Models'
+        - $ref: '#/components/parameters/ObjectID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuleResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.GetRecommendRuleAsync(
+              "indexName",
+              Enum.Parse<RecommendModels>("RelatedProducts"),
+              "objectID"
+            );
+        - lang: Dart
+          source: >
+            // Initialize the client
+
+            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
+            'YOUR_API_KEY');
+
+
+            // Call the API
+
+            final response = await client.getRecommendRule(
+              indexName: "indexName",
+              model: RecommendModels.fromJson("related-products"),
+              objectID: "objectID",
+            );
+        - lang: Go
+          source: >
+            // Initialize the client
+
+            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(
+              "indexName", recommend.RecommendModels("related-products"), "objectID",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            RecommendClient client = new RecommendClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.getRecommendRule("indexName",
+            RecommendModels.fromValue("related-products"), "objectID");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.getRecommendRule({
+              indexName: 'indexName',
+              model: 'related-products',
+              objectID: 'objectID',
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.getRecommendRule(
+              indexName = "indexName",
+              model = RecommendModels.entries.first { it.value == "related-products" },
+              objectID = "objectID",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->getRecommendRule(
+                'indexName',
+                'related-products',
+                'objectID',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.get_recommend_rule(
+                index_name="indexName",
+                model="related-products",
+                object_id="objectID",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::RecommendClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.get_recommend_rule("indexName", 'related-products',
+            "objectID")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.getRecommendRule(
+              indexName = "indexName",
+              model = RecommendModels.withName("related-products"),
+              objectID = "objectID"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.getRecommendRule(
+                indexName: "indexName",
+                model: RecommendModels.relatedProducts,
+                objectID: "objectID"
+            )
+    delete:
+      tags:
+        - recommendations
+      operationId: deleteRecommendRule
+      x-acl:
+        - editSettings
+      summary: Delete a Recommend rule.
+      description: >-
+        Delete a [Recommend
+        rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+      parameters:
+        - $ref: '#/components/parameters/IndexName'
+        - $ref: '#/components/parameters/Models'
+        - $ref: '#/components/parameters/ObjectID'
+      responses:
+        '200':
+          $ref: '#/components/responses/DeletedAt'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.DeleteRecommendRuleAsync(
+              "indexName",
+              Enum.Parse<RecommendModels>("RelatedProducts"),
+              "objectID"
+            );
+        - lang: Dart
+          source: >
+            // Initialize the client
+
+            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
+            'YOUR_API_KEY');
+
+
+            // Call the API
+
+            final response = await client.deleteRecommendRule(
+              indexName: "indexName",
+              model: RecommendModels.fromJson("related-products"),
+              objectID: "objectID",
+            );
+        - lang: Go
+          source: >
+            // Initialize the client
+
+            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.DeleteRecommendRule(client.NewApiDeleteRecommendRuleRequest(
+              "indexName", recommend.RecommendModels("related-products"), "objectID",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            RecommendClient client = new RecommendClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.deleteRecommendRule("indexName",
+            RecommendModels.fromValue("related-products"), "objectID");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.deleteRecommendRule({
+              indexName: 'indexName',
+              model: 'related-products',
+              objectID: 'objectID',
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.deleteRecommendRule(
+              indexName = "indexName",
+              model = RecommendModels.entries.first { it.value == "related-products" },
+              objectID = "objectID",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->deleteRecommendRule(
+                'indexName',
+                'related-products',
+                'objectID',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.delete_recommend_rule(
+                index_name="indexName",
+                model="related-products",
+                object_id="objectID",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::RecommendClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.delete_recommend_rule("indexName", 'related-products',
+            "objectID")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.deleteRecommendRule(
+              indexName = "indexName",
+              model = RecommendModels.withName("related-products"),
+              objectID = "objectID"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.deleteRecommendRule(
+                indexName: "indexName",
+                model: RecommendModels.relatedProducts,
+                objectID: "objectID"
+            )
+  /1/indexes/{indexName}/{model}/task/{taskID}:
+    get:
+      tags:
+        - recommendations
+      operationId: getRecommendStatus
+      x-acl:
+        - editSettings
+      summary: Get a Recommend task's status.
+      description: >-
+        Some operations, such as deleting a Recommend rule, will respond with a
+        `taskID` value. Use this value here to check the status of that task.
+      parameters:
+        - $ref: '#/components/parameters/IndexName'
+        - $ref: '#/components/parameters/Models'
+        - name: taskID
+          in: path
+          description: Unique identifier of a task. Numeric value (up to 64bits).
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 13235
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: getRecommendTaskResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  status:
+                    $ref: '#/components/schemas/taskStatus'
+                required:
+                  - status
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.GetRecommendStatusAsync(
+              "indexName",
+              Enum.Parse<RecommendModels>("RelatedProducts"),
+              12345L
+            );
+        - lang: Dart
+          source: >
+            // Initialize the client
+
+            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
+            'YOUR_API_KEY');
+
+
+            // Call the API
+
+            final response = await client.getRecommendStatus(
+              indexName: "indexName",
+              model: RecommendModels.fromJson("related-products"),
+              taskID: 12345,
+            );
+        - lang: Go
+          source: >
+            // Initialize the client
+
+            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.GetRecommendStatus(client.NewApiGetRecommendStatusRequest(
+              "indexName", recommend.RecommendModels("related-products"), 12345,
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            RecommendClient client = new RecommendClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.getRecommendStatus("indexName",
+            RecommendModels.fromValue("related-products"), 12345L);
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.getRecommendStatus({
+              indexName: 'indexName',
+              model: 'related-products',
+              taskID: 12345,
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.getRecommendStatus(
+              indexName = "indexName",
+              model = RecommendModels.entries.first { it.value == "related-products" },
+              taskID = 12345L,
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->getRecommendStatus(
+                'indexName',
+                'related-products',
+                12345,
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.get_recommend_status(
+                index_name="indexName",
+                model="related-products",
+                task_id=12345,
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::RecommendClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.get_recommend_status("indexName", 'related-products',
+            12_345)
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.getRecommendStatus(
+              indexName = "indexName",
+              model = RecommendModels.withName("related-products"),
+              taskID = 12345L
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.getRecommendStatus(
+                indexName: "indexName",
+                model: RecommendModels.relatedProducts,
+                taskID: Int64(12345)
+            )
+  /1/indexes/{indexName}/{model}/recommend/rules/search:
+    post:
+      tags:
+        - recommendations
+      operationId: searchRecommendRules
+      x-use-read-transporter: true
+      x-cacheable: true
+      x-acl:
+        - settings
+      summary: List Recommend rules.
+      description: >-
+        List [Recommend
+        rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+      parameters:
+        - $ref: '#/components/parameters/IndexName'
+        - $ref: '#/components/parameters/Models'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              title: searchRecommendRulesParams
+              description: Recommend rules search parameters.
+              additionalProperties: false
+              properties:
+                query:
+                  $ref: '#/components/schemas/parameters_query'
+                context:
+                  type: string
+                  description: >-
+                    Restricts responses to the specified [contextual
+                    rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
+                  example: mobile
+                page:
+                  $ref: '#/components/schemas/parameters_page'
+                hitsPerPage:
+                  $ref: '#/components/schemas/parameters_hitsPerPage'
+                enabled:
+                  oneOf:
+                    - type: boolean
+                      default: null
+                      description: >-
+                        Restricts responses to enabled rules. When absent
+                        (default), _all_ rules are retrieved.
+                    - type: 'null'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: searchRecommendRulesResponse
+                type: object
+                additionalProperties: false
+                required:
+                  - hits
+                  - nbHits
+                  - page
+                  - nbPages
+                properties:
+                  hits:
+                    type: array
+                    description: Fetched rules.
+                    items:
+                      $ref: '#/components/schemas/RuleResponse'
+                  nbHits:
+                    $ref: '#/components/schemas/nbHits'
+                  page:
+                    $ref: '#/components/schemas/page'
+                  nbPages:
+                    $ref: '#/components/schemas/nbPages'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: >
+            // Initialize the client
+
+            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.SearchRecommendRulesAsync(
+              "indexName",
+              Enum.Parse<RecommendModels>("RelatedProducts")
+            );
+        - lang: Dart
+          source: >
+            // Initialize the client
+
+            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
+            'YOUR_API_KEY');
+
+
+            // Call the API
+
+            final response = await client.searchRecommendRules(
+              indexName: "indexName",
+              model: RecommendModels.fromJson("related-products"),
+            );
+        - lang: Go
+          source: >
+            // Initialize the client
+
+            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err :=
+            client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(
+              "indexName", recommend.RecommendModels("related-products"),
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            RecommendClient client = new RecommendClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.searchRecommendRules("indexName",
+            RecommendModels.fromValue("related-products"));
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.searchRecommendRules({
+              indexName: 'indexName',
+              model: 'related-products',
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.searchRecommendRules(
+              indexName = "indexName",
+              model = RecommendModels.entries.first { it.value == "related-products" },
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->searchRecommendRules(
+                'indexName',
+                'related-products',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: |
+            # Initialize the client
+            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.search_recommend_rules(
+                index_name="indexName",
+                model="related-products",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::RecommendClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.search_recommend_rules("indexName",
+            'related-products')
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.searchRecommendRules(
+              indexName = "indexName",
+              model = RecommendModels.withName("related-products")
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.searchRecommendRules(indexName: "indexName",
+            model: RecommendModels.relatedProducts)
 components:
   securitySchemes:
     appId:
@@ -775,6 +2880,78 @@ components:
         - $ref: '#/components/schemas/typoToleranceEnum'
       x-categories:
         - Typos
+    supportedLanguage:
+      type: string
+      description: ISO code for a supported language.
+      enum:
+        - af
+        - ar
+        - az
+        - bg
+        - bn
+        - ca
+        - cs
+        - cy
+        - da
+        - de
+        - el
+        - en
+        - eo
+        - es
+        - et
+        - eu
+        - fa
+        - fi
+        - fo
+        - fr
+        - ga
+        - gl
+        - he
+        - hi
+        - hu
+        - hy
+        - id
+        - is
+        - it
+        - ja
+        - ka
+        - kk
+        - ko
+        - ku
+        - ky
+        - lt
+        - lv
+        - mi
+        - mn
+        - mr
+        - ms
+        - mt
+        - nb
+        - nl
+        - 'no'
+        - ns
+        - pl
+        - ps
+        - pt
+        - pt-br
+        - qu
+        - ro
+        - ru
+        - sk
+        - sq
+        - sv
+        - sw
+        - ta
+        - te
+        - th
+        - tl
+        - tn
+        - tr
+        - tt
+        - uk
+        - ur
+        - uz
+        - zh
     ignorePlurals:
       description: |
         Treat singular, plurals, and other forms of declensions as equivalent.
@@ -784,11 +2961,11 @@ components:
         - es
       oneOf:
         - type: array
+          description: |
+            ISO code for languages for which this feature should be active.
+            This overrides languages you set with `queryLanguages`.
           items:
-            type: string
-            description: |
-              ISO code for languages for which this feature should be active.
-              This overrides languages you set with `queryLanguages`.
+            $ref: '#/components/schemas/supportedLanguage'
         - type: boolean
           description: >
             If true, `ignorePlurals` is active for all languages included in
@@ -817,11 +2994,11 @@ components:
         - es
       oneOf:
         - type: array
+          description: >-
+            ISO code for languages for which stop words should be removed. This
+            overrides languages you set in `queryLanguges`.
           items:
-            type: string
-            description: >-
-              ISO code for languages for which stop words should be removed.
-              This overrides languages you set in `queryLanguges`.
+            $ref: '#/components/schemas/supportedLanguage'
         - type: boolean
           default: false
           description: >
@@ -923,14 +3100,15 @@ components:
         Only used when `mode` is `neuralSearch`.
       properties:
         eventSources:
-          description: |
-            Indices from which to collect click and conversion events.
+          oneOf:
+            - type: array
+              description: |
+                Indices from which to collect click and conversion events.
 
-            If null, the current index and all its replicas are used.
-          nullable: true
-          type: array
-          items:
-            type: string
+                If null, the current index and all its replicas are used.
+              items:
+                type: string
+            - type: 'null'
     exactOnSingleWordQuery:
       type: string
       enum:
@@ -1143,7 +3321,6 @@ components:
         Restrict [Dynamic
         Re-ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/)
         to records that match these filters.
-      nullable: true
       oneOf:
         - $ref: '#/components/schemas/listOfSearchFilters'
         - type: string
@@ -1466,14 +3643,12 @@ components:
         queryLanguages:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/supportedLanguage'
           example:
             - es
           description: >
-            [ISO
-            code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes)
-            for language-specific settings such as plurals, stop words, and
-            word-detection dictionaries.
+            Languages for language-specific query processing steps such as
+            plurals, stop-word removal, and word-detection dictionaries.
 
 
             This setting sets a default list of languages used by the
@@ -1485,7 +3660,6 @@ components:
             languages.
 
             To support this, you must place the CJK language **first**.
-
 
 
             **You should always specify a query language.**
@@ -2906,2127 +5080,7 @@ components:
                 $ref: '#/components/schemas/taskID'
               deletedAt:
                 $ref: '#/components/schemas/deletedAt'
-servers:
-  - url: https://{appId}.algolianet.com
-    variables:
-      appId:
-        default: myAppId
-  - url: https://{appId}-1.algolianet.com
-    variables:
-      appId:
-        default: myAppId
-  - url: https://{appId}-2.algolianet.com
-    variables:
-      appId:
-        default: myAppId
-  - url: https://{appId}-3.algolianet.com
-    variables:
-      appId:
-        default: myAppId
-  - url: https://{appId}-dsn.algolianet.com
-    variables:
-      appId:
-        default: myAppId
-security:
-  - appId: []
-    apiKey: []
-tags:
-  - name: recommendations
-    x-displayName: Recommend
-    description: Manage recommendations.
 x-tagGroups:
   - name: General
     tags:
       - recommendations
-paths:
-  /1{path}:
-    get:
-      operationId: customGet
-      summary: Send requests to the Algolia REST API.
-      description: This method allow you to send requests to the Algolia REST API.
-      parameters:
-        - $ref: '#/components/parameters/PathInPath'
-        - $ref: '#/components/parameters/Parameters'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: CSharp
-          source: >
-            // Initialize the client
-
-            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
-            "YOUR_API_KEY"));
-
-
-            // Call the API
-
-            var response = await client.CustomGetAsync("/test/minimal");
-        - lang: Dart
-          source: >
-            // Initialize the client
-
-            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
-            'YOUR_API_KEY');
-
-
-            // Call the API
-
-            final response = await client.customGet(
-              path: "/test/minimal",
-            );
-        - lang: Go
-          source: |
-            // Initialize the client
-            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-            // Call the API
-            resp, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "/test/minimal",
-            ))
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-            // use the model directly
-            print(resp)
-        - lang: Java
-          source: >
-            // Initialize the client
-
-            RecommendClient client = new RecommendClient("YOUR_APP_ID",
-            "YOUR_API_KEY");
-
-
-            // Call the API
-
-            client.customGet("/test/minimal");
-        - lang: JavaScript
-          source: |
-            // Initialize the client
-            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
-
-            // Call the API
-            const response = await client.customGet({ path: '/test/minimal' });
-
-            // use typed response
-            console.log(response);
-        - lang: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            var response = client.customGet(
-              path = "/test/minimal",
-            )
-
-
-            // Use the response
-
-            println(response)
-        - lang: PHP
-          source: >
-            // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
-
-
-            // Call the API
-
-            $response = $client->customGet(
-                '/test/minimal',
-            );
-
-
-            // play with the response
-
-            var_dump($response);
-        - lang: Python
-          source: |
-            # Initialize the client
-            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
-
-            # Call the API
-            resp = await _client.custom_get(
-                path="/test/minimal",
-            )
-
-            # use the class directly
-            print(resp)
-
-            # print the JSON response
-            print(resp.to_json())
-        - lang: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::RecommendClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
-
-
-            # Call the API
-
-            resp = client.custom_get("/test/minimal")
-
-
-            # use the class directly
-
-            puts resp
-
-
-            # print the JSON response
-
-            puts resp.to_json
-        - lang: Scala
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            val res = client.customGet[JObject](
-              path = "/test/minimal"
-            )
-
-
-            // Use the response
-
-            val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
-          source: >
-            // Initialize the client
-
-            let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            _ = try await client.customGet(
-                path: "/test/minimal"
-            )
-    post:
-      operationId: customPost
-      requestBody:
-        description: Parameters to send with the custom request.
-        content:
-          application/json:
-            schema:
-              type: object
-      summary: Send requests to the Algolia REST API.
-      description: This method allow you to send requests to the Algolia REST API.
-      parameters:
-        - $ref: '#/components/parameters/PathInPath'
-        - $ref: '#/components/parameters/Parameters'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: CSharp
-          source: >
-            // Initialize the client
-
-            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
-            "YOUR_API_KEY"));
-
-
-            // Call the API
-
-            var response = await client.CustomPostAsync("/test/minimal");
-        - lang: Dart
-          source: >
-            // Initialize the client
-
-            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
-            'YOUR_API_KEY');
-
-
-            // Call the API
-
-            final response = await client.customPost(
-              path: "/test/minimal",
-            );
-        - lang: Go
-          source: |
-            // Initialize the client
-            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-            // Call the API
-            resp, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "/test/minimal",
-            ))
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-            // use the model directly
-            print(resp)
-        - lang: Java
-          source: >
-            // Initialize the client
-
-            RecommendClient client = new RecommendClient("YOUR_APP_ID",
-            "YOUR_API_KEY");
-
-
-            // Call the API
-
-            client.customPost("/test/minimal");
-        - lang: JavaScript
-          source: |
-            // Initialize the client
-            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
-
-            // Call the API
-            const response = await client.customPost({ path: '/test/minimal' });
-
-            // use typed response
-            console.log(response);
-        - lang: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            var response = client.customPost(
-              path = "/test/minimal",
-            )
-
-
-            // Use the response
-
-            println(response)
-        - lang: PHP
-          source: >
-            // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
-
-
-            // Call the API
-
-            $response = $client->customPost(
-                '/test/minimal',
-            );
-
-
-            // play with the response
-
-            var_dump($response);
-        - lang: Python
-          source: |
-            # Initialize the client
-            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
-
-            # Call the API
-            resp = await _client.custom_post(
-                path="/test/minimal",
-            )
-
-            # use the class directly
-            print(resp)
-
-            # print the JSON response
-            print(resp.to_json())
-        - lang: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::RecommendClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
-
-
-            # Call the API
-
-            resp = client.custom_post("/test/minimal")
-
-
-            # use the class directly
-
-            puts resp
-
-
-            # print the JSON response
-
-            puts resp.to_json
-        - lang: Scala
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            val res = client.customPost[JObject](
-              path = "/test/minimal"
-            )
-
-
-            // Use the response
-
-            val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
-          source: >
-            // Initialize the client
-
-            let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            _ = try await client.customPost(
-                path: "/test/minimal"
-            )
-    put:
-      operationId: customPut
-      requestBody:
-        description: Parameters to send with the custom request.
-        content:
-          application/json:
-            schema:
-              type: object
-      summary: Send requests to the Algolia REST API.
-      description: This method allow you to send requests to the Algolia REST API.
-      parameters:
-        - $ref: '#/components/parameters/PathInPath'
-        - $ref: '#/components/parameters/Parameters'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: CSharp
-          source: >
-            // Initialize the client
-
-            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
-            "YOUR_API_KEY"));
-
-
-            // Call the API
-
-            var response = await client.CustomPutAsync("/test/minimal");
-        - lang: Dart
-          source: >
-            // Initialize the client
-
-            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
-            'YOUR_API_KEY');
-
-
-            // Call the API
-
-            final response = await client.customPut(
-              path: "/test/minimal",
-            );
-        - lang: Go
-          source: |
-            // Initialize the client
-            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-            // Call the API
-            resp, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "/test/minimal",
-            ))
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-            // use the model directly
-            print(resp)
-        - lang: Java
-          source: >
-            // Initialize the client
-
-            RecommendClient client = new RecommendClient("YOUR_APP_ID",
-            "YOUR_API_KEY");
-
-
-            // Call the API
-
-            client.customPut("/test/minimal");
-        - lang: JavaScript
-          source: |
-            // Initialize the client
-            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
-
-            // Call the API
-            const response = await client.customPut({ path: '/test/minimal' });
-
-            // use typed response
-            console.log(response);
-        - lang: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            var response = client.customPut(
-              path = "/test/minimal",
-            )
-
-
-            // Use the response
-
-            println(response)
-        - lang: PHP
-          source: >
-            // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
-
-
-            // Call the API
-
-            $response = $client->customPut(
-                '/test/minimal',
-            );
-
-
-            // play with the response
-
-            var_dump($response);
-        - lang: Python
-          source: |
-            # Initialize the client
-            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
-
-            # Call the API
-            resp = await _client.custom_put(
-                path="/test/minimal",
-            )
-
-            # use the class directly
-            print(resp)
-
-            # print the JSON response
-            print(resp.to_json())
-        - lang: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::RecommendClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
-
-
-            # Call the API
-
-            resp = client.custom_put("/test/minimal")
-
-
-            # use the class directly
-
-            puts resp
-
-
-            # print the JSON response
-
-            puts resp.to_json
-        - lang: Scala
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            val res = client.customPut[JObject](
-              path = "/test/minimal"
-            )
-
-
-            // Use the response
-
-            val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
-          source: >
-            // Initialize the client
-
-            let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            _ = try await client.customPut(
-                path: "/test/minimal"
-            )
-    delete:
-      operationId: customDelete
-      summary: Send requests to the Algolia REST API.
-      description: This method allow you to send requests to the Algolia REST API.
-      parameters:
-        - $ref: '#/components/parameters/PathInPath'
-        - $ref: '#/components/parameters/Parameters'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: CSharp
-          source: >
-            // Initialize the client
-
-            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
-            "YOUR_API_KEY"));
-
-
-            // Call the API
-
-            var response = await client.CustomDeleteAsync("/test/minimal");
-        - lang: Dart
-          source: >
-            // Initialize the client
-
-            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
-            'YOUR_API_KEY');
-
-
-            // Call the API
-
-            final response = await client.customDelete(
-              path: "/test/minimal",
-            );
-        - lang: Go
-          source: |
-            // Initialize the client
-            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-            // Call the API
-            resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "/test/minimal",
-            ))
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-            // use the model directly
-            print(resp)
-        - lang: Java
-          source: >
-            // Initialize the client
-
-            RecommendClient client = new RecommendClient("YOUR_APP_ID",
-            "YOUR_API_KEY");
-
-
-            // Call the API
-
-            client.customDelete("/test/minimal");
-        - lang: JavaScript
-          source: >
-            // Initialize the client
-
-            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
-
-
-            // Call the API
-
-            const response = await client.customDelete({ path: '/test/minimal'
-            });
-
-
-            // use typed response
-
-            console.log(response);
-        - lang: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            var response = client.customDelete(
-              path = "/test/minimal",
-            )
-
-
-            // Use the response
-
-            println(response)
-        - lang: PHP
-          source: >
-            // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
-
-
-            // Call the API
-
-            $response = $client->customDelete(
-                '/test/minimal',
-            );
-
-
-            // play with the response
-
-            var_dump($response);
-        - lang: Python
-          source: |
-            # Initialize the client
-            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
-
-            # Call the API
-            resp = await _client.custom_delete(
-                path="/test/minimal",
-            )
-
-            # use the class directly
-            print(resp)
-
-            # print the JSON response
-            print(resp.to_json())
-        - lang: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::RecommendClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
-
-
-            # Call the API
-
-            resp = client.custom_delete("/test/minimal")
-
-
-            # use the class directly
-
-            puts resp
-
-
-            # print the JSON response
-
-            puts resp.to_json
-        - lang: Scala
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            val res = client.customDelete[JObject](
-              path = "/test/minimal"
-            )
-
-
-            // Use the response
-
-            val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
-          source: >
-            // Initialize the client
-
-            let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            _ = try await client.customDelete(
-                path: "/test/minimal"
-            )
-  /1/indexes/*/recommendations:
-    post:
-      tags:
-        - recommendations
-      operationId: getRecommendations
-      x-use-read-transporter: true
-      x-cacheable: true
-      x-acl:
-        - search
-      summary: Get recommendations and trending items.
-      description: |
-        Returns results from either recommendation or trending models:
-
-          - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models
-          - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              title: getRecommendationsParams
-              description: Recommend parameters.
-              type: object
-              additionalProperties: false
-              properties:
-                requests:
-                  type: array
-                  description: >-
-                    Request parameters depend on the model (recommendations or
-                    trending).
-                  items:
-                    $ref: '#/components/schemas/recommendationsRequest'
-              required:
-                - requests
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                title: getRecommendationsResponse
-                type: object
-                additionalProperties: false
-                properties:
-                  results:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/recommendationsResults'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: CSharp
-          source: >
-            // Initialize the client
-
-            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
-            "YOUR_API_KEY"));
-
-
-            // Call the API
-
-            var response = await client.GetRecommendationsAsync(
-              new GetRecommendationsParams
-              {
-                Requests = new List<RecommendationsRequest>
-                {
-                  new RecommendationsRequest(
-                    new RecommendationsQuery
-                    {
-                      IndexName = "indexName",
-                      ObjectID = "objectID",
-                      Model = Enum.Parse<RecommendationModels>("RelatedProducts"),
-                      Threshold = 42,
-                    }
-                  )
-                },
-              }
-            );
-        - lang: Dart
-          source: >
-            // Initialize the client
-
-            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
-            'YOUR_API_KEY');
-
-
-            // Call the API
-
-            final response = await client.getRecommendations(
-              getRecommendationsParams: GetRecommendationsParams(
-                requests: [
-                  RecommendationsQuery(
-                    indexName: "indexName",
-                    objectID: "objectID",
-                    model: RecommendationModels.fromJson("related-products"),
-                    threshold: 42,
-                  ),
-                ],
-              ),
-            );
-        - lang: Go
-          source: >
-            // Initialize the client
-
-            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            resp, err :=
-            client.GetRecommendations(client.NewApiGetRecommendationsRequest(
-
-              recommend.NewEmptyGetRecommendationsParams().SetRequests(
-                []recommend.RecommendationsRequest{*recommend.RecommendationsQueryAsRecommendationsRequest(
-                  recommend.NewEmptyRecommendationsQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RecommendationModels("related-products")).SetThreshold(42))}),
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // use the model directly
-
-            print(resp)
-        - lang: Java
-          source: >
-            // Initialize the client
-
-            RecommendClient client = new RecommendClient("YOUR_APP_ID",
-            "YOUR_API_KEY");
-
-
-            // Call the API
-
-            client.getRecommendations(
-              new GetRecommendationsParams()
-                .setRequests(
-                  List.of(
-                    new RecommendationsQuery()
-                      .setIndexName("indexName")
-                      .setObjectID("objectID")
-                      .setModel(RecommendationModels.fromValue("related-products"))
-                      .setThreshold(42)
-                  )
-                )
-            );
-        - lang: JavaScript
-          source: |
-            // Initialize the client
-            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
-
-            // Call the API
-            const response = await client.getRecommendations({
-              requests: [
-                {
-                  indexName: 'indexName',
-                  objectID: 'objectID',
-                  model: 'related-products',
-                  threshold: 42,
-                },
-              ],
-            });
-
-            // use typed response
-            console.log(response);
-        - lang: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            var response = client.getRecommendations(
-              getRecommendationsParams = GetRecommendationsParams(
-                requests = listOf(
-                  RecommendationsQuery(
-                    indexName = "indexName",
-                    objectID = "objectID",
-                    model = RecommendationModels.entries.first { it.value == "related-products" },
-                    threshold = 42,
-                  ),
-                ),
-              ),
-            )
-
-
-            // Use the response
-
-            println(response)
-        - lang: PHP
-          source: >
-            // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
-
-
-            // Call the API
-
-            $response = $client->getRecommendations(
-                ['requests' => [
-                    ['indexName' => 'indexName',
-                        'objectID' => 'objectID',
-                        'model' => 'related-products',
-                        'threshold' => 42,
-                    ],
-                ],
-                ],
-            );
-
-
-            // play with the response
-
-            var_dump($response);
-        - lang: Python
-          source: |
-            # Initialize the client
-            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
-
-            # Call the API
-            resp = await _client.get_recommendations(
-                get_recommendations_params={
-                    "requests": [
-                        {
-                            "indexName": "indexName",
-                            "objectID": "objectID",
-                            "model": "related-products",
-                            "threshold": 42,
-                        },
-                    ],
-                },
-            )
-
-            # use the class directly
-            print(resp)
-
-            # print the JSON response
-            print(resp.to_json())
-        - lang: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::RecommendClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
-
-
-            # Call the API
-
-            resp = client.get_recommendations(
-              GetRecommendationsParams.new(
-                requests: [RecommendationsQuery.new(
-                  index_name: "indexName", object_id: "objectID", model: 'related-products', threshold: 42
-                )]
-              )
-            )
-
-
-            # use the class directly
-
-            puts resp
-
-
-            # print the JSON response
-
-            puts resp.to_json
-        - lang: Scala
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            val res = client.getRecommendations(
-              getRecommendationsParams = GetRecommendationsParams(
-                requests = Seq(
-                  RecommendationsQuery(
-                    indexName = "indexName",
-                    objectID = "objectID",
-                    model = RecommendationModels.withName("related-products"),
-                    threshold = Some(42)
-                  )
-                )
-              )
-            )
-
-
-            // Use the response
-
-            val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
-          source: >
-            // Initialize the client
-
-            let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            _ = try await client
-                .getRecommendations(
-                    getRecommendationsParams: GetRecommendationsParams(
-                        requests: [
-                            RecommendationsRequest
-                                .recommendationsQuery(
-                                    RecommendationsQuery(
-                                        indexName: "indexName",
-                                        threshold: 42,
-                                        model: RecommendationModels.relatedProducts,
-                                        objectID: "objectID"
-                                    )
-                                ),
-                        ]
-                    )
-                )
-  /1/indexes/{indexName}/{model}/recommend/rules/{objectID}:
-    get:
-      tags:
-        - recommendations
-      operationId: getRecommendRule
-      x-acl:
-        - settings
-      summary: Get a Recommend rule.
-      description: >-
-        Return a [Recommend
-        rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
-      parameters:
-        - $ref: '#/components/parameters/IndexName'
-        - $ref: '#/components/parameters/Models'
-        - $ref: '#/components/parameters/ObjectID'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RuleResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: CSharp
-          source: >
-            // Initialize the client
-
-            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
-            "YOUR_API_KEY"));
-
-
-            // Call the API
-
-            var response = await client.GetRecommendRuleAsync(
-              "indexName",
-              Enum.Parse<RecommendModels>("RelatedProducts"),
-              "objectID"
-            );
-        - lang: Dart
-          source: >
-            // Initialize the client
-
-            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
-            'YOUR_API_KEY');
-
-
-            // Call the API
-
-            final response = await client.getRecommendRule(
-              indexName: "indexName",
-              model: RecommendModels.fromJson("related-products"),
-              objectID: "objectID",
-            );
-        - lang: Go
-          source: >
-            // Initialize the client
-
-            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            resp, err :=
-            client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(
-              "indexName", recommend.RecommendModels("related-products"), "objectID",
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // use the model directly
-
-            print(resp)
-        - lang: Java
-          source: >
-            // Initialize the client
-
-            RecommendClient client = new RecommendClient("YOUR_APP_ID",
-            "YOUR_API_KEY");
-
-
-            // Call the API
-
-            client.getRecommendRule("indexName",
-            RecommendModels.fromValue("related-products"), "objectID");
-        - lang: JavaScript
-          source: |
-            // Initialize the client
-            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
-
-            // Call the API
-            const response = await client.getRecommendRule({
-              indexName: 'indexName',
-              model: 'related-products',
-              objectID: 'objectID',
-            });
-
-            // use typed response
-            console.log(response);
-        - lang: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            var response = client.getRecommendRule(
-              indexName = "indexName",
-              model = RecommendModels.entries.first { it.value == "related-products" },
-              objectID = "objectID",
-            )
-
-
-            // Use the response
-
-            println(response)
-        - lang: PHP
-          source: >
-            // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
-
-
-            // Call the API
-
-            $response = $client->getRecommendRule(
-                'indexName',
-                'related-products',
-                'objectID',
-            );
-
-
-            // play with the response
-
-            var_dump($response);
-        - lang: Python
-          source: |
-            # Initialize the client
-            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
-
-            # Call the API
-            resp = await _client.get_recommend_rule(
-                index_name="indexName",
-                model="related-products",
-                object_id="objectID",
-            )
-
-            # use the class directly
-            print(resp)
-
-            # print the JSON response
-            print(resp.to_json())
-        - lang: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::RecommendClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
-
-
-            # Call the API
-
-            resp = client.get_recommend_rule("indexName", 'related-products',
-            "objectID")
-
-
-            # use the class directly
-
-            puts resp
-
-
-            # print the JSON response
-
-            puts resp.to_json
-        - lang: Scala
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            val res = client.getRecommendRule(
-              indexName = "indexName",
-              model = RecommendModels.withName("related-products"),
-              objectID = "objectID"
-            )
-
-
-            // Use the response
-
-            val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
-          source: >
-            // Initialize the client
-
-            let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            _ = try await client.getRecommendRule(
-                indexName: "indexName",
-                model: RecommendModels.relatedProducts,
-                objectID: "objectID"
-            )
-    delete:
-      tags:
-        - recommendations
-      operationId: deleteRecommendRule
-      x-acl:
-        - editSettings
-      summary: Delete a Recommend rule.
-      description: >-
-        Delete a [Recommend
-        rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
-      parameters:
-        - $ref: '#/components/parameters/IndexName'
-        - $ref: '#/components/parameters/Models'
-        - $ref: '#/components/parameters/ObjectID'
-      responses:
-        '200':
-          $ref: '#/components/responses/DeletedAt'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: CSharp
-          source: >
-            // Initialize the client
-
-            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
-            "YOUR_API_KEY"));
-
-
-            // Call the API
-
-            var response = await client.DeleteRecommendRuleAsync(
-              "indexName",
-              Enum.Parse<RecommendModels>("RelatedProducts"),
-              "objectID"
-            );
-        - lang: Dart
-          source: >
-            // Initialize the client
-
-            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
-            'YOUR_API_KEY');
-
-
-            // Call the API
-
-            final response = await client.deleteRecommendRule(
-              indexName: "indexName",
-              model: RecommendModels.fromJson("related-products"),
-              objectID: "objectID",
-            );
-        - lang: Go
-          source: >
-            // Initialize the client
-
-            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            resp, err :=
-            client.DeleteRecommendRule(client.NewApiDeleteRecommendRuleRequest(
-              "indexName", recommend.RecommendModels("related-products"), "objectID",
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // use the model directly
-
-            print(resp)
-        - lang: Java
-          source: >
-            // Initialize the client
-
-            RecommendClient client = new RecommendClient("YOUR_APP_ID",
-            "YOUR_API_KEY");
-
-
-            // Call the API
-
-            client.deleteRecommendRule("indexName",
-            RecommendModels.fromValue("related-products"), "objectID");
-        - lang: JavaScript
-          source: |
-            // Initialize the client
-            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
-
-            // Call the API
-            const response = await client.deleteRecommendRule({
-              indexName: 'indexName',
-              model: 'related-products',
-              objectID: 'objectID',
-            });
-
-            // use typed response
-            console.log(response);
-        - lang: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            var response = client.deleteRecommendRule(
-              indexName = "indexName",
-              model = RecommendModels.entries.first { it.value == "related-products" },
-              objectID = "objectID",
-            )
-
-
-            // Use the response
-
-            println(response)
-        - lang: PHP
-          source: >
-            // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
-
-
-            // Call the API
-
-            $response = $client->deleteRecommendRule(
-                'indexName',
-                'related-products',
-                'objectID',
-            );
-
-
-            // play with the response
-
-            var_dump($response);
-        - lang: Python
-          source: |
-            # Initialize the client
-            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
-
-            # Call the API
-            resp = await _client.delete_recommend_rule(
-                index_name="indexName",
-                model="related-products",
-                object_id="objectID",
-            )
-
-            # use the class directly
-            print(resp)
-
-            # print the JSON response
-            print(resp.to_json())
-        - lang: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::RecommendClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
-
-
-            # Call the API
-
-            resp = client.delete_recommend_rule("indexName", 'related-products',
-            "objectID")
-
-
-            # use the class directly
-
-            puts resp
-
-
-            # print the JSON response
-
-            puts resp.to_json
-        - lang: Scala
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            val res = client.deleteRecommendRule(
-              indexName = "indexName",
-              model = RecommendModels.withName("related-products"),
-              objectID = "objectID"
-            )
-
-
-            // Use the response
-
-            val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
-          source: >
-            // Initialize the client
-
-            let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            _ = try await client.deleteRecommendRule(
-                indexName: "indexName",
-                model: RecommendModels.relatedProducts,
-                objectID: "objectID"
-            )
-  /1/indexes/{indexName}/{model}/task/{taskID}:
-    get:
-      tags:
-        - recommendations
-      operationId: getRecommendStatus
-      x-acl:
-        - editSettings
-      summary: Get a Recommend task's status.
-      description: >-
-        Some operations, such as deleting a Recommend rule, will respond with a
-        `taskID` value. Use this value here to check the status of that task.
-      parameters:
-        - $ref: '#/components/parameters/IndexName'
-        - $ref: '#/components/parameters/Models'
-        - name: taskID
-          in: path
-          description: Unique identifier of a task. Numeric value (up to 64bits).
-          required: true
-          schema:
-            type: integer
-            format: int64
-            example: 13235
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                title: getRecommendTaskResponse
-                type: object
-                additionalProperties: false
-                properties:
-                  status:
-                    $ref: '#/components/schemas/taskStatus'
-                required:
-                  - status
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: CSharp
-          source: >
-            // Initialize the client
-
-            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
-            "YOUR_API_KEY"));
-
-
-            // Call the API
-
-            var response = await client.GetRecommendStatusAsync(
-              "indexName",
-              Enum.Parse<RecommendModels>("RelatedProducts"),
-              12345L
-            );
-        - lang: Dart
-          source: >
-            // Initialize the client
-
-            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
-            'YOUR_API_KEY');
-
-
-            // Call the API
-
-            final response = await client.getRecommendStatus(
-              indexName: "indexName",
-              model: RecommendModels.fromJson("related-products"),
-              taskID: 12345,
-            );
-        - lang: Go
-          source: >
-            // Initialize the client
-
-            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            resp, err :=
-            client.GetRecommendStatus(client.NewApiGetRecommendStatusRequest(
-              "indexName", recommend.RecommendModels("related-products"), 12345,
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // use the model directly
-
-            print(resp)
-        - lang: Java
-          source: >
-            // Initialize the client
-
-            RecommendClient client = new RecommendClient("YOUR_APP_ID",
-            "YOUR_API_KEY");
-
-
-            // Call the API
-
-            client.getRecommendStatus("indexName",
-            RecommendModels.fromValue("related-products"), 12345L);
-        - lang: JavaScript
-          source: |
-            // Initialize the client
-            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
-
-            // Call the API
-            const response = await client.getRecommendStatus({
-              indexName: 'indexName',
-              model: 'related-products',
-              taskID: 12345,
-            });
-
-            // use typed response
-            console.log(response);
-        - lang: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            var response = client.getRecommendStatus(
-              indexName = "indexName",
-              model = RecommendModels.entries.first { it.value == "related-products" },
-              taskID = 12345L,
-            )
-
-
-            // Use the response
-
-            println(response)
-        - lang: PHP
-          source: >
-            // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
-
-
-            // Call the API
-
-            $response = $client->getRecommendStatus(
-                'indexName',
-                'related-products',
-                12345,
-            );
-
-
-            // play with the response
-
-            var_dump($response);
-        - lang: Python
-          source: |
-            # Initialize the client
-            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
-
-            # Call the API
-            resp = await _client.get_recommend_status(
-                index_name="indexName",
-                model="related-products",
-                task_id=12345,
-            )
-
-            # use the class directly
-            print(resp)
-
-            # print the JSON response
-            print(resp.to_json())
-        - lang: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::RecommendClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
-
-
-            # Call the API
-
-            resp = client.get_recommend_status("indexName", 'related-products',
-            12_345)
-
-
-            # use the class directly
-
-            puts resp
-
-
-            # print the JSON response
-
-            puts resp.to_json
-        - lang: Scala
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            val res = client.getRecommendStatus(
-              indexName = "indexName",
-              model = RecommendModels.withName("related-products"),
-              taskID = 12345L
-            )
-
-
-            // Use the response
-
-            val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
-          source: >
-            // Initialize the client
-
-            let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            _ = try await client.getRecommendStatus(
-                indexName: "indexName",
-                model: RecommendModels.relatedProducts,
-                taskID: Int64(12345)
-            )
-  /1/indexes/{indexName}/{model}/recommend/rules/search:
-    post:
-      tags:
-        - recommendations
-      operationId: searchRecommendRules
-      x-use-read-transporter: true
-      x-cacheable: true
-      x-acl:
-        - settings
-      summary: List Recommend rules.
-      description: >-
-        List [Recommend
-        rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
-      parameters:
-        - $ref: '#/components/parameters/IndexName'
-        - $ref: '#/components/parameters/Models'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              title: searchRecommendRulesParams
-              description: Recommend rules search parameters.
-              additionalProperties: false
-              properties:
-                query:
-                  $ref: '#/components/schemas/parameters_query'
-                context:
-                  type: string
-                  description: >-
-                    Restricts responses to the specified [contextual
-                    rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
-                  example: mobile
-                page:
-                  $ref: '#/components/schemas/parameters_page'
-                hitsPerPage:
-                  $ref: '#/components/schemas/parameters_hitsPerPage'
-                enabled:
-                  type: boolean
-                  nullable: true
-                  default: null
-                  description: >-
-                    Restricts responses to enabled rules. When absent (default),
-                    _all_ rules are retrieved.
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                title: searchRecommendRulesResponse
-                type: object
-                additionalProperties: false
-                required:
-                  - hits
-                  - nbHits
-                  - page
-                  - nbPages
-                properties:
-                  hits:
-                    type: array
-                    description: Fetched rules.
-                    items:
-                      $ref: '#/components/schemas/RuleResponse'
-                  nbHits:
-                    $ref: '#/components/schemas/nbHits'
-                  page:
-                    $ref: '#/components/schemas/page'
-                  nbPages:
-                    $ref: '#/components/schemas/nbPages'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: CSharp
-          source: >
-            // Initialize the client
-
-            var client = new RecommendClient(new RecommendConfig("YOUR_APP_ID",
-            "YOUR_API_KEY"));
-
-
-            // Call the API
-
-            var response = await client.SearchRecommendRulesAsync(
-              "indexName",
-              Enum.Parse<RecommendModels>("RelatedProducts")
-            );
-        - lang: Dart
-          source: >
-            // Initialize the client
-
-            final client = RecommendClient(appId: 'YOUR_APP_ID', apiKey:
-            'YOUR_API_KEY');
-
-
-            // Call the API
-
-            final response = await client.searchRecommendRules(
-              indexName: "indexName",
-              model: RecommendModels.fromJson("related-products"),
-            );
-        - lang: Go
-          source: >
-            // Initialize the client
-
-            client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            resp, err :=
-            client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(
-              "indexName", recommend.RecommendModels("related-products"),
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // use the model directly
-
-            print(resp)
-        - lang: Java
-          source: >
-            // Initialize the client
-
-            RecommendClient client = new RecommendClient("YOUR_APP_ID",
-            "YOUR_API_KEY");
-
-
-            // Call the API
-
-            client.searchRecommendRules("indexName",
-            RecommendModels.fromValue("related-products"));
-        - lang: JavaScript
-          source: |
-            // Initialize the client
-            const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
-
-            // Call the API
-            const response = await client.searchRecommendRules({
-              indexName: 'indexName',
-              model: 'related-products',
-            });
-
-            // use typed response
-            console.log(response);
-        - lang: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            var response = client.searchRecommendRules(
-              indexName = "indexName",
-              model = RecommendModels.entries.first { it.value == "related-products" },
-            )
-
-
-            // Use the response
-
-            println(response)
-        - lang: PHP
-          source: >
-            // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
-
-
-            // Call the API
-
-            $response = $client->searchRecommendRules(
-                'indexName',
-                'related-products',
-            );
-
-
-            // play with the response
-
-            var_dump($response);
-        - lang: Python
-          source: |
-            # Initialize the client
-            _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
-
-            # Call the API
-            resp = await _client.search_recommend_rules(
-                index_name="indexName",
-                model="related-products",
-            )
-
-            # use the class directly
-            print(resp)
-
-            # print the JSON response
-            print(resp.to_json())
-        - lang: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::RecommendClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
-
-
-            # Call the API
-
-            resp = client.search_recommend_rules("indexName",
-            'related-products')
-
-
-            # use the class directly
-
-            puts resp
-
-
-            # print the JSON response
-
-            puts resp.to_json
-        - lang: Scala
-          source: >
-            // Initialize the client
-
-            val client = RecommendClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            val res = client.searchRecommendRules(
-              indexName = "indexName",
-              model = RecommendModels.withName("related-products")
-            )
-
-
-            // Use the response
-
-            val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
-          source: >
-            // Initialize the client
-
-            let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY")
-
-
-            // Call the API
-
-            _ = try await client.searchRecommendRules(
-                indexName: "indexName",
-                model: RecommendModels.relatedProducts
-            )

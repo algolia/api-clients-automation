@@ -108,9 +108,1924 @@ info:
     The current version of the Insights API is version 1, as indicated by the
     `/1/` in each endpoint's URL.
   version: 1.0.0
+servers:
+  - url: https://insights.{region}.algolia.io
+    variables:
+      region:
+        enum:
+          - us
+          - de
+        default: us
+  - url: https://insights.algolia.io
+security:
+  - appId: []
+    apiKey: []
+tags:
+  - name: events
+    x-displayName: Events
+    description: >-
+      Events represent user interactions with your website or app. They include
+      details like the event's name, type, a timestamp or a user token.
+  - name: usertokens
+    x-displayName: User tokens
+    description: |
+      Delete events related to a specific user token.
 externalDocs:
   url: https://www.algolia.com/doc/guides/sending-events/getting-started/
   description: Events
+paths:
+  /1{path}:
+    get:
+      operationId: customGet
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new InsightsClient(
+              new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomGetAsync("/test/minimal");
+        - lang: Dart
+          source: |
+            // Initialize the client
+            final client = InsightsClient(
+                appId: 'YOUR_APP_ID',
+                apiKey: 'YOUR_API_KEY',
+                region: 'YOUR_APP_ID_REGION');
+
+            // Call the API
+            final response = await client.customGet(
+              path: "/test/minimal",
+            );
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            insights.YOUR_APP_ID_REGION
+
+            client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            insights.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomGet(client.NewApiCustomGetRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            InsightsClient client = new InsightsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customGet("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = insightsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.customGet({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customGet(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customGet(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.custom_get(
+                path="/test/minimal",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::InsightsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.custom_get("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.customGet[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customGet(path: "/test/minimal")
+    post:
+      operationId: customPost
+      requestBody:
+        description: Parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new InsightsClient(
+              new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomPostAsync("/test/minimal");
+        - lang: Dart
+          source: |
+            // Initialize the client
+            final client = InsightsClient(
+                appId: 'YOUR_APP_ID',
+                apiKey: 'YOUR_API_KEY',
+                region: 'YOUR_APP_ID_REGION');
+
+            // Call the API
+            final response = await client.customPost(
+              path: "/test/minimal",
+            );
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            insights.YOUR_APP_ID_REGION
+
+            client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            insights.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomPost(client.NewApiCustomPostRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            InsightsClient client = new InsightsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customPost("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = insightsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.customPost({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customPost(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customPost(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.custom_post(
+                path="/test/minimal",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::InsightsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.custom_post("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.customPost[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customPost(path: "/test/minimal")
+    put:
+      operationId: customPut
+      requestBody:
+        description: Parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new InsightsClient(
+              new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomPutAsync("/test/minimal");
+        - lang: Dart
+          source: |
+            // Initialize the client
+            final client = InsightsClient(
+                appId: 'YOUR_APP_ID',
+                apiKey: 'YOUR_API_KEY',
+                region: 'YOUR_APP_ID_REGION');
+
+            // Call the API
+            final response = await client.customPut(
+              path: "/test/minimal",
+            );
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            insights.YOUR_APP_ID_REGION
+
+            client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            insights.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomPut(client.NewApiCustomPutRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            InsightsClient client = new InsightsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customPut("/test/minimal");
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = insightsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.customPut({ path: '/test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customPut(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customPut(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.custom_put(
+                path="/test/minimal",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::InsightsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.custom_put("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.customPut[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customPut(path: "/test/minimal")
+    delete:
+      operationId: customDelete
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new InsightsClient(
+              new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.CustomDeleteAsync("/test/minimal");
+        - lang: Dart
+          source: |
+            // Initialize the client
+            final client = InsightsClient(
+                appId: 'YOUR_APP_ID',
+                apiKey: 'YOUR_API_KEY',
+                region: 'YOUR_APP_ID_REGION');
+
+            // Call the API
+            final response = await client.customDelete(
+              path: "/test/minimal",
+            );
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            insights.YOUR_APP_ID_REGION
+
+            client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            insights.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+              "/test/minimal",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            InsightsClient client = new InsightsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.customDelete("/test/minimal");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = insightsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+
+            // Call the API
+
+            const response = await client.customDelete({ path: '/test/minimal'
+            });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.customDelete(
+              path = "/test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->customDelete(
+                '/test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.custom_delete(
+                path="/test/minimal",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::InsightsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.custom_delete("/test/minimal")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.customDelete[JObject](
+              path = "/test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.customDelete(path: "/test/minimal")
+  /1/events:
+    post:
+      tags:
+        - events
+      operationId: pushEvents
+      summary: Send events.
+      description: |
+        Sends a list of events to the Insights API.
+
+        You can include up to 1,000 events in a single request,
+        but the request body must be smaller than 2&nbsp;MB.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              title: InsightsEvents
+              type: object
+              additionalProperties: false
+              required:
+                - events
+              properties:
+                events:
+                  type: array
+                  description: >
+                    Click and conversion events.
+
+
+                    **All** events must be valid, otherwise the API returns an
+                    error.
+                  minItems: 1
+                  maxItems: 1000
+                  items:
+                    $ref: '#/components/schemas/EventsItems'
+            examples:
+              ClickObjectIDsAfterSearch:
+                summary: Click event after search requests.
+                value:
+                  events:
+                    - eventName: Products Clicked
+                      eventType: click
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      objectIDs:
+                        - object-1
+                      positions:
+                        - 1
+                      queryID: 7dfe2ada7bca48bdd0629649df0bee07
+              ConversionObjectIDsAfterSearch:
+                summary: Conversion event after search or browse requests.
+                value:
+                  events:
+                    - eventName: Articles Liked
+                      eventType: conversion
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      objectIDs:
+                        - article-1
+                      queryID: 7dfe2ada7bca48bdd0629649df0bee07
+              AddedToCartAfterSearch:
+                summary: Add-to-cart event after search or browse requests.
+                value:
+                  events:
+                    - eventName: Products Added To Cart
+                      eventType: conversion
+                      eventSubtype: addToCart
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      objectIDs:
+                        - product-1
+                      objectData:
+                        - price: 50
+                          quantity: 1
+                      currency: USD
+                      queryID: 7dfe2ada7bca48bdd0629649df0bee07
+              PurchasedAfterSearch:
+                summary: Purchase event after search or browse requests.
+                value:
+                  events:
+                    - eventName: Products Purchased
+                      eventType: conversion
+                      eventSubtype: purchase
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      objectIDs:
+                        - product-1
+                        - product-2
+                      objectData:
+                        - price: 49.99
+                          discount: 1.99
+                          quantity: 1
+                          queryID: 7dfe2ada7bca48bdd0629649df0bee07
+                        - price: 9.99
+                          discount: 0
+                          quantity: 2
+                          queryID: 54ed4c9d94050a25e4e5ccf5d256ca42
+                      value: 69.97
+                      currency: USD
+              ClickObjectIDs:
+                summary: Click event.
+                value:
+                  events:
+                    - eventName: Products Clicked
+                      eventType: click
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      objectIDs:
+                        - object-1
+              ConversionObjectIDs:
+                summary: Conversion event.
+                value:
+                  events:
+                    - eventName: Products Added To Cart
+                      eventType: conversion
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      objectIDs:
+                        - object-1
+              AddedToCart:
+                summary: Add-to-cart event.
+                value:
+                  events:
+                    - eventName: Products Added To Cart
+                      eventType: conversion
+                      eventSubtype: addToCart
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      objectIDs:
+                        - product-1
+                      objectData:
+                        - price: 19.99
+                          quantity: 1
+                      currency: EUR
+              Purchased:
+                summary: Purchase event.
+                value:
+                  events:
+                    - eventName: Products Purchased
+                      eventType: conversion
+                      eventSubtype: purchase
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      objectIDs:
+                        - product-1
+                        - product-2
+                      objectData:
+                        - price: 49.99
+                          quantity: 1
+                        - price: 9.99
+                          quantity: 2
+                      currency: USD
+                      value: 69.97
+              ClickFilter:
+                summary: Click event with filters.
+                value:
+                  events:
+                    - eventName: Category Clicked
+                      eventType: click
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      filters:
+                        - category:books
+              ConversionFilter:
+                summary: Conversion event with filters.
+                value:
+                  events:
+                    - eventName: Category Converted
+                      eventType: conversion
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      filters:
+                        - category:books
+              ViewObjectIDs:
+                summary: View event.
+                value:
+                  events:
+                    - eventName: Products Viewed
+                      eventType: view
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      objectIDs:
+                        - object-1
+              ViewFilters:
+                summary: View event with filters.
+                value:
+                  events:
+                    - eventName: Category Viewed
+                      eventType: view
+                      index: test-index
+                      userToken: anonymous-user-1
+                      authenticatedUserToken: user-1
+                      filters:
+                        - category:books
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsResponse'
+              examples:
+                Success:
+                  summary: Events successfully sent to the Insights API.
+                  description: >-
+                    Success indicates that the Insights API received the events
+                    correctly, and that event properties are formatted
+                    correctly. Success doesn't imply that the event can be used
+                    by any Algolia feature. For example, the Insights API
+                    doesn't check if the index name you provided exists, or if
+                    the object IDs exist in your index.
+                  value:
+                    status: 200
+                    message: OK
+        '400':
+          description: Bad Request.
+          content:
+            text/html:
+              schema:
+                type: string
+                title: HTML
+              examples:
+                BadRequest:
+                  summary: Bad request.
+                  description: This error doesn't return a JSON object, but HTML.
+                  value: >-
+                    Error: Bad Request. Your client has issued a malformed or
+                    illegal request.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsResponse'
+              examples:
+                Unauthorized:
+                  summary: Invalid credentials.
+                  description: >-
+                    You need to provide your application ID using the
+                    `X-Algolia-Application-ID` header and your (search) API key
+                    with the `X-Algolia-API-Key` header.
+                  value:
+                    status: 401
+                    message: Invalid credentials
+        '404':
+          description: Not Found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsResponse'
+              examples:
+                NotFound:
+                  summary: Unsupported operation.
+                  description: Check that you're using the correct URL.
+                  value:
+                    status: 404
+                    message: >-
+                      Path not supported by Insights REST API. Please have a
+                      look at
+                      [https://www.algolia.com/doc/rest-api/insights/](https://www.algolia.com/doc/rest-api/insights/)
+                      for the list of valid commands.
+        '405':
+          description: Method Not Allowed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsResponse'
+              examples:
+                MethodNotAllowed:
+                  summary: Method not allowed.
+                  description: Check, that you send events with the `POST` method.
+                  value:
+                    status: 405
+                    message: Method Not Allowed
+        '413':
+          description: Payload Too Large.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsResponse'
+              examples:
+                PayloadTooLarge:
+                  summary: Request body larger than 2&nbspMB.
+                  value:
+                    status: 413
+                    message: Request Entity Too Large
+        '422':
+          description: Unprocessable Entity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsResponse'
+              examples:
+                InvalidPayload:
+                  summary: Incorrect event object.
+                  value:
+                    status: 422
+                    message: Invalid payload
+                NoEvents:
+                  summary: No events.
+                  description: >-
+                    This can happen if you're sending an empty `events` array,
+                    or if you try to send a single event object instead of the
+                    `events` array.
+                  value:
+                    status: 422
+                    message: No events to process
+                NoEventsField:
+                  summary: Missing events attribute.
+                  description: >-
+                    This can happen if you try to send an array of events
+                    directly instead of using the `events` attribute.
+                  value:
+                    status: 422
+                    message: >-
+                      Invalid type for field : expected
+                      insights.PublicEventsBatch, got array
+                EventNameRequired:
+                  summary: Missing eventName attribute.
+                  value:
+                    status: 422
+                    message: EventName is required
+                WrongEventName:
+                  summary: Event name too long or wrong characters.
+                  value:
+                    status: 422
+                    message: >-
+                      EventName must contain only visible ASCII characters, and
+                      be between 1 and 64 characters long
+                EventTypeRequired:
+                  summary: Missing eventType attribute.
+                  value:
+                    status: 422
+                    message: EventType is required
+                WrongEventType:
+                  summary: Wrong event type.
+                  value:
+                    status: 422
+                    message: EventType must be one of "click", "conversion" or "view"
+                IndexRequired:
+                  summary: Missing index attribute.
+                  value:
+                    status: 422
+                    message: The index field is required
+                UserTokenRequired:
+                  summary: Missing userToken attribute.
+                  value:
+                    status: 422
+                    message: The userToken field is required
+                WrongUserToken:
+                  summary: Malformed user token.
+                  value:
+                    status: 422
+                    message: >-
+                      UserToken must contain only alphanumeric, equal, plus,
+                      slash, hyphen, or underscore characters, and be between 1
+                      and 128 characters long
+                NoObjectIDsOrFilters:
+                  summary: Missing objectIDs or filters attribute.
+                  description: >-
+                    Each event must include either the `objectIDs` or `filters`
+                    attribute.
+                  value:
+                    status: 422
+                    message: Event should specify either some ObjectIDs or some Filters
+                BothDefined:
+                  summary: Both objectIDs and filters attributes defined.
+                  value:
+                    status: 422
+                    message: Event should specify ObjectIDs or Filters, but not both
+                PositionsOnWrongEventType:
+                  summary: Wrong combination of positions and eventType attributes.
+                  value:
+                    status: 422
+                    message: >-
+                      Only event of type click should specify the positions
+                      attribute
+                PositionsWithoutQueryID:
+                  summary: Positions attribute without queryID.
+                  description: >-
+                    Click events with the `positions` attribute require the
+                    `queryID` attribute.
+                  value:
+                    status: 422
+                    message: >-
+                      Event of type click with positions should specify a
+                      queryID
+                WrongPositionsValue:
+                  summary: Wrong value in positions array.
+                  description: Any value in the `positions` array must be greater than 0.
+                  value:
+                    status: 422
+                    message: >-
+                      Event of type click may only have strictly positive
+                      positions
+                WrongPositionsItems:
+                  summary: Wrong number of items in positions array.
+                  description: >-
+                    For click events with the `queryID` and `objectIDs`
+                    attributes, you must include the `positions` attribute with
+                    the same number of items as the `objectIDs` attribute.
+                  value:
+                    status: 422
+                    message: >-
+                      Event of type click should have the same number of
+                      ObjectIDs and Positions
+                WrongQueryID:
+                  summary: Malformed query ID.
+                  value:
+                    status: 422
+                    message: >-
+                      Query ID must be a search query ID (32 characters
+                      hexadecimal string)
+                InvalidDataType:
+                  summary: Wrong data type.
+                  description: >-
+                    This can happen if one or more attribute is a number instead
+                    of a string.
+                  value:
+                    status: 422
+                    message: 'Invalid type for field events: expected string, got number'
+                InvalidTimestamp:
+                  summary: Timestamp too old.
+                  value:
+                    status: 422
+                    message: The timestamp must be at most 4 days in the past
+                TooManyEvents:
+                  summary: Too many events.
+                  description: You can include up to 1,000 events in a single API request.
+                  value:
+                    status: 422
+                    message: Cannot process more than 1000 events in a batch
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new InsightsClient(
+              new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.PushEventsAsync(
+              new InsightsEvents
+              {
+                Events = new List<EventsItems>
+                {
+                  new EventsItems(
+                    new ClickedObjectIDsAfterSearch
+                    {
+                      EventType = Enum.Parse<ClickEvent>("Click"),
+                      EventName = "Product Clicked",
+                      Index = "products",
+                      UserToken = "user-123456",
+                      AuthenticatedUserToken = "user-123456",
+                      Timestamp = 1641290601962L,
+                      ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
+                      QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
+                      Positions = new List<int> { 7, 6 },
+                    }
+                  )
+                },
+              }
+            );
+        - lang: Dart
+          source: |
+            // Initialize the client
+            final client = InsightsClient(
+                appId: 'YOUR_APP_ID',
+                apiKey: 'YOUR_API_KEY',
+                region: 'YOUR_APP_ID_REGION');
+
+            // Call the API
+            final response = await client.pushEvents(
+              insightsEvents: InsightsEvents(
+                events: [
+                  ClickedObjectIDsAfterSearch(
+                    eventType: ClickEvent.fromJson("click"),
+                    eventName: "Product Clicked",
+                    index: "products",
+                    userToken: "user-123456",
+                    authenticatedUserToken: "user-123456",
+                    timestamp: 1641290601962,
+                    objectIDs: [
+                      "9780545139700",
+                      "9780439784542",
+                    ],
+                    queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
+                    positions: [
+                      7,
+                      6,
+                    ],
+                  ),
+                ],
+              ),
+            );
+        - lang: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            insights.YOUR_APP_ID_REGION
+
+            client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            insights.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            resp, err := client.PushEvents(client.NewApiPushEventsRequest(
+
+              insights.NewEmptyInsightsEvents().SetEvents(
+                []insights.EventsItems{*insights.ClickedObjectIDsAfterSearchAsEventsItems(
+                  insights.NewEmptyClickedObjectIDsAfterSearch().SetEventType(insights.ClickEvent("click")).SetEventName("Product Clicked").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1641290601962).SetObjectIDs(
+                    []string{"9780545139700", "9780439784542"}).SetQueryID("43b15df305339e827f0ac0bdc5ebcaa7").SetPositions(
+                    []int32{7, 6}))}),
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(resp)
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            InsightsClient client = new InsightsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.pushEvents(
+              new InsightsEvents()
+                .setEvents(
+                  List.of(
+                    new ClickedObjectIDsAfterSearch()
+                      .setEventType(ClickEvent.fromValue("click"))
+                      .setEventName("Product Clicked")
+                      .setIndex("products")
+                      .setUserToken("user-123456")
+                      .setAuthenticatedUserToken("user-123456")
+                      .setTimestamp(1641290601962L)
+                      .setObjectIDs(List.of("9780545139700", "9780439784542"))
+                      .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
+                      .setPositions(List.of(7, 6))
+                  )
+                )
+            );
+        - lang: JavaScript
+          source: |
+            // Initialize the client
+            const client = insightsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.pushEvents({
+              events: [
+                {
+                  eventType: 'click',
+                  eventName: 'Product Clicked',
+                  index: 'products',
+                  userToken: 'user-123456',
+                  authenticatedUserToken: 'user-123456',
+                  timestamp: 1641290601962,
+                  objectIDs: ['9780545139700', '9780439784542'],
+                  queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
+                  positions: [7, 6],
+                },
+              ],
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.pushEvents(
+              insightsEvents = InsightsEvents(
+                events = listOf(
+                  ClickedObjectIDsAfterSearch(
+                    eventType = ClickEvent.entries.first { it.value == "click" },
+                    eventName = "Product Clicked",
+                    index = "products",
+                    userToken = "user-123456",
+                    authenticatedUserToken = "user-123456",
+                    timestamp = 1641290601962L,
+                    objectIDs = listOf("9780545139700", "9780439784542"),
+                    queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
+                    positions = listOf(7, 6),
+                  ),
+                ),
+              ),
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->pushEvents(
+                ['events' => [
+                    ['eventType' => 'click',
+                        'eventName' => 'Product Clicked',
+                        'index' => 'products',
+                        'userToken' => 'user-123456',
+                        'authenticatedUserToken' => 'user-123456',
+                        'timestamp' => 1641290601962,
+                        'objectIDs' => [
+                            '9780545139700',
+
+                            '9780439784542',
+                        ],
+                        'queryID' => '43b15df305339e827f0ac0bdc5ebcaa7',
+                        'positions' => [
+                            7,
+
+                            6,
+                        ],
+                    ],
+                ],
+                ],
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.push_events(
+                insights_events={
+                    "events": [
+                        {
+                            "eventType": "click",
+                            "eventName": "Product Clicked",
+                            "index": "products",
+                            "userToken": "user-123456",
+                            "authenticatedUserToken": "user-123456",
+                            "timestamp": 1641290601962,
+                            "objectIDs": [
+                                "9780545139700",
+                                "9780439784542",
+                            ],
+                            "queryID": "43b15df305339e827f0ac0bdc5ebcaa7",
+                            "positions": [
+                                7,
+                                6,
+                            ],
+                        },
+                    ],
+                },
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::InsightsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.push_events(
+              InsightsEvents.new(
+                events: [ClickedObjectIDsAfterSearch.new(
+                  event_type: 'click',
+                  event_name: "Product Clicked",
+                  index: "products",
+                  user_token: "user-123456",
+                  authenticated_user_token: "user-123456",
+                  timestamp: 1_641_290_601_962,
+                  object_ids: [
+                    "9780545139700", "9780439784542"
+                  ],
+                  query_id: "43b15df305339e827f0ac0bdc5ebcaa7",
+                  positions: [7, 6]
+                )]
+              )
+            )
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.pushEvents(
+              insightsEvents = InsightsEvents(
+                events = Seq(
+                  ClickedObjectIDsAfterSearch(
+                    eventType = ClickEvent.withName("click"),
+                    eventName = "Product Clicked",
+                    index = "products",
+                    userToken = "user-123456",
+                    authenticatedUserToken = Some("user-123456"),
+                    timestamp = Some(1641290601962L),
+                    objectIDs = Seq("9780545139700", "9780439784542"),
+                    queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
+                    positions = Seq(7, 6)
+                  )
+                )
+              )
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client
+                .pushEvents(insightsEvents: InsightsEvents(events: [
+                    EventsItems
+                        .clickedObjectIDsAfterSearch(ClickedObjectIDsAfterSearch(
+                            eventName: "Product Clicked",
+                            eventType: ClickEvent.click,
+                            index: "products",
+                            objectIDs: ["9780545139700", "9780439784542"],
+                            positions: [7, 6],
+                            queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
+                            userToken: "user-123456",
+                            authenticatedUserToken: "user-123456",
+                            timestamp: Int64(1_641_290_601_962)
+                        )),
+                ]))
+  /1/usertokens/{userToken}:
+    delete:
+      tags:
+        - usertokens
+      operationId: deleteUserToken
+      summary: Delete user token.
+      description: >
+        Deletes all events related to the specified user token from events
+        metrics and analytics.
+
+        To delete a personalization user profile, see [Delete a user
+        profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
+      parameters:
+        - name: userToken
+          in: path
+          description: User token for which to delete all associated events.
+          required: true
+          schema:
+            $ref: '#/components/schemas/userToken'
+      responses:
+        '204':
+          description: No content.
+          headers:
+            x-ratelimit-limit:
+              description: Maximum number of requests you can make to this endpoint.
+              schema:
+                type: integer
+            x-ratelimit-remaining:
+              description: >-
+                Number of remaining API requests you can make to this endpoint
+                before reaching the rate limit.
+              schema:
+                type: integer
+            x-ratelimit-reset:
+              description: Timestamp in Unix epoch time when the rate limit will reset.
+              schema:
+                type: integer
+        '422':
+          description: Unprocessable Entity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsResponse'
+        '429':
+          description: >
+            Too Many Requests. This operation is rate-limited. Check the
+            `x-ratelimit-limit` and `x-ratelimit-reset` headers of the response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsResponse'
+      x-codeSamples:
+        - lang: CSharp
+          source: |
+            // Initialize the client
+            var client = new InsightsClient(
+              new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.DeleteUserTokenAsync("test-user-1");
+        - lang: Dart
+          source: |
+            // Initialize the client
+            final client = InsightsClient(
+                appId: 'YOUR_APP_ID',
+                apiKey: 'YOUR_API_KEY',
+                region: 'YOUR_APP_ID_REGION');
+
+            // Call the API
+            final response = await client.deleteUserToken(
+              userToken: "test-user-1",
+            );
+        - lang: Go
+          source: >+
+            // Initialize the client with your application region, eg.
+            insights.YOUR_APP_ID_REGION
+
+            client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            insights.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            err = client.DeleteUserToken(client.NewApiDeleteUserTokenRequest(
+              "test-user-1",
+            ))
+
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+        - lang: Java
+          source: >
+            // Initialize the client
+
+            InsightsClient client = new InsightsClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.deleteUserToken("test-user-1");
+        - lang: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = insightsClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+
+            // Call the API
+
+            const response = await client.deleteUserToken({ userToken:
+            'test-user-1' });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.deleteUserToken(
+              userToken = "test-user-1",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->deleteUserToken(
+                'test-user-1',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: Python
+          source: >
+            # Initialize the client
+
+            _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            resp = await _client.delete_user_token(
+                user_token="test-user-1",
+            )
+
+
+            # use the class directly
+
+            print(resp)
+
+
+            # print the JSON response
+
+            print(resp.to_json())
+        - lang: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::InsightsClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            resp = client.delete_user_token("test-user-1")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: Scala
+          source: >
+            // Initialize the client
+
+            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+
+            // Call the API
+
+            val res = client.deleteUserToken(
+              userToken = "test-user-1"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: Swift
+          source: >
+            // Initialize the client
+
+            let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            _ = try await client.deleteUserToken(userToken: "test-user-1")
 components:
   securitySchemes:
     appId:
@@ -893,1945 +2808,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
-servers:
-  - url: https://insights.{region}.algolia.io
-    variables:
-      region:
-        enum:
-          - us
-          - de
-        default: us
-  - url: https://insights.algolia.io
-security:
-  - appId: []
-    apiKey: []
-tags:
-  - name: events
-    x-displayName: Events
-    description: >-
-      Events represent user interactions with your website or app. They include
-      details like the event's name, type, a timestamp or a user token.
-  - name: usertokens
-    x-displayName: User tokens
-    description: |
-      Delete events related to a specific user token.
 x-tagGroups:
   - name: General
     tags:
       - events
       - usertokens
-paths:
-  /1{path}:
-    get:
-      operationId: customGet
-      summary: Send requests to the Algolia REST API.
-      description: This method allow you to send requests to the Algolia REST API.
-      parameters:
-        - $ref: '#/components/parameters/PathInPath'
-        - $ref: '#/components/parameters/Parameters'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: CSharp
-          source: |
-            // Initialize the client
-            var client = new InsightsClient(
-              new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-            );
-
-            // Call the API
-            var response = await client.CustomGetAsync("/test/minimal");
-        - lang: Dart
-          source: |
-            // Initialize the client
-            final client = InsightsClient(
-                appId: 'YOUR_APP_ID',
-                apiKey: 'YOUR_API_KEY',
-                region: 'YOUR_APP_ID_REGION');
-
-            // Call the API
-            final response = await client.customGet(
-              path: "/test/minimal",
-            );
-        - lang: Go
-          source: >
-            // Initialize the client with your application region, eg.
-            insights.YOUR_APP_ID_REGION
-
-            client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            insights.US)
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            resp, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "/test/minimal",
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // use the model directly
-
-            print(resp)
-        - lang: Java
-          source: >
-            // Initialize the client
-
-            InsightsClient client = new InsightsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
-
-
-            // Call the API
-
-            client.customGet("/test/minimal");
-        - lang: JavaScript
-          source: |
-            // Initialize the client
-            const client = insightsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
-
-            // Call the API
-            const response = await client.customGet({ path: '/test/minimal' });
-
-            // use typed response
-            console.log(response);
-        - lang: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-
-            // Call the API
-
-            var response = client.customGet(
-              path = "/test/minimal",
-            )
-
-
-            // Use the response
-
-            println(response)
-        - lang: PHP
-          source: >
-            // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
-
-
-            // Call the API
-
-            $response = $client->customGet(
-                '/test/minimal',
-            );
-
-
-            // play with the response
-
-            var_dump($response);
-        - lang: Python
-          source: >
-            # Initialize the client
-
-            _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
-
-            # Call the API
-
-            resp = await _client.custom_get(
-                path="/test/minimal",
-            )
-
-
-            # use the class directly
-
-            print(resp)
-
-
-            # print the JSON response
-
-            print(resp.to_json())
-        - lang: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::InsightsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
-
-
-            # Call the API
-
-            resp = client.custom_get("/test/minimal")
-
-
-            # use the class directly
-
-            puts resp
-
-
-            # print the JSON response
-
-            puts resp.to_json
-        - lang: Scala
-          source: >
-            // Initialize the client
-
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
-
-            // Call the API
-
-            val res = client.customGet[JObject](
-              path = "/test/minimal"
-            )
-
-
-            // Use the response
-
-            val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
-          source: >
-            // Initialize the client
-
-            let client = try InsightsClient(appId: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
-
-
-            // Call the API
-
-            _ = try await client.customGet(
-                path: "/test/minimal"
-            )
-    post:
-      operationId: customPost
-      requestBody:
-        description: Parameters to send with the custom request.
-        content:
-          application/json:
-            schema:
-              type: object
-      summary: Send requests to the Algolia REST API.
-      description: This method allow you to send requests to the Algolia REST API.
-      parameters:
-        - $ref: '#/components/parameters/PathInPath'
-        - $ref: '#/components/parameters/Parameters'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: CSharp
-          source: |
-            // Initialize the client
-            var client = new InsightsClient(
-              new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-            );
-
-            // Call the API
-            var response = await client.CustomPostAsync("/test/minimal");
-        - lang: Dart
-          source: |
-            // Initialize the client
-            final client = InsightsClient(
-                appId: 'YOUR_APP_ID',
-                apiKey: 'YOUR_API_KEY',
-                region: 'YOUR_APP_ID_REGION');
-
-            // Call the API
-            final response = await client.customPost(
-              path: "/test/minimal",
-            );
-        - lang: Go
-          source: >
-            // Initialize the client with your application region, eg.
-            insights.YOUR_APP_ID_REGION
-
-            client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            insights.US)
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            resp, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "/test/minimal",
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // use the model directly
-
-            print(resp)
-        - lang: Java
-          source: >
-            // Initialize the client
-
-            InsightsClient client = new InsightsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
-
-
-            // Call the API
-
-            client.customPost("/test/minimal");
-        - lang: JavaScript
-          source: |
-            // Initialize the client
-            const client = insightsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
-
-            // Call the API
-            const response = await client.customPost({ path: '/test/minimal' });
-
-            // use typed response
-            console.log(response);
-        - lang: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-
-            // Call the API
-
-            var response = client.customPost(
-              path = "/test/minimal",
-            )
-
-
-            // Use the response
-
-            println(response)
-        - lang: PHP
-          source: >
-            // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
-
-
-            // Call the API
-
-            $response = $client->customPost(
-                '/test/minimal',
-            );
-
-
-            // play with the response
-
-            var_dump($response);
-        - lang: Python
-          source: >
-            # Initialize the client
-
-            _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
-
-            # Call the API
-
-            resp = await _client.custom_post(
-                path="/test/minimal",
-            )
-
-
-            # use the class directly
-
-            print(resp)
-
-
-            # print the JSON response
-
-            print(resp.to_json())
-        - lang: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::InsightsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
-
-
-            # Call the API
-
-            resp = client.custom_post("/test/minimal")
-
-
-            # use the class directly
-
-            puts resp
-
-
-            # print the JSON response
-
-            puts resp.to_json
-        - lang: Scala
-          source: >
-            // Initialize the client
-
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
-
-            // Call the API
-
-            val res = client.customPost[JObject](
-              path = "/test/minimal"
-            )
-
-
-            // Use the response
-
-            val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
-          source: >
-            // Initialize the client
-
-            let client = try InsightsClient(appId: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
-
-
-            // Call the API
-
-            _ = try await client.customPost(
-                path: "/test/minimal"
-            )
-    put:
-      operationId: customPut
-      requestBody:
-        description: Parameters to send with the custom request.
-        content:
-          application/json:
-            schema:
-              type: object
-      summary: Send requests to the Algolia REST API.
-      description: This method allow you to send requests to the Algolia REST API.
-      parameters:
-        - $ref: '#/components/parameters/PathInPath'
-        - $ref: '#/components/parameters/Parameters'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: CSharp
-          source: |
-            // Initialize the client
-            var client = new InsightsClient(
-              new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-            );
-
-            // Call the API
-            var response = await client.CustomPutAsync("/test/minimal");
-        - lang: Dart
-          source: |
-            // Initialize the client
-            final client = InsightsClient(
-                appId: 'YOUR_APP_ID',
-                apiKey: 'YOUR_API_KEY',
-                region: 'YOUR_APP_ID_REGION');
-
-            // Call the API
-            final response = await client.customPut(
-              path: "/test/minimal",
-            );
-        - lang: Go
-          source: >
-            // Initialize the client with your application region, eg.
-            insights.YOUR_APP_ID_REGION
-
-            client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            insights.US)
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            resp, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "/test/minimal",
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // use the model directly
-
-            print(resp)
-        - lang: Java
-          source: >
-            // Initialize the client
-
-            InsightsClient client = new InsightsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
-
-
-            // Call the API
-
-            client.customPut("/test/minimal");
-        - lang: JavaScript
-          source: |
-            // Initialize the client
-            const client = insightsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
-
-            // Call the API
-            const response = await client.customPut({ path: '/test/minimal' });
-
-            // use typed response
-            console.log(response);
-        - lang: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-
-            // Call the API
-
-            var response = client.customPut(
-              path = "/test/minimal",
-            )
-
-
-            // Use the response
-
-            println(response)
-        - lang: PHP
-          source: >
-            // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
-
-
-            // Call the API
-
-            $response = $client->customPut(
-                '/test/minimal',
-            );
-
-
-            // play with the response
-
-            var_dump($response);
-        - lang: Python
-          source: >
-            # Initialize the client
-
-            _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
-
-            # Call the API
-
-            resp = await _client.custom_put(
-                path="/test/minimal",
-            )
-
-
-            # use the class directly
-
-            print(resp)
-
-
-            # print the JSON response
-
-            print(resp.to_json())
-        - lang: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::InsightsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
-
-
-            # Call the API
-
-            resp = client.custom_put("/test/minimal")
-
-
-            # use the class directly
-
-            puts resp
-
-
-            # print the JSON response
-
-            puts resp.to_json
-        - lang: Scala
-          source: >
-            // Initialize the client
-
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
-
-            // Call the API
-
-            val res = client.customPut[JObject](
-              path = "/test/minimal"
-            )
-
-
-            // Use the response
-
-            val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
-          source: >
-            // Initialize the client
-
-            let client = try InsightsClient(appId: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
-
-
-            // Call the API
-
-            _ = try await client.customPut(
-                path: "/test/minimal"
-            )
-    delete:
-      operationId: customDelete
-      summary: Send requests to the Algolia REST API.
-      description: This method allow you to send requests to the Algolia REST API.
-      parameters:
-        - $ref: '#/components/parameters/PathInPath'
-        - $ref: '#/components/parameters/Parameters'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-      x-codeSamples:
-        - lang: CSharp
-          source: |
-            // Initialize the client
-            var client = new InsightsClient(
-              new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-            );
-
-            // Call the API
-            var response = await client.CustomDeleteAsync("/test/minimal");
-        - lang: Dart
-          source: |
-            // Initialize the client
-            final client = InsightsClient(
-                appId: 'YOUR_APP_ID',
-                apiKey: 'YOUR_API_KEY',
-                region: 'YOUR_APP_ID_REGION');
-
-            // Call the API
-            final response = await client.customDelete(
-              path: "/test/minimal",
-            );
-        - lang: Go
-          source: >
-            // Initialize the client with your application region, eg.
-            insights.YOUR_APP_ID_REGION
-
-            client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            insights.US)
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "/test/minimal",
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // use the model directly
-
-            print(resp)
-        - lang: Java
-          source: >
-            // Initialize the client
-
-            InsightsClient client = new InsightsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
-
-
-            // Call the API
-
-            client.customDelete("/test/minimal");
-        - lang: JavaScript
-          source: >
-            // Initialize the client
-
-            const client = insightsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
-
-
-            // Call the API
-
-            const response = await client.customDelete({ path: '/test/minimal'
-            });
-
-
-            // use typed response
-
-            console.log(response);
-        - lang: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-
-            // Call the API
-
-            var response = client.customDelete(
-              path = "/test/minimal",
-            )
-
-
-            // Use the response
-
-            println(response)
-        - lang: PHP
-          source: >
-            // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
-
-
-            // Call the API
-
-            $response = $client->customDelete(
-                '/test/minimal',
-            );
-
-
-            // play with the response
-
-            var_dump($response);
-        - lang: Python
-          source: >
-            # Initialize the client
-
-            _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
-
-            # Call the API
-
-            resp = await _client.custom_delete(
-                path="/test/minimal",
-            )
-
-
-            # use the class directly
-
-            print(resp)
-
-
-            # print the JSON response
-
-            print(resp.to_json())
-        - lang: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::InsightsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
-
-
-            # Call the API
-
-            resp = client.custom_delete("/test/minimal")
-
-
-            # use the class directly
-
-            puts resp
-
-
-            # print the JSON response
-
-            puts resp.to_json
-        - lang: Scala
-          source: >
-            // Initialize the client
-
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
-
-            // Call the API
-
-            val res = client.customDelete[JObject](
-              path = "/test/minimal"
-            )
-
-
-            // Use the response
-
-            val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
-          source: >
-            // Initialize the client
-
-            let client = try InsightsClient(appId: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
-
-
-            // Call the API
-
-            _ = try await client.customDelete(
-                path: "/test/minimal"
-            )
-  /1/events:
-    post:
-      tags:
-        - events
-      operationId: pushEvents
-      summary: Send events.
-      description: |
-        Sends a list of events to the Insights API.
-
-        You can include up to 1,000 events in a single request,
-        but the request body must be smaller than 2&nbsp;MB.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              title: InsightsEvents
-              type: object
-              additionalProperties: false
-              required:
-                - events
-              properties:
-                events:
-                  type: array
-                  description: >
-                    Click and conversion events.
-
-
-                    **All** events must be valid, otherwise the API returns an
-                    error.
-                  minItems: 1
-                  maxItems: 1000
-                  items:
-                    $ref: '#/components/schemas/EventsItems'
-            examples:
-              ClickObjectIDsAfterSearch:
-                summary: Click event after search requests.
-                value:
-                  events:
-                    - eventName: Products Clicked
-                      eventType: click
-                      index: test-index
-                      userToken: anonymous-user-1
-                      authenticatedUserToken: user-1
-                      objectIDs:
-                        - object-1
-                      positions:
-                        - 1
-                      queryID: 7dfe2ada7bca48bdd0629649df0bee07
-              ConversionObjectIDsAfterSearch:
-                summary: Conversion event after search or browse requests.
-                value:
-                  events:
-                    - eventName: Articles Liked
-                      eventType: conversion
-                      index: test-index
-                      userToken: anonymous-user-1
-                      authenticatedUserToken: user-1
-                      objectIDs:
-                        - article-1
-                      queryID: 7dfe2ada7bca48bdd0629649df0bee07
-              AddedToCartAfterSearch:
-                summary: Add-to-cart event after search or browse requests.
-                value:
-                  events:
-                    - eventName: Products Added To Cart
-                      eventType: conversion
-                      eventSubtype: addToCart
-                      index: test-index
-                      userToken: anonymous-user-1
-                      authenticatedUserToken: user-1
-                      objectIDs:
-                        - product-1
-                      objectData:
-                        - price: 50
-                          quantity: 1
-                      currency: USD
-                      queryID: 7dfe2ada7bca48bdd0629649df0bee07
-              PurchasedAfterSearch:
-                summary: Purchase event after search or browse requests.
-                value:
-                  events:
-                    - eventName: Products Purchased
-                      eventType: conversion
-                      eventSubtype: purchase
-                      index: test-index
-                      userToken: anonymous-user-1
-                      authenticatedUserToken: user-1
-                      objectIDs:
-                        - product-1
-                        - product-2
-                      objectData:
-                        - price: 49.99
-                          discount: 1.99
-                          quantity: 1
-                          queryID: 7dfe2ada7bca48bdd0629649df0bee07
-                        - price: 9.99
-                          discount: 0
-                          quantity: 2
-                          queryID: 54ed4c9d94050a25e4e5ccf5d256ca42
-                      value: 69.97
-                      currency: USD
-              ClickObjectIDs:
-                summary: Click event.
-                value:
-                  events:
-                    - eventName: Products Clicked
-                      eventType: click
-                      index: test-index
-                      userToken: anonymous-user-1
-                      authenticatedUserToken: user-1
-                      objectIDs:
-                        - object-1
-              ConversionObjectIDs:
-                summary: Conversion event.
-                value:
-                  events:
-                    - eventName: Products Added To Cart
-                      eventType: conversion
-                      index: test-index
-                      userToken: anonymous-user-1
-                      authenticatedUserToken: user-1
-                      objectIDs:
-                        - object-1
-              AddedToCart:
-                summary: Add-to-cart event.
-                value:
-                  events:
-                    - eventName: Products Added To Cart
-                      eventType: conversion
-                      eventSubtype: addToCart
-                      index: test-index
-                      userToken: anonymous-user-1
-                      authenticatedUserToken: user-1
-                      objectIDs:
-                        - product-1
-                      objectData:
-                        - price: 19.99
-                          quantity: 1
-                      currency: EUR
-              Purchased:
-                summary: Purchase event.
-                value:
-                  events:
-                    - eventName: Products Purchased
-                      eventType: conversion
-                      eventSubtype: purchase
-                      index: test-index
-                      userToken: anonymous-user-1
-                      authenticatedUserToken: user-1
-                      objectIDs:
-                        - product-1
-                        - product-2
-                      objectData:
-                        - price: 49.99
-                          quantity: 1
-                        - price: 9.99
-                          quantity: 2
-                      currency: USD
-                      value: 69.97
-              ClickFilter:
-                summary: Click event with filters.
-                value:
-                  events:
-                    - eventName: Category Clicked
-                      eventType: click
-                      index: test-index
-                      userToken: anonymous-user-1
-                      authenticatedUserToken: user-1
-                      filters:
-                        - category:books
-              ConversionFilter:
-                summary: Conversion event with filters.
-                value:
-                  events:
-                    - eventName: Category Converted
-                      eventType: conversion
-                      index: test-index
-                      userToken: anonymous-user-1
-                      authenticatedUserToken: user-1
-                      filters:
-                        - category:books
-              ViewObjectIDs:
-                summary: View event.
-                value:
-                  events:
-                    - eventName: Products Viewed
-                      eventType: view
-                      index: test-index
-                      userToken: anonymous-user-1
-                      authenticatedUserToken: user-1
-                      objectIDs:
-                        - object-1
-              ViewFilters:
-                summary: View event with filters.
-                value:
-                  events:
-                    - eventName: Category Viewed
-                      eventType: view
-                      index: test-index
-                      userToken: anonymous-user-1
-                      authenticatedUserToken: user-1
-                      filters:
-                        - category:books
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventsResponse'
-              examples:
-                Success:
-                  summary: Events successfully sent to the Insights API.
-                  description: >-
-                    Success indicates that the Insights API received the events
-                    correctly, and that event properties are formatted
-                    correctly. Success doesn't imply that the event can be used
-                    by any Algolia feature. For example, the Insights API
-                    doesn't check if the index name you provided exists, or if
-                    the object IDs exist in your index.
-                  value:
-                    status: 200
-                    message: OK
-        '400':
-          description: Bad Request.
-          content:
-            text/html:
-              schema:
-                type: string
-                title: HTML
-              examples:
-                BadRequest:
-                  summary: Bad request.
-                  description: This error doesn't return a JSON object, but HTML.
-                  value: >-
-                    Error: Bad Request. Your client has issued a malformed or
-                    illegal request.
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventsResponse'
-              examples:
-                Unauthorized:
-                  summary: Invalid credentials.
-                  description: >-
-                    You need to provide your application ID using the
-                    `X-Algolia-Application-ID` header and your (search) API key
-                    with the `X-Algolia-API-Key` header.
-                  value:
-                    status: 401
-                    message: Invalid credentials
-        '404':
-          description: Not Found.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventsResponse'
-              examples:
-                NotFound:
-                  summary: Unsupported operation.
-                  description: Check that you're using the correct URL.
-                  value:
-                    status: 404
-                    message: >-
-                      Path not supported by Insights REST API. Please have a
-                      look at
-                      [https://www.algolia.com/doc/rest-api/insights/](https://www.algolia.com/doc/rest-api/insights/)
-                      for the list of valid commands.
-        '405':
-          description: Method Not Allowed.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventsResponse'
-              examples:
-                MethodNotAllowed:
-                  summary: Method not allowed.
-                  description: Check, that you send events with the `POST` method.
-                  value:
-                    status: 405
-                    message: Method Not Allowed
-        '413':
-          description: Payload Too Large.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventsResponse'
-              examples:
-                PayloadTooLarge:
-                  summary: Request body larger than 2&nbspMB.
-                  value:
-                    status: 413
-                    message: Request Entity Too Large
-        '422':
-          description: Unprocessable Entity.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventsResponse'
-              examples:
-                InvalidPayload:
-                  summary: Incorrect event object.
-                  value:
-                    status: 422
-                    message: Invalid payload
-                NoEvents:
-                  summary: No events.
-                  description: >-
-                    This can happen if you're sending an empty `events` array,
-                    or if you try to send a single event object instead of the
-                    `events` array.
-                  value:
-                    status: 422
-                    message: No events to process
-                NoEventsField:
-                  summary: Missing events attribute.
-                  description: >-
-                    This can happen if you try to send an array of events
-                    directly instead of using the `events` attribute.
-                  value:
-                    status: 422
-                    message: >-
-                      Invalid type for field : expected
-                      insights.PublicEventsBatch, got array
-                EventNameRequired:
-                  summary: Missing eventName attribute.
-                  value:
-                    status: 422
-                    message: EventName is required
-                WrongEventName:
-                  summary: Event name too long or wrong characters.
-                  value:
-                    status: 422
-                    message: >-
-                      EventName must contain only visible ASCII characters, and
-                      be between 1 and 64 characters long
-                EventTypeRequired:
-                  summary: Missing eventType attribute.
-                  value:
-                    status: 422
-                    message: EventType is required
-                WrongEventType:
-                  summary: Wrong event type.
-                  value:
-                    status: 422
-                    message: EventType must be one of "click", "conversion" or "view"
-                IndexRequired:
-                  summary: Missing index attribute.
-                  value:
-                    status: 422
-                    message: The index field is required
-                UserTokenRequired:
-                  summary: Missing userToken attribute.
-                  value:
-                    status: 422
-                    message: The userToken field is required
-                WrongUserToken:
-                  summary: Malformed user token.
-                  value:
-                    status: 422
-                    message: >-
-                      UserToken must contain only alphanumeric, equal, plus,
-                      slash, hyphen, or underscore characters, and be between 1
-                      and 128 characters long
-                NoObjectIDsOrFilters:
-                  summary: Missing objectIDs or filters attribute.
-                  description: >-
-                    Each event must include either the `objectIDs` or `filters`
-                    attribute.
-                  value:
-                    status: 422
-                    message: Event should specify either some ObjectIDs or some Filters
-                BothDefined:
-                  summary: Both objectIDs and filters attributes defined.
-                  value:
-                    status: 422
-                    message: Event should specify ObjectIDs or Filters, but not both
-                PositionsOnWrongEventType:
-                  summary: Wrong combination of positions and eventType attributes.
-                  value:
-                    status: 422
-                    message: >-
-                      Only event of type click should specify the positions
-                      attribute
-                PositionsWithoutQueryID:
-                  summary: Positions attribute without queryID.
-                  description: >-
-                    Click events with the `positions` attribute require the
-                    `queryID` attribute.
-                  value:
-                    status: 422
-                    message: >-
-                      Event of type click with positions should specify a
-                      queryID
-                WrongPositionsValue:
-                  summary: Wrong value in positions array.
-                  description: Any value in the `positions` array must be greater than 0.
-                  value:
-                    status: 422
-                    message: >-
-                      Event of type click may only have strictly positive
-                      positions
-                WrongPositionsItems:
-                  summary: Wrong number of items in positions array.
-                  description: >-
-                    For click events with the `queryID` and `objectIDs`
-                    attributes, you must include the `positions` attribute with
-                    the same number of items as the `objectIDs` attribute.
-                  value:
-                    status: 422
-                    message: >-
-                      Event of type click should have the same number of
-                      ObjectIDs and Positions
-                WrongQueryID:
-                  summary: Malformed query ID.
-                  value:
-                    status: 422
-                    message: >-
-                      Query ID must be a search query ID (32 characters
-                      hexadecimal string)
-                InvalidDataType:
-                  summary: Wrong data type.
-                  description: >-
-                    This can happen if one or more attribute is a number instead
-                    of a string.
-                  value:
-                    status: 422
-                    message: 'Invalid type for field events: expected string, got number'
-                InvalidTimestamp:
-                  summary: Timestamp too old.
-                  value:
-                    status: 422
-                    message: The timestamp must be at most 4 days in the past
-                TooManyEvents:
-                  summary: Too many events.
-                  description: You can include up to 1,000 events in a single API request.
-                  value:
-                    status: 422
-                    message: Cannot process more than 1000 events in a batch
-      x-codeSamples:
-        - lang: CSharp
-          source: |
-            // Initialize the client
-            var client = new InsightsClient(
-              new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-            );
-
-            // Call the API
-            var response = await client.PushEventsAsync(
-              new InsightsEvents
-              {
-                Events = new List<EventsItems>
-                {
-                  new EventsItems(
-                    new ClickedObjectIDsAfterSearch
-                    {
-                      EventType = Enum.Parse<ClickEvent>("Click"),
-                      EventName = "Product Clicked",
-                      Index = "products",
-                      UserToken = "user-123456",
-                      AuthenticatedUserToken = "user-123456",
-                      Timestamp = 1641290601962L,
-                      ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
-                      QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
-                      Positions = new List<int> { 7, 6 },
-                    }
-                  )
-                },
-              }
-            );
-        - lang: Dart
-          source: |
-            // Initialize the client
-            final client = InsightsClient(
-                appId: 'YOUR_APP_ID',
-                apiKey: 'YOUR_API_KEY',
-                region: 'YOUR_APP_ID_REGION');
-
-            // Call the API
-            final response = await client.pushEvents(
-              insightsEvents: InsightsEvents(
-                events: [
-                  ClickedObjectIDsAfterSearch(
-                    eventType: ClickEvent.fromJson("click"),
-                    eventName: "Product Clicked",
-                    index: "products",
-                    userToken: "user-123456",
-                    authenticatedUserToken: "user-123456",
-                    timestamp: 1641290601962,
-                    objectIDs: [
-                      "9780545139700",
-                      "9780439784542",
-                    ],
-                    queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
-                    positions: [
-                      7,
-                      6,
-                    ],
-                  ),
-                ],
-              ),
-            );
-        - lang: Go
-          source: >
-            // Initialize the client with your application region, eg.
-            insights.YOUR_APP_ID_REGION
-
-            client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            insights.US)
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            resp, err := client.PushEvents(client.NewApiPushEventsRequest(
-
-              insights.NewEmptyInsightsEvents().SetEvents(
-                []insights.EventsItems{*insights.ClickedObjectIDsAfterSearchAsEventsItems(
-                  insights.NewEmptyClickedObjectIDsAfterSearch().SetEventType(insights.ClickEvent("click")).SetEventName("Product Clicked").SetIndex("products").SetUserToken("user-123456").SetAuthenticatedUserToken("user-123456").SetTimestamp(1641290601962).SetObjectIDs(
-                    []string{"9780545139700", "9780439784542"}).SetQueryID("43b15df305339e827f0ac0bdc5ebcaa7").SetPositions(
-                    []int32{7, 6}))}),
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // use the model directly
-
-            print(resp)
-        - lang: Java
-          source: >
-            // Initialize the client
-
-            InsightsClient client = new InsightsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
-
-
-            // Call the API
-
-            client.pushEvents(
-              new InsightsEvents()
-                .setEvents(
-                  List.of(
-                    new ClickedObjectIDsAfterSearch()
-                      .setEventType(ClickEvent.fromValue("click"))
-                      .setEventName("Product Clicked")
-                      .setIndex("products")
-                      .setUserToken("user-123456")
-                      .setAuthenticatedUserToken("user-123456")
-                      .setTimestamp(1641290601962L)
-                      .setObjectIDs(List.of("9780545139700", "9780439784542"))
-                      .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")
-                      .setPositions(List.of(7, 6))
-                  )
-                )
-            );
-        - lang: JavaScript
-          source: |
-            // Initialize the client
-            const client = insightsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
-
-            // Call the API
-            const response = await client.pushEvents({
-              events: [
-                {
-                  eventType: 'click',
-                  eventName: 'Product Clicked',
-                  index: 'products',
-                  userToken: 'user-123456',
-                  authenticatedUserToken: 'user-123456',
-                  timestamp: 1641290601962,
-                  objectIDs: ['9780545139700', '9780439784542'],
-                  queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
-                  positions: [7, 6],
-                },
-              ],
-            });
-
-            // use typed response
-            console.log(response);
-        - lang: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-
-            // Call the API
-
-            var response = client.pushEvents(
-              insightsEvents = InsightsEvents(
-                events = listOf(
-                  ClickedObjectIDsAfterSearch(
-                    eventType = ClickEvent.entries.first { it.value == "click" },
-                    eventName = "Product Clicked",
-                    index = "products",
-                    userToken = "user-123456",
-                    authenticatedUserToken = "user-123456",
-                    timestamp = 1641290601962L,
-                    objectIDs = listOf("9780545139700", "9780439784542"),
-                    queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
-                    positions = listOf(7, 6),
-                  ),
-                ),
-              ),
-            )
-
-
-            // Use the response
-
-            println(response)
-        - lang: PHP
-          source: >
-            // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
-
-
-            // Call the API
-
-            $response = $client->pushEvents(
-                ['events' => [
-                    ['eventType' => 'click',
-                        'eventName' => 'Product Clicked',
-                        'index' => 'products',
-                        'userToken' => 'user-123456',
-                        'authenticatedUserToken' => 'user-123456',
-                        'timestamp' => 1641290601962,
-                        'objectIDs' => [
-                            '9780545139700',
-
-                            '9780439784542',
-                        ],
-                        'queryID' => '43b15df305339e827f0ac0bdc5ebcaa7',
-                        'positions' => [
-                            7,
-
-                            6,
-                        ],
-                    ],
-                ],
-                ],
-            );
-
-
-            // play with the response
-
-            var_dump($response);
-        - lang: Python
-          source: >
-            # Initialize the client
-
-            _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
-
-            # Call the API
-
-            resp = await _client.push_events(
-                insights_events={
-                    "events": [
-                        {
-                            "eventType": "click",
-                            "eventName": "Product Clicked",
-                            "index": "products",
-                            "userToken": "user-123456",
-                            "authenticatedUserToken": "user-123456",
-                            "timestamp": 1641290601962,
-                            "objectIDs": [
-                                "9780545139700",
-                                "9780439784542",
-                            ],
-                            "queryID": "43b15df305339e827f0ac0bdc5ebcaa7",
-                            "positions": [
-                                7,
-                                6,
-                            ],
-                        },
-                    ],
-                },
-            )
-
-
-            # use the class directly
-
-            print(resp)
-
-
-            # print the JSON response
-
-            print(resp.to_json())
-        - lang: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::InsightsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
-
-
-            # Call the API
-
-            resp = client.push_events(
-              InsightsEvents.new(
-                events: [ClickedObjectIDsAfterSearch.new(
-                  event_type: 'click',
-                  event_name: "Product Clicked",
-                  index: "products",
-                  user_token: "user-123456",
-                  authenticated_user_token: "user-123456",
-                  timestamp: 1_641_290_601_962,
-                  object_ids: [
-                    "9780545139700", "9780439784542"
-                  ],
-                  query_id: "43b15df305339e827f0ac0bdc5ebcaa7",
-                  positions: [7, 6]
-                )]
-              )
-            )
-
-
-            # use the class directly
-
-            puts resp
-
-
-            # print the JSON response
-
-            puts resp.to_json
-        - lang: Scala
-          source: >
-            // Initialize the client
-
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
-
-            // Call the API
-
-            val res = client.pushEvents(
-              insightsEvents = InsightsEvents(
-                events = Seq(
-                  ClickedObjectIDsAfterSearch(
-                    eventType = ClickEvent.withName("click"),
-                    eventName = "Product Clicked",
-                    index = "products",
-                    userToken = "user-123456",
-                    authenticatedUserToken = Some("user-123456"),
-                    timestamp = Some(1641290601962L),
-                    objectIDs = Seq("9780545139700", "9780439784542"),
-                    queryID = "43b15df305339e827f0ac0bdc5ebcaa7",
-                    positions = Seq(7, 6)
-                  )
-                )
-              )
-            )
-
-
-            // Use the response
-
-            val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
-          source: >
-            // Initialize the client
-
-            let client = try InsightsClient(appId: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
-
-
-            // Call the API
-
-            _ = try await client
-                .pushEvents(
-                    insightsEvents: InsightsEvents(
-                        events: [
-                            EventsItems
-                                .clickedObjectIDsAfterSearch(
-                                    ClickedObjectIDsAfterSearch(
-                                        eventName: "Product Clicked",
-                                        eventType: ClickEvent.click,
-                                        index: "products",
-                                        objectIDs: [
-                                            "9780545139700",
-                                            "9780439784542",
-                                        ],
-                                        positions: [
-                                            7,
-                                            6,
-                                        ],
-                                        queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
-                                        userToken: "user-123456",
-                                        authenticatedUserToken: "user-123456",
-                                        timestamp: Int64(1_641_290_601_962)
-                                    )
-                                ),
-                        ]
-                    )
-                )
-  /1/usertokens/{userToken}:
-    delete:
-      tags:
-        - usertokens
-      operationId: deleteUserToken
-      summary: Delete user token.
-      description: >
-        Deletes all events related to the specified user token from events
-        metrics and analytics.
-
-        To delete a personalization user profile, see [Delete a user
-        profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).
-      parameters:
-        - name: userToken
-          in: path
-          description: User token for which to delete all associated events.
-          required: true
-          schema:
-            $ref: '#/components/schemas/userToken'
-      responses:
-        '204':
-          description: No content.
-          headers:
-            x-ratelimit-limit:
-              description: Maximum number of requests you can make to this endpoint.
-              schema:
-                type: integer
-            x-ratelimit-remaining:
-              description: >-
-                Number of remaining API requests you can make to this endpoint
-                before reaching the rate limit.
-              schema:
-                type: integer
-            x-ratelimit-reset:
-              description: Timestamp in Unix epoch time when the rate limit will reset.
-              schema:
-                type: integer
-        '422':
-          description: Unprocessable Entity.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventsResponse'
-        '429':
-          description: >
-            Too Many Requests. This operation is rate-limited. Check the
-            `x-ratelimit-limit` and `x-ratelimit-reset` headers of the response.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EventsResponse'
-      x-codeSamples:
-        - lang: CSharp
-          source: |
-            // Initialize the client
-            var client = new InsightsClient(
-              new InsightsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-            );
-
-            // Call the API
-            var response = await client.DeleteUserTokenAsync("test-user-1");
-        - lang: Dart
-          source: |
-            // Initialize the client
-            final client = InsightsClient(
-                appId: 'YOUR_APP_ID',
-                apiKey: 'YOUR_API_KEY',
-                region: 'YOUR_APP_ID_REGION');
-
-            // Call the API
-            final response = await client.deleteUserToken(
-              userToken: "test-user-1",
-            );
-        - lang: Go
-          source: >+
-            // Initialize the client with your application region, eg.
-            insights.YOUR_APP_ID_REGION
-
-            client, err := insights.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            insights.US)
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            err = client.DeleteUserToken(client.NewApiDeleteUserTokenRequest(
-              "test-user-1",
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-        - lang: Java
-          source: >
-            // Initialize the client
-
-            InsightsClient client = new InsightsClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
-
-
-            // Call the API
-
-            client.deleteUserToken("test-user-1");
-        - lang: JavaScript
-          source: >
-            // Initialize the client
-
-            const client = insightsClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
-
-
-            // Call the API
-
-            const response = await client.deleteUserToken({ userToken:
-            'test-user-1' });
-
-
-            // use typed response
-
-            console.log(response);
-        - lang: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-
-            // Call the API
-
-            var response = client.deleteUserToken(
-              userToken = "test-user-1",
-            )
-
-
-            // Use the response
-
-            println(response)
-        - lang: PHP
-          source: >
-            // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
-
-
-            // Call the API
-
-            $response = $client->deleteUserToken(
-                'test-user-1',
-            );
-
-
-            // play with the response
-
-            var_dump($response);
-        - lang: Python
-          source: >
-            # Initialize the client
-
-            _client = InsightsClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
-
-            # Call the API
-
-            resp = await _client.delete_user_token(
-                user_token="test-user-1",
-            )
-
-
-            # use the class directly
-
-            print(resp)
-
-
-            # print the JSON response
-
-            print(resp.to_json())
-        - lang: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::InsightsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
-
-
-            # Call the API
-
-            resp = client.delete_user_token("test-user-1")
-
-
-            # use the class directly
-
-            puts resp
-
-
-            # print the JSON response
-
-            puts resp.to_json
-        - lang: Scala
-          source: >
-            // Initialize the client
-
-            val client = InsightsClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
-
-
-            // Call the API
-
-            val res = client.deleteUserToken(
-              userToken = "test-user-1"
-            )
-
-
-            // Use the response
-
-            val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
-          source: >
-            // Initialize the client
-
-            let client = try InsightsClient(appId: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
-
-
-            // Call the API
-
-            _ = try await client.deleteUserToken(
-                userToken: "test-user-1"
-            )

@@ -16,7 +16,7 @@ runs:
     # Java for code generation
     - name: Install Java
       if: inputs.type != 'minimal'
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v4.1.0
       with:
         distribution: zulu
         java-version-file: config/.java-version
@@ -194,7 +194,7 @@ runs:
     # Swift deps
     - name: Install swift
       if: ${{ inputs.language == 'swift' }}
-      uses: swift-actions/setup-swift@v1
+      uses: swift-actions/setup-swift@v2
       with:
         swift-version: ${{ steps.versions.outputs.SWIFT_VERSION }}
 

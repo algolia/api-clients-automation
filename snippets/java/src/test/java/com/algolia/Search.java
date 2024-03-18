@@ -110,10 +110,10 @@ class SnippetSearchClient {
           List.of(
             new BatchDictionaryEntriesRequest()
               .setAction(DictionaryAction.fromValue("addEntry"))
-              .setBody(new DictionaryEntry().setObjectID("1").setLanguage("en")),
+              .setBody(new DictionaryEntry().setObjectID("1").setLanguage(SupportedLanguage.fromValue("en"))),
             new BatchDictionaryEntriesRequest()
               .setAction(DictionaryAction.fromValue("deleteEntry"))
-              .setBody(new DictionaryEntry().setObjectID("2").setLanguage("fr"))
+              .setBody(new DictionaryEntry().setObjectID("2").setLanguage(SupportedLanguage.fromValue("fr")))
           )
         )
     );

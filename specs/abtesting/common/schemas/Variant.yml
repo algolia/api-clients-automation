@@ -13,36 +13,40 @@ variant:
       description: Number of add-to-cart events for this variant.
       example: 0
     addToCartRate:
-      type: number
-      format: double
-      nullable: true
-      description: Variant's [add-to-cart rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#add-to-cart-rate).
-      example: 0.0
+      oneOf:
+        - type: number
+          format: double
+          description: Variant's [add-to-cart rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#add-to-cart-rate).
+          example: 0.0
+        - type: 'null'
     averageClickPosition:
-      type: integer
-      nullable: true
-      description: Variant's [average click position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position).
-      example: 0
+      oneOf:
+        - type: integer
+          description: Variant's [average click position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position).
+          example: 0
+        - type: 'null'
     clickCount:
       type: integer
       description: Number of click events for this variant.
       example: 65131
     clickThroughRate:
-      type: number
-      format: double
-      nullable: true
-      description: Variant's [click-through rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
-      example: 0.22219857724813036
+      oneOf:
+        - type: number
+          format: double
+          description: Variant's [click-through rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+          example: 0.22219857724813036
+        - type: 'null'
     conversionCount:
       type: integer
       description: Number of click events for this variant.
       example: 4785
     conversionRate:
-      type: number
-      format: double
-      nullable: true
-      description: Variant's [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
-      example: 0.14546725846658964
+      oneOf:
+        - type: number
+          format: double
+          description: Variant's [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+          example: 0.14546725846658964
+        - type: 'null'
     currencies:
       $ref: '../parameters.yml#/currencies'
     description:
@@ -56,39 +60,44 @@ variant:
     index:
       $ref: '../parameters.yml#/index'
     noResultCount:
-      type: integer
-      nullable: true
-      description: Number of [searches without results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results) for that variant.
-      example: 0
+      oneOf:
+        - type: integer
+          description: Number of [searches without results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results) for that variant.
+          example: 0
+        - type: 'null'
     purchaseCount:
       type: integer
       description: Number of purchase events for this variant.
       example: 0
     purchaseRate:
-      type: number
-      format: double
-      nullable: true
-      description: Variant's [purchase rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#purchase-rate).
-      example: 0.0
+      oneOf:
+        - type: number
+          format: double
+          description: Variant's [purchase rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#purchase-rate).
+          example: 0.0
+        - type: 'null'
     searchCount:
-      type: integer
-      nullable: true
-      description: Number of searches carried out during the A/B test.
-      example: 86269
+      oneOf:
+        - type: integer
+          description: Number of searches carried out during the A/B test.
+          example: 86269
+        - type: 'null'
     trackedSearchCount:
       $ref: '../../../analytics/common/parameters.yml#/trackedSearchCount'
     trafficPercentage:
       $ref: '../parameters.yml#/trafficPercentage'
     userCount:
-      type: integer
-      nullable: true
-      description: Number of users during the A/B test.
-      example: 55501
+      oneOf:
+        - type: integer
+          description: Number of users during the A/B test.
+          example: 55501
+        - type: 'null'
     trackedUserCount:
-      type: integer
-      nullable: true
-      description: Number of users that performed a tracked search during the A/B test.
-      example: 55501
+      oneOf:
+        - type: integer
+          description: Number of users that performed a tracked search during the A/B test.
+          example: 55501
+        - type: 'null'
   required:
     - userCount
     - trackedUserCount

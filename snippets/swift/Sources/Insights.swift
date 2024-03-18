@@ -1,6 +1,6 @@
-import AnyCodable
-
-import Core
+#if canImport(Core)
+    import Core
+#endif
 import Insights
 
 final class InsightsClientSnippet {
@@ -10,12 +10,10 @@ final class InsightsClientSnippet {
     func snippetForCustomDelete() async throws {
         // >SEPARATOR customDelete
         // Initialize the client
-        let client = try InsightsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customDelete(
-            path: "/test/minimal"
-        )
+        _ = try await client.customDelete(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -25,12 +23,10 @@ final class InsightsClientSnippet {
     func snippetForCustomGet() async throws {
         // >SEPARATOR customGet
         // Initialize the client
-        let client = try InsightsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customGet(
-            path: "/test/minimal"
-        )
+        _ = try await client.customGet(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -40,12 +36,10 @@ final class InsightsClientSnippet {
     func snippetForCustomPost() async throws {
         // >SEPARATOR customPost
         // Initialize the client
-        let client = try InsightsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPost(
-            path: "/test/minimal"
-        )
+        _ = try await client.customPost(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -55,12 +49,10 @@ final class InsightsClientSnippet {
     func snippetForCustomPut() async throws {
         // >SEPARATOR customPut
         // Initialize the client
-        let client = try InsightsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPut(
-            path: "/test/minimal"
-        )
+        _ = try await client.customPut(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -70,12 +62,10 @@ final class InsightsClientSnippet {
     func snippetForDeleteUserToken() async throws {
         // >SEPARATOR deleteUserToken
         // Initialize the client
-        let client = try InsightsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.deleteUserToken(
-            userToken: "test-user-1"
-        )
+        _ = try await client.deleteUserToken(userToken: "test-user-1")
         // SEPARATOR<
     }
 
@@ -85,36 +75,24 @@ final class InsightsClientSnippet {
     func snippetForPushEvents() async throws {
         // >SEPARATOR pushEvents
         // Initialize the client
-        let client = try InsightsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client
-            .pushEvents(
-                insightsEvents: InsightsEvents(
-                    events: [
-                        EventsItems
-                            .clickedObjectIDsAfterSearch(
-                                ClickedObjectIDsAfterSearch(
-                                    eventName: "Product Clicked",
-                                    eventType: ClickEvent.click,
-                                    index: "products",
-                                    objectIDs: [
-                                        "9780545139700",
-                                        "9780439784542",
-                                    ],
-                                    positions: [
-                                        7,
-                                        6,
-                                    ],
-                                    queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
-                                    userToken: "user-123456",
-                                    authenticatedUserToken: "user-123456",
-                                    timestamp: Int64(1_641_290_601_962)
-                                )
-                            ),
-                    ]
-                )
-            )
+            .pushEvents(insightsEvents: InsightsEvents(events: [
+                EventsItems
+                    .clickedObjectIDsAfterSearch(ClickedObjectIDsAfterSearch(
+                        eventName: "Product Clicked",
+                        eventType: ClickEvent.click,
+                        index: "products",
+                        objectIDs: ["9780545139700", "9780439784542"],
+                        positions: [7, 6],
+                        queryID: "43b15df305339e827f0ac0bdc5ebcaa7",
+                        userToken: "user-123456",
+                        authenticatedUserToken: "user-123456",
+                        timestamp: Int64(1_641_290_601_962)
+                    )),
+            ]))
         // SEPARATOR<
     }
 }

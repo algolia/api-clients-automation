@@ -1,8 +1,9 @@
 {{#models}}{{#model}}// {{{generationBanner}}}
 
-import AnyCodable
 import Foundation
-import Core
+#if canImport(Core)
+  import Core
+#endif
 
 {{#description}}
 

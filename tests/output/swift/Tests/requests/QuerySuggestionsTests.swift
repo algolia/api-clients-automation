@@ -1,6 +1,5 @@
 import XCTest
 
-import AnyCodable
 import DotEnv
 import Utils
 
@@ -50,7 +49,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// createConfig0
     func testCreateConfigTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -59,38 +58,16 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let response = try await client
-            .createConfigWithHTTPInfo(
-                querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex(
-                    indexName: "theIndexName",
-                    sourceIndices: [
-                        SourceIndex(
-                            indexName: "testIndex",
-                            facets: [
-                                Facet(
-                                    attribute: "test"
-                                ),
-                            ],
-                            generate: [
-                                [
-                                    "facetA",
-                                    "facetB",
-                                ],
-                                [
-                                    "facetC",
-                                ],
-                            ]
-                        ),
-                    ],
-                    languages: Languages.arrayOfString(
-                        [
-                            "french",
-                        ]
-                    ),
-                    exclude: [
-                        "test",
-                    ]
-                )
-            )
+            .createConfigWithHTTPInfo(querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex(
+                indexName: "theIndexName",
+                sourceIndices: [SourceIndex(
+                    indexName: "testIndex",
+                    facets: [Facet(attribute: "test")],
+                    generate: [["facetA", "facetB"], ["facetC"]]
+                )],
+                languages: QuerySuggestionsLanguages.arrayOfString(["french"]),
+                exclude: ["test"]
+            ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -112,7 +89,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// allow del method for a custom path with minimal parameters
     func testCustomDeleteTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -120,9 +97,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customDeleteWithHTTPInfo(
-            path: "/test/minimal"
-        )
+        let response = try await client.customDeleteWithHTTPInfo(path: "/test/minimal")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -136,7 +111,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// allow del method for a custom path with all parameters
     func testCustomDeleteTest1() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -146,9 +121,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
         let response = try await client.customDeleteWithHTTPInfo(
             path: "/test/all",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ]
+            parameters: ["query": AnyCodable("parameters")]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -169,7 +142,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// allow get method for a custom path with minimal parameters
     func testCustomGetTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -177,9 +150,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customGetWithHTTPInfo(
-            path: "/test/minimal"
-        )
+        let response = try await client.customGetWithHTTPInfo(path: "/test/minimal")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -193,7 +164,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// allow get method for a custom path with all parameters
     func testCustomGetTest1() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -203,9 +174,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
         let response = try await client.customGetWithHTTPInfo(
             path: "/test/all",
-            parameters: [
-                "query": AnyCodable("parameters with space"),
-            ]
+            parameters: ["query": AnyCodable("parameters with space")]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -226,7 +195,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions should be escaped too
     func testCustomGetTest2() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -235,23 +204,14 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            headers: [
-                "x-header-1": "spaces are left alone",
-            ],
+            headers: ["x-header-1": "spaces are left alone"],
 
-            queryParameters: [
-                "query": "parameters with space",
-                "and an array": ["array",
-                                 "with spaces",
-                ],
-            ]
+            queryParameters: ["query": "parameters with space", "and an array": ["array", "with spaces"]]
         )
 
         let response = try await client.customGetWithHTTPInfo(
             path: "/test/all",
-            parameters: [
-                "query": AnyCodable("to be overriden"),
-            ],
+            parameters: ["query": AnyCodable("to be overriden")],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -285,7 +245,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// allow post method for a custom path with minimal parameters
     func testCustomPostTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -293,9 +253,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(
-            path: "/test/minimal"
-        )
+        let response = try await client.customPostWithHTTPInfo(path: "/test/minimal")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -315,7 +273,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// allow post method for a custom path with all parameters
     func testCustomPostTest1() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -325,12 +283,8 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/all",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "body": "parameters",
-            ]
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["body": "parameters"]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -357,7 +311,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions can override default query parameters
     func testCustomPostTest2() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -366,19 +320,13 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "query": "myQueryParameter",
-            ]
+            queryParameters: ["query": "myQueryParameter"]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -406,7 +354,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions merges query parameters with default ones
     func testCustomPostTest3() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -415,19 +363,13 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "query2": "myQueryParameter",
-            ]
+            queryParameters: ["query2": "myQueryParameter"]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -458,7 +400,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions can override default headers
     func testCustomPostTest4() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -467,19 +409,13 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            headers: [
-                "x-algolia-api-key": "myApiKey",
-            ]
+            headers: ["x-algolia-api-key": "myApiKey"]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -515,7 +451,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions merges headers with default ones
     func testCustomPostTest5() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -524,19 +460,13 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            headers: [
-                "x-algolia-api-key": "myApiKey",
-            ]
+            headers: ["x-algolia-api-key": "myApiKey"]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -572,7 +502,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts booleans
     func testCustomPostTest6() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -581,19 +511,13 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "isItWorking": true,
-            ]
+            queryParameters: ["isItWorking": true]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -624,7 +548,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts integers
     func testCustomPostTest7() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -633,19 +557,13 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "myParam": 2,
-            ]
+            queryParameters: ["myParam": 2]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -676,7 +594,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of string
     func testCustomPostTest8() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -685,21 +603,13 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "myParam": ["b and c",
-                            "d",
-                ],
-            ]
+            queryParameters: ["myParam": ["b and c", "d"]]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -730,7 +640,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of booleans
     func testCustomPostTest9() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -739,22 +649,13 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "myParam": [true,
-                            true,
-                            false,
-                ],
-            ]
+            queryParameters: ["myParam": [true, true, false]]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -785,7 +686,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of integers
     func testCustomPostTest10() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -794,21 +695,13 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "myParam": [1,
-                            2,
-                ],
-            ]
+            queryParameters: ["myParam": [1, 2]]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -839,7 +732,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// allow put method for a custom path with minimal parameters
     func testCustomPutTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -847,9 +740,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPutWithHTTPInfo(
-            path: "/test/minimal"
-        )
+        let response = try await client.customPutWithHTTPInfo(path: "/test/minimal")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -869,7 +760,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// allow put method for a custom path with all parameters
     func testCustomPutTest1() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -879,12 +770,8 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
         let response = try await client.customPutWithHTTPInfo(
             path: "/test/all",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "body": "parameters",
-            ]
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["body": "parameters"]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -911,7 +798,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// deleteConfig0
     func testDeleteConfigTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -919,9 +806,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.deleteConfigWithHTTPInfo(
-            indexName: "theIndexName"
-        )
+        let response = try await client.deleteConfigWithHTTPInfo(indexName: "theIndexName")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -935,7 +820,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// getAllConfigs0
     func testGetAllConfigsTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -957,7 +842,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// Retrieve QS config e2e
     func testGetConfigTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -965,9 +850,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getConfigWithHTTPInfo(
-            indexName: "cts_e2e_browse_query_suggestions"
-        )
+        let response = try await client.getConfigWithHTTPInfo(indexName: "cts_e2e_browse_query_suggestions")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -983,9 +866,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
             return
         }
 
-        let e2eResponse = try await e2eClient.getConfigWithHTTPInfo(
-            indexName: "cts_e2e_browse_query_suggestions"
-        )
+        let e2eResponse = try await e2eClient.getConfigWithHTTPInfo(indexName: "cts_e2e_browse_query_suggestions")
         let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
         let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
 
@@ -1002,7 +883,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// getConfigStatus0
     func testGetConfigStatusTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1010,9 +891,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getConfigStatusWithHTTPInfo(
-            indexName: "theIndexName"
-        )
+        let response = try await client.getConfigStatusWithHTTPInfo(indexName: "theIndexName")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1026,7 +905,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// getLogFile0
     func testGetLogFileTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1034,9 +913,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getLogFileWithHTTPInfo(
-            indexName: "theIndexName"
-        )
+        let response = try await client.getLogFileWithHTTPInfo(indexName: "theIndexName")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -1050,7 +927,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
     /// updateConfig0
     func testUpdateConfigTest0() async throws {
-        let configuration: QuerySuggestions.Configuration = try QuerySuggestions.Configuration(
+        let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1060,34 +937,14 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
         let response = try await client.updateConfigWithHTTPInfo(
             indexName: "theIndexName",
-            querySuggestionsConfiguration: QuerySuggestionsConfiguration(
-                sourceIndices: [
-                    SourceIndex(
-                        indexName: "testIndex",
-                        facets: [
-                            Facet(
-                                attribute: "test"
-                            ),
-                        ],
-                        generate: [
-                            [
-                                "facetA",
-                                "facetB",
-                            ],
-                            [
-                                "facetC",
-                            ],
-                        ]
-                    ),
-                ],
-                languages: Languages.arrayOfString(
-                    [
-                        "french",
-                    ]
-                ),
-                exclude: [
-                    "test",
-                ]
+            configuration: QuerySuggestionsConfiguration(
+                sourceIndices: [SourceIndex(
+                    indexName: "testIndex",
+                    facets: [Facet(attribute: "test")],
+                    generate: [["facetA", "facetB"], ["facetC"]]
+                )],
+                languages: QuerySuggestionsLanguages.arrayOfString(["french"]),
+                exclude: ["test"]
             )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)

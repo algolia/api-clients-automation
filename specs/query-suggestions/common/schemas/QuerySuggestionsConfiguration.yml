@@ -9,11 +9,12 @@ properties:
   languages:
     $ref: './Languages.yml'
   exclude:
-    type: array
-    description: Patterns to exclude from query suggestions.
-    nullable: true
-    items:
-      type: string
+    oneOf:
+      - type: array
+        description: Patterns to exclude from query suggestions.
+        items:
+          type: string
+      - type: 'null'
   enablePersonalization:
     type: boolean
     default: false

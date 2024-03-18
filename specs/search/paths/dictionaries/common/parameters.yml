@@ -11,12 +11,6 @@ dictionaryType:
   type: string
   enum: [plurals, stopwords, compounds]
 
-# misc
-language:
-  description: ISO code of a [supported language](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
-  example: en
-  type: string
-
 standardEntries:
   description: |
     Key-value pairs of [supported language ISO codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) and boolean values.
@@ -30,11 +24,12 @@ standardEntries:
       $ref: '#/standardEntry'
 
 standardEntry:
-  description: Key-value pair of a language ISO code and a boolean value.
-  example:
-    fr: false
-  type: object
-  nullable: true
-  additionalProperties:
-    x-additionalPropertiesName: language
-    type: boolean
+  oneOf:
+    - type: object
+      description: Key-value pair of a language ISO code and a boolean value.
+      example:
+        fr: false
+      additionalProperties:
+        x-additionalPropertiesName: language
+        type: boolean
+    - type: 'null'

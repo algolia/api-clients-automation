@@ -18,7 +18,7 @@ public class DictionaryEntry {
   private String objectID;
 
   @JsonProperty("language")
-  private String language;
+  private SupportedLanguage language;
 
   @JsonProperty("word")
   private String word;
@@ -56,17 +56,14 @@ public class DictionaryEntry {
     return objectID;
   }
 
-  public DictionaryEntry setLanguage(String language) {
+  public DictionaryEntry setLanguage(SupportedLanguage language) {
     this.language = language;
     return this;
   }
 
-  /**
-   * ISO code of a [supported
-   * language](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
-   */
+  /** Get language */
   @javax.annotation.Nonnull
-  public String getLanguage() {
+  public SupportedLanguage getLanguage() {
     return language;
   }
 

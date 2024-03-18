@@ -1,6 +1,6 @@
-import AnyCodable
-
-import Core
+#if canImport(Core)
+  import Core
+#endif
 import {{import}}
 
 final class {{client}}Snippet {
@@ -12,7 +12,7 @@ final class {{client}}Snippet {
   func snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}() async throws {
     // >SEPARATOR {{method}}
     // Initialize the client
-    let client = try {{client}}(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY"{{#hasRegionalHost}}, region: .{{defaultRegion}}{{/hasRegionalHost}})
+    let client = try {{client}}(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY"{{#hasRegionalHost}}, region: .{{defaultRegion}}{{/hasRegionalHost}})
 
   {{#hasRequestOptions}}
     let requestOptions = RequestOptions({{#requestOptions.headers}}

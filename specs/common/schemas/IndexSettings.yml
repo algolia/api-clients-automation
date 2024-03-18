@@ -132,7 +132,7 @@ baseIndexSettings:
       type: array
       items:
         type: string
-      example: ['description']
+      example: [description]
       description: Attributes for which to split [camel case](https://wikipedia.org/wiki/Camel_case) words.
       default: []
       x-categories:
@@ -158,11 +158,11 @@ baseIndexSettings:
     indexLanguages:
       type: array
       items:
-        type: string
+        $ref: '#/supportedLanguage'
       example:
         - ja
       description: |
-        [ISO code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) for a language for language-specific processing steps, such as word detection and dictionary settings.
+        Languages for language-specific processing steps, such as word detection and dictionary settings.
 
         **You should always specify an indexing language.**
         If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),
@@ -519,16 +519,15 @@ indexSettingsAsSearchParams:
     queryLanguages:
       type: array
       items:
-        type: string
+        $ref: '#/supportedLanguage'
       example:
         - es
       description: |
-        [ISO code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) for language-specific settings such as plurals, stop words, and word-detection dictionaries.
+        Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries.
 
         This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings.
         This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages.
         To support this, you must place the CJK language **first**.
-
 
         **You should always specify a query language.**
         If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/),
@@ -791,7 +790,6 @@ maxFacetHits:
 reRankingApplyFilter:
   description: |
     Restrict [Dynamic Re-ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) to records that match these filters.
-  nullable: true
   oneOf:
     - $ref: './SearchParams.yml#/listOfSearchFilters'
     - type: string
@@ -979,14 +977,14 @@ ignorePlurals:
   description: |
     Treat singular, plurals, and other forms of declensions as equivalent.
     You should only use this feature for the languages used in your index.
-  example: ['ca', 'es']
+  example: [ca, es]
   oneOf:
     - type: array
+      description: |
+        ISO code for languages for which this feature should be active.
+        This overrides languages you set with `queryLanguages`.
       items:
-        type: string
-        description: |
-          ISO code for languages for which this feature should be active.
-          This overrides languages you set with `queryLanguages`.
+        $ref: '#/supportedLanguage'
     - type: boolean
       description: |
         If true, `ignorePlurals` is active for all languages included in `queryLanguages`, or for all supported languages, if `queryLanguges` is empty.
@@ -1003,12 +1001,12 @@ removeStopWords:
     In English, "the", "a", or "and" are stop words.
 
     You should only use this feature for the languages used in your index.
-  example: ['ca', 'es']
+  example: [ca, es]
   oneOf:
     - type: array
+      description: ISO code for languages for which stop words should be removed. This overrides languages you set in `queryLanguges`.
       items:
-        type: string
-        description: ISO code for languages for which stop words should be removed. This overrides languages you set in `queryLanguges`.
+        $ref: '#/supportedLanguage'
     - type: boolean
       default: false
       description: |
@@ -1099,11 +1097,85 @@ semanticSearch:
     Only used when `mode` is `neuralSearch`.
   properties:
     eventSources:
-      description: |
-        Indices from which to collect click and conversion events.
+      oneOf:
+        - type: array
+          description: |
+            Indices from which to collect click and conversion events.
 
-        If null, the current index and all its replicas are used.
-      nullable: true
-      type: array
-      items:
-        type: string
+            If null, the current index and all its replicas are used.
+          items:
+            type: string
+        - type: 'null'
+
+supportedLanguage:
+  type: string
+  description: ISO code for a supported language.
+  enum:
+    - af
+    - ar
+    - az
+    - bg
+    - bn
+    - ca
+    - cs
+    - cy
+    - da
+    - de
+    - el
+    - en
+    - eo
+    - es
+    - et
+    - eu
+    - fa
+    - fi
+    - fo
+    - fr
+    - ga
+    - gl
+    - he
+    - hi
+    - hu
+    - hy
+    - id
+    - is
+    - it
+    - ja
+    - ka
+    - kk
+    - ko
+    - ku
+    - ky
+    - lt
+    - lv
+    - mi
+    - mn
+    - mr
+    - ms
+    - mt
+    - nb
+    - nl
+    - no
+    - ns
+    - pl
+    - ps
+    - pt
+    - 'pt-br'
+    - qu
+    - ro
+    - ru
+    - sk
+    - sq
+    - sv
+    - sw
+    - ta
+    - te
+    - th
+    - tl
+    - tn
+    - tr
+    - tt
+    - uk
+    - ur
+    - uz
+    - zh

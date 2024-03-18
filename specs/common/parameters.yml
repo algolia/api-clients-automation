@@ -57,9 +57,10 @@ Page:
     Requested page of the API response.
     If `null`, the API response is not paginated.
   schema:
-    type: integer
-    minimum: 0
-    nullable: true
+    oneOf:
+      - type: integer
+        minimum: 0
+      - type: 'null'
     default: null
 
 PageDefault0:
@@ -69,9 +70,10 @@ PageDefault0:
     Requested page of the API response.
     If `null`, the API response is not paginated.
   schema:
-    type: integer
-    nullable: true
-    minimum: 0
+    oneOf:
+      - type: integer
+        minimum: 0
+      - type: 'null'
     default: 0
 
 HitsPerPage:

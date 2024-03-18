@@ -144,6 +144,243 @@ info:
     The current version of the Search API is version 1, as indicated by the
     `/1/` in each endpoint's URL.
   version: 1.0.0
+servers:
+  - url: https://{appId}.algolia.net
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-1.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-2.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-3.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-dsn.algolia.net
+    variables:
+      appId:
+        default: myAppId
+security:
+  - appId: []
+    apiKey: []
+tags:
+  - name: Advanced
+    description: Query your logs.
+  - name: Api Keys
+    x-displayName: API keys
+    description: >
+      Manage your API keys.
+
+
+      API requests must be authenticated with an API key.
+
+      API keys can have permissions (access control lists, ACL) and
+      restrictions.
+    externalDocs:
+      url: https://www.algolia.com/doc/guides/security/api-keys/
+      description: |
+        Related guide: API keys.
+  - name: Clusters
+    description: |
+      Multi-cluster operations.
+
+      Algolia no longer offers multi-cluster management.
+    externalDocs:
+      url: >-
+        https://www.algolia.com/doc/guides/scaling/managing-multiple-clusters-mcm/
+      description: |
+        Related guide: Multi-cluster management.
+  - name: Dictionaries
+    description: >
+      Manage your dictionaries.
+
+
+      Customize language-specific settings, such as stop words, plurals, or word
+      segmentation.
+
+
+      Dictionaries are application-wide.
+    externalDocs:
+      url: >-
+        https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/
+      description: |
+        Related guide: Natural languages.
+  - name: Indices
+    description: >
+      Manage your indices and index settings.
+
+
+      Indices are copies of your data that are stored on Algolia's servers.
+
+      They're optimal data structures for fast search and are made up of records
+      and settings.
+    externalDocs:
+      url: >-
+        https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/
+      description: |
+        Related guide: Manage your indices.
+  - name: Records
+    description: >
+      Add, update, and delete records from your indices.
+
+
+      Records are individual items in your index.
+
+      When they match a search query, they're returned as search results, in the
+      order determined by your ranking.
+
+      Records are schemaless JSON objects.
+    externalDocs:
+      url: >-
+        https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/
+      description: |
+        Related guide: Prepare your records.
+  - name: Rules
+    description: >
+      Create, update, delete, and search for rules.
+
+
+      Rules are _if-then_ statements that you can use to curate search results.
+
+      Rules have _conditions_ which can trigger _consequences_.
+
+      Consequences are changes to the search results, such as changing the order
+      of search results, or boosting a facet.
+
+      This can be useful for tuning specific queries or for merchandising.
+    externalDocs:
+      url: >-
+        https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/
+      description: |
+        Related guide: Rules.
+  - name: Search
+    description: Search one or more indices for matching records or facet values.
+  - name: Synonyms
+    description: |
+      Create, update, delete, and search for synonyms.
+
+      Synonyms are terms that the search engine should consider equal.
+    externalDocs:
+      url: >-
+        https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/
+      description: |
+        Related guide: Synonyms.
+  - name: Vaults
+    description: >-
+      Algolia Vault lets you restrict access to your clusters to specific IP
+      addresses and provides disk-level encryption at rest.
+    externalDocs:
+      url: https://www.algolia.com/doc/guides/security/algolia-vault/
+      description: |
+        Related guide: Algolia Vault.
+  - name: _model_index_settings
+    x-displayName: Index settings
+    description: |
+      <SchemaDefinition schemaRef="#/components/schemas/indexSettings" />.
+paths:
+  /1{path}:
+    post:
+      operationId: customPost
+      requestBody:
+        description: Parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - algoliasearch
+  /1/indexes/*/queries:
+    post:
+      tags:
+        - algoliasearch
+      operationId: search
+      x-use-read-transporter: true
+      x-cacheable: true
+      x-legacy-signature: true
+      x-acl:
+        - search
+      summary: Search multiple indices.
+      description: >
+        Sends multiple search request to one or more indices.
+
+
+        This can be useful in these cases:
+
+
+        - Different indices for different purposes, such as, one index for
+        products, another one for marketing content.
+
+        - Multiple searches to the same index—for example, with different
+        filters.
+      requestBody:
+        required: true
+        description: >-
+          Muli-search request body. Results are returned in the same order as
+          the requests.
+        content:
+          application/json:
+            schema:
+              title: searchMethodParams
+              type: object
+              additionalProperties: false
+              properties:
+                requests:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/SearchQuery'
+                strategy:
+                  $ref: '#/components/schemas/searchStrategy'
+              required:
+                - requests
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: searchResponses
+                type: object
+                additionalProperties: false
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/searchResult'
+                required:
+                  - results
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
 components:
   securitySchemes:
     appId:
@@ -244,9 +481,10 @@ components:
         Requested page of the API response.
         If `null`, the API response is not paginated.
       schema:
-        type: integer
-        minimum: 0
-        nullable: true
+        oneOf:
+          - type: integer
+            minimum: 0
+          - type: 'null'
         default: null
     HitsPerPage:
       in: query
@@ -959,6 +1197,78 @@ components:
         - $ref: '#/components/schemas/typoToleranceEnum'
       x-categories:
         - Typos
+    supportedLanguage:
+      type: string
+      description: ISO code for a supported language.
+      enum:
+        - af
+        - ar
+        - az
+        - bg
+        - bn
+        - ca
+        - cs
+        - cy
+        - da
+        - de
+        - el
+        - en
+        - eo
+        - es
+        - et
+        - eu
+        - fa
+        - fi
+        - fo
+        - fr
+        - ga
+        - gl
+        - he
+        - hi
+        - hu
+        - hy
+        - id
+        - is
+        - it
+        - ja
+        - ka
+        - kk
+        - ko
+        - ku
+        - ky
+        - lt
+        - lv
+        - mi
+        - mn
+        - mr
+        - ms
+        - mt
+        - nb
+        - nl
+        - 'no'
+        - ns
+        - pl
+        - ps
+        - pt
+        - pt-br
+        - qu
+        - ro
+        - ru
+        - sk
+        - sq
+        - sv
+        - sw
+        - ta
+        - te
+        - th
+        - tl
+        - tn
+        - tr
+        - tt
+        - uk
+        - ur
+        - uz
+        - zh
     ignorePlurals:
       description: |
         Treat singular, plurals, and other forms of declensions as equivalent.
@@ -968,11 +1278,11 @@ components:
         - es
       oneOf:
         - type: array
+          description: |
+            ISO code for languages for which this feature should be active.
+            This overrides languages you set with `queryLanguages`.
           items:
-            type: string
-            description: |
-              ISO code for languages for which this feature should be active.
-              This overrides languages you set with `queryLanguages`.
+            $ref: '#/components/schemas/supportedLanguage'
         - type: boolean
           description: >
             If true, `ignorePlurals` is active for all languages included in
@@ -1001,11 +1311,11 @@ components:
         - es
       oneOf:
         - type: array
+          description: >-
+            ISO code for languages for which stop words should be removed. This
+            overrides languages you set in `queryLanguges`.
           items:
-            type: string
-            description: >-
-              ISO code for languages for which stop words should be removed.
-              This overrides languages you set in `queryLanguges`.
+            $ref: '#/components/schemas/supportedLanguage'
         - type: boolean
           default: false
           description: >
@@ -1107,14 +1417,15 @@ components:
         Only used when `mode` is `neuralSearch`.
       properties:
         eventSources:
-          description: |
-            Indices from which to collect click and conversion events.
+          oneOf:
+            - type: array
+              description: |
+                Indices from which to collect click and conversion events.
 
-            If null, the current index and all its replicas are used.
-          nullable: true
-          type: array
-          items:
-            type: string
+                If null, the current index and all its replicas are used.
+              items:
+                type: string
+            - type: 'null'
     exactOnSingleWordQuery:
       type: string
       enum:
@@ -1327,7 +1638,6 @@ components:
         Restrict [Dynamic
         Re-ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/)
         to records that match these filters.
-      nullable: true
       oneOf:
         - $ref: '#/components/schemas/listOfSearchFilters'
         - type: string
@@ -1650,14 +1960,12 @@ components:
         queryLanguages:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/supportedLanguage'
           example:
             - es
           description: >
-            [ISO
-            code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes)
-            for language-specific settings such as plurals, stop words, and
-            word-detection dictionaries.
+            Languages for language-specific query processing steps such as
+            plurals, stop-word removal, and word-detection dictionaries.
 
 
             This setting sets a default list of languages used by the
@@ -1669,7 +1977,6 @@ components:
             languages.
 
             To support this, you must place the CJK language **first**.
-
 
 
             **You should always specify a query language.**
@@ -3037,13 +3344,11 @@ components:
         indexLanguages:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/supportedLanguage'
           example:
             - ja
           description: >
-            [ISO
-            code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes)
-            for a language for language-specific processing steps, such as word
+            Languages for language-specific processing steps, such as word
             detection and dictionary settings.
 
 
@@ -3934,11 +4239,7 @@ components:
           description: Unique identifier for the dictionary entry.
           example: 828afd405e1f4fe950b6b98c2c43c032
         language:
-          type: string
-          description: >-
-            ISO code of a [supported
-            language](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
-          example: de
+          $ref: '#/components/schemas/supportedLanguage'
         word:
           type: string
           description: >-
@@ -3966,12 +4267,6 @@ components:
             type: string
         state:
           $ref: '#/components/schemas/dictionaryEntryState'
-    language:
-      description: >-
-        ISO code of a [supported
-        language](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
-      example: en
-      type: string
     searchDictionaryEntriesResponse:
       type: object
       additionalProperties: false
@@ -3993,14 +4288,15 @@ components:
         - nbHits
         - nbPages
     standardEntry:
-      description: Key-value pair of a language ISO code and a boolean value.
-      example:
-        fr: false
-      type: object
-      nullable: true
-      additionalProperties:
-        x-additionalPropertiesName: language
-        type: boolean
+      oneOf:
+        - type: object
+          description: Key-value pair of a language ISO code and a boolean value.
+          example:
+            fr: false
+          additionalProperties:
+            x-additionalPropertiesName: language
+            type: boolean
+        - type: 'null'
     standardEntries:
       description: >
         Key-value pairs of [supported language ISO
@@ -4015,16 +4311,17 @@ components:
         compounds:
           $ref: '#/components/schemas/standardEntry'
     dictionaryLanguage:
-      type: object
-      additionalProperties: false
-      nullable: true
-      description: >-
-        Dictionary type. If `null`, this dictionary type isn't supported for the
-        language.
-      properties:
-        nbCustomEntries:
-          description: Number of custom dictionary entries.
-          type: integer
+      oneOf:
+        - type: object
+          additionalProperties: false
+          description: >-
+            Dictionary type. If `null`, this dictionary type isn't supported for
+            the language.
+          properties:
+            nbCustomEntries:
+              description: Number of custom dictionary entries.
+              type: integer
+        - type: 'null'
     languages:
       type: object
       description: Dictionary language.
@@ -4376,144 +4673,6 @@ components:
             properties:
               createdAt:
                 $ref: '#/components/schemas/createdAt'
-servers:
-  - url: https://{appId}.algolia.net
-    variables:
-      appId:
-        default: myAppId
-  - url: https://{appId}-1.algolianet.com
-    variables:
-      appId:
-        default: myAppId
-  - url: https://{appId}-2.algolianet.com
-    variables:
-      appId:
-        default: myAppId
-  - url: https://{appId}-3.algolianet.com
-    variables:
-      appId:
-        default: myAppId
-  - url: https://{appId}-dsn.algolia.net
-    variables:
-      appId:
-        default: myAppId
-security:
-  - appId: []
-    apiKey: []
-tags:
-  - name: Advanced
-    description: Query your logs.
-  - name: Api Keys
-    x-displayName: API keys
-    description: >
-      Manage your API keys.
-
-
-      API requests must be authenticated with an API key.
-
-      API keys can have permissions (access control lists, ACL) and
-      restrictions.
-    externalDocs:
-      url: https://www.algolia.com/doc/guides/security/api-keys/
-      description: |
-        Related guide: API keys.
-  - name: Clusters
-    description: |
-      Multi-cluster operations.
-
-      Algolia no longer offers multi-cluster management.
-    externalDocs:
-      url: >-
-        https://www.algolia.com/doc/guides/scaling/managing-multiple-clusters-mcm/
-      description: |
-        Related guide: Multi-cluster management.
-  - name: Dictionaries
-    description: >
-      Manage your dictionaries.
-
-
-      Customize language-specific settings, such as stop words, plurals, or word
-      segmentation.
-
-
-      Dictionaries are application-wide.
-    externalDocs:
-      url: >-
-        https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/
-      description: |
-        Related guide: Natural languages.
-  - name: Indices
-    description: >
-      Manage your indices and index settings.
-
-
-      Indices are copies of your data that are stored on Algolia's servers.
-
-      They're optimal data structures for fast search and are made up of records
-      and settings.
-    externalDocs:
-      url: >-
-        https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/
-      description: |
-        Related guide: Manage your indices.
-  - name: Records
-    description: >
-      Add, update, and delete records from your indices.
-
-
-      Records are individual items in your index.
-
-      When they match a search query, they're returned as search results, in the
-      order determined by your ranking.
-
-      Records are schemaless JSON objects.
-    externalDocs:
-      url: >-
-        https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/
-      description: |
-        Related guide: Prepare your records.
-  - name: Rules
-    description: >
-      Create, update, delete, and search for rules.
-
-
-      Rules are _if-then_ statements that you can use to curate search results.
-
-      Rules have _conditions_ which can trigger _consequences_.
-
-      Consequences are changes to the search results, such as changing the order
-      of search results, or boosting a facet.
-
-      This can be useful for tuning specific queries or for merchandising.
-    externalDocs:
-      url: >-
-        https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/
-      description: |
-        Related guide: Rules.
-  - name: Search
-    description: Search one or more indices for matching records or facet values.
-  - name: Synonyms
-    description: |
-      Create, update, delete, and search for synonyms.
-
-      Synonyms are terms that the search engine should consider equal.
-    externalDocs:
-      url: >-
-        https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/
-      description: |
-        Related guide: Synonyms.
-  - name: Vaults
-    description: >-
-      Algolia Vault lets you restrict access to your clusters to specific IP
-      addresses and provides disk-level encryption at rest.
-    externalDocs:
-      url: https://www.algolia.com/doc/guides/security/algolia-vault/
-      description: |
-        Related guide: Algolia Vault.
-  - name: _model_index_settings
-    x-displayName: Index settings
-    description: |
-      <SchemaDefinition schemaRef="#/components/schemas/indexSettings" />.
 x-tagGroups:
   - name: Search and indexing
     tags:
@@ -4534,102 +4693,3 @@ x-tagGroups:
   - name: Models
     tags:
       - _model_index_settings
-paths:
-  /1{path}:
-    post:
-      operationId: customPost
-      requestBody:
-        description: Parameters to send with the custom request.
-        content:
-          application/json:
-            schema:
-              type: object
-      summary: Send requests to the Algolia REST API.
-      description: This method allow you to send requests to the Algolia REST API.
-      parameters:
-        - $ref: '#/components/parameters/PathInPath'
-        - $ref: '#/components/parameters/Parameters'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-      tags:
-        - algoliasearch
-  /1/indexes/*/queries:
-    post:
-      tags:
-        - algoliasearch
-      operationId: search
-      x-use-read-transporter: true
-      x-cacheable: true
-      x-legacy-signature: true
-      x-acl:
-        - search
-      summary: Search multiple indices.
-      description: >
-        Sends multiple search request to one or more indices.
-
-
-        This can be useful in these cases:
-
-
-        - Different indices for different purposes, such as, one index for
-        products, another one for marketing content.
-
-        - Multiple searches to the same index—for example, with different
-        filters.
-      requestBody:
-        required: true
-        description: >-
-          Muli-search request body. Results are returned in the same order as
-          the requests.
-        content:
-          application/json:
-            schema:
-              title: searchMethodParams
-              type: object
-              additionalProperties: false
-              properties:
-                requests:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/SearchQuery'
-                strategy:
-                  $ref: '#/components/schemas/searchStrategy'
-              required:
-                - requests
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                title: searchResponses
-                type: object
-                additionalProperties: false
-                properties:
-                  results:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/searchResult'
-                required:
-                  - results
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'

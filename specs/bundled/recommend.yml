@@ -10,6 +10,378 @@ info:
     to interact with the Recommend API. Using the HTTP endpoints directly is not
     covered by the [SLA](https://www.algolia.com/policies/sla/).
   version: 1.0.0
+servers:
+  - url: https://{appId}.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-1.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-2.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-3.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+  - url: https://{appId}-dsn.algolianet.com
+    variables:
+      appId:
+        default: myAppId
+security:
+  - appId: []
+    apiKey: []
+tags:
+  - name: recommendations
+    x-displayName: Recommend
+    description: Manage recommendations.
+paths:
+  /1{path}:
+    get:
+      operationId: customGet
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - recommend
+    post:
+      operationId: customPost
+      requestBody:
+        description: Parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - recommend
+    put:
+      operationId: customPut
+      requestBody:
+        description: Parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - recommend
+    delete:
+      operationId: customDelete
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - recommend
+  /1/indexes/*/recommendations:
+    post:
+      tags:
+        - recommend
+      operationId: getRecommendations
+      x-use-read-transporter: true
+      x-cacheable: true
+      x-acl:
+        - search
+      summary: Get recommendations and trending items.
+      description: |
+        Returns results from either recommendation or trending models:
+
+          - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models
+          - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              title: getRecommendationsParams
+              description: Recommend parameters.
+              type: object
+              additionalProperties: false
+              properties:
+                requests:
+                  type: array
+                  description: >-
+                    Request parameters depend on the model (recommendations or
+                    trending).
+                  items:
+                    $ref: '#/components/schemas/recommendationsRequest'
+              required:
+                - requests
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: getRecommendationsResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/recommendationsResults'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+  /1/indexes/{indexName}/{model}/recommend/rules/{objectID}:
+    get:
+      tags:
+        - recommend
+      operationId: getRecommendRule
+      x-acl:
+        - settings
+      summary: Get a Recommend rule.
+      description: >-
+        Return a [Recommend
+        rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+      parameters:
+        - $ref: '#/components/parameters/IndexName'
+        - $ref: '#/components/parameters/Models'
+        - $ref: '#/components/parameters/ObjectID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuleResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+    delete:
+      tags:
+        - recommend
+      operationId: deleteRecommendRule
+      x-acl:
+        - editSettings
+      summary: Delete a Recommend rule.
+      description: >-
+        Delete a [Recommend
+        rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+      parameters:
+        - $ref: '#/components/parameters/IndexName'
+        - $ref: '#/components/parameters/Models'
+        - $ref: '#/components/parameters/ObjectID'
+      responses:
+        '200':
+          $ref: '#/components/responses/DeletedAt'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+  /1/indexes/{indexName}/{model}/task/{taskID}:
+    get:
+      tags:
+        - recommend
+      operationId: getRecommendStatus
+      x-acl:
+        - editSettings
+      summary: Get a Recommend task's status.
+      description: >-
+        Some operations, such as deleting a Recommend rule, will respond with a
+        `taskID` value. Use this value here to check the status of that task.
+      parameters:
+        - $ref: '#/components/parameters/IndexName'
+        - $ref: '#/components/parameters/Models'
+        - name: taskID
+          in: path
+          description: Unique identifier of a task. Numeric value (up to 64bits).
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 13235
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: getRecommendTaskResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  status:
+                    $ref: '#/components/schemas/taskStatus'
+                required:
+                  - status
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+  /1/indexes/{indexName}/{model}/recommend/rules/search:
+    post:
+      tags:
+        - recommend
+      operationId: searchRecommendRules
+      x-use-read-transporter: true
+      x-cacheable: true
+      x-acl:
+        - settings
+      summary: List Recommend rules.
+      description: >-
+        List [Recommend
+        rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+      parameters:
+        - $ref: '#/components/parameters/IndexName'
+        - $ref: '#/components/parameters/Models'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              title: searchRecommendRulesParams
+              description: Recommend rules search parameters.
+              additionalProperties: false
+              properties:
+                query:
+                  $ref: '#/components/schemas/parameters_query'
+                context:
+                  type: string
+                  description: >-
+                    Restricts responses to the specified [contextual
+                    rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
+                  example: mobile
+                page:
+                  $ref: '#/components/schemas/parameters_page'
+                hitsPerPage:
+                  $ref: '#/components/schemas/parameters_hitsPerPage'
+                enabled:
+                  oneOf:
+                    - type: boolean
+                      default: null
+                      description: >-
+                        Restricts responses to enabled rules. When absent
+                        (default), _all_ rules are retrieved.
+                    - type: 'null'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: searchRecommendRulesResponse
+                type: object
+                additionalProperties: false
+                required:
+                  - hits
+                  - nbHits
+                  - page
+                  - nbPages
+                properties:
+                  hits:
+                    type: array
+                    description: Fetched rules.
+                    items:
+                      $ref: '#/components/schemas/RuleResponse'
+                  nbHits:
+                    $ref: '#/components/schemas/nbHits'
+                  page:
+                    $ref: '#/components/schemas/page'
+                  nbPages:
+                    $ref: '#/components/schemas/nbPages'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
 components:
   securitySchemes:
     appId:
@@ -775,6 +1147,78 @@ components:
         - $ref: '#/components/schemas/typoToleranceEnum'
       x-categories:
         - Typos
+    supportedLanguage:
+      type: string
+      description: ISO code for a supported language.
+      enum:
+        - af
+        - ar
+        - az
+        - bg
+        - bn
+        - ca
+        - cs
+        - cy
+        - da
+        - de
+        - el
+        - en
+        - eo
+        - es
+        - et
+        - eu
+        - fa
+        - fi
+        - fo
+        - fr
+        - ga
+        - gl
+        - he
+        - hi
+        - hu
+        - hy
+        - id
+        - is
+        - it
+        - ja
+        - ka
+        - kk
+        - ko
+        - ku
+        - ky
+        - lt
+        - lv
+        - mi
+        - mn
+        - mr
+        - ms
+        - mt
+        - nb
+        - nl
+        - 'no'
+        - ns
+        - pl
+        - ps
+        - pt
+        - pt-br
+        - qu
+        - ro
+        - ru
+        - sk
+        - sq
+        - sv
+        - sw
+        - ta
+        - te
+        - th
+        - tl
+        - tn
+        - tr
+        - tt
+        - uk
+        - ur
+        - uz
+        - zh
     ignorePlurals:
       description: |
         Treat singular, plurals, and other forms of declensions as equivalent.
@@ -784,11 +1228,11 @@ components:
         - es
       oneOf:
         - type: array
+          description: |
+            ISO code for languages for which this feature should be active.
+            This overrides languages you set with `queryLanguages`.
           items:
-            type: string
-            description: |
-              ISO code for languages for which this feature should be active.
-              This overrides languages you set with `queryLanguages`.
+            $ref: '#/components/schemas/supportedLanguage'
         - type: boolean
           description: >
             If true, `ignorePlurals` is active for all languages included in
@@ -817,11 +1261,11 @@ components:
         - es
       oneOf:
         - type: array
+          description: >-
+            ISO code for languages for which stop words should be removed. This
+            overrides languages you set in `queryLanguges`.
           items:
-            type: string
-            description: >-
-              ISO code for languages for which stop words should be removed.
-              This overrides languages you set in `queryLanguges`.
+            $ref: '#/components/schemas/supportedLanguage'
         - type: boolean
           default: false
           description: >
@@ -923,14 +1367,15 @@ components:
         Only used when `mode` is `neuralSearch`.
       properties:
         eventSources:
-          description: |
-            Indices from which to collect click and conversion events.
+          oneOf:
+            - type: array
+              description: |
+                Indices from which to collect click and conversion events.
 
-            If null, the current index and all its replicas are used.
-          nullable: true
-          type: array
-          items:
-            type: string
+                If null, the current index and all its replicas are used.
+              items:
+                type: string
+            - type: 'null'
     exactOnSingleWordQuery:
       type: string
       enum:
@@ -1143,7 +1588,6 @@ components:
         Restrict [Dynamic
         Re-ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/)
         to records that match these filters.
-      nullable: true
       oneOf:
         - $ref: '#/components/schemas/listOfSearchFilters'
         - type: string
@@ -1466,14 +1910,12 @@ components:
         queryLanguages:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/supportedLanguage'
           example:
             - es
           description: >
-            [ISO
-            code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes)
-            for language-specific settings such as plurals, stop words, and
-            word-detection dictionaries.
+            Languages for language-specific query processing steps such as
+            plurals, stop-word removal, and word-detection dictionaries.
 
 
             This setting sets a default list of languages used by the
@@ -1485,7 +1927,6 @@ components:
             languages.
 
             To support this, you must place the CJK language **first**.
-
 
 
             **You should always specify a query language.**
@@ -2906,378 +3347,7 @@ components:
                 $ref: '#/components/schemas/taskID'
               deletedAt:
                 $ref: '#/components/schemas/deletedAt'
-servers:
-  - url: https://{appId}.algolianet.com
-    variables:
-      appId:
-        default: myAppId
-  - url: https://{appId}-1.algolianet.com
-    variables:
-      appId:
-        default: myAppId
-  - url: https://{appId}-2.algolianet.com
-    variables:
-      appId:
-        default: myAppId
-  - url: https://{appId}-3.algolianet.com
-    variables:
-      appId:
-        default: myAppId
-  - url: https://{appId}-dsn.algolianet.com
-    variables:
-      appId:
-        default: myAppId
-security:
-  - appId: []
-    apiKey: []
-tags:
-  - name: recommendations
-    x-displayName: Recommend
-    description: Manage recommendations.
 x-tagGroups:
   - name: General
     tags:
       - recommendations
-paths:
-  /1{path}:
-    get:
-      operationId: customGet
-      summary: Send requests to the Algolia REST API.
-      description: This method allow you to send requests to the Algolia REST API.
-      parameters:
-        - $ref: '#/components/parameters/PathInPath'
-        - $ref: '#/components/parameters/Parameters'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-      tags:
-        - recommend
-    post:
-      operationId: customPost
-      requestBody:
-        description: Parameters to send with the custom request.
-        content:
-          application/json:
-            schema:
-              type: object
-      summary: Send requests to the Algolia REST API.
-      description: This method allow you to send requests to the Algolia REST API.
-      parameters:
-        - $ref: '#/components/parameters/PathInPath'
-        - $ref: '#/components/parameters/Parameters'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-      tags:
-        - recommend
-    put:
-      operationId: customPut
-      requestBody:
-        description: Parameters to send with the custom request.
-        content:
-          application/json:
-            schema:
-              type: object
-      summary: Send requests to the Algolia REST API.
-      description: This method allow you to send requests to the Algolia REST API.
-      parameters:
-        - $ref: '#/components/parameters/PathInPath'
-        - $ref: '#/components/parameters/Parameters'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-      tags:
-        - recommend
-    delete:
-      operationId: customDelete
-      summary: Send requests to the Algolia REST API.
-      description: This method allow you to send requests to the Algolia REST API.
-      parameters:
-        - $ref: '#/components/parameters/PathInPath'
-        - $ref: '#/components/parameters/Parameters'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-      tags:
-        - recommend
-  /1/indexes/*/recommendations:
-    post:
-      tags:
-        - recommend
-      operationId: getRecommendations
-      x-use-read-transporter: true
-      x-cacheable: true
-      x-acl:
-        - search
-      summary: Get recommendations and trending items.
-      description: |
-        Returns results from either recommendation or trending models:
-
-          - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models
-          - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              title: getRecommendationsParams
-              description: Recommend parameters.
-              type: object
-              additionalProperties: false
-              properties:
-                requests:
-                  type: array
-                  description: >-
-                    Request parameters depend on the model (recommendations or
-                    trending).
-                  items:
-                    $ref: '#/components/schemas/recommendationsRequest'
-              required:
-                - requests
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                title: getRecommendationsResponse
-                type: object
-                additionalProperties: false
-                properties:
-                  results:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/recommendationsResults'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/{model}/recommend/rules/{objectID}:
-    get:
-      tags:
-        - recommend
-      operationId: getRecommendRule
-      x-acl:
-        - settings
-      summary: Get a Recommend rule.
-      description: >-
-        Return a [Recommend
-        rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
-      parameters:
-        - $ref: '#/components/parameters/IndexName'
-        - $ref: '#/components/parameters/Models'
-        - $ref: '#/components/parameters/ObjectID'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RuleResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-    delete:
-      tags:
-        - recommend
-      operationId: deleteRecommendRule
-      x-acl:
-        - editSettings
-      summary: Delete a Recommend rule.
-      description: >-
-        Delete a [Recommend
-        rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
-      parameters:
-        - $ref: '#/components/parameters/IndexName'
-        - $ref: '#/components/parameters/Models'
-        - $ref: '#/components/parameters/ObjectID'
-      responses:
-        '200':
-          $ref: '#/components/responses/DeletedAt'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/{model}/task/{taskID}:
-    get:
-      tags:
-        - recommend
-      operationId: getRecommendStatus
-      x-acl:
-        - editSettings
-      summary: Get a Recommend task's status.
-      description: >-
-        Some operations, such as deleting a Recommend rule, will respond with a
-        `taskID` value. Use this value here to check the status of that task.
-      parameters:
-        - $ref: '#/components/parameters/IndexName'
-        - $ref: '#/components/parameters/Models'
-        - name: taskID
-          in: path
-          description: Unique identifier of a task. Numeric value (up to 64bits).
-          required: true
-          schema:
-            type: integer
-            format: int64
-            example: 13235
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                title: getRecommendTaskResponse
-                type: object
-                additionalProperties: false
-                properties:
-                  status:
-                    $ref: '#/components/schemas/taskStatus'
-                required:
-                  - status
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-  /1/indexes/{indexName}/{model}/recommend/rules/search:
-    post:
-      tags:
-        - recommend
-      operationId: searchRecommendRules
-      x-use-read-transporter: true
-      x-cacheable: true
-      x-acl:
-        - settings
-      summary: List Recommend rules.
-      description: >-
-        List [Recommend
-        rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
-      parameters:
-        - $ref: '#/components/parameters/IndexName'
-        - $ref: '#/components/parameters/Models'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              title: searchRecommendRulesParams
-              description: Recommend rules search parameters.
-              additionalProperties: false
-              properties:
-                query:
-                  $ref: '#/components/schemas/parameters_query'
-                context:
-                  type: string
-                  description: >-
-                    Restricts responses to the specified [contextual
-                    rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
-                  example: mobile
-                page:
-                  $ref: '#/components/schemas/parameters_page'
-                hitsPerPage:
-                  $ref: '#/components/schemas/parameters_hitsPerPage'
-                enabled:
-                  type: boolean
-                  nullable: true
-                  default: null
-                  description: >-
-                    Restricts responses to enabled rules. When absent (default),
-                    _all_ rules are retrieved.
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                title: searchRecommendRulesResponse
-                type: object
-                additionalProperties: false
-                required:
-                  - hits
-                  - nbHits
-                  - page
-                  - nbPages
-                properties:
-                  hits:
-                    type: array
-                    description: Fetched rules.
-                    items:
-                      $ref: '#/components/schemas/RuleResponse'
-                  nbHits:
-                    $ref: '#/components/schemas/nbHits'
-                  page:
-                    $ref: '#/components/schemas/page'
-                  nbPages:
-                    $ref: '#/components/schemas/nbPages'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/FeatureNotEnabled'
-        '403':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'

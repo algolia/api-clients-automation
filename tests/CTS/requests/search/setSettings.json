@@ -88,7 +88,7 @@
       "indexName": "theIndexName",
       "indexSettings": {
         "ignorePlurals": [
-          "algolia"
+          "fr"
         ]
       },
       "forwardToReplicas": true
@@ -98,7 +98,7 @@
       "method": "PUT",
       "body": {
         "ignorePlurals": [
-          "algolia"
+          "fr"
         ]
       },
       "queryParameters": {
@@ -132,7 +132,7 @@
       "indexName": "theIndexName",
       "indexSettings": {
         "removeStopWords": [
-          "algolia"
+          "fr"
         ]
       },
       "forwardToReplicas": true
@@ -142,7 +142,7 @@
       "method": "PUT",
       "body": {
         "removeStopWords": [
-          "algolia"
+          "fr"
         ]
       },
       "queryParameters": {
@@ -258,7 +258,7 @@
         "hitsPerPage": 10,
         "ignorePlurals": false,
         "indexLanguages": [
-          "algolia"
+          "fr"
         ],
         "keepDiacriticsOnCharacters": "abc",
         "maxFacetHits": 20,
@@ -275,7 +275,7 @@
         ],
         "paginationLimitedTo": 0,
         "queryLanguages": [
-          "algolia"
+          "fr"
         ],
         "queryType": "prefixLast",
         "ranking": [
@@ -398,7 +398,7 @@
         "hitsPerPage": 10,
         "ignorePlurals": false,
         "indexLanguages": [
-          "algolia"
+          "fr"
         ],
         "keepDiacriticsOnCharacters": "abc",
         "maxFacetHits": 20,
@@ -415,7 +415,7 @@
         ],
         "paginationLimitedTo": 0,
         "queryLanguages": [
-          "algolia"
+          "fr"
         ],
         "queryType": "prefixLast",
         "ranking": [

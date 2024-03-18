@@ -94,8 +94,15 @@ SourceSearch:
 
 SourceType:
   type: string
-  enum: ['bigcommerce', 'commercetools', 'json', 'csv', 'bigquery', 'docker', 'ga4BigqueryExport']
-
+  enum:
+    - 'bigcommerce'
+    - 'commercetools'
+    - 'json'
+    - 'csv'
+    - 'bigquery'
+    - 'docker'
+    - 'ga4BigqueryExport'
+    
 SourceCommercetools:
   type: object
   additionalProperties: false
@@ -134,23 +141,26 @@ CommercetoolsCustomFields:
   description: Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).
   properties:
     inventory:
-      type: array
-      items:
-        type: string
-      description: Inventory custom fields.
-      nullable: true
+      oneOf:
+        - type: array
+          items:
+            type: string
+          description: Inventory custom fields.
+        - type: 'null'
     price:
-      type: array
-      items:
-        type: string
-      description: Price custom fields.
-      nullable: true
+      oneOf:
+        - type: array
+          items:
+            type: string
+          description: Price custom fields.
+        - type: 'null'
     category:
-      type: array
-      items:
-        type: string
-      description: Category custom fields.
-      nullable: true
+      oneOf:
+        - type: array
+          items:
+            type: string
+          description: Category custom fields.
+        - type: 'null'
 
 SourceBigCommerce:
   type: object

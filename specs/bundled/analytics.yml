@@ -9,485 +9,6 @@ info:
     [`analytics`
     ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl).
   version: 1.0.0
-components:
-  securitySchemes:
-    appId:
-      type: apiKey
-      in: header
-      name: X-Algolia-Application-Id
-    apiKey:
-      type: apiKey
-      in: header
-      name: X-Algolia-API-Key
-  parameters:
-    PathInPath:
-      name: path
-      in: path
-      description: Path of the endpoint, anything after "/1" must be specified.
-      required: true
-      schema:
-        type: string
-        example: /keys
-    Parameters:
-      name: parameters
-      in: query
-      description: Query parameters to apply to the current query.
-      schema:
-        type: object
-        additionalProperties: true
-    Index:
-      in: query
-      name: index
-      description: Index name.
-      required: true
-      schema:
-        type: string
-        example: YourIndexName
-    ClickAnalytics:
-      in: query
-      name: clickAnalytics
-      description: >-
-        Whether to include [click and
-        conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/)
-        rates for a search.
-      schema:
-        type: boolean
-        default: false
-    StartDate:
-      in: query
-      name: startDate
-      description: Start date (`YYYY-MM-DD`) of the period to analyze.
-      schema:
-        type: string
-        format: date
-        example: '2022-09-19'
-    EndDate:
-      in: query
-      name: endDate
-      description: End date (`YYYY-MM-DD`) of the period to analyze.
-      schema:
-        type: string
-        format: date
-        example: '2023-01-21'
-    OrderBy:
-      in: query
-      name: orderBy
-      description: Reorder the results.
-      schema:
-        $ref: '#/components/schemas/orderBy'
-    Direction:
-      in: query
-      name: direction
-      description: |
-        Sorting direction of the results: ascending or descending.
-      schema:
-        $ref: '#/components/schemas/direction'
-    Limit:
-      in: query
-      name: limit
-      description: Number of items to return.
-      schema:
-        type: integer
-        default: 10
-    Offset:
-      in: query
-      name: offset
-      description: Position of the first item to return.
-      schema:
-        type: integer
-        default: 0
-        minimum: 0
-    Tags:
-      name: tags
-      in: query
-      description: >-
-        Filter analytics on the
-        [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-        set at search time. Multiple tags can be combined with the operators OR
-        and AND. If a tag contains characters like spaces or parentheses, it
-        must be URL-encoded.
-      example: device:mobile%20phone
-      schema:
-        type: string
-    Search:
-      in: query
-      name: search
-      description: User query.
-      example: enable ab test
-      schema:
-        type: string
-    Attribute:
-      in: path
-      name: attribute
-      description: Attribute name.
-      required: true
-      schema:
-        type: string
-        example: brand
-  schemas:
-    ErrorBase:
-      description: Error.
-      type: object
-      additionalProperties: true
-      properties:
-        message:
-          type: string
-          example: Invalid Application-Id or API-Key
-    orderBy:
-      type: string
-      description: >
-        Method for ordering results.
-
-        `clickThroughRate`, `conversionRate` and `averageClickPosition` are only
-        available if the `clickAnalytics` parameter is `true`.
-      enum:
-        - searchCount
-        - clickThroughRate
-        - conversionRate
-        - averageClickPosition
-      default: searchCount
-    direction:
-      type: string
-      enum:
-        - asc
-        - desc
-      default: asc
-    search:
-      description: User query.
-      example: separator
-      type: string
-    count:
-      description: >-
-        Number of tracked _and_ untracked searches (where the `clickAnalytics`
-        parameter isn't `true`).
-      type: integer
-      example: 504
-    nbHits:
-      type: integer
-      description: Number of results (hits).
-      example: 20
-    topSearchesResponse:
-      type: object
-      additionalProperties: false
-      required:
-        - searches
-      properties:
-        searches:
-          type: array
-          description: Top searches with their hits count.
-          items:
-            type: object
-            title: topSearch
-            additionalProperties: false
-            required:
-              - search
-              - count
-              - nbHits
-            properties:
-              search:
-                $ref: '#/components/schemas/search'
-              count:
-                $ref: '#/components/schemas/count'
-              nbHits:
-                $ref: '#/components/schemas/nbHits'
-    rate:
-      type: number
-      format: double
-      description: >
-        [Click-through rate
-        (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
-      minimum: 0
-      maximum: 1
-      example: 0.14634193523426317
-    averageClickPosition:
-      type: integer
-      description: >-
-        Average
-        [position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position)
-        of clicked search result.
-      example: 1
-    conversionRate:
-      type: number
-      format: double
-      description: >
-        [Conversion rate
-        (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
-      example: 0
-    trackedSearchCount:
-      type: integer
-      example: 2
-      nullable: true
-      description: >-
-        Number of tracked searches. This is the number of search requests where
-        the `clickAnalytics` parameter is `true`.
-    clickCount:
-      type: integer
-      description: Number of click events.
-      example: 162
-    conversionCount:
-      type: integer
-      description: Number of converted clicks.
-      example: 0
-    topSearchesResponseWithAnalytics:
-      type: object
-      additionalProperties: false
-      required:
-        - searches
-      properties:
-        searches:
-          type: array
-          description: Top searches with their hits count and analytics.
-          items:
-            type: object
-            title: topSearchWithAnalytics
-            additionalProperties: false
-            required:
-              - search
-              - count
-              - nbHits
-              - clickThroughRate
-              - averageClickPosition
-              - conversionRate
-              - trackedSearchCount
-              - clickCount
-              - conversionCount
-            properties:
-              search:
-                $ref: '#/components/schemas/search'
-              count:
-                $ref: '#/components/schemas/count'
-              clickThroughRate:
-                $ref: '#/components/schemas/rate'
-              averageClickPosition:
-                $ref: '#/components/schemas/averageClickPosition'
-              conversionRate:
-                $ref: '#/components/schemas/conversionRate'
-              trackedSearchCount:
-                $ref: '#/components/schemas/trackedSearchCount'
-              clickCount:
-                $ref: '#/components/schemas/clickCount'
-              conversionCount:
-                $ref: '#/components/schemas/conversionCount'
-              nbHits:
-                $ref: '#/components/schemas/nbHits'
-    getTopSearchesResponse:
-      oneOf:
-        - $ref: '#/components/schemas/topSearchesResponse'
-        - $ref: '#/components/schemas/topSearchesResponseWithAnalytics'
-    parameters_count:
-      description: Number of occurrences.
-      example: 2
-      type: integer
-    date:
-      type: string
-      description: Date of the event in the format YYYY-MM-DD.
-      example: '2023-06-14'
-    noResultCount:
-      description: Number of occurences.
-      type: integer
-      example: 54
-    hit:
-      description: Hit.
-      type: string
-      example: method-export-rules-php
-    topHitsResponse:
-      type: object
-      additionalProperties: false
-      required:
-        - hits
-      properties:
-        hits:
-          type: array
-          description: Top hits.
-          items:
-            type: object
-            title: topHit
-            additionalProperties: false
-            required:
-              - hit
-              - count
-            properties:
-              hit:
-                $ref: '#/components/schemas/hit'
-              count:
-                $ref: '#/components/schemas/parameters_count'
-    topHitsResponseWithAnalytics:
-      type: object
-      additionalProperties: false
-      required:
-        - hits
-      properties:
-        hits:
-          type: array
-          description: Top hits.
-          items:
-            type: object
-            title: topHitWithAnalytics
-            additionalProperties: false
-            required:
-              - hit
-              - count
-              - clickThroughRate
-              - conversionRate
-              - trackedSearchCount
-              - clickCount
-              - conversionCount
-            properties:
-              hit:
-                $ref: '#/components/schemas/hit'
-              count:
-                $ref: '#/components/schemas/parameters_count'
-              clickThroughRate:
-                $ref: '#/components/schemas/rate'
-              conversionRate:
-                $ref: '#/components/schemas/conversionRate'
-              trackedSearchCount:
-                $ref: '#/components/schemas/trackedSearchCount'
-              clickCount:
-                $ref: '#/components/schemas/clickCount'
-              conversionCount:
-                $ref: '#/components/schemas/conversionCount'
-    getTopHitsResponse:
-      oneOf:
-        - $ref: '#/components/schemas/topHitsResponse'
-        - $ref: '#/components/schemas/topHitsResponseWithAnalytics'
-    attribute:
-      description: Attribute name.
-      type: string
-      example: url
-    getTopFilterAttribute:
-      type: object
-      additionalProperties: false
-      required:
-        - attribute
-        - count
-      properties:
-        attribute:
-          $ref: '#/components/schemas/attribute'
-        count:
-          $ref: '#/components/schemas/parameters_count'
-    getTopFilterAttributesResponse:
-      type: object
-      additionalProperties: false
-      required:
-        - attributes
-      properties:
-        attributes:
-          type: array
-          description: Filterable attributes.
-          items:
-            $ref: '#/components/schemas/getTopFilterAttribute'
-    operator:
-      description: Operator.
-      type: string
-      example: ':'
-    value:
-      description: Attribute value.
-      type: string
-      example: integration
-    getTopFilterForAttribute:
-      type: object
-      additionalProperties: false
-      required:
-        - operator
-        - attribute
-        - value
-        - count
-      properties:
-        attribute:
-          $ref: '#/components/schemas/attribute'
-        operator:
-          $ref: '#/components/schemas/operator'
-        value:
-          $ref: '#/components/schemas/value'
-        count:
-          $ref: '#/components/schemas/parameters_count'
-    getTopFilterForAttributeResponse:
-      type: object
-      additionalProperties: false
-      required:
-        - values
-      properties:
-        values:
-          type: array
-          description: Filter values for an attribute.
-          items:
-            $ref: '#/components/schemas/getTopFilterForAttribute'
-    getTopFiltersNoResultsValue:
-      type: object
-      additionalProperties: false
-      required:
-        - attribute
-        - operator
-        - value
-      properties:
-        attribute:
-          $ref: '#/components/schemas/attribute'
-        operator:
-          $ref: '#/components/schemas/operator'
-        value:
-          $ref: '#/components/schemas/value'
-    getTopFiltersNoResultsValues:
-      type: object
-      additionalProperties: false
-      required:
-        - values
-        - count
-      properties:
-        count:
-          $ref: '#/components/schemas/parameters_count'
-        values:
-          type: array
-          description: Filters with no results.
-          items:
-            $ref: '#/components/schemas/getTopFiltersNoResultsValue'
-    getTopFiltersNoResultsResponse:
-      type: object
-      additionalProperties: false
-      required:
-        - values
-      properties:
-        values:
-          type: array
-          description: Filters with no results.
-          items:
-            $ref: '#/components/schemas/getTopFiltersNoResultsValues'
-    average:
-      type: number
-      format: double
-      description: Average count of all click events.
-      example: 2.3344634550185286
-    updatedAt:
-      type: string
-      example: '2023-07-04T12:49:15Z'
-      description: >-
-        Timestamp of the last update in [ISO
-        8601](https://wikipedia.org/wiki/ISO_8601) format.
-  responses:
-    BadRequest:
-      description: Bad request or request arguments.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    FeatureNotEnabled:
-      description: This feature is not enabled on your Algolia account.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    MethodNotAllowed:
-      description: Method not allowed with this API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    IndexNotFound:
-      description: Index not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
 servers:
   - url: https://analytics.{region}.algolia.com
     variables:
@@ -510,14 +31,6 @@ tags:
   - name: search
     x-displayName: Search Analytics
     description: Get all search analytics.
-x-tagGroups:
-  - name: General
-    tags:
-      - search
-      - click
-  - name: Others
-    tags:
-      - advanced
 paths:
   /1{path}:
     get:
@@ -1512,3 +1025,491 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+components:
+  securitySchemes:
+    appId:
+      type: apiKey
+      in: header
+      name: X-Algolia-Application-Id
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-Algolia-API-Key
+  parameters:
+    PathInPath:
+      name: path
+      in: path
+      description: Path of the endpoint, anything after "/1" must be specified.
+      required: true
+      schema:
+        type: string
+        example: /keys
+    Parameters:
+      name: parameters
+      in: query
+      description: Query parameters to apply to the current query.
+      schema:
+        type: object
+        additionalProperties: true
+    Index:
+      in: query
+      name: index
+      description: Index name.
+      required: true
+      schema:
+        type: string
+        example: YourIndexName
+    ClickAnalytics:
+      in: query
+      name: clickAnalytics
+      description: >-
+        Whether to include [click and
+        conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/)
+        rates for a search.
+      schema:
+        type: boolean
+        default: false
+    StartDate:
+      in: query
+      name: startDate
+      description: Start date (`YYYY-MM-DD`) of the period to analyze.
+      schema:
+        type: string
+        format: date
+        example: '2022-09-19'
+    EndDate:
+      in: query
+      name: endDate
+      description: End date (`YYYY-MM-DD`) of the period to analyze.
+      schema:
+        type: string
+        format: date
+        example: '2023-01-21'
+    OrderBy:
+      in: query
+      name: orderBy
+      description: Reorder the results.
+      schema:
+        $ref: '#/components/schemas/orderBy'
+    Direction:
+      in: query
+      name: direction
+      description: |
+        Sorting direction of the results: ascending or descending.
+      schema:
+        $ref: '#/components/schemas/direction'
+    Limit:
+      in: query
+      name: limit
+      description: Number of items to return.
+      schema:
+        type: integer
+        default: 10
+    Offset:
+      in: query
+      name: offset
+      description: Position of the first item to return.
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    Tags:
+      name: tags
+      in: query
+      description: >-
+        Filter analytics on the
+        [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
+        set at search time. Multiple tags can be combined with the operators OR
+        and AND. If a tag contains characters like spaces or parentheses, it
+        must be URL-encoded.
+      example: device:mobile%20phone
+      schema:
+        type: string
+    Search:
+      in: query
+      name: search
+      description: User query.
+      example: enable ab test
+      schema:
+        type: string
+    Attribute:
+      in: path
+      name: attribute
+      description: Attribute name.
+      required: true
+      schema:
+        type: string
+        example: brand
+  schemas:
+    ErrorBase:
+      description: Error.
+      type: object
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
+    orderBy:
+      type: string
+      description: >
+        Method for ordering results.
+
+        `clickThroughRate`, `conversionRate` and `averageClickPosition` are only
+        available if the `clickAnalytics` parameter is `true`.
+      enum:
+        - searchCount
+        - clickThroughRate
+        - conversionRate
+        - averageClickPosition
+      default: searchCount
+    direction:
+      type: string
+      enum:
+        - asc
+        - desc
+      default: asc
+    search:
+      description: User query.
+      example: separator
+      type: string
+    count:
+      description: >-
+        Number of tracked _and_ untracked searches (where the `clickAnalytics`
+        parameter isn't `true`).
+      type: integer
+      example: 504
+    nbHits:
+      type: integer
+      description: Number of results (hits).
+      example: 20
+    topSearchesResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - searches
+      properties:
+        searches:
+          type: array
+          description: Top searches with their hits count.
+          items:
+            type: object
+            title: topSearch
+            additionalProperties: false
+            required:
+              - search
+              - count
+              - nbHits
+            properties:
+              search:
+                $ref: '#/components/schemas/search'
+              count:
+                $ref: '#/components/schemas/count'
+              nbHits:
+                $ref: '#/components/schemas/nbHits'
+    rate:
+      type: number
+      format: double
+      description: >
+        [Click-through rate
+        (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+      minimum: 0
+      maximum: 1
+      example: 0.14634193523426317
+    averageClickPosition:
+      type: integer
+      description: >-
+        Average
+        [position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position)
+        of clicked search result.
+      example: 1
+    conversionRate:
+      type: number
+      format: double
+      description: >
+        [Conversion rate
+        (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+      example: 0
+    trackedSearchCount:
+      oneOf:
+        - type: integer
+          example: 2
+          description: >-
+            Number of tracked searches. This is the number of search requests
+            where the `clickAnalytics` parameter is `true`.
+        - type: 'null'
+    clickCount:
+      type: integer
+      description: Number of click events.
+      example: 162
+    conversionCount:
+      type: integer
+      description: Number of converted clicks.
+      example: 0
+    topSearchesResponseWithAnalytics:
+      type: object
+      additionalProperties: false
+      required:
+        - searches
+      properties:
+        searches:
+          type: array
+          description: Top searches with their hits count and analytics.
+          items:
+            type: object
+            title: topSearchWithAnalytics
+            additionalProperties: false
+            required:
+              - search
+              - count
+              - nbHits
+              - clickThroughRate
+              - averageClickPosition
+              - conversionRate
+              - trackedSearchCount
+              - clickCount
+              - conversionCount
+            properties:
+              search:
+                $ref: '#/components/schemas/search'
+              count:
+                $ref: '#/components/schemas/count'
+              clickThroughRate:
+                $ref: '#/components/schemas/rate'
+              averageClickPosition:
+                $ref: '#/components/schemas/averageClickPosition'
+              conversionRate:
+                $ref: '#/components/schemas/conversionRate'
+              trackedSearchCount:
+                $ref: '#/components/schemas/trackedSearchCount'
+              clickCount:
+                $ref: '#/components/schemas/clickCount'
+              conversionCount:
+                $ref: '#/components/schemas/conversionCount'
+              nbHits:
+                $ref: '#/components/schemas/nbHits'
+    getTopSearchesResponse:
+      oneOf:
+        - $ref: '#/components/schemas/topSearchesResponse'
+        - $ref: '#/components/schemas/topSearchesResponseWithAnalytics'
+    parameters_count:
+      description: Number of occurrences.
+      example: 2
+      type: integer
+    date:
+      type: string
+      description: Date of the event in the format YYYY-MM-DD.
+      example: '2023-06-14'
+    noResultCount:
+      description: Number of occurences.
+      type: integer
+      example: 54
+    hit:
+      description: Hit.
+      type: string
+      example: method-export-rules-php
+    topHitsResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - hits
+      properties:
+        hits:
+          type: array
+          description: Top hits.
+          items:
+            type: object
+            title: topHit
+            additionalProperties: false
+            required:
+              - hit
+              - count
+            properties:
+              hit:
+                $ref: '#/components/schemas/hit'
+              count:
+                $ref: '#/components/schemas/parameters_count'
+    topHitsResponseWithAnalytics:
+      type: object
+      additionalProperties: false
+      required:
+        - hits
+      properties:
+        hits:
+          type: array
+          description: Top hits.
+          items:
+            type: object
+            title: topHitWithAnalytics
+            additionalProperties: false
+            required:
+              - hit
+              - count
+              - clickThroughRate
+              - conversionRate
+              - trackedSearchCount
+              - clickCount
+              - conversionCount
+            properties:
+              hit:
+                $ref: '#/components/schemas/hit'
+              count:
+                $ref: '#/components/schemas/parameters_count'
+              clickThroughRate:
+                $ref: '#/components/schemas/rate'
+              conversionRate:
+                $ref: '#/components/schemas/conversionRate'
+              trackedSearchCount:
+                $ref: '#/components/schemas/trackedSearchCount'
+              clickCount:
+                $ref: '#/components/schemas/clickCount'
+              conversionCount:
+                $ref: '#/components/schemas/conversionCount'
+    getTopHitsResponse:
+      oneOf:
+        - $ref: '#/components/schemas/topHitsResponse'
+        - $ref: '#/components/schemas/topHitsResponseWithAnalytics'
+    attribute:
+      description: Attribute name.
+      type: string
+      example: url
+    getTopFilterAttribute:
+      type: object
+      additionalProperties: false
+      required:
+        - attribute
+        - count
+      properties:
+        attribute:
+          $ref: '#/components/schemas/attribute'
+        count:
+          $ref: '#/components/schemas/parameters_count'
+    getTopFilterAttributesResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - attributes
+      properties:
+        attributes:
+          type: array
+          description: Filterable attributes.
+          items:
+            $ref: '#/components/schemas/getTopFilterAttribute'
+    operator:
+      description: Operator.
+      type: string
+      example: ':'
+    value:
+      description: Attribute value.
+      type: string
+      example: integration
+    getTopFilterForAttribute:
+      type: object
+      additionalProperties: false
+      required:
+        - operator
+        - attribute
+        - value
+        - count
+      properties:
+        attribute:
+          $ref: '#/components/schemas/attribute'
+        operator:
+          $ref: '#/components/schemas/operator'
+        value:
+          $ref: '#/components/schemas/value'
+        count:
+          $ref: '#/components/schemas/parameters_count'
+    getTopFilterForAttributeResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - values
+      properties:
+        values:
+          type: array
+          description: Filter values for an attribute.
+          items:
+            $ref: '#/components/schemas/getTopFilterForAttribute'
+    getTopFiltersNoResultsValue:
+      type: object
+      additionalProperties: false
+      required:
+        - attribute
+        - operator
+        - value
+      properties:
+        attribute:
+          $ref: '#/components/schemas/attribute'
+        operator:
+          $ref: '#/components/schemas/operator'
+        value:
+          $ref: '#/components/schemas/value'
+    getTopFiltersNoResultsValues:
+      type: object
+      additionalProperties: false
+      required:
+        - values
+        - count
+      properties:
+        count:
+          $ref: '#/components/schemas/parameters_count'
+        values:
+          type: array
+          description: Filters with no results.
+          items:
+            $ref: '#/components/schemas/getTopFiltersNoResultsValue'
+    getTopFiltersNoResultsResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - values
+      properties:
+        values:
+          type: array
+          description: Filters with no results.
+          items:
+            $ref: '#/components/schemas/getTopFiltersNoResultsValues'
+    average:
+      type: number
+      format: double
+      description: Average count of all click events.
+      example: 2.3344634550185286
+    updatedAt:
+      type: string
+      example: '2023-07-04T12:49:15Z'
+      description: >-
+        Timestamp of the last update in [ISO
+        8601](https://wikipedia.org/wiki/ISO_8601) format.
+  responses:
+    BadRequest:
+      description: Bad request or request arguments.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    FeatureNotEnabled:
+      description: This feature is not enabled on your Algolia account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    MethodNotAllowed:
+      description: Method not allowed with this API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    IndexNotFound:
+      description: Index not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+x-tagGroups:
+  - name: General
+    tags:
+      - search
+      - click
+  - name: Others
+    tags:
+      - advanced

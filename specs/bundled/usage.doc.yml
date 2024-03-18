@@ -12,6 +12,76 @@ info:
   contact:
     name: Algolia Usage API
     url: https://www.algolia.com/doc/rest-api/usage/
+servers:
+  - url: https://usage.algolia.com/1/usage
+  - url: https://usage-dev.algolia.com/1/usage
+  - url: http://localhost:8000/1/usage
+security:
+  - BasicAuth: []
+paths:
+  /{statistic}:
+    get:
+      operationId: getUsage
+      summary: Get usage.
+      description: >
+        Returns usage statistics over a specified period.
+
+
+        The specified period must be within the last 90 days.
+
+        However, the period of [data retention can be
+        extended](https://support.algolia.com/hc/en-us/articles/4406975230993-Can-I-extend-the-retention-period-of-the-analytics-data-)
+        to a maximum of 365 days.
+      parameters:
+        - $ref: '#/components/parameters/statisticParameter'
+        - $ref: '#/components/parameters/startDateParameter'
+        - $ref: '#/components/parameters/endDateParameter'
+        - $ref: '#/components/parameters/granularityParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+        '422':
+          $ref: '#/components/responses/StatisticNotFound'
+  /{statistic}/{index}:
+    get:
+      operationId: getIndexUsage
+      summary: Get usage for an index.
+      description: >
+        Returns index usage statistics over a specified period.
+
+
+        The specified period must be within the last 90 days.
+
+        However, the period of [data retention can be
+        extended](https://support.algolia.com/hc/en-us/articles/4406975230993-Can-I-extend-the-retention-period-of-the-analytics-data-)
+        to a maximum of 365 days.
+      parameters:
+        - $ref: '#/components/parameters/statisticParameter'
+        - $ref: '#/components/parameters/indexParameter'
+        - $ref: '#/components/parameters/startDateParameter'
+        - $ref: '#/components/parameters/endDateParameter'
+        - $ref: '#/components/parameters/granularityParameter'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+        '401':
+          $ref: '#/components/responses/MissingAuthorization'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+        '422':
+          $ref: '#/components/responses/StatisticNotFound'
 components:
   securitySchemes:
     BasicAuth:
@@ -580,73 +650,3 @@ components:
         period](https://support.algolia.com/hc/en-us/articles/4406975230993-Can-I-extend-the-retention-period-of-the-analytics-data-).
     StatisticNotFound:
       description: Metric not found.
-servers:
-  - url: https://usage.algolia.com/1/usage
-  - url: https://usage-dev.algolia.com/1/usage
-  - url: http://localhost:8000/1/usage
-security:
-  - BasicAuth: []
-paths:
-  /{statistic}:
-    get:
-      operationId: getUsage
-      summary: Get usage.
-      description: >
-        Returns usage statistics over a specified period.
-
-
-        The specified period must be within the last 90 days.
-
-        However, the period of [data retention can be
-        extended](https://support.algolia.com/hc/en-us/articles/4406975230993-Can-I-extend-the-retention-period-of-the-analytics-data-)
-        to a maximum of 365 days.
-      parameters:
-        - $ref: '#/components/parameters/statisticParameter'
-        - $ref: '#/components/parameters/startDateParameter'
-        - $ref: '#/components/parameters/endDateParameter'
-        - $ref: '#/components/parameters/granularityParameter'
-      responses:
-        '200':
-          $ref: '#/components/responses/Success'
-        '400':
-          $ref: '#/components/responses/InvalidRequest'
-        '401':
-          $ref: '#/components/responses/MissingAuthorization'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-        '422':
-          $ref: '#/components/responses/StatisticNotFound'
-  /{statistic}/{index}:
-    get:
-      operationId: getIndexUsage
-      summary: Get usage for an index.
-      description: >
-        Returns index usage statistics over a specified period.
-
-
-        The specified period must be within the last 90 days.
-
-        However, the period of [data retention can be
-        extended](https://support.algolia.com/hc/en-us/articles/4406975230993-Can-I-extend-the-retention-period-of-the-analytics-data-)
-        to a maximum of 365 days.
-      parameters:
-        - $ref: '#/components/parameters/statisticParameter'
-        - $ref: '#/components/parameters/indexParameter'
-        - $ref: '#/components/parameters/startDateParameter'
-        - $ref: '#/components/parameters/endDateParameter'
-        - $ref: '#/components/parameters/granularityParameter'
-      responses:
-        '200':
-          $ref: '#/components/responses/Success'
-        '400':
-          $ref: '#/components/responses/InvalidRequest'
-        '401':
-          $ref: '#/components/responses/MissingAuthorization'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/IndexNotFound'
-        '422':
-          $ref: '#/components/responses/StatisticNotFound'

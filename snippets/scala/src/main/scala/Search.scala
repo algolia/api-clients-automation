@@ -171,14 +171,14 @@ class SnippetSearchClient {
             action = DictionaryAction.withName("addEntry"),
             body = DictionaryEntry(
               objectID = "1",
-              language = "en"
+              language = SupportedLanguage.withName("en")
             )
           ),
           BatchDictionaryEntriesRequest(
             action = DictionaryAction.withName("deleteEntry"),
             body = DictionaryEntry(
               objectID = "2",
-              language = "fr"
+              language = SupportedLanguage.withName("fr")
             )
           )
         )

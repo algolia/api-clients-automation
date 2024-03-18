@@ -1,6 +1,5 @@
 import XCTest
 
-import AnyCodable
 import Utils
 
 @testable import Core
@@ -12,10 +11,7 @@ final class SearchClientClientTests: XCTestCase {
 
     /// calls api with correct read host
     func testApiTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(
-            appID: "test-app-id",
-            apiKey: "test-api-key"
-        )
+        let configuration = try SearchClientConfiguration(appID: "test-app-id", apiKey: "test-api-key")
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.customGetWithHTTPInfo(
@@ -29,10 +25,7 @@ final class SearchClientClientTests: XCTestCase {
 
     /// calls api with correct write host
     func testApiTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(
-            appID: "test-app-id",
-            apiKey: "test-api-key"
-        )
+        let configuration = try SearchClientConfiguration(appID: "test-app-id", apiKey: "test-api-key")
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.customPostWithHTTPInfo(
@@ -46,7 +39,7 @@ final class SearchClientClientTests: XCTestCase {
 
     /// tests the retry strategy
     func testApiTest2() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(
+        let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
             hosts: [
@@ -69,7 +62,7 @@ final class SearchClientClientTests: XCTestCase {
 
     /// test the compression strategy
     func testApiTest3() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(
+        let configuration = try SearchClientConfiguration(
             appID: "test-app-id",
             apiKey: "test-api-key",
             hosts: [RetryableHost(url: URL(string: "http://localhost:6678")!)],
@@ -79,12 +72,8 @@ final class SearchClientClientTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/gzip",
-
             parameters: [:],
-
-            body: [
-                "message": "this is a compressed body",
-            ]
+            body: ["message": "this is a compressed body"]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
@@ -98,10 +87,7 @@ final class SearchClientClientTests: XCTestCase {
 
     /// calls api with correct user agent
     func testCommonApiTest0() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY
-        )
+        let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -128,10 +114,7 @@ final class SearchClientClientTests: XCTestCase {
 
     /// calls api with default read timeouts
     func testCommonApiTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY
-        )
+        let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -146,10 +129,7 @@ final class SearchClientClientTests: XCTestCase {
 
     /// calls api with default write timeouts
     func testCommonApiTest2() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY
-        )
+        let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -165,7 +145,7 @@ final class SearchClientClientTests: XCTestCase {
     /// client throws with invalid parameters
     func testParametersTest0() async throws {
         do {
-            let configuration: Search.Configuration = try Search.Configuration(appID: "", apiKey: "")
+            let configuration = try SearchClientConfiguration(appID: "", apiKey: "")
             let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
             let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -174,7 +154,7 @@ final class SearchClientClientTests: XCTestCase {
             XCTAssertEqual(error.localizedDescription, "`appId` is missing.")
         }
         do {
-            let configuration: Search.Configuration = try Search.Configuration(appID: "", apiKey: "my-api-key")
+            let configuration = try SearchClientConfiguration(appID: "", apiKey: "my-api-key")
             let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
             let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -183,7 +163,7 @@ final class SearchClientClientTests: XCTestCase {
             XCTAssertEqual(error.localizedDescription, "`appId` is missing.")
         }
         do {
-            let configuration: Search.Configuration = try Search.Configuration(appID: "my-app-id", apiKey: "")
+            let configuration = try SearchClientConfiguration(appID: "my-app-id", apiKey: "")
             let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
             let client = SearchClient(configuration: configuration, transporter: transporter)
 
@@ -195,29 +175,21 @@ final class SearchClientClientTests: XCTestCase {
 
     /// &#x60;addApiKey&#x60; throws with invalid parameters
     func testParametersTest1() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY
-        )
+        let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
     }
 
     /// &#x60;addOrUpdateObject&#x60; throws with invalid parameters
     func testParametersTest2() async throws {
-        let configuration: Search.Configuration = try Search.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY
-        )
+        let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         do {
             let response = try await client.addOrUpdateObjectWithHTTPInfo(
                 indexName: TestNullString(),
-
                 objectID: "my-object-id",
-
                 body: [:]
             )
             let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -233,9 +205,7 @@ final class SearchClientClientTests: XCTestCase {
         do {
             let response = try await client.addOrUpdateObjectWithHTTPInfo(
                 indexName: "my-index-name",
-
                 objectID: TestNullString(),
-
                 body: [:]
             )
             let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -251,9 +221,7 @@ final class SearchClientClientTests: XCTestCase {
         do {
             let response = try await client.addOrUpdateObjectWithHTTPInfo(
                 indexName: "my-index-name",
-
                 objectID: "my-object-id",
-
                 body: TestNullObject()
             )
             let responseBodyData = try XCTUnwrap(response.bodyData)

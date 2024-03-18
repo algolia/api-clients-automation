@@ -4,6 +4,7 @@ import 'package:algolia_client_recommend/src/model/query_type.dart';
 import 'package:algolia_client_recommend/src/model/alternatives_as_exact.dart';
 import 'package:algolia_client_recommend/src/model/semantic_search.dart';
 import 'package:algolia_client_recommend/src/model/advanced_syntax_features.dart';
+import 'package:algolia_client_recommend/src/model/supported_language.dart';
 import 'package:algolia_client_recommend/src/model/remove_words_if_no_results.dart';
 import 'package:algolia_client_recommend/src/model/exact_on_single_word_query.dart';
 import 'package:algolia_client_recommend/src/model/mode.dart';
@@ -313,13 +314,13 @@ final class ConsequenceParams {
 
   /// One of types:
   /// - [bool]
-  /// - [List<String>]
+  /// - [List<SupportedLanguage>]
   @JsonKey(name: r'ignorePlurals')
   final dynamic ignorePlurals;
 
   /// One of types:
   /// - [bool]
-  /// - [List<String>]
+  /// - [List<SupportedLanguage>]
   @JsonKey(name: r'removeStopWords')
   final dynamic removeStopWords;
 
@@ -327,9 +328,9 @@ final class ConsequenceParams {
   @JsonKey(name: r'keepDiacriticsOnCharacters')
   final String? keepDiacriticsOnCharacters;
 
-  /// [ISO code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) for language-specific settings such as plurals, stop words, and word-detection dictionaries.  This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings. This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages. To support this, you must place the CJK language **first**.   **You should always specify a query language.** If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/), or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
+  /// Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries.  This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings. This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages. To support this, you must place the CJK language **first**.  **You should always specify a query language.** If you don't specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/), or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
   @JsonKey(name: r'queryLanguages')
-  final List<String>? queryLanguages;
+  final List<SupportedLanguage>? queryLanguages;
 
   /// Whether to split compound words into their building blocks.  For more information, see [Word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words). Word segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and Norwegian.
   @JsonKey(name: r'decompoundQuery')

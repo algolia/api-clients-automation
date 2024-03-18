@@ -1,6 +1,5 @@
 import XCTest
 
-import AnyCodable
 import DotEnv
 import Utils
 
@@ -50,7 +49,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// addABTests with minimal parameters
     func testAddABTestsTest0() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -58,23 +57,14 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.addABTestsWithHTTPInfo(
-            addABTestsRequest: AddABTestsRequest(
-                name: "myABTest",
-                variants: [AddABTestsVariant.abTestsVariant(
-                    AbTestsVariant(
-                        index: "AB_TEST_1",
-                        trafficPercentage: 30
-                    )
-                ), AddABTestsVariant.abTestsVariant(
-                    AbTestsVariant(
-                        index: "AB_TEST_2",
-                        trafficPercentage: 50
-                    )
-                )],
-                endAt: "2022-12-31T00:00:00.000Z"
-            )
-        )
+        let response = try await client.addABTestsWithHTTPInfo(addABTestsRequest: AddABTestsRequest(
+            name: "myABTest",
+            variants: [
+                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_1", trafficPercentage: 30)),
+                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_2", trafficPercentage: 50)),
+            ],
+            endAt: "2022-12-31T00:00:00.000Z"
+        ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -96,7 +86,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// allow del method for a custom path with minimal parameters
     func testCustomDeleteTest0() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -104,9 +94,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customDeleteWithHTTPInfo(
-            path: "/test/minimal"
-        )
+        let response = try await client.customDeleteWithHTTPInfo(path: "/test/minimal")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -120,7 +108,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// allow del method for a custom path with all parameters
     func testCustomDeleteTest1() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -130,9 +118,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
         let response = try await client.customDeleteWithHTTPInfo(
             path: "/test/all",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ]
+            parameters: ["query": AnyCodable("parameters")]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -153,7 +139,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// allow get method for a custom path with minimal parameters
     func testCustomGetTest0() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -161,9 +147,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customGetWithHTTPInfo(
-            path: "/test/minimal"
-        )
+        let response = try await client.customGetWithHTTPInfo(path: "/test/minimal")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -177,7 +161,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// allow get method for a custom path with all parameters
     func testCustomGetTest1() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -187,9 +171,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
         let response = try await client.customGetWithHTTPInfo(
             path: "/test/all",
-            parameters: [
-                "query": AnyCodable("parameters with space"),
-            ]
+            parameters: ["query": AnyCodable("parameters with space")]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -210,7 +192,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// requestOptions should be escaped too
     func testCustomGetTest2() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -219,23 +201,14 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            headers: [
-                "x-header-1": "spaces are left alone",
-            ],
+            headers: ["x-header-1": "spaces are left alone"],
 
-            queryParameters: [
-                "query": "parameters with space",
-                "and an array": ["array",
-                                 "with spaces",
-                ],
-            ]
+            queryParameters: ["query": "parameters with space", "and an array": ["array", "with spaces"]]
         )
 
         let response = try await client.customGetWithHTTPInfo(
             path: "/test/all",
-            parameters: [
-                "query": AnyCodable("to be overriden"),
-            ],
+            parameters: ["query": AnyCodable("to be overriden")],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -269,7 +242,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// allow post method for a custom path with minimal parameters
     func testCustomPostTest0() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -277,9 +250,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(
-            path: "/test/minimal"
-        )
+        let response = try await client.customPostWithHTTPInfo(path: "/test/minimal")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -299,7 +270,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// allow post method for a custom path with all parameters
     func testCustomPostTest1() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -309,12 +280,8 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/all",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "body": "parameters",
-            ]
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["body": "parameters"]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -341,7 +308,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// requestOptions can override default query parameters
     func testCustomPostTest2() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -350,19 +317,13 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "query": "myQueryParameter",
-            ]
+            queryParameters: ["query": "myQueryParameter"]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -390,7 +351,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// requestOptions merges query parameters with default ones
     func testCustomPostTest3() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -399,19 +360,13 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "query2": "myQueryParameter",
-            ]
+            queryParameters: ["query2": "myQueryParameter"]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -442,7 +397,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// requestOptions can override default headers
     func testCustomPostTest4() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -451,19 +406,13 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            headers: [
-                "x-algolia-api-key": "myApiKey",
-            ]
+            headers: ["x-algolia-api-key": "myApiKey"]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -499,7 +448,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// requestOptions merges headers with default ones
     func testCustomPostTest5() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -508,19 +457,13 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            headers: [
-                "x-algolia-api-key": "myApiKey",
-            ]
+            headers: ["x-algolia-api-key": "myApiKey"]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -556,7 +499,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts booleans
     func testCustomPostTest6() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -565,19 +508,13 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "isItWorking": true,
-            ]
+            queryParameters: ["isItWorking": true]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -608,7 +545,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts integers
     func testCustomPostTest7() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -617,19 +554,13 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "myParam": 2,
-            ]
+            queryParameters: ["myParam": 2]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -660,7 +591,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of string
     func testCustomPostTest8() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -669,21 +600,13 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "myParam": ["b and c",
-                            "d",
-                ],
-            ]
+            queryParameters: ["myParam": ["b and c", "d"]]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -714,7 +637,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of booleans
     func testCustomPostTest9() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -723,22 +646,13 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "myParam": [true,
-                            true,
-                            false,
-                ],
-            ]
+            queryParameters: ["myParam": [true, true, false]]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -769,7 +683,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of integers
     func testCustomPostTest10() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -778,21 +692,13 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
         let requestOptions = RequestOptions(
-            queryParameters: [
-                "myParam": [1,
-                            2,
-                ],
-            ]
+            queryParameters: ["myParam": [1, 2]]
         )
 
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/requestOptions",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "facet": "filters",
-            ],
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["facet": "filters"],
             requestOptions: requestOptions
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -823,7 +729,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// allow put method for a custom path with minimal parameters
     func testCustomPutTest0() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -831,9 +737,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPutWithHTTPInfo(
-            path: "/test/minimal"
-        )
+        let response = try await client.customPutWithHTTPInfo(path: "/test/minimal")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -853,7 +757,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// allow put method for a custom path with all parameters
     func testCustomPutTest1() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -863,12 +767,8 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
         let response = try await client.customPutWithHTTPInfo(
             path: "/test/all",
-            parameters: [
-                "query": AnyCodable("parameters"),
-            ],
-            body: [
-                "body": "parameters",
-            ]
+            parameters: ["query": AnyCodable("parameters")],
+            body: ["body": "parameters"]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -895,7 +795,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// deleteABTest
     func testDeleteABTestTest0() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -903,9 +803,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.deleteABTestWithHTTPInfo(
-            id: 42
-        )
+        let response = try await client.deleteABTestWithHTTPInfo(id: 42)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -919,7 +817,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// getABTest
     func testGetABTestTest0() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -927,9 +825,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getABTestWithHTTPInfo(
-            id: 42
-        )
+        let response = try await client.getABTestWithHTTPInfo(id: 42)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -943,7 +839,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// listABTests with minimal parameters
     func testListABTestsTest0() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -965,7 +861,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// listABTests with parameters
     func testListABTestsTest1() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -1026,7 +922,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
 
     /// stopABTest
     func testStopABTestTest0() async throws {
-        let configuration: Abtesting.Configuration = try Abtesting.Configuration(
+        let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
             region: Region.us
@@ -1034,9 +930,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AbtestingClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.stopABTestWithHTTPInfo(
-            id: 42
-        )
+        let response = try await client.stopABTestWithHTTPInfo(id: 42)
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
