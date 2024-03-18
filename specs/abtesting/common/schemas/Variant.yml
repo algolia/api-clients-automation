@@ -76,7 +76,7 @@ variant:
       description: Number of searches carried out during the A/B test.
       example: 86269
     trackedSearchCount:
-      $ref: '../../../common/parameters.yml#/trackedSearchCount'
+      $ref: '../../../analytics/common/parameters.yml#/trackedSearchCount'
     trafficPercentage:
       $ref: '../parameters.yml#/trafficPercentage'
     userCount:
