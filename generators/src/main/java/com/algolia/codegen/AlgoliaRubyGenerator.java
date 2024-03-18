@@ -43,26 +43,25 @@ public class AlgoliaRubyGenerator extends RubyClientCodegen {
     modelTestTemplateFiles.clear();
 
     // Remove some files we don't want to output or change their paths
-    supportingFiles.removeIf(
-      file ->
-        file.getTemplateFile().equals("gitignore.mustache") ||
-        file.getTemplateFile().equals("travis.mustache") ||
-        file.getTemplateFile().equals("rspec.mustache") ||
-        file.getTemplateFile().equals("Gemfile.mustache") ||
-        file.getTemplateFile().equals("gem.mustache") ||
-        file.getTemplateFile().equals("gemspec.mustache") ||
-        file.getTemplateFile().equals("api_client.mustache") ||
-        file.getTemplateFile().equals("configuration.mustache") ||
-        file.getTemplateFile().equals("api_error.mustache") ||
-        file.getTemplateFile().equals("README.mustache") ||
-        file.getTemplateFile().equals("Rakefile.mustache") ||
-        file.getTemplateFile().equals("api_client_spec.mustache") ||
-        file.getTemplateFile().equals("git_push.sh.mustache") ||
-        file.getTemplateFile().equals("api_test.mustache") ||
-        file.getTemplateFile().equals("configuration_spec.mustache") ||
-        file.getTemplateFile().equals("gitlab-ci.mustache") ||
-        file.getTemplateFile().equals("spec_helper.mustache") ||
-        file.getTemplateFile().equals("rubocop.mustache")
+    supportingFiles.removeIf(file ->
+      file.getTemplateFile().equals("gitignore.mustache") ||
+      file.getTemplateFile().equals("travis.mustache") ||
+      file.getTemplateFile().equals("rspec.mustache") ||
+      file.getTemplateFile().equals("Gemfile.mustache") ||
+      file.getTemplateFile().equals("gem.mustache") ||
+      file.getTemplateFile().equals("gemspec.mustache") ||
+      file.getTemplateFile().equals("api_client.mustache") ||
+      file.getTemplateFile().equals("configuration.mustache") ||
+      file.getTemplateFile().equals("api_error.mustache") ||
+      file.getTemplateFile().equals("README.mustache") ||
+      file.getTemplateFile().equals("Rakefile.mustache") ||
+      file.getTemplateFile().equals("api_client_spec.mustache") ||
+      file.getTemplateFile().equals("git_push.sh.mustache") ||
+      file.getTemplateFile().equals("api_test.mustache") ||
+      file.getTemplateFile().equals("configuration_spec.mustache") ||
+      file.getTemplateFile().equals("gitlab-ci.mustache") ||
+      file.getTemplateFile().equals("spec_helper.mustache") ||
+      file.getTemplateFile().equals("rubocop.mustache")
     );
   }
 

@@ -107,7 +107,8 @@ public final class JsonSerializer {
 
     /** Builds JsonSerializer instance. */
     public JsonSerializer build() {
-      JsonMapper.Builder builder = JsonMapper.builder()
+      JsonMapper.Builder builder = JsonMapper
+        .builder()
         .disable(MapperFeature.ALLOW_COERCION_OF_SCALARS)
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
         .enable(JsonGenerator.Feature.AUTO_CLOSE_JSON_CONTENT)
