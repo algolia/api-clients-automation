@@ -3,1840 +3,6 @@ info:
   title: Ingestion API
   description: API powering the Data Ingestion connectors of Algolia.
   version: '1.0'
-components:
-  securitySchemes:
-    appId:
-      type: apiKey
-      in: header
-      name: X-Algolia-Application-Id
-    apiKey:
-      type: apiKey
-      in: header
-      name: X-Algolia-API-Key
-  parameters:
-    PathInPath:
-      name: path
-      in: path
-      description: Path of the endpoint, anything after "/1" must be specified.
-      required: true
-      schema:
-        type: string
-        example: /keys
-    Parameters:
-      name: parameters
-      in: query
-      description: Query parameters to apply to the current query.
-      schema:
-        type: object
-        additionalProperties: true
-    itemsPerPage:
-      name: itemsPerPage
-      in: query
-      description: The number of items per page to return.
-      required: false
-      schema:
-        type: integer
-    page:
-      name: page
-      in: query
-      description: The page number to fetch, starting at 1.
-      required: false
-      schema:
-        type: integer
-    type:
-      name: type
-      in: query
-      description: The type of the authentications to retrieve.
-      required: false
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/AuthenticationType'
-        example: basic,oauth
-    platform:
-      name: platform
-      in: query
-      description: The platform of the authentications to retrieve.
-      required: false
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/platformWithNone'
-        example: commercetools,none
-    sort:
-      name: sort
-      in: query
-      description: The key by which the list should be sorted.
-      required: false
-      schema:
-        $ref: '#/components/schemas/authenticationSortKeys'
-    order:
-      name: order
-      in: query
-      description: The order of the returned list.
-      required: false
-      schema:
-        $ref: '#/components/schemas/orderKeys'
-    pathAuthenticationID:
-      name: authenticationID
-      in: path
-      required: true
-      description: The authentication UUID.
-      schema:
-        $ref: '#/components/schemas/authenticationID'
-    destinationParameters_type:
-      name: type
-      in: query
-      description: The type of the destinations to retrive.
-      required: false
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/DestinationType'
-        example: search
-    authenticationID:
-      name: authenticationID
-      in: query
-      description: The authenticationIDs of the destinations to retrive.
-      required: false
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/authenticationID'
-    destinationParameters_sort:
-      name: sort
-      in: query
-      description: The key by which the list should be sorted.
-      required: false
-      schema:
-        $ref: '#/components/schemas/destinationSortKeys'
-    pathDestinationID:
-      name: destinationID
-      in: path
-      required: true
-      description: The destination UUID.
-      schema:
-        $ref: '#/components/schemas/destinationID'
-    sourceParameters_type:
-      name: type
-      in: query
-      description: The type of the sources to retrieve.
-      required: false
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/SourceType'
-        example: commercetools,bigcommerce
-    sourceParameters_authenticationID:
-      name: authenticationID
-      in: query
-      description: >
-        The authenticationIDs of the sources to retrieve. 'none' returns sources
-        that doesn't have an authentication.
-      required: false
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/authenticationID'
-        example:
-          - 10000000-0a75-4000-a000-000000000001
-          - none
-    sourceParameters_sort:
-      name: sort
-      in: query
-      description: The key by which the list should be sorted.
-      required: false
-      schema:
-        $ref: '#/components/schemas/sourceSortKeys'
-    pathSourceID:
-      name: sourceID
-      in: path
-      required: true
-      description: The source UUID.
-      schema:
-        $ref: '#/components/schemas/sourceID'
-    action:
-      name: action
-      in: query
-      required: false
-      description: The action of the tasks to retrieve.
-      style: form
-      explode: false
-      schema:
-        type: array
-        description: An array of actions to perform on the Algolia index.
-        items:
-          $ref: '#/components/schemas/ActionType'
-        example: save,replace,partial,append
-    enabled:
-      name: enabled
-      in: query
-      description: Whether the task is enabled or not.
-      required: false
-      schema:
-        type: boolean
-    sourceID:
-      name: sourceID
-      in: query
-      description: The sourceIDs of the tasks to retrieve.
-      required: false
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/sourceID'
-    destinationID:
-      name: destinationID
-      in: query
-      description: The destinationIDs of the tasks to retrieve.
-      required: false
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/destinationID'
-    triggerType:
-      name: triggerType
-      in: query
-      description: The trigger type of the task.
-      required: false
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/TriggerType'
-        example: onDemand,schedule,subscription,streaming
-    taskParameters_sort:
-      name: sort
-      in: query
-      description: The key by which the list should be sorted.
-      required: false
-      schema:
-        $ref: '#/components/schemas/taskSortKeys'
-    pathTaskID:
-      name: taskID
-      in: path
-      required: true
-      description: The task UUID.
-      schema:
-        $ref: '#/components/schemas/taskID'
-    runStatus:
-      name: status
-      in: query
-      description: Filter the status of the runs.
-      schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/RunStatus'
-    taskID:
-      name: taskID
-      in: query
-      description: Filter by taskID.
-      schema:
-        $ref: '#/components/schemas/taskID'
-    runSort:
-      name: sort
-      in: query
-      description: The key by which the list should be sorted.
-      required: false
-      schema:
-        $ref: '#/components/schemas/runSortKeys'
-    pathRunID:
-      name: runID
-      in: path
-      required: true
-      description: The run UUID.
-      schema:
-        $ref: '#/components/schemas/runID'
-    eventStatus:
-      name: status
-      in: query
-      description: Filter the status of the events.
-      schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/EventStatus'
-    eventType:
-      name: type
-      in: query
-      description: Filter the type of the events.
-      schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/EventType'
-    eventSort:
-      name: sort
-      in: query
-      description: The key by which the list should be sorted.
-      required: false
-      schema:
-        $ref: '#/components/schemas/eventSortKeys'
-    pathEventID:
-      name: eventID
-      in: path
-      required: true
-      description: The event UUID.
-      schema:
-        $ref: '#/components/schemas/eventID'
-  schemas:
-    ErrorBase:
-      description: Error.
-      type: object
-      additionalProperties: true
-      properties:
-        message:
-          type: string
-          example: Invalid Application-Id or API-Key
-    AuthenticationType:
-      type: string
-      description: >-
-        Type of the Authentication, defines what kind of object is stored in the
-        input.
-      enum:
-        - googleServiceAccount
-        - basic
-        - apiKey
-        - oauth
-        - algolia
-    Platform:
-      type: string
-      nullable: true
-      description: Describe which platform the Authentication is used for.
-      enum:
-        - bigcommerce
-        - commercetools
-    platformNone:
-      type: string
-      description: Used to filter Authentication without platform property.
-      enum:
-        - none
-    platformWithNone:
-      oneOf:
-        - $ref: '#/components/schemas/Platform'
-        - $ref: '#/components/schemas/platformNone'
-    authenticationSortKeys:
-      type: string
-      description: Used to sort the Authentication list endpoint.
-      enum:
-        - name
-        - auth_type
-        - platform
-        - updatedAt
-        - createdAt
-    orderKeys:
-      type: string
-      description: Used to order a sorted request.
-      enum:
-        - asc
-        - desc
-    authenticationID:
-      type: string
-      description: The authentication UUID.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    name:
-      type: string
-      description: An human readable name describing the object.
-    AuthGoogleServiceAccountPartial:
-      type: object
-      description: Authentication input to connect to a Google service (e.g. BigQuery).
-      additionalProperties: false
-      properties:
-        clientEmail:
-          type: string
-          description: Email address of the Service Account.
-          example: service-account-name@project-id.iam.gserviceaccount.com
-        privateKey:
-          type: string
-          description: Private key of the Service Account.
-    AuthBasicPartial:
-      type: object
-      description: Authentication input for Basic login with username and password.
-      additionalProperties: false
-      properties:
-        username:
-          type: string
-        password:
-          type: string
-    AuthAPIKeyPartial:
-      type: object
-      description: Authentication input used for token credentials.
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-    AuthOAuthPartial:
-      type: object
-      description: Authentication input for OAuth login.
-      additionalProperties: false
-      properties:
-        url:
-          type: string
-          description: The OAuth endpoint URL.
-        client_id:
-          type: string
-          description: The clientID.
-        client_secret:
-          type: string
-          description: The secret.
-    AuthAlgoliaPartial:
-      type: object
-      additionalProperties: false
-      properties:
-        appID:
-          type: string
-          description: Algolia Application ID.
-        apiKey:
-          type: string
-          description: >-
-            Algolia API Key, with the correct rights to push to an index and
-            change settings.
-    AuthInputPartial:
-      oneOf:
-        - $ref: '#/components/schemas/AuthGoogleServiceAccountPartial'
-        - $ref: '#/components/schemas/AuthBasicPartial'
-        - $ref: '#/components/schemas/AuthAPIKeyPartial'
-        - $ref: '#/components/schemas/AuthOAuthPartial'
-        - $ref: '#/components/schemas/AuthAlgoliaPartial'
-    createdAt:
-      type: string
-      description: Date of creation (RFC3339 format).
-    updatedAt:
-      type: string
-      description: Date of last update (RFC3339 format).
-    Authentication:
-      type: object
-      description: >-
-        An authentication is used to login into a Source or a Destination, with
-        obfuscated input.
-      additionalProperties: false
-      properties:
-        authenticationID:
-          $ref: '#/components/schemas/authenticationID'
-        type:
-          $ref: '#/components/schemas/AuthenticationType'
-        name:
-          $ref: '#/components/schemas/name'
-        platform:
-          $ref: '#/components/schemas/Platform'
-        input:
-          $ref: '#/components/schemas/AuthInputPartial'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-      required:
-        - authenticationID
-        - type
-        - name
-        - input
-        - createdAt
-    Pagination:
-      type: object
-      additionalProperties: false
-      properties:
-        nbPages:
-          type: integer
-        page:
-          type: integer
-        nbItems:
-          type: integer
-        itemsPerPage:
-          type: integer
-      required:
-        - nbPages
-        - page
-        - nbItems
-        - itemsPerPage
-    AuthGoogleServiceAccount:
-      type: object
-      description: Authentication input to connect to a Google service (e.g. BigQuery).
-      additionalProperties: false
-      properties:
-        clientEmail:
-          type: string
-          description: Email address of the Service Account.
-          example: service-account-name@project-id.iam.gserviceaccount.com
-        privateKey:
-          type: string
-          description: Private key of the Service Account.
-      required:
-        - clientEmail
-        - privateKey
-    AuthBasic:
-      type: object
-      description: Authentication input for Basic login with username and password.
-      additionalProperties: false
-      properties:
-        username:
-          type: string
-        password:
-          type: string
-      required:
-        - username
-        - password
-    AuthAPIKey:
-      type: object
-      description: Authentication input used for token credentials.
-      additionalProperties: false
-      properties:
-        key:
-          type: string
-      required:
-        - key
-    AuthOAuth:
-      type: object
-      description: Authentication input for OAuth login.
-      additionalProperties: false
-      properties:
-        url:
-          type: string
-          description: The OAuth endpoint URL.
-        client_id:
-          type: string
-          description: The clientID.
-        client_secret:
-          type: string
-          description: The secret.
-      required:
-        - url
-        - client_id
-        - client_secret
-    AuthAlgolia:
-      type: object
-      additionalProperties: false
-      properties:
-        appID:
-          type: string
-          description: Algolia Application ID.
-        apiKey:
-          type: string
-          description: >-
-            Algolia API Key, with the correct rights to push to an index and
-            change settings.
-      required:
-        - appID
-        - apiKey
-    AuthInput:
-      oneOf:
-        - $ref: '#/components/schemas/AuthGoogleServiceAccount'
-        - $ref: '#/components/schemas/AuthBasic'
-        - $ref: '#/components/schemas/AuthAPIKey'
-        - $ref: '#/components/schemas/AuthOAuth'
-        - $ref: '#/components/schemas/AuthAlgolia'
-    AuthenticationCreate:
-      type: object
-      description: The payload when creating an authentication.
-      additionalProperties: false
-      properties:
-        type:
-          $ref: '#/components/schemas/AuthenticationType'
-        name:
-          $ref: '#/components/schemas/name'
-        platform:
-          $ref: '#/components/schemas/Platform'
-        input:
-          $ref: '#/components/schemas/AuthInput'
-      required:
-        - type
-        - name
-        - input
-    AuthenticationCreateResponse:
-      type: object
-      description: Response from the API when the Authentication is successfully created.
-      additionalProperties: false
-      properties:
-        authenticationID:
-          $ref: '#/components/schemas/authenticationID'
-        name:
-          $ref: '#/components/schemas/name'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-      required:
-        - authenticationID
-        - name
-        - createdAt
-    AuthenticationSearch:
-      type: object
-      additionalProperties: false
-      description: >-
-        Payload to search for multiple authentications, based on the given
-        `authenticationIDs`.
-      properties:
-        authenticationIDs:
-          type: array
-          items:
-            $ref: '#/components/schemas/authenticationID'
-      required:
-        - authenticationIDs
-    DeleteResponse:
-      type: object
-      properties:
-        deletedAt:
-          type: string
-          description: Date of deletion (RFC3339 format).
-      required:
-        - deletedAt
-    AuthenticationUpdate:
-      type: object
-      description: Payload to partially update an Authentication.
-      additionalProperties: false
-      properties:
-        type:
-          $ref: '#/components/schemas/AuthenticationType'
-        name:
-          $ref: '#/components/schemas/name'
-        platform:
-          $ref: '#/components/schemas/Platform'
-        input:
-          $ref: '#/components/schemas/AuthInputPartial'
-    AuthenticationUpdateResponse:
-      type: object
-      additionalProperties: false
-      description: Response from the API when the Authentication is successfully updated.
-      properties:
-        authenticationID:
-          $ref: '#/components/schemas/authenticationID'
-        name:
-          $ref: '#/components/schemas/name'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-      required:
-        - authenticationID
-        - name
-        - updatedAt
-    DestinationType:
-      type: string
-      description: >-
-        Type of the Destination, defines in which Algolia product the data will
-        be stored.
-      enum:
-        - search
-        - insights
-        - flow
-    destinationSortKeys:
-      type: string
-      description: Used to sort the Destination list endpoint.
-      enum:
-        - name
-        - type
-        - updatedAt
-        - createdAt
-    destinationID:
-      type: string
-      description: The destination UUID.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    DestinationIndexPrefix:
-      type: object
-      additionalProperties: false
-      properties:
-        indexPrefix:
-          type: string
-          description: The prefix of the final index name.
-      required:
-        - indexPrefix
-    RecordType:
-      type: string
-      description: Determines the indexing strategy to use for a given e-commerce source.
-      enum:
-        - product
-        - variant
-    AttributesToExclude:
-      type: array
-      description: >
-        Determines the attributes to exclude from an Algolia record.
-
-        To remove nested element, you can separate the path to the element with
-        dots (`.`):
-          - "foo.bar": will remove `bar` from `foo`.
-        To remove elements from an array, you can use the following:
-          - "foo.[0].bar": will only remove `bar` from the first element of `foo`.
-          - "foo.[*].bar": will remove `bar` from every elements of `foo`.
-      items:
-        type: string
-    DestinationIndexName:
-      type: object
-      additionalProperties: false
-      properties:
-        indexName:
-          type: string
-          description: The index name to store data in.
-        recordType:
-          $ref: '#/components/schemas/RecordType'
-        attributesToExclude:
-          $ref: '#/components/schemas/AttributesToExclude'
-      required:
-        - indexName
-    DestinationInput:
-      oneOf:
-        - $ref: '#/components/schemas/DestinationIndexPrefix'
-        - $ref: '#/components/schemas/DestinationIndexName'
-    Destination:
-      type: object
-      description: A destination describe how the data is indexed on the Algolia side.
-      additionalProperties: false
-      properties:
-        destinationID:
-          $ref: '#/components/schemas/destinationID'
-        type:
-          $ref: '#/components/schemas/DestinationType'
-        name:
-          $ref: '#/components/schemas/name'
-        input:
-          $ref: '#/components/schemas/DestinationInput'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-        authenticationID:
-          $ref: '#/components/schemas/authenticationID'
-      required:
-        - destinationID
-        - type
-        - name
-        - input
-        - createdAt
-    DestinationCreate:
-      type: object
-      additionalProperties: false
-      description: The payload when creating a destination.
-      properties:
-        type:
-          $ref: '#/components/schemas/DestinationType'
-        name:
-          $ref: '#/components/schemas/name'
-        input:
-          $ref: '#/components/schemas/DestinationInput'
-        authenticationID:
-          $ref: '#/components/schemas/authenticationID'
-      required:
-        - type
-        - name
-        - input
-    DestinationCreateResponse:
-      type: object
-      additionalProperties: false
-      description: Response from the API when the Destination is successfully created.
-      properties:
-        destinationID:
-          $ref: '#/components/schemas/destinationID'
-        name:
-          $ref: '#/components/schemas/name'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-      required:
-        - destinationID
-        - name
-        - createdAt
-    DestinationSearch:
-      type: object
-      additionalProperties: false
-      description: >-
-        Payload to search for multiple destinations, based on the given
-        `destinationIDs`.
-      properties:
-        destinationIDs:
-          type: array
-          items:
-            $ref: '#/components/schemas/destinationID'
-      required:
-        - destinationIDs
-    DestinationUpdate:
-      type: object
-      additionalProperties: false
-      description: Payload to partially update a Destination.
-      properties:
-        type:
-          $ref: '#/components/schemas/DestinationType'
-        name:
-          $ref: '#/components/schemas/name'
-        input:
-          $ref: '#/components/schemas/DestinationInput'
-        authenticationID:
-          $ref: '#/components/schemas/authenticationID'
-    DestinationUpdateResponse:
-      type: object
-      additionalProperties: false
-      description: Response from the API when the Destination is successfully updated.
-      properties:
-        destinationID:
-          $ref: '#/components/schemas/destinationID'
-        name:
-          $ref: '#/components/schemas/name'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-      required:
-        - destinationID
-        - name
-        - updatedAt
-    SourceType:
-      type: string
-      enum:
-        - bigcommerce
-        - commercetools
-        - json
-        - csv
-        - bigquery
-        - docker
-        - ga4BigqueryExport
-    sourceSortKeys:
-      type: string
-      description: Used to sort the Source list endpoint.
-      enum:
-        - name
-        - type
-        - updatedAt
-        - createdAt
-    sourceID:
-      type: string
-      description: The source UUID.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    CommercetoolsCustomFields:
-      type: object
-      additionalProperties: false
-      description: >-
-        Custom fields from Commercetools to index in the records (see
-        https://docs.commercetools.com/tutorials/custom-types).
-      properties:
-        inventory:
-          type: array
-          items:
-            type: string
-          description: Inventory custom fields.
-          nullable: true
-        price:
-          type: array
-          items:
-            type: string
-          description: Price custom fields.
-          nullable: true
-        category:
-          type: array
-          items:
-            type: string
-          description: Category custom fields.
-          nullable: true
-    SourceCommercetools:
-      type: object
-      additionalProperties: false
-      properties:
-        storeKeys:
-          type: array
-          items:
-            description: Unique and immutable key of the referenced Store.
-            type: string
-        locales:
-          type: array
-          description: >
-            Array of locales that must match the following pattern:
-            ^[a-z]{2}(-[A-Z]{2})?$. For example ["fr-FR", "en"].
-          items:
-            type: string
-        url:
-          type: string
-        projectKey:
-          type: string
-        fallbackIsInStockValue:
-          type: boolean
-          default: true
-          description: >
-            Determines the value that will be stored in the Algolia record if
-            there's no inventory information on the product.
-        customFields:
-          $ref: '#/components/schemas/CommercetoolsCustomFields'
-      required:
-        - url
-        - projectKey
-      x-discriminator-fields:
-        - projectKey
-    BigCommerceChannel:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          type: integer
-          description: The ID of the bigcommerce channel.
-        currencies:
-          type: array
-          description: >-
-            An array of currencies for the given channel `ID`, a currency is a
-            trigram string that represents the currency code.
-          example:
-            - usd
-            - eur
-          items:
-            type: string
-            example: usd
-      required:
-        - id
-    BigCommerceMetafield:
-      type: object
-      additionalProperties: false
-      properties:
-        namespace:
-          type: string
-          description: The namespace of the metafield.
-        key:
-          type: string
-          description: The key identifier of the metafield.
-      required:
-        - namespace
-        - key
-    SourceBigCommerce:
-      type: object
-      additionalProperties: false
-      properties:
-        storeHash:
-          type: string
-          description: The store hash identifying the store the shopper is signing in to.
-        channel:
-          $ref: '#/components/schemas/BigCommerceChannel'
-        customFields:
-          type: array
-          items:
-            type: string
-        productMetafields:
-          type: array
-          items:
-            $ref: '#/components/schemas/BigCommerceMetafield'
-        variantMetafields:
-          type: array
-          items:
-            $ref: '#/components/schemas/BigCommerceMetafield'
-      required:
-        - storeHash
-      x-discriminator-fields:
-        - storeHash
-    UniqueIDColumn:
-      type: string
-      description: >-
-        The name of the column that contains the unique ID, used as `objectID`
-        in Algolia.
-    MethodType:
-      type: string
-      enum:
-        - GET
-        - POST
-    SourceJSON:
-      type: object
-      additionalProperties: false
-      properties:
-        url:
-          type: string
-          description: The URL of the file.
-        uniqueIDColumn:
-          $ref: '#/components/schemas/UniqueIDColumn'
-        method:
-          $ref: '#/components/schemas/MethodType'
-      required:
-        - url
-    MappingTypeCSV:
-      type: string
-      enum:
-        - string
-        - integer
-        - float
-        - boolean
-        - json
-    SourceCSV:
-      type: object
-      additionalProperties: false
-      properties:
-        url:
-          type: string
-          description: The URL of the file.
-        uniqueIDColumn:
-          $ref: '#/components/schemas/UniqueIDColumn'
-        mapping:
-          type: object
-          description: >
-            Mapping of type for every column. For example {"myColumn":
-            "boolean", "myOtherColumn": "json"}.
-          additionalProperties:
-            $ref: '#/components/schemas/MappingTypeCSV'
-        method:
-          $ref: '#/components/schemas/MethodType'
-        delimiter:
-          type: string
-          minLength: 1
-          maxLength: 1
-          default: ','
-          description: >-
-            The character used to split the value on each line, default to a
-            comma (\r, \n, 0xFFFD, and space are forbidden).
-      required:
-        - url
-    BigQueryDataType:
-      type: string
-      enum:
-        - ga4
-        - ga360
-    SourceBigQuery:
-      type: object
-      additionalProperties: false
-      properties:
-        projectID:
-          type: string
-          description: Project ID of the BigQuery Source.
-        datasetID:
-          type: string
-          description: Dataset ID of the BigQuery Source.
-        dataType:
-          $ref: '#/components/schemas/BigQueryDataType'
-        table:
-          type: string
-          description: Table name (for default BQ).
-        tablePrefix:
-          type: string
-          description: Table prefix (for Google Analytics).
-        customSQLRequest:
-          type: string
-          description: Custom SQL request to extract data from the BigQuery table.
-        uniqueIDColumn:
-          $ref: '#/components/schemas/UniqueIDColumn'
-      required:
-        - projectID
-        - datasetID
-      x-discriminator-fields:
-        - projectID
-    SourceGA4BigQueryExport:
-      type: object
-      additionalProperties: false
-      properties:
-        projectID:
-          type: string
-          description: GCP project ID that the BigQuery Export writes to.
-        datasetID:
-          type: string
-          description: BigQuery dataset ID that the BigQuery Export writes to.
-        tablePrefix:
-          type: string
-          description: >-
-            Prefix of the tables that the BigQuery Export writes to (i.e.
-            events_intraday_ for streaming, events_ for daily).
-      required:
-        - projectID
-        - datasetID
-        - tablePrefix
-      x-discriminator-fields:
-        - projectID
-        - datasetID
-        - tablePrefix
-    DockerImageType:
-      type: string
-      enum:
-        - singer
-        - custom
-        - airbyte
-      description: The type of the image.
-    DockerRegistry:
-      type: string
-      enum:
-        - dockerhub
-        - ghcr
-      description: The registry where the image is stored.
-    SourceDocker:
-      type: object
-      additionalProperties: false
-      properties:
-        imageType:
-          $ref: '#/components/schemas/DockerImageType'
-        registry:
-          $ref: '#/components/schemas/DockerRegistry'
-        image:
-          type: string
-          description: The name of the image to pull.
-          example: algolia/zendesk
-        version:
-          type: string
-          description: The version of the image, defaults to `latest`.
-          example: v2.1.0
-        configuration:
-          type: object
-          description: The configuration of the spec.
-      required:
-        - registry
-        - image
-        - imageType
-        - configuration
-    SourceInput:
-      oneOf:
-        - $ref: '#/components/schemas/SourceCommercetools'
-        - $ref: '#/components/schemas/SourceBigCommerce'
-        - $ref: '#/components/schemas/SourceJSON'
-        - $ref: '#/components/schemas/SourceCSV'
-        - $ref: '#/components/schemas/SourceBigQuery'
-        - $ref: '#/components/schemas/SourceGA4BigQueryExport'
-        - $ref: '#/components/schemas/SourceDocker'
-    Source:
-      type: object
-      additionalProperties: false
-      properties:
-        sourceID:
-          $ref: '#/components/schemas/sourceID'
-        type:
-          $ref: '#/components/schemas/SourceType'
-        name:
-          type: string
-        input:
-          $ref: '#/components/schemas/SourceInput'
-        authenticationID:
-          $ref: '#/components/schemas/authenticationID'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-      required:
-        - sourceID
-        - type
-        - name
-        - input
-        - createdAt
-    SourceCreate:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
-          $ref: '#/components/schemas/SourceType'
-        name:
-          type: string
-        input:
-          $ref: '#/components/schemas/SourceInput'
-        authenticationID:
-          $ref: '#/components/schemas/authenticationID'
-      required:
-        - type
-        - name
-        - input
-    SourceCreateResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        sourceID:
-          $ref: '#/components/schemas/sourceID'
-        name:
-          type: string
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-      required:
-        - sourceID
-        - name
-        - createdAt
-    SourceSearch:
-      type: object
-      additionalProperties: false
-      properties:
-        sourceIDs:
-          type: array
-          items:
-            type: string
-      required:
-        - sourceIDs
-    SourceUpdateCommercetools:
-      type: object
-      additionalProperties: false
-      properties:
-        storeKeys:
-          type: array
-          description: Unique and immutable key of the referenced Store.
-          items:
-            type: string
-        locales:
-          type: array
-          description: >
-            Array of locales that must match the following pattern:
-            ^[a-z]{2}(-[A-Z]{2})?$. For example ["fr-FR", "en"].
-          items:
-            type: string
-        url:
-          type: string
-        fallbackIsInStockValue:
-          type: boolean
-          description: >
-            Determines the value that will be stored in the Algolia record if
-            there's no inventory information on the product.
-        customFields:
-          $ref: '#/components/schemas/CommercetoolsCustomFields'
-    SourceUpdateDocker:
-      type: object
-      additionalProperties: false
-      properties:
-        registry:
-          $ref: '#/components/schemas/DockerRegistry'
-        image:
-          type: string
-          description: The name of the image to pull.
-          example: algolia/zendesk
-        version:
-          type: string
-          description: The version of the image, defaults to `latest`.
-          example: v2.1.0
-        configuration:
-          type: object
-          description: The configuration of the spec.
-      required:
-        - configuration
-    SourceUpdateInput:
-      oneOf:
-        - $ref: '#/components/schemas/SourceUpdateCommercetools'
-        - $ref: '#/components/schemas/SourceJSON'
-        - $ref: '#/components/schemas/SourceCSV'
-        - $ref: '#/components/schemas/SourceBigQuery'
-        - $ref: '#/components/schemas/SourceGA4BigQueryExport'
-        - $ref: '#/components/schemas/SourceUpdateDocker'
-    SourceUpdate:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-        input:
-          $ref: '#/components/schemas/SourceUpdateInput'
-        authenticationID:
-          $ref: '#/components/schemas/authenticationID'
-    SourceUpdateResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        sourceID:
-          $ref: '#/components/schemas/sourceID'
-        name:
-          type: string
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-      required:
-        - sourceID
-        - name
-        - updatedAt
-    DockerSourceStream:
-      type: object
-      description: A stream definition (see the Singer specification for details).
-    runID:
-      type: string
-      description: The run UUID.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    ActionType:
-      type: string
-      description: The action to perform on the Algolia index.
-      enum:
-        - replace
-        - save
-        - partial
-        - append
-    TriggerType:
-      type: string
-      description: |
-        The type of the task reflect how it can be used:
-          - onDemand: a task that runs manually
-          - schedule: a task that runs regularly, following a given cron expression
-          - subscription: a task that runs after a subscription event is received from an integration (e.g. Webhook).
-          - streaming: a task that runs continuously.
-      enum:
-        - onDemand
-        - schedule
-        - subscription
-        - streaming
-    taskSortKeys:
-      type: string
-      description: Used to sort the Task list endpoint.
-      enum:
-        - enabled
-        - triggerType
-        - action
-        - updatedAt
-        - createdAt
-    taskID:
-      type: string
-      description: The task UUID.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    OnDemandTriggerType:
-      type: string
-      description: A task which is manually executed via the run task endpoint.
-      enum:
-        - onDemand
-    LastRun:
-      description: The last time the scheduled task ran (RFC3339 format).
-      type: string
-    OnDemandTrigger:
-      type: object
-      additionalProperties: false
-      description: The trigger information of a task of type `onDemand`.
-      properties:
-        type:
-          $ref: '#/components/schemas/OnDemandTriggerType'
-        lastRun:
-          $ref: '#/components/schemas/LastRun'
-      required:
-        - type
-    ScheduleTriggerType:
-      type: string
-      description: A task which is triggered by a schedule (cron expression).
-      enum:
-        - schedule
-    Cron:
-      type: string
-      description: >-
-        A cron expression that represent at which regularity the task should
-        run.
-      example: '* * 1 * *'
-    ScheduleTrigger:
-      type: object
-      additionalProperties: false
-      description: The trigger information for a task of type 'schedule'.
-      properties:
-        type:
-          $ref: '#/components/schemas/ScheduleTriggerType'
-        cron:
-          $ref: '#/components/schemas/Cron'
-        lastRun:
-          $ref: '#/components/schemas/LastRun'
-        nextRun:
-          description: The next scheduled run of the task (RFC3339 format).
-          type: string
-      required:
-        - type
-        - cron
-        - nextRun
-    SubscriptionTriggerType:
-      type: string
-      description: A task which is triggered by an external subscription (e.g. Webhook).
-      enum:
-        - subscription
-    SubscriptionTrigger:
-      type: object
-      additionalProperties: false
-      description: The trigger input for a task of type 'subscription'.
-      properties:
-        type:
-          $ref: '#/components/schemas/SubscriptionTriggerType'
-      required:
-        - type
-    StreamingTriggerType:
-      type: string
-      description: A task that runs continuously.
-      enum:
-        - streaming
-    StreamingTrigger:
-      type: object
-      additionalProperties: false
-      description: The trigger input for a task of type 'streaming'.
-      properties:
-        type:
-          $ref: '#/components/schemas/StreamingTriggerType'
-      required:
-        - type
-    Trigger:
-      oneOf:
-        - $ref: '#/components/schemas/OnDemandTrigger'
-        - $ref: '#/components/schemas/ScheduleTrigger'
-        - $ref: '#/components/schemas/SubscriptionTrigger'
-        - $ref: '#/components/schemas/StreamingTrigger'
-    MappingFieldDirective:
-      type: object
-      additionalProperties: false
-      description: >-
-        Describes how a field should be resolved by applying a set of
-        directives.
-      properties:
-        fieldKey:
-          description: Destination field key.
-          type: string
-        value:
-          type: object
-          additionalProperties: true
-          description: How the destination field should be resolved from the source.
-      required:
-        - fieldKey
-        - value
-    MappingKitAction:
-      type: object
-      additionalProperties: false
-      description: >-
-        Describes how a destination object should be resolved by means of
-        applying a set of directives.
-      properties:
-        id:
-          description: ID to uniquely identify this action.
-          type: string
-        enabled:
-          description: Whether this action has any effect.
-          type: boolean
-        trigger:
-          description: >-
-            Condition which must be satisfied to apply the action. If this
-            evaluates to false, the action is not applied, and the process
-            attempts to apply the next action, if any.
-          type: string
-        fieldDirectives:
-          type: array
-          items:
-            $ref: '#/components/schemas/MappingFieldDirective'
-      required:
-        - enabled
-        - trigger
-        - fieldDirectives
-    MappingInput:
-      type: object
-      additionalProperties: false
-      description: Transformations to apply to source, serialized as a JSON string.
-      properties:
-        format:
-          description: >-
-            Name of the mapping format schema, `mappingkit/v1` is currently the
-            only supported format.
-          type: string
-        actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/MappingKitAction'
-      required:
-        - format
-        - actions
-    OnDemandDateUtilsInput:
-      type: object
-      additionalProperties: false
-      description: >-
-        The input for an `onDemand` task whose source is of type `bigquery` and
-        for which extracted data spans a given time range.
-      properties:
-        startDate:
-          description: The start date of the extraction (RFC3339 format).
-          type: string
-        endDate:
-          description: The end date of the extraction (RFC3339 format).
-          type: string
-        mapping:
-          $ref: '#/components/schemas/MappingInput'
-      required:
-        - startDate
-        - endDate
-    ScheduleDateUtilsInput:
-      type: object
-      additionalProperties: false
-      description: >-
-        The input for a `schedule` task whose source is of type `bigquery` and
-        for which extracted data spans a fixed number of days.
-      properties:
-        timeframe:
-          description: The timeframe of the extraction, in number of days from today.
-          type: integer
-          minimum: 1
-          maximum: 30
-        mapping:
-          $ref: '#/components/schemas/MappingInput'
-      required:
-        - timeframe
-    StreamingUtilsInput:
-      type: object
-      additionalProperties: false
-      description: >-
-        The input for a `streaming` task whose source is of type
-        `ga4BigqueryExport` and for which extracted data is continuously
-        streamed.
-      properties:
-        mapping:
-          $ref: '#/components/schemas/MappingInput'
-      required:
-        - mapping
-    TaskInput:
-      oneOf:
-        - $ref: '#/components/schemas/OnDemandDateUtilsInput'
-        - $ref: '#/components/schemas/ScheduleDateUtilsInput'
-        - $ref: '#/components/schemas/StreamingUtilsInput'
-    failureThreshold:
-      type: integer
-      minimum: 0
-      maximum: 100
-      description: >-
-        A percentage representing the accepted failure threshold to determine if
-        a `run` succeeded or not.
-    Task:
-      type: object
-      additionalProperties: false
-      properties:
-        taskID:
-          $ref: '#/components/schemas/taskID'
-        sourceID:
-          $ref: '#/components/schemas/sourceID'
-        destinationID:
-          $ref: '#/components/schemas/destinationID'
-        trigger:
-          $ref: '#/components/schemas/Trigger'
-        input:
-          $ref: '#/components/schemas/TaskInput'
-        enabled:
-          type: boolean
-          default: true
-          description: Whether the task is enabled or not.
-        failureThreshold:
-          $ref: '#/components/schemas/failureThreshold'
-        action:
-          $ref: '#/components/schemas/ActionType'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-      required:
-        - taskID
-        - sourceID
-        - destinationID
-        - trigger
-        - enabled
-        - action
-        - createdAt
-    OnDemandTriggerInput:
-      type: object
-      additionalProperties: false
-      description: The trigger information of a task of type `onDemand`.
-      properties:
-        type:
-          $ref: '#/components/schemas/OnDemandTriggerType'
-      required:
-        - type
-    ScheduleTriggerInput:
-      type: object
-      additionalProperties: false
-      description: The trigger input for a task of type 'schedule'.
-      properties:
-        type:
-          $ref: '#/components/schemas/ScheduleTriggerType'
-        cron:
-          $ref: '#/components/schemas/Cron'
-      required:
-        - type
-        - cron
-    TaskCreateTrigger:
-      oneOf:
-        - $ref: '#/components/schemas/OnDemandTriggerInput'
-        - $ref: '#/components/schemas/ScheduleTriggerInput'
-        - $ref: '#/components/schemas/SubscriptionTrigger'
-        - $ref: '#/components/schemas/StreamingTrigger'
-    TaskCreate:
-      type: object
-      additionalProperties: false
-      description: The payload for a task creation.
-      properties:
-        sourceID:
-          $ref: '#/components/schemas/sourceID'
-        destinationID:
-          $ref: '#/components/schemas/destinationID'
-        trigger:
-          $ref: '#/components/schemas/TaskCreateTrigger'
-        action:
-          $ref: '#/components/schemas/ActionType'
-        enabled:
-          type: boolean
-          description: Whether the task is enabled or not.
-        failureThreshold:
-          $ref: '#/components/schemas/failureThreshold'
-        input:
-          $ref: '#/components/schemas/TaskInput'
-      required:
-        - sourceID
-        - destinationID
-        - trigger
-        - action
-    TaskCreateResponse:
-      type: object
-      additionalProperties: false
-      description: The response from the API after a task creation.
-      properties:
-        taskID:
-          $ref: '#/components/schemas/taskID'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-      required:
-        - taskID
-        - createdAt
-    TaskSearch:
-      type: object
-      additionalProperties: false
-      properties:
-        taskIDs:
-          type: array
-          items:
-            type: string
-      required:
-        - taskIDs
-    TriggerUpdateInput:
-      type: object
-      additionalProperties: false
-      description: The trigger input for a task update.
-      properties:
-        cron:
-          $ref: '#/components/schemas/Cron'
-      required:
-        - cron
-    TaskUpdate:
-      type: object
-      additionalProperties: false
-      description: The payload for a task update.
-      properties:
-        destinationID:
-          $ref: '#/components/schemas/destinationID'
-        trigger:
-          $ref: '#/components/schemas/TriggerUpdateInput'
-        input:
-          $ref: '#/components/schemas/TaskInput'
-        enabled:
-          type: boolean
-          description: Whether the task is enabled or not.
-        failureThreshold:
-          $ref: '#/components/schemas/failureThreshold'
-    TaskUpdateResponse:
-      type: object
-      description: The response from the API after a task update.
-      additionalProperties: false
-      properties:
-        taskID:
-          $ref: '#/components/schemas/taskID'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-      required:
-        - taskID
-        - updatedAt
-    RunResponse:
-      type: object
-      additionalProperties: false
-      description: >-
-        The response from the run task API, containing an Observability Run ID
-        and the time it was created at.
-      properties:
-        runID:
-          $ref: '#/components/schemas/runID'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-      required:
-        - runID
-        - createdAt
-    RunStatus:
-      type: string
-      enum:
-        - created
-        - started
-        - idled
-        - finished
-        - skipped
-    runSortKeys:
-      type: string
-      description: Used to sort the Run list endpoint.
-      enum:
-        - status
-        - updatedAt
-        - createdAt
-    RunOutcome:
-      type: string
-      enum:
-        - success
-        - failure
-        - processing
-    RunReasonCode:
-      type: string
-      description: An identifier that pairs with the outcome reason.
-      enum:
-        - internal
-        - critical
-        - no_events
-        - too_many_errors
-        - ok
-        - discarded
-        - blocking
-    RunType:
-      type: string
-      enum:
-        - reindex
-        - update
-        - discover
-    startedAt:
-      type: string
-      description: Date of start (RFC3339 format).
-    finishedAt:
-      type: string
-      description: Date of finish (RFC3339 format).
-    Run:
-      type: object
-      additionalProperties: false
-      properties:
-        runID:
-          $ref: '#/components/schemas/runID'
-        appID:
-          type: string
-        taskID:
-          $ref: '#/components/schemas/taskID'
-        status:
-          $ref: '#/components/schemas/RunStatus'
-        progress:
-          type: object
-          additionalProperties: false
-          properties:
-            expectedNbOfEvents:
-              type: integer
-            receivedNbOfEvents:
-              type: integer
-        outcome:
-          $ref: '#/components/schemas/RunOutcome'
-        failureThreshold:
-          $ref: '#/components/schemas/failureThreshold'
-        reason:
-          type: string
-          description: Explains the result of outcome.
-        reasonCode:
-          $ref: '#/components/schemas/RunReasonCode'
-        type:
-          $ref: '#/components/schemas/RunType'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-        startedAt:
-          $ref: '#/components/schemas/startedAt'
-        finishedAt:
-          $ref: '#/components/schemas/finishedAt'
-      required:
-        - runID
-        - appID
-        - taskID
-        - status
-        - type
-        - createdAt
-    Window:
-      type: object
-      additionalProperties: false
-      description: >-
-        The window parameter represents the holds the dates used to query the
-        Observability data from the database in a given window.
-      properties:
-        startDate:
-          type: string
-          description: >-
-            A date in format RFC3339 representing the oldest possible data in
-            query window.
-        endDate:
-          type: string
-          description: >-
-            A date in format RFC3339 representing the newest possible data in
-            query window.
-      required:
-        - startDate
-        - endDate
-    RunListResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        runs:
-          type: array
-          items:
-            $ref: '#/components/schemas/Run'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        window:
-          $ref: '#/components/schemas/Window'
-      required:
-        - runs
-        - pagination
-        - window
-    EventStatus:
-      type: string
-      enum:
-        - created
-        - started
-        - retried
-        - failed
-        - succeeded
-        - critical
-    EventType:
-      type: string
-      enum:
-        - fetch
-        - record
-        - log
-        - transform
-    eventSortKeys:
-      type: string
-      description: Used to sort the Event list endpoint.
-      enum:
-        - status
-        - type
-        - publishedAt
-    eventID:
-      type: string
-      description: The event UUID.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    publishedAt:
-      type: string
-      description: Date of publish (RFC3339 format).
-    Event:
-      type: object
-      description: An event describe a step of the task execution flow..
-      additionalProperties: false
-      properties:
-        eventID:
-          $ref: '#/components/schemas/eventID'
-        runID:
-          $ref: '#/components/schemas/runID'
-        parentID:
-          type: string
-          description: The parent event, the cause of this event.
-          example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-        status:
-          $ref: '#/components/schemas/EventStatus'
-        type:
-          $ref: '#/components/schemas/EventType'
-        batchSize:
-          type: integer
-          description: The extracted record batch size.
-          example: 10
-          minimum: 0
-          multipleOf: 1
-        data:
-          type: object
-          additionalProperties: true
-        publishedAt:
-          $ref: '#/components/schemas/publishedAt'
-      required:
-        - eventID
-        - runID
-        - status
-        - type
-        - batchSize
-        - publishedAt
-  responses:
-    BadRequest:
-      description: Bad request or request arguments.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    FeatureNotEnabled:
-      description: This feature is not enabled on your Algolia account.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    MethodNotAllowed:
-      description: Method not allowed with this API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    IndexNotFound:
-      description: Index not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
 servers:
   - url: https://data.{region}.algolia.com
     variables:
@@ -10033,3 +8199,1841 @@ paths:
                 runID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
                 eventID: "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
             )
+components:
+  securitySchemes:
+    appId:
+      type: apiKey
+      in: header
+      name: X-Algolia-Application-Id
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-Algolia-API-Key
+  parameters:
+    PathInPath:
+      name: path
+      in: path
+      description: Path of the endpoint, anything after "/1" must be specified.
+      required: true
+      schema:
+        type: string
+        example: /keys
+    Parameters:
+      name: parameters
+      in: query
+      description: Query parameters to apply to the current query.
+      schema:
+        type: object
+        additionalProperties: true
+    itemsPerPage:
+      name: itemsPerPage
+      in: query
+      description: The number of items per page to return.
+      required: false
+      schema:
+        type: integer
+    page:
+      name: page
+      in: query
+      description: The page number to fetch, starting at 1.
+      required: false
+      schema:
+        type: integer
+    type:
+      name: type
+      in: query
+      description: The type of the authentications to retrieve.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/AuthenticationType'
+        example: basic,oauth
+    platform:
+      name: platform
+      in: query
+      description: The platform of the authentications to retrieve.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/platformWithNone'
+        example: commercetools,none
+    sort:
+      name: sort
+      in: query
+      description: The key by which the list should be sorted.
+      required: false
+      schema:
+        $ref: '#/components/schemas/authenticationSortKeys'
+    order:
+      name: order
+      in: query
+      description: The order of the returned list.
+      required: false
+      schema:
+        $ref: '#/components/schemas/orderKeys'
+    pathAuthenticationID:
+      name: authenticationID
+      in: path
+      required: true
+      description: The authentication UUID.
+      schema:
+        $ref: '#/components/schemas/authenticationID'
+    destinationParameters_type:
+      name: type
+      in: query
+      description: The type of the destinations to retrive.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/DestinationType'
+        example: search
+    authenticationID:
+      name: authenticationID
+      in: query
+      description: The authenticationIDs of the destinations to retrive.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/authenticationID'
+    destinationParameters_sort:
+      name: sort
+      in: query
+      description: The key by which the list should be sorted.
+      required: false
+      schema:
+        $ref: '#/components/schemas/destinationSortKeys'
+    pathDestinationID:
+      name: destinationID
+      in: path
+      required: true
+      description: The destination UUID.
+      schema:
+        $ref: '#/components/schemas/destinationID'
+    sourceParameters_type:
+      name: type
+      in: query
+      description: The type of the sources to retrieve.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/SourceType'
+        example: commercetools,bigcommerce
+    sourceParameters_authenticationID:
+      name: authenticationID
+      in: query
+      description: >
+        The authenticationIDs of the sources to retrieve. 'none' returns sources
+        that doesn't have an authentication.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/authenticationID'
+        example:
+          - 10000000-0a75-4000-a000-000000000001
+          - none
+    sourceParameters_sort:
+      name: sort
+      in: query
+      description: The key by which the list should be sorted.
+      required: false
+      schema:
+        $ref: '#/components/schemas/sourceSortKeys'
+    pathSourceID:
+      name: sourceID
+      in: path
+      required: true
+      description: The source UUID.
+      schema:
+        $ref: '#/components/schemas/sourceID'
+    action:
+      name: action
+      in: query
+      required: false
+      description: The action of the tasks to retrieve.
+      style: form
+      explode: false
+      schema:
+        type: array
+        description: An array of actions to perform on the Algolia index.
+        items:
+          $ref: '#/components/schemas/ActionType'
+        example: save,replace,partial,append
+    enabled:
+      name: enabled
+      in: query
+      description: Whether the task is enabled or not.
+      required: false
+      schema:
+        type: boolean
+    sourceID:
+      name: sourceID
+      in: query
+      description: The sourceIDs of the tasks to retrieve.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/sourceID'
+    destinationID:
+      name: destinationID
+      in: query
+      description: The destinationIDs of the tasks to retrieve.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/destinationID'
+    triggerType:
+      name: triggerType
+      in: query
+      description: The trigger type of the task.
+      required: false
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/TriggerType'
+        example: onDemand,schedule,subscription,streaming
+    taskParameters_sort:
+      name: sort
+      in: query
+      description: The key by which the list should be sorted.
+      required: false
+      schema:
+        $ref: '#/components/schemas/taskSortKeys'
+    pathTaskID:
+      name: taskID
+      in: path
+      required: true
+      description: The task UUID.
+      schema:
+        $ref: '#/components/schemas/taskID'
+    runStatus:
+      name: status
+      in: query
+      description: Filter the status of the runs.
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/RunStatus'
+    taskID:
+      name: taskID
+      in: query
+      description: Filter by taskID.
+      schema:
+        $ref: '#/components/schemas/taskID'
+    runSort:
+      name: sort
+      in: query
+      description: The key by which the list should be sorted.
+      required: false
+      schema:
+        $ref: '#/components/schemas/runSortKeys'
+    pathRunID:
+      name: runID
+      in: path
+      required: true
+      description: The run UUID.
+      schema:
+        $ref: '#/components/schemas/runID'
+    eventStatus:
+      name: status
+      in: query
+      description: Filter the status of the events.
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/EventStatus'
+    eventType:
+      name: type
+      in: query
+      description: Filter the type of the events.
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/EventType'
+    eventSort:
+      name: sort
+      in: query
+      description: The key by which the list should be sorted.
+      required: false
+      schema:
+        $ref: '#/components/schemas/eventSortKeys'
+    pathEventID:
+      name: eventID
+      in: path
+      required: true
+      description: The event UUID.
+      schema:
+        $ref: '#/components/schemas/eventID'
+  schemas:
+    ErrorBase:
+      description: Error.
+      type: object
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
+    AuthenticationType:
+      type: string
+      description: >-
+        Type of the Authentication, defines what kind of object is stored in the
+        input.
+      enum:
+        - googleServiceAccount
+        - basic
+        - apiKey
+        - oauth
+        - algolia
+    Platform:
+      oneOf:
+        - type: string
+          description: Describe which platform the Authentication is used for.
+          enum:
+            - bigcommerce
+            - commercetools
+        - type: 'null'
+    platformNone:
+      type: string
+      description: Used to filter Authentication without platform property.
+      enum:
+        - none
+    platformWithNone:
+      oneOf:
+        - $ref: '#/components/schemas/Platform'
+        - $ref: '#/components/schemas/platformNone'
+    authenticationSortKeys:
+      type: string
+      description: Used to sort the Authentication list endpoint.
+      enum:
+        - name
+        - auth_type
+        - platform
+        - updatedAt
+        - createdAt
+    orderKeys:
+      type: string
+      description: Used to order a sorted request.
+      enum:
+        - asc
+        - desc
+    authenticationID:
+      type: string
+      description: The authentication UUID.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    name:
+      type: string
+      description: An human readable name describing the object.
+    AuthGoogleServiceAccountPartial:
+      type: object
+      description: Authentication input to connect to a Google service (e.g. BigQuery).
+      additionalProperties: false
+      properties:
+        clientEmail:
+          type: string
+          description: Email address of the Service Account.
+          example: service-account-name@project-id.iam.gserviceaccount.com
+        privateKey:
+          type: string
+          description: Private key of the Service Account.
+    AuthBasicPartial:
+      type: object
+      description: Authentication input for Basic login with username and password.
+      additionalProperties: false
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    AuthAPIKeyPartial:
+      type: object
+      description: Authentication input used for token credentials.
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+    AuthOAuthPartial:
+      type: object
+      description: Authentication input for OAuth login.
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+          description: The OAuth endpoint URL.
+        client_id:
+          type: string
+          description: The clientID.
+        client_secret:
+          type: string
+          description: The secret.
+    AuthAlgoliaPartial:
+      type: object
+      additionalProperties: false
+      properties:
+        appID:
+          type: string
+          description: Algolia Application ID.
+        apiKey:
+          type: string
+          description: >-
+            Algolia API Key, with the correct rights to push to an index and
+            change settings.
+    AuthInputPartial:
+      oneOf:
+        - $ref: '#/components/schemas/AuthGoogleServiceAccountPartial'
+        - $ref: '#/components/schemas/AuthBasicPartial'
+        - $ref: '#/components/schemas/AuthAPIKeyPartial'
+        - $ref: '#/components/schemas/AuthOAuthPartial'
+        - $ref: '#/components/schemas/AuthAlgoliaPartial'
+    createdAt:
+      type: string
+      description: Date of creation (RFC3339 format).
+    updatedAt:
+      type: string
+      description: Date of last update (RFC3339 format).
+    Authentication:
+      type: object
+      description: >-
+        An authentication is used to login into a Source or a Destination, with
+        obfuscated input.
+      additionalProperties: false
+      properties:
+        authenticationID:
+          $ref: '#/components/schemas/authenticationID'
+        type:
+          $ref: '#/components/schemas/AuthenticationType'
+        name:
+          $ref: '#/components/schemas/name'
+        platform:
+          $ref: '#/components/schemas/Platform'
+        input:
+          $ref: '#/components/schemas/AuthInputPartial'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+      required:
+        - authenticationID
+        - type
+        - name
+        - input
+        - createdAt
+    Pagination:
+      type: object
+      additionalProperties: false
+      properties:
+        nbPages:
+          type: integer
+        page:
+          type: integer
+        nbItems:
+          type: integer
+        itemsPerPage:
+          type: integer
+      required:
+        - nbPages
+        - page
+        - nbItems
+        - itemsPerPage
+    AuthGoogleServiceAccount:
+      type: object
+      description: Authentication input to connect to a Google service (e.g. BigQuery).
+      additionalProperties: false
+      properties:
+        clientEmail:
+          type: string
+          description: Email address of the Service Account.
+          example: service-account-name@project-id.iam.gserviceaccount.com
+        privateKey:
+          type: string
+          description: Private key of the Service Account.
+      required:
+        - clientEmail
+        - privateKey
+    AuthBasic:
+      type: object
+      description: Authentication input for Basic login with username and password.
+      additionalProperties: false
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
+    AuthAPIKey:
+      type: object
+      description: Authentication input used for token credentials.
+      additionalProperties: false
+      properties:
+        key:
+          type: string
+      required:
+        - key
+    AuthOAuth:
+      type: object
+      description: Authentication input for OAuth login.
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+          description: The OAuth endpoint URL.
+        client_id:
+          type: string
+          description: The clientID.
+        client_secret:
+          type: string
+          description: The secret.
+      required:
+        - url
+        - client_id
+        - client_secret
+    AuthAlgolia:
+      type: object
+      additionalProperties: false
+      properties:
+        appID:
+          type: string
+          description: Algolia Application ID.
+        apiKey:
+          type: string
+          description: >-
+            Algolia API Key, with the correct rights to push to an index and
+            change settings.
+      required:
+        - appID
+        - apiKey
+    AuthInput:
+      oneOf:
+        - $ref: '#/components/schemas/AuthGoogleServiceAccount'
+        - $ref: '#/components/schemas/AuthBasic'
+        - $ref: '#/components/schemas/AuthAPIKey'
+        - $ref: '#/components/schemas/AuthOAuth'
+        - $ref: '#/components/schemas/AuthAlgolia'
+    AuthenticationCreate:
+      type: object
+      description: The payload when creating an authentication.
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/AuthenticationType'
+        name:
+          $ref: '#/components/schemas/name'
+        platform:
+          $ref: '#/components/schemas/Platform'
+        input:
+          $ref: '#/components/schemas/AuthInput'
+      required:
+        - type
+        - name
+        - input
+    AuthenticationCreateResponse:
+      type: object
+      description: Response from the API when the Authentication is successfully created.
+      additionalProperties: false
+      properties:
+        authenticationID:
+          $ref: '#/components/schemas/authenticationID'
+        name:
+          $ref: '#/components/schemas/name'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+      required:
+        - authenticationID
+        - name
+        - createdAt
+    AuthenticationSearch:
+      type: object
+      additionalProperties: false
+      description: >-
+        Payload to search for multiple authentications, based on the given
+        `authenticationIDs`.
+      properties:
+        authenticationIDs:
+          type: array
+          items:
+            $ref: '#/components/schemas/authenticationID'
+      required:
+        - authenticationIDs
+    DeleteResponse:
+      type: object
+      properties:
+        deletedAt:
+          type: string
+          description: Date of deletion (RFC3339 format).
+      required:
+        - deletedAt
+    AuthenticationUpdate:
+      type: object
+      description: Payload to partially update an Authentication.
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/AuthenticationType'
+        name:
+          $ref: '#/components/schemas/name'
+        platform:
+          $ref: '#/components/schemas/Platform'
+        input:
+          $ref: '#/components/schemas/AuthInputPartial'
+    AuthenticationUpdateResponse:
+      type: object
+      additionalProperties: false
+      description: Response from the API when the Authentication is successfully updated.
+      properties:
+        authenticationID:
+          $ref: '#/components/schemas/authenticationID'
+        name:
+          $ref: '#/components/schemas/name'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+      required:
+        - authenticationID
+        - name
+        - updatedAt
+    DestinationType:
+      type: string
+      description: >-
+        Type of the Destination, defines in which Algolia product the data will
+        be stored.
+      enum:
+        - search
+        - insights
+        - flow
+    destinationSortKeys:
+      type: string
+      description: Used to sort the Destination list endpoint.
+      enum:
+        - name
+        - type
+        - updatedAt
+        - createdAt
+    destinationID:
+      type: string
+      description: The destination UUID.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    DestinationIndexPrefix:
+      type: object
+      additionalProperties: false
+      properties:
+        indexPrefix:
+          type: string
+          description: The prefix of the final index name.
+      required:
+        - indexPrefix
+    RecordType:
+      type: string
+      description: Determines the indexing strategy to use for a given e-commerce source.
+      enum:
+        - product
+        - variant
+    AttributesToExclude:
+      type: array
+      description: >
+        Determines the attributes to exclude from an Algolia record.
+
+        To remove nested element, you can separate the path to the element with
+        dots (`.`):
+          - "foo.bar": will remove `bar` from `foo`.
+        To remove elements from an array, you can use the following:
+          - "foo.[0].bar": will only remove `bar` from the first element of `foo`.
+          - "foo.[*].bar": will remove `bar` from every elements of `foo`.
+      items:
+        type: string
+    DestinationIndexName:
+      type: object
+      additionalProperties: false
+      properties:
+        indexName:
+          type: string
+          description: The index name to store data in.
+        recordType:
+          $ref: '#/components/schemas/RecordType'
+        attributesToExclude:
+          $ref: '#/components/schemas/AttributesToExclude'
+      required:
+        - indexName
+    DestinationInput:
+      oneOf:
+        - $ref: '#/components/schemas/DestinationIndexPrefix'
+        - $ref: '#/components/schemas/DestinationIndexName'
+    Destination:
+      type: object
+      description: A destination describe how the data is indexed on the Algolia side.
+      additionalProperties: false
+      properties:
+        destinationID:
+          $ref: '#/components/schemas/destinationID'
+        type:
+          $ref: '#/components/schemas/DestinationType'
+        name:
+          $ref: '#/components/schemas/name'
+        input:
+          $ref: '#/components/schemas/DestinationInput'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+        authenticationID:
+          $ref: '#/components/schemas/authenticationID'
+      required:
+        - destinationID
+        - type
+        - name
+        - input
+        - createdAt
+    DestinationCreate:
+      type: object
+      additionalProperties: false
+      description: The payload when creating a destination.
+      properties:
+        type:
+          $ref: '#/components/schemas/DestinationType'
+        name:
+          $ref: '#/components/schemas/name'
+        input:
+          $ref: '#/components/schemas/DestinationInput'
+        authenticationID:
+          $ref: '#/components/schemas/authenticationID'
+      required:
+        - type
+        - name
+        - input
+    DestinationCreateResponse:
+      type: object
+      additionalProperties: false
+      description: Response from the API when the Destination is successfully created.
+      properties:
+        destinationID:
+          $ref: '#/components/schemas/destinationID'
+        name:
+          $ref: '#/components/schemas/name'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+      required:
+        - destinationID
+        - name
+        - createdAt
+    DestinationSearch:
+      type: object
+      additionalProperties: false
+      description: >-
+        Payload to search for multiple destinations, based on the given
+        `destinationIDs`.
+      properties:
+        destinationIDs:
+          type: array
+          items:
+            $ref: '#/components/schemas/destinationID'
+      required:
+        - destinationIDs
+    DestinationUpdate:
+      type: object
+      additionalProperties: false
+      description: Payload to partially update a Destination.
+      properties:
+        type:
+          $ref: '#/components/schemas/DestinationType'
+        name:
+          $ref: '#/components/schemas/name'
+        input:
+          $ref: '#/components/schemas/DestinationInput'
+        authenticationID:
+          $ref: '#/components/schemas/authenticationID'
+    DestinationUpdateResponse:
+      type: object
+      additionalProperties: false
+      description: Response from the API when the Destination is successfully updated.
+      properties:
+        destinationID:
+          $ref: '#/components/schemas/destinationID'
+        name:
+          $ref: '#/components/schemas/name'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+      required:
+        - destinationID
+        - name
+        - updatedAt
+    SourceType:
+      type: string
+      enum:
+        - bigcommerce
+        - commercetools
+        - json
+        - csv
+        - bigquery
+        - docker
+        - ga4BigqueryExport
+    sourceSortKeys:
+      type: string
+      description: Used to sort the Source list endpoint.
+      enum:
+        - name
+        - type
+        - updatedAt
+        - createdAt
+    sourceID:
+      type: string
+      description: The source UUID.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    CommercetoolsCustomFields:
+      type: object
+      additionalProperties: false
+      description: >-
+        Custom fields from Commercetools to index in the records (see
+        https://docs.commercetools.com/tutorials/custom-types).
+      properties:
+        inventory:
+          oneOf:
+            - type: array
+              items:
+                type: string
+              description: Inventory custom fields.
+            - type: 'null'
+        price:
+          oneOf:
+            - type: array
+              items:
+                type: string
+              description: Price custom fields.
+            - type: 'null'
+        category:
+          oneOf:
+            - type: array
+              items:
+                type: string
+              description: Category custom fields.
+            - type: 'null'
+    SourceCommercetools:
+      type: object
+      additionalProperties: false
+      properties:
+        storeKeys:
+          type: array
+          items:
+            description: Unique and immutable key of the referenced Store.
+            type: string
+        locales:
+          type: array
+          description: >
+            Array of locales that must match the following pattern:
+            ^[a-z]{2}(-[A-Z]{2})?$. For example ["fr-FR", "en"].
+          items:
+            type: string
+        url:
+          type: string
+        projectKey:
+          type: string
+        fallbackIsInStockValue:
+          type: boolean
+          default: true
+          description: >
+            Determines the value that will be stored in the Algolia record if
+            there's no inventory information on the product.
+        customFields:
+          $ref: '#/components/schemas/CommercetoolsCustomFields'
+      required:
+        - url
+        - projectKey
+      x-discriminator-fields:
+        - projectKey
+    BigCommerceChannel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          description: The ID of the bigcommerce channel.
+        currencies:
+          type: array
+          description: >-
+            An array of currencies for the given channel `ID`, a currency is a
+            trigram string that represents the currency code.
+          example:
+            - usd
+            - eur
+          items:
+            type: string
+            example: usd
+      required:
+        - id
+    BigCommerceMetafield:
+      type: object
+      additionalProperties: false
+      properties:
+        namespace:
+          type: string
+          description: The namespace of the metafield.
+        key:
+          type: string
+          description: The key identifier of the metafield.
+      required:
+        - namespace
+        - key
+    SourceBigCommerce:
+      type: object
+      additionalProperties: false
+      properties:
+        storeHash:
+          type: string
+          description: The store hash identifying the store the shopper is signing in to.
+        channel:
+          $ref: '#/components/schemas/BigCommerceChannel'
+        customFields:
+          type: array
+          items:
+            type: string
+        productMetafields:
+          type: array
+          items:
+            $ref: '#/components/schemas/BigCommerceMetafield'
+        variantMetafields:
+          type: array
+          items:
+            $ref: '#/components/schemas/BigCommerceMetafield'
+      required:
+        - storeHash
+      x-discriminator-fields:
+        - storeHash
+    UniqueIDColumn:
+      type: string
+      description: >-
+        The name of the column that contains the unique ID, used as `objectID`
+        in Algolia.
+    MethodType:
+      type: string
+      enum:
+        - GET
+        - POST
+    SourceJSON:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+          description: The URL of the file.
+        uniqueIDColumn:
+          $ref: '#/components/schemas/UniqueIDColumn'
+        method:
+          $ref: '#/components/schemas/MethodType'
+      required:
+        - url
+    MappingTypeCSV:
+      type: string
+      enum:
+        - string
+        - integer
+        - float
+        - boolean
+        - json
+    SourceCSV:
+      type: object
+      additionalProperties: false
+      properties:
+        url:
+          type: string
+          description: The URL of the file.
+        uniqueIDColumn:
+          $ref: '#/components/schemas/UniqueIDColumn'
+        mapping:
+          type: object
+          description: >
+            Mapping of type for every column. For example {"myColumn":
+            "boolean", "myOtherColumn": "json"}.
+          additionalProperties:
+            $ref: '#/components/schemas/MappingTypeCSV'
+        method:
+          $ref: '#/components/schemas/MethodType'
+        delimiter:
+          type: string
+          minLength: 1
+          maxLength: 1
+          default: ','
+          description: >-
+            The character used to split the value on each line, default to a
+            comma (\r, \n, 0xFFFD, and space are forbidden).
+      required:
+        - url
+    BigQueryDataType:
+      type: string
+      enum:
+        - ga4
+        - ga360
+    SourceBigQuery:
+      type: object
+      additionalProperties: false
+      properties:
+        projectID:
+          type: string
+          description: Project ID of the BigQuery Source.
+        datasetID:
+          type: string
+          description: Dataset ID of the BigQuery Source.
+        dataType:
+          $ref: '#/components/schemas/BigQueryDataType'
+        table:
+          type: string
+          description: Table name (for default BQ).
+        tablePrefix:
+          type: string
+          description: Table prefix (for Google Analytics).
+        customSQLRequest:
+          type: string
+          description: Custom SQL request to extract data from the BigQuery table.
+        uniqueIDColumn:
+          $ref: '#/components/schemas/UniqueIDColumn'
+      required:
+        - projectID
+        - datasetID
+      x-discriminator-fields:
+        - projectID
+    SourceGA4BigQueryExport:
+      type: object
+      additionalProperties: false
+      properties:
+        projectID:
+          type: string
+          description: GCP project ID that the BigQuery Export writes to.
+        datasetID:
+          type: string
+          description: BigQuery dataset ID that the BigQuery Export writes to.
+        tablePrefix:
+          type: string
+          description: >-
+            Prefix of the tables that the BigQuery Export writes to (i.e.
+            events_intraday_ for streaming, events_ for daily).
+      required:
+        - projectID
+        - datasetID
+        - tablePrefix
+      x-discriminator-fields:
+        - projectID
+        - datasetID
+        - tablePrefix
+    DockerImageType:
+      type: string
+      enum:
+        - singer
+        - custom
+        - airbyte
+      description: The type of the image.
+    DockerRegistry:
+      type: string
+      enum:
+        - dockerhub
+        - ghcr
+      description: The registry where the image is stored.
+    SourceDocker:
+      type: object
+      additionalProperties: false
+      properties:
+        imageType:
+          $ref: '#/components/schemas/DockerImageType'
+        registry:
+          $ref: '#/components/schemas/DockerRegistry'
+        image:
+          type: string
+          description: The name of the image to pull.
+          example: algolia/zendesk
+        version:
+          type: string
+          description: The version of the image, defaults to `latest`.
+          example: v2.1.0
+        configuration:
+          type: object
+          description: The configuration of the spec.
+      required:
+        - registry
+        - image
+        - imageType
+        - configuration
+    SourceInput:
+      oneOf:
+        - $ref: '#/components/schemas/SourceCommercetools'
+        - $ref: '#/components/schemas/SourceBigCommerce'
+        - $ref: '#/components/schemas/SourceJSON'
+        - $ref: '#/components/schemas/SourceCSV'
+        - $ref: '#/components/schemas/SourceBigQuery'
+        - $ref: '#/components/schemas/SourceGA4BigQueryExport'
+        - $ref: '#/components/schemas/SourceDocker'
+    Source:
+      type: object
+      additionalProperties: false
+      properties:
+        sourceID:
+          $ref: '#/components/schemas/sourceID'
+        type:
+          $ref: '#/components/schemas/SourceType'
+        name:
+          type: string
+        input:
+          $ref: '#/components/schemas/SourceInput'
+        authenticationID:
+          $ref: '#/components/schemas/authenticationID'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+      required:
+        - sourceID
+        - type
+        - name
+        - input
+        - createdAt
+    SourceCreate:
+      type: object
+      additionalProperties: false
+      properties:
+        type:
+          $ref: '#/components/schemas/SourceType'
+        name:
+          type: string
+        input:
+          $ref: '#/components/schemas/SourceInput'
+        authenticationID:
+          $ref: '#/components/schemas/authenticationID'
+      required:
+        - type
+        - name
+        - input
+    SourceCreateResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        sourceID:
+          $ref: '#/components/schemas/sourceID'
+        name:
+          type: string
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+      required:
+        - sourceID
+        - name
+        - createdAt
+    SourceSearch:
+      type: object
+      additionalProperties: false
+      properties:
+        sourceIDs:
+          type: array
+          items:
+            type: string
+      required:
+        - sourceIDs
+    SourceUpdateCommercetools:
+      type: object
+      additionalProperties: false
+      properties:
+        storeKeys:
+          type: array
+          description: Unique and immutable key of the referenced Store.
+          items:
+            type: string
+        locales:
+          type: array
+          description: >
+            Array of locales that must match the following pattern:
+            ^[a-z]{2}(-[A-Z]{2})?$. For example ["fr-FR", "en"].
+          items:
+            type: string
+        url:
+          type: string
+        fallbackIsInStockValue:
+          type: boolean
+          description: >
+            Determines the value that will be stored in the Algolia record if
+            there's no inventory information on the product.
+        customFields:
+          $ref: '#/components/schemas/CommercetoolsCustomFields'
+    SourceUpdateDocker:
+      type: object
+      additionalProperties: false
+      properties:
+        registry:
+          $ref: '#/components/schemas/DockerRegistry'
+        image:
+          type: string
+          description: The name of the image to pull.
+          example: algolia/zendesk
+        version:
+          type: string
+          description: The version of the image, defaults to `latest`.
+          example: v2.1.0
+        configuration:
+          type: object
+          description: The configuration of the spec.
+      required:
+        - configuration
+    SourceUpdateInput:
+      oneOf:
+        - $ref: '#/components/schemas/SourceUpdateCommercetools'
+        - $ref: '#/components/schemas/SourceJSON'
+        - $ref: '#/components/schemas/SourceCSV'
+        - $ref: '#/components/schemas/SourceBigQuery'
+        - $ref: '#/components/schemas/SourceGA4BigQueryExport'
+        - $ref: '#/components/schemas/SourceUpdateDocker'
+    SourceUpdate:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+        input:
+          $ref: '#/components/schemas/SourceUpdateInput'
+        authenticationID:
+          $ref: '#/components/schemas/authenticationID'
+    SourceUpdateResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        sourceID:
+          $ref: '#/components/schemas/sourceID'
+        name:
+          type: string
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+      required:
+        - sourceID
+        - name
+        - updatedAt
+    DockerSourceStream:
+      type: object
+      description: A stream definition (see the Singer specification for details).
+    runID:
+      type: string
+      description: The run UUID.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    ActionType:
+      type: string
+      description: The action to perform on the Algolia index.
+      enum:
+        - replace
+        - save
+        - partial
+        - append
+    TriggerType:
+      type: string
+      description: |
+        The type of the task reflect how it can be used:
+          - onDemand: a task that runs manually
+          - schedule: a task that runs regularly, following a given cron expression
+          - subscription: a task that runs after a subscription event is received from an integration (e.g. Webhook).
+          - streaming: a task that runs continuously.
+      enum:
+        - onDemand
+        - schedule
+        - subscription
+        - streaming
+    taskSortKeys:
+      type: string
+      description: Used to sort the Task list endpoint.
+      enum:
+        - enabled
+        - triggerType
+        - action
+        - updatedAt
+        - createdAt
+    taskID:
+      type: string
+      description: The task UUID.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    OnDemandTriggerType:
+      type: string
+      description: A task which is manually executed via the run task endpoint.
+      enum:
+        - onDemand
+    LastRun:
+      description: The last time the scheduled task ran (RFC3339 format).
+      type: string
+    OnDemandTrigger:
+      type: object
+      additionalProperties: false
+      description: The trigger information of a task of type `onDemand`.
+      properties:
+        type:
+          $ref: '#/components/schemas/OnDemandTriggerType'
+        lastRun:
+          $ref: '#/components/schemas/LastRun'
+      required:
+        - type
+    ScheduleTriggerType:
+      type: string
+      description: A task which is triggered by a schedule (cron expression).
+      enum:
+        - schedule
+    Cron:
+      type: string
+      description: >-
+        A cron expression that represent at which regularity the task should
+        run.
+      example: '* * 1 * *'
+    ScheduleTrigger:
+      type: object
+      additionalProperties: false
+      description: The trigger information for a task of type 'schedule'.
+      properties:
+        type:
+          $ref: '#/components/schemas/ScheduleTriggerType'
+        cron:
+          $ref: '#/components/schemas/Cron'
+        lastRun:
+          $ref: '#/components/schemas/LastRun'
+        nextRun:
+          description: The next scheduled run of the task (RFC3339 format).
+          type: string
+      required:
+        - type
+        - cron
+        - nextRun
+    SubscriptionTriggerType:
+      type: string
+      description: A task which is triggered by an external subscription (e.g. Webhook).
+      enum:
+        - subscription
+    SubscriptionTrigger:
+      type: object
+      additionalProperties: false
+      description: The trigger input for a task of type 'subscription'.
+      properties:
+        type:
+          $ref: '#/components/schemas/SubscriptionTriggerType'
+      required:
+        - type
+    StreamingTriggerType:
+      type: string
+      description: A task that runs continuously.
+      enum:
+        - streaming
+    StreamingTrigger:
+      type: object
+      additionalProperties: false
+      description: The trigger input for a task of type 'streaming'.
+      properties:
+        type:
+          $ref: '#/components/schemas/StreamingTriggerType'
+      required:
+        - type
+    Trigger:
+      oneOf:
+        - $ref: '#/components/schemas/OnDemandTrigger'
+        - $ref: '#/components/schemas/ScheduleTrigger'
+        - $ref: '#/components/schemas/SubscriptionTrigger'
+        - $ref: '#/components/schemas/StreamingTrigger'
+    MappingFieldDirective:
+      type: object
+      additionalProperties: false
+      description: >-
+        Describes how a field should be resolved by applying a set of
+        directives.
+      properties:
+        fieldKey:
+          description: Destination field key.
+          type: string
+        value:
+          type: object
+          additionalProperties: true
+          description: How the destination field should be resolved from the source.
+      required:
+        - fieldKey
+        - value
+    MappingKitAction:
+      type: object
+      additionalProperties: false
+      description: >-
+        Describes how a destination object should be resolved by means of
+        applying a set of directives.
+      properties:
+        id:
+          description: ID to uniquely identify this action.
+          type: string
+        enabled:
+          description: Whether this action has any effect.
+          type: boolean
+        trigger:
+          description: >-
+            Condition which must be satisfied to apply the action. If this
+            evaluates to false, the action is not applied, and the process
+            attempts to apply the next action, if any.
+          type: string
+        fieldDirectives:
+          type: array
+          items:
+            $ref: '#/components/schemas/MappingFieldDirective'
+      required:
+        - enabled
+        - trigger
+        - fieldDirectives
+    MappingInput:
+      type: object
+      additionalProperties: false
+      description: Transformations to apply to source, serialized as a JSON string.
+      properties:
+        format:
+          description: >-
+            Name of the mapping format schema, `mappingkit/v1` is currently the
+            only supported format.
+          type: string
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/MappingKitAction'
+      required:
+        - format
+        - actions
+    OnDemandDateUtilsInput:
+      type: object
+      additionalProperties: false
+      description: >-
+        The input for an `onDemand` task whose source is of type `bigquery` and
+        for which extracted data spans a given time range.
+      properties:
+        startDate:
+          description: The start date of the extraction (RFC3339 format).
+          type: string
+        endDate:
+          description: The end date of the extraction (RFC3339 format).
+          type: string
+        mapping:
+          $ref: '#/components/schemas/MappingInput'
+      required:
+        - startDate
+        - endDate
+    ScheduleDateUtilsInput:
+      type: object
+      additionalProperties: false
+      description: >-
+        The input for a `schedule` task whose source is of type `bigquery` and
+        for which extracted data spans a fixed number of days.
+      properties:
+        timeframe:
+          description: The timeframe of the extraction, in number of days from today.
+          type: integer
+          minimum: 1
+          maximum: 30
+        mapping:
+          $ref: '#/components/schemas/MappingInput'
+      required:
+        - timeframe
+    StreamingUtilsInput:
+      type: object
+      additionalProperties: false
+      description: >-
+        The input for a `streaming` task whose source is of type
+        `ga4BigqueryExport` and for which extracted data is continuously
+        streamed.
+      properties:
+        mapping:
+          $ref: '#/components/schemas/MappingInput'
+      required:
+        - mapping
+    TaskInput:
+      oneOf:
+        - $ref: '#/components/schemas/OnDemandDateUtilsInput'
+        - $ref: '#/components/schemas/ScheduleDateUtilsInput'
+        - $ref: '#/components/schemas/StreamingUtilsInput'
+    failureThreshold:
+      type: integer
+      minimum: 0
+      maximum: 100
+      description: >-
+        A percentage representing the accepted failure threshold to determine if
+        a `run` succeeded or not.
+    Task:
+      type: object
+      additionalProperties: false
+      properties:
+        taskID:
+          $ref: '#/components/schemas/taskID'
+        sourceID:
+          $ref: '#/components/schemas/sourceID'
+        destinationID:
+          $ref: '#/components/schemas/destinationID'
+        trigger:
+          $ref: '#/components/schemas/Trigger'
+        input:
+          $ref: '#/components/schemas/TaskInput'
+        enabled:
+          type: boolean
+          default: true
+          description: Whether the task is enabled or not.
+        failureThreshold:
+          $ref: '#/components/schemas/failureThreshold'
+        action:
+          $ref: '#/components/schemas/ActionType'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+      required:
+        - taskID
+        - sourceID
+        - destinationID
+        - trigger
+        - enabled
+        - action
+        - createdAt
+    OnDemandTriggerInput:
+      type: object
+      additionalProperties: false
+      description: The trigger information of a task of type `onDemand`.
+      properties:
+        type:
+          $ref: '#/components/schemas/OnDemandTriggerType'
+      required:
+        - type
+    ScheduleTriggerInput:
+      type: object
+      additionalProperties: false
+      description: The trigger input for a task of type 'schedule'.
+      properties:
+        type:
+          $ref: '#/components/schemas/ScheduleTriggerType'
+        cron:
+          $ref: '#/components/schemas/Cron'
+      required:
+        - type
+        - cron
+    TaskCreateTrigger:
+      oneOf:
+        - $ref: '#/components/schemas/OnDemandTriggerInput'
+        - $ref: '#/components/schemas/ScheduleTriggerInput'
+        - $ref: '#/components/schemas/SubscriptionTrigger'
+        - $ref: '#/components/schemas/StreamingTrigger'
+    TaskCreate:
+      type: object
+      additionalProperties: false
+      description: The payload for a task creation.
+      properties:
+        sourceID:
+          $ref: '#/components/schemas/sourceID'
+        destinationID:
+          $ref: '#/components/schemas/destinationID'
+        trigger:
+          $ref: '#/components/schemas/TaskCreateTrigger'
+        action:
+          $ref: '#/components/schemas/ActionType'
+        enabled:
+          type: boolean
+          description: Whether the task is enabled or not.
+        failureThreshold:
+          $ref: '#/components/schemas/failureThreshold'
+        input:
+          $ref: '#/components/schemas/TaskInput'
+      required:
+        - sourceID
+        - destinationID
+        - trigger
+        - action
+    TaskCreateResponse:
+      type: object
+      additionalProperties: false
+      description: The response from the API after a task creation.
+      properties:
+        taskID:
+          $ref: '#/components/schemas/taskID'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+      required:
+        - taskID
+        - createdAt
+    TaskSearch:
+      type: object
+      additionalProperties: false
+      properties:
+        taskIDs:
+          type: array
+          items:
+            type: string
+      required:
+        - taskIDs
+    TriggerUpdateInput:
+      type: object
+      additionalProperties: false
+      description: The trigger input for a task update.
+      properties:
+        cron:
+          $ref: '#/components/schemas/Cron'
+      required:
+        - cron
+    TaskUpdate:
+      type: object
+      additionalProperties: false
+      description: The payload for a task update.
+      properties:
+        destinationID:
+          $ref: '#/components/schemas/destinationID'
+        trigger:
+          $ref: '#/components/schemas/TriggerUpdateInput'
+        input:
+          $ref: '#/components/schemas/TaskInput'
+        enabled:
+          type: boolean
+          description: Whether the task is enabled or not.
+        failureThreshold:
+          $ref: '#/components/schemas/failureThreshold'
+    TaskUpdateResponse:
+      type: object
+      description: The response from the API after a task update.
+      additionalProperties: false
+      properties:
+        taskID:
+          $ref: '#/components/schemas/taskID'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+      required:
+        - taskID
+        - updatedAt
+    RunResponse:
+      type: object
+      additionalProperties: false
+      description: >-
+        The response from the run task API, containing an Observability Run ID
+        and the time it was created at.
+      properties:
+        runID:
+          $ref: '#/components/schemas/runID'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+      required:
+        - runID
+        - createdAt
+    RunStatus:
+      type: string
+      enum:
+        - created
+        - started
+        - idled
+        - finished
+        - skipped
+    runSortKeys:
+      type: string
+      description: Used to sort the Run list endpoint.
+      enum:
+        - status
+        - updatedAt
+        - createdAt
+    RunOutcome:
+      type: string
+      enum:
+        - success
+        - failure
+        - processing
+    RunReasonCode:
+      type: string
+      description: An identifier that pairs with the outcome reason.
+      enum:
+        - internal
+        - critical
+        - no_events
+        - too_many_errors
+        - ok
+        - discarded
+        - blocking
+    RunType:
+      type: string
+      enum:
+        - reindex
+        - update
+        - discover
+    startedAt:
+      type: string
+      description: Date of start (RFC3339 format).
+    finishedAt:
+      type: string
+      description: Date of finish (RFC3339 format).
+    Run:
+      type: object
+      additionalProperties: false
+      properties:
+        runID:
+          $ref: '#/components/schemas/runID'
+        appID:
+          type: string
+        taskID:
+          $ref: '#/components/schemas/taskID'
+        status:
+          $ref: '#/components/schemas/RunStatus'
+        progress:
+          type: object
+          additionalProperties: false
+          properties:
+            expectedNbOfEvents:
+              type: integer
+            receivedNbOfEvents:
+              type: integer
+        outcome:
+          $ref: '#/components/schemas/RunOutcome'
+        failureThreshold:
+          $ref: '#/components/schemas/failureThreshold'
+        reason:
+          type: string
+          description: Explains the result of outcome.
+        reasonCode:
+          $ref: '#/components/schemas/RunReasonCode'
+        type:
+          $ref: '#/components/schemas/RunType'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        startedAt:
+          $ref: '#/components/schemas/startedAt'
+        finishedAt:
+          $ref: '#/components/schemas/finishedAt'
+      required:
+        - runID
+        - appID
+        - taskID
+        - status
+        - type
+        - createdAt
+    Window:
+      type: object
+      additionalProperties: false
+      description: >-
+        The window parameter represents the holds the dates used to query the
+        Observability data from the database in a given window.
+      properties:
+        startDate:
+          type: string
+          description: >-
+            A date in format RFC3339 representing the oldest possible data in
+            query window.
+        endDate:
+          type: string
+          description: >-
+            A date in format RFC3339 representing the newest possible data in
+            query window.
+      required:
+        - startDate
+        - endDate
+    RunListResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        runs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Run'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        window:
+          $ref: '#/components/schemas/Window'
+      required:
+        - runs
+        - pagination
+        - window
+    EventStatus:
+      type: string
+      enum:
+        - created
+        - started
+        - retried
+        - failed
+        - succeeded
+        - critical
+    EventType:
+      type: string
+      enum:
+        - fetch
+        - record
+        - log
+        - transform
+    eventSortKeys:
+      type: string
+      description: Used to sort the Event list endpoint.
+      enum:
+        - status
+        - type
+        - publishedAt
+    eventID:
+      type: string
+      description: The event UUID.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    publishedAt:
+      type: string
+      description: Date of publish (RFC3339 format).
+    Event:
+      type: object
+      description: An event describe a step of the task execution flow..
+      additionalProperties: false
+      properties:
+        eventID:
+          $ref: '#/components/schemas/eventID'
+        runID:
+          $ref: '#/components/schemas/runID'
+        parentID:
+          type: string
+          description: The parent event, the cause of this event.
+          example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+        status:
+          $ref: '#/components/schemas/EventStatus'
+        type:
+          $ref: '#/components/schemas/EventType'
+        batchSize:
+          type: integer
+          description: The extracted record batch size.
+          example: 10
+          minimum: 0
+          multipleOf: 1
+        data:
+          type: object
+          additionalProperties: true
+        publishedAt:
+          $ref: '#/components/schemas/publishedAt'
+      required:
+        - eventID
+        - runID
+        - status
+        - type
+        - batchSize
+        - publishedAt
+  responses:
+    BadRequest:
+      description: Bad request or request arguments.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    FeatureNotEnabled:
+      description: This feature is not enabled on your Algolia account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    MethodNotAllowed:
+      description: Method not allowed with this API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    IndexNotFound:
+      description: Index not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'

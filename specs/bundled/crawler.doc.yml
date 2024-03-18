@@ -3,316 +3,6 @@ info:
   title: Crawler API
   description: API to configure and manage the Algolia Crawler.
   version: 1.0.0
-components:
-  securitySchemes:
-    BasicAuth:
-      type: http
-      scheme: basic
-  schemas:
-    Pagination:
-      type: object
-      description: Represent a group of items and pagination information.
-      properties:
-        items:
-          type: array
-          items:
-            type: object
-        itemsPerPage:
-          type: integer
-          description: The maximum number of items returned by this request.
-          default: 20
-          example: 20
-        page:
-          type: integer
-          description: The current page browsed by this request.
-          default: 1
-          example: 1
-        total:
-          type: integer
-          description: The total number of items.
-          example: 100
-    CrawlerId:
-      type: string
-      description: The unique id of the Crawler.
-      example: e0f6db8a-24f5-4092-83a4-1b2c6cb6d809
-    CrawlerName:
-      type: string
-      maxLength: 64
-      description: The name of the Crawler.
-      example: My Crawler
-    crawlersResponse:
-      allOf:
-        - $ref: '#/components/schemas/Pagination'
-        - type: object
-          properties:
-            items:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    $ref: '#/components/schemas/CrawlerId'
-                  name:
-                    $ref: '#/components/schemas/CrawlerName'
-    configurationRecordExtractorType:
-      type: string
-      enum:
-        - function
-    Configuration:
-      type: object
-      description: >-
-        A Crawler configuration object. See the Crawler documentation to have
-        more details about it.
-      properties:
-        appId:
-          type: string
-          example: ABC9DEFGHI
-        apiKey:
-          type: string
-          example: c69564c68bad256f8d11399bf2048f82
-        indexPrefix:
-          type: string
-          example: crawler_
-        rateLimit:
-          type: number
-          example: 8
-        startUrls:
-          type: array
-          items:
-            type: string
-            example: https://www.algolia.com
-        actions:
-          type: array
-          items:
-            type: object
-            properties:
-              indexName:
-                type: string
-                example: algolia_website
-              pathsToMatch:
-                type: array
-                items:
-                  type: string
-                  example: https://www.algolia.com/**
-              selectorsToMatch:
-                type: array
-                items:
-                  type: string
-                example:
-                  - .products
-                  - '!.featured'
-              fileTypesToMatch:
-                type: array
-                items:
-                  type: string
-                example:
-                  - html
-                  - pdf
-              recordExtractor:
-                type: object
-                properties:
-                  __type:
-                    $ref: '#/components/schemas/configurationRecordExtractorType'
-                  source:
-                    type: string
-                    example: () => {}
-            required:
-              - indexName
-              - recordExtractor
-    urlsCrawledGroupStatus:
-      type: string
-      description: A string corresponding to the status of the group.
-      enum:
-        - DONE
-        - SKIPPED
-        - FAILED
-    urlsCrawledGroupCategory:
-      type: string
-      description: >-
-        In case of error, will be set to the step where the error occurred,
-        otherwise will be set to 'success'.
-      enum:
-        - fetch
-        - extraction
-        - indexing
-        - success
-    UrlsCrawledGroup:
-      type: object
-      description: >-
-        Represent a group of URLs that have been crawled and have the same final
-        state.
-      properties:
-        status:
-          $ref: '#/components/schemas/urlsCrawledGroupStatus'
-        reason:
-          type: string
-          description: The code of the reason why when ended up in this status.
-        category:
-          $ref: '#/components/schemas/urlsCrawledGroupCategory'
-        count:
-          type: integer
-          description: Number of URLs belonging to this group.
-        readable:
-          type: string
-          description: Human redeable version of the error.
-      example:
-        status: SKIPPED
-        reason: forbidden_by_robotstxt
-        category: fetch
-        nbUrls: 3
-        readable: Forbidden by robots.txt
-    crawlerConfigVersionsResponse:
-      allOf:
-        - $ref: '#/components/schemas/Pagination'
-        - type: object
-          properties:
-            items:
-              type: array
-              items:
-                type: object
-                properties:
-                  version:
-                    type: integer
-                    minimum: 1
-                  createdAt:
-                    type: string
-                  authorId:
-                    type: string
-                required:
-                  - version
-                  - createdAt
-    domainsResponse:
-      allOf:
-        - $ref: '#/components/schemas/Pagination'
-        - type: object
-          properties:
-            items:
-              type: array
-              items:
-                type: object
-                properties:
-                  appId:
-                    type: string
-                    description: The app for which the domain is registered.
-                  domain:
-                    type: string
-                    description: The registered domain name.
-                  validated:
-                    type: boolean
-                    description: Indicates whether the domain is validated or not.
-  responses:
-    InvalidRequest:
-      description: Invalid request.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  code:
-                    type: string
-                  message:
-                    type: string
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        code:
-                          type: string
-                        message:
-                          type: string
-                        line:
-                          type: integer
-                        position:
-                          type: integer
-                      required:
-                        - message
-                      example:
-                        message: url is not defined
-                        line: 5
-                example:
-                  code: malformed_id
-            required:
-              - error
-    MissingAuthorization:
-      description: Authorization information is missing or invalid.
-    NoRightsOnCrawler:
-      description: >-
-        The user doesn't have enough rights on the specified Crawler, or it
-        doesn't exists.
-    ActionAcknowledged:
-      description: The request has been acknowledged by the crawler.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              taskId:
-                type: string
-                example: e0f6db8a-24f5-4092-83a4-1b2c6cb6d809
-            required:
-              - taskId
-    Forbidden:
-      description: Invalid credentials.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: object
-                properties:
-                  code:
-                    type: string
-                  message:
-                    type: string
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        code:
-                          type: string
-                        message:
-                          type: string
-                        line:
-                          type: integer
-                        position:
-                          type: integer
-                      required:
-                        - message
-                      example:
-                        message: url is not defined
-                        line: 5
-                example:
-                  code: malformed_id
-            required:
-              - error
-  parameters:
-    CrawlerIdParameter:
-      name: id
-      in: path
-      description: The Id of the targeted Crawler.
-      required: true
-      schema:
-        type: string
-    TaskIdParameter:
-      name: tid
-      in: path
-      description: The Id of the targeted Task.
-      required: true
-      schema:
-        type: string
-    CrawlerVersionParameter:
-      name: version
-      in: path
-      description: The version of the targeted Crawler revision.
-      required: true
-      schema:
-        type: integer
 servers:
   - url: https://crawler.algolia.com/api/1
   - url: https://crawler-dev.algolia.com/api/1
@@ -463,19 +153,21 @@ paths:
                     type: string
                     description: The ID of the task that is currently blocking the Crawler.
                   lastReindexStartedAt:
-                    type: string
-                    nullable: true
-                    description: >-
-                      The date when the last complete reindex was started. Will
-                      be null if no reindex was ever done.
-                    example: '2019-05-10T08:16:47.920Z'
+                    oneOf:
+                      - type: string
+                        description: >-
+                          The date when the last complete reindex was started.
+                          Will be null if no reindex was ever done.
+                        example: '2019-05-10T08:16:47.920Z'
+                      - type: 'null'
                   lastReindexEndedAt:
-                    type: string
-                    nullable: true
-                    description: >-
-                      The date when the last complete reindex finished. Can be
-                      null if the reindex is still running.
-                    example: null
+                    oneOf:
+                      - type: string
+                        description: >-
+                          The date when the last complete reindex finished. Can
+                          be null if the reindex is still running.
+                        example: null
+                      - type: 'null'
                   config:
                     $ref: '#/components/schemas/Configuration'
                 required:
@@ -976,3 +668,313 @@ paths:
           $ref: '#/components/responses/MissingAuthorization'
         '403':
           $ref: '#/components/responses/Forbidden'
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    Pagination:
+      type: object
+      description: Represent a group of items and pagination information.
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+        itemsPerPage:
+          type: integer
+          description: The maximum number of items returned by this request.
+          default: 20
+          example: 20
+        page:
+          type: integer
+          description: The current page browsed by this request.
+          default: 1
+          example: 1
+        total:
+          type: integer
+          description: The total number of items.
+          example: 100
+    CrawlerId:
+      type: string
+      description: The unique id of the Crawler.
+      example: e0f6db8a-24f5-4092-83a4-1b2c6cb6d809
+    CrawlerName:
+      type: string
+      maxLength: 64
+      description: The name of the Crawler.
+      example: My Crawler
+    crawlersResponse:
+      allOf:
+        - $ref: '#/components/schemas/Pagination'
+        - type: object
+          properties:
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    $ref: '#/components/schemas/CrawlerId'
+                  name:
+                    $ref: '#/components/schemas/CrawlerName'
+    configurationRecordExtractorType:
+      type: string
+      enum:
+        - function
+    Configuration:
+      type: object
+      description: >-
+        A Crawler configuration object. See the Crawler documentation to have
+        more details about it.
+      properties:
+        appId:
+          type: string
+          example: ABC9DEFGHI
+        apiKey:
+          type: string
+          example: c69564c68bad256f8d11399bf2048f82
+        indexPrefix:
+          type: string
+          example: crawler_
+        rateLimit:
+          type: number
+          example: 8
+        startUrls:
+          type: array
+          items:
+            type: string
+            example: https://www.algolia.com
+        actions:
+          type: array
+          items:
+            type: object
+            properties:
+              indexName:
+                type: string
+                example: algolia_website
+              pathsToMatch:
+                type: array
+                items:
+                  type: string
+                  example: https://www.algolia.com/**
+              selectorsToMatch:
+                type: array
+                items:
+                  type: string
+                example:
+                  - .products
+                  - '!.featured'
+              fileTypesToMatch:
+                type: array
+                items:
+                  type: string
+                example:
+                  - html
+                  - pdf
+              recordExtractor:
+                type: object
+                properties:
+                  __type:
+                    $ref: '#/components/schemas/configurationRecordExtractorType'
+                  source:
+                    type: string
+                    example: () => {}
+            required:
+              - indexName
+              - recordExtractor
+    urlsCrawledGroupStatus:
+      type: string
+      description: A string corresponding to the status of the group.
+      enum:
+        - DONE
+        - SKIPPED
+        - FAILED
+    urlsCrawledGroupCategory:
+      type: string
+      description: >-
+        In case of error, will be set to the step where the error occurred,
+        otherwise will be set to 'success'.
+      enum:
+        - fetch
+        - extraction
+        - indexing
+        - success
+    UrlsCrawledGroup:
+      type: object
+      description: >-
+        Represent a group of URLs that have been crawled and have the same final
+        state.
+      properties:
+        status:
+          $ref: '#/components/schemas/urlsCrawledGroupStatus'
+        reason:
+          type: string
+          description: The code of the reason why when ended up in this status.
+        category:
+          $ref: '#/components/schemas/urlsCrawledGroupCategory'
+        count:
+          type: integer
+          description: Number of URLs belonging to this group.
+        readable:
+          type: string
+          description: Human redeable version of the error.
+      example:
+        status: SKIPPED
+        reason: forbidden_by_robotstxt
+        category: fetch
+        nbUrls: 3
+        readable: Forbidden by robots.txt
+    crawlerConfigVersionsResponse:
+      allOf:
+        - $ref: '#/components/schemas/Pagination'
+        - type: object
+          properties:
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  version:
+                    type: integer
+                    minimum: 1
+                  createdAt:
+                    type: string
+                  authorId:
+                    type: string
+                required:
+                  - version
+                  - createdAt
+    domainsResponse:
+      allOf:
+        - $ref: '#/components/schemas/Pagination'
+        - type: object
+          properties:
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  appId:
+                    type: string
+                    description: The app for which the domain is registered.
+                  domain:
+                    type: string
+                    description: The registered domain name.
+                  validated:
+                    type: boolean
+                    description: Indicates whether the domain is validated or not.
+  responses:
+    InvalidRequest:
+      description: Invalid request.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        message:
+                          type: string
+                        line:
+                          type: integer
+                        position:
+                          type: integer
+                      required:
+                        - message
+                      example:
+                        message: url is not defined
+                        line: 5
+                example:
+                  code: malformed_id
+            required:
+              - error
+    MissingAuthorization:
+      description: Authorization information is missing or invalid.
+    NoRightsOnCrawler:
+      description: >-
+        The user doesn't have enough rights on the specified Crawler, or it
+        doesn't exists.
+    ActionAcknowledged:
+      description: The request has been acknowledged by the crawler.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              taskId:
+                type: string
+                example: e0f6db8a-24f5-4092-83a4-1b2c6cb6d809
+            required:
+              - taskId
+    Forbidden:
+      description: Invalid credentials.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        message:
+                          type: string
+                        line:
+                          type: integer
+                        position:
+                          type: integer
+                      required:
+                        - message
+                      example:
+                        message: url is not defined
+                        line: 5
+                example:
+                  code: malformed_id
+            required:
+              - error
+  parameters:
+    CrawlerIdParameter:
+      name: id
+      in: path
+      description: The Id of the targeted Crawler.
+      required: true
+      schema:
+        type: string
+    TaskIdParameter:
+      name: tid
+      in: path
+      description: The Id of the targeted Task.
+      required: true
+      schema:
+        type: string
+    CrawlerVersionParameter:
+      name: version
+      in: path
+      description: The version of the targeted Crawler revision.
+      required: true
+      schema:
+        type: integer
