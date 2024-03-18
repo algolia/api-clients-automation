@@ -1,6 +1,6 @@
 import type { Rule } from 'eslint';
 
-import { isBLockScalar, isPairWithKey, isScalar } from '../utils';
+import { isBlockScalar, isPairWithKey, isScalar } from '../utils';
 
 export const endWithDot: Rule.RuleModule = {
   meta: {
@@ -45,7 +45,7 @@ export const endWithDot: Rule.RuleModule = {
 
         // trim the whitespaces at the end before adding the dot. This assume the indent is 2
         let toTrim = value.value.length - value.value.trimEnd().length;
-        if (isBLockScalar(value)) {
+        if (isBlockScalar(value)) {
           // -1 for block scalar, don't know why
           toTrim -= 1;
         }

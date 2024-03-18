@@ -24,11 +24,12 @@ standardEntries:
       $ref: '#/standardEntry'
 
 standardEntry:
-  description: Key-value pair of a language ISO code and a boolean value.
-  example:
-    fr: false
-  type: object
-  nullable: true
-  additionalProperties:
-    x-additionalPropertiesName: language
-    type: boolean
+  oneOf:
+    - type: object
+      description: Key-value pair of a language ISO code and a boolean value.
+      example:
+        fr: false
+      additionalProperties:
+        x-additionalPropertiesName: language
+        type: boolean
+    - type: 'null'

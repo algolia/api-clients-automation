@@ -32,8 +32,9 @@ get:
         By default, log entries are retrieved for all indices.
       example: products
       schema:
-        type: string
-        nullable: true
+        oneOf:
+          - type: string
+          - type: 'null'
     - name: type
       in: query
       description: |
