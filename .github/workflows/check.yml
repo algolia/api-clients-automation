@@ -380,18 +380,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download specs artifacts
+      - name: Download artifacts
         uses: ./scripts/ci/actions/restore-artifacts
         with:
-          type: specs
+          type: all
 
       - name: Setup
         uses: ./.github/actions/setup
         with:
+          type: minimal
           language: swift
-
-      - name: Generate clients
-        run: yarn cli generate swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
 
       - name: Generate CTS
         run: yarn cli cts generate swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}

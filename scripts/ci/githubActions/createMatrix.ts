@@ -16,7 +16,6 @@ import { isBaseChanged } from './utils.js';
 // This empty matrix is required by the CI, otherwise it throws
 const EMPTY_MATRIX = { client: ['no-run'] };
 
-// eslint-disable-next-line complexity
 async function createClientMatrix(baseBranch: string): Promise<void> {
   const matrix: Record<string, ToRunMatrix> = {};
   const commonDependenciesChanged =
@@ -144,7 +143,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 
   // If the base branch is `main`, we also run the swift tests on macOS
   const swiftData = clientMatrix.client.find((c) => c.language === 'swift');
-  if (swiftData && baseBranch === 'main') {
+  if (swiftData) {
     core.setOutput('SWIFT_DATA', swiftData);
     core.setOutput('RUN_MACOS_SWIFT_CTS', true);
   }
