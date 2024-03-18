@@ -302,7 +302,7 @@ public class ParametersWithDataType {
       CodegenModel model = (CodegenModel) spec;
       IJsonSchemaValidationProperties match = findMatchingOneOf(param, model);
 
-      paramName = getOriginalParamName(paramName);
+      paramName = getTransformedParamName(paramName);
 
       testOutput.putAll(traverseParams(paramName, param, match, parent, suffix, isParentFreeFormObject));
 
@@ -334,8 +334,8 @@ public class ParametersWithDataType {
       }
 
       if (language.equals("swift")) {
-        typeName = AlgoliaSwiftGenerator.prefixReservedModelName(typeName, client);
-        baseType = AlgoliaSwiftGenerator.prefixReservedModelName(baseType, client);
+        typeName = getTransformedParamName(typeName);
+        baseType = getTransformedParamName(baseType);
       }
 
       oneOfModel.put("parentClassName", Helpers.capitalize(baseType));
@@ -415,7 +415,7 @@ public class ParametersWithDataType {
     testOutput.put("additionalProperties", additionalPropertyValues);
   }
 
-  private String getOriginalParamName(String paramName) {
+  private String getTransformedParamName(String paramName) {
     if (language.equals("swift")) {
       paramName = AlgoliaSwiftGenerator.prefixReservedModelName(paramName, client);
     }
@@ -537,7 +537,7 @@ public class ParametersWithDataType {
           case "List":
             return "array";
           default:
-            return Helpers.capitalize(AlgoliaSwiftGenerator.prefixReservedModelName(objectName, client));
+            return Helpers.capitalize(getTransformedParamName(objectName));
         }
     }
 
