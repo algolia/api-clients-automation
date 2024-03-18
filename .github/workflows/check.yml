@@ -360,8 +360,7 @@ jobs:
           name: clients-${{matrix.client.language }}
           path: clients-${{matrix.client.language }}.zip
 
-  test_swift_macos:
-    name: Test Swift CTS on macOS
+  swift_cts_macos:
     timeout-minutes: 20
     runs-on: macos-latest
     needs:
@@ -407,8 +406,10 @@ jobs:
       - setup
       - client_gen
       - client_gen_javascript
+      - cts_swift_macos
     if: |
       always() &&
+      (needs.cts_swift_macos.result == 'success' || needs.cts_swift_macos.result == 'skipped') &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     outputs:
