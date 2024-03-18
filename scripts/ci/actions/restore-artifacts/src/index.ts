@@ -1,4 +1,5 @@
 import type {
+  Artifact,
   DownloadArtifactOptions,
   DownloadArtifactResponse,
   FindOptions,
@@ -36,6 +37,17 @@ async function restoreSpecs(): Promise<void> {
   core.info(`Downloaded artifact to ${res.downloadPath}`);
 }
 
+async function extractLanguageArtifact(
+  artifactClient: DefaultArtifactClient,
+  languageArtifact: Artifact,
+  languageName: string,
+): Promise<void> {
+  await download(artifactClient, languageArtifact.id);
+  await io.rmRF(`clients/algoliasearch-client-${languageName}`);
+  await exec(`unzip -q -o clients-${languageName}.zip`);
+  await io.rmRF(`clients-${languageName}.zip`);
+}
+
 async function restoreLanguage(language: string): Promise<void> {
   const artifact = new DefaultArtifactClient();
   const artifacts = await artifact.listArtifacts();
@@ -44,10 +56,7 @@ async function restoreLanguage(language: string): Promise<void> {
     throw new Error(`No ${language} artifact found`);
   }
 
-  await download(artifact, langArtifact.id);
-  await io.rmRF(`clients/algoliasearch-client-${language}`);
-  await exec(`unzip -q -o clients-${language}.zip`);
-  await io.rmRF(`clients-${language}.zip`);
+  await extractLanguageArtifact(artifact, langArtifact, language);
 }
 
 async function restoreLanguages(): Promise<void> {
@@ -55,10 +64,8 @@ async function restoreLanguages(): Promise<void> {
   const artifacts = await artifact.listArtifacts();
   for (const arti of artifacts.artifacts.filter((a) => a.name.startsWith('clients-'))) {
     const language = arti.name.replace('clients-', '');
-    await download(artifact, arti.id);
-    await io.rmRF(`clients/algoliasearch-client-${language}`);
-    await exec(`unzip -q -o clients-${language}.zip`);
-    await io.rmRF(`clients-${language}.zip`);
+
+    await extractLanguageArtifact(artifact, arti, language);
   }
 }
 
