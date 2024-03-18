@@ -158,14 +158,14 @@ class SnippetSearchClient {
             action = DictionaryAction.entries.first { it.value == "addEntry" },
             body = DictionaryEntry(
               objectID = "1",
-              language = "en",
+              language = SupportedLanguage.entries.first { it.value == "en" },
             ),
           ),
           BatchDictionaryEntriesRequest(
             action = DictionaryAction.entries.first { it.value == "deleteEntry" },
             body = DictionaryEntry(
               objectID = "2",
-              language = "fr",
+              language = SupportedLanguage.entries.first { it.value == "fr" },
             ),
           ),
         ),

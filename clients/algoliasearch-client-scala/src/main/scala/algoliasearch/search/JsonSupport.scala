@@ -62,6 +62,7 @@ object JsonSupport {
     new SearchTypeDefaultSerializer() :+
     new SearchTypeFacetSerializer() :+
     new SortRemainingBySerializer() :+
+    new SupportedLanguageSerializer() :+
     new SynonymTypeSerializer() :+
     new TaskStatusSerializer() :+
     new TypoToleranceEnumSerializer()

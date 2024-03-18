@@ -71,6 +71,7 @@ export 'src/model/search_recommend_rules_response.dart';
 export 'src/model/semantic_search.dart';
 export 'src/model/snippet_result_option.dart';
 export 'src/model/sort_remaining_by.dart';
+export 'src/model/supported_language.dart';
 export 'src/model/task_status.dart';
 export 'src/model/trending_facet_hit.dart';
 export 'src/model/trending_facets_model.dart';

@@ -64,6 +64,7 @@ import 'package:algolia_client_recommend/src/model/search_recommend_rules_respon
 import 'package:algolia_client_recommend/src/model/semantic_search.dart';
 import 'package:algolia_client_recommend/src/model/snippet_result_option.dart';
 import 'package:algolia_client_recommend/src/model/sort_remaining_by.dart';
+import 'package:algolia_client_recommend/src/model/supported_language.dart';
 import 'package:algolia_client_recommend/src/model/task_status.dart';
 import 'package:algolia_client_recommend/src/model/trending_facet_hit.dart';
 import 'package:algolia_client_recommend/src/model/trending_facets_model.dart';
@@ -264,6 +265,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'SortRemainingBy':
       return SortRemainingBy.fromJson(value) as ReturnType;
+    case 'SupportedLanguage':
+      return SupportedLanguage.fromJson(value) as ReturnType;
     case 'TaskStatus':
       return TaskStatus.fromJson(value) as ReturnType;
     case 'TrendingFacetHit':

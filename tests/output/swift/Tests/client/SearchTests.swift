@@ -79,12 +79,8 @@ final class SearchClientClientTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.customPostWithHTTPInfo(
             path: "/test/gzip",
-
             parameters: [:],
-
-            body: [
-                "message": "this is a compressed body",
-            ]
+            body: ["message": "this is a compressed body"]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
@@ -215,9 +211,7 @@ final class SearchClientClientTests: XCTestCase {
         do {
             let response = try await client.addOrUpdateObjectWithHTTPInfo(
                 indexName: TestNullString(),
-
                 objectID: "my-object-id",
-
                 body: [:]
             )
             let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -233,9 +227,7 @@ final class SearchClientClientTests: XCTestCase {
         do {
             let response = try await client.addOrUpdateObjectWithHTTPInfo(
                 indexName: "my-index-name",
-
                 objectID: TestNullString(),
-
                 body: [:]
             )
             let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -251,9 +243,7 @@ final class SearchClientClientTests: XCTestCase {
         do {
             let response = try await client.addOrUpdateObjectWithHTTPInfo(
                 indexName: "my-index-name",
-
                 objectID: "my-object-id",
-
                 body: TestNullObject()
             )
             let responseBodyData = try XCTUnwrap(response.bodyData)

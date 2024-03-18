@@ -286,8 +286,8 @@ func TestSearch_BatchDictionaryEntries(t *testing.T) {
 			search.DictionaryType("compounds"),
 			search.NewEmptyBatchDictionaryEntriesParams().SetRequests(
 				[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
-					search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage("en")), *search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("deleteEntry")).SetBody(
-					search.NewEmptyDictionaryEntry().SetObjectID("2").SetLanguage("fr"))}),
+					search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en"))), *search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("deleteEntry")).SetBody(
+					search.NewEmptyDictionaryEntry().SetObjectID("2").SetLanguage(search.SupportedLanguage("fr")))}),
 		))
 		require.NoError(t, err)
 
@@ -302,10 +302,10 @@ func TestSearch_BatchDictionaryEntries(t *testing.T) {
 			search.DictionaryType("compounds"),
 			search.NewEmptyBatchDictionaryEntriesParams().SetClearExistingDictionaryEntries(false).SetRequests(
 				[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
-					search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage("en").SetWord("fancy").SetWords(
+					search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetWord("fancy").SetWords(
 						[]string{"believe", "algolia"}).SetDecomposition(
 						[]string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled"))), *search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("deleteEntry")).SetBody(
-					search.NewEmptyDictionaryEntry().SetObjectID("2").SetLanguage("fr").SetWord("humility").SetWords(
+					search.NewEmptyDictionaryEntry().SetObjectID("2").SetLanguage(search.SupportedLanguage("fr")).SetWord("humility").SetWords(
 						[]string{"candor", "algolia"}).SetDecomposition(
 						[]string{"grit", "algolia"}).SetState(search.DictionaryEntryState("enabled")))}),
 		))
@@ -322,7 +322,7 @@ func TestSearch_BatchDictionaryEntries(t *testing.T) {
 			search.DictionaryType("compounds"),
 			search.NewEmptyBatchDictionaryEntriesParams().SetRequests(
 				[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
-					search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage("en").SetAdditionalProperty("additional", "try me"))}),
+					search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetAdditionalProperty("additional", "try me"))}),
 		))
 		require.NoError(t, err)
 
@@ -1825,7 +1825,7 @@ func TestSearch_Search(t *testing.T) {
 						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("")})).SetOffset(0).SetOptionalFilters(search.ArrayOfMixedSearchFiltersAsOptionalFilters(
 						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("")})).SetOptionalWords(
 						[]string{""}).SetPage(0).SetPercentileComputation(true).SetPersonalizationImpact(0).SetQuery("").SetQueryLanguages(
-						[]string{""}).SetQueryType(search.QueryType("prefixAll")).SetRanking(
+						[]search.SupportedLanguage{search.SupportedLanguage("fr")}).SetQueryType(search.QueryType("prefixAll")).SetRanking(
 						[]string{""}).SetReRankingApplyFilter(search.ArrayOfMixedSearchFiltersAsReRankingApplyFilter(
 						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("")})).SetRelevancyStrictness(0).SetRemoveStopWords(search.BoolAsRemoveStopWords(true)).SetRemoveWordsIfNoResults(search.RemoveWordsIfNoResults("allOptional")).SetRenderingContent(
 						search.NewEmptyRenderingContent().SetFacetOrdering(
@@ -1844,7 +1844,7 @@ func TestSearch_Search(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":[""],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":["fr"],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}`)
 	})
 }
 
@@ -1894,7 +1894,7 @@ func TestSearch_SearchDictionaryEntries(t *testing.T) {
 	t.Run("get searchDictionaryEntries results with all parameters", func(t *testing.T) {
 		_, err := client.SearchDictionaryEntries(client.NewApiSearchDictionaryEntriesRequest(
 			search.DictionaryType("compounds"),
-			search.NewEmptySearchDictionaryEntriesParams().SetQuery("foo").SetPage(4).SetHitsPerPage(2).SetLanguage("fr"),
+			search.NewEmptySearchDictionaryEntriesParams().SetQuery("foo").SetPage(4).SetHitsPerPage(2).SetLanguage(search.SupportedLanguage("fr")),
 		))
 		require.NoError(t, err)
 
@@ -2225,8 +2225,8 @@ func TestSearch_SetSettings(t *testing.T) {
 	t.Run("setSettings allow list of string `ignorePlurals`", func(t *testing.T) {
 		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
 			"theIndexName",
-			search.NewEmptyIndexSettings().SetIgnorePlurals(search.ArrayOfStringAsIgnorePlurals(
-				[]string{"algolia"})),
+			search.NewEmptyIndexSettings().SetIgnorePlurals(search.ArrayOfSupportedLanguageAsIgnorePlurals(
+				[]search.SupportedLanguage{search.SupportedLanguage("fr")})),
 		).WithForwardToReplicas(true))
 		require.NoError(t, err)
 
@@ -2234,7 +2234,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"ignorePlurals":["algolia"]}`)
+		ja.Assertf(*echo.Body, `{"ignorePlurals":["fr"]}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
@@ -2264,8 +2264,8 @@ func TestSearch_SetSettings(t *testing.T) {
 	t.Run("setSettings allow list of string `removeStopWords`", func(t *testing.T) {
 		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
 			"theIndexName",
-			search.NewEmptyIndexSettings().SetRemoveStopWords(search.ArrayOfStringAsRemoveStopWords(
-				[]string{"algolia"})),
+			search.NewEmptyIndexSettings().SetRemoveStopWords(search.ArrayOfSupportedLanguageAsRemoveStopWords(
+				[]search.SupportedLanguage{search.SupportedLanguage("fr")})),
 		).WithForwardToReplicas(true))
 		require.NoError(t, err)
 
@@ -2273,7 +2273,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"removeStopWords":["algolia"]}`)
+		ja.Assertf(*echo.Body, `{"removeStopWords":["fr"]}`)
 		queryParams := map[string]string{}
 		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
@@ -2336,10 +2336,10 @@ func TestSearch_SetSettings(t *testing.T) {
 				[]string{"algolia"}).SetDisableTypoToleranceOnAttributes(
 				[]string{"algolia"}).SetDisableTypoToleranceOnWords(
 				[]string{"algolia"}).SetDistinct(search.Int32AsDistinct(3)).SetEnablePersonalization(true).SetEnableReRanking(false).SetEnableRules(true).SetExactOnSingleWordQuery(search.ExactOnSingleWordQuery("attribute")).SetHighlightPreTag("<span>").SetHighlightPostTag("</span>").SetHitsPerPage(10).SetIgnorePlurals(search.BoolAsIgnorePlurals(false)).SetIndexLanguages(
-				[]string{"algolia"}).SetKeepDiacriticsOnCharacters("abc").SetMaxFacetHits(20).SetMaxValuesPerFacet(30).SetMinProximity(6).SetMinWordSizefor1Typo(5).SetMinWordSizefor2Typos(11).SetMode(search.Mode("neuralSearch")).SetNumericAttributesForFiltering(
+				[]search.SupportedLanguage{search.SupportedLanguage("fr")}).SetKeepDiacriticsOnCharacters("abc").SetMaxFacetHits(20).SetMaxValuesPerFacet(30).SetMinProximity(6).SetMinWordSizefor1Typo(5).SetMinWordSizefor2Typos(11).SetMode(search.Mode("neuralSearch")).SetNumericAttributesForFiltering(
 				[]string{"algolia"}).SetOptionalWords(
 				[]string{"myspace"}).SetPaginationLimitedTo(0).SetQueryLanguages(
-				[]string{"algolia"}).SetQueryType(search.QueryType("prefixLast")).SetRanking(
+				[]search.SupportedLanguage{search.SupportedLanguage("fr")}).SetQueryType(search.QueryType("prefixLast")).SetRanking(
 				[]string{"geo"}).SetReRankingApplyFilter(search.StringAsReRankingApplyFilter("mySearch:filters")).SetRelevancyStrictness(10).SetRemoveStopWords(search.BoolAsRemoveStopWords(false)).SetRemoveWordsIfNoResults(search.RemoveWordsIfNoResults("lastWords")).SetRenderingContent(
 				search.NewEmptyRenderingContent().SetFacetOrdering(
 					search.NewEmptyFacetOrdering().SetFacets(
@@ -2359,7 +2359,7 @@ func TestSearch_SetSettings(t *testing.T) {
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["algolia"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["algolia"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}`)
+		ja.Assertf(*echo.Body, `{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["fr"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["fr"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}`)
 	})
 }
 

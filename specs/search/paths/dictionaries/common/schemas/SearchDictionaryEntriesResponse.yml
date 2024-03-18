@@ -32,9 +32,7 @@ dictionaryEntry:
       description: Unique identifier for the dictionary entry.
       example: 828afd405e1f4fe950b6b98c2c43c032
     language:
-      type: string
-      description: ISO code of a [supported language](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/).
-      example: de
+      $ref: '../../../../../common/schemas/IndexSettings.yml#/supportedLanguage'
     word:
       type: string
       description: Matching dictionary word for `stopwords` and `compounds` dictionaries.

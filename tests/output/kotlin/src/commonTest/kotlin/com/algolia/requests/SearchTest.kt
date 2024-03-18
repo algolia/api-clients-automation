@@ -371,14 +371,14 @@ class SearchTest {
                 action = DictionaryAction.entries.first { it.value == "addEntry" },
                 body = DictionaryEntry(
                   objectID = "1",
-                  language = "en",
+                  language = SupportedLanguage.entries.first { it.value == "en" },
                 ),
               ),
               BatchDictionaryEntriesRequest(
                 action = DictionaryAction.entries.first { it.value == "deleteEntry" },
                 body = DictionaryEntry(
                   objectID = "2",
-                  language = "fr",
+                  language = SupportedLanguage.entries.first { it.value == "fr" },
                 ),
               ),
             ),
@@ -406,7 +406,7 @@ class SearchTest {
                 action = DictionaryAction.entries.first { it.value == "addEntry" },
                 body = DictionaryEntry(
                   objectID = "1",
-                  language = "en",
+                  language = SupportedLanguage.entries.first { it.value == "en" },
                   word = "fancy",
                   words = listOf("believe", "algolia"),
                   decomposition = listOf("trust", "algolia"),
@@ -417,7 +417,7 @@ class SearchTest {
                 action = DictionaryAction.entries.first { it.value == "deleteEntry" },
                 body = DictionaryEntry(
                   objectID = "2",
-                  language = "fr",
+                  language = SupportedLanguage.entries.first { it.value == "fr" },
                   word = "humility",
                   words = listOf("candor", "algolia"),
                   decomposition = listOf("grit", "algolia"),
@@ -448,7 +448,7 @@ class SearchTest {
                 action = DictionaryAction.entries.first { it.value == "addEntry" },
                 body = DictionaryEntry(
                   objectID = "1",
-                  language = "en",
+                  language = SupportedLanguage.entries.first { it.value == "en" },
                   additionalProperties = mapOf(
                     "additional" to JsonPrimitive("try me"),
                   ),
@@ -2279,7 +2279,7 @@ class SearchTest {
                 percentileComputation = true,
                 personalizationImpact = 0,
                 query = "",
-                queryLanguages = listOf(""),
+                queryLanguages = listOf(SupportedLanguage.entries.first { it.value == "fr" }),
                 queryType = QueryType.entries.first { it.value == "prefixAll" },
                 ranking = listOf(""),
                 reRankingApplyFilter = ReRankingApplyFilter.of(listOf(MixedSearchFilters.of(""))),
@@ -2321,7 +2321,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/*/queries".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":[""],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}""", it.body)
+        assertJsonBody("""{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":["fr"],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}""", it.body)
       },
     )
   }
@@ -2357,7 +2357,7 @@ class SearchTest {
             query = "foo",
             page = 4,
             hitsPerPage = 2,
-            language = "fr",
+            language = SupportedLanguage.entries.first { it.value == "fr" },
           ),
         )
       },
@@ -2706,7 +2706,7 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings = IndexSettings(
-            ignorePlurals = IgnorePlurals.of(listOf("algolia")),
+            ignorePlurals = IgnorePlurals.of(listOf(SupportedLanguage.entries.first { it.value == "fr" })),
           ),
           forwardToReplicas = true,
         )
@@ -2715,7 +2715,7 @@ class SearchTest {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
         assertQueryParams("""{"forwardToReplicas":"true"}""", it.url.encodedParameters)
-        assertJsonBody("""{"ignorePlurals":["algolia"]}""", it.body)
+        assertJsonBody("""{"ignorePlurals":["fr"]}""", it.body)
       },
     )
   }
@@ -2748,7 +2748,7 @@ class SearchTest {
         setSettings(
           indexName = "theIndexName",
           indexSettings = IndexSettings(
-            removeStopWords = RemoveStopWords.of(listOf("algolia")),
+            removeStopWords = RemoveStopWords.of(listOf(SupportedLanguage.entries.first { it.value == "fr" })),
           ),
           forwardToReplicas = true,
         )
@@ -2757,7 +2757,7 @@ class SearchTest {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
         assertQueryParams("""{"forwardToReplicas":"true"}""", it.url.encodedParameters)
-        assertJsonBody("""{"removeStopWords":["algolia"]}""", it.body)
+        assertJsonBody("""{"removeStopWords":["fr"]}""", it.body)
       },
     )
   }
@@ -2846,7 +2846,7 @@ class SearchTest {
             highlightPostTag = "</span>",
             hitsPerPage = 10,
             ignorePlurals = IgnorePlurals.of(false),
-            indexLanguages = listOf("algolia"),
+            indexLanguages = listOf(SupportedLanguage.entries.first { it.value == "fr" }),
             keepDiacriticsOnCharacters = "abc",
             maxFacetHits = 20,
             maxValuesPerFacet = 30,
@@ -2857,7 +2857,7 @@ class SearchTest {
             numericAttributesForFiltering = listOf("algolia"),
             optionalWords = listOf("myspace"),
             paginationLimitedTo = 0,
-            queryLanguages = listOf("algolia"),
+            queryLanguages = listOf(SupportedLanguage.entries.first { it.value == "fr" }),
             queryType = QueryType.entries.first { it.value == "prefixLast" },
             ranking = listOf("geo"),
             reRankingApplyFilter = ReRankingApplyFilter.of("mySearch:filters"),
@@ -2902,7 +2902,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/theIndexName/settings".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
-        assertJsonBody("""{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["algolia"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["algolia"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}""", it.body)
+        assertJsonBody("""{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["fr"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["fr"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}""", it.body)
       },
     )
   }

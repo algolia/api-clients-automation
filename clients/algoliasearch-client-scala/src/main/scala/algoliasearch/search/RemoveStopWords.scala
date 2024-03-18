@@ -34,6 +34,8 @@
   */
 package algoliasearch.search
 
+import algoliasearch.search.SupportedLanguage._
+
 import org.json4s._
 
 /** Removes stop words from the search query. Stop words are common words like articles, conjunctions, prepositions, or
@@ -44,11 +46,11 @@ sealed trait RemoveStopWords
 
 object RemoveStopWords {
 
-  case class SeqOfString(value: Seq[String]) extends RemoveStopWords
+  case class SeqOfSupportedLanguage(value: Seq[SupportedLanguage]) extends RemoveStopWords
   case class BooleanValue(value: Boolean) extends RemoveStopWords
 
-  def apply(value: Seq[String]): RemoveStopWords = {
-    RemoveStopWords.SeqOfString(value)
+  def apply(value: Seq[SupportedLanguage]): RemoveStopWords = {
+    RemoveStopWords.SeqOfSupportedLanguage(value)
   }
   def apply(value: Boolean): RemoveStopWords = {
     RemoveStopWords.BooleanValue(value)
@@ -60,16 +62,17 @@ object RemoveStopWordsSerializer extends Serializer[RemoveStopWords] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[RemoveStopWords] =>
       json match {
-        case JArray(value) if value.forall(_.isInstanceOf[JArray]) => RemoveStopWords.SeqOfString(value.map(_.extract))
-        case JBool(value)                                          => RemoveStopWords.BooleanValue(value)
-        case _ => throw new MappingException("Can't convert " + json + " to RemoveStopWords")
+        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
+          RemoveStopWords.SeqOfSupportedLanguage(value.map(_.extract))
+        case JBool(value) => RemoveStopWords.BooleanValue(value)
+        case _            => throw new MappingException("Can't convert " + json + " to RemoveStopWords")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: RemoveStopWords =>
     value match {
-      case RemoveStopWords.SeqOfString(value)  => JArray(value.map(Extraction.decompose).toList)
-      case RemoveStopWords.BooleanValue(value) => JBool(value)
+      case RemoveStopWords.SeqOfSupportedLanguage(value) => JArray(value.map(Extraction.decompose).toList)
+      case RemoveStopWords.BooleanValue(value)           => JBool(value)
     }
   }
 }

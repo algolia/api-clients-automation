@@ -19,9 +19,9 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = IgnorePlurals.Deserializer.class)
 public interface IgnorePlurals {
-  // IgnorePlurals as List<String> wrapper.
-  static IgnorePlurals of(List<String> value) {
-    return new ListOfStringWrapper(value);
+  // IgnorePlurals as List<SupportedLanguage> wrapper.
+  static IgnorePlurals of(List<SupportedLanguage> value) {
+    return new ListOfSupportedLanguageWrapper(value);
   }
 
   // IgnorePlurals as Boolean wrapper.
@@ -29,24 +29,24 @@ public interface IgnorePlurals {
     return new BooleanWrapper(value);
   }
 
-  // IgnorePlurals as List<String> wrapper.
-  @JsonSerialize(using = ListOfStringWrapper.Serializer.class)
-  class ListOfStringWrapper implements IgnorePlurals {
+  // IgnorePlurals as List<SupportedLanguage> wrapper.
+  @JsonSerialize(using = ListOfSupportedLanguageWrapper.Serializer.class)
+  class ListOfSupportedLanguageWrapper implements IgnorePlurals {
 
-    private final List<String> value;
+    private final List<SupportedLanguage> value;
 
-    ListOfStringWrapper(List<String> value) {
+    ListOfSupportedLanguageWrapper(List<SupportedLanguage> value) {
       this.value = value;
     }
 
-    public List<String> getValue() {
+    public List<SupportedLanguage> getValue() {
       return value;
     }
 
-    static class Serializer extends JsonSerializer<ListOfStringWrapper> {
+    static class Serializer extends JsonSerializer<ListOfSupportedLanguageWrapper> {
 
       @Override
-      public void serialize(ListOfStringWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+      public void serialize(ListOfSupportedLanguageWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeObject(value.getValue());
       }
     }
@@ -82,14 +82,16 @@ public interface IgnorePlurals {
     @Override
     public IgnorePlurals deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-      // deserialize List<String>
+      // deserialize List<SupportedLanguage>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          List<String> value = parser.readValueAs(new TypeReference<List<String>>() {});
-          return new IgnorePlurals.ListOfStringWrapper(value);
+          List<SupportedLanguage> value = parser.readValueAs(new TypeReference<List<SupportedLanguage>>() {});
+          return new IgnorePlurals.ListOfSupportedLanguageWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf List<String> (error: " + e.getMessage() + ") (type: List<String>)");
+          LOGGER.finest(
+            "Failed to deserialize oneOf List<SupportedLanguage> (error: " + e.getMessage() + ") (type: List<SupportedLanguage>)"
+          );
         }
       }
       // deserialize Boolean

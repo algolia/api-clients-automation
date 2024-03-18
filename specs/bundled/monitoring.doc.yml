@@ -771,9 +771,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customGet(
-                path: "/test/minimal"
-            )
+            _ = try await client.customGet(path: "/test/minimal")
     post:
       operationId: customPost
       requestBody:
@@ -956,9 +954,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPost(
-                path: "/test/minimal"
-            )
+            _ = try await client.customPost(path: "/test/minimal")
     put:
       operationId: customPut
       requestBody:
@@ -1141,9 +1137,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPut(
-                path: "/test/minimal"
-            )
+            _ = try await client.customPut(path: "/test/minimal")
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API.
@@ -1326,9 +1320,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customDelete(
-                path: "/test/minimal"
-            )
+            _ = try await client.customDelete(path: "/test/minimal")
   /1/status:
     get:
       operationId: getStatus
@@ -1685,9 +1677,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getClusterStatus(
-                clusters: "c1-de"
-            )
+            _ = try await client.getClusterStatus(clusters: "c1-de")
   /1/incidents:
     get:
       summary: List incidents.
@@ -2033,9 +2023,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getClusterIncidents(
-                clusters: "c1-de"
-            )
+            _ = try await client.getClusterIncidents(clusters: "c1-de")
   /1/inventory/servers:
     get:
       summary: List servers.
@@ -2376,9 +2364,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getLatency(
-                clusters: "c1-de"
-            )
+            _ = try await client.getLatency(clusters: "c1-de")
   /1/indexing/{clusters}:
     get:
       summary: Get indexing times.
@@ -2562,9 +2548,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getIndexingTime(
-                clusters: "c1-de"
-            )
+            _ = try await client.getIndexingTime(clusters: "c1-de")
   /1/reachability/{clusters}/probes:
     get:
       summary: Test the reachability of clusters.
@@ -2748,9 +2732,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getReachability(
-                clusters: "c1-de"
-            )
+            _ = try await client.getReachability(clusters: "c1-de")
   /1/infrastructure/{metric}/period/{period}:
     get:
       summary: Get metrics for a given period.
@@ -2931,7 +2913,5 @@ paths:
 
             // Call the API
 
-            _ = try await client.getMetrics(
-                metric: Metric.avgBuildTime,
-                period: Period.minute
-            )
+            _ = try await client.getMetrics(metric: Metric.avgBuildTime, period:
+            Period.minute)

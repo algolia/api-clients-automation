@@ -335,10 +335,10 @@ class SearchClientRequestsTests {
             List.of(
               new BatchDictionaryEntriesRequest()
                 .setAction(DictionaryAction.fromValue("addEntry"))
-                .setBody(new DictionaryEntry().setObjectID("1").setLanguage("en")),
+                .setBody(new DictionaryEntry().setObjectID("1").setLanguage(SupportedLanguage.fromValue("en"))),
               new BatchDictionaryEntriesRequest()
                 .setAction(DictionaryAction.fromValue("deleteEntry"))
-                .setBody(new DictionaryEntry().setObjectID("2").setLanguage("fr"))
+                .setBody(new DictionaryEntry().setObjectID("2").setLanguage(SupportedLanguage.fromValue("fr")))
             )
           )
       );
@@ -370,7 +370,7 @@ class SearchClientRequestsTests {
                 .setBody(
                   new DictionaryEntry()
                     .setObjectID("1")
-                    .setLanguage("en")
+                    .setLanguage(SupportedLanguage.fromValue("en"))
                     .setWord("fancy")
                     .setWords(List.of("believe", "algolia"))
                     .setDecomposition(List.of("trust", "algolia"))
@@ -381,7 +381,7 @@ class SearchClientRequestsTests {
                 .setBody(
                   new DictionaryEntry()
                     .setObjectID("2")
-                    .setLanguage("fr")
+                    .setLanguage(SupportedLanguage.fromValue("fr"))
                     .setWord("humility")
                     .setWords(List.of("candor", "algolia"))
                     .setDecomposition(List.of("grit", "algolia"))
@@ -414,7 +414,12 @@ class SearchClientRequestsTests {
             List.of(
               new BatchDictionaryEntriesRequest()
                 .setAction(DictionaryAction.fromValue("addEntry"))
-                .setBody(new DictionaryEntry().setObjectID("1").setLanguage("en").setAdditionalProperty("additional", "try me"))
+                .setBody(
+                  new DictionaryEntry()
+                    .setObjectID("1")
+                    .setLanguage(SupportedLanguage.fromValue("en"))
+                    .setAdditionalProperty("additional", "try me")
+                )
             )
           )
       );
@@ -2230,7 +2235,7 @@ class SearchClientRequestsTests {
                 .setPercentileComputation(true)
                 .setPersonalizationImpact(0)
                 .setQuery("")
-                .setQueryLanguages(List.of(""))
+                .setQueryLanguages(List.of(SupportedLanguage.fromValue("fr")))
                 .setQueryType(QueryType.fromValue("prefixAll"))
                 .setRanking(List.of(""))
                 .setReRankingApplyFilter(ReRankingApplyFilter.of(List.of(MixedSearchFilters.of(""))))
@@ -2269,7 +2274,7 @@ class SearchClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"requests\":[{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"multiWordsSynonym\"],\"analytics\":true,\"analyticsTags\":[\"\"],\"aroundLatLng\":\"\",\"aroundLatLngViaIP\":true,\"aroundPrecision\":0,\"aroundRadius\":\"all\",\"attributeCriteriaComputedByMinProximity\":true,\"attributesToHighlight\":[\"\"],\"attributesToRetrieve\":[\"\"],\"attributesToSnippet\":[\"\"],\"clickAnalytics\":true,\"customRanking\":[\"\"],\"decompoundQuery\":true,\"disableExactOnAttributes\":[\"\"],\"disableTypoToleranceOnAttributes\":[\"\"],\"distinct\":0,\"enableABTest\":true,\"enablePersonalization\":true,\"enableReRanking\":true,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"facetFilters\":[\"\"],\"facetingAfterDistinct\":true,\"facets\":[\"\"],\"filters\":\"\",\"getRankingInfo\":true,\"highlightPostTag\":\"\",\"highlightPreTag\":\"\",\"hitsPerPage\":1,\"ignorePlurals\":false,\"indexName\":\"theIndexName\",\"insideBoundingBox\":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],\"insidePolygon\":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],\"keepDiacriticsOnCharacters\":\"\",\"length\":1,\"maxValuesPerFacet\":0,\"minProximity\":1,\"minWordSizefor1Typo\":0,\"minWordSizefor2Typos\":0,\"minimumAroundRadius\":1,\"naturalLanguages\":[\"\"],\"numericFilters\":[\"\"],\"offset\":0,\"optionalFilters\":[\"\"],\"optionalWords\":[\"\"],\"page\":0,\"percentileComputation\":true,\"personalizationImpact\":0,\"query\":\"\",\"queryLanguages\":[\"\"],\"queryType\":\"prefixAll\",\"ranking\":[\"\"],\"reRankingApplyFilter\":[\"\"],\"relevancyStrictness\":0,\"removeStopWords\":true,\"removeWordsIfNoResults\":\"allOptional\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"responseFields\":[\"\"],\"restrictHighlightAndSnippetArrays\":true,\"restrictSearchableAttributes\":[\"\"],\"ruleContexts\":[\"\"],\"similarQuery\":\"\",\"snippetEllipsisText\":\"\",\"sortFacetValuesBy\":\"\",\"sumOrFiltersScores\":true,\"synonyms\":true,\"tagFilters\":[\"\"],\"type\":\"default\",\"typoTolerance\":\"min\",\"userToken\":\"\"}]}",
+        "{\"requests\":[{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"multiWordsSynonym\"],\"analytics\":true,\"analyticsTags\":[\"\"],\"aroundLatLng\":\"\",\"aroundLatLngViaIP\":true,\"aroundPrecision\":0,\"aroundRadius\":\"all\",\"attributeCriteriaComputedByMinProximity\":true,\"attributesToHighlight\":[\"\"],\"attributesToRetrieve\":[\"\"],\"attributesToSnippet\":[\"\"],\"clickAnalytics\":true,\"customRanking\":[\"\"],\"decompoundQuery\":true,\"disableExactOnAttributes\":[\"\"],\"disableTypoToleranceOnAttributes\":[\"\"],\"distinct\":0,\"enableABTest\":true,\"enablePersonalization\":true,\"enableReRanking\":true,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"facetFilters\":[\"\"],\"facetingAfterDistinct\":true,\"facets\":[\"\"],\"filters\":\"\",\"getRankingInfo\":true,\"highlightPostTag\":\"\",\"highlightPreTag\":\"\",\"hitsPerPage\":1,\"ignorePlurals\":false,\"indexName\":\"theIndexName\",\"insideBoundingBox\":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],\"insidePolygon\":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],\"keepDiacriticsOnCharacters\":\"\",\"length\":1,\"maxValuesPerFacet\":0,\"minProximity\":1,\"minWordSizefor1Typo\":0,\"minWordSizefor2Typos\":0,\"minimumAroundRadius\":1,\"naturalLanguages\":[\"\"],\"numericFilters\":[\"\"],\"offset\":0,\"optionalFilters\":[\"\"],\"optionalWords\":[\"\"],\"page\":0,\"percentileComputation\":true,\"personalizationImpact\":0,\"query\":\"\",\"queryLanguages\":[\"fr\"],\"queryType\":\"prefixAll\",\"ranking\":[\"\"],\"reRankingApplyFilter\":[\"\"],\"relevancyStrictness\":0,\"removeStopWords\":true,\"removeWordsIfNoResults\":\"allOptional\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"responseFields\":[\"\"],\"restrictHighlightAndSnippetArrays\":true,\"restrictSearchableAttributes\":[\"\"],\"ruleContexts\":[\"\"],\"similarQuery\":\"\",\"snippetEllipsisText\":\"\",\"sortFacetValuesBy\":\"\",\"sumOrFiltersScores\":true,\"synonyms\":true,\"tagFilters\":[\"\"],\"type\":\"default\",\"typoTolerance\":\"min\",\"userToken\":\"\"}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -2306,7 +2311,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.searchDictionaryEntries(
         DictionaryType.fromValue("compounds"),
-        new SearchDictionaryEntriesParams().setQuery("foo").setPage(4).setHitsPerPage(2).setLanguage("fr")
+        new SearchDictionaryEntriesParams().setQuery("foo").setPage(4).setHitsPerPage(2).setLanguage(SupportedLanguage.fromValue("fr"))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -2660,12 +2665,16 @@ class SearchClientRequestsTests {
   @DisplayName("setSettings allow list of string `ignorePlurals`")
   void setSettingsTest4() {
     assertDoesNotThrow(() -> {
-      client.setSettings("theIndexName", new IndexSettings().setIgnorePlurals(IgnorePlurals.of(List.of("algolia"))), true);
+      client.setSettings(
+        "theIndexName",
+        new IndexSettings().setIgnorePlurals(IgnorePlurals.of(List.of(SupportedLanguage.fromValue("fr")))),
+        true
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/theIndexName/settings", req.path);
     assertEquals("PUT", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"ignorePlurals\":[\"algolia\"]}", req.body, JSONCompareMode.STRICT));
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"ignorePlurals\":[\"fr\"]}", req.body, JSONCompareMode.STRICT));
 
     try {
       Map<String, String> expectedQuery = json.readValue(
@@ -2714,12 +2723,16 @@ class SearchClientRequestsTests {
   @DisplayName("setSettings allow list of string `removeStopWords`")
   void setSettingsTest6() {
     assertDoesNotThrow(() -> {
-      client.setSettings("theIndexName", new IndexSettings().setRemoveStopWords(RemoveStopWords.of(List.of("algolia"))), true);
+      client.setSettings(
+        "theIndexName",
+        new IndexSettings().setRemoveStopWords(RemoveStopWords.of(List.of(SupportedLanguage.fromValue("fr")))),
+        true
+      );
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/theIndexName/settings", req.path);
     assertEquals("PUT", req.method);
-    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"removeStopWords\":[\"algolia\"]}", req.body, JSONCompareMode.STRICT));
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"removeStopWords\":[\"fr\"]}", req.body, JSONCompareMode.STRICT));
 
     try {
       Map<String, String> expectedQuery = json.readValue(
@@ -2828,7 +2841,7 @@ class SearchClientRequestsTests {
           .setHighlightPostTag("</span>")
           .setHitsPerPage(10)
           .setIgnorePlurals(IgnorePlurals.of(false))
-          .setIndexLanguages(List.of("algolia"))
+          .setIndexLanguages(List.of(SupportedLanguage.fromValue("fr")))
           .setKeepDiacriticsOnCharacters("abc")
           .setMaxFacetHits(20)
           .setMaxValuesPerFacet(30)
@@ -2839,7 +2852,7 @@ class SearchClientRequestsTests {
           .setNumericAttributesForFiltering(List.of("algolia"))
           .setOptionalWords(List.of("myspace"))
           .setPaginationLimitedTo(0)
-          .setQueryLanguages(List.of("algolia"))
+          .setQueryLanguages(List.of(SupportedLanguage.fromValue("fr")))
           .setQueryType(QueryType.fromValue("prefixLast"))
           .setRanking(List.of("geo"))
           .setReRankingApplyFilter(ReRankingApplyFilter.of("mySearch:filters"))
@@ -2873,7 +2886,7 @@ class SearchClientRequestsTests {
     assertEquals("PUT", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowCompressionOfIntegerArray\":true,\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"singleWordSynonym\"],\"attributeCriteriaComputedByMinProximity\":true,\"attributeForDistinct\":\"test\",\"attributesForFaceting\":[\"algolia\"],\"attributesToHighlight\":[\"algolia\"],\"attributesToRetrieve\":[\"algolia\"],\"attributesToSnippet\":[\"algolia\"],\"attributesToTransliterate\":[\"algolia\"],\"camelCaseAttributes\":[\"algolia\"],\"customNormalization\":{\"algolia\":{\"aloglia\":\"aglolia\"}},\"customRanking\":[\"algolia\"],\"decompoundQuery\":false,\"decompoundedAttributes\":{\"algolia\":\"aloglia\"},\"disableExactOnAttributes\":[\"algolia\"],\"disablePrefixOnAttributes\":[\"algolia\"],\"disableTypoToleranceOnAttributes\":[\"algolia\"],\"disableTypoToleranceOnWords\":[\"algolia\"],\"distinct\":3,\"enablePersonalization\":true,\"enableReRanking\":false,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"highlightPreTag\":\"<span>\",\"highlightPostTag\":\"</span>\",\"hitsPerPage\":10,\"ignorePlurals\":false,\"indexLanguages\":[\"algolia\"],\"keepDiacriticsOnCharacters\":\"abc\",\"maxFacetHits\":20,\"maxValuesPerFacet\":30,\"minProximity\":6,\"minWordSizefor1Typo\":5,\"minWordSizefor2Typos\":11,\"mode\":\"neuralSearch\",\"numericAttributesForFiltering\":[\"algolia\"],\"optionalWords\":[\"myspace\"],\"paginationLimitedTo\":0,\"queryLanguages\":[\"algolia\"],\"queryType\":\"prefixLast\",\"ranking\":[\"geo\"],\"reRankingApplyFilter\":\"mySearch:filters\",\"relevancyStrictness\":10,\"removeStopWords\":false,\"removeWordsIfNoResults\":\"lastWords\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"replicas\":[\"\"],\"responseFields\":[\"algolia\"],\"restrictHighlightAndSnippetArrays\":true,\"searchableAttributes\":[\"foo\"],\"semanticSearch\":{\"eventSources\":[\"foo\"]},\"separatorsToIndex\":\"bar\",\"snippetEllipsisText\":\"---\",\"sortFacetValuesBy\":\"date\",\"typoTolerance\":false,\"unretrievableAttributes\":[\"foo\"],\"userData\":{\"user\":\"data\"}}",
+        "{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowCompressionOfIntegerArray\":true,\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"singleWordSynonym\"],\"attributeCriteriaComputedByMinProximity\":true,\"attributeForDistinct\":\"test\",\"attributesForFaceting\":[\"algolia\"],\"attributesToHighlight\":[\"algolia\"],\"attributesToRetrieve\":[\"algolia\"],\"attributesToSnippet\":[\"algolia\"],\"attributesToTransliterate\":[\"algolia\"],\"camelCaseAttributes\":[\"algolia\"],\"customNormalization\":{\"algolia\":{\"aloglia\":\"aglolia\"}},\"customRanking\":[\"algolia\"],\"decompoundQuery\":false,\"decompoundedAttributes\":{\"algolia\":\"aloglia\"},\"disableExactOnAttributes\":[\"algolia\"],\"disablePrefixOnAttributes\":[\"algolia\"],\"disableTypoToleranceOnAttributes\":[\"algolia\"],\"disableTypoToleranceOnWords\":[\"algolia\"],\"distinct\":3,\"enablePersonalization\":true,\"enableReRanking\":false,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"highlightPreTag\":\"<span>\",\"highlightPostTag\":\"</span>\",\"hitsPerPage\":10,\"ignorePlurals\":false,\"indexLanguages\":[\"fr\"],\"keepDiacriticsOnCharacters\":\"abc\",\"maxFacetHits\":20,\"maxValuesPerFacet\":30,\"minProximity\":6,\"minWordSizefor1Typo\":5,\"minWordSizefor2Typos\":11,\"mode\":\"neuralSearch\",\"numericAttributesForFiltering\":[\"algolia\"],\"optionalWords\":[\"myspace\"],\"paginationLimitedTo\":0,\"queryLanguages\":[\"fr\"],\"queryType\":\"prefixLast\",\"ranking\":[\"geo\"],\"reRankingApplyFilter\":\"mySearch:filters\",\"relevancyStrictness\":10,\"removeStopWords\":false,\"removeWordsIfNoResults\":\"lastWords\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"replicas\":[\"\"],\"responseFields\":[\"algolia\"],\"restrictHighlightAndSnippetArrays\":true,\"searchableAttributes\":[\"foo\"],\"semanticSearch\":{\"eventSources\":[\"foo\"]},\"separatorsToIndex\":\"bar\",\"snippetEllipsisText\":\"---\",\"sortFacetValuesBy\":\"date\",\"typoTolerance\":false,\"unretrievableAttributes\":[\"foo\"],\"userData\":{\"user\":\"data\"}}",
         req.body,
         JSONCompareMode.STRICT
       )

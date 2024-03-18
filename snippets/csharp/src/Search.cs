@@ -160,12 +160,20 @@ public class SnippetSearchClient
           new BatchDictionaryEntriesRequest
           {
             Action = Enum.Parse<DictionaryAction>("AddEntry"),
-            Body = new DictionaryEntry { ObjectID = "1", Language = "en", },
+            Body = new DictionaryEntry
+            {
+              ObjectID = "1",
+              Language = Enum.Parse<SupportedLanguage>("En"),
+            },
           },
           new BatchDictionaryEntriesRequest
           {
             Action = Enum.Parse<DictionaryAction>("DeleteEntry"),
-            Body = new DictionaryEntry { ObjectID = "2", Language = "fr", },
+            Body = new DictionaryEntry
+            {
+              ObjectID = "2",
+              Language = Enum.Parse<SupportedLanguage>("Fr"),
+            },
           }
         },
       }

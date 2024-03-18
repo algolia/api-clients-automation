@@ -70,7 +70,7 @@ public class IndexSettingsAsSearchParams {
   private String keepDiacriticsOnCharacters;
 
   @JsonProperty("queryLanguages")
-  private List<String> queryLanguages;
+  private List<SupportedLanguage> queryLanguages;
 
   @JsonProperty("decompoundQuery")
   private Boolean decompoundQuery;
@@ -486,12 +486,12 @@ public class IndexSettingsAsSearchParams {
     return keepDiacriticsOnCharacters;
   }
 
-  public IndexSettingsAsSearchParams setQueryLanguages(List<String> queryLanguages) {
+  public IndexSettingsAsSearchParams setQueryLanguages(List<SupportedLanguage> queryLanguages) {
     this.queryLanguages = queryLanguages;
     return this;
   }
 
-  public IndexSettingsAsSearchParams addQueryLanguages(String queryLanguagesItem) {
+  public IndexSettingsAsSearchParams addQueryLanguages(SupportedLanguage queryLanguagesItem) {
     if (this.queryLanguages == null) {
       this.queryLanguages = new ArrayList<>();
     }
@@ -500,10 +500,10 @@ public class IndexSettingsAsSearchParams {
   }
 
   /**
-   * [ISO code](https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes) for language-specific
-   * settings such as plurals, stop words, and word-detection dictionaries. This setting sets a
-   * default list of languages used by the `removeStopWords` and `ignorePlurals` settings. This
-   * setting also sets a dictionary for word detection in the logogram-based
+   * Languages for language-specific query processing steps such as plurals, stop-word removal, and
+   * word-detection dictionaries. This setting sets a default list of languages used by the
+   * `removeStopWords` and `ignorePlurals` settings. This setting also sets a dictionary for word
+   * detection in the logogram-based
    * [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk)
    * languages. To support this, you must place the CJK language **first**. **You should always
    * specify a query language.** If you don't specify an indexing language, the search engine uses
@@ -514,7 +514,7 @@ public class IndexSettingsAsSearchParams {
    * configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
    */
   @javax.annotation.Nullable
-  public List<String> getQueryLanguages() {
+  public List<SupportedLanguage> getQueryLanguages() {
     return queryLanguages;
   }
 

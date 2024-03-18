@@ -13,38 +13,17 @@ final class QuerySuggestionsClientSnippet {
         let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.createConfig(
-            querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex(
+        _ = try await client
+            .createConfig(querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex(
                 indexName: "theIndexName",
-                sourceIndices: [
-                    SourceIndex(
-                        indexName: "testIndex",
-                        facets: [
-                            Facet(
-                                attribute: "test"
-                            ),
-                        ],
-                        generate: [
-                            [
-                                "facetA",
-                                "facetB",
-                            ],
-                            [
-                                "facetC",
-                            ],
-                        ]
-                    ),
-                ],
-                languages: Languages.arrayOfString(
-                    [
-                        "french",
-                    ]
-                ),
-                exclude: [
-                    "test",
-                ]
-            )
-        )
+                sourceIndices: [SourceIndex(
+                    indexName: "testIndex",
+                    facets: [Facet(attribute: "test")],
+                    generate: [["facetA", "facetB"], ["facetC"]]
+                )],
+                languages: Languages.arrayOfString(["french"]),
+                exclude: ["test"]
+            ))
         // SEPARATOR<
     }
 
@@ -57,9 +36,7 @@ final class QuerySuggestionsClientSnippet {
         let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customDelete(
-            path: "/test/minimal"
-        )
+        _ = try await client.customDelete(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -72,9 +49,7 @@ final class QuerySuggestionsClientSnippet {
         let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customGet(
-            path: "/test/minimal"
-        )
+        _ = try await client.customGet(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -87,9 +62,7 @@ final class QuerySuggestionsClientSnippet {
         let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPost(
-            path: "/test/minimal"
-        )
+        _ = try await client.customPost(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -102,9 +75,7 @@ final class QuerySuggestionsClientSnippet {
         let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPut(
-            path: "/test/minimal"
-        )
+        _ = try await client.customPut(path: "/test/minimal")
         // SEPARATOR<
     }
 
@@ -117,9 +88,7 @@ final class QuerySuggestionsClientSnippet {
         let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.deleteConfig(
-            indexName: "theIndexName"
-        )
+        _ = try await client.deleteConfig(indexName: "theIndexName")
         // SEPARATOR<
     }
 
@@ -145,9 +114,7 @@ final class QuerySuggestionsClientSnippet {
         let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getConfig(
-            indexName: "cts_e2e_browse_query_suggestions"
-        )
+        _ = try await client.getConfig(indexName: "cts_e2e_browse_query_suggestions")
         // SEPARATOR<
     }
 
@@ -160,9 +127,7 @@ final class QuerySuggestionsClientSnippet {
         let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getConfigStatus(
-            indexName: "theIndexName"
-        )
+        _ = try await client.getConfigStatus(indexName: "theIndexName")
         // SEPARATOR<
     }
 
@@ -175,9 +140,7 @@ final class QuerySuggestionsClientSnippet {
         let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getLogFile(
-            indexName: "theIndexName"
-        )
+        _ = try await client.getLogFile(indexName: "theIndexName")
         // SEPARATOR<
     }
 
@@ -193,33 +156,13 @@ final class QuerySuggestionsClientSnippet {
         _ = try await client.updateConfig(
             indexName: "theIndexName",
             querySuggestionsConfiguration: QuerySuggestionsConfiguration(
-                sourceIndices: [
-                    SourceIndex(
-                        indexName: "testIndex",
-                        facets: [
-                            Facet(
-                                attribute: "test"
-                            ),
-                        ],
-                        generate: [
-                            [
-                                "facetA",
-                                "facetB",
-                            ],
-                            [
-                                "facetC",
-                            ],
-                        ]
-                    ),
-                ],
-                languages: Languages.arrayOfString(
-                    [
-                        "french",
-                    ]
-                ),
-                exclude: [
-                    "test",
-                ]
+                sourceIndices: [SourceIndex(
+                    indexName: "testIndex",
+                    facets: [Facet(attribute: "test")],
+                    generate: [["facetA", "facetB"], ["facetC"]]
+                )],
+                languages: Languages.arrayOfString(["french"]),
+                exclude: ["test"]
             )
         )
         // SEPARATOR<

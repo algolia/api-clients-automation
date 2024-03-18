@@ -460,7 +460,7 @@
           "personalizationImpact": 0,
           "query": "",
           "queryLanguages": [
-            ""
+            "fr"
           ],
           "queryType": "prefixAll",
           "ranking": [
@@ -635,7 +635,7 @@
             "personalizationImpact": 0,
             "query": "",
             "queryLanguages": [
-              ""
+              "fr"
             ],
             "queryType": "prefixAll",
             "ranking": [

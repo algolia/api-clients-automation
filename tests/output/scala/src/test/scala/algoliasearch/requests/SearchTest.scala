@@ -365,14 +365,14 @@ class SearchTest extends AnyFunSuite {
             action = DictionaryAction.withName("addEntry"),
             body = DictionaryEntry(
               objectID = "1",
-              language = "en"
+              language = SupportedLanguage.withName("en")
             )
           ),
           BatchDictionaryEntriesRequest(
             action = DictionaryAction.withName("deleteEntry"),
             body = DictionaryEntry(
               objectID = "2",
-              language = "fr"
+              language = SupportedLanguage.withName("fr")
             )
           )
         )
@@ -402,7 +402,7 @@ class SearchTest extends AnyFunSuite {
             action = DictionaryAction.withName("addEntry"),
             body = DictionaryEntry(
               objectID = "1",
-              language = "en",
+              language = SupportedLanguage.withName("en"),
               word = Some("fancy"),
               words = Some(Seq("believe", "algolia")),
               decomposition = Some(Seq("trust", "algolia")),
@@ -413,7 +413,7 @@ class SearchTest extends AnyFunSuite {
             action = DictionaryAction.withName("deleteEntry"),
             body = DictionaryEntry(
               objectID = "2",
-              language = "fr",
+              language = SupportedLanguage.withName("fr"),
               word = Some("humility"),
               words = Some(Seq("candor", "algolia")),
               decomposition = Some(Seq("grit", "algolia")),
@@ -446,7 +446,7 @@ class SearchTest extends AnyFunSuite {
             action = DictionaryAction.withName("addEntry"),
             body = DictionaryEntry(
               objectID = "1",
-              language = "en",
+              language = SupportedLanguage.withName("en"),
               additionalProperties = Some(List(JField("additional", JString("try me"))))
             )
           )
@@ -2373,7 +2373,7 @@ class SearchTest extends AnyFunSuite {
             percentileComputation = Some(true),
             personalizationImpact = Some(0),
             query = Some(""),
-            queryLanguages = Some(Seq("")),
+            queryLanguages = Some(Seq(SupportedLanguage.withName("fr"))),
             queryType = Some(QueryType.withName("prefixAll")),
             ranking = Some(Seq("")),
             reRankingApplyFilter = Some(ReRankingApplyFilter(Seq(MixedSearchFilters("")))),
@@ -2426,7 +2426,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/*/queries")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":[""],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}"""
+      """{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":["fr"],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -2473,7 +2473,7 @@ class SearchTest extends AnyFunSuite {
         query = "foo",
         page = Some(4),
         hitsPerPage = Some(2),
-        language = Some("fr")
+        language = Some(SupportedLanguage.withName("fr"))
       )
     )
 
@@ -2879,7 +2879,7 @@ class SearchTest extends AnyFunSuite {
     val future = client.setSettings(
       indexName = "theIndexName",
       indexSettings = IndexSettings(
-        ignorePlurals = Some(IgnorePlurals(Seq("algolia")))
+        ignorePlurals = Some(IgnorePlurals(Seq(SupportedLanguage.withName("fr"))))
       ),
       forwardToReplicas = Some(true)
     )
@@ -2889,7 +2889,7 @@ class SearchTest extends AnyFunSuite {
 
     assert(res.path == "/1/indexes/theIndexName/settings")
     assert(res.method == "PUT")
-    val expectedBody = parse("""{"ignorePlurals":["algolia"]}""")
+    val expectedBody = parse("""{"ignorePlurals":["fr"]}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
     val expectedQuery = parse("""{"forwardToReplicas":"true"}""").asInstanceOf[JObject].obj.toMap
@@ -2933,7 +2933,7 @@ class SearchTest extends AnyFunSuite {
     val future = client.setSettings(
       indexName = "theIndexName",
       indexSettings = IndexSettings(
-        removeStopWords = Some(RemoveStopWords(Seq("algolia")))
+        removeStopWords = Some(RemoveStopWords(Seq(SupportedLanguage.withName("fr"))))
       ),
       forwardToReplicas = Some(true)
     )
@@ -2943,7 +2943,7 @@ class SearchTest extends AnyFunSuite {
 
     assert(res.path == "/1/indexes/theIndexName/settings")
     assert(res.method == "PUT")
-    val expectedBody = parse("""{"removeStopWords":["algolia"]}""")
+    val expectedBody = parse("""{"removeStopWords":["fr"]}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
     val expectedQuery = parse("""{"forwardToReplicas":"true"}""").asInstanceOf[JObject].obj.toMap
@@ -3044,7 +3044,7 @@ class SearchTest extends AnyFunSuite {
         highlightPostTag = Some("</span>"),
         hitsPerPage = Some(10),
         ignorePlurals = Some(IgnorePlurals(false)),
-        indexLanguages = Some(Seq("algolia")),
+        indexLanguages = Some(Seq(SupportedLanguage.withName("fr"))),
         keepDiacriticsOnCharacters = Some("abc"),
         maxFacetHits = Some(20),
         maxValuesPerFacet = Some(30),
@@ -3055,7 +3055,7 @@ class SearchTest extends AnyFunSuite {
         numericAttributesForFiltering = Some(Seq("algolia")),
         optionalWords = Some(Seq("myspace")),
         paginationLimitedTo = Some(0),
-        queryLanguages = Some(Seq("algolia")),
+        queryLanguages = Some(Seq(SupportedLanguage.withName("fr"))),
         queryType = Some(QueryType.withName("prefixLast")),
         ranking = Some(Seq("geo")),
         reRankingApplyFilter = Some(ReRankingApplyFilter("mySearch:filters")),
@@ -3108,7 +3108,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/theIndexName/settings")
     assert(res.method == "PUT")
     val expectedBody = parse(
-      """{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["algolia"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["algolia"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}"""
+      """{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["fr"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["fr"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)

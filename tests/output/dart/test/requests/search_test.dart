@@ -393,14 +393,14 @@ void main() {
               action: DictionaryAction.fromJson("addEntry"),
               body: DictionaryEntry(
                 objectID: "1",
-                language: "en",
+                language: SupportedLanguage.fromJson("en"),
               ),
             ),
             BatchDictionaryEntriesRequest(
               action: DictionaryAction.fromJson("deleteEntry"),
               body: DictionaryEntry(
                 objectID: "2",
-                language: "fr",
+                language: SupportedLanguage.fromJson("fr"),
               ),
             ),
           ],
@@ -433,7 +433,7 @@ void main() {
               action: DictionaryAction.fromJson("addEntry"),
               body: DictionaryEntry(
                 objectID: "1",
-                language: "en",
+                language: SupportedLanguage.fromJson("en"),
                 word: "fancy",
                 words: [
                   "believe",
@@ -450,7 +450,7 @@ void main() {
               action: DictionaryAction.fromJson("deleteEntry"),
               body: DictionaryEntry(
                 objectID: "2",
-                language: "fr",
+                language: SupportedLanguage.fromJson("fr"),
                 word: "humility",
                 words: [
                   "candor",
@@ -492,7 +492,7 @@ void main() {
               action: DictionaryAction.fromJson("addEntry"),
               body: DictionaryEntry(
                 objectID: "1",
-                language: "en",
+                language: SupportedLanguage.fromJson("en"),
                 additionalProperties: {'additional': 'try me'},
               ),
             ),
@@ -2690,7 +2690,7 @@ void main() {
               personalizationImpact: 0,
               query: "",
               queryLanguages: [
-                "",
+                SupportedLanguage.fromJson("fr"),
               ],
               queryType: QueryType.fromJson("prefixAll"),
               ranking: [
@@ -2751,7 +2751,7 @@ void main() {
         expectPath(request.path, '/1/indexes/*/queries');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":[""],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}""");
+            """{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":["fr"],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}""");
       },
     ),
   );
@@ -2794,7 +2794,7 @@ void main() {
           query: "foo",
           page: 4,
           hitsPerPage: 2,
-          language: "fr",
+          language: SupportedLanguage.fromJson("fr"),
         ),
       ),
       intercept: (request) {
@@ -3228,7 +3228,7 @@ void main() {
         indexName: "theIndexName",
         indexSettings: IndexSettings(
           ignorePlurals: [
-            "algolia",
+            SupportedLanguage.fromJson("fr"),
           ],
         ),
         forwardToReplicas: true,
@@ -3238,7 +3238,7 @@ void main() {
         expect(request.method, 'put');
         expectParams(
             request.queryParameters, """{"forwardToReplicas":"true"}""");
-        expectBody(request.body, """{"ignorePlurals":["algolia"]}""");
+        expectBody(request.body, """{"ignorePlurals":["fr"]}""");
       },
     ),
   );
@@ -3282,7 +3282,7 @@ void main() {
         indexName: "theIndexName",
         indexSettings: IndexSettings(
           removeStopWords: [
-            "algolia",
+            SupportedLanguage.fromJson("fr"),
           ],
         ),
         forwardToReplicas: true,
@@ -3292,7 +3292,7 @@ void main() {
         expect(request.method, 'put');
         expectParams(
             request.queryParameters, """{"forwardToReplicas":"true"}""");
-        expectBody(request.body, """{"removeStopWords":["algolia"]}""");
+        expectBody(request.body, """{"removeStopWords":["fr"]}""");
       },
     ),
   );
@@ -3424,7 +3424,7 @@ void main() {
           hitsPerPage: 10,
           ignorePlurals: false,
           indexLanguages: [
-            "algolia",
+            SupportedLanguage.fromJson("fr"),
           ],
           keepDiacriticsOnCharacters: "abc",
           maxFacetHits: 20,
@@ -3441,7 +3441,7 @@ void main() {
           ],
           paginationLimitedTo: 0,
           queryLanguages: [
-            "algolia",
+            SupportedLanguage.fromJson("fr"),
           ],
           queryType: QueryType.fromJson("prefixLast"),
           ranking: [
@@ -3501,7 +3501,7 @@ void main() {
         expectPath(request.path, '/1/indexes/theIndexName/settings');
         expect(request.method, 'put');
         expectBody(request.body,
-            """{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["algolia"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["algolia"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}""");
+            """{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["fr"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["fr"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}""");
       },
     ),
   );

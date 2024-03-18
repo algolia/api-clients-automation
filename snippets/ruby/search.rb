@@ -150,12 +150,12 @@ def snippet_for_batch_dictionary_entries
           action: 'addEntry',
           body: DictionaryEntry.new(
             object_id: "1",
-            language: "en"
+            language: 'en'
           )
         ),
         BatchDictionaryEntriesRequest.new(
           action: 'deleteEntry',
-          body: DictionaryEntry.new(object_id: "2", language: "fr")
+          body: DictionaryEntry.new(object_id: "2", language: 'fr')
         )
       ]
     )
