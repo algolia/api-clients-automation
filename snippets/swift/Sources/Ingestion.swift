@@ -1,6 +1,6 @@
-import AnyCodable
-
-import Core
+#if canImport(Core)
+    import Core
+#endif
 import Ingestion
 
 final class IngestionClientSnippet {
@@ -10,7 +10,7 @@ final class IngestionClientSnippet {
     func snippetForCreateAuthentication() async throws {
         // >SEPARATOR createAuthentication
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.createAuthentication(authenticationCreate: AuthenticationCreate(
@@ -27,7 +27,7 @@ final class IngestionClientSnippet {
     func snippetForCreateDestination() async throws {
         // >SEPARATOR createDestination
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.createDestination(destinationCreate: DestinationCreate(
@@ -45,7 +45,7 @@ final class IngestionClientSnippet {
     func snippetForCreateSource() async throws {
         // >SEPARATOR createSource
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.createSource(sourceCreate: SourceCreate(
@@ -68,7 +68,7 @@ final class IngestionClientSnippet {
     func snippetForCreateTask() async throws {
         // >SEPARATOR createTask
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.createTask(taskCreate: TaskCreate(
@@ -86,7 +86,7 @@ final class IngestionClientSnippet {
     func snippetForCustomDelete() async throws {
         // >SEPARATOR customDelete
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.customDelete(path: "/test/minimal")
@@ -99,7 +99,7 @@ final class IngestionClientSnippet {
     func snippetForCustomGet() async throws {
         // >SEPARATOR customGet
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.customGet(path: "/test/minimal")
@@ -112,7 +112,7 @@ final class IngestionClientSnippet {
     func snippetForCustomPost() async throws {
         // >SEPARATOR customPost
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.customPost(path: "/test/minimal")
@@ -125,7 +125,7 @@ final class IngestionClientSnippet {
     func snippetForCustomPut() async throws {
         // >SEPARATOR customPut
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.customPut(path: "/test/minimal")
@@ -138,7 +138,7 @@ final class IngestionClientSnippet {
     func snippetForDeleteAuthentication() async throws {
         // >SEPARATOR deleteAuthentication
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.deleteAuthentication(authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -151,7 +151,7 @@ final class IngestionClientSnippet {
     func snippetForDeleteDestination() async throws {
         // >SEPARATOR deleteDestination
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.deleteDestination(destinationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -164,7 +164,7 @@ final class IngestionClientSnippet {
     func snippetForDeleteSource() async throws {
         // >SEPARATOR deleteSource
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.deleteSource(sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -177,7 +177,7 @@ final class IngestionClientSnippet {
     func snippetForDeleteTask() async throws {
         // >SEPARATOR deleteTask
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.deleteTask(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -190,7 +190,7 @@ final class IngestionClientSnippet {
     func snippetForDisableTask() async throws {
         // >SEPARATOR disableTask
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.disableTask(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -203,7 +203,7 @@ final class IngestionClientSnippet {
     func snippetForEnableTask() async throws {
         // >SEPARATOR enableTask
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.enableTask(taskID: "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
@@ -216,7 +216,7 @@ final class IngestionClientSnippet {
     func snippetForGetAuthentication() async throws {
         // >SEPARATOR getAuthentication
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getAuthentication(authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -229,7 +229,7 @@ final class IngestionClientSnippet {
     func snippetForGetAuthentications() async throws {
         // >SEPARATOR getAuthentications
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getAuthentications()
@@ -242,7 +242,7 @@ final class IngestionClientSnippet {
     func snippetForGetDestination() async throws {
         // >SEPARATOR getDestination
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getDestination(destinationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -255,7 +255,7 @@ final class IngestionClientSnippet {
     func snippetForGetDestinations() async throws {
         // >SEPARATOR getDestinations
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getDestinations()
@@ -268,7 +268,7 @@ final class IngestionClientSnippet {
     func snippetForGetDockerSourceStreams() async throws {
         // >SEPARATOR getDockerSourceStreams
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getDockerSourceStreams(sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -281,7 +281,7 @@ final class IngestionClientSnippet {
     func snippetForGetEvent() async throws {
         // >SEPARATOR getEvent
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getEvent(
@@ -297,7 +297,7 @@ final class IngestionClientSnippet {
     func snippetForGetEvents() async throws {
         // >SEPARATOR getEvents
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getEvents(runID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -310,7 +310,7 @@ final class IngestionClientSnippet {
     func snippetForGetRun() async throws {
         // >SEPARATOR getRun
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getRun(runID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -323,7 +323,7 @@ final class IngestionClientSnippet {
     func snippetForGetRuns() async throws {
         // >SEPARATOR getRuns
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getRuns()
@@ -336,7 +336,7 @@ final class IngestionClientSnippet {
     func snippetForGetSource() async throws {
         // >SEPARATOR getSource
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getSource(sourceID: "75eeb306-51d3-4e5e-a279-3c92bd8893ac")
@@ -349,7 +349,7 @@ final class IngestionClientSnippet {
     func snippetForGetSources() async throws {
         // >SEPARATOR getSources
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getSources()
@@ -362,7 +362,7 @@ final class IngestionClientSnippet {
     func snippetForGetTask() async throws {
         // >SEPARATOR getTask
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getTask(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -375,7 +375,7 @@ final class IngestionClientSnippet {
     func snippetForGetTasks() async throws {
         // >SEPARATOR getTasks
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.getTasks()
@@ -388,7 +388,7 @@ final class IngestionClientSnippet {
     func snippetForRunTask() async throws {
         // >SEPARATOR runTask
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.runTask(taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -401,7 +401,7 @@ final class IngestionClientSnippet {
     func snippetForSearchAuthentications() async throws {
         // >SEPARATOR searchAuthentications
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.searchAuthentications(authenticationSearch: AuthenticationSearch(authenticationIDs: [
@@ -417,7 +417,7 @@ final class IngestionClientSnippet {
     func snippetForSearchDestinations() async throws {
         // >SEPARATOR searchDestinations
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.searchDestinations(destinationSearch: DestinationSearch(destinationIDs: [
@@ -433,7 +433,7 @@ final class IngestionClientSnippet {
     func snippetForSearchSources() async throws {
         // >SEPARATOR searchSources
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.searchSources(sourceSearch: SourceSearch(sourceIDs: [
@@ -449,7 +449,7 @@ final class IngestionClientSnippet {
     func snippetForSearchTasks() async throws {
         // >SEPARATOR searchTasks
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.searchTasks(taskSearch: TaskSearch(taskIDs: [
@@ -466,7 +466,7 @@ final class IngestionClientSnippet {
     func snippetForTriggerDockerSourceDiscover() async throws {
         // >SEPARATOR triggerDockerSourceDiscover
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.triggerDockerSourceDiscover(sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -479,7 +479,7 @@ final class IngestionClientSnippet {
     func snippetForUpdateAuthentication() async throws {
         // >SEPARATOR updateAuthentication
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.updateAuthentication(
@@ -495,7 +495,7 @@ final class IngestionClientSnippet {
     func snippetForUpdateDestination() async throws {
         // >SEPARATOR updateDestination
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.updateDestination(
@@ -511,7 +511,7 @@ final class IngestionClientSnippet {
     func snippetForUpdateSource() async throws {
         // >SEPARATOR updateSource
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.updateSource(
@@ -527,7 +527,7 @@ final class IngestionClientSnippet {
     func snippetForUpdateTask() async throws {
         // >SEPARATOR updateTask
         // Initialize the client
-        let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
         _ = try await client.updateTask(

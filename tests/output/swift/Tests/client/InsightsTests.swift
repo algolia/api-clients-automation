@@ -1,6 +1,5 @@
 import XCTest
 
-import AnyCodable
 import Utils
 
 @testable import Core
@@ -12,11 +11,7 @@ final class InsightsClientClientTests: XCTestCase {
 
     /// calls api with correct user agent
     func testCommonApiTest0() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY,
-            region: Region.us
-        )
+        let configuration = try InsightsClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
@@ -43,11 +38,7 @@ final class InsightsClientClientTests: XCTestCase {
 
     /// calls api with default read timeouts
     func testCommonApiTest1() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY,
-            region: Region.us
-        )
+        let configuration = try InsightsClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
@@ -62,11 +53,7 @@ final class InsightsClientClientTests: XCTestCase {
 
     /// calls api with default write timeouts
     func testCommonApiTest2() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY,
-            region: Region.us
-        )
+        let configuration = try InsightsClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
@@ -81,11 +68,7 @@ final class InsightsClientClientTests: XCTestCase {
 
     /// fallbacks to the alias when region is not given
     func testParametersTest0() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
-            appID: "my-app-id",
-            apiKey: "my-api-key",
-            region: nil
-        )
+        let configuration = try InsightsClientConfiguration(appID: "my-app-id", apiKey: "my-api-key", region: nil)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
         let response = try await client.pushEventsWithHTTPInfo(
@@ -111,7 +94,7 @@ final class InsightsClientClientTests: XCTestCase {
 
     /// uses the correct region
     func testParametersTest1() async throws {
-        let configuration: Insights.Configuration = try Insights.Configuration(
+        let configuration = try InsightsClientConfiguration(
             appID: "my-app-id",
             apiKey: "my-api-key",
             region: Region(rawValue: "us")
@@ -130,7 +113,7 @@ final class InsightsClientClientTests: XCTestCase {
     /// throws when incorrect region is given
     func testParametersTest2() async throws {
         do {
-            let configuration: Insights.Configuration = try Insights.Configuration(
+            let configuration = try InsightsClientConfiguration(
                 appID: "my-app-id",
                 apiKey: "my-api-key",
                 region: Region(rawValue: "not_a_region")

@@ -219,7 +219,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID",
             apiKey: "YOUR_API_KEY", region: .us)
 
 
@@ -412,7 +412,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID",
             apiKey: "YOUR_API_KEY", region: .us)
 
 
@@ -605,7 +605,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID",
             apiKey: "YOUR_API_KEY", region: .us)
 
 
@@ -798,7 +798,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID",
             apiKey: "YOUR_API_KEY", region: .us)
 
 
@@ -975,7 +975,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID",
             apiKey: "YOUR_API_KEY", region: .us)
 
 
@@ -1328,7 +1328,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID",
             apiKey: "YOUR_API_KEY", region: .us)
 
 
@@ -1342,7 +1342,7 @@ paths:
                         facets: [Facet(attribute: "test")],
                         generate: [["facetA", "facetB"], ["facetC"]]
                     )],
-                    languages: Languages.arrayOfString(["french"]),
+                    languages: QuerySuggestionsLanguages.arrayOfString(["french"]),
                     exclude: ["test"]
                 ))
   /1/configs/{indexName}:
@@ -1533,7 +1533,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID",
             apiKey: "YOUR_API_KEY", region: .us)
 
 
@@ -1884,7 +1884,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID",
             apiKey: "YOUR_API_KEY", region: .us)
 
 
@@ -1892,13 +1892,13 @@ paths:
 
             _ = try await client.updateConfig(
                 indexName: "theIndexName",
-                querySuggestionsConfiguration: QuerySuggestionsConfiguration(
+                configuration: QuerySuggestionsConfiguration(
                     sourceIndices: [SourceIndex(
                         indexName: "testIndex",
                         facets: [Facet(attribute: "test")],
                         generate: [["facetA", "facetB"], ["facetC"]]
                     )],
-                    languages: Languages.arrayOfString(["french"]),
+                    languages: QuerySuggestionsLanguages.arrayOfString(["french"]),
                     exclude: ["test"]
                 )
             )
@@ -2100,7 +2100,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID",
             apiKey: "YOUR_API_KEY", region: .us)
 
 
@@ -2323,7 +2323,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID",
             apiKey: "YOUR_API_KEY", region: .us)
 
 
@@ -2543,7 +2543,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try QuerySuggestionsClient(appId: "YOUR_APP_ID",
+            let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID",
             apiKey: "YOUR_API_KEY", region: .us)
 
 

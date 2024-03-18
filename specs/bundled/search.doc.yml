@@ -459,7 +459,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -647,7 +647,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -835,7 +835,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -1023,7 +1023,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -1239,7 +1239,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -1517,7 +1517,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -1758,7 +1758,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -1975,7 +1975,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -2242,7 +2242,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -2449,7 +2449,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -2704,7 +2704,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -2955,7 +2955,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -3155,7 +3155,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -3382,7 +3382,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -3575,7 +3575,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -3875,7 +3875,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -4210,7 +4210,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -4552,7 +4552,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -4892,7 +4892,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -5089,7 +5089,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -5320,7 +5320,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -5522,7 +5522,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -5815,7 +5815,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -6015,7 +6015,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -6373,7 +6373,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -6575,7 +6575,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -6794,7 +6794,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -6980,7 +6980,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -7240,7 +7240,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -7438,7 +7438,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -7715,7 +7715,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -7915,7 +7915,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -8111,7 +8111,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -8310,7 +8310,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -8594,7 +8594,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -8603,7 +8603,10 @@ paths:
             _ = try await client.saveRule(
                 indexName: "indexName",
                 objectID: "id1",
-                rule: Rule(objectID: "id1", conditions: [Condition(pattern: "apple", anchoring: Anchoring.contains)])
+                rule: Rule(
+                    objectID: "id1",
+                    conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)]
+                )
             )
     delete:
       tags:
@@ -8792,7 +8795,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -9156,7 +9159,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -9167,11 +9170,11 @@ paths:
                 rules: [
                     Rule(
                         objectID: "a-rule-id",
-                        conditions: [Condition(pattern: "smartphone", anchoring: Anchoring.contains)]
+                        conditions: [SearchCondition(pattern: "smartphone", anchoring: SearchAnchoring.contains)]
                     ),
                     Rule(
                         objectID: "a-second-rule-id",
-                        conditions: [Condition(pattern: "apple", anchoring: Anchoring.contains)]
+                        conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)]
                     ),
                 ]
             )
@@ -9357,7 +9360,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -9629,7 +9632,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -10011,7 +10014,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -10264,7 +10267,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -10450,7 +10453,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -10712,7 +10715,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -10903,7 +10906,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -11134,7 +11137,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -11330,7 +11333,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -11596,7 +11599,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -11799,7 +11802,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -11992,7 +11995,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -12184,7 +12187,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -12371,7 +12374,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -12691,7 +12694,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -12909,7 +12912,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -13083,7 +13086,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -13326,13 +13329,13 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
             // Call the API
 
-            _ = try await client.replaceSources(source: [Source(source:
+            _ = try await client.replaceSources(source: [SearchSource(source:
             "theSource", description: "theDescription")])
   /1/security/sources/append:
     post:
@@ -13540,13 +13543,13 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
             // Call the API
 
-            _ = try await client.appendSource(source: Source(source:
+            _ = try await client.appendSource(source: SearchSource(source:
             "theSource", description: "theDescription"))
   /1/security/sources/{source}:
     delete:
@@ -13740,7 +13743,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -14095,7 +14098,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -14317,7 +14320,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -14644,7 +14647,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 
@@ -14833,7 +14836,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try SearchClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY")
 
 

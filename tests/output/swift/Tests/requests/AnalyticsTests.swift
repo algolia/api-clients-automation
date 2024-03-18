@@ -1,6 +1,5 @@
 import XCTest
 
-import AnyCodable
 import DotEnv
 import Utils
 
@@ -50,7 +49,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// allow del method for a custom path with minimal parameters
     func testCustomDeleteTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -72,7 +71,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// allow del method for a custom path with all parameters
     func testCustomDeleteTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -103,7 +102,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// allow get method for a custom path with minimal parameters
     func testCustomGetTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -125,7 +124,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// allow get method for a custom path with all parameters
     func testCustomGetTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -156,7 +155,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// requestOptions should be escaped too
     func testCustomGetTest2() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -206,7 +205,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// allow post method for a custom path with minimal parameters
     func testCustomPostTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -234,7 +233,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// allow post method for a custom path with all parameters
     func testCustomPostTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -272,7 +271,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// requestOptions can override default query parameters
     func testCustomPostTest2() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -315,7 +314,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// requestOptions merges query parameters with default ones
     func testCustomPostTest3() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -361,7 +360,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// requestOptions can override default headers
     func testCustomPostTest4() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -412,7 +411,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// requestOptions merges headers with default ones
     func testCustomPostTest5() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -463,7 +462,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts booleans
     func testCustomPostTest6() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -509,7 +508,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts integers
     func testCustomPostTest7() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -555,7 +554,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of string
     func testCustomPostTest8() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -601,7 +600,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of booleans
     func testCustomPostTest9() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -647,7 +646,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of integers
     func testCustomPostTest10() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -693,7 +692,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// allow put method for a custom path with minimal parameters
     func testCustomPutTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -721,7 +720,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// allow put method for a custom path with all parameters
     func testCustomPutTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -759,7 +758,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getAverageClickPosition with minimal parameters
     func testGetAverageClickPositionTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -787,7 +786,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getAverageClickPosition with all parameters
     func testGetAverageClickPositionTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -824,7 +823,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getClickPositions with minimal parameters
     func testGetClickPositionsTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -852,7 +851,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getClickPositions with all parameters
     func testGetClickPositionsTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -889,7 +888,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getClickThroughRate with minimal parameters
     func testGetClickThroughRateTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -917,7 +916,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getClickThroughRate with all parameters
     func testGetClickThroughRateTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -954,7 +953,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getConversationRate with minimal parameters
     func testGetConversationRateTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -982,7 +981,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getConversationRate with all parameters
     func testGetConversationRateTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1019,7 +1018,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getNoClickRate with minimal parameters
     func testGetNoClickRateTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1047,7 +1046,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getNoClickRate with all parameters
     func testGetNoClickRateTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1084,7 +1083,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getNoResultsRate with minimal parameters
     func testGetNoResultsRateTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1112,7 +1111,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getNoResultsRate with all parameters
     func testGetNoResultsRateTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1149,7 +1148,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getSearchesCount with minimal parameters
     func testGetSearchesCountTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1177,7 +1176,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getSearchesCount with all parameters
     func testGetSearchesCountTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1214,7 +1213,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getSearchesNoClicks with minimal parameters
     func testGetSearchesNoClicksTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1242,7 +1241,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getSearchesNoClicks with all parameters
     func testGetSearchesNoClicksTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1281,7 +1280,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getSearchesNoResults with minimal parameters
     func testGetSearchesNoResultsTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1309,7 +1308,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getSearchesNoResults with all parameters
     func testGetSearchesNoResultsTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1348,7 +1347,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getStatus with minimal parameters
     func testGetStatusTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1376,7 +1375,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getTopCountries with minimal parameters
     func testGetTopCountriesTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1404,7 +1403,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getTopCountries with all parameters
     func testGetTopCountriesTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1443,7 +1442,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getTopFilterAttributes with minimal parameters
     func testGetTopFilterAttributesTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1471,7 +1470,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getTopFilterAttributes with all parameters
     func testGetTopFilterAttributesTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1511,7 +1510,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getTopFilterForAttribute with minimal parameters
     func testGetTopFilterForAttributeTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1539,7 +1538,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getTopFilterForAttribute with minimal parameters and multiple attributes
     func testGetTopFilterForAttributeTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1570,7 +1569,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getTopFilterForAttribute with all parameters
     func testGetTopFilterForAttributeTest2() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1611,7 +1610,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getTopFilterForAttribute with all parameters and multiple attributes
     func testGetTopFilterForAttributeTest3() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1652,7 +1651,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getTopFiltersNoResults with minimal parameters
     func testGetTopFiltersNoResultsTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1680,7 +1679,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getTopFiltersNoResults with all parameters
     func testGetTopFiltersNoResultsTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1720,7 +1719,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getTopHits with minimal parameters
     func testGetTopHitsTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1748,7 +1747,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getTopHits with all parameters
     func testGetTopHitsTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1789,7 +1788,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getTopSearches with minimal parameters
     func testGetTopSearchesTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1817,7 +1816,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getTopSearches with all parameters
     func testGetTopSearchesTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1859,7 +1858,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// e2e with complex query params
     func testGetTopSearchesTest2() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1905,7 +1904,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getUsersCount with minimal parameters
     func testGetUsersCountTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us
@@ -1933,7 +1932,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
     /// get getUsersCount with all parameters
     func testGetUsersCountTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
             region: Region.us

@@ -1,6 +1,5 @@
 import XCTest
 
-import AnyCodable
 import Utils
 
 @testable import Analytics
@@ -12,11 +11,7 @@ final class AnalyticsClientClientTests: XCTestCase {
 
     /// calls api with correct user agent
     func testCommonApiTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY,
-            region: Region.us
-        )
+        let configuration = try AnalyticsClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
@@ -43,11 +38,7 @@ final class AnalyticsClientClientTests: XCTestCase {
 
     /// calls api with default read timeouts
     func testCommonApiTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY,
-            region: Region.us
-        )
+        let configuration = try AnalyticsClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
@@ -62,11 +53,7 @@ final class AnalyticsClientClientTests: XCTestCase {
 
     /// calls api with default write timeouts
     func testCommonApiTest2() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY,
-            region: Region.us
-        )
+        let configuration = try AnalyticsClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
@@ -81,11 +68,7 @@ final class AnalyticsClientClientTests: XCTestCase {
 
     /// fallbacks to the alias when region is not given
     func testParametersTest0() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
-            appID: "my-app-id",
-            apiKey: "my-api-key",
-            region: nil
-        )
+        let configuration = try AnalyticsClientConfiguration(appID: "my-app-id", apiKey: "my-api-key", region: nil)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
         let response = try await client.getAverageClickPositionWithHTTPInfo(
@@ -99,7 +82,7 @@ final class AnalyticsClientClientTests: XCTestCase {
 
     /// uses the correct region
     func testParametersTest1() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
+        let configuration = try AnalyticsClientConfiguration(
             appID: "my-app-id",
             apiKey: "my-api-key",
             region: Region(rawValue: "de")
@@ -118,7 +101,7 @@ final class AnalyticsClientClientTests: XCTestCase {
     /// throws when incorrect region is given
     func testParametersTest2() async throws {
         do {
-            let configuration: Analytics.Configuration = try Analytics.Configuration(
+            let configuration = try AnalyticsClientConfiguration(
                 appID: "my-app-id",
                 apiKey: "my-api-key",
                 region: Region(rawValue: "not_a_region")
@@ -134,11 +117,7 @@ final class AnalyticsClientClientTests: XCTestCase {
 
     /// getAverageClickPosition throws without index
     func testParametersTest3() async throws {
-        let configuration: Analytics.Configuration = try Analytics.Configuration(
-            appID: self.APPLICATION_ID,
-            apiKey: self.API_KEY,
-            region: Region.us
-        )
+        let configuration = try AnalyticsClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 

@@ -1,6 +1,6 @@
-import AnyCodable
-
-import Core
+#if canImport(Core)
+    import Core
+#endif
 import Recommend
 
 final class RecommendClientSnippet {
@@ -10,7 +10,7 @@ final class RecommendClientSnippet {
     func snippetForCustomDelete() async throws {
         // >SEPARATOR customDelete
         // Initialize the client
-        let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.customDelete(path: "/test/minimal")
@@ -23,7 +23,7 @@ final class RecommendClientSnippet {
     func snippetForCustomGet() async throws {
         // >SEPARATOR customGet
         // Initialize the client
-        let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.customGet(path: "/test/minimal")
@@ -36,7 +36,7 @@ final class RecommendClientSnippet {
     func snippetForCustomPost() async throws {
         // >SEPARATOR customPost
         // Initialize the client
-        let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.customPost(path: "/test/minimal")
@@ -49,7 +49,7 @@ final class RecommendClientSnippet {
     func snippetForCustomPut() async throws {
         // >SEPARATOR customPut
         // Initialize the client
-        let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.customPut(path: "/test/minimal")
@@ -62,7 +62,7 @@ final class RecommendClientSnippet {
     func snippetForDeleteRecommendRule() async throws {
         // >SEPARATOR deleteRecommendRule
         // Initialize the client
-        let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.deleteRecommendRule(
@@ -79,7 +79,7 @@ final class RecommendClientSnippet {
     func snippetForGetRecommendRule() async throws {
         // >SEPARATOR getRecommendRule
         // Initialize the client
-        let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.getRecommendRule(
@@ -96,7 +96,7 @@ final class RecommendClientSnippet {
     func snippetForGetRecommendStatus() async throws {
         // >SEPARATOR getRecommendStatus
         // Initialize the client
-        let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.getRecommendStatus(
@@ -113,7 +113,7 @@ final class RecommendClientSnippet {
     func snippetForGetRecommendations() async throws {
         // >SEPARATOR getRecommendations
         // Initialize the client
-        let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client
@@ -135,7 +135,7 @@ final class RecommendClientSnippet {
     func snippetForSearchRecommendRules() async throws {
         // >SEPARATOR searchRecommendRules
         // Initialize the client
-        let client = try RecommendClient(appId: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+        let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
         _ = try await client.searchRecommendRules(indexName: "indexName", model: RecommendModels.relatedProducts)

@@ -1,6 +1,5 @@
 import XCTest
 
-import AnyCodable
 import Utils
 
 @testable import Core
@@ -12,7 +11,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// allow del method for a custom path with minimal parameters
     func testCustomDeleteTest0() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -34,7 +33,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// allow del method for a custom path with all parameters
     func testCustomDeleteTest1() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -65,7 +64,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// allow get method for a custom path with minimal parameters
     func testCustomGetTest0() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -87,7 +86,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// allow get method for a custom path with all parameters
     func testCustomGetTest1() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -118,7 +117,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// requestOptions should be escaped too
     func testCustomGetTest2() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -168,7 +167,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// allow post method for a custom path with minimal parameters
     func testCustomPostTest0() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -196,7 +195,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// allow post method for a custom path with all parameters
     func testCustomPostTest1() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -234,7 +233,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// requestOptions can override default query parameters
     func testCustomPostTest2() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -277,7 +276,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// requestOptions merges query parameters with default ones
     func testCustomPostTest3() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -323,7 +322,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// requestOptions can override default headers
     func testCustomPostTest4() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -374,7 +373,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// requestOptions merges headers with default ones
     func testCustomPostTest5() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -425,7 +424,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts booleans
     func testCustomPostTest6() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -471,7 +470,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts integers
     func testCustomPostTest7() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -517,7 +516,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of string
     func testCustomPostTest8() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -563,7 +562,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of booleans
     func testCustomPostTest9() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -609,7 +608,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// requestOptions queryParameters accepts list of integers
     func testCustomPostTest10() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -655,7 +654,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// allow put method for a custom path with minimal parameters
     func testCustomPutTest0() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -683,7 +682,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// allow put method for a custom path with all parameters
     func testCustomPutTest1() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -721,7 +720,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// delete deleteUserProfile
     func testDeleteUserProfileTest0() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -743,7 +742,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// get getPersonalizationStrategy
     func testGetPersonalizationStrategyTest0() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -765,7 +764,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// get getUserTokenProfile
     func testGetUserTokenProfileTest0() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us
@@ -787,7 +786,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
 
     /// set setPersonalizationStrategy
     func testSetPersonalizationStrategyTest0() async throws {
-        let configuration: Personalization.Configuration = try Personalization.Configuration(
+        let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
             region: Region.us

@@ -227,7 +227,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -429,7 +429,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -631,7 +631,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -833,7 +833,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -1041,7 +1041,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -1307,7 +1307,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -1555,7 +1555,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -1763,7 +1763,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -1988,7 +1988,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -2194,7 +2194,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -2403,7 +2403,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -2658,7 +2658,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -2906,7 +2906,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -3114,7 +3114,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -3339,7 +3339,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -3545,7 +3545,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -3753,7 +3753,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -4053,7 +4053,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -4304,7 +4304,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -4510,7 +4510,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -4734,7 +4734,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -4938,7 +4938,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -5154,7 +5154,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -5368,7 +5368,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -5580,7 +5580,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -5832,7 +5832,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -6090,7 +6090,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -6296,7 +6296,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -6516,7 +6516,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -6716,7 +6716,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -6919,7 +6919,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -7122,7 +7122,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -7325,7 +7325,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -7535,7 +7535,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -7737,7 +7737,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -7977,7 +7977,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
@@ -8189,7 +8189,7 @@ paths:
           source: >
             // Initialize the client
 
-            let client = try IngestionClient(appId: "YOUR_APP_ID", apiKey:
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
             "YOUR_API_KEY", region: .us)
 
 
