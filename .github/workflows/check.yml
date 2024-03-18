@@ -364,9 +364,7 @@ jobs:
     timeout-minutes: 20
     runs-on: macos-latest
     needs:
-      - setup
-      - specs
-      - scripts
+      - client_gen
     if: |
       always() &&
       needs.setup.outputs.RUN_GEN == 'true' &&
