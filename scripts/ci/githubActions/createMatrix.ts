@@ -130,7 +130,6 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
     }
 
     clientMatrix.client.push({
-      runsOn: 'ubuntu-22.04',
       language,
       path: matrix[language].path,
       toRun,
@@ -142,20 +141,11 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
     });
   }
 
+  // If the base branch is `main`, we run the swift tests on macOS
   const swiftData = clientMatrix.client.find((c) => c.language === 'swift');
   if (swiftData) {
-    clientMatrix.client.push({
-      runsOn: 'macos-latest',
-      runsIf: "github.ref == 'refs/heads/main'",
-      language: 'swift',
-      path: swiftData.path,
-      toRun: swiftData.toRun,
-      buildCommand: swiftData.buildCommand,
-      testsRootFolder: swiftData.testsRootFolder,
-      testsToDelete: swiftData.testsToDelete,
-      testsToStore: swiftData.testsToStore,
-      snippetsToStore: swiftData.snippetsToStore,
-    });
+    core.setOutput('SWIFT_DATA', swiftData);
+    core.setOutput('RUN_MACOS_SWIFT_CTS', true);
   }
 
   const javascriptData = clientMatrix.client.find((c) => c.language === 'javascript');

@@ -12,14 +12,6 @@ export type CreateMatrix = {
 export type ClientMatrix = {
   client: Array<{
     /**
-     * The operating system to run the job on.
-     */
-    runsOn: 'macos-latest' | 'ubuntu-22.04';
-    /**
-     * The condition to run the job.
-     */
-    runsIf?: "github.ref == 'refs/heads/main'";
-    /**
      * Path to the file/folder being handled.
      */
     path: string;

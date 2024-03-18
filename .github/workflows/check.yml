@@ -282,9 +282,8 @@ jobs:
           path: clients-javascript.zip
 
   client_gen:
-    name: Generate ${{ fromJSON(needs.setup.outputs.GEN_MATRIX).client.language }} client on ${{ fromJSON(needs.setup.outputs.GEN_MATRIX).client.runsOn }}
     timeout-minutes: 20
-    runs-on: ${{ fromJSON(needs.setup.outputs.GEN_MATRIX).client.runsOn }}
+    runs-on: ubuntu-22.04
     needs:
       - setup
       - specs
@@ -294,7 +293,6 @@ jobs:
       needs.setup.outputs.RUN_GEN == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure') &&
-      ${{ fromJSON(needs.setup.outputs.GEN_MATRIX).client.runsIf || true }}
     strategy:
       fail-fast: false
       matrix: ${{ fromJSON(needs.setup.outputs.GEN_MATRIX) }}
@@ -358,6 +356,49 @@ jobs:
           if-no-files-found: error
           name: clients-${{matrix.client.language }}
           path: clients-${{matrix.client.language }}.zip
+
+  test_swift_macos:
+    name: Test Swift CTS on macOS
+    timeout-minutes: 20
+    runs-on: macos-latest
+    needs:
+      - setup
+      - specs
+      - scripts
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_GEN == 'true' &&
+      needs.setup.outputs.RUN_MACOS_SWIFT_CTS == 'true'
+      !contains(needs.*.result, 'cancelled') &&
+      !contains(needs.*.result, 'failure') &&
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.setup.outputs.GEN_MATRIX) }}
+    env:
+      ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
+      ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
+      MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download specs artifacts
+        uses: ./scripts/ci/actions/restore-artifacts
+        with:
+          type: specs
+
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          language: ${{ matrix.client.language }}
+
+      - name: Generate clients
+        run: yarn cli generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
+
+      - name: Generate CTS
+        run: yarn cli cts generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
+
+      - name: Run CTS
+        run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
   codegen:
     runs-on: ubuntu-22.04
