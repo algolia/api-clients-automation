@@ -154,7 +154,6 @@ noClickCount:
 
 date:
   type: string
-  format: date
   description: Date in the format YYYY-MM-DD.
   example: '2023-06-14'
 

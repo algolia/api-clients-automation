@@ -33,7 +33,6 @@ StartDate:
   description: Start date (`YYYY-MM-DD`) of the period to analyze.
   schema:
     type: string
-    format: date
     example: 2022-09-19
 
 EndDate:
@@ -42,7 +41,6 @@ EndDate:
   description: End date (`YYYY-MM-DD`) of the period to analyze.
   schema:
     type: string
-    format: date
     example: 2023-01-21
 
 ForwardToReplicas:
