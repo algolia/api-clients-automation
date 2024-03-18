@@ -391,9 +391,6 @@ jobs:
           type: minimal
           language: swift
 
-      - name: Generate CTS
-        run: yarn cli cts generate swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
-
       - name: Run CTS
         run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
 
