@@ -1,3 +1,7 @@
+## [9.0.0-alpha.12](https://github.com/algolia/algoliasearch-client-swift/compare/9.0.0-alpha.11...9.0.0-alpha.12)
+
+- [c897a8f92](https://github.com/algolia/api-clients-automation/commit/c897a8f92) feat(swift): release process ([#2864](https://github.com/algolia/api-clients-automation/pull/2864)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [9.0.0-alpha.11](https://github.com/algolia/algoliasearch-client-swift/compare/9.0.0-alpha.10...9.0.0-alpha.11)
 
 - [b89aa0ff6](https://github.com/algolia/api-clients-automation/commit/b89aa0ff6) fix(swift): improve DX ([#2800](https://github.com/algolia/api-clients-automation/pull/2800)) by [@Fluf22](https://github.com/Fluf22/)

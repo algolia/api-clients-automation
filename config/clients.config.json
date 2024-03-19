@@ -322,7 +322,7 @@
     ],
     "folder": "clients/algoliasearch-client-swift",
     "gitRepoId": "algoliasearch-client-swift",
-    "packageVersion": "9.0.0-alpha.11",
+    "packageVersion": "9.0.0-alpha.12",
     "modelFolder": "Sources",
     "apiFolder": "Sources",
     "dockerImage": "apic_swift",
