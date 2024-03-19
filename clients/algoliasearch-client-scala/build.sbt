@@ -23,6 +23,8 @@ developers += Developer(
   url("https://github.com/algolia/algoliasearch-client-scala/")
 )
 
+publishTo := sonatypePublishToBundle.value
+
 lazy val root = project
   .in(file("."))
   .enablePlugins(BuildInfoPlugin)
