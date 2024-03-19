@@ -96,6 +96,9 @@ jobs:
       JAVASCRIPT_DATA: ${{ steps.gen-matrix.outputs.JAVASCRIPT_DATA }}
       RUN_GEN_JAVASCRIPT: ${{ steps.gen-matrix.outputs.RUN_GEN_JAVASCRIPT }}
 
+      SWIFT_DATA: ${{ steps.gen-matrix.outputs.SWIFT_DATA }}
+      RUN_MACOS_SWIFT_CTS: ${{ steps.gen-matrix.outputs.RUN_MACOS_SWIFT_CTS }}
+
   scripts:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
@@ -283,7 +286,7 @@ jobs:
 
   client_gen:
     timeout-minutes: 20
-    runs-on: 'ubuntu-22.04'
+    runs-on: ubuntu-22.04
     needs:
       - setup
       - specs
@@ -357,6 +360,41 @@ jobs:
           name: clients-${{matrix.client.language }}
           path: clients-${{matrix.client.language }}.zip
 
+  swift_cts_macos:
+    timeout-minutes: 20
+    runs-on: macos-latest
+    needs:
+      - setup
+      - client_gen
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_GEN == 'true' &&
+      needs.setup.outputs.RUN_MACOS_SWIFT_CTS == 'true' &&
+      !contains(needs.*.result, 'cancelled') &&
+      !contains(needs.*.result, 'failure')
+    env:
+      ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
+      ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
+      MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: ./scripts/ci/actions/restore-artifacts
+        with:
+          type: languages
+          languages: |
+            swift
+
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          type: minimal
+          language: swift
+
+      - name: Run CTS
+        run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
+
   codegen:
     runs-on: ubuntu-22.04
     timeout-minutes: 15
@@ -364,8 +402,10 @@ jobs:
       - setup
       - client_gen
       - client_gen_javascript
+      - swift_cts_macos
     if: |
       always() &&
+      (needs.swift_cts_macos.result == 'success' || needs.swift_cts_macos.result == 'skipped') &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     outputs:

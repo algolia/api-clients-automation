@@ -9,7 +9,7 @@ import { createSpinner } from '../spinners';
 let timeoutCounter = 0;
 
 async function timeoutServer(): Promise<Server> {
-  const spinner = createSpinner('starting tiemout test server');
+  const spinner = createSpinner('starting timeout test server');
   const app = express();
   const port = 6677;
   app.get('/1/test/retry', (req, res) => {

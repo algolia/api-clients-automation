@@ -4,7 +4,11 @@ author: algolia
 inputs:
   type:
     required: true
-    description: Type of artifacts to restore (`all` | `specs`)
+    description: Type of artifacts to restore (`all` | `specs` | `languages`)
+  languages:
+    required: false
+    description: |
+      List of languages to restore (use the pipe character to put each language on its own line)
 runs:
   using: 'node20'
   main: './builddir/index.js'

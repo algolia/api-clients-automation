@@ -1,4 +1,5 @@
 import type {
+  Artifact,
   DownloadArtifactOptions,
   DownloadArtifactResponse,
   FindOptions,
@@ -36,15 +37,35 @@ async function restoreSpecs(): Promise<void> {
   core.info(`Downloaded artifact to ${res.downloadPath}`);
 }
 
+async function extractLanguageArtifact(
+  artifactClient: DefaultArtifactClient,
+  languageArtifact: Artifact,
+  languageName: string,
+): Promise<void> {
+  await download(artifactClient, languageArtifact.id);
+  await io.rmRF(`clients/algoliasearch-client-${languageName}`);
+  await exec(`unzip -q -o clients-${languageName}.zip`);
+  await io.rmRF(`clients-${languageName}.zip`);
+}
+
+async function restoreLanguage(language: string): Promise<void> {
+  const artifact = new DefaultArtifactClient();
+  const artifacts = await artifact.listArtifacts();
+  const langArtifact = artifacts.artifacts.find((a) => a.name === `clients-${language}`);
+  if (langArtifact === undefined) {
+    throw new Error(`No ${language} artifact found`);
+  }
+
+  await extractLanguageArtifact(artifact, langArtifact, language);
+}
+
 async function restoreLanguages(): Promise<void> {
   const artifact = new DefaultArtifactClient();
   const artifacts = await artifact.listArtifacts();
   for (const arti of artifacts.artifacts.filter((a) => a.name.startsWith('clients-'))) {
     const language = arti.name.replace('clients-', '');
-    await download(artifact, arti.id);
-    await io.rmRF(`clients/algoliasearch-client-${language}`);
-    await exec(`unzip -q -o clients-${language}.zip`);
-    await io.rmRF(`clients-${language}.zip`);
+
+    await extractLanguageArtifact(artifact, arti, language);
   }
 }
 
@@ -56,6 +77,12 @@ async function run(): Promise<void> {
     } else if (actionType === 'all') {
       await restoreSpecs();
       await restoreLanguages();
+    } else if (actionType === 'languages') {
+      const languages = core.getMultilineInput('languages');
+      await restoreSpecs();
+      for (const language of languages) {
+        await restoreLanguage(language);
+      }
     } else {
       throw new Error(`Unknown type: ${actionType}`);
     }
