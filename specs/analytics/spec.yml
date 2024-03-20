@@ -46,7 +46,7 @@ paths:
   # ######################
   # ### Custom request ###
   # ######################
-  /1{path}:
+  /2{path}:
     $ref: '../common/paths/customRequest.yml'
 
   # ##################################
