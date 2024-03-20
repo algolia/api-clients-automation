@@ -1,4 +1,4 @@
-{{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} enum {{classname}}: Codable, JSONEncodable, AbstractEncodable{{#vendorExtensions.x-swift-hashable}}, Hashable{{/vendorExtensions.x-swift-hashable}} {
+{{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} enum {{classname}}{{#vendorExtensions.x-has-child-generic}}<T: Codable>{{/vendorExtensions.x-has-child-generic}}: Codable, JSONEncodable, AbstractEncodable{{#vendorExtensions.x-swift-hashable}}, Hashable{{/vendorExtensions.x-swift-hashable}} {
     {{#oneOf}}
     case {{#lambda.camelcase}}{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}}{{/lambda.camelcase}}({{{.}}})
     {{/oneOf}}

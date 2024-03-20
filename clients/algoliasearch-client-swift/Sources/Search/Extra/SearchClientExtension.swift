@@ -307,7 +307,7 @@ public extension SearchClient {
     /// facets.
     /// Disclaimer: We don't assert that the parameters you pass to this method only contains `hits` requests to prevent
     /// impacting search performances, this helper is purely for typing purposes.
-    func searchForHits(
+    func searchForHitsWithResponse(
         searchMethodParams: SearchMethodParams,
         requestOptions: RequestOptions? = nil
     ) async throws -> [SearchResponse] {
@@ -320,6 +320,15 @@ public extension SearchClient {
                     break
                 }
             }
+    }
+
+    func searchForHits<T: Codable>(
+        searchMethodParams: SearchMethodParams,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> [T] {
+        try await self.searchForHitsWithResponse(searchMethodParams: searchMethodParams, requestOptions: requestOptions)
+            .map(\.hits)
+            .map { $0 as! T }
     }
 
     /// Helper: calls the `search` method but with certainty that we will only request Algolia facets and not records
