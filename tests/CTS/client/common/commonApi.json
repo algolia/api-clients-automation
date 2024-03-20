@@ -7,7 +7,7 @@
         "object": "$client",
         "path": "customPost",
         "parameters": {
-          "path": "/test"
+          "path": "/1/test"
         },
         "expected": {
           "type": "userAgent",
@@ -24,7 +24,7 @@
         "object": "$client",
         "path": "customGet",
         "parameters": {
-          "path": "/test"
+          "path": "/1/test"
         },
         "expected": {
           "type": "timeouts",
@@ -44,7 +44,7 @@
         "object": "$client",
         "path": "customPost",
         "parameters": {
-          "path": "/test"
+          "path": "/1/test"
         },
         "expected": {
           "type": "timeouts",
