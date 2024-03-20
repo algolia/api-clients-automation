@@ -2,17 +2,17 @@
   {
     "testName": "allow post method for a custom path with minimal parameters",
     "parameters": {
-      "path": "/test/minimal"
+      "path": "test/minimal"
     },
     "request": {
-      "path": "/1/test/minimal",
+      "path": "/test/minimal",
       "method": "POST"
     }
   },
   {
     "testName": "allow post method for a custom path with all parameters",
     "parameters": {
-      "path": "/test/all",
+      "path": "test/all",
       "parameters": {
         "query": "parameters"
       },
@@ -21,7 +21,7 @@
       }
     },
     "request": {
-      "path": "/1/test/all",
+      "path": "/test/all",
       "method": "POST",
       "body": {
         "body": "parameters"
@@ -34,7 +34,7 @@
   {
     "testName": "requestOptions can override default query parameters",
     "parameters": {
-      "path": "/test/requestOptions",
+      "path": "test/requestOptions",
       "parameters": {
         "query": "parameters"
       },
@@ -48,7 +48,7 @@
       }
     },
     "request": {
-      "path": "/1/test/requestOptions",
+      "path": "/test/requestOptions",
       "method": "POST",
       "body": {
         "facet": "filters"
@@ -61,7 +61,7 @@
   {
     "testName": "requestOptions merges query parameters with default ones",
     "parameters": {
-      "path": "/test/requestOptions",
+      "path": "test/requestOptions",
       "parameters": {
         "query": "parameters"
       },
@@ -75,7 +75,7 @@
       }
     },
     "request": {
-      "path": "/1/test/requestOptions",
+      "path": "/test/requestOptions",
       "method": "POST",
       "body": {
         "facet": "filters"
@@ -89,7 +89,7 @@
   {
     "testName": "requestOptions can override default headers",
     "parameters": {
-      "path": "/test/requestOptions",
+      "path": "test/requestOptions",
       "parameters": {
         "query": "parameters"
       },
@@ -103,7 +103,7 @@
       }
     },
     "request": {
-      "path": "/1/test/requestOptions",
+      "path": "/test/requestOptions",
       "method": "POST",
       "body": {
         "facet": "filters"
@@ -119,7 +119,7 @@
   {
     "testName": "requestOptions merges headers with default ones",
     "parameters": {
-      "path": "/test/requestOptions",
+      "path": "test/requestOptions",
       "parameters": {
         "query": "parameters"
       },
@@ -133,7 +133,7 @@
       }
     },
     "request": {
-      "path": "/1/test/requestOptions",
+      "path": "/test/requestOptions",
       "method": "POST",
       "body": {
         "facet": "filters"
@@ -149,7 +149,7 @@
   {
     "testName": "requestOptions queryParameters accepts booleans",
     "parameters": {
-      "path": "/test/requestOptions",
+      "path": "test/requestOptions",
       "parameters": {
         "query": "parameters"
       },
@@ -163,7 +163,7 @@
       }
     },
     "request": {
-      "path": "/1/test/requestOptions",
+      "path": "/test/requestOptions",
       "method": "POST",
       "body": {
         "facet": "filters"
@@ -177,7 +177,7 @@
   {
     "testName": "requestOptions queryParameters accepts integers",
     "parameters": {
-      "path": "/test/requestOptions",
+      "path": "test/requestOptions",
       "parameters": {
         "query": "parameters"
       },
@@ -191,7 +191,7 @@
       }
     },
     "request": {
-      "path": "/1/test/requestOptions",
+      "path": "/test/requestOptions",
       "method": "POST",
       "body": {
         "facet": "filters"
@@ -205,7 +205,7 @@
   {
     "testName": "requestOptions queryParameters accepts list of string",
     "parameters": {
-      "path": "/test/requestOptions",
+      "path": "test/requestOptions",
       "parameters": {
         "query": "parameters"
       },
@@ -222,7 +222,7 @@
       }
     },
     "request": {
-      "path": "/1/test/requestOptions",
+      "path": "/test/requestOptions",
       "method": "POST",
       "body": {
         "facet": "filters"
@@ -236,7 +236,7 @@
   {
     "testName": "requestOptions queryParameters accepts list of booleans",
     "parameters": {
-      "path": "/test/requestOptions",
+      "path": "test/requestOptions",
       "parameters": {
         "query": "parameters"
       },
@@ -254,7 +254,7 @@
       }
     },
     "request": {
-      "path": "/1/test/requestOptions",
+      "path": "/test/requestOptions",
       "method": "POST",
       "body": {
         "facet": "filters"
@@ -268,7 +268,7 @@
   {
     "testName": "requestOptions queryParameters accepts list of integers",
     "parameters": {
-      "path": "/test/requestOptions",
+      "path": "test/requestOptions",
       "parameters": {
         "query": "parameters"
       },
@@ -285,7 +285,7 @@
       }
     },
     "request": {
-      "path": "/1/test/requestOptions",
+      "path": "/test/requestOptions",
       "method": "POST",
       "body": {
         "facet": "filters"
