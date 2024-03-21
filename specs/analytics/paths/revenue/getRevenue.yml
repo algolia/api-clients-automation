@@ -1,13 +1,14 @@
 get:
   tags:
-    - search
-  operationId: getSearchesCount
+    - click
+  operationId: getRevenue
   x-acl:
     - analytics
-  summary: Retrieve number of searches.
+  summary: Retrieve revenue data.
   description: |
-    Retrieves the number of searches within a time range, including a daily breakdown.
+    Retrieves revenue-related metrics, such as the total revenue or the average order value.
 
+    To retrieve revenue-related metrics, sent purchase events.
     By default, the analyzed period includes the last eight days including the current day.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
@@ -17,40 +18,33 @@ get:
   responses:
     '200':
       description: OK
-      headers:
-        x-ratelimit-limit:
-          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
-        x-ratelimit-remaining:
-          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
-        x-ratelimit-reset:
-          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:
-            title: getSearchesCountResponse
+            title: getRevenue
             type: object
             additionalProperties: false
             required:
+              - currencies
               - dates
-              - count
             properties:
-              count:
-                $ref: '../../../common/parameters.yml#/count'
+              currencies:
+                $ref: '../../common/parameters.yml#/currencies'
               dates:
                 type: array
-                description: Daily number of searches.
+                description: Daily revenue.
                 items:
                   type: object
-                  title: dailySearches
+                  title: dailyRevenue
                   additionalProperties: false
                   required:
+                    - currencies
                     - date
-                    - count
                   properties:
+                    currencies:
+                      $ref: '../../common/parameters.yml#/currencies'
                     date:
                       $ref: '../../common/parameters.yml#/date'
-                    count:
-                      $ref: '../../../common/parameters.yml#/count'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

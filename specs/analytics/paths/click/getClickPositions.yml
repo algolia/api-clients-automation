@@ -4,12 +4,11 @@ get:
   operationId: getClickPositions
   x-acl:
     - analytics
-  summary: Get click positions.
+  summary: Retrieve click positions.
   description: |
-    Show the number of clicks events and their associated position in the search results.
+    Retrieves the positions in the search results and their associated number of clicks.
 
-    > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
-
+    This lets you check how many clicks the first, second, or tenth search results receive.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'
@@ -18,6 +17,13 @@ get:
   responses:
     '200':
       description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:
@@ -28,31 +34,7 @@ get:
               - positions
             properties:
               positions:
-                type: array
-                description: Click positions.
-                minItems: 2
-                maxItems: 2
-                items:
-                  type: object
-                  title: clickPosition
-                  additionalProperties: false
-                  required:
-                    - position
-                    - clickCount
-                  properties:
-                    position:
-                      description: >
-                        Range of positions with the following pattern:
-
-                        - For positions 1 to 10, the number of click events are shown for each position
-                        - For positions 11 to 20, all click events are grouped
-                        - For positions 21 and up, all click events are grouped.
-                      type: array
-                      example: [10, 10]
-                      items:
-                        type: integer
-                    clickCount:
-                      $ref: '../../common/parameters.yml#/clickCount'
+                $ref: '../../common/parameters.yml#/clickPositions'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

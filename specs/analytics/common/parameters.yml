@@ -6,30 +6,33 @@ Attribute:
   required: true
   schema:
     type: string
-    example: 'brand'
+    example: brand
 
 # query
 OrderBy:
   in: query
   name: orderBy
-  description: Reorder the results.
+  description: |
+    Attribute by which to order the response items.
+
+    If the `clickAnalytics` parameter is false, only `searchCount` is available.
   schema:
     $ref: '#/orderBy'
 
 # private
 orderBy:
   type: string
-  description: >
-    Method for ordering results.
+  description: |
+    Attribute by which to order the response items.
 
-    `clickThroughRate`, `conversionRate` and `averageClickPosition` are only available if the `clickAnalytics` parameter is `true`.
+    If the `clickAnalytics` parameter is false, only `searchCount` is available.
   enum: [searchCount, clickThroughRate, conversionRate, averageClickPosition]
   default: searchCount
 
 Direction:
   in: query
   name: direction
-  description: >
+  description: |
     Sorting direction of the results: ascending or descending.
   schema:
     $ref: '#/direction'
@@ -43,33 +46,55 @@ direction:
 ClickAnalytics:
   in: query
   name: clickAnalytics
-  description: Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search.
+  description: Whether to include metrics related to click and conversion events in the response.
+  schema:
+    type: boolean
+    default: false
+
+RevenueAnalytics:
+  in: query
+  name: revenueAnalytics
+  description: |
+    Whether to include revenue-related metrics in the response.
+
+    If true, metrics related to click and conversion events are also included in the response.
   schema:
     type: boolean
     default: false
 
 count:
-  description: Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).
+  description: Number of searches.
   type: integer
   example: 504
 
+trackedSearchCount:
+  type: integer
+  example: 2
+  default: 0
+  description: Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
+
 noResultCount:
-  description: Number of occurences.
+  description: Number of searches without any results.
   type: integer
   example: 54
 
 Search:
   in: query
   name: search
-  description: User query.
-  example: 'enable ab test'
+  description: Search query.
+  example: enable ab test
   schema:
     type: string
 
 Tags:
   name: tags
   in: query
-  description: Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+  description: |
+    Tags by which to segment the analytics.
+
+    You can combine multiple tags with `OR` and `AND`.
+    Tags must be URL-encoded.
+    For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
   example: 'device:mobile%20phone'
   schema:
     type: string
@@ -82,49 +107,178 @@ average:
   example: 2.3344634550185286
 
 averageClickPosition:
-  type: integer
-  description: Average [position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position) of clicked search result.
-  example: 1
+  type: number
+  format: double
+  description: |
+    Average position of a clicked search result in the list of search results.
+    If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+  nullable: true
+  minimum: 1.0
+  example: 2.035
+  default: null
+
+clickPositions:
+  type: array
+  description: List of positions in the search results and clicks associated with this search.
+  minItems: 12
+  maxItems: 12
+  items:
+    type: object
+    description: Click position.
+    properties:
+      position:
+        type: array
+        description: |
+          Range of positions in the search results, using the pattern `[start,end]`.
+
+          For positions 11 and up, click events are summed over the specified range.
+          `-1` indicates the end of the list of search results.
+        minItems: 2
+        maxItems: 2
+        example: [21, -1]
+        items:
+          type: integer
+      clickCount:
+        type: integer
+        description: Number of times this search has been clicked at that position.
+        example: 24
+        minimum: 0
+        default: 0
 
 clickCount:
   type: integer
-  description: Number of click events.
+  description: Number of clicks associated with this search.
   example: 162
+  minimum: 0
+  default: 0
+
+noClickCount:
+  type: integer
+  description: Number of times this search was returned as a result without any click.
+  example: 15
+  minimum: 1
 
 date:
   type: string
-  description: Date of the event in the format YYYY-MM-DD.
+  description: Date in the format YYYY-MM-DD.
   example: '2023-06-14'
 
-rate:
+clickThroughRate:
   type: number
   format: double
-  description: >
-    [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+  description: |
+    Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches.
+    If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+  nullable: true
   minimum: 0
   maximum: 1
-  example: 0.14634193523426317
+  default: null
+  example: 0.49
+
+noClickRate:
+  type: number
+  format: double
+  description: No click rate, calculated as number of tracked searches without any click divided by the number of tracked searches.
+  minimum: 0
+  maximum: 1
+  example: 0.15
+
+noResultsRate:
+  type: number
+  format: double
+  description: No results rate, calculated as number of searches with zero results divided by the total number of searches.
+  minimum: 0
+  maximum: 1
+  example: 0.49
 
 conversionRate:
   type: number
   format: double
-  description: >
-    [Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
-  example: 0
+  description: |
+    Conversion rate, calculated as number of tracked searches with at least one conversion event divided by the number of tracked searches.
+    If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+  nullable: true
+  minimum: 0
+  maximum: 1
+  default: null
+  example: 0.05
 
 conversionCount:
   type: integer
-  description: Number of converted clicks.
-  example: 0
+  description: Number of conversions from this search.
+  example: 10
+  minimum: 0
+  default: 0
+
+addToCartRate:
+  type: number
+  format: double
+  description: |
+    Add-to-cart rate, calculated as number of tracked searches with at least one add-to-cart event divided by the number of tracked searches.
+    If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+  nullable: true
+  minimum: 0
+  maximum: 1
+  default: null
+  example: 0.1
+
+addToCartCount:
+  type: integer
+  description: Number of add-to-cart events from this search.
+  minimum: 0
+  default: 0
+  example: 10
+
+purchaseRate:
+  type: number
+  format: double
+  description: |
+    Purchase rate, calculated as number of tracked searches with at least one purchase event divided by the number of tracked searches.
+    If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+  nullable: true
+  minimum: 0
+  maximum: 1
+  default: null
+  example: 0.05
+
+purchaseCount:
+  type: integer
+  description: Number of purchase events from this search.
+  default: 0
+  example: 10
+
+currencies:
+  type: object
+  description: Revenue associated with this search, broken-down by currencies.
+  default: {}
+  additionalProperties:
+    x-additionalPropertiesName: currency
+    type: object
+    description: Currency code.
+    properties:
+      currency:
+        type: string
+        description: Currency code.
+        example: USD
+      revenue:
+        type: number
+        format: float
+        description: Revenue associated with this search in this currency.
+        example: 999.98
 
 attribute:
   description: Attribute name.
   type: string
-  example: 'url'
+  example: url
 
 operator:
-  description: Operator.
+  description: |
+    Character that characterizes how the filter is applied.
+
+    For example, for a facet filter `facet:value`, `:` is the operator.
+    For a numeric filter `count>50`, `>` is the operator.
   type: string
+  enum: [':', <, <=, =, '!=', '>', '>=']
   example: ':'
 
 value:
@@ -133,11 +287,36 @@ value:
   example: 'integration'
 
 search:
-  description: User query.
+  description: Search query.
   example: 'separator'
   type: string
 
 hit:
-  description: Hit.
+  description: Object ID of a record that's returned as a search result.
   type: string
   example: 'method-export-rules-php'
+
+withFilterCount:
+  type: integer
+  description: Number of searches for this term with applied filters.
+  example: 5
+  minimum: 0
+  default: 0
+
+x-ratelimit-limit:
+  description: Number of allowed requests per one minute.
+  example: 100
+  schema:
+    type: integer
+
+x-ratelimit-remaining:
+  description: Number of remaining requests in the current period.
+  example: 99
+  schema:
+    type: integer
+
+x-ratelimit-reset:
+  description: Timestamp in Unix epoch time when the rate limit will reset.
+  example: 1710682486
+  schema:
+    type: integer

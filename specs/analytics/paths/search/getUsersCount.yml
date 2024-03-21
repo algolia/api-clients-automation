@@ -1,11 +1,21 @@
 get:
   tags:
-    - search
+    - user
   operationId: getUsersCount
   x-acl:
     - analytics
-  summary: Get user count.
-  description: Return the count of unique users.
+  summary: Retrieve number of users.
+  description: |
+    Retrieves the number of unique users within a time range, including a daily breakdown.
+
+    Since this endpoint returns the number of unique users, the sum of the daily values might be different from the total number.
+
+    By default, Algolia distinguishes search users by their IP address, _unless_ you include a pseudonymous user identifier in your search requests with the `userToken` API parameter or `x-algolia-usertoken` request header.
+    By default, the analyzed period includes the last eight days including the current day.
+  externalDocs:
+    url: https://www.algolia.com/doc/guides/search-analytics/guides/usertoken/
+    description: |
+      Related guide: Distinguish users for analytics.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'
@@ -14,6 +24,13 @@ get:
   responses:
     '200':
       description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:
@@ -25,13 +42,14 @@ get:
               - count
             properties:
               count:
-                $ref: '../../../common/parameters.yml#/count'
+                type: integer
+                description: Number of unique users.
               dates:
                 type: array
-                description: User count.
+                description: Daily number of unique users.
                 items:
                   type: object
-                  title: userWithDate
+                  title: dailyUsers
                   additionalProperties: false
                   required:
                     - date
@@ -40,7 +58,8 @@ get:
                     date:
                       $ref: '../../common/parameters.yml#/date'
                     count:
-                      $ref: '../../../common/parameters.yml#/count'
+                      type: integer
+                      description: Number of unique users.
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

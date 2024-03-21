@@ -33,7 +33,6 @@ StartDate:
   description: Start date (`YYYY-MM-DD`) of the period to analyze.
   schema:
     type: string
-    format: date
     example: 2022-09-19
 
 EndDate:
@@ -42,7 +41,6 @@ EndDate:
   description: End date (`YYYY-MM-DD`) of the period to analyze.
   schema:
     type: string
-    format: date
     example: 2023-01-21
 
 ForwardToReplicas:
@@ -139,13 +137,6 @@ page:
   type: integer
   minimum: 0
   description: Requested page of the API response.
-
-trackedSearchCount:
-  oneOf:
-    - type: integer
-      example: 2
-      description: Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
-    - type: 'null'
 
 count:
   description: Number of occurrences.

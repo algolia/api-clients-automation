@@ -17,6 +17,7 @@
     "parameters": {
       "index": "index",
       "clickAnalytics": true,
+      "revenueAnalytics": true,
       "startDate": "1999-09-19",
       "endDate": "2001-01-01",
       "orderBy": "searchCount",
@@ -31,6 +32,7 @@
       "queryParameters": {
         "index": "index",
         "clickAnalytics": "true",
+        "revenueAnalytics": "true",
         "startDate": "1999-09-19",
         "endDate": "2001-01-01",
         "orderBy": "searchCount",

@@ -4,8 +4,11 @@ get:
   operationId: getClickThroughRate
   x-acl:
     - analytics
-  summary: Get click-through rate (CTR).
-  description: Returns a [click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+  summary: Retrieve click-through rate.
+  description: |
+    Retrieves the click-through rate for all of your searches with at least one click event, including a daily breakdown
+
+    By default, the analyzed period includes the last eight days including the current day.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'
@@ -14,6 +17,13 @@ get:
   responses:
     '200':
       description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:
@@ -27,17 +37,17 @@ get:
               - rate
             properties:
               rate:
-                $ref: '../../common/parameters.yml#/rate'
+                $ref: '../../common/parameters.yml#/clickThroughRate'
               clickCount:
                 $ref: '../../common/parameters.yml#/clickCount'
               trackedSearchCount:
-                $ref: '../../../common/parameters.yml#/trackedSearchCount'
+                $ref: '../../common/parameters.yml#/trackedSearchCount'
               dates:
                 type: array
-                description: Click-through rate events.
+                description: Daily click-through rates.
                 items:
                   type: object
-                  title: clickThroughRateEvent
+                  title: dailyClickThroughRates
                   additionalProperties: false
                   required:
                     - rate
@@ -46,11 +56,11 @@ get:
                     - date
                   properties:
                     rate:
-                      $ref: '../../common/parameters.yml#/rate'
+                      $ref: '../../common/parameters.yml#/clickThroughRate'
                     clickCount:
                       $ref: '../../common/parameters.yml#/clickCount'
                     trackedSearchCount:
-                      $ref: '../../../common/parameters.yml#/trackedSearchCount'
+                      $ref: '../../common/parameters.yml#/trackedSearchCount'
                     date:
                       $ref: '../../common/parameters.yml#/date'
     '400':

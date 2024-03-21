@@ -1,11 +1,11 @@
 get:
   tags:
-    - search
+    - click
   operationId: getSearchesNoClicks
   x-acl:
     - analytics
-  summary: Get top searches with no clicks.
-  description: Return the most popular of the last 1,000 searches that didn't lead to any clicks.
+  summary: Retrieve top searches without clicks.
+  description: Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most frequent searches.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'
@@ -16,6 +16,13 @@ get:
   responses:
     '200':
       description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:
@@ -27,22 +34,25 @@ get:
             properties:
               searches:
                 type: array
-                description: Searches with no clicks.
+                description: Searches without any clicks.
                 items:
                   type: object
-                  title: searchNoClickEvent
+                  title: dailySearchesNoClicks
                   additionalProperties: false
                   required:
                     - search
                     - count
-                    - withFilterCount
+                    - nbHits
                   properties:
                     search:
                       $ref: '../../common/parameters.yml#/search'
                     count:
-                      $ref: '../../../common/parameters.yml#/count'
-                    withFilterCount:
-                      $ref: '../../../common/parameters.yml#/count'
+                      type: integer
+                      description: Number of tracked searches.
+                      minimum: 1
+                      example: 7
+                    nbHits:
+                      $ref: '../../../search/common/schemas/SearchResponse.yml#/nbHits'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

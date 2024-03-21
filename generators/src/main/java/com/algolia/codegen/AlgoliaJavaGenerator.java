@@ -107,6 +107,20 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     switch (value) {
       case "*":
         return "ALL";
+      case ":":
+        return "APPLY";
+      case "=":
+        return "EQUALS";
+      case "!=":
+        return "NOT_EQUALS";
+      case "<":
+        return "LESS_THAN";
+      case "<=":
+        return "LESS_EQUALS";
+      case ">":
+        return "GREATER_THAN";
+      case ">=":
+        return "GREATER_EQUALS";
     }
 
     if (!value.matches("[A-Z0-9_]+")) {
