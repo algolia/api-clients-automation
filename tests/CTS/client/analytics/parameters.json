@@ -43,7 +43,7 @@
         "object": "$client",
         "path": "customPost",
         "parameters": {
-          "path": "/test"
+          "path": "test"
         },
         "expected": {
           "type": "host",

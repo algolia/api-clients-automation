@@ -2,23 +2,23 @@
   {
     "testName": "allow del method for a custom path with minimal parameters",
     "parameters": {
-      "path": "/test/minimal"
+      "path": "test/minimal"
     },
     "request": {
-      "path": "/1/test/minimal",
+      "path": "/test/minimal",
       "method": "DELETE"
     }
   },
   {
     "testName": "allow del method for a custom path with all parameters",
     "parameters": {
-      "path": "/test/all",
+      "path": "test/all",
       "parameters": {
         "query": "parameters"
       }
     },
     "request": {
-      "path": "/1/test/all",
+      "path": "/test/all",
       "method": "DELETE",
       "queryParameters": {
         "query": "parameters"
