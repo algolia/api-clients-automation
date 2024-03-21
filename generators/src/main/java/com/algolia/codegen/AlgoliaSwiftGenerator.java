@@ -306,6 +306,56 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     return models;
   }
 
+  private Iterator getCurrentIterator(int i, CodegenModel cm) {
+    List<List<CodegenProperty>> varContainers = List.of(cm.vars, cm.allVars, cm.requiredVars, cm.optionalVars);
+    return varContainers.get(i).iterator();
+  }
+
+  @Override
+  public ModelsMap postProcessModels(ModelsMap modelsMap) {
+    ModelsMap processedModels = this.postProcessModelsEnum(modelsMap);
+
+    // Iterate through each model
+    for (ModelMap modelMap : processedModels.getModels()) {
+      CodegenModel codegenModel = modelMap.getModel();
+      var codegenModelVars = List
+        .of(codegenModel.vars, codegenModel.allVars, codegenModel.requiredVars, codegenModel.optionalVars)
+        .stream()
+        .flatMap(Collection::stream)
+        .toList();
+      boolean modelHasEscapedPropertyName = false;
+
+      // Iterate through each property of the model
+      for (CodegenProperty property : codegenModelVars) {
+        // Check if property name is different from base name
+        if (!property.name.equals(property.baseName)) {
+          property.vendorExtensions.put("x-codegen-escaped-property-name", true);
+          modelHasEscapedPropertyName = true;
+        }
+
+        // Check if the property is null encodable
+        if (
+          property.vendorExtensions.containsKey("x-null-encodable") &&
+          property.vendorExtensions.get("x-null-encodable").toString().equals("true")
+        ) {
+          // Set null encodable default value
+          if (property.defaultValue != null && !property.defaultValue.equals("null")) {
+            property.vendorExtensions.put("x-null-encodable-default-value", ".encodeValue(" + property.defaultValue + ")");
+          } else {
+            property.vendorExtensions.put("x-null-encodable-default-value", ".encodeNull");
+          }
+        }
+      }
+
+      // Set vendor extension if model has properties with escaped names
+      if (modelHasEscapedPropertyName) {
+        codegenModel.vendorExtensions.put("x-codegen-has-escaped-property-names", true);
+      }
+    }
+
+    return processedModels;
+  }
+
   @Override
   public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
     return Helpers.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
