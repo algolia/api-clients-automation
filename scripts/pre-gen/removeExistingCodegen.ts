@@ -13,7 +13,7 @@ export async function removeExistingCodegen({
   client,
   output,
 }: Generator): Promise<void> {
-  const folder = getLanguageFolder(language);
+  let folder = getLanguageFolder(language);
   let baseModelFolder = getLanguageModelFolder(language);
   let baseApiFolder = getLanguageApiFolder(language);
   const clientName = createClientName(client, language);
@@ -22,6 +22,9 @@ export async function removeExistingCodegen({
   let clientApi = '';
 
   switch (language) {
+    case 'dart':
+      folder = output;
+      break;
     case 'csharp':
       clientModel = clientName;
       clientApi = `${clientName}*.cs`;
@@ -35,6 +38,8 @@ export async function removeExistingCodegen({
       clientApi = `${clientName}*.java`;
       break;
     case 'javascript':
+      folder = output;
+
       // We want to also delete the nested `lite` client or folders that only exists in JS
       if (clientName === 'algoliasearch') {
         await fsp.rm(toAbsolutePath(path.resolve('..', output, 'lite')), {
@@ -48,6 +53,7 @@ export async function removeExistingCodegen({
         force: true,
         recursive: true,
       });
+
       break;
     case 'kotlin':
       clientModel = clientName.toLowerCase();
