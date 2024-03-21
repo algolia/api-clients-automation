@@ -64,7 +64,7 @@ class SnippetQuerySuggestionsClient
 
         // Call the API
         $response = $client->customDelete(
-            '/test/minimal',
+            'test/minimal',
         );
 
         // play with the response
@@ -85,7 +85,7 @@ class SnippetQuerySuggestionsClient
 
         // Call the API
         $response = $client->customGet(
-            '/test/minimal',
+            'test/minimal',
         );
 
         // play with the response
@@ -106,7 +106,7 @@ class SnippetQuerySuggestionsClient
 
         // Call the API
         $response = $client->customPost(
-            '/test/minimal',
+            'test/minimal',
         );
 
         // play with the response
@@ -127,7 +127,7 @@ class SnippetQuerySuggestionsClient
 
         // Call the API
         $response = $client->customPut(
-            '/test/minimal',
+            'test/minimal',
         );
 
         // play with the response

@@ -18,10 +18,10 @@ class TestPersonalizationClient < Test::Unit::TestCase
 
   # allow del method for a custom path with minimal parameters
   def test_custom_delete0
-    req = @client.custom_delete_with_http_info("/test/minimal")
+    req = @client.custom_delete_with_http_info("test/minimal")
 
     assert_equal(:delete, req.method)
-    assert_equal('/1/test/minimal', req.path)
+    assert_equal('/test/minimal', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -30,10 +30,10 @@ class TestPersonalizationClient < Test::Unit::TestCase
 
   # allow del method for a custom path with all parameters
   def test_custom_delete1
-    req = @client.custom_delete_with_http_info("/test/all", { query: "parameters" })
+    req = @client.custom_delete_with_http_info("test/all", { query: "parameters" })
 
     assert_equal(:delete, req.method)
-    assert_equal('/1/test/all', req.path)
+    assert_equal('/test/all', req.path)
     assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -42,10 +42,10 @@ class TestPersonalizationClient < Test::Unit::TestCase
 
   # allow get method for a custom path with minimal parameters
   def test_custom_get0
-    req = @client.custom_get_with_http_info("/test/minimal")
+    req = @client.custom_get_with_http_info("test/minimal")
 
     assert_equal(:get, req.method)
-    assert_equal('/1/test/minimal', req.path)
+    assert_equal('/test/minimal', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -55,12 +55,12 @@ class TestPersonalizationClient < Test::Unit::TestCase
   # allow get method for a custom path with all parameters
   def test_custom_get1
     req = @client.custom_get_with_http_info(
-      "/test/all",
+      "test/all",
       { query: "parameters with space" }
     )
 
     assert_equal(:get, req.method)
-    assert_equal('/1/test/all', req.path)
+    assert_equal('/test/all', req.path)
     assert_equal({ 'query': "parameters%20with%20space" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -70,7 +70,7 @@ class TestPersonalizationClient < Test::Unit::TestCase
   # requestOptions should be escaped too
   def test_custom_get2
     req = @client.custom_get_with_http_info(
-      "/test/all",
+      "test/all",
       { query: "to be overriden" },
       {
         :header_params => JSON.parse(
@@ -84,7 +84,7 @@ class TestPersonalizationClient < Test::Unit::TestCase
     )
 
     assert_equal(:get, req.method)
-    assert_equal('/1/test/all', req.path)
+    assert_equal('/test/all', req.path)
     assert_equal(
       { 'query': "parameters%20with%20space",
         'and%20an%20array': "array%2Cwith%20spaces" }.to_a,
@@ -99,10 +99,10 @@ class TestPersonalizationClient < Test::Unit::TestCase
 
   # allow post method for a custom path with minimal parameters
   def test_custom_post0
-    req = @client.custom_post_with_http_info("/test/minimal")
+    req = @client.custom_post_with_http_info("test/minimal")
 
     assert_equal(:post, req.method)
-    assert_equal('/1/test/minimal', req.path)
+    assert_equal('/test/minimal', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{}'), JSON.parse(req.body))
@@ -111,13 +111,13 @@ class TestPersonalizationClient < Test::Unit::TestCase
   # allow post method for a custom path with all parameters
   def test_custom_post1
     req = @client.custom_post_with_http_info(
-      "/test/all",
+      "test/all",
       { query: "parameters" },
       { body: "parameters" }
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/test/all', req.path)
+    assert_equal('/test/all', req.path)
     assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"body":"parameters"}'), JSON.parse(req.body))
@@ -126,14 +126,14 @@ class TestPersonalizationClient < Test::Unit::TestCase
   # requestOptions can override default query parameters
   def test_custom_post2
     req = @client.custom_post_with_http_info(
-      "/test/requestOptions",
+      "test/requestOptions",
       { query: "parameters" },
       { facet: "filters" },
       { :query_params => JSON.parse('{"query":"myQueryParameter"}', :symbolize_names => true) }
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/test/requestOptions', req.path)
+    assert_equal('/test/requestOptions', req.path)
     assert_equal({ 'query': "myQueryParameter" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
@@ -142,14 +142,14 @@ class TestPersonalizationClient < Test::Unit::TestCase
   # requestOptions merges query parameters with default ones
   def test_custom_post3
     req = @client.custom_post_with_http_info(
-      "/test/requestOptions",
+      "test/requestOptions",
       { query: "parameters" },
       { facet: "filters" },
       { :query_params => JSON.parse('{"query2":"myQueryParameter"}', :symbolize_names => true) }
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/test/requestOptions', req.path)
+    assert_equal('/test/requestOptions', req.path)
     assert_equal(
       { 'query': "parameters", 'query2': "myQueryParameter" }.to_a,
       req.query_params.to_a
@@ -161,14 +161,14 @@ class TestPersonalizationClient < Test::Unit::TestCase
   # requestOptions can override default headers
   def test_custom_post4
     req = @client.custom_post_with_http_info(
-      "/test/requestOptions",
+      "test/requestOptions",
       { query: "parameters" },
       { facet: "filters" },
       { :header_params => JSON.parse('{"x-algolia-api-key":"myApiKey"}', :symbolize_names => true) }
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/test/requestOptions', req.path)
+    assert_equal('/test/requestOptions', req.path)
     assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(
       ({ 'x-algolia-api-key': "myApiKey" }.transform_keys(&:to_s).to_a - req.headers.to_a).empty?, req.headers.to_s
@@ -179,14 +179,14 @@ class TestPersonalizationClient < Test::Unit::TestCase
   # requestOptions merges headers with default ones
   def test_custom_post5
     req = @client.custom_post_with_http_info(
-      "/test/requestOptions",
+      "test/requestOptions",
       { query: "parameters" },
       { facet: "filters" },
       { :header_params => JSON.parse('{"x-algolia-api-key":"myApiKey"}', :symbolize_names => true) }
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/test/requestOptions', req.path)
+    assert_equal('/test/requestOptions', req.path)
     assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(
       ({ 'x-algolia-api-key': "myApiKey" }.transform_keys(&:to_s).to_a - req.headers.to_a).empty?, req.headers.to_s
@@ -197,14 +197,14 @@ class TestPersonalizationClient < Test::Unit::TestCase
   # requestOptions queryParameters accepts booleans
   def test_custom_post6
     req = @client.custom_post_with_http_info(
-      "/test/requestOptions",
+      "test/requestOptions",
       { query: "parameters" },
       { facet: "filters" },
       { :query_params => JSON.parse('{"isItWorking":true}', :symbolize_names => true) }
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/test/requestOptions', req.path)
+    assert_equal('/test/requestOptions', req.path)
     assert_equal({ 'query': "parameters", 'isItWorking': "true" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
@@ -213,14 +213,14 @@ class TestPersonalizationClient < Test::Unit::TestCase
   # requestOptions queryParameters accepts integers
   def test_custom_post7
     req = @client.custom_post_with_http_info(
-      "/test/requestOptions",
+      "test/requestOptions",
       { query: "parameters" },
       { facet: "filters" },
       { :query_params => JSON.parse('{"myParam":2}', :symbolize_names => true) }
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/test/requestOptions', req.path)
+    assert_equal('/test/requestOptions', req.path)
     assert_equal({ 'query': "parameters", 'myParam': "2" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
@@ -229,14 +229,14 @@ class TestPersonalizationClient < Test::Unit::TestCase
   # requestOptions queryParameters accepts list of string
   def test_custom_post8
     req = @client.custom_post_with_http_info(
-      "/test/requestOptions",
+      "test/requestOptions",
       { query: "parameters" },
       { facet: "filters" },
       { :query_params => JSON.parse('{"myParam":["b and c","d"]}', :symbolize_names => true) }
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/test/requestOptions', req.path)
+    assert_equal('/test/requestOptions', req.path)
     assert_equal(
       { 'query': "parameters", 'myParam': "b%20and%20c%2Cd" }.to_a,
       req.query_params.to_a
@@ -248,14 +248,14 @@ class TestPersonalizationClient < Test::Unit::TestCase
   # requestOptions queryParameters accepts list of booleans
   def test_custom_post9
     req = @client.custom_post_with_http_info(
-      "/test/requestOptions",
+      "test/requestOptions",
       { query: "parameters" },
       { facet: "filters" },
       { :query_params => JSON.parse('{"myParam":[true,true,false]}', :symbolize_names => true) }
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/test/requestOptions', req.path)
+    assert_equal('/test/requestOptions', req.path)
     assert_equal(
       { 'query': "parameters", 'myParam': "true%2Ctrue%2Cfalse" }.to_a,
       req.query_params.to_a
@@ -267,14 +267,14 @@ class TestPersonalizationClient < Test::Unit::TestCase
   # requestOptions queryParameters accepts list of integers
   def test_custom_post10
     req = @client.custom_post_with_http_info(
-      "/test/requestOptions",
+      "test/requestOptions",
       { query: "parameters" },
       { facet: "filters" },
       { :query_params => JSON.parse('{"myParam":[1,2]}', :symbolize_names => true) }
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/test/requestOptions', req.path)
+    assert_equal('/test/requestOptions', req.path)
     assert_equal({ 'query': "parameters", 'myParam': "1%2C2" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"facet":"filters"}'), JSON.parse(req.body))
@@ -282,10 +282,10 @@ class TestPersonalizationClient < Test::Unit::TestCase
 
   # allow put method for a custom path with minimal parameters
   def test_custom_put0
-    req = @client.custom_put_with_http_info("/test/minimal")
+    req = @client.custom_put_with_http_info("test/minimal")
 
     assert_equal(:put, req.method)
-    assert_equal('/1/test/minimal', req.path)
+    assert_equal('/test/minimal', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{}'), JSON.parse(req.body))
@@ -294,13 +294,13 @@ class TestPersonalizationClient < Test::Unit::TestCase
   # allow put method for a custom path with all parameters
   def test_custom_put1
     req = @client.custom_put_with_http_info(
-      "/test/all",
+      "test/all",
       { query: "parameters" },
       { body: "parameters" }
     )
 
     assert_equal(:put, req.method)
-    assert_equal('/1/test/all', req.path)
+    assert_equal('/test/all', req.path)
     assert_equal({ 'query': "parameters" }.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"body":"parameters"}'), JSON.parse(req.body))

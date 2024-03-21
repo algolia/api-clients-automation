@@ -76,10 +76,10 @@ class TestQuerySuggestionsClient:
         allow del method for a custom path with minimal parameters
         """
         _req = await self._client.custom_delete_with_http_info(
-            path="/test/minimal",
+            path="test/minimal",
         )
 
-        assert _req.path == "/1/test/minimal"
+        assert _req.path == "/test/minimal"
         assert _req.verb == "DELETE"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -90,13 +90,13 @@ class TestQuerySuggestionsClient:
         allow del method for a custom path with all parameters
         """
         _req = await self._client.custom_delete_with_http_info(
-            path="/test/all",
+            path="test/all",
             parameters={
                 "query": "parameters",
             },
         )
 
-        assert _req.path == "/1/test/all"
+        assert _req.path == "/test/all"
         assert _req.verb == "DELETE"
         assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
@@ -107,10 +107,10 @@ class TestQuerySuggestionsClient:
         allow get method for a custom path with minimal parameters
         """
         _req = await self._client.custom_get_with_http_info(
-            path="/test/minimal",
+            path="test/minimal",
         )
 
-        assert _req.path == "/1/test/minimal"
+        assert _req.path == "/test/minimal"
         assert _req.verb == "GET"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -121,13 +121,13 @@ class TestQuerySuggestionsClient:
         allow get method for a custom path with all parameters
         """
         _req = await self._client.custom_get_with_http_info(
-            path="/test/all",
+            path="test/all",
             parameters={
                 "query": "parameters with space",
             },
         )
 
-        assert _req.path == "/1/test/all"
+        assert _req.path == "/test/all"
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
@@ -141,7 +141,7 @@ class TestQuerySuggestionsClient:
         requestOptions should be escaped too
         """
         _req = await self._client.custom_get_with_http_info(
-            path="/test/all",
+            path="test/all",
             parameters={
                 "query": "to be overriden",
             },
@@ -153,7 +153,7 @@ class TestQuerySuggestionsClient:
             },
         )
 
-        assert _req.path == "/1/test/all"
+        assert _req.path == "/test/all"
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
@@ -170,10 +170,10 @@ class TestQuerySuggestionsClient:
         allow post method for a custom path with minimal parameters
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/minimal",
+            path="test/minimal",
         )
 
-        assert _req.path == "/1/test/minimal"
+        assert _req.path == "/test/minimal"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -184,7 +184,7 @@ class TestQuerySuggestionsClient:
         allow post method for a custom path with all parameters
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/all",
+            path="test/all",
             parameters={
                 "query": "parameters",
             },
@@ -193,7 +193,7 @@ class TestQuerySuggestionsClient:
             },
         )
 
-        assert _req.path == "/1/test/all"
+        assert _req.path == "/test/all"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
@@ -204,7 +204,7 @@ class TestQuerySuggestionsClient:
         requestOptions can override default query parameters
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/requestOptions",
+            path="test/requestOptions",
             parameters={
                 "query": "parameters",
             },
@@ -216,7 +216,7 @@ class TestQuerySuggestionsClient:
             },
         )
 
-        assert _req.path == "/1/test/requestOptions"
+        assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {"query": "myQueryParameter"}.items()
         assert _req.headers.items() >= {}.items()
@@ -227,7 +227,7 @@ class TestQuerySuggestionsClient:
         requestOptions merges query parameters with default ones
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/requestOptions",
+            path="test/requestOptions",
             parameters={
                 "query": "parameters",
             },
@@ -239,7 +239,7 @@ class TestQuerySuggestionsClient:
             },
         )
 
-        assert _req.path == "/1/test/requestOptions"
+        assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
@@ -253,7 +253,7 @@ class TestQuerySuggestionsClient:
         requestOptions can override default headers
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/requestOptions",
+            path="test/requestOptions",
             parameters={
                 "query": "parameters",
             },
@@ -265,7 +265,7 @@ class TestQuerySuggestionsClient:
             },
         )
 
-        assert _req.path == "/1/test/requestOptions"
+        assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
@@ -276,7 +276,7 @@ class TestQuerySuggestionsClient:
         requestOptions merges headers with default ones
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/requestOptions",
+            path="test/requestOptions",
             parameters={
                 "query": "parameters",
             },
@@ -288,7 +288,7 @@ class TestQuerySuggestionsClient:
             },
         )
 
-        assert _req.path == "/1/test/requestOptions"
+        assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
@@ -299,7 +299,7 @@ class TestQuerySuggestionsClient:
         requestOptions queryParameters accepts booleans
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/requestOptions",
+            path="test/requestOptions",
             parameters={
                 "query": "parameters",
             },
@@ -311,7 +311,7 @@ class TestQuerySuggestionsClient:
             },
         )
 
-        assert _req.path == "/1/test/requestOptions"
+        assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
@@ -325,7 +325,7 @@ class TestQuerySuggestionsClient:
         requestOptions queryParameters accepts integers
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/requestOptions",
+            path="test/requestOptions",
             parameters={
                 "query": "parameters",
             },
@@ -337,7 +337,7 @@ class TestQuerySuggestionsClient:
             },
         )
 
-        assert _req.path == "/1/test/requestOptions"
+        assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
@@ -351,7 +351,7 @@ class TestQuerySuggestionsClient:
         requestOptions queryParameters accepts list of string
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/requestOptions",
+            path="test/requestOptions",
             parameters={
                 "query": "parameters",
             },
@@ -363,7 +363,7 @@ class TestQuerySuggestionsClient:
             },
         )
 
-        assert _req.path == "/1/test/requestOptions"
+        assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
@@ -377,7 +377,7 @@ class TestQuerySuggestionsClient:
         requestOptions queryParameters accepts list of booleans
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/requestOptions",
+            path="test/requestOptions",
             parameters={
                 "query": "parameters",
             },
@@ -389,7 +389,7 @@ class TestQuerySuggestionsClient:
             },
         )
 
-        assert _req.path == "/1/test/requestOptions"
+        assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
@@ -403,7 +403,7 @@ class TestQuerySuggestionsClient:
         requestOptions queryParameters accepts list of integers
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/requestOptions",
+            path="test/requestOptions",
             parameters={
                 "query": "parameters",
             },
@@ -415,7 +415,7 @@ class TestQuerySuggestionsClient:
             },
         )
 
-        assert _req.path == "/1/test/requestOptions"
+        assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
@@ -429,10 +429,10 @@ class TestQuerySuggestionsClient:
         allow put method for a custom path with minimal parameters
         """
         _req = await self._client.custom_put_with_http_info(
-            path="/test/minimal",
+            path="test/minimal",
         )
 
-        assert _req.path == "/1/test/minimal"
+        assert _req.path == "/test/minimal"
         assert _req.verb == "PUT"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -443,7 +443,7 @@ class TestQuerySuggestionsClient:
         allow put method for a custom path with all parameters
         """
         _req = await self._client.custom_put_with_http_info(
-            path="/test/all",
+            path="test/all",
             parameters={
                 "query": "parameters",
             },
@@ -452,7 +452,7 @@ class TestQuerySuggestionsClient:
             },
         )
 
-        assert _req.path == "/1/test/all"
+        assert _req.path == "/test/all"
         assert _req.verb == "PUT"
         assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()

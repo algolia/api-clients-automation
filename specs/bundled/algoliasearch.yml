@@ -283,7 +283,7 @@ tags:
     description: |
       <SchemaDefinition schemaRef="#/components/schemas/indexSettings" />.
 paths:
-  /1{path}:
+  /{path}:
     post:
       operationId: customPost
       requestBody:

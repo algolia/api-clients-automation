@@ -134,7 +134,7 @@ externalDocs:
   url: https://www.algolia.com/doc/guides/sending-events/getting-started/
   description: Events
 paths:
-  /1{path}:
+  /{path}:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API.

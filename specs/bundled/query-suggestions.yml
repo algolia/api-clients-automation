@@ -38,7 +38,7 @@ tags:
     x-displayName: Logs
     description: Get logs for a Query Suggestions index.
 paths:
-  /1{path}:
+  /{path}:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API.

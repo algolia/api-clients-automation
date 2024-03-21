@@ -20,7 +20,7 @@ final class QuerySuggestionsClientClientTests: XCTestCase {
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customPostWithHTTPInfo(
-            path: "/test"
+            path: "1/test"
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -51,7 +51,7 @@ final class QuerySuggestionsClientClientTests: XCTestCase {
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customGetWithHTTPInfo(
-            path: "/test"
+            path: "1/test"
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -70,7 +70,7 @@ final class QuerySuggestionsClientClientTests: XCTestCase {
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customPostWithHTTPInfo(
-            path: "/test"
+            path: "1/test"
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)

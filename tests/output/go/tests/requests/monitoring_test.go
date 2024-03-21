@@ -36,22 +36,22 @@ func TestMonitoring_CustomDelete(t *testing.T) {
 
 	t.Run("allow del method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"/test/minimal",
+			"test/minimal",
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/test/minimal", echo.Path)
+		require.Equal(t, "/test/minimal", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
 	})
 	t.Run("allow del method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-			"/test/all",
+			"test/all",
 		).WithParameters(map[string]any{"query": "parameters"}))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/test/all", echo.Path)
+		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -70,22 +70,22 @@ func TestMonitoring_CustomGet(t *testing.T) {
 
 	t.Run("allow get method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"/test/minimal",
+			"test/minimal",
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/test/minimal", echo.Path)
+		require.Equal(t, "/test/minimal", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
 	})
 	t.Run("allow get method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"/test/all",
+			"test/all",
 		).WithParameters(map[string]any{"query": "parameters with space"}))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/test/all", echo.Path)
+		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -98,14 +98,14 @@ func TestMonitoring_CustomGet(t *testing.T) {
 	})
 	t.Run("requestOptions should be escaped too", func(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
-			"/test/all",
+			"test/all",
 		).WithParameters(map[string]any{"query": "to be overriden"}),
 			monitoring.QueryParamOption("query", "parameters with space"), monitoring.QueryParamOption("and an array",
 				[]string{"array", "with spaces"}), monitoring.HeaderParamOption("x-header-1", "spaces are left alone"),
 		)
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/test/all", echo.Path)
+		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -129,11 +129,11 @@ func TestMonitoring_CustomPost(t *testing.T) {
 
 	t.Run("allow post method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"/test/minimal",
+			"test/minimal",
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/test/minimal", echo.Path)
+		require.Equal(t, "/test/minimal", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -141,11 +141,11 @@ func TestMonitoring_CustomPost(t *testing.T) {
 	})
 	t.Run("allow post method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"/test/all",
+			"test/all",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/test/all", echo.Path)
+		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -159,13 +159,13 @@ func TestMonitoring_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions can override default query parameters", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"/test/requestOptions",
+			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
 			monitoring.QueryParamOption("query", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/test/requestOptions", echo.Path)
+		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -179,13 +179,13 @@ func TestMonitoring_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions merges query parameters with default ones", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"/test/requestOptions",
+			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
 			monitoring.QueryParamOption("query2", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/test/requestOptions", echo.Path)
+		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -199,13 +199,13 @@ func TestMonitoring_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions can override default headers", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"/test/requestOptions",
+			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
 			monitoring.HeaderParamOption("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/test/requestOptions", echo.Path)
+		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -224,13 +224,13 @@ func TestMonitoring_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions merges headers with default ones", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"/test/requestOptions",
+			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
 			monitoring.HeaderParamOption("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/test/requestOptions", echo.Path)
+		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -249,13 +249,13 @@ func TestMonitoring_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts booleans", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"/test/requestOptions",
+			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
 			monitoring.QueryParamOption("isItWorking", true),
 		)
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/test/requestOptions", echo.Path)
+		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -269,13 +269,13 @@ func TestMonitoring_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts integers", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"/test/requestOptions",
+			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
 			monitoring.QueryParamOption("myParam", 2),
 		)
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/test/requestOptions", echo.Path)
+		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -289,14 +289,14 @@ func TestMonitoring_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts list of string", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"/test/requestOptions",
+			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
 			monitoring.QueryParamOption("myParam",
 				[]string{"b and c", "d"}),
 		)
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/test/requestOptions", echo.Path)
+		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -310,14 +310,14 @@ func TestMonitoring_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts list of booleans", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"/test/requestOptions",
+			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
 			monitoring.QueryParamOption("myParam",
 				[]bool{true, true, false}),
 		)
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/test/requestOptions", echo.Path)
+		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -331,14 +331,14 @@ func TestMonitoring_CustomPost(t *testing.T) {
 	})
 	t.Run("requestOptions queryParameters accepts list of integers", func(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
-			"/test/requestOptions",
+			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
 			monitoring.QueryParamOption("myParam",
 				[]int32{1, 2}),
 		)
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/test/requestOptions", echo.Path)
+		require.Equal(t, "/test/requestOptions", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -358,11 +358,11 @@ func TestMonitoring_CustomPut(t *testing.T) {
 
 	t.Run("allow put method for a custom path with minimal parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"/test/minimal",
+			"test/minimal",
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/test/minimal", echo.Path)
+		require.Equal(t, "/test/minimal", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -370,11 +370,11 @@ func TestMonitoring_CustomPut(t *testing.T) {
 	})
 	t.Run("allow put method for a custom path with all parameters", func(t *testing.T) {
 		_, err := client.CustomPut(client.NewApiCustomPutRequest(
-			"/test/all",
+			"test/all",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"body": "parameters"}))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/test/all", echo.Path)
+		require.Equal(t, "/test/all", echo.Path)
 		require.Equal(t, "PUT", echo.Method)
 
 		ja := jsonassert.New(t)

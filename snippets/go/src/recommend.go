@@ -21,7 +21,7 @@ func SnippetForCustomDeleteOfRecommend() {
 
 	// Call the API
 	resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-		"/test/minimal",
+		"test/minimal",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -49,7 +49,7 @@ func SnippetForCustomGetOfRecommend() {
 
 	// Call the API
 	resp, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"/test/minimal",
+		"test/minimal",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -77,7 +77,7 @@ func SnippetForCustomPostOfRecommend() {
 
 	// Call the API
 	resp, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"/test/minimal",
+		"test/minimal",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -105,7 +105,7 @@ func SnippetForCustomPutOfRecommend() {
 
 	// Call the API
 	resp, err := client.CustomPut(client.NewApiCustomPutRequest(
-		"/test/minimal",
+		"test/minimal",
 	))
 	if err != nil {
 		// handle the eventual error

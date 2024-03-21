@@ -46,7 +46,7 @@ class QuerySuggestionsClientClientTests {
   void commonApiTest0() {
     QuerySuggestionsClient client = createClient();
 
-    client.customPost("/test");
+    client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
       String regexp =
@@ -66,7 +66,7 @@ class QuerySuggestionsClientClientTests {
   void commonApiTest1() {
     QuerySuggestionsClient client = createClient();
 
-    client.customGet("/test");
+    client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -78,7 +78,7 @@ class QuerySuggestionsClientClientTests {
   void commonApiTest2() {
     QuerySuggestionsClient client = createClient();
 
-    client.customPost("/test");
+    client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);

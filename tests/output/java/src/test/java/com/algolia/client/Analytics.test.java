@@ -46,7 +46,7 @@ class AnalyticsClientClientTests {
   void commonApiTest0() {
     AnalyticsClient client = createClient();
 
-    client.customPost("/test");
+    client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
       String regexp =
@@ -66,7 +66,7 @@ class AnalyticsClientClientTests {
   void commonApiTest1() {
     AnalyticsClient client = createClient();
 
-    client.customGet("/test");
+    client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -78,7 +78,7 @@ class AnalyticsClientClientTests {
   void commonApiTest2() {
     AnalyticsClient client = createClient();
 
-    client.customPost("/test");
+    client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -99,7 +99,7 @@ class AnalyticsClientClientTests {
   @DisplayName("uses the correct region")
   void parametersTest1() {
     AnalyticsClient client = new AnalyticsClient("my-app-id", "my-api-key", "de", withEchoRequester());
-    client.customPost("/test");
+    client.customPost("test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("analytics.de.algolia.com", result.host);

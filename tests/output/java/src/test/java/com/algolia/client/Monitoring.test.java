@@ -45,7 +45,7 @@ class MonitoringClientClientTests {
   void commonApiTest0() {
     MonitoringClient client = createClient();
 
-    client.customPost("/test");
+    client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
       String regexp =
@@ -65,7 +65,7 @@ class MonitoringClientClientTests {
   void commonApiTest1() {
     MonitoringClient client = createClient();
 
-    client.customGet("/test");
+    client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -77,7 +77,7 @@ class MonitoringClientClientTests {
   void commonApiTest2() {
     MonitoringClient client = createClient();
 
-    client.customPost("/test");
+    client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -88,7 +88,7 @@ class MonitoringClientClientTests {
   @DisplayName("use the correct host")
   void parametersTest0() {
     MonitoringClient client = new MonitoringClient("my-app-id", "my-api-key", withEchoRequester());
-    client.customDelete("/test");
+    client.customDelete("test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("status.algolia.com", result.host);

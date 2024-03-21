@@ -46,7 +46,7 @@ export async function snippetForcustomDelete(): Promise<void> {
   );
 
   // Call the API
-  const response = await client.customDelete({ path: '/test/minimal' });
+  const response = await client.customDelete({ path: 'test/minimal' });
 
   // use typed response
   console.log(response);
@@ -66,7 +66,7 @@ export async function snippetForcustomGet(): Promise<void> {
   );
 
   // Call the API
-  const response = await client.customGet({ path: '/test/minimal' });
+  const response = await client.customGet({ path: 'test/minimal' });
 
   // use typed response
   console.log(response);
@@ -86,7 +86,7 @@ export async function snippetForcustomPost(): Promise<void> {
   );
 
   // Call the API
-  const response = await client.customPost({ path: '/test/minimal' });
+  const response = await client.customPost({ path: 'test/minimal' });
 
   // use typed response
   console.log(response);
@@ -106,7 +106,7 @@ export async function snippetForcustomPut(): Promise<void> {
   );
 
   // Call the API
-  const response = await client.customPut({ path: '/test/minimal' });
+  const response = await client.customPut({ path: 'test/minimal' });
 
   // use typed response
   console.log(response);

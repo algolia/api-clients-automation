@@ -15,7 +15,7 @@ final class RecommendClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
         let response = try await client.customGetWithHTTPInfo(
-            path: "/test"
+            path: "test"
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -29,7 +29,7 @@ final class RecommendClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
         let response = try await client.customPostWithHTTPInfo(
-            path: "/test"
+            path: "test"
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -44,7 +44,7 @@ final class RecommendClientClientTests: XCTestCase {
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customPostWithHTTPInfo(
-            path: "/test"
+            path: "1/test"
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -71,7 +71,7 @@ final class RecommendClientClientTests: XCTestCase {
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customGetWithHTTPInfo(
-            path: "/test"
+            path: "1/test"
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -86,7 +86,7 @@ final class RecommendClientClientTests: XCTestCase {
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customPostWithHTTPInfo(
-            path: "/test"
+            path: "1/test"
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)

@@ -34,7 +34,7 @@ func TestIngestioncommonApi0(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)
@@ -47,7 +47,7 @@ func TestIngestioncommonApi1(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)
@@ -61,7 +61,7 @@ func TestIngestioncommonApi2(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)

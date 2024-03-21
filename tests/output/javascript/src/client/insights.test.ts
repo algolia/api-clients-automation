@@ -17,7 +17,7 @@ describe('commonApi', () => {
     const $client = createClient();
 
     const result = (await $client.customPost({
-      path: '/test',
+      path: '1/test',
     })) as unknown as EchoResponse;
 
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(
@@ -29,7 +29,7 @@ describe('commonApi', () => {
     const $client = createClient();
 
     const result = (await $client.customGet({
-      path: '/test',
+      path: '1/test',
     })) as unknown as EchoResponse;
 
     expect(result).toEqual(
@@ -41,7 +41,7 @@ describe('commonApi', () => {
     const $client = createClient();
 
     const result = (await $client.customPost({
-      path: '/test',
+      path: '1/test',
     })) as unknown as EchoResponse;
 
     expect(result).toEqual(
@@ -81,7 +81,7 @@ describe('parameters', () => {
     });
 
     const result = (await $client.customDelete({
-      path: '/test',
+      path: 'test',
     })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('insights.us.algolia.io');

@@ -27,7 +27,7 @@ public class SearchClientTests
   public async Task ApiTest0()
   {
     var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"), _echo);
-    await client.CustomGetAsync("/test");
+    await client.CustomGetAsync("test");
     EchoResponse result = _echo.LastResponse;
 
     Assert.Equal("test-app-id-dsn.algolia.net", result.Host);
@@ -37,7 +37,7 @@ public class SearchClientTests
   public async Task ApiTest1()
   {
     var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"), _echo);
-    await client.CustomPostAsync("/test");
+    await client.CustomPostAsync("test");
     EchoResponse result = _echo.LastResponse;
 
     Assert.Equal("test-app-id.algolia.net", result.Host);
@@ -72,7 +72,7 @@ public class SearchClientTests
     };
     var client = new SearchClient(_config);
 
-    var res = await client.CustomGetAsync("/test/retry");
+    var res = await client.CustomGetAsync("1/test/retry");
 
     JsonAssert.EqualOverrideDefault(
       "{\"message\":\"ok test server response\"}",
@@ -103,7 +103,7 @@ public class SearchClientTests
     var client = new SearchClient(_config);
 
     var res = await client.CustomPostAsync(
-      "/test/gzip",
+      "1/test/gzip",
       new Dictionary<string, object> { },
       new Dictionary<string, string> { { "message", "this is a compressed body" } }
     );
@@ -119,7 +119,7 @@ public class SearchClientTests
   public async Task CommonApiTest0()
   {
     var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
-    await client.CustomPostAsync("/test");
+    await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
       var regexp = new Regex(
@@ -133,7 +133,7 @@ public class SearchClientTests
   public async Task CommonApiTest1()
   {
     var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
-    await client.CustomGetAsync("/test");
+    await client.CustomGetAsync("1/test");
     EchoResponse result = _echo.LastResponse;
 
     Assert.Equal(2000, result.ConnectTimeout.TotalMilliseconds);
@@ -144,7 +144,7 @@ public class SearchClientTests
   public async Task CommonApiTest2()
   {
     var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
-    await client.CustomPostAsync("/test");
+    await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
 
     Assert.Equal(2000, result.ConnectTimeout.TotalMilliseconds);

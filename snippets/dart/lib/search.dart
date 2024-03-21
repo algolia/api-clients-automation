@@ -229,7 +229,7 @@ void snippetForcustomDelete() async {
 
   // Call the API
   final response = await client.customDelete(
-    path: "/test/minimal",
+    path: "test/minimal",
   );
   // SEPARATOR<
 }
@@ -244,7 +244,7 @@ void snippetForcustomGet() async {
 
   // Call the API
   final response = await client.customGet(
-    path: "/test/minimal",
+    path: "test/minimal",
   );
   // SEPARATOR<
 }
@@ -259,7 +259,7 @@ void snippetForcustomPost() async {
 
   // Call the API
   final response = await client.customPost(
-    path: "/test/minimal",
+    path: "test/minimal",
   );
   // SEPARATOR<
 }
@@ -274,7 +274,7 @@ void snippetForcustomPut() async {
 
   // Call the API
   final response = await client.customPut(
-    path: "/test/minimal",
+    path: "test/minimal",
   );
   // SEPARATOR<
 }

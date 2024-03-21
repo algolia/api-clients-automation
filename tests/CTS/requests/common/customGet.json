@@ -2,23 +2,23 @@
   {
     "testName": "allow get method for a custom path with minimal parameters",
     "parameters": {
-      "path": "/test/minimal"
+      "path": "test/minimal"
     },
     "request": {
-      "path": "/1/test/minimal",
+      "path": "/test/minimal",
       "method": "GET"
     }
   },
   {
     "testName": "allow get method for a custom path with all parameters",
     "parameters": {
-      "path": "/test/all",
+      "path": "test/all",
       "parameters": {
         "query": "parameters with space"
       }
     },
     "request": {
-      "path": "/1/test/all",
+      "path": "/test/all",
       "method": "GET",
       "queryParameters": {
         "query": "parameters%20with%20space"
@@ -28,7 +28,7 @@
   {
     "testName": "requestOptions should be escaped too",
     "parameters": {
-      "path": "/test/all",
+      "path": "test/all",
       "parameters": {
         "query": "to be overriden"
       }
@@ -46,7 +46,7 @@
       }
     },
     "request": {
-      "path": "/1/test/all",
+      "path": "/test/all",
       "method": "GET",
       "queryParameters": {
         "query": "parameters%20with%20space",

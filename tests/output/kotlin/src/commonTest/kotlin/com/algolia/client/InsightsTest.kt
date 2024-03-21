@@ -18,7 +18,7 @@ class InsightsTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test",
+          path = "1/test",
         )
       },
       intercept = {
@@ -35,7 +35,7 @@ class InsightsTest {
     client.runTest(
       call = {
         customGet(
-          path = "/test",
+          path = "1/test",
         )
       },
       intercept = {
@@ -51,7 +51,7 @@ class InsightsTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test",
+          path = "1/test",
         )
       },
       intercept = {
@@ -96,7 +96,7 @@ class InsightsTest {
     client.runTest(
       call = {
         customDelete(
-          path = "/test",
+          path = "test",
         )
       },
       intercept = {

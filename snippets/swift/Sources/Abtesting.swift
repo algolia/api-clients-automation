@@ -33,7 +33,7 @@ final class AbtestingClientSnippet {
         let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customDelete(path: "/test/minimal")
+        _ = try await client.customDelete(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -46,7 +46,7 @@ final class AbtestingClientSnippet {
         let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customGet(path: "/test/minimal")
+        _ = try await client.customGet(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -59,7 +59,7 @@ final class AbtestingClientSnippet {
         let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPost(path: "/test/minimal")
+        _ = try await client.customPost(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -72,7 +72,7 @@ final class AbtestingClientSnippet {
         let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPut(path: "/test/minimal")
+        _ = try await client.customPut(path: "test/minimal")
         // SEPARATOR<
     }
 

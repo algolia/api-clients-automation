@@ -48,7 +48,7 @@ class SearchClientClientTests {
   @DisplayName("calls api with correct read host")
   void apiTest0() {
     SearchClient client = new SearchClient("test-app-id", "test-api-key", withEchoRequester());
-    client.customGet("/test");
+    client.customGet("test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("test-app-id-dsn.algolia.net", result.host);
@@ -58,7 +58,7 @@ class SearchClientClientTests {
   @DisplayName("calls api with correct write host")
   void apiTest1() {
     SearchClient client = new SearchClient("test-app-id", "test-api-key", withEchoRequester());
-    client.customPost("/test");
+    client.customPost("test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("test-app-id.algolia.net", result.host);
@@ -78,7 +78,7 @@ class SearchClientClientTests {
         false
       )
     );
-    var res = client.customGet("/test/retry");
+    var res = client.customGet("1/test/retry");
 
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals("{\"message\":\"ok test server response\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)
@@ -93,7 +93,7 @@ class SearchClientClientTests {
       "test-api-key",
       withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6678)), true)
     );
-    var res = client.customPost("/test/gzip", Map.of(), Map.of("message", "this is a compressed body"));
+    var res = client.customPost("1/test/gzip", Map.of(), Map.of("message", "this is a compressed body"));
 
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
@@ -109,7 +109,7 @@ class SearchClientClientTests {
   void commonApiTest0() {
     SearchClient client = createClient();
 
-    client.customPost("/test");
+    client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
       String regexp =
@@ -129,7 +129,7 @@ class SearchClientClientTests {
   void commonApiTest1() {
     SearchClient client = createClient();
 
-    client.customGet("/test");
+    client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -141,7 +141,7 @@ class SearchClientClientTests {
   void commonApiTest2() {
     SearchClient client = createClient();
 
-    client.customPost("/test");
+    client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);

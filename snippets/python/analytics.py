@@ -13,7 +13,7 @@ async def snippet_for_custom_delete():
 
     # Call the API
     resp = await _client.custom_delete(
-        path="/test/minimal",
+        path="test/minimal",
     )
 
     # use the class directly
@@ -36,7 +36,7 @@ async def snippet_for_custom_get():
 
     # Call the API
     resp = await _client.custom_get(
-        path="/test/minimal",
+        path="test/minimal",
     )
 
     # use the class directly
@@ -59,7 +59,7 @@ async def snippet_for_custom_post():
 
     # Call the API
     resp = await _client.custom_post(
-        path="/test/minimal",
+        path="test/minimal",
     )
 
     # use the class directly
@@ -82,7 +82,7 @@ async def snippet_for_custom_put():
 
     # Call the API
     resp = await _client.custom_put(
-        path="/test/minimal",
+        path="test/minimal",
     )
 
     # use the class directly

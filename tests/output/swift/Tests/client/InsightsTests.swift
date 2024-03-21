@@ -16,7 +16,7 @@ final class InsightsClientClientTests: XCTestCase {
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customPostWithHTTPInfo(
-            path: "/test"
+            path: "1/test"
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -43,7 +43,7 @@ final class InsightsClientClientTests: XCTestCase {
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customGetWithHTTPInfo(
-            path: "/test"
+            path: "1/test"
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -58,7 +58,7 @@ final class InsightsClientClientTests: XCTestCase {
         let client = InsightsClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customPostWithHTTPInfo(
-            path: "/test"
+            path: "1/test"
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -102,7 +102,7 @@ final class InsightsClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = InsightsClient(configuration: configuration, transporter: transporter)
         let response = try await client.customDeleteWithHTTPInfo(
-            path: "/test"
+            path: "test"
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)

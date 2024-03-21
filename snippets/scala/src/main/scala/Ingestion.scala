@@ -132,7 +132,7 @@ class SnippetIngestionClient {
 
     // Call the API
     val res = client.customDelete[JObject](
-      path = "/test/minimal"
+      path = "test/minimal"
     )
 
     // Use the response
@@ -151,7 +151,7 @@ class SnippetIngestionClient {
 
     // Call the API
     val res = client.customGet[JObject](
-      path = "/test/minimal"
+      path = "test/minimal"
     )
 
     // Use the response
@@ -170,7 +170,7 @@ class SnippetIngestionClient {
 
     // Call the API
     val res = client.customPost[JObject](
-      path = "/test/minimal"
+      path = "test/minimal"
     )
 
     // Use the response
@@ -189,7 +189,7 @@ class SnippetIngestionClient {
 
     // Call the API
     val res = client.customPut[JObject](
-      path = "/test/minimal"
+      path = "test/minimal"
     )
 
     // Use the response

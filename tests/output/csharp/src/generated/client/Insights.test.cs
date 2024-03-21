@@ -27,7 +27,7 @@ public class InsightsClientTests
   public async Task CommonApiTest0()
   {
     var client = new InsightsClient(new InsightsConfig("appId", "apiKey", "us"), _echo);
-    await client.CustomPostAsync("/test");
+    await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
       var regexp = new Regex(
@@ -41,7 +41,7 @@ public class InsightsClientTests
   public async Task CommonApiTest1()
   {
     var client = new InsightsClient(new InsightsConfig("appId", "apiKey", "us"), _echo);
-    await client.CustomGetAsync("/test");
+    await client.CustomGetAsync("1/test");
     EchoResponse result = _echo.LastResponse;
 
     Assert.Equal(2000, result.ConnectTimeout.TotalMilliseconds);
@@ -52,7 +52,7 @@ public class InsightsClientTests
   public async Task CommonApiTest2()
   {
     var client = new InsightsClient(new InsightsConfig("appId", "apiKey", "us"), _echo);
-    await client.CustomPostAsync("/test");
+    await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
 
     Assert.Equal(2000, result.ConnectTimeout.TotalMilliseconds);
@@ -94,7 +94,7 @@ public class InsightsClientTests
   public async Task ParametersTest1()
   {
     var client = new InsightsClient(new InsightsConfig("my-app-id", "my-api-key", "us"), _echo);
-    await client.CustomDeleteAsync("/test");
+    await client.CustomDeleteAsync("test");
     EchoResponse result = _echo.LastResponse;
 
     Assert.Equal("insights.us.algolia.io", result.Host);

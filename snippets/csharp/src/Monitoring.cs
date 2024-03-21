@@ -17,7 +17,7 @@ public class SnippetMonitoringClient
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.CustomDeleteAsync("/test/minimal");
+    var response = await client.CustomDeleteAsync("test/minimal");
     // SEPARATOR<
   }
 
@@ -33,7 +33,7 @@ public class SnippetMonitoringClient
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.CustomGetAsync("/test/minimal");
+    var response = await client.CustomGetAsync("test/minimal");
     // SEPARATOR<
   }
 
@@ -49,7 +49,7 @@ public class SnippetMonitoringClient
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.CustomPostAsync("/test/minimal");
+    var response = await client.CustomPostAsync("test/minimal");
     // SEPARATOR<
   }
 
@@ -65,7 +65,7 @@ public class SnippetMonitoringClient
     var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
 
     // Call the API
-    var response = await client.CustomPutAsync("/test/minimal");
+    var response = await client.CustomPutAsync("test/minimal");
     // SEPARATOR<
   }
 

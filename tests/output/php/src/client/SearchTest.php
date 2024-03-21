@@ -49,7 +49,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
         $this->assertIsObject($client);
         $client->customGet(
-            '/test',
+            'test',
         );
         $this->assertEquals(
             'test-app-id-dsn.algolia.net',
@@ -69,7 +69,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
         $this->assertIsObject($client);
         $client->customPost(
-            '/test',
+            'test',
         );
         $this->assertEquals(
             'test-app-id.algolia.net',
@@ -85,7 +85,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6677', 'http://localhost:6678']));
 
         $res = $client->customGet(
-            '/test/retry',
+            '1/test/retry',
         );
         $this->assertEquals(
             '{"message":"ok test server response"}',
@@ -100,7 +100,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customPost(
-            '/test',
+            '1/test',
         );
         $this->assertTrue(
             (bool) preg_match(
@@ -117,7 +117,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customGet(
-            '/test',
+            '1/test',
         );
         $this->assertEquals(
             2000,
@@ -137,7 +137,7 @@ class SearchTest extends TestCase implements HttpClientInterface
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customPost(
-            '/test',
+            '1/test',
         );
         $this->assertEquals(
             2000,

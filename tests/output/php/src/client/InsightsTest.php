@@ -44,7 +44,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customPost(
-            '/test',
+            '1/test',
         );
         $this->assertTrue(
             (bool) preg_match(
@@ -61,7 +61,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customGet(
-            '/test',
+            '1/test',
         );
         $this->assertEquals(
             2000,
@@ -81,7 +81,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customPost(
-            '/test',
+            '1/test',
         );
         $this->assertEquals(
             2000,
@@ -146,7 +146,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
         );
         $this->assertIsObject($client);
         $client->customDelete(
-            '/test',
+            'test',
         );
         $this->assertEquals(
             'insights.us.algolia.io',

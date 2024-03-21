@@ -40,7 +40,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.customDelete("/test/minimal");
+    client.customDelete("test/minimal");
     // SEPARATOR<
   }
 
@@ -53,7 +53,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.customGet("/test/minimal");
+    client.customGet("test/minimal");
     // SEPARATOR<
   }
 
@@ -66,7 +66,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.customPost("/test/minimal");
+    client.customPost("test/minimal");
     // SEPARATOR<
   }
 
@@ -79,7 +79,7 @@ class SnippetQuerySuggestionsClient {
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.customPut("/test/minimal");
+    client.customPut("test/minimal");
     // SEPARATOR<
   }
 

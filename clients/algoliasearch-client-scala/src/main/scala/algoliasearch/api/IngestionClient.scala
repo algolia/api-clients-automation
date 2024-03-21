@@ -223,7 +223,7 @@ class IngestionClient(
     val request = HttpRequest
       .builder()
       .withMethod("DELETE")
-      .withPath(s"/1${path}")
+      .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
     execute[T](request, requestOptions)
@@ -246,7 +246,7 @@ class IngestionClient(
     val request = HttpRequest
       .builder()
       .withMethod("GET")
-      .withPath(s"/1${path}")
+      .withPath(s"/${path}")
       .withQueryParameters(parameters)
       .build()
     execute[T](request, requestOptions)
@@ -272,7 +272,7 @@ class IngestionClient(
     val request = HttpRequest
       .builder()
       .withMethod("POST")
-      .withPath(s"/1${path}")
+      .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
@@ -299,7 +299,7 @@ class IngestionClient(
     val request = HttpRequest
       .builder()
       .withMethod("PUT")
-      .withPath(s"/1${path}")
+      .withPath(s"/${path}")
       .withBody(body)
       .withQueryParameters(parameters)
       .build()
