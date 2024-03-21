@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "algoliasearch"
-version = "4.0.0b10"
+version = "4.0.0b11"
 description = "A fully-featured and blazing-fast Python API client to interact with Algolia."
 authors = ["Algolia Team <support@algolia.com>"]
 license = "MIT"
@@ -25,7 +25,7 @@ pydantic = ">= 2"
 flake8 = "6.1.0"
 autoflake = "2.2.1"
 autopep8 = "2.0.4"
-black = "23.11.0"
+black = "24.3.0"
 isort = "5.13.0"
 
 [tool.flake8]

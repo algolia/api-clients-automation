@@ -143,7 +143,7 @@ func SnippetForCustomDeleteOfIngestion() {
 
 	// Call the API
 	resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-		"/test/minimal",
+		"test/minimal",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -171,7 +171,7 @@ func SnippetForCustomGetOfIngestion() {
 
 	// Call the API
 	resp, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"/test/minimal",
+		"test/minimal",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -199,7 +199,7 @@ func SnippetForCustomPostOfIngestion() {
 
 	// Call the API
 	resp, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"/test/minimal",
+		"test/minimal",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -227,7 +227,7 @@ func SnippetForCustomPutOfIngestion() {
 
 	// Call the API
 	resp, err := client.CustomPut(client.NewApiCustomPutRequest(
-		"/test/minimal",
+		"test/minimal",
 	))
 	if err != nil {
 		// handle the eventual error

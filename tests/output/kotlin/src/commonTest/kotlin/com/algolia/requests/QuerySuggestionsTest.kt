@@ -58,11 +58,11 @@ class QuerySuggestionsTest {
     client.runTest(
       call = {
         customDelete(
-          path = "/test/minimal",
+          path = "test/minimal",
         )
       },
       intercept = {
-        assertEquals("/1/test/minimal".toPathSegments(), it.url.pathSegments)
+        assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("DELETE"), it.method)
         assertNoBody(it.body)
       },
@@ -74,12 +74,12 @@ class QuerySuggestionsTest {
     client.runTest(
       call = {
         customDelete(
-          path = "/test/all",
+          path = "test/all",
           parameters = mapOf("query" to "parameters"),
         )
       },
       intercept = {
-        assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
+        assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("DELETE"), it.method)
         assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertNoBody(it.body)
@@ -94,11 +94,11 @@ class QuerySuggestionsTest {
     client.runTest(
       call = {
         customGet(
-          path = "/test/minimal",
+          path = "test/minimal",
         )
       },
       intercept = {
-        assertEquals("/1/test/minimal".toPathSegments(), it.url.pathSegments)
+        assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertNoBody(it.body)
       },
@@ -110,12 +110,12 @@ class QuerySuggestionsTest {
     client.runTest(
       call = {
         customGet(
-          path = "/test/all",
+          path = "test/all",
           parameters = mapOf("query" to "parameters with space"),
         )
       },
       intercept = {
-        assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
+        assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertQueryParams("""{"query":"parameters%20with%20space"}""", it.url.encodedParameters)
         assertNoBody(it.body)
@@ -128,7 +128,7 @@ class QuerySuggestionsTest {
     client.runTest(
       call = {
         customGet(
-          path = "/test/all",
+          path = "test/all",
           parameters = mapOf("query" to "to be overriden"),
           requestOptions = RequestOptions(
             urlParameters = buildMap {
@@ -142,7 +142,7 @@ class QuerySuggestionsTest {
         )
       },
       intercept = {
-        assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
+        assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertContainsAll("""{"x-header-1":"spaces are left alone"}""", it.headers)
         assertQueryParams("""{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}""", it.url.encodedParameters)
@@ -158,11 +158,11 @@ class QuerySuggestionsTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test/minimal",
+          path = "test/minimal",
         )
       },
       intercept = {
-        assertEquals("/1/test/minimal".toPathSegments(), it.url.pathSegments)
+        assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{}""", it.body)
       },
@@ -174,7 +174,7 @@ class QuerySuggestionsTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test/all",
+          path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
             put(
@@ -185,7 +185,7 @@ class QuerySuggestionsTest {
         )
       },
       intercept = {
-        assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
+        assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"body":"parameters"}""", it.body)
@@ -198,7 +198,7 @@ class QuerySuggestionsTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test/requestOptions",
+          path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
             put(
@@ -214,7 +214,7 @@ class QuerySuggestionsTest {
         )
       },
       intercept = {
-        assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
+        assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertQueryParams("""{"query":"myQueryParameter"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
@@ -227,7 +227,7 @@ class QuerySuggestionsTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test/requestOptions",
+          path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
             put(
@@ -243,7 +243,7 @@ class QuerySuggestionsTest {
         )
       },
       intercept = {
-        assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
+        assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertQueryParams("""{"query":"parameters","query2":"myQueryParameter"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
@@ -256,7 +256,7 @@ class QuerySuggestionsTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test/requestOptions",
+          path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
             put(
@@ -272,7 +272,7 @@ class QuerySuggestionsTest {
         )
       },
       intercept = {
-        assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
+        assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertContainsAll("""{"x-algolia-api-key":"myApiKey"}""", it.headers)
         assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
@@ -286,7 +286,7 @@ class QuerySuggestionsTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test/requestOptions",
+          path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
             put(
@@ -302,7 +302,7 @@ class QuerySuggestionsTest {
         )
       },
       intercept = {
-        assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
+        assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertContainsAll("""{"x-algolia-api-key":"myApiKey"}""", it.headers)
         assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
@@ -316,7 +316,7 @@ class QuerySuggestionsTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test/requestOptions",
+          path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
             put(
@@ -332,7 +332,7 @@ class QuerySuggestionsTest {
         )
       },
       intercept = {
-        assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
+        assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertQueryParams("""{"query":"parameters","isItWorking":"true"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
@@ -345,7 +345,7 @@ class QuerySuggestionsTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test/requestOptions",
+          path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
             put(
@@ -361,7 +361,7 @@ class QuerySuggestionsTest {
         )
       },
       intercept = {
-        assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
+        assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertQueryParams("""{"query":"parameters","myParam":"2"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
@@ -374,7 +374,7 @@ class QuerySuggestionsTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test/requestOptions",
+          path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
             put(
@@ -390,7 +390,7 @@ class QuerySuggestionsTest {
         )
       },
       intercept = {
-        assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
+        assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertQueryParams("""{"query":"parameters","myParam":"b%20and%20c%2Cd"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
@@ -403,7 +403,7 @@ class QuerySuggestionsTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test/requestOptions",
+          path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
             put(
@@ -419,7 +419,7 @@ class QuerySuggestionsTest {
         )
       },
       intercept = {
-        assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
+        assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertQueryParams("""{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
@@ -432,7 +432,7 @@ class QuerySuggestionsTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test/requestOptions",
+          path = "test/requestOptions",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
             put(
@@ -448,7 +448,7 @@ class QuerySuggestionsTest {
         )
       },
       intercept = {
-        assertEquals("/1/test/requestOptions".toPathSegments(), it.url.pathSegments)
+        assertEquals("/test/requestOptions".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertQueryParams("""{"query":"parameters","myParam":"1%2C2"}""", it.url.encodedParameters)
         assertJsonBody("""{"facet":"filters"}""", it.body)
@@ -463,11 +463,11 @@ class QuerySuggestionsTest {
     client.runTest(
       call = {
         customPut(
-          path = "/test/minimal",
+          path = "test/minimal",
         )
       },
       intercept = {
-        assertEquals("/1/test/minimal".toPathSegments(), it.url.pathSegments)
+        assertEquals("/test/minimal".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
         assertJsonBody("""{}""", it.body)
       },
@@ -479,7 +479,7 @@ class QuerySuggestionsTest {
     client.runTest(
       call = {
         customPut(
-          path = "/test/all",
+          path = "test/all",
           parameters = mapOf("query" to "parameters"),
           body = buildJsonObject {
             put(
@@ -490,7 +490,7 @@ class QuerySuggestionsTest {
         )
       },
       intercept = {
-        assertEquals("/1/test/all".toPathSegments(), it.url.pathSegments)
+        assertEquals("/test/all".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PUT"), it.method)
         assertQueryParams("""{"query":"parameters"}""", it.url.encodedParameters)
         assertJsonBody("""{"body":"parameters"}""", it.body)

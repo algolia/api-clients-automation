@@ -27,7 +27,7 @@ public class RecommendClientTests
   public async Task ApiTest0()
   {
     var client = new RecommendClient(new RecommendConfig("test-app-id", "test-api-key"), _echo);
-    await client.CustomGetAsync("/test");
+    await client.CustomGetAsync("test");
     EchoResponse result = _echo.LastResponse;
 
     Assert.Equal("test-app-id-dsn.algolia.net", result.Host);
@@ -37,7 +37,7 @@ public class RecommendClientTests
   public async Task ApiTest1()
   {
     var client = new RecommendClient(new RecommendConfig("test-app-id", "test-api-key"), _echo);
-    await client.CustomPostAsync("/test");
+    await client.CustomPostAsync("test");
     EchoResponse result = _echo.LastResponse;
 
     Assert.Equal("test-app-id.algolia.net", result.Host);
@@ -47,7 +47,7 @@ public class RecommendClientTests
   public async Task CommonApiTest0()
   {
     var client = new RecommendClient(new RecommendConfig("appId", "apiKey"), _echo);
-    await client.CustomPostAsync("/test");
+    await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
       var regexp = new Regex(
@@ -61,7 +61,7 @@ public class RecommendClientTests
   public async Task CommonApiTest1()
   {
     var client = new RecommendClient(new RecommendConfig("appId", "apiKey"), _echo);
-    await client.CustomGetAsync("/test");
+    await client.CustomGetAsync("1/test");
     EchoResponse result = _echo.LastResponse;
 
     Assert.Equal(2000, result.ConnectTimeout.TotalMilliseconds);
@@ -72,7 +72,7 @@ public class RecommendClientTests
   public async Task CommonApiTest2()
   {
     var client = new RecommendClient(new RecommendConfig("appId", "apiKey"), _echo);
-    await client.CustomPostAsync("/test");
+    await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
 
     Assert.Equal(2000, result.ConnectTimeout.TotalMilliseconds);

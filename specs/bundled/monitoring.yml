@@ -38,7 +38,7 @@ tags:
       Server names follow the pattern: `{cluster-name}-{1|2|3}`.
     x-displayName: Status
 paths:
-  /1{path}:
+  /{path}:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API.

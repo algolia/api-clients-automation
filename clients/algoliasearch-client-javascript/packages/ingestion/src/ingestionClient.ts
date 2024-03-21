@@ -83,7 +83,7 @@ import type { TaskSearch } from '../model/taskSearch';
 import type { TaskUpdateResponse } from '../model/taskUpdateResponse';
 import type { Trigger } from '../model/trigger';
 
-export const apiClientVersion = '1.0.0-alpha.81';
+export const apiClientVersion = '1.0.0-alpha.82';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -420,7 +420,7 @@ export function createIngestionClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 
@@ -452,7 +452,7 @@ export function createIngestionClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 
@@ -485,7 +485,7 @@ export function createIngestionClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 
@@ -519,7 +519,7 @@ export function createIngestionClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 

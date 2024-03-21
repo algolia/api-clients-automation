@@ -13,10 +13,10 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "/test/minimal",
+        path: "test/minimal",
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/test/minimal');
+        expectPath(request.path, '/test/minimal');
         expect(request.method, 'post');
         expectBody(request.body, """{}""");
       },
@@ -33,7 +33,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "/test/all",
+        path: "test/all",
         parameters: {
           'query': "parameters",
         },
@@ -42,7 +42,7 @@ void main() {
         },
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/test/all');
+        expectPath(request.path, '/test/all');
         expect(request.method, 'post');
         expectParams(request.queryParameters, """{"query":"parameters"}""");
         expectBody(request.body, """{"body":"parameters"}""");
@@ -60,7 +60,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "/test/requestOptions",
+        path: "test/requestOptions",
         parameters: {
           'query': "parameters",
         },
@@ -74,7 +74,7 @@ void main() {
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/test/requestOptions');
+        expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
         expectParams(
             request.queryParameters, """{"query":"myQueryParameter"}""");
@@ -93,7 +93,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "/test/requestOptions",
+        path: "test/requestOptions",
         parameters: {
           'query': "parameters",
         },
@@ -107,7 +107,7 @@ void main() {
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/test/requestOptions');
+        expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
         expectParams(request.queryParameters,
             """{"query":"parameters","query2":"myQueryParameter"}""");
@@ -126,7 +126,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "/test/requestOptions",
+        path: "test/requestOptions",
         parameters: {
           'query': "parameters",
         },
@@ -140,7 +140,7 @@ void main() {
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/test/requestOptions');
+        expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
         expectHeaders(request.headers, """{"x-algolia-api-key":"myApiKey"}""");
         expectParams(request.queryParameters, """{"query":"parameters"}""");
@@ -159,7 +159,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "/test/requestOptions",
+        path: "test/requestOptions",
         parameters: {
           'query': "parameters",
         },
@@ -173,7 +173,7 @@ void main() {
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/test/requestOptions');
+        expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
         expectHeaders(request.headers, """{"x-algolia-api-key":"myApiKey"}""");
         expectParams(request.queryParameters, """{"query":"parameters"}""");
@@ -192,7 +192,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "/test/requestOptions",
+        path: "test/requestOptions",
         parameters: {
           'query': "parameters",
         },
@@ -206,7 +206,7 @@ void main() {
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/test/requestOptions');
+        expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
         expectParams(request.queryParameters,
             """{"query":"parameters","isItWorking":"true"}""");
@@ -225,7 +225,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "/test/requestOptions",
+        path: "test/requestOptions",
         parameters: {
           'query': "parameters",
         },
@@ -239,7 +239,7 @@ void main() {
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/test/requestOptions');
+        expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
         expectParams(request.queryParameters,
             """{"query":"parameters","myParam":"2"}""");
@@ -258,7 +258,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "/test/requestOptions",
+        path: "test/requestOptions",
         parameters: {
           'query': "parameters",
         },
@@ -275,7 +275,7 @@ void main() {
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/test/requestOptions');
+        expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
         expectParams(request.queryParameters,
             """{"query":"parameters","myParam":"b%20and%20c%2Cd"}""");
@@ -294,7 +294,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "/test/requestOptions",
+        path: "test/requestOptions",
         parameters: {
           'query': "parameters",
         },
@@ -312,7 +312,7 @@ void main() {
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/test/requestOptions');
+        expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
         expectParams(request.queryParameters,
             """{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}""");
@@ -331,7 +331,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.customPost(
-        path: "/test/requestOptions",
+        path: "test/requestOptions",
         parameters: {
           'query': "parameters",
         },
@@ -348,7 +348,7 @@ void main() {
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/test/requestOptions');
+        expectPath(request.path, '/test/requestOptions');
         expect(request.method, 'post');
         expectParams(request.queryParameters,
             """{"query":"parameters","myParam":"1%2C2"}""");

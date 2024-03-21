@@ -34,13 +34,13 @@ class PersonalizationTest extends AnyFunSuite {
   test("allow del method for a custom path with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.customDelete[JObject](
-      path = "/test/minimal"
+      path = "test/minimal"
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/test/minimal")
+    assert(res.path == "/test/minimal")
     assert(res.method == "DELETE")
     assert(res.body.isEmpty)
   }
@@ -48,14 +48,14 @@ class PersonalizationTest extends AnyFunSuite {
   test("allow del method for a custom path with all parameters") {
     val (client, echo) = testClient()
     val future = client.customDelete[JObject](
-      path = "/test/all",
+      path = "test/all",
       parameters = Some(Map("query" -> "parameters"))
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/test/all")
+    assert(res.path == "/test/all")
     assert(res.method == "DELETE")
     assert(res.body.isEmpty)
     val expectedQuery = parse("""{"query":"parameters"}""").asInstanceOf[JObject].obj.toMap
@@ -70,13 +70,13 @@ class PersonalizationTest extends AnyFunSuite {
   test("allow get method for a custom path with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.customGet[JObject](
-      path = "/test/minimal"
+      path = "test/minimal"
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/test/minimal")
+    assert(res.path == "/test/minimal")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
   }
@@ -84,14 +84,14 @@ class PersonalizationTest extends AnyFunSuite {
   test("allow get method for a custom path with all parameters") {
     val (client, echo) = testClient()
     val future = client.customGet[JObject](
-      path = "/test/all",
+      path = "test/all",
       parameters = Some(Map("query" -> "parameters with space"))
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/test/all")
+    assert(res.path == "/test/all")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
     val expectedQuery = parse("""{"query":"parameters%20with%20space"}""").asInstanceOf[JObject].obj.toMap
@@ -106,7 +106,7 @@ class PersonalizationTest extends AnyFunSuite {
   test("requestOptions should be escaped too") {
     val (client, echo) = testClient()
     val future = client.customGet[JObject](
-      path = "/test/all",
+      path = "test/all",
       parameters = Some(Map("query" -> "to be overriden")),
       requestOptions = Some(
         RequestOptions
@@ -121,7 +121,7 @@ class PersonalizationTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/test/all")
+    assert(res.path == "/test/all")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
     val expectedQuery = parse("""{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}""")
@@ -145,13 +145,13 @@ class PersonalizationTest extends AnyFunSuite {
   test("allow post method for a custom path with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
-      path = "/test/minimal"
+      path = "test/minimal"
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/test/minimal")
+    assert(res.path == "/test/minimal")
     assert(res.method == "POST")
     val expectedBody = parse("""{}""")
     val actualBody = parse(res.body.get)
@@ -161,7 +161,7 @@ class PersonalizationTest extends AnyFunSuite {
   test("allow post method for a custom path with all parameters") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
-      path = "/test/all",
+      path = "test/all",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("body", JString("parameters")))))
     )
@@ -169,7 +169,7 @@ class PersonalizationTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/test/all")
+    assert(res.path == "/test/all")
     assert(res.method == "POST")
     val expectedBody = parse("""{"body":"parameters"}""")
     val actualBody = parse(res.body.get)
@@ -186,7 +186,7 @@ class PersonalizationTest extends AnyFunSuite {
   test("requestOptions can override default query parameters") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
-      path = "/test/requestOptions",
+      path = "test/requestOptions",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("facet", JString("filters"))))),
       requestOptions = Some(
@@ -200,7 +200,7 @@ class PersonalizationTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/test/requestOptions")
+    assert(res.path == "/test/requestOptions")
     assert(res.method == "POST")
     val expectedBody = parse("""{"facet":"filters"}""")
     val actualBody = parse(res.body.get)
@@ -217,7 +217,7 @@ class PersonalizationTest extends AnyFunSuite {
   test("requestOptions merges query parameters with default ones") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
-      path = "/test/requestOptions",
+      path = "test/requestOptions",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("facet", JString("filters"))))),
       requestOptions = Some(
@@ -231,7 +231,7 @@ class PersonalizationTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/test/requestOptions")
+    assert(res.path == "/test/requestOptions")
     assert(res.method == "POST")
     val expectedBody = parse("""{"facet":"filters"}""")
     val actualBody = parse(res.body.get)
@@ -248,7 +248,7 @@ class PersonalizationTest extends AnyFunSuite {
   test("requestOptions can override default headers") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
-      path = "/test/requestOptions",
+      path = "test/requestOptions",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("facet", JString("filters"))))),
       requestOptions = Some(
@@ -262,7 +262,7 @@ class PersonalizationTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/test/requestOptions")
+    assert(res.path == "/test/requestOptions")
     assert(res.method == "POST")
     val expectedBody = parse("""{"facet":"filters"}""")
     val actualBody = parse(res.body.get)
@@ -285,7 +285,7 @@ class PersonalizationTest extends AnyFunSuite {
   test("requestOptions merges headers with default ones") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
-      path = "/test/requestOptions",
+      path = "test/requestOptions",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("facet", JString("filters"))))),
       requestOptions = Some(
@@ -299,7 +299,7 @@ class PersonalizationTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/test/requestOptions")
+    assert(res.path == "/test/requestOptions")
     assert(res.method == "POST")
     val expectedBody = parse("""{"facet":"filters"}""")
     val actualBody = parse(res.body.get)
@@ -322,7 +322,7 @@ class PersonalizationTest extends AnyFunSuite {
   test("requestOptions queryParameters accepts booleans") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
-      path = "/test/requestOptions",
+      path = "test/requestOptions",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("facet", JString("filters"))))),
       requestOptions = Some(
@@ -336,7 +336,7 @@ class PersonalizationTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/test/requestOptions")
+    assert(res.path == "/test/requestOptions")
     assert(res.method == "POST")
     val expectedBody = parse("""{"facet":"filters"}""")
     val actualBody = parse(res.body.get)
@@ -353,7 +353,7 @@ class PersonalizationTest extends AnyFunSuite {
   test("requestOptions queryParameters accepts integers") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
-      path = "/test/requestOptions",
+      path = "test/requestOptions",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("facet", JString("filters"))))),
       requestOptions = Some(
@@ -367,7 +367,7 @@ class PersonalizationTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/test/requestOptions")
+    assert(res.path == "/test/requestOptions")
     assert(res.method == "POST")
     val expectedBody = parse("""{"facet":"filters"}""")
     val actualBody = parse(res.body.get)
@@ -384,7 +384,7 @@ class PersonalizationTest extends AnyFunSuite {
   test("requestOptions queryParameters accepts list of string") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
-      path = "/test/requestOptions",
+      path = "test/requestOptions",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("facet", JString("filters"))))),
       requestOptions = Some(
@@ -398,7 +398,7 @@ class PersonalizationTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/test/requestOptions")
+    assert(res.path == "/test/requestOptions")
     assert(res.method == "POST")
     val expectedBody = parse("""{"facet":"filters"}""")
     val actualBody = parse(res.body.get)
@@ -415,7 +415,7 @@ class PersonalizationTest extends AnyFunSuite {
   test("requestOptions queryParameters accepts list of booleans") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
-      path = "/test/requestOptions",
+      path = "test/requestOptions",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("facet", JString("filters"))))),
       requestOptions = Some(
@@ -429,7 +429,7 @@ class PersonalizationTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/test/requestOptions")
+    assert(res.path == "/test/requestOptions")
     assert(res.method == "POST")
     val expectedBody = parse("""{"facet":"filters"}""")
     val actualBody = parse(res.body.get)
@@ -447,7 +447,7 @@ class PersonalizationTest extends AnyFunSuite {
   test("requestOptions queryParameters accepts list of integers") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
-      path = "/test/requestOptions",
+      path = "test/requestOptions",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("facet", JString("filters"))))),
       requestOptions = Some(
@@ -461,7 +461,7 @@ class PersonalizationTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/test/requestOptions")
+    assert(res.path == "/test/requestOptions")
     assert(res.method == "POST")
     val expectedBody = parse("""{"facet":"filters"}""")
     val actualBody = parse(res.body.get)
@@ -478,13 +478,13 @@ class PersonalizationTest extends AnyFunSuite {
   test("allow put method for a custom path with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.customPut[JObject](
-      path = "/test/minimal"
+      path = "test/minimal"
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/test/minimal")
+    assert(res.path == "/test/minimal")
     assert(res.method == "PUT")
     val expectedBody = parse("""{}""")
     val actualBody = parse(res.body.get)
@@ -494,7 +494,7 @@ class PersonalizationTest extends AnyFunSuite {
   test("allow put method for a custom path with all parameters") {
     val (client, echo) = testClient()
     val future = client.customPut[JObject](
-      path = "/test/all",
+      path = "test/all",
       parameters = Some(Map("query" -> "parameters")),
       body = Some(JObject(List(JField("body", JString("parameters")))))
     )
@@ -502,7 +502,7 @@ class PersonalizationTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/test/all")
+    assert(res.path == "/test/all")
     assert(res.method == "PUT")
     val expectedBody = parse("""{"body":"parameters"}""")
     val actualBody = parse(res.body.get)

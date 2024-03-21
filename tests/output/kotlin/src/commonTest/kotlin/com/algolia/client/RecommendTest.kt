@@ -18,7 +18,7 @@ class RecommendTest {
     client.runTest(
       call = {
         customGet(
-          path = "/test",
+          path = "test",
         )
       },
       intercept = {
@@ -33,7 +33,7 @@ class RecommendTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test",
+          path = "test",
         )
       },
       intercept = {
@@ -48,7 +48,7 @@ class RecommendTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test",
+          path = "1/test",
         )
       },
       intercept = {
@@ -65,7 +65,7 @@ class RecommendTest {
     client.runTest(
       call = {
         customGet(
-          path = "/test",
+          path = "1/test",
         )
       },
       intercept = {
@@ -81,7 +81,7 @@ class RecommendTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test",
+          path = "1/test",
         )
       },
       intercept = {

@@ -40,7 +40,7 @@ paths:
   # ######################
   # ### Custom request ###
   # ######################
-  /1{path}:
+  /{path}:
     $ref: '../common/paths/customRequest.yml'
 
   # authentications API.

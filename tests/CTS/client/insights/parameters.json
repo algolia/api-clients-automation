@@ -61,7 +61,7 @@
         "object": "$client",
         "path": "customDelete",
         "parameters": {
-          "path": "/test"
+          "path": "test"
         },
         "expected": {
           "type": "host",

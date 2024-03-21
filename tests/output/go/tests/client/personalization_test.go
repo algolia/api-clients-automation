@@ -34,7 +34,7 @@ func TestPersonalizationcommonApi0(t *testing.T) {
 	client, echo := createPersonalizationClient(t)
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)
@@ -47,7 +47,7 @@ func TestPersonalizationcommonApi1(t *testing.T) {
 	client, echo := createPersonalizationClient(t)
 	_ = echo
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)
@@ -61,7 +61,7 @@ func TestPersonalizationcommonApi2(t *testing.T) {
 	client, echo := createPersonalizationClient(t)
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)

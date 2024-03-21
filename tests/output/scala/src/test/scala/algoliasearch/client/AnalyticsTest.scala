@@ -43,7 +43,7 @@ class AnalyticsTest extends AnyFunSuite {
 
     Await.ready(
       client.customPost[Any](
-        path = "/test"
+        path = "1/test"
       ),
       Duration.Inf
     )
@@ -58,7 +58,7 @@ class AnalyticsTest extends AnyFunSuite {
 
     Await.ready(
       client.customGet[Any](
-        path = "/test"
+        path = "1/test"
       ),
       Duration.Inf
     )
@@ -71,7 +71,7 @@ class AnalyticsTest extends AnyFunSuite {
 
     Await.ready(
       client.customPost[Any](
-        path = "/test"
+        path = "1/test"
       ),
       Duration.Inf
     )
@@ -98,7 +98,7 @@ class AnalyticsTest extends AnyFunSuite {
 
     Await.ready(
       client.customPost[Any](
-        path = "/test"
+        path = "test"
       ),
       Duration.Inf
     )

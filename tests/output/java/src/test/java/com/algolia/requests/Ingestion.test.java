@@ -226,10 +226,10 @@ class IngestionClientRequestsTests {
   @DisplayName("allow del method for a custom path with minimal parameters")
   void customDeleteTest0() {
     assertDoesNotThrow(() -> {
-      client.customDelete("/test/minimal");
+      client.customDelete("test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/test/minimal", req.path);
+    assertEquals("/test/minimal", req.path);
     assertEquals("DELETE", req.method);
     assertNull(req.body);
   }
@@ -238,10 +238,10 @@ class IngestionClientRequestsTests {
   @DisplayName("allow del method for a custom path with all parameters")
   void customDeleteTest1() {
     assertDoesNotThrow(() -> {
-      client.customDelete("/test/all", Map.of("query", "parameters"));
+      client.customDelete("test/all", Map.of("query", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/test/all", req.path);
+    assertEquals("/test/all", req.path);
     assertEquals("DELETE", req.method);
     assertNull(req.body);
 
@@ -262,10 +262,10 @@ class IngestionClientRequestsTests {
   @DisplayName("allow get method for a custom path with minimal parameters")
   void customGetTest0() {
     assertDoesNotThrow(() -> {
-      client.customGet("/test/minimal");
+      client.customGet("test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/test/minimal", req.path);
+    assertEquals("/test/minimal", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
   }
@@ -274,10 +274,10 @@ class IngestionClientRequestsTests {
   @DisplayName("allow get method for a custom path with all parameters")
   void customGetTest1() {
     assertDoesNotThrow(() -> {
-      client.customGet("/test/all", Map.of("query", "parameters with space"));
+      client.customGet("test/all", Map.of("query", "parameters with space"));
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/test/all", req.path);
+    assertEquals("/test/all", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
 
@@ -302,7 +302,7 @@ class IngestionClientRequestsTests {
   void customGetTest2() {
     assertDoesNotThrow(() -> {
       client.customGet(
-        "/test/all",
+        "test/all",
         Map.of("query", "to be overriden"),
         new RequestOptions()
           .addExtraQueryParameters("query", "parameters with space")
@@ -311,7 +311,7 @@ class IngestionClientRequestsTests {
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/test/all", req.path);
+    assertEquals("/test/all", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
 
@@ -349,10 +349,10 @@ class IngestionClientRequestsTests {
   @DisplayName("allow post method for a custom path with minimal parameters")
   void customPostTest0() {
     assertDoesNotThrow(() -> {
-      client.customPost("/test/minimal");
+      client.customPost("test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/test/minimal", req.path);
+    assertEquals("/test/minimal", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
   }
@@ -361,10 +361,10 @@ class IngestionClientRequestsTests {
   @DisplayName("allow post method for a custom path with all parameters")
   void customPostTest1() {
     assertDoesNotThrow(() -> {
-      client.customPost("/test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
+      client.customPost("test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/test/all", req.path);
+    assertEquals("/test/all", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"body\":\"parameters\"}", req.body, JSONCompareMode.STRICT));
 
@@ -386,14 +386,14 @@ class IngestionClientRequestsTests {
   void customPostTest2() {
     assertDoesNotThrow(() -> {
       client.customPost(
-        "/test/requestOptions",
+        "test/requestOptions",
         Map.of("query", "parameters"),
         Map.of("facet", "filters"),
         new RequestOptions().addExtraQueryParameters("query", "myQueryParameter")
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/test/requestOptions", req.path);
+    assertEquals("/test/requestOptions", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT));
 
@@ -418,14 +418,14 @@ class IngestionClientRequestsTests {
   void customPostTest3() {
     assertDoesNotThrow(() -> {
       client.customPost(
-        "/test/requestOptions",
+        "test/requestOptions",
         Map.of("query", "parameters"),
         Map.of("facet", "filters"),
         new RequestOptions().addExtraQueryParameters("query2", "myQueryParameter")
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/test/requestOptions", req.path);
+    assertEquals("/test/requestOptions", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT));
 
@@ -450,14 +450,14 @@ class IngestionClientRequestsTests {
   void customPostTest4() {
     assertDoesNotThrow(() -> {
       client.customPost(
-        "/test/requestOptions",
+        "test/requestOptions",
         Map.of("query", "parameters"),
         Map.of("facet", "filters"),
         new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/test/requestOptions", req.path);
+    assertEquals("/test/requestOptions", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT));
 
@@ -493,14 +493,14 @@ class IngestionClientRequestsTests {
   void customPostTest5() {
     assertDoesNotThrow(() -> {
       client.customPost(
-        "/test/requestOptions",
+        "test/requestOptions",
         Map.of("query", "parameters"),
         Map.of("facet", "filters"),
         new RequestOptions().addExtraHeader("x-algolia-api-key", "myApiKey")
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/test/requestOptions", req.path);
+    assertEquals("/test/requestOptions", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT));
 
@@ -536,14 +536,14 @@ class IngestionClientRequestsTests {
   void customPostTest6() {
     assertDoesNotThrow(() -> {
       client.customPost(
-        "/test/requestOptions",
+        "test/requestOptions",
         Map.of("query", "parameters"),
         Map.of("facet", "filters"),
         new RequestOptions().addExtraQueryParameters("isItWorking", true)
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/test/requestOptions", req.path);
+    assertEquals("/test/requestOptions", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT));
 
@@ -568,14 +568,14 @@ class IngestionClientRequestsTests {
   void customPostTest7() {
     assertDoesNotThrow(() -> {
       client.customPost(
-        "/test/requestOptions",
+        "test/requestOptions",
         Map.of("query", "parameters"),
         Map.of("facet", "filters"),
         new RequestOptions().addExtraQueryParameters("myParam", 2)
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/test/requestOptions", req.path);
+    assertEquals("/test/requestOptions", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT));
 
@@ -600,14 +600,14 @@ class IngestionClientRequestsTests {
   void customPostTest8() {
     assertDoesNotThrow(() -> {
       client.customPost(
-        "/test/requestOptions",
+        "test/requestOptions",
         Map.of("query", "parameters"),
         Map.of("facet", "filters"),
         new RequestOptions().addExtraQueryParameters("myParam", List.of("b and c", "d"))
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/test/requestOptions", req.path);
+    assertEquals("/test/requestOptions", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT));
 
@@ -632,14 +632,14 @@ class IngestionClientRequestsTests {
   void customPostTest9() {
     assertDoesNotThrow(() -> {
       client.customPost(
-        "/test/requestOptions",
+        "test/requestOptions",
         Map.of("query", "parameters"),
         Map.of("facet", "filters"),
         new RequestOptions().addExtraQueryParameters("myParam", List.of(true, true, false))
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/test/requestOptions", req.path);
+    assertEquals("/test/requestOptions", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT));
 
@@ -664,14 +664,14 @@ class IngestionClientRequestsTests {
   void customPostTest10() {
     assertDoesNotThrow(() -> {
       client.customPost(
-        "/test/requestOptions",
+        "test/requestOptions",
         Map.of("query", "parameters"),
         Map.of("facet", "filters"),
         new RequestOptions().addExtraQueryParameters("myParam", List.of(1, 2))
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/test/requestOptions", req.path);
+    assertEquals("/test/requestOptions", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"facet\":\"filters\"}", req.body, JSONCompareMode.STRICT));
 
@@ -695,10 +695,10 @@ class IngestionClientRequestsTests {
   @DisplayName("allow put method for a custom path with minimal parameters")
   void customPutTest0() {
     assertDoesNotThrow(() -> {
-      client.customPut("/test/minimal");
+      client.customPut("test/minimal");
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/test/minimal", req.path);
+    assertEquals("/test/minimal", req.path);
     assertEquals("PUT", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{}", req.body, JSONCompareMode.STRICT));
   }
@@ -707,10 +707,10 @@ class IngestionClientRequestsTests {
   @DisplayName("allow put method for a custom path with all parameters")
   void customPutTest1() {
     assertDoesNotThrow(() -> {
-      client.customPut("/test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
+      client.customPut("test/all", Map.of("query", "parameters"), Map.of("body", "parameters"));
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/test/all", req.path);
+    assertEquals("/test/all", req.path);
     assertEquals("PUT", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"body\":\"parameters\"}", req.body, JSONCompareMode.STRICT));
 

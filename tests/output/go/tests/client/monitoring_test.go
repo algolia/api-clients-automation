@@ -33,7 +33,7 @@ func TestMonitoringcommonApi0(t *testing.T) {
 	client, echo := createMonitoringClient(t)
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)
@@ -46,7 +46,7 @@ func TestMonitoringcommonApi1(t *testing.T) {
 	client, echo := createMonitoringClient(t)
 	_ = echo
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)
@@ -60,7 +60,7 @@ func TestMonitoringcommonApi2(t *testing.T) {
 	client, echo := createMonitoringClient(t)
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)
@@ -86,7 +86,7 @@ func TestMonitoringparameters0(t *testing.T) {
 	client, err = monitoring.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	_, err = client.CustomDelete(client.NewApiCustomDeleteRequest(
-		"/test",
+		"test",
 	),
 	)
 	require.NoError(t, err)

@@ -25,7 +25,7 @@ class TestSearchClient:
             config=_config, transporter=EchoTransporter(_config)
         )
         _req = await self._client.custom_get_with_http_info(
-            path="/test",
+            path="test",
         )
         assert _req.host == "test-app-id-dsn.algolia.net"
 
@@ -39,7 +39,7 @@ class TestSearchClient:
             config=_config, transporter=EchoTransporter(_config)
         )
         _req = await self._client.custom_post_with_http_info(
-            path="/test",
+            path="test",
         )
         assert _req.host == "test-app-id.algolia.net"
 
@@ -57,7 +57,7 @@ class TestSearchClient:
         )
         self._client = SearchClient.create_with_config(config=_config)
         _req = await self._client.custom_get(
-            path="/test/retry",
+            path="1/test/retry",
         )
         assert _req == """{"message":"ok test server response"}"""
 
@@ -68,7 +68,7 @@ class TestSearchClient:
         self.create_client()
 
         _req = await self._client.custom_post_with_http_info(
-            path="/test",
+            path="1/test",
         )
         regex_user_agent = compile(
             "^Algolia for Python \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Search (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
@@ -82,7 +82,7 @@ class TestSearchClient:
         self.create_client()
 
         _req = await self._client.custom_get_with_http_info(
-            path="/test",
+            path="1/test",
         )
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 5000
@@ -94,7 +94,7 @@ class TestSearchClient:
         self.create_client()
 
         _req = await self._client.custom_post_with_http_info(
-            path="/test",
+            path="1/test",
         )
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 30000

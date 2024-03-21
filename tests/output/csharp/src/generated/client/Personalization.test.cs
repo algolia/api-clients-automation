@@ -30,7 +30,7 @@ public class PersonalizationClientTests
       new PersonalizationConfig("appId", "apiKey", "us"),
       _echo
     );
-    await client.CustomPostAsync("/test");
+    await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
       var regexp = new Regex(
@@ -47,7 +47,7 @@ public class PersonalizationClientTests
       new PersonalizationConfig("appId", "apiKey", "us"),
       _echo
     );
-    await client.CustomGetAsync("/test");
+    await client.CustomGetAsync("1/test");
     EchoResponse result = _echo.LastResponse;
 
     Assert.Equal(2000, result.ConnectTimeout.TotalMilliseconds);
@@ -61,7 +61,7 @@ public class PersonalizationClientTests
       new PersonalizationConfig("appId", "apiKey", "us"),
       _echo
     );
-    await client.CustomPostAsync("/test");
+    await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
 
     Assert.Equal(2000, result.ConnectTimeout.TotalMilliseconds);

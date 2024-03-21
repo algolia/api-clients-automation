@@ -17,7 +17,7 @@ void main() {
     });
     try {
       final res = await client.customPost(
-        path: "/test",
+        path: "1/test",
       );
     } on InterceptionException catch (_) {
       // Ignore InterceptionException
@@ -37,7 +37,7 @@ void main() {
     });
     try {
       final res = await client.customGet(
-        path: "/test",
+        path: "1/test",
       );
     } on InterceptionException catch (_) {
       // Ignore InterceptionException
@@ -57,7 +57,7 @@ void main() {
     });
     try {
       final res = await client.customPost(
-        path: "/test",
+        path: "1/test",
       );
     } on InterceptionException catch (_) {
       // Ignore InterceptionException
@@ -114,7 +114,7 @@ void main() {
     });
     try {
       final res = await client.customDelete(
-        path: "/test",
+        path: "test",
       );
     } on InterceptionException catch (_) {
       // Ignore InterceptionException

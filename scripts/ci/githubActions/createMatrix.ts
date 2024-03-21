@@ -141,6 +141,13 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
     });
   }
 
+  // If there are updates for the Swift client, we allow ourselves to run the CTS on macOS
+  const swiftData = clientMatrix.client.find((c) => c.language === 'swift');
+  if (swiftData) {
+    core.setOutput('SWIFT_DATA', JSON.stringify(swiftData));
+    core.setOutput('RUN_MACOS_SWIFT_CTS', true);
+  }
+
   const javascriptData = clientMatrix.client.find((c) => c.language === 'javascript');
   if (javascriptData) {
     core.setOutput('JAVASCRIPT_DATA', JSON.stringify(javascriptData));

@@ -22,7 +22,7 @@ tags:
     x-displayName: Strategies
     description: Manage personalization strategies.
 paths:
-  /1{path}:
+  /{path}:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API.

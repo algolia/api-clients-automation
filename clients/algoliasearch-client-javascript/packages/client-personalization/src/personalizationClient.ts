@@ -27,7 +27,7 @@ import type { GetUserTokenResponse } from '../model/getUserTokenResponse';
 import type { PersonalizationStrategyParams } from '../model/personalizationStrategyParams';
 import type { SetPersonalizationStrategyResponse } from '../model/setPersonalizationStrategyResponse';
 
-export const apiClientVersion = '5.0.0-alpha.107';
+export const apiClientVersion = '5.0.0-alpha.108';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -123,7 +123,7 @@ export function createPersonalizationClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 
@@ -155,7 +155,7 @@ export function createPersonalizationClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 
@@ -188,7 +188,7 @@ export function createPersonalizationClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 
@@ -222,7 +222,7 @@ export function createPersonalizationClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 

@@ -10,7 +10,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       'test-api-key',
       { requester: Algolia::Transport::EchoRequester.new }
     )
-    req = client.custom_get_with_http_info("/test")
+    req = client.custom_get_with_http_info("test")
     assert_equal('test-app-id-dsn.algolia.net', req.host.url)
   end
 
@@ -21,7 +21,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       'test-api-key',
       { requester: Algolia::Transport::EchoRequester.new }
     )
-    req = client.custom_post_with_http_info("/test")
+    req = client.custom_post_with_http_info("test")
     assert_equal('test-app-id.algolia.net', req.host.url)
   end
 
@@ -48,7 +48,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         'searchClient'
       )
     )
-    req = client.custom_get("/test/retry")
+    req = client.custom_get("1/test/retry")
     assert_equal({ 'message': "ok test server response" }, req)
   end
 
@@ -69,7 +69,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       )
     )
     req = client.custom_post(
-      "/test/gzip",
+      "1/test/gzip",
       {},
       { message: "this is a compressed body" }
     )
@@ -87,7 +87,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       'API_KEY',
       { requester: Algolia::Transport::EchoRequester.new }
     )
-    req = client.custom_post_with_http_info("/test")
+    req = client.custom_post_with_http_info("1/test")
     assert(req.headers['user-agent'].match(/^Algolia for Ruby \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Search (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/))
   end
 
@@ -98,7 +98,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       'API_KEY',
       { requester: Algolia::Transport::EchoRequester.new }
     )
-    req = client.custom_get_with_http_info("/test")
+    req = client.custom_get_with_http_info("1/test")
     assert_equal(2000, req.connect_timeout)
     assert_equal(5000, req.timeout)
   end
@@ -110,7 +110,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       'API_KEY',
       { requester: Algolia::Transport::EchoRequester.new }
     )
-    req = client.custom_post_with_http_info("/test")
+    req = client.custom_post_with_http_info("1/test")
     assert_equal(2000, req.connect_timeout)
     assert_equal(30_000, req.timeout)
   end

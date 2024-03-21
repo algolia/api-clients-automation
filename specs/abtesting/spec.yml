@@ -33,7 +33,7 @@ paths:
   # ######################
   # ### Custom request ###
   # ######################
-  /1{path}:
+  /{path}:
     $ref: '../common/paths/customRequest.yml'
 
   /2/abtests:

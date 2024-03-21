@@ -22,7 +22,7 @@ import type {
 import type { SearchMethodParams } from '../model/searchMethodParams';
 import type { SearchResponses } from '../model/searchResponses';
 
-export const apiClientVersion = '5.0.0-alpha.107';
+export const apiClientVersion = '5.0.0-alpha.108';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -141,7 +141,7 @@ export function createLiteClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 

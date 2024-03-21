@@ -37,7 +37,7 @@ tags:
       A Task describe how we fetch the data (onDemand, schedule, subscription)
       from a source and how we index it on the Algolia side.
 paths:
-  /1{path}:
+  /{path}:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API.
@@ -69,7 +69,7 @@ paths:
             );
 
             // Call the API
-            var response = await client.CustomGetAsync("/test/minimal");
+            var response = await client.CustomGetAsync("test/minimal");
         - lang: Go
           source: >
             // Initialize the client with your application region, eg.
@@ -87,7 +87,7 @@ paths:
             // Call the API
 
             resp, err := client.CustomGet(client.NewApiCustomGetRequest(
-              "/test/minimal",
+              "test/minimal",
             ))
 
             if err != nil {
@@ -109,7 +109,7 @@ paths:
 
             // Call the API
 
-            client.customGet("/test/minimal");
+            client.customGet("test/minimal");
         - lang: JavaScript
           source: |
             // Initialize the client
@@ -120,7 +120,7 @@ paths:
             );
 
             // Call the API
-            const response = await client.customGet({ path: '/test/minimal' });
+            const response = await client.customGet({ path: 'test/minimal' });
 
             // use typed response
             console.log(response);
@@ -135,7 +135,7 @@ paths:
             // Call the API
 
             var response = client.customGet(
-              path = "/test/minimal",
+              path = "test/minimal",
             )
 
 
@@ -154,7 +154,7 @@ paths:
             // Call the API
 
             $response = $client->customGet(
-                '/test/minimal',
+                'test/minimal',
             );
 
 
@@ -172,7 +172,7 @@ paths:
             # Call the API
 
             resp = await _client.custom_get(
-                path="/test/minimal",
+                path="test/minimal",
             )
 
 
@@ -194,7 +194,7 @@ paths:
 
             # Call the API
 
-            resp = client.custom_get("/test/minimal")
+            resp = client.custom_get("test/minimal")
 
 
             # use the class directly
@@ -216,7 +216,7 @@ paths:
             // Call the API
 
             val res = client.customGet[JObject](
-              path = "/test/minimal"
+              path = "test/minimal"
             )
 
 
@@ -233,7 +233,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customGet(path: "/test/minimal")
+            _ = try await client.customGet(path: "test/minimal")
     post:
       operationId: customPost
       requestBody:
@@ -271,7 +271,7 @@ paths:
             );
 
             // Call the API
-            var response = await client.CustomPostAsync("/test/minimal");
+            var response = await client.CustomPostAsync("test/minimal");
         - lang: Go
           source: >
             // Initialize the client with your application region, eg.
@@ -289,7 +289,7 @@ paths:
             // Call the API
 
             resp, err := client.CustomPost(client.NewApiCustomPostRequest(
-              "/test/minimal",
+              "test/minimal",
             ))
 
             if err != nil {
@@ -311,7 +311,7 @@ paths:
 
             // Call the API
 
-            client.customPost("/test/minimal");
+            client.customPost("test/minimal");
         - lang: JavaScript
           source: |
             // Initialize the client
@@ -322,7 +322,7 @@ paths:
             );
 
             // Call the API
-            const response = await client.customPost({ path: '/test/minimal' });
+            const response = await client.customPost({ path: 'test/minimal' });
 
             // use typed response
             console.log(response);
@@ -337,7 +337,7 @@ paths:
             // Call the API
 
             var response = client.customPost(
-              path = "/test/minimal",
+              path = "test/minimal",
             )
 
 
@@ -356,7 +356,7 @@ paths:
             // Call the API
 
             $response = $client->customPost(
-                '/test/minimal',
+                'test/minimal',
             );
 
 
@@ -374,7 +374,7 @@ paths:
             # Call the API
 
             resp = await _client.custom_post(
-                path="/test/minimal",
+                path="test/minimal",
             )
 
 
@@ -396,7 +396,7 @@ paths:
 
             # Call the API
 
-            resp = client.custom_post("/test/minimal")
+            resp = client.custom_post("test/minimal")
 
 
             # use the class directly
@@ -418,7 +418,7 @@ paths:
             // Call the API
 
             val res = client.customPost[JObject](
-              path = "/test/minimal"
+              path = "test/minimal"
             )
 
 
@@ -435,7 +435,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPost(path: "/test/minimal")
+            _ = try await client.customPost(path: "test/minimal")
     put:
       operationId: customPut
       requestBody:
@@ -473,7 +473,7 @@ paths:
             );
 
             // Call the API
-            var response = await client.CustomPutAsync("/test/minimal");
+            var response = await client.CustomPutAsync("test/minimal");
         - lang: Go
           source: >
             // Initialize the client with your application region, eg.
@@ -491,7 +491,7 @@ paths:
             // Call the API
 
             resp, err := client.CustomPut(client.NewApiCustomPutRequest(
-              "/test/minimal",
+              "test/minimal",
             ))
 
             if err != nil {
@@ -513,7 +513,7 @@ paths:
 
             // Call the API
 
-            client.customPut("/test/minimal");
+            client.customPut("test/minimal");
         - lang: JavaScript
           source: |
             // Initialize the client
@@ -524,7 +524,7 @@ paths:
             );
 
             // Call the API
-            const response = await client.customPut({ path: '/test/minimal' });
+            const response = await client.customPut({ path: 'test/minimal' });
 
             // use typed response
             console.log(response);
@@ -539,7 +539,7 @@ paths:
             // Call the API
 
             var response = client.customPut(
-              path = "/test/minimal",
+              path = "test/minimal",
             )
 
 
@@ -558,7 +558,7 @@ paths:
             // Call the API
 
             $response = $client->customPut(
-                '/test/minimal',
+                'test/minimal',
             );
 
 
@@ -576,7 +576,7 @@ paths:
             # Call the API
 
             resp = await _client.custom_put(
-                path="/test/minimal",
+                path="test/minimal",
             )
 
 
@@ -598,7 +598,7 @@ paths:
 
             # Call the API
 
-            resp = client.custom_put("/test/minimal")
+            resp = client.custom_put("test/minimal")
 
 
             # use the class directly
@@ -620,7 +620,7 @@ paths:
             // Call the API
 
             val res = client.customPut[JObject](
-              path = "/test/minimal"
+              path = "test/minimal"
             )
 
 
@@ -637,7 +637,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPut(path: "/test/minimal")
+            _ = try await client.customPut(path: "test/minimal")
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API.
@@ -669,7 +669,7 @@ paths:
             );
 
             // Call the API
-            var response = await client.CustomDeleteAsync("/test/minimal");
+            var response = await client.CustomDeleteAsync("test/minimal");
         - lang: Go
           source: >
             // Initialize the client with your application region, eg.
@@ -687,7 +687,7 @@ paths:
             // Call the API
 
             resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-              "/test/minimal",
+              "test/minimal",
             ))
 
             if err != nil {
@@ -709,7 +709,7 @@ paths:
 
             // Call the API
 
-            client.customDelete("/test/minimal");
+            client.customDelete("test/minimal");
         - lang: JavaScript
           source: >
             // Initialize the client
@@ -723,7 +723,7 @@ paths:
 
             // Call the API
 
-            const response = await client.customDelete({ path: '/test/minimal'
+            const response = await client.customDelete({ path: 'test/minimal'
             });
 
 
@@ -741,7 +741,7 @@ paths:
             // Call the API
 
             var response = client.customDelete(
-              path = "/test/minimal",
+              path = "test/minimal",
             )
 
 
@@ -760,7 +760,7 @@ paths:
             // Call the API
 
             $response = $client->customDelete(
-                '/test/minimal',
+                'test/minimal',
             );
 
 
@@ -778,7 +778,7 @@ paths:
             # Call the API
 
             resp = await _client.custom_delete(
-                path="/test/minimal",
+                path="test/minimal",
             )
 
 
@@ -800,7 +800,7 @@ paths:
 
             # Call the API
 
-            resp = client.custom_delete("/test/minimal")
+            resp = client.custom_delete("test/minimal")
 
 
             # use the class directly
@@ -822,7 +822,7 @@ paths:
             // Call the API
 
             val res = client.customDelete[JObject](
-              path = "/test/minimal"
+              path = "test/minimal"
             )
 
 
@@ -839,7 +839,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customDelete(path: "/test/minimal")
+            _ = try await client.customDelete(path: "test/minimal")
   /1/authentications:
     get:
       tags:

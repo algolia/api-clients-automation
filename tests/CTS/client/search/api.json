@@ -16,7 +16,7 @@
         "object": "$client",
         "path": "customGet",
         "parameters": {
-          "path": "/test"
+          "path": "test"
         },
         "expected": {
           "type": "host",
@@ -42,7 +42,7 @@
         "object": "$client",
         "path": "customPost",
         "parameters": {
-          "path": "/test"
+          "path": "test"
         },
         "expected": {
           "type": "host",
@@ -78,7 +78,7 @@
         "object": "$client",
         "path": "customGet",
         "parameters": {
-          "path": "/test/retry"
+          "path": "1/test/retry"
         },
         "expected": {
           "type": "response",
@@ -113,7 +113,7 @@
         "object": "$client",
         "path": "customPost",
         "parameters": {
-          "path": "/test/gzip",
+          "path": "1/test/gzip",
           "parameters": {},
           "body": {
             "message": "this is a compressed body"

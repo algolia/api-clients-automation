@@ -45,7 +45,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     var response = client.customDelete(
-      path = "/test/minimal",
+      path = "test/minimal",
     )
 
     // Use the response
@@ -62,7 +62,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     var response = client.customGet(
-      path = "/test/minimal",
+      path = "test/minimal",
     )
 
     // Use the response
@@ -79,7 +79,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     var response = client.customPost(
-      path = "/test/minimal",
+      path = "test/minimal",
     )
 
     // Use the response
@@ -96,7 +96,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     var response = client.customPut(
-      path = "/test/minimal",
+      path = "test/minimal",
     )
 
     // Use the response

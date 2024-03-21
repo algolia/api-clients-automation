@@ -55,7 +55,7 @@ import type { GetTopHitsResponse } from '../model/getTopHitsResponse';
 import type { GetTopSearchesResponse } from '../model/getTopSearchesResponse';
 import type { GetUsersCountResponse } from '../model/getUsersCountResponse';
 
-export const apiClientVersion = '5.0.0-alpha.107';
+export const apiClientVersion = '5.0.0-alpha.108';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -150,7 +150,7 @@ export function createAnalyticsClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 
@@ -182,7 +182,7 @@ export function createAnalyticsClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 
@@ -215,7 +215,7 @@ export function createAnalyticsClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 
@@ -249,7 +249,7 @@ export function createAnalyticsClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 

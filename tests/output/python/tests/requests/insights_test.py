@@ -33,10 +33,10 @@ class TestInsightsClient:
         allow del method for a custom path with minimal parameters
         """
         _req = await self._client.custom_delete_with_http_info(
-            path="/test/minimal",
+            path="test/minimal",
         )
 
-        assert _req.path == "/1/test/minimal"
+        assert _req.path == "/test/minimal"
         assert _req.verb == "DELETE"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -47,13 +47,13 @@ class TestInsightsClient:
         allow del method for a custom path with all parameters
         """
         _req = await self._client.custom_delete_with_http_info(
-            path="/test/all",
+            path="test/all",
             parameters={
                 "query": "parameters",
             },
         )
 
-        assert _req.path == "/1/test/all"
+        assert _req.path == "/test/all"
         assert _req.verb == "DELETE"
         assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
@@ -64,10 +64,10 @@ class TestInsightsClient:
         allow get method for a custom path with minimal parameters
         """
         _req = await self._client.custom_get_with_http_info(
-            path="/test/minimal",
+            path="test/minimal",
         )
 
-        assert _req.path == "/1/test/minimal"
+        assert _req.path == "/test/minimal"
         assert _req.verb == "GET"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -78,13 +78,13 @@ class TestInsightsClient:
         allow get method for a custom path with all parameters
         """
         _req = await self._client.custom_get_with_http_info(
-            path="/test/all",
+            path="test/all",
             parameters={
                 "query": "parameters with space",
             },
         )
 
-        assert _req.path == "/1/test/all"
+        assert _req.path == "/test/all"
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
@@ -98,7 +98,7 @@ class TestInsightsClient:
         requestOptions should be escaped too
         """
         _req = await self._client.custom_get_with_http_info(
-            path="/test/all",
+            path="test/all",
             parameters={
                 "query": "to be overriden",
             },
@@ -110,7 +110,7 @@ class TestInsightsClient:
             },
         )
 
-        assert _req.path == "/1/test/all"
+        assert _req.path == "/test/all"
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
@@ -127,10 +127,10 @@ class TestInsightsClient:
         allow post method for a custom path with minimal parameters
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/minimal",
+            path="test/minimal",
         )
 
-        assert _req.path == "/1/test/minimal"
+        assert _req.path == "/test/minimal"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -141,7 +141,7 @@ class TestInsightsClient:
         allow post method for a custom path with all parameters
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/all",
+            path="test/all",
             parameters={
                 "query": "parameters",
             },
@@ -150,7 +150,7 @@ class TestInsightsClient:
             },
         )
 
-        assert _req.path == "/1/test/all"
+        assert _req.path == "/test/all"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
@@ -161,7 +161,7 @@ class TestInsightsClient:
         requestOptions can override default query parameters
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/requestOptions",
+            path="test/requestOptions",
             parameters={
                 "query": "parameters",
             },
@@ -173,7 +173,7 @@ class TestInsightsClient:
             },
         )
 
-        assert _req.path == "/1/test/requestOptions"
+        assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {"query": "myQueryParameter"}.items()
         assert _req.headers.items() >= {}.items()
@@ -184,7 +184,7 @@ class TestInsightsClient:
         requestOptions merges query parameters with default ones
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/requestOptions",
+            path="test/requestOptions",
             parameters={
                 "query": "parameters",
             },
@@ -196,7 +196,7 @@ class TestInsightsClient:
             },
         )
 
-        assert _req.path == "/1/test/requestOptions"
+        assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
@@ -210,7 +210,7 @@ class TestInsightsClient:
         requestOptions can override default headers
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/requestOptions",
+            path="test/requestOptions",
             parameters={
                 "query": "parameters",
             },
@@ -222,7 +222,7 @@ class TestInsightsClient:
             },
         )
 
-        assert _req.path == "/1/test/requestOptions"
+        assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
@@ -233,7 +233,7 @@ class TestInsightsClient:
         requestOptions merges headers with default ones
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/requestOptions",
+            path="test/requestOptions",
             parameters={
                 "query": "parameters",
             },
@@ -245,7 +245,7 @@ class TestInsightsClient:
             },
         )
 
-        assert _req.path == "/1/test/requestOptions"
+        assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {"x-algolia-api-key": "myApiKey"}.items()
@@ -256,7 +256,7 @@ class TestInsightsClient:
         requestOptions queryParameters accepts booleans
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/requestOptions",
+            path="test/requestOptions",
             parameters={
                 "query": "parameters",
             },
@@ -268,7 +268,7 @@ class TestInsightsClient:
             },
         )
 
-        assert _req.path == "/1/test/requestOptions"
+        assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
@@ -282,7 +282,7 @@ class TestInsightsClient:
         requestOptions queryParameters accepts integers
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/requestOptions",
+            path="test/requestOptions",
             parameters={
                 "query": "parameters",
             },
@@ -294,7 +294,7 @@ class TestInsightsClient:
             },
         )
 
-        assert _req.path == "/1/test/requestOptions"
+        assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
@@ -308,7 +308,7 @@ class TestInsightsClient:
         requestOptions queryParameters accepts list of string
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/requestOptions",
+            path="test/requestOptions",
             parameters={
                 "query": "parameters",
             },
@@ -320,7 +320,7 @@ class TestInsightsClient:
             },
         )
 
-        assert _req.path == "/1/test/requestOptions"
+        assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
@@ -334,7 +334,7 @@ class TestInsightsClient:
         requestOptions queryParameters accepts list of booleans
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/requestOptions",
+            path="test/requestOptions",
             parameters={
                 "query": "parameters",
             },
@@ -346,7 +346,7 @@ class TestInsightsClient:
             },
         )
 
-        assert _req.path == "/1/test/requestOptions"
+        assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
@@ -360,7 +360,7 @@ class TestInsightsClient:
         requestOptions queryParameters accepts list of integers
         """
         _req = await self._client.custom_post_with_http_info(
-            path="/test/requestOptions",
+            path="test/requestOptions",
             parameters={
                 "query": "parameters",
             },
@@ -372,7 +372,7 @@ class TestInsightsClient:
             },
         )
 
-        assert _req.path == "/1/test/requestOptions"
+        assert _req.path == "/test/requestOptions"
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
@@ -386,10 +386,10 @@ class TestInsightsClient:
         allow put method for a custom path with minimal parameters
         """
         _req = await self._client.custom_put_with_http_info(
-            path="/test/minimal",
+            path="test/minimal",
         )
 
-        assert _req.path == "/1/test/minimal"
+        assert _req.path == "/test/minimal"
         assert _req.verb == "PUT"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -400,7 +400,7 @@ class TestInsightsClient:
         allow put method for a custom path with all parameters
         """
         _req = await self._client.custom_put_with_http_info(
-            path="/test/all",
+            path="test/all",
             parameters={
                 "query": "parameters",
             },
@@ -409,7 +409,7 @@ class TestInsightsClient:
             },
         )
 
-        assert _req.path == "/1/test/all"
+        assert _req.path == "/test/all"
         assert _req.verb == "PUT"
         assert _req.query_parameters.items() == {"query": "parameters"}.items()
         assert _req.headers.items() >= {}.items()
@@ -478,7 +478,7 @@ class TestInsightsClient:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1710720000000,
+                        "timestamp": 1710979200000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -491,7 +491,7 @@ class TestInsightsClient:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1710720000000,
+                        "timestamp": 1710979200000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -506,7 +506,7 @@ class TestInsightsClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1710720000000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1710720000000,"objectIDs":["9780545139700","9780439784542"]}]}"""
+            """{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1710979200000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1710979200000,"objectIDs":["9780545139700","9780439784542"]}]}"""
         )
 
         raw_resp = await InsightsClient(
@@ -520,7 +520,7 @@ class TestInsightsClient:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1710720000000,
+                        "timestamp": 1710979200000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -533,7 +533,7 @@ class TestInsightsClient:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1710720000000,
+                        "timestamp": 1710979200000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -555,7 +555,7 @@ class TestInsightsClient:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1710720000000,
+                        "timestamp": 1710979200000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",
@@ -568,7 +568,7 @@ class TestInsightsClient:
                         "index": "products",
                         "userToken": "user-123456",
                         "authenticatedUserToken": "user-123456",
-                        "timestamp": 1710720000000,
+                        "timestamp": 1710979200000,
                         "objectIDs": [
                             "9780545139700",
                             "9780439784542",

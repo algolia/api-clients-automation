@@ -35,7 +35,7 @@ def snippet_for_custom_delete
   client = Algolia::AbtestingClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.custom_delete("/test/minimal")
+  resp = client.custom_delete("test/minimal")
 
   # use the class directly
   puts resp
@@ -54,7 +54,7 @@ def snippet_for_custom_get
   client = Algolia::AbtestingClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.custom_get("/test/minimal")
+  resp = client.custom_get("test/minimal")
 
   # use the class directly
   puts resp
@@ -73,7 +73,7 @@ def snippet_for_custom_post
   client = Algolia::AbtestingClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.custom_post("/test/minimal")
+  resp = client.custom_post("test/minimal")
 
   # use the class directly
   puts resp
@@ -92,7 +92,7 @@ def snippet_for_custom_put
   client = Algolia::AbtestingClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.custom_put("/test/minimal")
+  resp = client.custom_put("test/minimal")
 
   # use the class directly
   puts resp

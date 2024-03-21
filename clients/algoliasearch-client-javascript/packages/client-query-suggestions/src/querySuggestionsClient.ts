@@ -31,7 +31,7 @@ import type { GetLogFile200Response } from '../model/getLogFile200Response';
 import type { QuerySuggestionsConfigurationResponse } from '../model/querySuggestionsConfigurationResponse';
 import type { QuerySuggestionsConfigurationWithIndex } from '../model/querySuggestionsConfigurationWithIndex';
 
-export const apiClientVersion = '5.0.0-alpha.107';
+export const apiClientVersion = '5.0.0-alpha.108';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -161,7 +161,7 @@ export function createQuerySuggestionsClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 
@@ -193,7 +193,7 @@ export function createQuerySuggestionsClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 
@@ -226,7 +226,7 @@ export function createQuerySuggestionsClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 
@@ -260,7 +260,7 @@ export function createQuerySuggestionsClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 

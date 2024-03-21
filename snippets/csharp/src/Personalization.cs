@@ -19,7 +19,7 @@ public class SnippetPersonalizationClient
     );
 
     // Call the API
-    var response = await client.CustomDeleteAsync("/test/minimal");
+    var response = await client.CustomDeleteAsync("test/minimal");
     // SEPARATOR<
   }
 
@@ -37,7 +37,7 @@ public class SnippetPersonalizationClient
     );
 
     // Call the API
-    var response = await client.CustomGetAsync("/test/minimal");
+    var response = await client.CustomGetAsync("test/minimal");
     // SEPARATOR<
   }
 
@@ -55,7 +55,7 @@ public class SnippetPersonalizationClient
     );
 
     // Call the API
-    var response = await client.CustomPostAsync("/test/minimal");
+    var response = await client.CustomPostAsync("test/minimal");
     // SEPARATOR<
   }
 
@@ -73,7 +73,7 @@ public class SnippetPersonalizationClient
     );
 
     // Call the API
-    var response = await client.CustomPutAsync("/test/minimal");
+    var response = await client.CustomPutAsync("test/minimal");
     // SEPARATOR<
   }
 

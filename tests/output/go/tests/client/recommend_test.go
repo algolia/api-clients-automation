@@ -45,7 +45,7 @@ func TestRecommendapi0(t *testing.T) {
 	client, err = recommend.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
-		"/test",
+		"test",
 	),
 	)
 	require.NoError(t, err)
@@ -70,7 +70,7 @@ func TestRecommendapi1(t *testing.T) {
 	client, err = recommend.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"/test",
+		"test",
 	),
 	)
 	require.NoError(t, err)
@@ -83,7 +83,7 @@ func TestRecommendcommonApi0(t *testing.T) {
 	client, echo := createRecommendClient(t)
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)
@@ -96,7 +96,7 @@ func TestRecommendcommonApi1(t *testing.T) {
 	client, echo := createRecommendClient(t)
 	_ = echo
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)
@@ -110,7 +110,7 @@ func TestRecommendcommonApi2(t *testing.T) {
 	client, echo := createRecommendClient(t)
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)

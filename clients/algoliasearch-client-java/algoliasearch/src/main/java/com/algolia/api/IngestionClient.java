@@ -318,7 +318,7 @@ public class IngestionClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customDelete`.");
 
-    HttpRequest request = HttpRequest.builder().setPathEncoded("/1{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
+    HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("DELETE").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
   }
 
@@ -415,7 +415,7 @@ public class IngestionClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customGet`.");
 
-    HttpRequest request = HttpRequest.builder().setPathEncoded("/1{path}", path).setMethod("GET").addQueryParameters(parameters).build();
+    HttpRequest request = HttpRequest.builder().setPathEncoded("/{path}", path).setMethod("GET").addQueryParameters(parameters).build();
     return executeAsync(request, requestOptions, new TypeReference<Object>() {});
   }
 
@@ -521,7 +521,7 @@ public class IngestionClient extends ApiClient {
 
     HttpRequest request = HttpRequest
       .builder()
-      .setPathEncoded("/1{path}", path)
+      .setPathEncoded("/{path}", path)
       .setMethod("POST")
       .setBody(body)
       .addQueryParameters(parameters)
@@ -633,7 +633,7 @@ public class IngestionClient extends ApiClient {
 
     HttpRequest request = HttpRequest
       .builder()
-      .setPathEncoded("/1{path}", path)
+      .setPathEncoded("/{path}", path)
       .setMethod("PUT")
       .setBody(body)
       .addQueryParameters(parameters)
