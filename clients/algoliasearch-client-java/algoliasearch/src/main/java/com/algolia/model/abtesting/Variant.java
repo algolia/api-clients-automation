@@ -34,7 +34,7 @@ public class Variant {
   private Double conversionRate;
 
   @JsonProperty("currencies")
-  private Map<String, CurrenciesValue> currencies;
+  private Map<String, Currency> currencies;
 
   @JsonProperty("description")
   private String description;
@@ -161,12 +161,12 @@ public class Variant {
     return conversionRate;
   }
 
-  public Variant setCurrencies(Map<String, CurrenciesValue> currencies) {
+  public Variant setCurrencies(Map<String, Currency> currencies) {
     this.currencies = currencies;
     return this;
   }
 
-  public Variant putCurrencies(String key, CurrenciesValue currenciesItem) {
+  public Variant putCurrencies(String key, Currency currenciesItem) {
     if (this.currencies == null) {
       this.currencies = new HashMap<>();
     }
@@ -176,7 +176,7 @@ public class Variant {
 
   /** A/B test currencies. */
   @javax.annotation.Nullable
-  public Map<String, CurrenciesValue> getCurrencies() {
+  public Map<String, Currency> getCurrencies() {
     return currencies;
   }
 
@@ -285,8 +285,8 @@ public class Variant {
   }
 
   /**
-   * Number of tracked searches. This is the number of search requests where the `clickAnalytics`
-   * parameter is `true`.
+   * Number of tracked searches. Tracked searches are search requests where the `clickAnalytics`
+   * parameter is true.
    */
   @javax.annotation.Nullable
   public Integer getTrackedSearchCount() {

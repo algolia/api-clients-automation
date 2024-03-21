@@ -465,6 +465,45 @@ class AnalyticsTest {
     )
   }
 
+  // getAddToCartRate
+
+  @Test
+  fun `get getAddToCartRate with minimal parameters`() = runTest {
+    client.runTest(
+      call = {
+        getAddToCartRate(
+          index = "index",
+        )
+      },
+      intercept = {
+        assertEquals("/2/conversions/addToCartRate".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `get getAddToCartRate with all parameters`() = runTest {
+    client.runTest(
+      call = {
+        getAddToCartRate(
+          index = "index",
+          startDate = "1999-09-19",
+          endDate = "2001-01-01",
+          tags = "tag",
+        )
+      },
+      intercept = {
+        assertEquals("/2/conversions/addToCartRate".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertQueryParams("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // getAverageClickPosition
 
   @Test
@@ -582,13 +621,13 @@ class AnalyticsTest {
     )
   }
 
-  // getConversationRate
+  // getConversionRate
 
   @Test
   fun `get getConversationRate with minimal parameters`() = runTest {
     client.runTest(
       call = {
-        getConversationRate(
+        getConversionRate(
           index = "index",
         )
       },
@@ -605,7 +644,7 @@ class AnalyticsTest {
   fun `get getConversationRate with all parameters`() = runTest {
     client.runTest(
       call = {
-        getConversationRate(
+        getConversionRate(
           index = "index",
           startDate = "1999-09-19",
           endDate = "2001-01-01",
@@ -692,6 +731,84 @@ class AnalyticsTest {
       },
       intercept = {
         assertEquals("/2/searches/noResultRate".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertQueryParams("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // getPurchaseRate
+
+  @Test
+  fun `get getPurchaseRate with minimal parameters`() = runTest {
+    client.runTest(
+      call = {
+        getPurchaseRate(
+          index = "index",
+        )
+      },
+      intercept = {
+        assertEquals("/2/conversions/purchaseRate".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `get getPurchaseRate with all parameters`() = runTest {
+    client.runTest(
+      call = {
+        getPurchaseRate(
+          index = "index",
+          startDate = "1999-09-19",
+          endDate = "2001-01-01",
+          tags = "tag",
+        )
+      },
+      intercept = {
+        assertEquals("/2/conversions/purchaseRate".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertQueryParams("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // getRevenue
+
+  @Test
+  fun `get getRevenue with minimal parameters`() = runTest {
+    client.runTest(
+      call = {
+        getRevenue(
+          index = "index",
+        )
+      },
+      intercept = {
+        assertEquals("/2/conversions/revenue".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertQueryParams("""{"index":"index"}""", it.url.encodedParameters)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `get getRevenue with all parameters`() = runTest {
+    client.runTest(
+      call = {
+        getRevenue(
+          index = "index",
+          startDate = "1999-09-19",
+          endDate = "2001-01-01",
+          tags = "tag",
+        )
+      },
+      intercept = {
+        assertEquals("/2/conversions/revenue".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertQueryParams("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
@@ -1077,6 +1194,7 @@ class AnalyticsTest {
           index = "index",
           search = "mySearch",
           clickAnalytics = true,
+          revenueAnalytics = true,
           startDate = "1999-09-19",
           endDate = "2001-01-01",
           limit = 21,
@@ -1087,7 +1205,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/hits".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertQueryParams("""{"index":"index","search":"mySearch","clickAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index","search":"mySearch","clickAnalytics":"true","revenueAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
@@ -1119,6 +1237,7 @@ class AnalyticsTest {
         getTopSearches(
           index = "index",
           clickAnalytics = true,
+          revenueAnalytics = true,
           startDate = "1999-09-19",
           endDate = "2001-01-01",
           orderBy = OrderBy.entries.first { it.value == "searchCount" },
@@ -1131,7 +1250,7 @@ class AnalyticsTest {
       intercept = {
         assertEquals("/2/searches".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertQueryParams("""{"index":"index","clickAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","orderBy":"searchCount","direction":"asc","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
+        assertQueryParams("""{"index":"index","clickAnalytics":"true","revenueAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","orderBy":"searchCount","direction":"asc","limit":"21","offset":"42","tags":"tag"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )

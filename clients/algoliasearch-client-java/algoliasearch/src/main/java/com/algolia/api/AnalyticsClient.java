@@ -479,18 +479,171 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Return the average click position for the complete time range and for individual days. >
-   * **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't
-   * receive any click events for tracked searches. A _tracked_ search is a search request where the
-   * `clickAnalytics` parameter is `true`.
+   * Retrieves the add-to-cart rate for all of your searches with at least one add-to-cart event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public GetAddToCartRateResponse getAddToCartRate(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getAddToCartRateAsync(index, startDate, endDate, tags, requestOptions));
+  }
+
+  /**
+   * Retrieves the add-to-cart rate for all of your searches with at least one add-to-cart event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public GetAddToCartRateResponse getAddToCartRate(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getAddToCartRate(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * Retrieves the add-to-cart rate for all of your searches with at least one add-to-cart event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day.
+   *
+   * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public GetAddToCartRateResponse getAddToCartRate(@Nonnull String index, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.getAddToCartRate(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves the add-to-cart rate for all of your searches with at least one add-to-cart event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public GetAddToCartRateResponse getAddToCartRate(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getAddToCartRate(index, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the add-to-cart rate for all of your searches with at least one
+   * add-to-cart event, including a daily breakdown. By default, the analyzed period includes the
+   * last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<GetAddToCartRateResponse> getAddToCartRateAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getAddToCartRate`.");
+
+    HttpRequest request = HttpRequest
+      .builder()
+      .setPath("/2/conversions/addToCartRate")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<GetAddToCartRateResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the add-to-cart rate for all of your searches with at least one
+   * add-to-cart event, including a daily breakdown. By default, the analyzed period includes the
+   * last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<GetAddToCartRateResponse> getAddToCartRateAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getAddToCartRateAsync(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the add-to-cart rate for all of your searches with at least one
+   * add-to-cart event, including a daily breakdown. By default, the analyzed period includes the
+   * last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<GetAddToCartRateResponse> getAddToCartRateAsync(@Nonnull String index, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getAddToCartRateAsync(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves the add-to-cart rate for all of your searches with at least one
+   * add-to-cart event, including a daily breakdown. By default, the analyzed period includes the
+   * last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<GetAddToCartRateResponse> getAddToCartRateAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getAddToCartRateAsync(index, null, null, null, null);
+  }
+
+  /**
+   * Retrieves the average click position of your search results, including a daily breakdown. The
+   * average click position is the average of all clicked search results' positions. For example, if
+   * users only ever click on the first result for any search, the average click position is 1. By
+   * default, the analyzed period includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -506,18 +659,17 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Return the average click position for the complete time range and for individual days. >
-   * **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't
-   * receive any click events for tracked searches. A _tracked_ search is a search request where the
-   * `clickAnalytics` parameter is `true`.
+   * Retrieves the average click position of your search results, including a daily breakdown. The
+   * average click position is the average of all clicked search results' positions. For example, if
+   * users only ever click on the first result for any search, the average click position is 1. By
+   * default, the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetAverageClickPositionResponse getAverageClickPosition(@Nonnull String index, String startDate, String endDate, String tags)
@@ -526,10 +678,10 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Return the average click position for the complete time range and for individual days. >
-   * **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't
-   * receive any click events for tracked searches. A _tracked_ search is a search request where the
-   * `clickAnalytics` parameter is `true`.
+   * Retrieves the average click position of your search results, including a daily breakdown. The
+   * average click position is the average of all clicked search results' positions. For example, if
+   * users only ever click on the first result for any search, the average click position is 1. By
+   * default, the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -542,10 +694,10 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Return the average click position for the complete time range and for individual days. >
-   * **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't
-   * receive any click events for tracked searches. A _tracked_ search is a search request where the
-   * `clickAnalytics` parameter is `true`.
+   * Retrieves the average click position of your search results, including a daily breakdown. The
+   * average click position is the average of all clicked search results' positions. For example, if
+   * users only ever click on the first result for any search, the average click position is 1. By
+   * default, the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -555,18 +707,18 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the average click position for the complete time range and for
-   * individual days. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means
-   * Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search
-   * request where the `clickAnalytics` parameter is `true`.
+   * (asynchronously) Retrieves the average click position of your search results, including a daily
+   * breakdown. The average click position is the average of all clicked search results' positions.
+   * For example, if users only ever click on the first result for any search, the average click
+   * position is 1. By default, the analyzed period includes the last eight days including the
+   * current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -593,18 +745,18 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the average click position for the complete time range and for
-   * individual days. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means
-   * Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search
-   * request where the `clickAnalytics` parameter is `true`.
+   * (asynchronously) Retrieves the average click position of your search results, including a daily
+   * breakdown. The average click position is the average of all clicked search results' positions.
+   * For example, if users only ever click on the first result for any search, the average click
+   * position is 1. By default, the analyzed period includes the last eight days including the
+   * current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetAverageClickPositionResponse> getAverageClickPositionAsync(
@@ -617,10 +769,11 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the average click position for the complete time range and for
-   * individual days. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means
-   * Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search
-   * request where the `clickAnalytics` parameter is `true`.
+   * (asynchronously) Retrieves the average click position of your search results, including a daily
+   * breakdown. The average click position is the average of all clicked search results' positions.
+   * For example, if users only ever click on the first result for any search, the average click
+   * position is 1. By default, the analyzed period includes the last eight days including the
+   * current day.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -635,10 +788,11 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the average click position for the complete time range and for
-   * individual days. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means
-   * Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search
-   * request where the `clickAnalytics` parameter is `true`.
+   * (asynchronously) Retrieves the average click position of your search results, including a daily
+   * breakdown. The average click position is the average of all clicked search results' positions.
+   * For example, if users only ever click on the first result for any search, the average click
+   * position is 1. By default, the analyzed period includes the last eight days including the
+   * current day.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -649,18 +803,15 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Show the number of clicks events and their associated position in the search results. >
-   * **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't
-   * receive any click events for tracked searches. A _tracked_ search is a search request where the
-   * `clickAnalytics` parameter is `true`.
+   * Retrieves the positions in the search results and their associated number of clicks. This lets
+   * you check how many clicks the first, second, or tenth search results receive.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -676,18 +827,15 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Show the number of clicks events and their associated position in the search results. >
-   * **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't
-   * receive any click events for tracked searches. A _tracked_ search is a search request where the
-   * `clickAnalytics` parameter is `true`.
+   * Retrieves the positions in the search results and their associated number of clicks. This lets
+   * you check how many clicks the first, second, or tenth search results receive.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetClickPositionsResponse getClickPositions(@Nonnull String index, String startDate, String endDate, String tags)
@@ -696,10 +844,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Show the number of clicks events and their associated position in the search results. >
-   * **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't
-   * receive any click events for tracked searches. A _tracked_ search is a search request where the
-   * `clickAnalytics` parameter is `true`.
+   * Retrieves the positions in the search results and their associated number of clicks. This lets
+   * you check how many clicks the first, second, or tenth search results receive.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -711,10 +857,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Show the number of clicks events and their associated position in the search results. >
-   * **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't
-   * receive any click events for tracked searches. A _tracked_ search is a search request where the
-   * `clickAnalytics` parameter is `true`.
+   * Retrieves the positions in the search results and their associated number of clicks. This lets
+   * you check how many clicks the first, second, or tenth search results receive.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -724,18 +868,15 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Show the number of clicks events and their associated position in the search
-   * results. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia
-   * didn't receive any click events for tracked searches. A _tracked_ search is a search request
-   * where the `clickAnalytics` parameter is `true`.
+   * (asynchronously) Retrieves the positions in the search results and their associated number of
+   * clicks. This lets you check how many clicks the first, second, or tenth search results receive.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -762,18 +903,15 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Show the number of clicks events and their associated position in the search
-   * results. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia
-   * didn't receive any click events for tracked searches. A _tracked_ search is a search request
-   * where the `clickAnalytics` parameter is `true`.
+   * (asynchronously) Retrieves the positions in the search results and their associated number of
+   * clicks. This lets you check how many clicks the first, second, or tenth search results receive.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetClickPositionsResponse> getClickPositionsAsync(
@@ -786,10 +924,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Show the number of clicks events and their associated position in the search
-   * results. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia
-   * didn't receive any click events for tracked searches. A _tracked_ search is a search request
-   * where the `clickAnalytics` parameter is `true`.
+   * (asynchronously) Retrieves the positions in the search results and their associated number of
+   * clicks. This lets you check how many clicks the first, second, or tenth search results receive.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -802,10 +938,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Show the number of clicks events and their associated position in the search
-   * results. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia
-   * didn't receive any click events for tracked searches. A _tracked_ search is a search request
-   * where the `clickAnalytics` parameter is `true`.
+   * (asynchronously) Retrieves the positions in the search results and their associated number of
+   * clicks. This lets you check how many clicks the first, second, or tenth search results receive.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -815,16 +949,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns a [click-through rate
-   * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+   * Retrieves the click-through rate for all of your searches with at least one click event,
+   * including a daily breakdown By default, the analyzed period includes the last eight days
+   * including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -840,16 +974,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns a [click-through rate
-   * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+   * Retrieves the click-through rate for all of your searches with at least one click event,
+   * including a daily breakdown By default, the analyzed period includes the last eight days
+   * including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetClickThroughRateResponse getClickThroughRate(@Nonnull String index, String startDate, String endDate, String tags)
@@ -858,8 +992,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns a [click-through rate
-   * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+   * Retrieves the click-through rate for all of your searches with at least one click event,
+   * including a daily breakdown By default, the analyzed period includes the last eight days
+   * including the current day.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -872,8 +1007,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns a [click-through rate
-   * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+   * Retrieves the click-through rate for all of your searches with at least one click event,
+   * including a daily breakdown By default, the analyzed period includes the last eight days
+   * including the current day.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -883,16 +1019,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns a [click-through rate
-   * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+   * (asynchronously) Retrieves the click-through rate for all of your searches with at least one
+   * click event, including a daily breakdown By default, the analyzed period includes the last
+   * eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -919,16 +1055,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns a [click-through rate
-   * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+   * (asynchronously) Retrieves the click-through rate for all of your searches with at least one
+   * click event, including a daily breakdown By default, the analyzed period includes the last
+   * eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetClickThroughRateResponse> getClickThroughRateAsync(
@@ -941,8 +1077,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns a [click-through rate
-   * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+   * (asynchronously) Retrieves the click-through rate for all of your searches with at least one
+   * click event, including a daily breakdown By default, the analyzed period includes the last
+   * eight days including the current day.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -955,8 +1092,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns a [click-through rate
-   * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+   * (asynchronously) Retrieves the click-through rate for all of your searches with at least one
+   * click event, including a daily breakdown By default, the analyzed period includes the last
+   * eight days including the current day.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -966,96 +1104,97 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Return a [conversion
-   * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+   * Retrieves the conversion rate for all of your searches with at least one conversion event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetConversationRateResponse getConversationRate(
+  public GetConversionRateResponse getConversionRate(
     @Nonnull String index,
     String startDate,
     String endDate,
     String tags,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(getConversationRateAsync(index, startDate, endDate, tags, requestOptions));
+    return LaunderThrowable.await(getConversionRateAsync(index, startDate, endDate, tags, requestOptions));
   }
 
   /**
-   * Return a [conversion
-   * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+   * Retrieves the conversion rate for all of your searches with at least one conversion event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetConversationRateResponse getConversationRate(@Nonnull String index, String startDate, String endDate, String tags)
+  public GetConversionRateResponse getConversionRate(@Nonnull String index, String startDate, String endDate, String tags)
     throws AlgoliaRuntimeException {
-    return this.getConversationRate(index, startDate, endDate, tags, null);
+    return this.getConversionRate(index, startDate, endDate, tags, null);
   }
 
   /**
-   * Return a [conversion
-   * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+   * Retrieves the conversion rate for all of your searches with at least one conversion event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetConversationRateResponse getConversationRate(@Nonnull String index, RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    return this.getConversationRate(index, null, null, null, requestOptions);
+  public GetConversionRateResponse getConversionRate(@Nonnull String index, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.getConversionRate(index, null, null, null, requestOptions);
   }
 
   /**
-   * Return a [conversion
-   * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+   * Retrieves the conversion rate for all of your searches with at least one conversion event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public GetConversationRateResponse getConversationRate(@Nonnull String index) throws AlgoliaRuntimeException {
-    return this.getConversationRate(index, null, null, null, null);
+  public GetConversionRateResponse getConversionRate(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getConversionRate(index, null, null, null, null);
   }
 
   /**
-   * (asynchronously) Return a [conversion
-   * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+   * (asynchronously) Retrieves the conversion rate for all of your searches with at least one
+   * conversion event, including a daily breakdown. By default, the analyzed period includes the
+   * last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetConversationRateResponse> getConversationRateAsync(
+  public CompletableFuture<GetConversionRateResponse> getConversionRateAsync(
     @Nonnull String index,
     String startDate,
     String endDate,
     String tags,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getConversationRate`.");
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getConversionRate`.");
 
     HttpRequest request = HttpRequest
       .builder()
@@ -1066,68 +1205,69 @@ public class AnalyticsClient extends ApiClient {
       .addQueryParameter("endDate", endDate)
       .addQueryParameter("tags", tags)
       .build();
-    return executeAsync(request, requestOptions, new TypeReference<GetConversationRateResponse>() {});
+    return executeAsync(request, requestOptions, new TypeReference<GetConversionRateResponse>() {});
   }
 
   /**
-   * (asynchronously) Return a [conversion
-   * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+   * (asynchronously) Retrieves the conversion rate for all of your searches with at least one
+   * conversion event, including a daily breakdown. By default, the analyzed period includes the
+   * last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetConversationRateResponse> getConversationRateAsync(
+  public CompletableFuture<GetConversionRateResponse> getConversionRateAsync(
     @Nonnull String index,
     String startDate,
     String endDate,
     String tags
   ) throws AlgoliaRuntimeException {
-    return this.getConversationRateAsync(index, startDate, endDate, tags, null);
+    return this.getConversionRateAsync(index, startDate, endDate, tags, null);
   }
 
   /**
-   * (asynchronously) Return a [conversion
-   * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+   * (asynchronously) Retrieves the conversion rate for all of your searches with at least one
+   * conversion event, including a daily breakdown. By default, the analyzed period includes the
+   * last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetConversationRateResponse> getConversationRateAsync(@Nonnull String index, RequestOptions requestOptions)
+  public CompletableFuture<GetConversionRateResponse> getConversionRateAsync(@Nonnull String index, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return this.getConversationRateAsync(index, null, null, null, requestOptions);
+    return this.getConversionRateAsync(index, null, null, null, requestOptions);
   }
 
   /**
-   * (asynchronously) Return a [conversion
-   * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+   * (asynchronously) Retrieves the conversion rate for all of your searches with at least one
+   * conversion event, including a daily breakdown. By default, the analyzed period includes the
+   * last eight days including the current day.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<GetConversationRateResponse> getConversationRateAsync(@Nonnull String index) throws AlgoliaRuntimeException {
-    return this.getConversationRateAsync(index, null, null, null, null);
+  public CompletableFuture<GetConversionRateResponse> getConversionRateAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getConversionRateAsync(index, null, null, null, null);
   }
 
   /**
-   * Returns the rate at which searches don't lead to any clicks. The endpoint returns a value for
-   * the complete given time range, as well as a value per day. It also returns the count of
-   * searches and searches without clicks.
+   * Retrieves the fraction of searches that didn't lead to any click within a time range, including
+   * a daily breakdown. By default, the analyzed period includes the last eight days including the
+   * current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1143,17 +1283,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the rate at which searches don't lead to any clicks. The endpoint returns a value for
-   * the complete given time range, as well as a value per day. It also returns the count of
-   * searches and searches without clicks.
+   * Retrieves the fraction of searches that didn't lead to any click within a time range, including
+   * a daily breakdown. By default, the analyzed period includes the last eight days including the
+   * current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetNoClickRateResponse getNoClickRate(@Nonnull String index, String startDate, String endDate, String tags)
@@ -1162,9 +1301,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the rate at which searches don't lead to any clicks. The endpoint returns a value for
-   * the complete given time range, as well as a value per day. It also returns the count of
-   * searches and searches without clicks.
+   * Retrieves the fraction of searches that didn't lead to any click within a time range, including
+   * a daily breakdown. By default, the analyzed period includes the last eight days including the
+   * current day.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1176,9 +1315,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the rate at which searches don't lead to any clicks. The endpoint returns a value for
-   * the complete given time range, as well as a value per day. It also returns the count of
-   * searches and searches without clicks.
+   * Retrieves the fraction of searches that didn't lead to any click within a time range, including
+   * a daily breakdown. By default, the analyzed period includes the last eight days including the
+   * current day.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1188,17 +1327,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the rate at which searches don't lead to any clicks. The endpoint
-   * returns a value for the complete given time range, as well as a value per day. It also returns
-   * the count of searches and searches without clicks.
+   * (asynchronously) Retrieves the fraction of searches that didn't lead to any click within a time
+   * range, including a daily breakdown. By default, the analyzed period includes the last eight
+   * days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1225,17 +1363,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the rate at which searches don't lead to any clicks. The endpoint
-   * returns a value for the complete given time range, as well as a value per day. It also returns
-   * the count of searches and searches without clicks.
+   * (asynchronously) Retrieves the fraction of searches that didn't lead to any click within a time
+   * range, including a daily breakdown. By default, the analyzed period includes the last eight
+   * days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetNoClickRateResponse> getNoClickRateAsync(
@@ -1248,9 +1385,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the rate at which searches don't lead to any clicks. The endpoint
-   * returns a value for the complete given time range, as well as a value per day. It also returns
-   * the count of searches and searches without clicks.
+   * (asynchronously) Retrieves the fraction of searches that didn't lead to any click within a time
+   * range, including a daily breakdown. By default, the analyzed period includes the last eight
+   * days including the current day.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1263,9 +1400,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the rate at which searches don't lead to any clicks. The endpoint
-   * returns a value for the complete given time range, as well as a value per day. It also returns
-   * the count of searches and searches without clicks.
+   * (asynchronously) Retrieves the fraction of searches that didn't lead to any click within a time
+   * range, including a daily breakdown. By default, the analyzed period includes the last eight
+   * days including the current day.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1275,15 +1412,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the rate at which searches didn't return any results.
+   * Retrieves the fraction of searches that didn't return any results within a time range,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1299,15 +1437,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the rate at which searches didn't return any results.
+   * Retrieves the fraction of searches that didn't return any results within a time range,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetNoResultsRateResponse getNoResultsRate(@Nonnull String index, String startDate, String endDate, String tags)
@@ -1316,7 +1455,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the rate at which searches didn't return any results.
+   * Retrieves the fraction of searches that didn't return any results within a time range,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1328,7 +1469,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the rate at which searches didn't return any results.
+   * Retrieves the fraction of searches that didn't return any results within a time range,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1338,15 +1481,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the rate at which searches didn't return any results.
+   * (asynchronously) Retrieves the fraction of searches that didn't return any results within a
+   * time range, including a daily breakdown. By default, the analyzed period includes the last
+   * eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1373,15 +1517,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the rate at which searches didn't return any results.
+   * (asynchronously) Retrieves the fraction of searches that didn't return any results within a
+   * time range, including a daily breakdown. By default, the analyzed period includes the last
+   * eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetNoResultsRateResponse> getNoResultsRateAsync(
@@ -1394,7 +1539,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the rate at which searches didn't return any results.
+   * (asynchronously) Retrieves the fraction of searches that didn't return any results within a
+   * time range, including a daily breakdown. By default, the analyzed period includes the last
+   * eight days including the current day.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1407,7 +1554,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the rate at which searches didn't return any results.
+   * (asynchronously) Retrieves the fraction of searches that didn't return any results within a
+   * time range, including a daily breakdown. By default, the analyzed period includes the last
+   * eight days including the current day.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1417,15 +1566,313 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the number of searches within a time range.
+   * Retrieves the purchase rate for all of your searches with at least one purchase event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public GetPurchaseRateResponse getPurchaseRate(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getPurchaseRateAsync(index, startDate, endDate, tags, requestOptions));
+  }
+
+  /**
+   * Retrieves the purchase rate for all of your searches with at least one purchase event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public GetPurchaseRateResponse getPurchaseRate(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getPurchaseRate(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * Retrieves the purchase rate for all of your searches with at least one purchase event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day.
+   *
+   * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public GetPurchaseRateResponse getPurchaseRate(@Nonnull String index, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.getPurchaseRate(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves the purchase rate for all of your searches with at least one purchase event,
+   * including a daily breakdown. By default, the analyzed period includes the last eight days
+   * including the current day.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public GetPurchaseRateResponse getPurchaseRate(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getPurchaseRate(index, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the purchase rate for all of your searches with at least one
+   * purchase event, including a daily breakdown. By default, the analyzed period includes the last
+   * eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<GetPurchaseRateResponse> getPurchaseRateAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getPurchaseRate`.");
+
+    HttpRequest request = HttpRequest
+      .builder()
+      .setPath("/2/conversions/purchaseRate")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<GetPurchaseRateResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the purchase rate for all of your searches with at least one
+   * purchase event, including a daily breakdown. By default, the analyzed period includes the last
+   * eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<GetPurchaseRateResponse> getPurchaseRateAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags
+  ) throws AlgoliaRuntimeException {
+    return this.getPurchaseRateAsync(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the purchase rate for all of your searches with at least one
+   * purchase event, including a daily breakdown. By default, the analyzed period includes the last
+   * eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<GetPurchaseRateResponse> getPurchaseRateAsync(@Nonnull String index, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getPurchaseRateAsync(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves the purchase rate for all of your searches with at least one
+   * purchase event, including a daily breakdown. By default, the analyzed period includes the last
+   * eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<GetPurchaseRateResponse> getPurchaseRateAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getPurchaseRateAsync(index, null, null, null, null);
+  }
+
+  /**
+   * Retrieves revenue-related metrics, such as the total revenue or the average order value. To
+   * retrieve revenue-related metrics, sent purchase events. By default, the analyzed period
+   * includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public GetRevenue getRevenue(@Nonnull String index, String startDate, String endDate, String tags, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getRevenueAsync(index, startDate, endDate, tags, requestOptions));
+  }
+
+  /**
+   * Retrieves revenue-related metrics, such as the total revenue or the average order value. To
+   * retrieve revenue-related metrics, sent purchase events. By default, the analyzed period
+   * includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public GetRevenue getRevenue(@Nonnull String index, String startDate, String endDate, String tags) throws AlgoliaRuntimeException {
+    return this.getRevenue(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * Retrieves revenue-related metrics, such as the total revenue or the average order value. To
+   * retrieve revenue-related metrics, sent purchase events. By default, the analyzed period
+   * includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public GetRevenue getRevenue(@Nonnull String index, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.getRevenue(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * Retrieves revenue-related metrics, such as the total revenue or the average order value. To
+   * retrieve revenue-related metrics, sent purchase events. By default, the analyzed period
+   * includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public GetRevenue getRevenue(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getRevenue(index, null, null, null, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves revenue-related metrics, such as the total revenue or the average
+   * order value. To retrieve revenue-related metrics, sent purchase events. By default, the
+   * analyzed period includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<GetRevenue> getRevenueAsync(
+    @Nonnull String index,
+    String startDate,
+    String endDate,
+    String tags,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(index, "Parameter `index` is required when calling `getRevenue`.");
+
+    HttpRequest request = HttpRequest
+      .builder()
+      .setPath("/2/conversions/revenue")
+      .setMethod("GET")
+      .addQueryParameter("index", index)
+      .addQueryParameter("startDate", startDate)
+      .addQueryParameter("endDate", endDate)
+      .addQueryParameter("tags", tags)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<GetRevenue>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves revenue-related metrics, such as the total revenue or the average
+   * order value. To retrieve revenue-related metrics, sent purchase events. By default, the
+   * analyzed period includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<GetRevenue> getRevenueAsync(@Nonnull String index, String startDate, String endDate, String tags)
+    throws AlgoliaRuntimeException {
+    return this.getRevenueAsync(index, startDate, endDate, tags, null);
+  }
+
+  /**
+   * (asynchronously) Retrieves revenue-related metrics, such as the total revenue or the average
+   * order value. To retrieve revenue-related metrics, sent purchase events. By default, the
+   * analyzed period includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<GetRevenue> getRevenueAsync(@Nonnull String index, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return this.getRevenueAsync(index, null, null, null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Retrieves revenue-related metrics, such as the total revenue or the average
+   * order value. To retrieve revenue-related metrics, sent purchase events. By default, the
+   * analyzed period includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<GetRevenue> getRevenueAsync(@Nonnull String index) throws AlgoliaRuntimeException {
+    return this.getRevenueAsync(index, null, null, null, null);
+  }
+
+  /**
+   * Retrieves the number of searches within a time range, including a daily breakdown. By default,
+   * the analyzed period includes the last eight days including the current day.
+   *
+   * @param index Index name. (required)
+   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1441,15 +1888,15 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the number of searches within a time range.
+   * Retrieves the number of searches within a time range, including a daily breakdown. By default,
+   * the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetSearchesCountResponse getSearchesCount(@Nonnull String index, String startDate, String endDate, String tags)
@@ -1458,7 +1905,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the number of searches within a time range.
+   * Retrieves the number of searches within a time range, including a daily breakdown. By default,
+   * the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1470,7 +1918,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the number of searches within a time range.
+   * Retrieves the number of searches within a time range, including a daily breakdown. By default,
+   * the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1480,15 +1929,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the number of searches within a time range.
+   * (asynchronously) Retrieves the number of searches within a time range, including a daily
+   * breakdown. By default, the analyzed period includes the last eight days including the current
+   * day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1515,15 +1965,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the number of searches within a time range.
+   * (asynchronously) Retrieves the number of searches within a time range, including a daily
+   * breakdown. By default, the analyzed period includes the last eight days including the current
+   * day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetSearchesCountResponse> getSearchesCountAsync(
@@ -1536,7 +1987,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the number of searches within a time range.
+   * (asynchronously) Retrieves the number of searches within a time range, including a daily
+   * breakdown. By default, the analyzed period includes the last eight days including the current
+   * day.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1549,7 +2002,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the number of searches within a time range.
+   * (asynchronously) Retrieves the number of searches within a time range, including a daily
+   * breakdown. By default, the analyzed period includes the last eight days including the current
+   * day.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1559,17 +2014,17 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Return the most popular of the last 1,000 searches that didn't lead to any clicks.
+   * Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most
+   * frequent searches.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1587,17 +2042,17 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Return the most popular of the last 1,000 searches that didn't lead to any clicks.
+   * Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most
+   * frequent searches.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetSearchesNoClicksResponse getSearchesNoClicks(
@@ -1612,7 +2067,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Return the most popular of the last 1,000 searches that didn't lead to any clicks.
+   * Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most
+   * frequent searches.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1625,7 +2081,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Return the most popular of the last 1,000 searches that didn't lead to any clicks.
+   * Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most
+   * frequent searches.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1635,18 +2092,17 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the most popular of the last 1,000 searches that didn't lead to any
-   * clicks.
+   * (asynchronously) Retrieves the most popular searches that didn't lead to any clicks, from the
+   * 1,000 most frequent searches.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1677,18 +2133,17 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the most popular of the last 1,000 searches that didn't lead to any
-   * clicks.
+   * (asynchronously) Retrieves the most popular searches that didn't lead to any clicks, from the
+   * 1,000 most frequent searches.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetSearchesNoClicksResponse> getSearchesNoClicksAsync(
@@ -1703,8 +2158,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the most popular of the last 1,000 searches that didn't lead to any
-   * clicks.
+   * (asynchronously) Retrieves the most popular searches that didn't lead to any clicks, from the
+   * 1,000 most frequent searches.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1717,8 +2172,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the most popular of the last 1,000 searches that didn't lead to any
-   * clicks.
+   * (asynchronously) Retrieves the most popular searches that didn't lead to any clicks, from the
+   * 1,000 most frequent searches.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1728,17 +2183,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the most popular of the latest 1,000 searches that didn't return any results.
+   * Retrieves the most popular searches that didn't return any results.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1756,17 +2210,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the most popular of the latest 1,000 searches that didn't return any results.
+   * Retrieves the most popular searches that didn't return any results.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetSearchesNoResultsResponse getSearchesNoResults(
@@ -1781,7 +2234,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the most popular of the latest 1,000 searches that didn't return any results.
+   * Retrieves the most popular searches that didn't return any results.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1794,7 +2247,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the most popular of the latest 1,000 searches that didn't return any results.
+   * Retrieves the most popular searches that didn't return any results.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1804,18 +2257,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the most popular of the latest 1,000 searches that didn't return any
-   * results.
+   * (asynchronously) Retrieves the most popular searches that didn't return any results.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1846,18 +2297,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the most popular of the latest 1,000 searches that didn't return any
-   * results.
+   * (asynchronously) Retrieves the most popular searches that didn't return any results.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetSearchesNoResultsResponse> getSearchesNoResultsAsync(
@@ -1872,8 +2321,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the most popular of the latest 1,000 searches that didn't return any
-   * results.
+   * (asynchronously) Retrieves the most popular searches that didn't return any results.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1886,8 +2334,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the most popular of the latest 1,000 searches that didn't return any
-   * results.
+   * (asynchronously) Retrieves the most popular searches that didn't return any results.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1897,9 +2344,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Return the latest update time of the Analytics API for an index. If the index has been recently
-   * created or no search has been performed yet, `updatedAt` will be `null`. > **Note**: The
-   * Analytics API is updated every 5&nbsp;minutes.
+   * Retrieves the time when the Analytics data for the specified index was last updated. The
+   * Analytics data is updated every 5 minutes.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1911,9 +2357,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Return the latest update time of the Analytics API for an index. If the index has been recently
-   * created or no search has been performed yet, `updatedAt` will be `null`. > **Note**: The
-   * Analytics API is updated every 5&nbsp;minutes.
+   * Retrieves the time when the Analytics data for the specified index was last updated. The
+   * Analytics data is updated every 5 minutes.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1923,9 +2368,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the latest update time of the Analytics API for an index. If the index
-   * has been recently created or no search has been performed yet, `updatedAt` will be `null`. >
-   * **Note**: The Analytics API is updated every 5&nbsp;minutes.
+   * (asynchronously) Retrieves the time when the Analytics data for the specified index was last
+   * updated. The Analytics data is updated every 5 minutes.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -1941,9 +2385,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the latest update time of the Analytics API for an index. If the index
-   * has been recently created or no search has been performed yet, `updatedAt` will be `null`. >
-   * **Note**: The Analytics API is updated every 5&nbsp;minutes.
+   * (asynchronously) Retrieves the time when the Analytics data for the specified index was last
+   * updated. The Analytics data is updated every 5 minutes.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1953,17 +2396,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns top countries. Limited to the 1,000 most frequent ones.
+   * Retrieves the countries with the most searches to your index.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1981,17 +2423,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns top countries. Limited to the 1,000 most frequent ones.
+   * Retrieves the countries with the most searches to your index.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopCountriesResponse getTopCountries(
@@ -2006,7 +2447,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns top countries. Limited to the 1,000 most frequent ones.
+   * Retrieves the countries with the most searches to your index.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2018,7 +2459,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns top countries. Limited to the 1,000 most frequent ones.
+   * Retrieves the countries with the most searches to your index.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2028,17 +2469,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns top countries. Limited to the 1,000 most frequent ones.
+   * (asynchronously) Retrieves the countries with the most searches to your index.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2069,17 +2509,16 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns top countries. Limited to the 1,000 most frequent ones.
+   * (asynchronously) Retrieves the countries with the most searches to your index.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopCountriesResponse> getTopCountriesAsync(
@@ -2094,7 +2533,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns top countries. Limited to the 1,000 most frequent ones.
+   * (asynchronously) Retrieves the countries with the most searches to your index.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2107,7 +2546,7 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns top countries. Limited to the 1,000 most frequent ones.
+   * (asynchronously) Retrieves the countries with the most searches to your index.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2117,20 +2556,18 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Return the most popular [filterable
-   * attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in
-   * the 1,000 most recently used filters.
+   * Retrieves the most frequently used filter attributes. These are attributes of your records that
+   * you included in the `attributesForFaceting` setting.
    *
    * @param index Index name. (required)
-   * @param search User query. (optional)
+   * @param search Search query. (optional)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2149,20 +2586,18 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Return the most popular [filterable
-   * attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in
-   * the 1,000 most recently used filters.
+   * Retrieves the most frequently used filter attributes. These are attributes of your records that
+   * you included in the `attributesForFaceting` setting.
    *
    * @param index Index name. (required)
-   * @param search User query. (optional)
+   * @param search Search query. (optional)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopFilterAttributesResponse getTopFilterAttributes(
@@ -2178,9 +2613,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Return the most popular [filterable
-   * attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in
-   * the 1,000 most recently used filters.
+   * Retrieves the most frequently used filter attributes. These are attributes of your records that
+   * you included in the `attributesForFaceting` setting.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2193,9 +2627,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Return the most popular [filterable
-   * attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in
-   * the 1,000 most recently used filters.
+   * Retrieves the most frequently used filter attributes. These are attributes of your records that
+   * you included in the `attributesForFaceting` setting.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2205,20 +2638,18 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the most popular [filterable
-   * attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in
-   * the 1,000 most recently used filters.
+   * (asynchronously) Retrieves the most frequently used filter attributes. These are attributes of
+   * your records that you included in the `attributesForFaceting` setting.
    *
    * @param index Index name. (required)
-   * @param search User query. (optional)
+   * @param search Search query. (optional)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2251,20 +2682,18 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the most popular [filterable
-   * attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in
-   * the 1,000 most recently used filters.
+   * (asynchronously) Retrieves the most frequently used filter attributes. These are attributes of
+   * your records that you included in the `attributesForFaceting` setting.
    *
    * @param index Index name. (required)
-   * @param search User query. (optional)
+   * @param search Search query. (optional)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopFilterAttributesResponse> getTopFilterAttributesAsync(
@@ -2280,9 +2709,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the most popular [filterable
-   * attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in
-   * the 1,000 most recently used filters.
+   * (asynchronously) Retrieves the most frequently used filter attributes. These are attributes of
+   * your records that you included in the `attributesForFaceting` setting.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2297,9 +2725,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the most popular [filterable
-   * attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in
-   * the 1,000 most recently used filters.
+   * (asynchronously) Retrieves the most frequently used filter attributes. These are attributes of
+   * your records that you included in the `attributesForFaceting` setting.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2310,20 +2737,19 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the most popular filter values for an attribute in the 1,000 most recently used
-   * filters.
+   * Retrieves the most frequent filter (facet) values for a filter attribute. These are attributes
+   * of your records that you included in the `attributesForFaceting` setting.
    *
    * @param attribute Attribute name. (required)
    * @param index Index name. (required)
-   * @param search User query. (optional)
+   * @param search Search query. (optional)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2345,20 +2771,19 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the most popular filter values for an attribute in the 1,000 most recently used
-   * filters.
+   * Retrieves the most frequent filter (facet) values for a filter attribute. These are attributes
+   * of your records that you included in the `attributesForFaceting` setting.
    *
    * @param attribute Attribute name. (required)
    * @param index Index name. (required)
-   * @param search User query. (optional)
+   * @param search Search query. (optional)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopFilterForAttributeResponse getTopFilterForAttribute(
@@ -2375,8 +2800,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the most popular filter values for an attribute in the 1,000 most recently used
-   * filters.
+   * Retrieves the most frequent filter (facet) values for a filter attribute. These are attributes
+   * of your records that you included in the `attributesForFaceting` setting.
    *
    * @param attribute Attribute name. (required)
    * @param index Index name. (required)
@@ -2393,8 +2818,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns the most popular filter values for an attribute in the 1,000 most recently used
-   * filters.
+   * Retrieves the most frequent filter (facet) values for a filter attribute. These are attributes
+   * of your records that you included in the `attributesForFaceting` setting.
    *
    * @param attribute Attribute name. (required)
    * @param index Index name. (required)
@@ -2406,20 +2831,19 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the most popular filter values for an attribute in the 1,000 most
-   * recently used filters.
+   * (asynchronously) Retrieves the most frequent filter (facet) values for a filter attribute.
+   * These are attributes of your records that you included in the `attributesForFaceting` setting.
    *
    * @param attribute Attribute name. (required)
    * @param index Index name. (required)
-   * @param search User query. (optional)
+   * @param search Search query. (optional)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2455,20 +2879,19 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the most popular filter values for an attribute in the 1,000 most
-   * recently used filters.
+   * (asynchronously) Retrieves the most frequent filter (facet) values for a filter attribute.
+   * These are attributes of your records that you included in the `attributesForFaceting` setting.
    *
    * @param attribute Attribute name. (required)
    * @param index Index name. (required)
-   * @param search User query. (optional)
+   * @param search Search query. (optional)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopFilterForAttributeResponse> getTopFilterForAttributeAsync(
@@ -2485,8 +2908,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the most popular filter values for an attribute in the 1,000 most
-   * recently used filters.
+   * (asynchronously) Retrieves the most frequent filter (facet) values for a filter attribute.
+   * These are attributes of your records that you included in the `attributesForFaceting` setting.
    *
    * @param attribute Attribute name. (required)
    * @param index Index name. (required)
@@ -2503,8 +2926,8 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the most popular filter values for an attribute in the 1,000 most
-   * recently used filters.
+   * (asynchronously) Retrieves the most frequent filter (facet) values for a filter attribute.
+   * These are attributes of your records that you included in the `attributesForFaceting` setting.
    *
    * @param attribute Attribute name. (required)
    * @param index Index name. (required)
@@ -2518,19 +2941,19 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns top filters for filter-enabled searches that don't return results. Limited to the 1,000
-   * most recently used filters.
+   * Retrieves the most frequently used filters for a search that didn't return any results. To get
+   * the most frequent searches without results, use the [Retrieve searches without
+   * results](#tag/search/operation/getSearchesNoResults) operation.
    *
    * @param index Index name. (required)
-   * @param search User query. (optional)
+   * @param search Search query. (optional)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2549,19 +2972,19 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns top filters for filter-enabled searches that don't return results. Limited to the 1,000
-   * most recently used filters.
+   * Retrieves the most frequently used filters for a search that didn't return any results. To get
+   * the most frequent searches without results, use the [Retrieve searches without
+   * results](#tag/search/operation/getSearchesNoResults) operation.
    *
    * @param index Index name. (required)
-   * @param search User query. (optional)
+   * @param search Search query. (optional)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopFiltersNoResultsResponse getTopFiltersNoResults(
@@ -2577,8 +3000,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns top filters for filter-enabled searches that don't return results. Limited to the 1,000
-   * most recently used filters.
+   * Retrieves the most frequently used filters for a search that didn't return any results. To get
+   * the most frequent searches without results, use the [Retrieve searches without
+   * results](#tag/search/operation/getSearchesNoResults) operation.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2591,8 +3015,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Returns top filters for filter-enabled searches that don't return results. Limited to the 1,000
-   * most recently used filters.
+   * Retrieves the most frequently used filters for a search that didn't return any results. To get
+   * the most frequent searches without results, use the [Retrieve searches without
+   * results](#tag/search/operation/getSearchesNoResults) operation.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2602,19 +3027,19 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns top filters for filter-enabled searches that don't return results.
-   * Limited to the 1,000 most recently used filters.
+   * (asynchronously) Retrieves the most frequently used filters for a search that didn't return any
+   * results. To get the most frequent searches without results, use the [Retrieve searches without
+   * results](#tag/search/operation/getSearchesNoResults) operation.
    *
    * @param index Index name. (required)
-   * @param search User query. (optional)
+   * @param search Search query. (optional)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2647,19 +3072,19 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns top filters for filter-enabled searches that don't return results.
-   * Limited to the 1,000 most recently used filters.
+   * (asynchronously) Retrieves the most frequently used filters for a search that didn't return any
+   * results. To get the most frequent searches without results, use the [Retrieve searches without
+   * results](#tag/search/operation/getSearchesNoResults) operation.
    *
    * @param index Index name. (required)
-   * @param search User query. (optional)
+   * @param search Search query. (optional)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopFiltersNoResultsResponse> getTopFiltersNoResultsAsync(
@@ -2675,8 +3100,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns top filters for filter-enabled searches that don't return results.
-   * Limited to the 1,000 most recently used filters.
+   * (asynchronously) Retrieves the most frequently used filters for a search that didn't return any
+   * results. To get the most frequent searches without results, use the [Retrieve searches without
+   * results](#tag/search/operation/getSearchesNoResults) operation.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2691,8 +3117,9 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns top filters for filter-enabled searches that don't return results.
-   * Limited to the 1,000 most recently used filters.
+   * (asynchronously) Retrieves the most frequently used filters for a search that didn't return any
+   * results. To get the most frequent searches without results, use the [Retrieve searches without
+   * results](#tag/search/operation/getSearchesNoResults) operation.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2703,21 +3130,22 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Return the most popular clicked results in the last 1,000 searches.
+   * Retrieves the object IDs of the most frequent search results.
    *
    * @param index Index name. (required)
-   * @param search User query. (optional)
-   * @param clickAnalytics Whether to include [click and
-   *     conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a
-   *     search. (optional, default to false)
+   * @param search Search query. (optional)
+   * @param clickAnalytics Whether to include metrics related to click and conversion events in the
+   *     response. (optional, default to false)
+   * @param revenueAnalytics Whether to include revenue-related metrics in the response. If true,
+   *     metrics related to click and conversion events are also included in the response.
+   *     (optional, default to false)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2726,6 +3154,7 @@ public class AnalyticsClient extends ApiClient {
     @Nonnull String index,
     String search,
     Boolean clickAnalytics,
+    Boolean revenueAnalytics,
     String startDate,
     String endDate,
     Integer limit,
@@ -2733,42 +3162,46 @@ public class AnalyticsClient extends ApiClient {
     String tags,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(getTopHitsAsync(index, search, clickAnalytics, startDate, endDate, limit, offset, tags, requestOptions));
+    return LaunderThrowable.await(
+      getTopHitsAsync(index, search, clickAnalytics, revenueAnalytics, startDate, endDate, limit, offset, tags, requestOptions)
+    );
   }
 
   /**
-   * Return the most popular clicked results in the last 1,000 searches.
+   * Retrieves the object IDs of the most frequent search results.
    *
    * @param index Index name. (required)
-   * @param search User query. (optional)
-   * @param clickAnalytics Whether to include [click and
-   *     conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a
-   *     search. (optional, default to false)
+   * @param search Search query. (optional)
+   * @param clickAnalytics Whether to include metrics related to click and conversion events in the
+   *     response. (optional, default to false)
+   * @param revenueAnalytics Whether to include revenue-related metrics in the response. If true,
+   *     metrics related to click and conversion events are also included in the response.
+   *     (optional, default to false)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopHitsResponse getTopHits(
     @Nonnull String index,
     String search,
     Boolean clickAnalytics,
+    Boolean revenueAnalytics,
     String startDate,
     String endDate,
     Integer limit,
     Integer offset,
     String tags
   ) throws AlgoliaRuntimeException {
-    return this.getTopHits(index, search, clickAnalytics, startDate, endDate, limit, offset, tags, null);
+    return this.getTopHits(index, search, clickAnalytics, revenueAnalytics, startDate, endDate, limit, offset, tags, null);
   }
 
   /**
-   * Return the most popular clicked results in the last 1,000 searches.
+   * Retrieves the object IDs of the most frequent search results.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2776,35 +3209,36 @@ public class AnalyticsClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopHitsResponse getTopHits(@Nonnull String index, RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.getTopHits(index, null, null, null, null, null, null, null, requestOptions);
+    return this.getTopHits(index, null, null, null, null, null, null, null, null, requestOptions);
   }
 
   /**
-   * Return the most popular clicked results in the last 1,000 searches.
+   * Retrieves the object IDs of the most frequent search results.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopHitsResponse getTopHits(@Nonnull String index) throws AlgoliaRuntimeException {
-    return this.getTopHits(index, null, null, null, null, null, null, null, null);
+    return this.getTopHits(index, null, null, null, null, null, null, null, null, null);
   }
 
   /**
-   * (asynchronously) Return the most popular clicked results in the last 1,000 searches.
+   * (asynchronously) Retrieves the object IDs of the most frequent search results.
    *
    * @param index Index name. (required)
-   * @param search User query. (optional)
-   * @param clickAnalytics Whether to include [click and
-   *     conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a
-   *     search. (optional, default to false)
+   * @param search Search query. (optional)
+   * @param clickAnalytics Whether to include metrics related to click and conversion events in the
+   *     response. (optional, default to false)
+   * @param revenueAnalytics Whether to include revenue-related metrics in the response. If true,
+   *     metrics related to click and conversion events are also included in the response.
+   *     (optional, default to false)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2813,6 +3247,7 @@ public class AnalyticsClient extends ApiClient {
     @Nonnull String index,
     String search,
     Boolean clickAnalytics,
+    Boolean revenueAnalytics,
     String startDate,
     String endDate,
     Integer limit,
@@ -2829,6 +3264,7 @@ public class AnalyticsClient extends ApiClient {
       .addQueryParameter("index", index)
       .addQueryParameter("search", search)
       .addQueryParameter("clickAnalytics", clickAnalytics)
+      .addQueryParameter("revenueAnalytics", revenueAnalytics)
       .addQueryParameter("startDate", startDate)
       .addQueryParameter("endDate", endDate)
       .addQueryParameter("limit", limit)
@@ -2839,38 +3275,40 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the most popular clicked results in the last 1,000 searches.
+   * (asynchronously) Retrieves the object IDs of the most frequent search results.
    *
    * @param index Index name. (required)
-   * @param search User query. (optional)
-   * @param clickAnalytics Whether to include [click and
-   *     conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a
-   *     search. (optional, default to false)
+   * @param search Search query. (optional)
+   * @param clickAnalytics Whether to include metrics related to click and conversion events in the
+   *     response. (optional, default to false)
+   * @param revenueAnalytics Whether to include revenue-related metrics in the response. If true,
+   *     metrics related to click and conversion events are also included in the response.
+   *     (optional, default to false)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopHitsResponse> getTopHitsAsync(
     @Nonnull String index,
     String search,
     Boolean clickAnalytics,
+    Boolean revenueAnalytics,
     String startDate,
     String endDate,
     Integer limit,
     Integer offset,
     String tags
   ) throws AlgoliaRuntimeException {
-    return this.getTopHitsAsync(index, search, clickAnalytics, startDate, endDate, limit, offset, tags, null);
+    return this.getTopHitsAsync(index, search, clickAnalytics, revenueAnalytics, startDate, endDate, limit, offset, tags, null);
   }
 
   /**
-   * (asynchronously) Return the most popular clicked results in the last 1,000 searches.
+   * (asynchronously) Retrieves the object IDs of the most frequent search results.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2879,38 +3317,39 @@ public class AnalyticsClient extends ApiClient {
    */
   public CompletableFuture<GetTopHitsResponse> getTopHitsAsync(@Nonnull String index, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return this.getTopHitsAsync(index, null, null, null, null, null, null, null, requestOptions);
+    return this.getTopHitsAsync(index, null, null, null, null, null, null, null, null, requestOptions);
   }
 
   /**
-   * (asynchronously) Return the most popular clicked results in the last 1,000 searches.
+   * (asynchronously) Retrieves the object IDs of the most frequent search results.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopHitsResponse> getTopHitsAsync(@Nonnull String index) throws AlgoliaRuntimeException {
-    return this.getTopHitsAsync(index, null, null, null, null, null, null, null, null);
+    return this.getTopHitsAsync(index, null, null, null, null, null, null, null, null, null);
   }
 
   /**
-   * Returns the most popular of the latest 1,000 searches. For each search, also returns the number
-   * of hits.
+   * Returns the most popular search terms.
    *
    * @param index Index name. (required)
-   * @param clickAnalytics Whether to include [click and
-   *     conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a
-   *     search. (optional, default to false)
+   * @param clickAnalytics Whether to include metrics related to click and conversion events in the
+   *     response. (optional, default to false)
+   * @param revenueAnalytics Whether to include revenue-related metrics in the response. If true,
+   *     metrics related to click and conversion events are also included in the response.
+   *     (optional, default to false)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param orderBy Reorder the results. (optional, default to searchCount)
+   * @param orderBy Attribute by which to order the response items. If the `clickAnalytics`
+   *     parameter is false, only `searchCount` is available. (optional, default to searchCount)
    * @param direction Sorting direction of the results: ascending or descending. (optional, default
    *     to asc)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2918,6 +3357,7 @@ public class AnalyticsClient extends ApiClient {
   public GetTopSearchesResponse getTopSearches(
     @Nonnull String index,
     Boolean clickAnalytics,
+    Boolean revenueAnalytics,
     String startDate,
     String endDate,
     OrderBy orderBy,
@@ -2928,34 +3368,48 @@ public class AnalyticsClient extends ApiClient {
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(
-      getTopSearchesAsync(index, clickAnalytics, startDate, endDate, orderBy, direction, limit, offset, tags, requestOptions)
+      getTopSearchesAsync(
+        index,
+        clickAnalytics,
+        revenueAnalytics,
+        startDate,
+        endDate,
+        orderBy,
+        direction,
+        limit,
+        offset,
+        tags,
+        requestOptions
+      )
     );
   }
 
   /**
-   * Returns the most popular of the latest 1,000 searches. For each search, also returns the number
-   * of hits.
+   * Returns the most popular search terms.
    *
    * @param index Index name. (required)
-   * @param clickAnalytics Whether to include [click and
-   *     conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a
-   *     search. (optional, default to false)
+   * @param clickAnalytics Whether to include metrics related to click and conversion events in the
+   *     response. (optional, default to false)
+   * @param revenueAnalytics Whether to include revenue-related metrics in the response. If true,
+   *     metrics related to click and conversion events are also included in the response.
+   *     (optional, default to false)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param orderBy Reorder the results. (optional, default to searchCount)
+   * @param orderBy Attribute by which to order the response items. If the `clickAnalytics`
+   *     parameter is false, only `searchCount` is available. (optional, default to searchCount)
    * @param direction Sorting direction of the results: ascending or descending. (optional, default
    *     to asc)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopSearchesResponse getTopSearches(
     @Nonnull String index,
     Boolean clickAnalytics,
+    Boolean revenueAnalytics,
     String startDate,
     String endDate,
     OrderBy orderBy,
@@ -2964,12 +3418,11 @@ public class AnalyticsClient extends ApiClient {
     Integer offset,
     String tags
   ) throws AlgoliaRuntimeException {
-    return this.getTopSearches(index, clickAnalytics, startDate, endDate, orderBy, direction, limit, offset, tags, null);
+    return this.getTopSearches(index, clickAnalytics, revenueAnalytics, startDate, endDate, orderBy, direction, limit, offset, tags, null);
   }
 
   /**
-   * Returns the most popular of the latest 1,000 searches. For each search, also returns the number
-   * of hits.
+   * Returns the most popular search terms.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2977,39 +3430,39 @@ public class AnalyticsClient extends ApiClient {
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopSearchesResponse getTopSearches(@Nonnull String index, RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.getTopSearches(index, null, null, null, null, null, null, null, null, requestOptions);
+    return this.getTopSearches(index, null, null, null, null, null, null, null, null, null, requestOptions);
   }
 
   /**
-   * Returns the most popular of the latest 1,000 searches. For each search, also returns the number
-   * of hits.
+   * Returns the most popular search terms.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetTopSearchesResponse getTopSearches(@Nonnull String index) throws AlgoliaRuntimeException {
-    return this.getTopSearches(index, null, null, null, null, null, null, null, null, null);
+    return this.getTopSearches(index, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
-   * (asynchronously) Returns the most popular of the latest 1,000 searches. For each search, also
-   * returns the number of hits.
+   * (asynchronously) Returns the most popular search terms.
    *
    * @param index Index name. (required)
-   * @param clickAnalytics Whether to include [click and
-   *     conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a
-   *     search. (optional, default to false)
+   * @param clickAnalytics Whether to include metrics related to click and conversion events in the
+   *     response. (optional, default to false)
+   * @param revenueAnalytics Whether to include revenue-related metrics in the response. If true,
+   *     metrics related to click and conversion events are also included in the response.
+   *     (optional, default to false)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param orderBy Reorder the results. (optional, default to searchCount)
+   * @param orderBy Attribute by which to order the response items. If the `clickAnalytics`
+   *     parameter is false, only `searchCount` is available. (optional, default to searchCount)
    * @param direction Sorting direction of the results: ascending or descending. (optional, default
    *     to asc)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3017,6 +3470,7 @@ public class AnalyticsClient extends ApiClient {
   public CompletableFuture<GetTopSearchesResponse> getTopSearchesAsync(
     @Nonnull String index,
     Boolean clickAnalytics,
+    Boolean revenueAnalytics,
     String startDate,
     String endDate,
     OrderBy orderBy,
@@ -3034,6 +3488,7 @@ public class AnalyticsClient extends ApiClient {
       .setMethod("GET")
       .addQueryParameter("index", index)
       .addQueryParameter("clickAnalytics", clickAnalytics)
+      .addQueryParameter("revenueAnalytics", revenueAnalytics)
       .addQueryParameter("startDate", startDate)
       .addQueryParameter("endDate", endDate)
       .addQueryParameter("orderBy", orderBy)
@@ -3046,29 +3501,31 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns the most popular of the latest 1,000 searches. For each search, also
-   * returns the number of hits.
+   * (asynchronously) Returns the most popular search terms.
    *
    * @param index Index name. (required)
-   * @param clickAnalytics Whether to include [click and
-   *     conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a
-   *     search. (optional, default to false)
+   * @param clickAnalytics Whether to include metrics related to click and conversion events in the
+   *     response. (optional, default to false)
+   * @param revenueAnalytics Whether to include revenue-related metrics in the response. If true,
+   *     metrics related to click and conversion events are also included in the response.
+   *     (optional, default to false)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param orderBy Reorder the results. (optional, default to searchCount)
+   * @param orderBy Attribute by which to order the response items. If the `clickAnalytics`
+   *     parameter is false, only `searchCount` is available. (optional, default to searchCount)
    * @param direction Sorting direction of the results: ascending or descending. (optional, default
    *     to asc)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopSearchesResponse> getTopSearchesAsync(
     @Nonnull String index,
     Boolean clickAnalytics,
+    Boolean revenueAnalytics,
     String startDate,
     String endDate,
     OrderBy orderBy,
@@ -3077,12 +3534,23 @@ public class AnalyticsClient extends ApiClient {
     Integer offset,
     String tags
   ) throws AlgoliaRuntimeException {
-    return this.getTopSearchesAsync(index, clickAnalytics, startDate, endDate, orderBy, direction, limit, offset, tags, null);
+    return this.getTopSearchesAsync(
+        index,
+        clickAnalytics,
+        revenueAnalytics,
+        startDate,
+        endDate,
+        orderBy,
+        direction,
+        limit,
+        offset,
+        tags,
+        null
+      );
   }
 
   /**
-   * (asynchronously) Returns the most popular of the latest 1,000 searches. For each search, also
-   * returns the number of hits.
+   * (asynchronously) Returns the most popular search terms.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3091,30 +3559,33 @@ public class AnalyticsClient extends ApiClient {
    */
   public CompletableFuture<GetTopSearchesResponse> getTopSearchesAsync(@Nonnull String index, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    return this.getTopSearchesAsync(index, null, null, null, null, null, null, null, null, requestOptions);
+    return this.getTopSearchesAsync(index, null, null, null, null, null, null, null, null, null, requestOptions);
   }
 
   /**
-   * (asynchronously) Returns the most popular of the latest 1,000 searches. For each search, also
-   * returns the number of hits.
+   * (asynchronously) Returns the most popular search terms.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetTopSearchesResponse> getTopSearchesAsync(@Nonnull String index) throws AlgoliaRuntimeException {
-    return this.getTopSearchesAsync(index, null, null, null, null, null, null, null, null, null);
+    return this.getTopSearchesAsync(index, null, null, null, null, null, null, null, null, null, null);
   }
 
   /**
-   * Return the count of unique users.
+   * Retrieves the number of unique users within a time range, including a daily breakdown. Since
+   * this endpoint returns the number of unique users, the sum of the daily values might be
+   * different from the total number. By default, Algolia distinguishes search users by their IP
+   * address, _unless_ you include a pseudonymous user identifier in your search requests with the
+   * `userToken` API parameter or `x-algolia-usertoken` request header. By default, the analyzed
+   * period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3130,15 +3601,19 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Return the count of unique users.
+   * Retrieves the number of unique users within a time range, including a daily breakdown. Since
+   * this endpoint returns the number of unique users, the sum of the daily values might be
+   * different from the total number. By default, Algolia distinguishes search users by their IP
+   * address, _unless_ you include a pseudonymous user identifier in your search requests with the
+   * `userToken` API parameter or `x-algolia-usertoken` request header. By default, the analyzed
+   * period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetUsersCountResponse getUsersCount(@Nonnull String index, String startDate, String endDate, String tags)
@@ -3147,7 +3622,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Return the count of unique users.
+   * Retrieves the number of unique users within a time range, including a daily breakdown. Since
+   * this endpoint returns the number of unique users, the sum of the daily values might be
+   * different from the total number. By default, Algolia distinguishes search users by their IP
+   * address, _unless_ you include a pseudonymous user identifier in your search requests with the
+   * `userToken` API parameter or `x-algolia-usertoken` request header. By default, the analyzed
+   * period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3159,7 +3639,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * Return the count of unique users.
+   * Retrieves the number of unique users within a time range, including a daily breakdown. Since
+   * this endpoint returns the number of unique users, the sum of the daily values might be
+   * different from the total number. By default, Algolia distinguishes search users by their IP
+   * address, _unless_ you include a pseudonymous user identifier in your search requests with the
+   * `userToken` API parameter or `x-algolia-usertoken` request header. By default, the analyzed
+   * period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3169,15 +3654,19 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the count of unique users.
+   * (asynchronously) Retrieves the number of unique users within a time range, including a daily
+   * breakdown. Since this endpoint returns the number of unique users, the sum of the daily values
+   * might be different from the total number. By default, Algolia distinguishes search users by
+   * their IP address, _unless_ you include a pseudonymous user identifier in your search requests
+   * with the `userToken` API parameter or `x-algolia-usertoken` request header. By default, the
+   * analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3204,15 +3693,19 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the count of unique users.
+   * (asynchronously) Retrieves the number of unique users within a time range, including a daily
+   * breakdown. Since this endpoint returns the number of unique users, the sum of the daily values
+   * might be different from the total number. By default, Algolia distinguishes search users by
+   * their IP address, _unless_ you include a pseudonymous user identifier in your search requests
+   * with the `userToken` API parameter or `x-algolia-usertoken` request header. By default, the
+   * analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
    * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param tags Filter analytics on the
-   *     [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-   *     set at search time. Multiple tags can be combined with the operators OR and AND. If a tag
-   *     contains characters like spaces or parentheses, it must be URL-encoded. (optional)
+   * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
+   *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
+   *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetUsersCountResponse> getUsersCountAsync(@Nonnull String index, String startDate, String endDate, String tags)
@@ -3221,7 +3714,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the count of unique users.
+   * (asynchronously) Retrieves the number of unique users within a time range, including a daily
+   * breakdown. Since this endpoint returns the number of unique users, the sum of the daily values
+   * might be different from the total number. By default, Algolia distinguishes search users by
+   * their IP address, _unless_ you include a pseudonymous user identifier in your search requests
+   * with the `userToken` API parameter or `x-algolia-usertoken` request header. By default, the
+   * analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3234,7 +3732,12 @@ public class AnalyticsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Return the count of unique users.
+   * (asynchronously) Retrieves the number of unique users within a time range, including a daily
+   * breakdown. Since this endpoint returns the number of unique users, the sum of the daily values
+   * might be different from the total number. By default, Algolia distinguishes search users by
+   * their IP address, _unless_ you include a pseudonymous user identifier in your search requests
+   * with the `userToken` API parameter or `x-algolia-usertoken` request header. By default, the
+   * analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call

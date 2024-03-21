@@ -21,7 +21,7 @@ public class TopCountry {
     return this;
   }
 
-  /** Country. */
+  /** Country code. */
   @javax.annotation.Nonnull
   public String getCountry() {
     return country;

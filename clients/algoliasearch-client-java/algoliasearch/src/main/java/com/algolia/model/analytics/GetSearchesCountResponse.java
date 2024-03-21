@@ -16,7 +16,7 @@ public class GetSearchesCountResponse {
   private Integer count;
 
   @JsonProperty("dates")
-  private List<SearchEvent> dates = new ArrayList<>();
+  private List<DailySearches> dates = new ArrayList<>();
 
   public GetSearchesCountResponse setCount(Integer count) {
     this.count = count;
@@ -29,19 +29,19 @@ public class GetSearchesCountResponse {
     return count;
   }
 
-  public GetSearchesCountResponse setDates(List<SearchEvent> dates) {
+  public GetSearchesCountResponse setDates(List<DailySearches> dates) {
     this.dates = dates;
     return this;
   }
 
-  public GetSearchesCountResponse addDates(SearchEvent datesItem) {
+  public GetSearchesCountResponse addDates(DailySearches datesItem) {
     this.dates.add(datesItem);
     return this;
   }
 
-  /** Search events with their associated dates and hit counts. */
+  /** Daily number of searches. */
   @javax.annotation.Nonnull
-  public List<SearchEvent> getDates() {
+  public List<DailySearches> getDates() {
     return dates;
   }
 

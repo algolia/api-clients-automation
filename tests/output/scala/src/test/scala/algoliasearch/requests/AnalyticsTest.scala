@@ -539,6 +539,54 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
+  test("get getAddToCartRate with minimal parameters") {
+    val (client, echo) = testClient()
+    val future = client.getAddToCartRate(
+      index = "index"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/conversions/addToCartRate")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse("""{"index":"index"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("get getAddToCartRate with all parameters") {
+    val (client, echo) = testClient()
+    val future = client.getAddToCartRate(
+      index = "index",
+      startDate = Some("1999-09-19"),
+      endDate = Some("2001-01-01"),
+      tags = Some("tag")
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/conversions/addToCartRate")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""")
+      .asInstanceOf[JObject]
+      .obj
+      .toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
   test("get getAverageClickPosition with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.getAverageClickPosition(
@@ -685,7 +733,7 @@ class AnalyticsTest extends AnyFunSuite {
 
   test("get getConversationRate with minimal parameters") {
     val (client, echo) = testClient()
-    val future = client.getConversationRate(
+    val future = client.getConversionRate(
       index = "index"
     )
 
@@ -706,7 +754,7 @@ class AnalyticsTest extends AnyFunSuite {
 
   test("get getConversationRate with all parameters") {
     val (client, echo) = testClient()
-    val future = client.getConversationRate(
+    val future = client.getConversionRate(
       index = "index",
       startDate = Some("1999-09-19"),
       endDate = Some("2001-01-01"),
@@ -813,6 +861,102 @@ class AnalyticsTest extends AnyFunSuite {
     val res = echo.lastResponse.get
 
     assert(res.path == "/2/searches/noResultRate")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""")
+      .asInstanceOf[JObject]
+      .obj
+      .toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("get getPurchaseRate with minimal parameters") {
+    val (client, echo) = testClient()
+    val future = client.getPurchaseRate(
+      index = "index"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/conversions/purchaseRate")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse("""{"index":"index"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("get getPurchaseRate with all parameters") {
+    val (client, echo) = testClient()
+    val future = client.getPurchaseRate(
+      index = "index",
+      startDate = Some("1999-09-19"),
+      endDate = Some("2001-01-01"),
+      tags = Some("tag")
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/conversions/purchaseRate")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""")
+      .asInstanceOf[JObject]
+      .obj
+      .toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("get getRevenue with minimal parameters") {
+    val (client, echo) = testClient()
+    val future = client.getRevenue(
+      index = "index"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/conversions/revenue")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+    val expectedQuery = parse("""{"index":"index"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
+  }
+
+  test("get getRevenue with all parameters") {
+    val (client, echo) = testClient()
+    val future = client.getRevenue(
+      index = "index",
+      startDate = Some("1999-09-19"),
+      endDate = Some("2001-01-01"),
+      tags = Some("tag")
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/2/conversions/revenue")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
     val expectedQuery = parse("""{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}""")
@@ -1274,6 +1418,7 @@ class AnalyticsTest extends AnyFunSuite {
       index = "index",
       search = Some("mySearch"),
       clickAnalytics = Some(true),
+      revenueAnalytics = Some(true),
       startDate = Some("1999-09-19"),
       endDate = Some("2001-01-01"),
       limit = Some(21),
@@ -1288,7 +1433,7 @@ class AnalyticsTest extends AnyFunSuite {
     assert(res.method == "GET")
     assert(res.body.isEmpty)
     val expectedQuery = parse(
-      """{"index":"index","search":"mySearch","clickAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}"""
+      """{"index":"index","search":"mySearch","clickAnalytics":"true","revenueAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}"""
     ).asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
@@ -1324,6 +1469,7 @@ class AnalyticsTest extends AnyFunSuite {
     val future = client.getTopSearches(
       index = "index",
       clickAnalytics = Some(true),
+      revenueAnalytics = Some(true),
       startDate = Some("1999-09-19"),
       endDate = Some("2001-01-01"),
       orderBy = Some(OrderBy.withName("searchCount")),
@@ -1340,7 +1486,7 @@ class AnalyticsTest extends AnyFunSuite {
     assert(res.method == "GET")
     assert(res.body.isEmpty)
     val expectedQuery = parse(
-      """{"index":"index","clickAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","orderBy":"searchCount","direction":"asc","limit":"21","offset":"42","tags":"tag"}"""
+      """{"index":"index","clickAnalytics":"true","revenueAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","orderBy":"searchCount","direction":"asc","limit":"21","offset":"42","tags":"tag"}"""
     ).asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)

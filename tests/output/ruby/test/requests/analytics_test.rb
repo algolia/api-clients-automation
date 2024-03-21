@@ -312,6 +312,41 @@ class TestAnalyticsClient < Test::Unit::TestCase
     assert_equal(JSON.parse('{"body":"parameters"}'), JSON.parse(req.body))
   end
 
+  # get getAddToCartRate with minimal parameters
+  def test_get_add_to_cart_rate0
+    req = @client.get_add_to_cart_rate_with_http_info("index")
+
+    assert_equal(:get, req.method)
+    assert_equal('/2/conversions/addToCartRate', req.path)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, 'body is not nil')
+  end
+
+  # get getAddToCartRate with all parameters
+  def test_get_add_to_cart_rate1
+    req = @client.get_add_to_cart_rate_with_http_info(
+      "index",
+      "1999-09-19",
+      "2001-01-01",
+      "tag"
+    )
+
+    assert_equal(:get, req.method)
+    assert_equal('/2/conversions/addToCartRate', req.path)
+    assert_equal(
+      { 'index': "index",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
+    )
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, 'body is not nil')
+  end
+
   # get getAverageClickPosition with minimal parameters
   def test_get_average_click_position0
     req = @client.get_average_click_position_with_http_info("index")
@@ -418,8 +453,8 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getConversationRate with minimal parameters
-  def test_get_conversation_rate0
-    req = @client.get_conversation_rate_with_http_info("index")
+  def test_get_conversion_rate0
+    req = @client.get_conversion_rate_with_http_info("index")
 
     assert_equal(:get, req.method)
     assert_equal('/2/conversions/conversionRate', req.path)
@@ -430,8 +465,8 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getConversationRate with all parameters
-  def test_get_conversation_rate1
-    req = @client.get_conversation_rate_with_http_info(
+  def test_get_conversion_rate1
+    req = @client.get_conversion_rate_with_http_info(
       "index",
       "1999-09-19",
       "2001-01-01",
@@ -505,6 +540,66 @@ class TestAnalyticsClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/2/searches/noResultRate', req.path)
+    assert_equal(
+      { 'index': "index",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
+    )
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, 'body is not nil')
+  end
+
+  # get getPurchaseRate with minimal parameters
+  def test_get_purchase_rate0
+    req = @client.get_purchase_rate_with_http_info("index")
+
+    assert_equal(:get, req.method)
+    assert_equal('/2/conversions/purchaseRate', req.path)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, 'body is not nil')
+  end
+
+  # get getPurchaseRate with all parameters
+  def test_get_purchase_rate1
+    req = @client.get_purchase_rate_with_http_info("index", "1999-09-19", "2001-01-01", "tag")
+
+    assert_equal(:get, req.method)
+    assert_equal('/2/conversions/purchaseRate', req.path)
+    assert_equal(
+      { 'index': "index",
+        'startDate': "1999-09-19",
+        'endDate': "2001-01-01",
+        'tags': "tag" }.to_a,
+      req.query_params.to_a
+    )
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, 'body is not nil')
+  end
+
+  # get getRevenue with minimal parameters
+  def test_get_revenue0
+    req = @client.get_revenue_with_http_info("index")
+
+    assert_equal(:get, req.method)
+    assert_equal('/2/conversions/revenue', req.path)
+    assert_equal({ 'index': "index" }.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, 'body is not nil')
+  end
+
+  # get getRevenue with all parameters
+  def test_get_revenue1
+    req = @client.get_revenue_with_http_info("index", "1999-09-19", "2001-01-01", "tag")
+
+    assert_equal(:get, req.method)
+    assert_equal('/2/conversions/revenue', req.path)
     assert_equal(
       { 'index': "index",
         'startDate': "1999-09-19",
@@ -868,6 +963,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
       "index",
       "mySearch",
       true,
+      true,
       "1999-09-19",
       "2001-01-01",
       21,
@@ -881,6 +977,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
       { 'index': "index",
         'search': "mySearch",
         'clickAnalytics': "true",
+        'revenueAnalytics': "true",
         'startDate': "1999-09-19",
         'endDate': "2001-01-01",
         'limit': "21",
@@ -910,6 +1007,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
     req = @client.get_top_searches_with_http_info(
       "index",
       true,
+      true,
       "1999-09-19",
       "2001-01-01",
       'searchCount',
@@ -924,6 +1022,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
     assert_equal(
       { 'index': "index",
         'clickAnalytics': "true",
+        'revenueAnalytics': "true",
         'startDate': "1999-09-19",
         'endDate': "2001-01-01",
         'orderBy': "searchCount",

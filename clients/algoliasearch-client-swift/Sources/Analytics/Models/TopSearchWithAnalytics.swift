@@ -14,24 +14,55 @@ public struct TopSearchWithAnalytics: Codable, JSONEncodable, Hashable {
         exclusiveMaximum: false,
         multipleOf: nil
     )
-    /// User query.
+    static let averageClickPositionRule = NumericRule<Double>(
+        minimum: 1,
+        exclusiveMinimum: false,
+        maximum: nil,
+        exclusiveMaximum: false,
+        multipleOf: nil
+    )
+    static let conversionRateRule = NumericRule<Double>(
+        minimum: 0,
+        exclusiveMinimum: false,
+        maximum: 1,
+        exclusiveMaximum: false,
+        multipleOf: nil
+    )
+    static let clickCountRule = NumericRule<Int>(
+        minimum: 0,
+        exclusiveMinimum: false,
+        maximum: nil,
+        exclusiveMaximum: false,
+        multipleOf: nil
+    )
+    static let conversionCountRule = NumericRule<Int>(
+        minimum: 0,
+        exclusiveMinimum: false,
+        maximum: nil,
+        exclusiveMaximum: false,
+        multipleOf: nil
+    )
+    /// Search query.
     public var search: String
-    /// Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).
+    /// Number of searches.
     public var count: Int
-    /// [Click-through rate
-    /// (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
-    public var clickThroughRate: Double
-    /// Average [position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position) of
-    /// clicked search result.
-    public var averageClickPosition: Int
-    /// [Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
-    public var conversionRate: Double
-    /// Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is
-    /// `true`.
-    public var trackedSearchCount: Int?
-    /// Number of click events.
+    /// Click-through rate, calculated as number of tracked searches with at least one click event divided by the number
+    /// of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+    public var clickThroughRate: Double?
+    /// Average position of a clicked search result in the list of search results. If null, Algolia didn't receive any
+    /// search requests with `clickAnalytics` set to true.
+    public var averageClickPosition: Double?
+    /// List of positions in the search results and clicks associated with this search.
+    public var clickPositions: [ClickPositionsInner]
+    /// Conversion rate, calculated as number of tracked searches with at least one conversion event divided by the
+    /// number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to
+    /// true.
+    public var conversionRate: Double?
+    /// Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
+    public var trackedSearchCount: Int
+    /// Number of clicks associated with this search.
     public var clickCount: Int
-    /// Number of converted clicks.
+    /// Number of conversions from this search.
     public var conversionCount: Int
     /// Number of results (hits).
     public var nbHits: Int
@@ -39,10 +70,11 @@ public struct TopSearchWithAnalytics: Codable, JSONEncodable, Hashable {
     public init(
         search: String,
         count: Int,
-        clickThroughRate: Double,
-        averageClickPosition: Int,
-        conversionRate: Double,
-        trackedSearchCount: Int?,
+        clickThroughRate: Double?,
+        averageClickPosition: Double?,
+        clickPositions: [ClickPositionsInner],
+        conversionRate: Double?,
+        trackedSearchCount: Int,
         clickCount: Int,
         conversionCount: Int,
         nbHits: Int
@@ -51,6 +83,7 @@ public struct TopSearchWithAnalytics: Codable, JSONEncodable, Hashable {
         self.count = count
         self.clickThroughRate = clickThroughRate
         self.averageClickPosition = averageClickPosition
+        self.clickPositions = clickPositions
         self.conversionRate = conversionRate
         self.trackedSearchCount = trackedSearchCount
         self.clickCount = clickCount
@@ -63,6 +96,7 @@ public struct TopSearchWithAnalytics: Codable, JSONEncodable, Hashable {
         case count
         case clickThroughRate
         case averageClickPosition
+        case clickPositions
         case conversionRate
         case trackedSearchCount
         case clickCount
@@ -78,6 +112,7 @@ public struct TopSearchWithAnalytics: Codable, JSONEncodable, Hashable {
         try container.encode(self.count, forKey: .count)
         try container.encode(self.clickThroughRate, forKey: .clickThroughRate)
         try container.encode(self.averageClickPosition, forKey: .averageClickPosition)
+        try container.encode(self.clickPositions, forKey: .clickPositions)
         try container.encode(self.conversionRate, forKey: .conversionRate)
         try container.encode(self.trackedSearchCount, forKey: .trackedSearchCount)
         try container.encode(self.clickCount, forKey: .clickCount)

@@ -78,6 +78,24 @@ public class SnippetAnalyticsClient
   }
 
   /// <summary>
+  /// Snippet for the GetAddToCartRate method.
+  ///
+  /// get getAddToCartRate with minimal parameters
+  /// </summary>
+  public async Task SnippetForAnalyticsClientGetAddToCartRate()
+  {
+    // >SEPARATOR getAddToCartRate
+    // Initialize the client
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.GetAddToCartRateAsync("index");
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the GetAverageClickPosition method.
   ///
   /// get getAverageClickPosition with minimal parameters
@@ -132,20 +150,20 @@ public class SnippetAnalyticsClient
   }
 
   /// <summary>
-  /// Snippet for the GetConversationRate method.
+  /// Snippet for the GetConversionRate method.
   ///
   /// get getConversationRate with minimal parameters
   /// </summary>
-  public async Task SnippetForAnalyticsClientGetConversationRate()
+  public async Task SnippetForAnalyticsClientGetConversionRate()
   {
-    // >SEPARATOR getConversationRate
+    // >SEPARATOR getConversionRate
     // Initialize the client
     var client = new AnalyticsClient(
       new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
     );
 
     // Call the API
-    var response = await client.GetConversationRateAsync("index");
+    var response = await client.GetConversionRateAsync("index");
     // SEPARATOR<
   }
 
@@ -182,6 +200,42 @@ public class SnippetAnalyticsClient
 
     // Call the API
     var response = await client.GetNoResultsRateAsync("index");
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetPurchaseRate method.
+  ///
+  /// get getPurchaseRate with minimal parameters
+  /// </summary>
+  public async Task SnippetForAnalyticsClientGetPurchaseRate()
+  {
+    // >SEPARATOR getPurchaseRate
+    // Initialize the client
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.GetPurchaseRateAsync("index");
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetRevenue method.
+  ///
+  /// get getRevenue with minimal parameters
+  /// </summary>
+  public async Task SnippetForAnalyticsClientGetRevenue()
+  {
+    // >SEPARATOR getRevenue
+    // Initialize the client
+    var client = new AnalyticsClient(
+      new AnalyticsConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.GetRevenueAsync("index");
     // SEPARATOR<
   }
 

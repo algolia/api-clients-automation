@@ -22,7 +22,7 @@ public class GetNoClickRateResponse {
   private Integer noClickCount;
 
   @JsonProperty("dates")
-  private List<NoClickRateEvent> dates = new ArrayList<>();
+  private List<DailyNoClickRates> dates = new ArrayList<>();
 
   public GetNoClickRateResponse setRate(Double rate) {
     this.rate = rate;
@@ -30,9 +30,8 @@ public class GetNoClickRateResponse {
   }
 
   /**
-   * [Click-through rate
-   * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
-   * minimum: 0 maximum: 1
+   * No click rate, calculated as number of tracked searches without any click divided by the number
+   * of tracked searches. minimum: 0 maximum: 1
    */
   @javax.annotation.Nonnull
   public Double getRate() {
@@ -44,7 +43,10 @@ public class GetNoClickRateResponse {
     return this;
   }
 
-  /** Number of click events. */
+  /**
+   * Number of tracked searches. Tracked searches are search requests where the `clickAnalytics`
+   * parameter is true.
+   */
   @javax.annotation.Nonnull
   public Integer getCount() {
     return count;
@@ -55,25 +57,25 @@ public class GetNoClickRateResponse {
     return this;
   }
 
-  /** Number of click events. */
+  /** Number of times this search was returned as a result without any click. minimum: 1 */
   @javax.annotation.Nonnull
   public Integer getNoClickCount() {
     return noClickCount;
   }
 
-  public GetNoClickRateResponse setDates(List<NoClickRateEvent> dates) {
+  public GetNoClickRateResponse setDates(List<DailyNoClickRates> dates) {
     this.dates = dates;
     return this;
   }
 
-  public GetNoClickRateResponse addDates(NoClickRateEvent datesItem) {
+  public GetNoClickRateResponse addDates(DailyNoClickRates datesItem) {
     this.dates.add(datesItem);
     return this;
   }
 
-  /** Overall count of searches without clicks plus a daily breakdown. */
+  /** Daily no click rates. */
   @javax.annotation.Nonnull
-  public List<NoClickRateEvent> getDates() {
+  public List<DailyNoClickRates> getDates() {
     return dates;
   }
 

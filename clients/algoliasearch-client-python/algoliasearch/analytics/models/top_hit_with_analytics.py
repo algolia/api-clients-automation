@@ -8,7 +8,7 @@ from __future__ import annotations
 from json import loads
 from typing import Annotated, Any, Dict, Optional, Self, Union
 
-from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr
+from pydantic import BaseModel, Field, StrictInt, StrictStr
 
 
 class TopHitWithAnalytics(BaseModel):
@@ -16,28 +16,37 @@ class TopHitWithAnalytics(BaseModel):
     TopHitWithAnalytics
     """
 
-    hit: StrictStr = Field(description="Hit.")
+    hit: StrictStr = Field(
+        description="Object ID of a record that's returned as a search result."
+    )
     count: StrictInt = Field(description="Number of occurrences.")
-    click_through_rate: Union[
-        Annotated[float, Field(le=1, strict=True, ge=0)],
-        Annotated[int, Field(le=1, strict=True, ge=0)],
+    click_through_rate: Optional[
+        Union[
+            Annotated[float, Field(le=1, strict=True, ge=0)],
+            Annotated[int, Field(le=1, strict=True, ge=0)],
+        ]
     ] = Field(
-        description="[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate). ",
+        description="Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true. ",
         alias="clickThroughRate",
     )
-    conversion_rate: Union[StrictFloat, StrictInt] = Field(
-        description="[Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate). ",
+    conversion_rate: Optional[
+        Union[
+            Annotated[float, Field(le=1, strict=True, ge=0)],
+            Annotated[int, Field(le=1, strict=True, ge=0)],
+        ]
+    ] = Field(
+        description="Conversion rate, calculated as number of tracked searches with at least one conversion event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true. ",
         alias="conversionRate",
     )
-    tracked_search_count: Optional[StrictInt] = Field(
-        description="Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.",
-        alias="trackedSearchCount",
+    tracked_hit_count: StrictInt = Field(
+        description="Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.",
+        alias="trackedHitCount",
     )
-    click_count: StrictInt = Field(
-        description="Number of click events.", alias="clickCount"
+    click_count: Annotated[int, Field(strict=True, ge=0)] = Field(
+        description="Number of clicks associated with this search.", alias="clickCount"
     )
-    conversion_count: StrictInt = Field(
-        description="Number of converted clicks.", alias="conversionCount"
+    conversion_count: Annotated[int, Field(strict=True, ge=0)] = Field(
+        description="Number of conversions from this search.", alias="conversionCount"
     )
 
     model_config = {"populate_by_name": True, "validate_assignment": True}
@@ -65,13 +74,18 @@ class TopHitWithAnalytics(BaseModel):
             exclude={},
             exclude_none=True,
         )
-        # set to None if tracked_search_count (nullable) is None
+        # set to None if click_through_rate (nullable) is None
         # and model_fields_set contains the field
         if (
-            self.tracked_search_count is None
-            and "tracked_search_count" in self.model_fields_set
+            self.click_through_rate is None
+            and "click_through_rate" in self.model_fields_set
         ):
-            _dict["trackedSearchCount"] = None
+            _dict["clickThroughRate"] = None
+
+        # set to None if conversion_rate (nullable) is None
+        # and model_fields_set contains the field
+        if self.conversion_rate is None and "conversion_rate" in self.model_fields_set:
+            _dict["conversionRate"] = None
 
         return _dict
 
@@ -90,7 +104,7 @@ class TopHitWithAnalytics(BaseModel):
                 "count": obj.get("count"),
                 "clickThroughRate": obj.get("clickThroughRate"),
                 "conversionRate": obj.get("conversionRate"),
-                "trackedSearchCount": obj.get("trackedSearchCount"),
+                "trackedHitCount": obj.get("trackedHitCount"),
                 "clickCount": obj.get("clickCount"),
                 "conversionCount": obj.get("conversionCount"),
             }

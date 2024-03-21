@@ -10,8 +10,8 @@ from typing import Annotated, Any, Dict, List, Optional, Self, Union
 
 from pydantic import BaseModel, Field, StrictInt
 
-from algoliasearch.analytics.models.click_through_rate_event import (
-    ClickThroughRateEvent,
+from algoliasearch.analytics.models.daily_click_through_rates import (
+    DailyClickThroughRates,
 )
 
 
@@ -20,20 +20,24 @@ class GetClickThroughRateResponse(BaseModel):
     GetClickThroughRateResponse
     """
 
-    rate: Union[
-        Annotated[float, Field(le=1, strict=True, ge=0)],
-        Annotated[int, Field(le=1, strict=True, ge=0)],
+    rate: Optional[
+        Union[
+            Annotated[float, Field(le=1, strict=True, ge=0)],
+            Annotated[int, Field(le=1, strict=True, ge=0)],
+        ]
     ] = Field(
-        description="[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate). "
+        description="Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true. "
     )
-    click_count: StrictInt = Field(
-        description="Number of click events.", alias="clickCount"
+    click_count: Annotated[int, Field(strict=True, ge=0)] = Field(
+        description="Number of clicks associated with this search.", alias="clickCount"
     )
-    tracked_search_count: Optional[StrictInt] = Field(
-        description="Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.",
+    tracked_search_count: StrictInt = Field(
+        description="Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.",
         alias="trackedSearchCount",
     )
-    dates: List[ClickThroughRateEvent] = Field(description="Click-through rate events.")
+    dates: List[DailyClickThroughRates] = Field(
+        description="Daily click-through rates."
+    )
 
     model_config = {"populate_by_name": True, "validate_assignment": True}
 
@@ -66,13 +70,10 @@ class GetClickThroughRateResponse(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict["dates"] = _items
-        # set to None if tracked_search_count (nullable) is None
+        # set to None if rate (nullable) is None
         # and model_fields_set contains the field
-        if (
-            self.tracked_search_count is None
-            and "tracked_search_count" in self.model_fields_set
-        ):
-            _dict["trackedSearchCount"] = None
+        if self.rate is None and "rate" in self.model_fields_set:
+            _dict["rate"] = None
 
         return _dict
 
@@ -92,7 +93,7 @@ class GetClickThroughRateResponse(BaseModel):
                 "trackedSearchCount": obj.get("trackedSearchCount"),
                 "dates": (
                     [
-                        ClickThroughRateEvent.from_dict(_item)
+                        DailyClickThroughRates.from_dict(_item)
                         for _item in obj.get("dates")
                     ]
                     if obj.get("dates") is not None

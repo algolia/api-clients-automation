@@ -555,6 +555,57 @@ class AnalyticsClientRequestsTests {
   }
 
   @Test
+  @DisplayName("get getAddToCartRate with minimal parameters")
+  void getAddToCartRateTest0() {
+    assertDoesNotThrow(() -> {
+      client.getAddToCartRate("index");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/conversions/addToCartRate", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+
+    try {
+      Map<String, String> expectedQuery = json.readValue("{\"index\":\"index\"}", new TypeReference<HashMap<String, String>>() {});
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
+  @DisplayName("get getAddToCartRate with all parameters")
+  void getAddToCartRateTest1() {
+    assertDoesNotThrow(() -> {
+      client.getAddToCartRate("index", "1999-09-19", "2001-01-01", "tag");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/conversions/addToCartRate", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+
+    try {
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
   @DisplayName("get getAverageClickPosition with minimal parameters")
   void getAverageClickPositionTest0() {
     assertDoesNotThrow(() -> {
@@ -709,9 +760,9 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getConversationRate with minimal parameters")
-  void getConversationRateTest0() {
+  void getConversionRateTest0() {
     assertDoesNotThrow(() -> {
-      client.getConversationRate("index");
+      client.getConversionRate("index");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/conversions/conversionRate", req.path);
@@ -733,9 +784,9 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getConversationRate with all parameters")
-  void getConversationRateTest1() {
+  void getConversionRateTest1() {
     assertDoesNotThrow(() -> {
-      client.getConversationRate("index", "1999-09-19", "2001-01-01", "tag");
+      client.getConversionRate("index", "1999-09-19", "2001-01-01", "tag");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/conversions/conversionRate", req.path);
@@ -841,6 +892,108 @@ class AnalyticsClientRequestsTests {
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/searches/noResultRate", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+
+    try {
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
+  @DisplayName("get getPurchaseRate with minimal parameters")
+  void getPurchaseRateTest0() {
+    assertDoesNotThrow(() -> {
+      client.getPurchaseRate("index");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/conversions/purchaseRate", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+
+    try {
+      Map<String, String> expectedQuery = json.readValue("{\"index\":\"index\"}", new TypeReference<HashMap<String, String>>() {});
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
+  @DisplayName("get getPurchaseRate with all parameters")
+  void getPurchaseRateTest1() {
+    assertDoesNotThrow(() -> {
+      client.getPurchaseRate("index", "1999-09-19", "2001-01-01", "tag");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/conversions/purchaseRate", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+
+    try {
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
+  @DisplayName("get getRevenue with minimal parameters")
+  void getRevenueTest0() {
+    assertDoesNotThrow(() -> {
+      client.getRevenue("index");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/conversions/revenue", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+
+    try {
+      Map<String, String> expectedQuery = json.readValue("{\"index\":\"index\"}", new TypeReference<HashMap<String, String>>() {});
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
+  }
+
+  @Test
+  @DisplayName("get getRevenue with all parameters")
+  void getRevenueTest1() {
+    assertDoesNotThrow(() -> {
+      client.getRevenue("index", "1999-09-19", "2001-01-01", "tag");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/2/conversions/revenue", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
 
@@ -1320,7 +1473,7 @@ class AnalyticsClientRequestsTests {
   @DisplayName("get getTopHits with all parameters")
   void getTopHitsTest1() {
     assertDoesNotThrow(() -> {
-      client.getTopHits("index", "mySearch", true, "1999-09-19", "2001-01-01", 21, 42, "tag");
+      client.getTopHits("index", "mySearch", true, true, "1999-09-19", "2001-01-01", 21, 42, "tag");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/hits", req.path);
@@ -1329,7 +1482,7 @@ class AnalyticsClientRequestsTests {
 
     try {
       Map<String, String> expectedQuery = json.readValue(
-        "{\"index\":\"index\",\"search\":\"mySearch\",\"clickAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
+        "{\"index\":\"index\",\"search\":\"mySearch\",\"clickAnalytics\":\"true\",\"revenueAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, Object> actualQuery = req.queryParameters;
@@ -1374,6 +1527,7 @@ class AnalyticsClientRequestsTests {
       client.getTopSearches(
         "index",
         true,
+        true,
         "1999-09-19",
         "2001-01-01",
         OrderBy.fromValue("searchCount"),
@@ -1390,7 +1544,7 @@ class AnalyticsClientRequestsTests {
 
     try {
       Map<String, String> expectedQuery = json.readValue(
-        "{\"index\":\"index\",\"clickAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"orderBy\":\"searchCount\",\"direction\":\"asc\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
+        "{\"index\":\"index\",\"clickAnalytics\":\"true\",\"revenueAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"orderBy\":\"searchCount\",\"direction\":\"asc\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, Object> actualQuery = req.queryParameters;

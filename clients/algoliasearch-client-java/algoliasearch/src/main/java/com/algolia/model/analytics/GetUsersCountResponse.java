@@ -16,32 +16,32 @@ public class GetUsersCountResponse {
   private Integer count;
 
   @JsonProperty("dates")
-  private List<UserWithDate> dates = new ArrayList<>();
+  private List<DailyUsers> dates = new ArrayList<>();
 
   public GetUsersCountResponse setCount(Integer count) {
     this.count = count;
     return this;
   }
 
-  /** Number of occurrences. */
+  /** Number of unique users. */
   @javax.annotation.Nonnull
   public Integer getCount() {
     return count;
   }
 
-  public GetUsersCountResponse setDates(List<UserWithDate> dates) {
+  public GetUsersCountResponse setDates(List<DailyUsers> dates) {
     this.dates = dates;
     return this;
   }
 
-  public GetUsersCountResponse addDates(UserWithDate datesItem) {
+  public GetUsersCountResponse addDates(DailyUsers datesItem) {
     this.dates.add(datesItem);
     return this;
   }
 
-  /** User count. */
+  /** Daily number of unique users. */
   @javax.annotation.Nonnull
-  public List<UserWithDate> getDates() {
+  public List<DailyUsers> getDates() {
     return dates;
   }
 

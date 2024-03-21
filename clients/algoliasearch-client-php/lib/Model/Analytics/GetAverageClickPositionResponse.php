@@ -19,7 +19,7 @@ class GetAverageClickPositionResponse extends \Algolia\AlgoliaSearch\Model\Abstr
     protected static $modelTypes = [
         'average' => 'float',
         'clickCount' => 'int',
-        'dates' => '\Algolia\AlgoliaSearch\Model\Analytics\AverageClickEvent[]',
+        'dates' => '\Algolia\AlgoliaSearch\Model\Analytics\DailyAverageClicks[]',
     ];
 
     /**
@@ -155,9 +155,17 @@ class GetAverageClickPositionResponse extends \Algolia\AlgoliaSearch\Model\Abstr
         if (!isset($this->container['average']) || null === $this->container['average']) {
             $invalidProperties[] = "'average' can't be null";
         }
+        if ($this->container['average'] < 1) {
+            $invalidProperties[] = "invalid value for 'average', must be bigger than or equal to 1.";
+        }
+
         if (!isset($this->container['clickCount']) || null === $this->container['clickCount']) {
             $invalidProperties[] = "'clickCount' can't be null";
         }
+        if ($this->container['clickCount'] < 0) {
+            $invalidProperties[] = "invalid value for 'clickCount', must be bigger than or equal to 0.";
+        }
+
         if (!isset($this->container['dates']) || null === $this->container['dates']) {
             $invalidProperties[] = "'dates' can't be null";
         }
@@ -189,12 +197,16 @@ class GetAverageClickPositionResponse extends \Algolia\AlgoliaSearch\Model\Abstr
     /**
      * Sets average.
      *
-     * @param float $average average count of all click events
+     * @param float $average Average position of a clicked search result in the list of search results. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
      *
      * @return self
      */
     public function setAverage($average)
     {
+        if ($average < 1) {
+            throw new \InvalidArgumentException('invalid value for $average when calling GetAverageClickPositionResponse., must be bigger than or equal to 1.');
+        }
+
         $this->container['average'] = $average;
 
         return $this;
@@ -213,12 +225,16 @@ class GetAverageClickPositionResponse extends \Algolia\AlgoliaSearch\Model\Abstr
     /**
      * Sets clickCount.
      *
-     * @param int $clickCount number of click events
+     * @param int $clickCount number of clicks associated with this search
      *
      * @return self
      */
     public function setClickCount($clickCount)
     {
+        if ($clickCount < 0) {
+            throw new \InvalidArgumentException('invalid value for $clickCount when calling GetAverageClickPositionResponse., must be bigger than or equal to 0.');
+        }
+
         $this->container['clickCount'] = $clickCount;
 
         return $this;
@@ -227,7 +243,7 @@ class GetAverageClickPositionResponse extends \Algolia\AlgoliaSearch\Model\Abstr
     /**
      * Gets dates.
      *
-     * @return \Algolia\AlgoliaSearch\Model\Analytics\AverageClickEvent[]
+     * @return \Algolia\AlgoliaSearch\Model\Analytics\DailyAverageClicks[]
      */
     public function getDates()
     {
@@ -237,7 +253,7 @@ class GetAverageClickPositionResponse extends \Algolia\AlgoliaSearch\Model\Abstr
     /**
      * Sets dates.
      *
-     * @param \Algolia\AlgoliaSearch\Model\Analytics\AverageClickEvent[] $dates average click positions
+     * @param \Algolia\AlgoliaSearch\Model\Analytics\DailyAverageClicks[] $dates daily average click positions
      *
      * @return self
      */

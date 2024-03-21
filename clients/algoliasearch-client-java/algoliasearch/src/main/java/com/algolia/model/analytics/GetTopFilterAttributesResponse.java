@@ -25,7 +25,7 @@ public class GetTopFilterAttributesResponse {
     return this;
   }
 
-  /** Filterable attributes. */
+  /** Most frequent filters. */
   @javax.annotation.Nonnull
   public List<GetTopFilterAttribute> getAttributes() {
     return attributes;

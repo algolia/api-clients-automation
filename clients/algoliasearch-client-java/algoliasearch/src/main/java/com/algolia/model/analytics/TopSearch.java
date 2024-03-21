@@ -24,7 +24,7 @@ public class TopSearch {
     return this;
   }
 
-  /** User query. */
+  /** Search query. */
   @javax.annotation.Nonnull
   public String getSearch() {
     return search;
@@ -35,9 +35,7 @@ public class TopSearch {
     return this;
   }
 
-  /**
-   * Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).
-   */
+  /** Number of searches. */
   @javax.annotation.Nonnull
   public Integer getCount() {
     return count;

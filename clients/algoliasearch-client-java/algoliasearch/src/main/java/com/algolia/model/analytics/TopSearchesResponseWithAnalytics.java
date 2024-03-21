@@ -26,7 +26,7 @@ public class TopSearchesResponseWithAnalytics implements GetTopSearchesResponse 
     return this;
   }
 
-  /** Top searches with their hits count and analytics. */
+  /** Most popular searches and their associated click and conversion metrics. */
   @javax.annotation.Nonnull
   public List<TopSearchWithAnalytics> getSearches() {
     return searches;

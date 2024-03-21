@@ -18,7 +18,9 @@ class TopSearchesResponse(BaseModel):
     TopSearchesResponse
     """
 
-    searches: List[TopSearch] = Field(description="Top searches with their hits count.")
+    searches: List[TopSearch] = Field(
+        description="Most popular searches and their number of search results (hits)."
+    )
 
     model_config = {"populate_by_name": True, "validate_assignment": True}
 

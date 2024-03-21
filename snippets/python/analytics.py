@@ -93,6 +93,29 @@ async def snippet_for_custom_put():
     # SEPARATOR<
 
 
+async def snippet_for_get_add_to_cart_rate():
+    """
+    Snippet for the getAddToCartRate method.
+
+    get getAddToCartRate with minimal parameters
+    """
+    # >SEPARATOR getAddToCartRate
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    resp = await _client.get_add_to_cart_rate(
+        index="index",
+    )
+
+    # use the class directly
+    print(resp)
+
+    # print the JSON response
+    print(resp.to_json())
+    # SEPARATOR<
+
+
 async def snippet_for_get_average_click_position():
     """
     Snippet for the getAverageClickPosition method.
@@ -162,18 +185,18 @@ async def snippet_for_get_click_through_rate():
     # SEPARATOR<
 
 
-async def snippet_for_get_conversation_rate():
+async def snippet_for_get_conversion_rate():
     """
-    Snippet for the getConversationRate method.
+    Snippet for the getConversionRate method.
 
     get getConversationRate with minimal parameters
     """
-    # >SEPARATOR getConversationRate
+    # >SEPARATOR getConversionRate
     # Initialize the client
     _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
     # Call the API
-    resp = await _client.get_conversation_rate(
+    resp = await _client.get_conversion_rate(
         index="index",
     )
 
@@ -220,6 +243,52 @@ async def snippet_for_get_no_results_rate():
 
     # Call the API
     resp = await _client.get_no_results_rate(
+        index="index",
+    )
+
+    # use the class directly
+    print(resp)
+
+    # print the JSON response
+    print(resp.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_get_purchase_rate():
+    """
+    Snippet for the getPurchaseRate method.
+
+    get getPurchaseRate with minimal parameters
+    """
+    # >SEPARATOR getPurchaseRate
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    resp = await _client.get_purchase_rate(
+        index="index",
+    )
+
+    # use the class directly
+    print(resp)
+
+    # print the JSON response
+    print(resp.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_get_revenue():
+    """
+    Snippet for the getRevenue method.
+
+    get getRevenue with minimal parameters
+    """
+    # >SEPARATOR getRevenue
+    # Initialize the client
+    _client = AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    resp = await _client.get_revenue(
         index="index",
     )
 

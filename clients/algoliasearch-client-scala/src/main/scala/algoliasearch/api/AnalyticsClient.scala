@@ -5,12 +5,15 @@ package algoliasearch.api
 
 import algoliasearch.analytics.Direction._
 import algoliasearch.analytics.ErrorBase
+import algoliasearch.analytics.GetAddToCartRateResponse
 import algoliasearch.analytics.GetAverageClickPositionResponse
 import algoliasearch.analytics.GetClickPositionsResponse
 import algoliasearch.analytics.GetClickThroughRateResponse
-import algoliasearch.analytics.GetConversationRateResponse
+import algoliasearch.analytics.GetConversionRateResponse
 import algoliasearch.analytics.GetNoClickRateResponse
 import algoliasearch.analytics.GetNoResultsRateResponse
+import algoliasearch.analytics.GetPurchaseRateResponse
+import algoliasearch.analytics.GetRevenue
 import algoliasearch.analytics.GetSearchesCountResponse
 import algoliasearch.analytics.GetSearchesNoClicksResponse
 import algoliasearch.analytics.GetSearchesNoResultsResponse
@@ -182,9 +185,8 @@ class AnalyticsClient(
     execute[T](request, requestOptions)
   }
 
-  /** Return the average click position for the complete time range and for individual days. > **Note**: If all
-    * `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked
-    * searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
+  /** Retrieves the add-to-cart rate for all of your searches with at least one add-to-cart event, including a daily
+    * breakdown. By default, the analyzed period includes the last eight days including the current day.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -196,10 +198,49 @@ class AnalyticsClient(
     * @param endDate
     *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param tags
-    *   Filter analytics on the
-    *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
-    *   Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or
-    *   parentheses, it must be URL-encoded.
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    */
+  def getAddToCartRate(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[GetAddToCartRateResponse] = Future {
+    requireNotNull(index, "Parameter `index` is required when calling `getAddToCartRate`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/2/conversions/addToCartRate")
+      .withQueryParameter("index", index)
+      .withQueryParameter("startDate", startDate)
+      .withQueryParameter("endDate", endDate)
+      .withQueryParameter("tags", tags)
+      .build()
+    execute[GetAddToCartRateResponse](request, requestOptions)
+  }
+
+  /** Retrieves the average click position of your search results, including a daily breakdown. The average click
+    * position is the average of all clicked search results' positions. For example, if users only ever click on the
+    * first result for any search, the average click position is 1. By default, the analyzed period includes the last
+    * eight days including the current day.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param startDate
+    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    * @param endDate
+    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     */
   def getAverageClickPosition(
       index: String,
@@ -222,9 +263,8 @@ class AnalyticsClient(
     execute[GetAverageClickPositionResponse](request, requestOptions)
   }
 
-  /** Show the number of clicks events and their associated position in the search results. > **Note**: If all
-    * `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked
-    * searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
+  /** Retrieves the positions in the search results and their associated number of clicks. This lets you check how many
+    * clicks the first, second, or tenth search results receive.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -236,10 +276,9 @@ class AnalyticsClient(
     * @param endDate
     *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param tags
-    *   Filter analytics on the
-    *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
-    *   Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or
-    *   parentheses, it must be URL-encoded.
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     */
   def getClickPositions(
       index: String,
@@ -262,8 +301,8 @@ class AnalyticsClient(
     execute[GetClickPositionsResponse](request, requestOptions)
   }
 
-  /** Returns a [click-through rate
-    * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+  /** Retrieves the click-through rate for all of your searches with at least one click event, including a daily
+    * breakdown By default, the analyzed period includes the last eight days including the current day.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -275,10 +314,9 @@ class AnalyticsClient(
     * @param endDate
     *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param tags
-    *   Filter analytics on the
-    *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
-    *   Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or
-    *   parentheses, it must be URL-encoded.
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     */
   def getClickThroughRate(
       index: String,
@@ -301,7 +339,8 @@ class AnalyticsClient(
     execute[GetClickThroughRateResponse](request, requestOptions)
   }
 
-  /** Return a [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+  /** Retrieves the conversion rate for all of your searches with at least one conversion event, including a daily
+    * breakdown. By default, the analyzed period includes the last eight days including the current day.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -313,19 +352,18 @@ class AnalyticsClient(
     * @param endDate
     *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param tags
-    *   Filter analytics on the
-    *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
-    *   Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or
-    *   parentheses, it must be URL-encoded.
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     */
-  def getConversationRate(
+  def getConversionRate(
       index: String,
       startDate: Option[String] = None,
       endDate: Option[String] = None,
       tags: Option[String] = None,
       requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[GetConversationRateResponse] = Future {
-    requireNotNull(index, "Parameter `index` is required when calling `getConversationRate`.")
+  )(implicit ec: ExecutionContext): Future[GetConversionRateResponse] = Future {
+    requireNotNull(index, "Parameter `index` is required when calling `getConversionRate`.")
 
     val request = HttpRequest
       .builder()
@@ -336,11 +374,11 @@ class AnalyticsClient(
       .withQueryParameter("endDate", endDate)
       .withQueryParameter("tags", tags)
       .build()
-    execute[GetConversationRateResponse](request, requestOptions)
+    execute[GetConversionRateResponse](request, requestOptions)
   }
 
-  /** Returns the rate at which searches don't lead to any clicks. The endpoint returns a value for the complete given
-    * time range, as well as a value per day. It also returns the count of searches and searches without clicks.
+  /** Retrieves the fraction of searches that didn't lead to any click within a time range, including a daily breakdown.
+    * By default, the analyzed period includes the last eight days including the current day.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -352,10 +390,9 @@ class AnalyticsClient(
     * @param endDate
     *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param tags
-    *   Filter analytics on the
-    *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
-    *   Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or
-    *   parentheses, it must be URL-encoded.
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     */
   def getNoClickRate(
       index: String,
@@ -378,7 +415,8 @@ class AnalyticsClient(
     execute[GetNoClickRateResponse](request, requestOptions)
   }
 
-  /** Returns the rate at which searches didn't return any results.
+  /** Retrieves the fraction of searches that didn't return any results within a time range, including a daily
+    * breakdown. By default, the analyzed period includes the last eight days including the current day.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -390,10 +428,9 @@ class AnalyticsClient(
     * @param endDate
     *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param tags
-    *   Filter analytics on the
-    *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
-    *   Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or
-    *   parentheses, it must be URL-encoded.
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     */
   def getNoResultsRate(
       index: String,
@@ -416,7 +453,8 @@ class AnalyticsClient(
     execute[GetNoResultsRateResponse](request, requestOptions)
   }
 
-  /** Returns the number of searches within a time range.
+  /** Retrieves the purchase rate for all of your searches with at least one purchase event, including a daily
+    * breakdown. By default, the analyzed period includes the last eight days including the current day.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -428,10 +466,86 @@ class AnalyticsClient(
     * @param endDate
     *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param tags
-    *   Filter analytics on the
-    *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
-    *   Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or
-    *   parentheses, it must be URL-encoded.
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    */
+  def getPurchaseRate(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[GetPurchaseRateResponse] = Future {
+    requireNotNull(index, "Parameter `index` is required when calling `getPurchaseRate`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/2/conversions/purchaseRate")
+      .withQueryParameter("index", index)
+      .withQueryParameter("startDate", startDate)
+      .withQueryParameter("endDate", endDate)
+      .withQueryParameter("tags", tags)
+      .build()
+    execute[GetPurchaseRateResponse](request, requestOptions)
+  }
+
+  /** Retrieves revenue-related metrics, such as the total revenue or the average order value. To retrieve
+    * revenue-related metrics, sent purchase events. By default, the analyzed period includes the last eight days
+    * including the current day.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param startDate
+    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    * @param endDate
+    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    */
+  def getRevenue(
+      index: String,
+      startDate: Option[String] = None,
+      endDate: Option[String] = None,
+      tags: Option[String] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[GetRevenue] = Future {
+    requireNotNull(index, "Parameter `index` is required when calling `getRevenue`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/2/conversions/revenue")
+      .withQueryParameter("index", index)
+      .withQueryParameter("startDate", startDate)
+      .withQueryParameter("endDate", endDate)
+      .withQueryParameter("tags", tags)
+      .build()
+    execute[GetRevenue](request, requestOptions)
+  }
+
+  /** Retrieves the number of searches within a time range, including a daily breakdown. By default, the analyzed period
+    * includes the last eight days including the current day.
+    *
+    * Required API Key ACLs:
+    *   - analytics
+    *
+    * @param index
+    *   Index name.
+    * @param startDate
+    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    * @param endDate
+    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    * @param tags
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     */
   def getSearchesCount(
       index: String,
@@ -454,7 +568,7 @@ class AnalyticsClient(
     execute[GetSearchesCountResponse](request, requestOptions)
   }
 
-  /** Return the most popular of the last 1,000 searches that didn't lead to any clicks.
+  /** Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most frequent searches.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -470,10 +584,9 @@ class AnalyticsClient(
     * @param offset
     *   Position of the first item to return.
     * @param tags
-    *   Filter analytics on the
-    *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
-    *   Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or
-    *   parentheses, it must be URL-encoded.
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     */
   def getSearchesNoClicks(
       index: String,
@@ -500,7 +613,7 @@ class AnalyticsClient(
     execute[GetSearchesNoClicksResponse](request, requestOptions)
   }
 
-  /** Returns the most popular of the latest 1,000 searches that didn't return any results.
+  /** Retrieves the most popular searches that didn't return any results.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -516,10 +629,9 @@ class AnalyticsClient(
     * @param offset
     *   Position of the first item to return.
     * @param tags
-    *   Filter analytics on the
-    *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
-    *   Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or
-    *   parentheses, it must be URL-encoded.
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     */
   def getSearchesNoResults(
       index: String,
@@ -546,9 +658,8 @@ class AnalyticsClient(
     execute[GetSearchesNoResultsResponse](request, requestOptions)
   }
 
-  /** Return the latest update time of the Analytics API for an index. If the index has been recently created or no
-    * search has been performed yet, `updatedAt` will be `null`. > **Note**: The Analytics API is updated every
-    * 5&nbsp;minutes.
+  /** Retrieves the time when the Analytics data for the specified index was last updated. The Analytics data is updated
+    * every 5 minutes.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -570,7 +681,7 @@ class AnalyticsClient(
     execute[GetStatusResponse](request, requestOptions)
   }
 
-  /** Returns top countries. Limited to the 1,000 most frequent ones.
+  /** Retrieves the countries with the most searches to your index.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -586,10 +697,9 @@ class AnalyticsClient(
     * @param offset
     *   Position of the first item to return.
     * @param tags
-    *   Filter analytics on the
-    *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
-    *   Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or
-    *   parentheses, it must be URL-encoded.
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     */
   def getTopCountries(
       index: String,
@@ -616,9 +726,8 @@ class AnalyticsClient(
     execute[GetTopCountriesResponse](request, requestOptions)
   }
 
-  /** Return the most popular [filterable
-    * attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in the 1,000 most
-    * recently used filters.
+  /** Retrieves the most frequently used filter attributes. These are attributes of your records that you included in
+    * the `attributesForFaceting` setting.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -626,7 +735,7 @@ class AnalyticsClient(
     * @param index
     *   Index name.
     * @param search
-    *   User query.
+    *   Search query.
     * @param startDate
     *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
@@ -636,10 +745,9 @@ class AnalyticsClient(
     * @param offset
     *   Position of the first item to return.
     * @param tags
-    *   Filter analytics on the
-    *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
-    *   Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or
-    *   parentheses, it must be URL-encoded.
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     */
   def getTopFilterAttributes(
       index: String,
@@ -668,7 +776,8 @@ class AnalyticsClient(
     execute[GetTopFilterAttributesResponse](request, requestOptions)
   }
 
-  /** Returns the most popular filter values for an attribute in the 1,000 most recently used filters.
+  /** Retrieves the most frequent filter (facet) values for a filter attribute. These are attributes of your records
+    * that you included in the `attributesForFaceting` setting.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -678,7 +787,7 @@ class AnalyticsClient(
     * @param index
     *   Index name.
     * @param search
-    *   User query.
+    *   Search query.
     * @param startDate
     *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
@@ -688,10 +797,9 @@ class AnalyticsClient(
     * @param offset
     *   Position of the first item to return.
     * @param tags
-    *   Filter analytics on the
-    *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
-    *   Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or
-    *   parentheses, it must be URL-encoded.
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     */
   def getTopFilterForAttribute(
       attribute: String,
@@ -722,8 +830,9 @@ class AnalyticsClient(
     execute[GetTopFilterForAttributeResponse](request, requestOptions)
   }
 
-  /** Returns top filters for filter-enabled searches that don't return results. Limited to the 1,000 most recently used
-    * filters.
+  /** Retrieves the most frequently used filters for a search that didn't return any results. To get the most frequent
+    * searches without results, use the [Retrieve searches without results](#tag/search/operation/getSearchesNoResults)
+    * operation.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -731,7 +840,7 @@ class AnalyticsClient(
     * @param index
     *   Index name.
     * @param search
-    *   User query.
+    *   Search query.
     * @param startDate
     *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
@@ -741,10 +850,9 @@ class AnalyticsClient(
     * @param offset
     *   Position of the first item to return.
     * @param tags
-    *   Filter analytics on the
-    *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
-    *   Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or
-    *   parentheses, it must be URL-encoded.
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     */
   def getTopFiltersNoResults(
       index: String,
@@ -773,7 +881,7 @@ class AnalyticsClient(
     execute[GetTopFiltersNoResultsResponse](request, requestOptions)
   }
 
-  /** Return the most popular clicked results in the last 1,000 searches.
+  /** Retrieves the object IDs of the most frequent search results.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -781,10 +889,12 @@ class AnalyticsClient(
     * @param index
     *   Index name.
     * @param search
-    *   User query.
+    *   Search query.
     * @param clickAnalytics
-    *   Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/)
-    *   rates for a search.
+    *   Whether to include metrics related to click and conversion events in the response.
+    * @param revenueAnalytics
+    *   Whether to include revenue-related metrics in the response. If true, metrics related to click and conversion
+    *   events are also included in the response.
     * @param startDate
     *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
@@ -794,15 +904,15 @@ class AnalyticsClient(
     * @param offset
     *   Position of the first item to return.
     * @param tags
-    *   Filter analytics on the
-    *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
-    *   Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or
-    *   parentheses, it must be URL-encoded.
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     */
   def getTopHits(
       index: String,
       search: Option[String] = None,
       clickAnalytics: Option[Boolean] = None,
+      revenueAnalytics: Option[Boolean] = None,
       startDate: Option[String] = None,
       endDate: Option[String] = None,
       limit: Option[Int] = None,
@@ -819,6 +929,7 @@ class AnalyticsClient(
       .withQueryParameter("index", index)
       .withQueryParameter("search", search)
       .withQueryParameter("clickAnalytics", clickAnalytics)
+      .withQueryParameter("revenueAnalytics", revenueAnalytics)
       .withQueryParameter("startDate", startDate)
       .withQueryParameter("endDate", endDate)
       .withQueryParameter("limit", limit)
@@ -828,7 +939,7 @@ class AnalyticsClient(
     execute[GetTopHitsResponse](request, requestOptions)
   }
 
-  /** Returns the most popular of the latest 1,000 searches. For each search, also returns the number of hits.
+  /** Returns the most popular search terms.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -836,14 +947,17 @@ class AnalyticsClient(
     * @param index
     *   Index name.
     * @param clickAnalytics
-    *   Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/)
-    *   rates for a search.
+    *   Whether to include metrics related to click and conversion events in the response.
+    * @param revenueAnalytics
+    *   Whether to include revenue-related metrics in the response. If true, metrics related to click and conversion
+    *   events are also included in the response.
     * @param startDate
     *   Start date (`YYYY-MM-DD`) of the period to analyze.
     * @param endDate
     *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param orderBy
-    *   Reorder the results.
+    *   Attribute by which to order the response items. If the `clickAnalytics` parameter is false, only `searchCount`
+    *   is available.
     * @param direction
     *   Sorting direction of the results: ascending or descending.
     * @param limit
@@ -851,14 +965,14 @@ class AnalyticsClient(
     * @param offset
     *   Position of the first item to return.
     * @param tags
-    *   Filter analytics on the
-    *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
-    *   Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or
-    *   parentheses, it must be URL-encoded.
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     */
   def getTopSearches(
       index: String,
       clickAnalytics: Option[Boolean] = None,
+      revenueAnalytics: Option[Boolean] = None,
       startDate: Option[String] = None,
       endDate: Option[String] = None,
       orderBy: Option[OrderBy] = None,
@@ -876,6 +990,7 @@ class AnalyticsClient(
       .withPath(s"/2/searches")
       .withQueryParameter("index", index)
       .withQueryParameter("clickAnalytics", clickAnalytics)
+      .withQueryParameter("revenueAnalytics", revenueAnalytics)
       .withQueryParameter("startDate", startDate)
       .withQueryParameter("endDate", endDate)
       .withQueryParameter("orderBy", orderBy)
@@ -887,7 +1002,11 @@ class AnalyticsClient(
     execute[GetTopSearchesResponse](request, requestOptions)
   }
 
-  /** Return the count of unique users.
+  /** Retrieves the number of unique users within a time range, including a daily breakdown. Since this endpoint returns
+    * the number of unique users, the sum of the daily values might be different from the total number. By default,
+    * Algolia distinguishes search users by their IP address, _unless_ you include a pseudonymous user identifier in
+    * your search requests with the `userToken` API parameter or `x-algolia-usertoken` request header. By default, the
+    * analyzed period includes the last eight days including the current day.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -899,10 +1018,9 @@ class AnalyticsClient(
     * @param endDate
     *   End date (`YYYY-MM-DD`) of the period to analyze.
     * @param tags
-    *   Filter analytics on the
-    *   [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time.
-    *   Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or
-    *   parentheses, it must be URL-encoded.
+    *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
+    *   URL-encoded. For more information, see [Segment your analytics
+    *   data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
     */
   def getUsersCount(
       index: String,

@@ -26,7 +26,7 @@ public class TopHitsResponseWithAnalytics implements GetTopHitsResponse {
     return this;
   }
 
-  /** Top hits. */
+  /** Most frequent search results with click and conversion metrics. */
   @javax.annotation.Nonnull
   public List<TopHitWithAnalytics> getHits() {
     return hits;

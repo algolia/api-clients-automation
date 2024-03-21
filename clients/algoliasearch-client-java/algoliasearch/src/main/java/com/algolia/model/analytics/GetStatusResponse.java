@@ -18,8 +18,11 @@ public class GetStatusResponse {
     return this;
   }
 
-  /** Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format. */
-  @javax.annotation.Nonnull
+  /**
+   * Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format. If
+   * null, no update was performed yet.
+   */
+  @javax.annotation.Nullable
   public String getUpdatedAt() {
     return updatedAt;
   }

@@ -47,7 +47,7 @@ package algoliasearch.abtesting
   * @param searchCount
   *   Number of searches carried out during the A/B test.
   * @param trackedSearchCount
-  *   Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
+  *   Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
   * @param trafficPercentage
   *   A/B test traffic percentage.
   * @param userCount
@@ -63,7 +63,7 @@ case class Variant(
     clickThroughRate: Option[Double] = scala.None,
     conversionCount: Int,
     conversionRate: Option[Double] = scala.None,
-    currencies: Option[Map[String, CurrenciesValue]] = scala.None,
+    currencies: Option[Map[String, Currency]] = scala.None,
     description: String,
     estimatedSampleSize: Option[Int] = scala.None,
     filterEffects: Option[FilterEffects] = scala.None,

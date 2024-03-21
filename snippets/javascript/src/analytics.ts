@@ -82,6 +82,26 @@ export async function snippetForcustomPut(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the getAddToCartRate method.
+//
+// get getAddToCartRate with minimal parameters
+export async function snippetForgetAddToCartRate(): Promise<void> {
+  // >SEPARATOR getAddToCartRate
+  // Initialize the client
+  const client = analyticsClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.getAddToCartRate({ index: 'index' });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the getAverageClickPosition method.
 //
 // get getAverageClickPosition with minimal parameters
@@ -142,11 +162,11 @@ export async function snippetForgetClickThroughRate(): Promise<void> {
   // SEPARATOR<
 }
 
-// Snippet for the getConversationRate method.
+// Snippet for the getConversionRate method.
 //
 // get getConversationRate with minimal parameters
-export async function snippetForgetConversationRate(): Promise<void> {
-  // >SEPARATOR getConversationRate
+export async function snippetForgetConversionRate(): Promise<void> {
+  // >SEPARATOR getConversionRate
   // Initialize the client
   const client = analyticsClient(
     'YOUR_APP_ID',
@@ -155,7 +175,7 @@ export async function snippetForgetConversationRate(): Promise<void> {
   );
 
   // Call the API
-  const response = await client.getConversationRate({ index: 'index' });
+  const response = await client.getConversionRate({ index: 'index' });
 
   // use typed response
   console.log(response);
@@ -196,6 +216,46 @@ export async function snippetForgetNoResultsRate(): Promise<void> {
 
   // Call the API
   const response = await client.getNoResultsRate({ index: 'index' });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getPurchaseRate method.
+//
+// get getPurchaseRate with minimal parameters
+export async function snippetForgetPurchaseRate(): Promise<void> {
+  // >SEPARATOR getPurchaseRate
+  // Initialize the client
+  const client = analyticsClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.getPurchaseRate({ index: 'index' });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getRevenue method.
+//
+// get getRevenue with minimal parameters
+export async function snippetForgetRevenue(): Promise<void> {
+  // >SEPARATOR getRevenue
+  // Initialize the client
+  const client = analyticsClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.getRevenue({ index: 'index' });
 
   // use typed response
   console.log(response);

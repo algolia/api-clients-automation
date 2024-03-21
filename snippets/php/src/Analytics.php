@@ -89,6 +89,27 @@ class SnippetAnalyticsClient
     }
 
     /**
+     * Snippet for the GetAddToCartRate method.
+     *
+     * get getAddToCartRate with minimal parameters
+     */
+    public function snippetForGetAddToCartRate()
+    {
+        // >SEPARATOR getAddToCartRate
+        // Initialize the client
+        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->getAddToCartRate(
+            'index',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetAverageClickPosition method.
      *
      * get getAverageClickPosition with minimal parameters
@@ -152,18 +173,18 @@ class SnippetAnalyticsClient
     }
 
     /**
-     * Snippet for the GetConversationRate method.
+     * Snippet for the GetConversionRate method.
      *
      * get getConversationRate with minimal parameters
      */
-    public function snippetForGetConversationRate()
+    public function snippetForGetConversionRate()
     {
-        // >SEPARATOR getConversationRate
+        // >SEPARATOR getConversionRate
         // Initialize the client
         $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
-        $response = $client->getConversationRate(
+        $response = $client->getConversionRate(
             'index',
         );
 
@@ -206,6 +227,48 @@ class SnippetAnalyticsClient
 
         // Call the API
         $response = $client->getNoResultsRate(
+            'index',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetPurchaseRate method.
+     *
+     * get getPurchaseRate with minimal parameters
+     */
+    public function snippetForGetPurchaseRate()
+    {
+        // >SEPARATOR getPurchaseRate
+        // Initialize the client
+        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->getPurchaseRate(
+            'index',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetRevenue method.
+     *
+     * get getRevenue with minimal parameters
+     */
+    public function snippetForGetRevenue()
+    {
+        // >SEPARATOR getRevenue
+        // Initialize the client
+        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->getRevenue(
             'index',
         );
 

@@ -7,19 +7,19 @@ import kotlinx.serialization.json.*
 /**
  * GetAverageClickPositionResponse
  *
- * @param average Average count of all click events.
- * @param clickCount Number of click events.
- * @param dates Average click positions.
+ * @param average Average position of a clicked search result in the list of search results. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+ * @param clickCount Number of clicks associated with this search.
+ * @param dates Daily average click positions.
  */
 @Serializable
 public data class GetAverageClickPositionResponse(
 
-  /** Average count of all click events. */
+  /** Average position of a clicked search result in the list of search results. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.  */
   @SerialName(value = "average") val average: Double,
 
-  /** Number of click events. */
+  /** Number of clicks associated with this search. */
   @SerialName(value = "clickCount") val clickCount: Int,
 
-  /** Average click positions. */
-  @SerialName(value = "dates") val dates: List<AverageClickEvent>,
+  /** Daily average click positions. */
+  @SerialName(value = "dates") val dates: List<DailyAverageClicks>,
 )

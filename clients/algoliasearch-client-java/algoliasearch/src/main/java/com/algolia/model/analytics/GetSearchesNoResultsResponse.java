@@ -13,21 +13,21 @@ import java.util.Objects;
 public class GetSearchesNoResultsResponse {
 
   @JsonProperty("searches")
-  private List<SearchNoResultEvent> searches = new ArrayList<>();
+  private List<DailySearchesNoResults> searches = new ArrayList<>();
 
-  public GetSearchesNoResultsResponse setSearches(List<SearchNoResultEvent> searches) {
+  public GetSearchesNoResultsResponse setSearches(List<DailySearchesNoResults> searches) {
     this.searches = searches;
     return this;
   }
 
-  public GetSearchesNoResultsResponse addSearches(SearchNoResultEvent searchesItem) {
+  public GetSearchesNoResultsResponse addSearches(DailySearchesNoResults searchesItem) {
     this.searches.add(searchesItem);
     return this;
   }
 
-  /** Searches with no results. */
+  /** Searches without results. */
   @javax.annotation.Nonnull
-  public List<SearchNoResultEvent> getSearches() {
+  public List<DailySearchesNoResults> getSearches() {
     return searches;
   }
 

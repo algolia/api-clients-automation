@@ -557,6 +557,51 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     /**
+     * Test case for GetAddToCartRate
+     * get getAddToCartRate with minimal parameters.
+     */
+    public function testGetAddToCartRate0()
+    {
+        $client = $this->getClient();
+        $client->getAddToCartRate(
+            'index',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/conversions/addToCartRate',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"index":"index"}', true),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetAddToCartRate
+     * get getAddToCartRate with all parameters.
+     */
+    public function testGetAddToCartRate1()
+    {
+        $client = $this->getClient();
+        $client->getAddToCartRate(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/conversions/addToCartRate',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
+            ],
+        ]);
+    }
+
+    /**
      * Test case for GetAverageClickPosition
      * get getAverageClickPosition with minimal parameters.
      */
@@ -692,13 +737,13 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for GetConversationRate
+     * Test case for GetConversionRate
      * get getConversationRate with minimal parameters.
      */
-    public function testGetConversationRate0()
+    public function testGetConversionRate0()
     {
         $client = $this->getClient();
-        $client->getConversationRate(
+        $client->getConversionRate(
             'index',
         );
 
@@ -713,13 +758,13 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for GetConversationRate
+     * Test case for GetConversionRate
      * get getConversationRate with all parameters.
      */
-    public function testGetConversationRate1()
+    public function testGetConversionRate1()
     {
         $client = $this->getClient();
-        $client->getConversationRate(
+        $client->getConversionRate(
             'index',
             '1999-09-19',
             '2001-01-01',
@@ -819,6 +864,96 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
         $this->assertRequests([
             [
                 'path' => '/2/searches/noResultRate',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetPurchaseRate
+     * get getPurchaseRate with minimal parameters.
+     */
+    public function testGetPurchaseRate0()
+    {
+        $client = $this->getClient();
+        $client->getPurchaseRate(
+            'index',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/conversions/purchaseRate',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"index":"index"}', true),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetPurchaseRate
+     * get getPurchaseRate with all parameters.
+     */
+    public function testGetPurchaseRate1()
+    {
+        $client = $this->getClient();
+        $client->getPurchaseRate(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/conversions/purchaseRate',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetRevenue
+     * get getRevenue with minimal parameters.
+     */
+    public function testGetRevenue0()
+    {
+        $client = $this->getClient();
+        $client->getRevenue(
+            'index',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/conversions/revenue',
+                'method' => 'GET',
+                'body' => null,
+                'queryParameters' => json_decode('{"index":"index"}', true),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetRevenue
+     * get getRevenue with all parameters.
+     */
+    public function testGetRevenue1()
+    {
+        $client = $this->getClient();
+        $client->getRevenue(
+            'index',
+            '1999-09-19',
+            '2001-01-01',
+            'tag',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/2/conversions/revenue',
                 'method' => 'GET',
                 'body' => null,
                 'queryParameters' => json_decode('{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}', true),
@@ -1261,6 +1396,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             'index',
             'mySearch',
             true,
+            true,
             '1999-09-19',
             '2001-01-01',
             21,
@@ -1273,7 +1409,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
                 'path' => '/2/hits',
                 'method' => 'GET',
                 'body' => null,
-                'queryParameters' => json_decode('{"index":"index","search":"mySearch","clickAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}', true),
+                'queryParameters' => json_decode('{"index":"index","search":"mySearch","clickAnalytics":"true","revenueAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}', true),
             ],
         ]);
     }
@@ -1309,6 +1445,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
         $client->getTopSearches(
             'index',
             true,
+            true,
             '1999-09-19',
             '2001-01-01',
             'searchCount',
@@ -1323,7 +1460,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
                 'path' => '/2/searches',
                 'method' => 'GET',
                 'body' => null,
-                'queryParameters' => json_decode('{"index":"index","clickAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","orderBy":"searchCount","direction":"asc","limit":"21","offset":"42","tags":"tag"}', true),
+                'queryParameters' => json_decode('{"index":"index","clickAnalytics":"true","revenueAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","orderBy":"searchCount","direction":"asc","limit":"21","offset":"42","tags":"tag"}', true),
             ],
         ]);
     }

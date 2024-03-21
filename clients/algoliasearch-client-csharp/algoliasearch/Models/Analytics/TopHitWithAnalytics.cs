@@ -24,28 +24,28 @@ public partial class TopHitWithAnalytics
   /// <summary>
   /// Initializes a new instance of the TopHitWithAnalytics class.
   /// </summary>
-  /// <param name="hit">Hit. (required).</param>
+  /// <param name="hit">Object ID of a record that&#39;s returned as a search result. (required).</param>
   /// <param name="count">Number of occurrences. (required).</param>
-  /// <param name="clickThroughRate">[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).  (required).</param>
-  /// <param name="conversionRate">[Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).  (required).</param>
-  /// <param name="trackedSearchCount">Number of tracked searches. This is the number of search requests where the &#x60;clickAnalytics&#x60; parameter is &#x60;true&#x60;. (required).</param>
-  /// <param name="clickCount">Number of click events. (required).</param>
-  /// <param name="conversionCount">Number of converted clicks. (required).</param>
-  public TopHitWithAnalytics(string hit, int count, double clickThroughRate, double conversionRate, int? trackedSearchCount, int clickCount, int conversionCount)
+  /// <param name="clickThroughRate">Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn&#39;t receive any search requests with &#x60;clickAnalytics&#x60; set to true.  (required).</param>
+  /// <param name="conversionRate">Conversion rate, calculated as number of tracked searches with at least one conversion event divided by the number of tracked searches. If null, Algolia didn&#39;t receive any search requests with &#x60;clickAnalytics&#x60; set to true.  (required).</param>
+  /// <param name="trackedHitCount">Number of tracked searches. Tracked searches are search requests where the &#x60;clickAnalytics&#x60; parameter is true. (required) (default to 0).</param>
+  /// <param name="clickCount">Number of clicks associated with this search. (required) (default to 0).</param>
+  /// <param name="conversionCount">Number of conversions from this search. (required) (default to 0).</param>
+  public TopHitWithAnalytics(string hit, int count, double? clickThroughRate, double? conversionRate, int trackedHitCount, int clickCount, int conversionCount)
   {
     Hit = hit ?? throw new ArgumentNullException(nameof(hit));
     Count = count;
-    ClickThroughRate = clickThroughRate;
-    ConversionRate = conversionRate;
-    TrackedSearchCount = trackedSearchCount ?? throw new ArgumentNullException(nameof(trackedSearchCount));
+    ClickThroughRate = clickThroughRate ?? throw new ArgumentNullException(nameof(clickThroughRate));
+    ConversionRate = conversionRate ?? throw new ArgumentNullException(nameof(conversionRate));
+    TrackedHitCount = trackedHitCount;
     ClickCount = clickCount;
     ConversionCount = conversionCount;
   }
 
   /// <summary>
-  /// Hit.
+  /// Object ID of a record that's returned as a search result.
   /// </summary>
-  /// <value>Hit.</value>
+  /// <value>Object ID of a record that's returned as a search result.</value>
   [JsonPropertyName("hit")]
   public string Hit { get; set; }
 
@@ -57,37 +57,37 @@ public partial class TopHitWithAnalytics
   public int Count { get; set; }
 
   /// <summary>
-  /// [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate). 
+  /// Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true. 
   /// </summary>
-  /// <value>[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate). </value>
+  /// <value>Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true. </value>
   [JsonPropertyName("clickThroughRate")]
-  public double ClickThroughRate { get; set; }
+  public double? ClickThroughRate { get; set; }
 
   /// <summary>
-  /// [Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate). 
+  /// Conversion rate, calculated as number of tracked searches with at least one conversion event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true. 
   /// </summary>
-  /// <value>[Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate). </value>
+  /// <value>Conversion rate, calculated as number of tracked searches with at least one conversion event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true. </value>
   [JsonPropertyName("conversionRate")]
-  public double ConversionRate { get; set; }
+  public double? ConversionRate { get; set; }
 
   /// <summary>
-  /// Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
+  /// Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
   /// </summary>
-  /// <value>Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.</value>
-  [JsonPropertyName("trackedSearchCount")]
-  public int? TrackedSearchCount { get; set; }
+  /// <value>Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.</value>
+  [JsonPropertyName("trackedHitCount")]
+  public int TrackedHitCount { get; set; }
 
   /// <summary>
-  /// Number of click events.
+  /// Number of clicks associated with this search.
   /// </summary>
-  /// <value>Number of click events.</value>
+  /// <value>Number of clicks associated with this search.</value>
   [JsonPropertyName("clickCount")]
   public int ClickCount { get; set; }
 
   /// <summary>
-  /// Number of converted clicks.
+  /// Number of conversions from this search.
   /// </summary>
-  /// <value>Number of converted clicks.</value>
+  /// <value>Number of conversions from this search.</value>
   [JsonPropertyName("conversionCount")]
   public int ConversionCount { get; set; }
 
@@ -103,7 +103,7 @@ public partial class TopHitWithAnalytics
     sb.Append("  Count: ").Append(Count).Append("\n");
     sb.Append("  ClickThroughRate: ").Append(ClickThroughRate).Append("\n");
     sb.Append("  ConversionRate: ").Append(ConversionRate).Append("\n");
-    sb.Append("  TrackedSearchCount: ").Append(TrackedSearchCount).Append("\n");
+    sb.Append("  TrackedHitCount: ").Append(TrackedHitCount).Append("\n");
     sb.Append("  ClickCount: ").Append(ClickCount).Append("\n");
     sb.Append("  ConversionCount: ").Append(ConversionCount).Append("\n");
     sb.Append("}\n");
@@ -134,9 +134,9 @@ public partial class TopHitWithAnalytics
     return
         (Hit == input.Hit || (Hit != null && Hit.Equals(input.Hit))) &&
         (Count == input.Count || Count.Equals(input.Count)) &&
-        (ClickThroughRate == input.ClickThroughRate || ClickThroughRate.Equals(input.ClickThroughRate)) &&
-        (ConversionRate == input.ConversionRate || ConversionRate.Equals(input.ConversionRate)) &&
-        (TrackedSearchCount == input.TrackedSearchCount || (TrackedSearchCount != null && TrackedSearchCount.Equals(input.TrackedSearchCount))) &&
+        (ClickThroughRate == input.ClickThroughRate || (ClickThroughRate != null && ClickThroughRate.Equals(input.ClickThroughRate))) &&
+        (ConversionRate == input.ConversionRate || (ConversionRate != null && ConversionRate.Equals(input.ConversionRate))) &&
+        (TrackedHitCount == input.TrackedHitCount || TrackedHitCount.Equals(input.TrackedHitCount)) &&
         (ClickCount == input.ClickCount || ClickCount.Equals(input.ClickCount)) &&
         (ConversionCount == input.ConversionCount || ConversionCount.Equals(input.ConversionCount));
   }
@@ -155,12 +155,15 @@ public partial class TopHitWithAnalytics
         hashCode = (hashCode * 59) + Hit.GetHashCode();
       }
       hashCode = (hashCode * 59) + Count.GetHashCode();
-      hashCode = (hashCode * 59) + ClickThroughRate.GetHashCode();
-      hashCode = (hashCode * 59) + ConversionRate.GetHashCode();
-      if (TrackedSearchCount != null)
+      if (ClickThroughRate != null)
       {
-        hashCode = (hashCode * 59) + TrackedSearchCount.GetHashCode();
+        hashCode = (hashCode * 59) + ClickThroughRate.GetHashCode();
       }
+      if (ConversionRate != null)
+      {
+        hashCode = (hashCode * 59) + ConversionRate.GetHashCode();
+      }
+      hashCode = (hashCode * 59) + TrackedHitCount.GetHashCode();
       hashCode = (hashCode * 59) + ClickCount.GetHashCode();
       hashCode = (hashCode * 59) + ConversionCount.GetHashCode();
       return hashCode;
