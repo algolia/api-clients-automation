@@ -49,7 +49,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
         );
         $this->assertIsObject($client);
         $client->customGet(
-            '/test',
+            'test',
         );
         $this->assertEquals(
             'test-app-id-dsn.algolia.net',
@@ -69,7 +69,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
         );
         $this->assertIsObject($client);
         $client->customPost(
-            '/test',
+            'test',
         );
         $this->assertEquals(
             'test-app-id.algolia.net',
@@ -84,7 +84,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customPost(
-            '/test',
+            '1/test',
         );
         $this->assertTrue(
             (bool) preg_match(
@@ -101,7 +101,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customGet(
-            '/test',
+            '1/test',
         );
         $this->assertEquals(
             2000,
@@ -121,7 +121,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
         $client->customPost(
-            '/test',
+            '1/test',
         );
         $this->assertEquals(
             2000,

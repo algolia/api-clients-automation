@@ -34,7 +34,7 @@ func TestInsightscommonApi0(t *testing.T) {
 	client, echo := createInsightsClient(t)
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)
@@ -47,7 +47,7 @@ func TestInsightscommonApi1(t *testing.T) {
 	client, echo := createInsightsClient(t)
 	_ = echo
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)
@@ -61,7 +61,7 @@ func TestInsightscommonApi2(t *testing.T) {
 	client, echo := createInsightsClient(t)
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)
@@ -118,7 +118,7 @@ func TestInsightsparameters1(t *testing.T) {
 	client, err = insights.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	_, err = client.CustomDelete(client.NewApiCustomDeleteRequest(
-		"/test",
+		"test",
 	),
 	)
 	require.NoError(t, err)

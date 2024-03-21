@@ -46,7 +46,7 @@ class InsightsClientClientTests {
   void commonApiTest0() {
     InsightsClient client = createClient();
 
-    client.customPost("/test");
+    client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
       String regexp =
@@ -66,7 +66,7 @@ class InsightsClientClientTests {
   void commonApiTest1() {
     InsightsClient client = createClient();
 
-    client.customGet("/test");
+    client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -78,7 +78,7 @@ class InsightsClientClientTests {
   void commonApiTest2() {
     InsightsClient client = createClient();
 
-    client.customPost("/test");
+    client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -115,7 +115,7 @@ class InsightsClientClientTests {
   @DisplayName("uses the correct region")
   void parametersTest1() {
     InsightsClient client = new InsightsClient("my-app-id", "my-api-key", "us", withEchoRequester());
-    client.customDelete("/test");
+    client.customDelete("test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("insights.us.algolia.io", result.host);

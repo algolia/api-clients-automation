@@ -44,7 +44,7 @@ class RecommendClientClientTests {
   @DisplayName("calls api with correct read host")
   void apiTest0() {
     RecommendClient client = new RecommendClient("test-app-id", "test-api-key", withEchoRequester());
-    client.customGet("/test");
+    client.customGet("test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("test-app-id-dsn.algolia.net", result.host);
@@ -54,7 +54,7 @@ class RecommendClientClientTests {
   @DisplayName("calls api with correct write host")
   void apiTest1() {
     RecommendClient client = new RecommendClient("test-app-id", "test-api-key", withEchoRequester());
-    client.customPost("/test");
+    client.customPost("test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals("test-app-id.algolia.net", result.host);
@@ -65,7 +65,7 @@ class RecommendClientClientTests {
   void commonApiTest0() {
     RecommendClient client = createClient();
 
-    client.customPost("/test");
+    client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
       String regexp =
@@ -85,7 +85,7 @@ class RecommendClientClientTests {
   void commonApiTest1() {
     RecommendClient client = createClient();
 
-    client.customGet("/test");
+    client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -97,7 +97,7 @@ class RecommendClientClientTests {
   void commonApiTest2() {
     RecommendClient client = createClient();
 
-    client.customPost("/test");
+    client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);

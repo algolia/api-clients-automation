@@ -37,7 +37,7 @@ tags:
       A Task describe how we fetch the data (onDemand, schedule, subscription)
       from a source and how we index it on the Algolia side.
 paths:
-  /1{path}:
+  /{path}:
     get:
       operationId: customGet
       summary: Send requests to the Algolia REST API.

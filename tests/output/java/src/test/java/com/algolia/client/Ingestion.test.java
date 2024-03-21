@@ -46,7 +46,7 @@ class IngestionClientClientTests {
   void commonApiTest0() {
     IngestionClient client = createClient();
 
-    client.customPost("/test");
+    client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
       String regexp =
@@ -66,7 +66,7 @@ class IngestionClientClientTests {
   void commonApiTest1() {
     IngestionClient client = createClient();
 
-    client.customGet("/test");
+    client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -78,7 +78,7 @@ class IngestionClientClientTests {
   void commonApiTest2() {
     IngestionClient client = createClient();
 
-    client.customPost("/test");
+    client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);

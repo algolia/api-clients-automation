@@ -50,10 +50,10 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
   public async Task CustomDeleteTest0()
   {
-    await _client.CustomDeleteAsync("/test/minimal");
+    await _client.CustomDeleteAsync("test/minimal");
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/test/minimal", req.Path);
+    Assert.Equal("/test/minimal", req.Path);
     Assert.Equal("DELETE", req.Method.ToString());
     Assert.Null(req.Body);
   }
@@ -62,12 +62,12 @@ public class AnalyticsClientRequestTests
   public async Task CustomDeleteTest1()
   {
     await _client.CustomDeleteAsync(
-      "/test/all",
+      "test/all",
       new Dictionary<string, object> { { "query", "parameters" } }
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/test/all", req.Path);
+    Assert.Equal("/test/all", req.Path);
     Assert.Equal("DELETE", req.Method.ToString());
     Assert.Null(req.Body);
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
@@ -88,10 +88,10 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "allow get method for a custom path with minimal parameters")]
   public async Task CustomGetTest0()
   {
-    await _client.CustomGetAsync("/test/minimal");
+    await _client.CustomGetAsync("test/minimal");
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/test/minimal", req.Path);
+    Assert.Equal("/test/minimal", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
   }
@@ -100,12 +100,12 @@ public class AnalyticsClientRequestTests
   public async Task CustomGetTest1()
   {
     await _client.CustomGetAsync(
-      "/test/all",
+      "test/all",
       new Dictionary<string, object> { { "query", "parameters with space" } }
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/test/all", req.Path);
+    Assert.Equal("/test/all", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
@@ -127,7 +127,7 @@ public class AnalyticsClientRequestTests
   public async Task CustomGetTest2()
   {
     await _client.CustomGetAsync(
-      "/test/all",
+      "test/all",
       new Dictionary<string, object> { { "query", "to be overriden" } },
       new RequestOptionBuilder()
         .AddExtraQueryParameters("query", "parameters with space")
@@ -137,7 +137,7 @@ public class AnalyticsClientRequestTests
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/test/all", req.Path);
+    Assert.Equal("/test/all", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
@@ -168,10 +168,10 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "allow post method for a custom path with minimal parameters")]
   public async Task CustomPostTest0()
   {
-    await _client.CustomPostAsync("/test/minimal");
+    await _client.CustomPostAsync("test/minimal");
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/test/minimal", req.Path);
+    Assert.Equal("/test/minimal", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
   }
@@ -180,13 +180,13 @@ public class AnalyticsClientRequestTests
   public async Task CustomPostTest1()
   {
     await _client.CustomPostAsync(
-      "/test/all",
+      "test/all",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "body", "parameters" } }
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/test/all", req.Path);
+    Assert.Equal("/test/all", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"body\":\"parameters\"}",
@@ -212,14 +212,14 @@ public class AnalyticsClientRequestTests
   public async Task CustomPostTest2()
   {
     await _client.CustomPostAsync(
-      "/test/requestOptions",
+      "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
       new RequestOptionBuilder().AddExtraQueryParameters("query", "myQueryParameter").Build()
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/test/requestOptions", req.Path);
+    Assert.Equal("/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
@@ -241,14 +241,14 @@ public class AnalyticsClientRequestTests
   public async Task CustomPostTest3()
   {
     await _client.CustomPostAsync(
-      "/test/requestOptions",
+      "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
       new RequestOptionBuilder().AddExtraQueryParameters("query2", "myQueryParameter").Build()
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/test/requestOptions", req.Path);
+    Assert.Equal("/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
@@ -270,14 +270,14 @@ public class AnalyticsClientRequestTests
   public async Task CustomPostTest4()
   {
     await _client.CustomPostAsync(
-      "/test/requestOptions",
+      "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
       new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "myApiKey").Build()
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/test/requestOptions", req.Path);
+    Assert.Equal("/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
@@ -309,14 +309,14 @@ public class AnalyticsClientRequestTests
   public async Task CustomPostTest5()
   {
     await _client.CustomPostAsync(
-      "/test/requestOptions",
+      "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
       new RequestOptionBuilder().AddExtraHeader("x-algolia-api-key", "myApiKey").Build()
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/test/requestOptions", req.Path);
+    Assert.Equal("/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
@@ -348,14 +348,14 @@ public class AnalyticsClientRequestTests
   public async Task CustomPostTest6()
   {
     await _client.CustomPostAsync(
-      "/test/requestOptions",
+      "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
       new RequestOptionBuilder().AddExtraQueryParameters("isItWorking", true).Build()
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/test/requestOptions", req.Path);
+    Assert.Equal("/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
@@ -377,14 +377,14 @@ public class AnalyticsClientRequestTests
   public async Task CustomPostTest7()
   {
     await _client.CustomPostAsync(
-      "/test/requestOptions",
+      "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
       new RequestOptionBuilder().AddExtraQueryParameters("myParam", 2).Build()
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/test/requestOptions", req.Path);
+    Assert.Equal("/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
@@ -406,7 +406,7 @@ public class AnalyticsClientRequestTests
   public async Task CustomPostTest8()
   {
     await _client.CustomPostAsync(
-      "/test/requestOptions",
+      "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
       new RequestOptionBuilder()
@@ -415,7 +415,7 @@ public class AnalyticsClientRequestTests
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/test/requestOptions", req.Path);
+    Assert.Equal("/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
@@ -437,7 +437,7 @@ public class AnalyticsClientRequestTests
   public async Task CustomPostTest9()
   {
     await _client.CustomPostAsync(
-      "/test/requestOptions",
+      "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
       new RequestOptionBuilder()
@@ -446,7 +446,7 @@ public class AnalyticsClientRequestTests
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/test/requestOptions", req.Path);
+    Assert.Equal("/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
@@ -468,7 +468,7 @@ public class AnalyticsClientRequestTests
   public async Task CustomPostTest10()
   {
     await _client.CustomPostAsync(
-      "/test/requestOptions",
+      "test/requestOptions",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "facet", "filters" } },
       new RequestOptionBuilder()
@@ -477,7 +477,7 @@ public class AnalyticsClientRequestTests
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/test/requestOptions", req.Path);
+    Assert.Equal("/test/requestOptions", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"facet\":\"filters\"}", req.Body, new JsonDiffConfig(false));
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
@@ -498,10 +498,10 @@ public class AnalyticsClientRequestTests
   [Fact(DisplayName = "allow put method for a custom path with minimal parameters")]
   public async Task CustomPutTest0()
   {
-    await _client.CustomPutAsync("/test/minimal");
+    await _client.CustomPutAsync("test/minimal");
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/test/minimal", req.Path);
+    Assert.Equal("/test/minimal", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{}", req.Body, new JsonDiffConfig(false));
   }
@@ -510,13 +510,13 @@ public class AnalyticsClientRequestTests
   public async Task CustomPutTest1()
   {
     await _client.CustomPutAsync(
-      "/test/all",
+      "test/all",
       new Dictionary<string, object> { { "query", "parameters" } },
       new Dictionary<string, string> { { "body", "parameters" } }
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/test/all", req.Path);
+    Assert.Equal("/test/all", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"body\":\"parameters\"}",

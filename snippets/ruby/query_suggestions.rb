@@ -47,7 +47,7 @@ def snippet_for_custom_delete
   )
 
   # Call the API
-  resp = client.custom_delete("/test/minimal")
+  resp = client.custom_delete("test/minimal")
 
   # use the class directly
   puts resp
@@ -70,7 +70,7 @@ def snippet_for_custom_get
   )
 
   # Call the API
-  resp = client.custom_get("/test/minimal")
+  resp = client.custom_get("test/minimal")
 
   # use the class directly
   puts resp
@@ -93,7 +93,7 @@ def snippet_for_custom_post
   )
 
   # Call the API
-  resp = client.custom_post("/test/minimal")
+  resp = client.custom_post("test/minimal")
 
   # use the class directly
   puts resp
@@ -116,7 +116,7 @@ def snippet_for_custom_put
   )
 
   # Call the API
-  resp = client.custom_put("/test/minimal")
+  resp = client.custom_put("test/minimal")
 
   # use the class directly
   puts resp

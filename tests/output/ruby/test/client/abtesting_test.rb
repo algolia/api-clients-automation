@@ -11,7 +11,7 @@ class TestClientAbtestingClient < Test::Unit::TestCase
       'us',
       { requester: Algolia::Transport::EchoRequester.new }
     )
-    req = client.custom_post_with_http_info("/test")
+    req = client.custom_post_with_http_info("1/test")
     assert(req.headers['user-agent'].match(/^Algolia for Ruby \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Abtesting (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/))
   end
 
@@ -23,7 +23,7 @@ class TestClientAbtestingClient < Test::Unit::TestCase
       'us',
       { requester: Algolia::Transport::EchoRequester.new }
     )
-    req = client.custom_get_with_http_info("/test")
+    req = client.custom_get_with_http_info("1/test")
     assert_equal(2000, req.connect_timeout)
     assert_equal(5000, req.timeout)
   end
@@ -36,7 +36,7 @@ class TestClientAbtestingClient < Test::Unit::TestCase
       'us',
       { requester: Algolia::Transport::EchoRequester.new }
     )
-    req = client.custom_post_with_http_info("/test")
+    req = client.custom_post_with_http_info("1/test")
     assert_equal(2000, req.connect_timeout)
     assert_equal(30_000, req.timeout)
   end

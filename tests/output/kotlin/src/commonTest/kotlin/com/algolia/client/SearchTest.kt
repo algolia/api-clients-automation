@@ -19,7 +19,7 @@ class SearchTest {
     client.runTest(
       call = {
         customGet(
-          path = "/test",
+          path = "test",
         )
       },
       intercept = {
@@ -34,7 +34,7 @@ class SearchTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test",
+          path = "test",
         )
       },
       intercept = {
@@ -49,7 +49,7 @@ class SearchTest {
     client.runTest(
       call = {
         customGet(
-          path = "/test/retry",
+          path = "1/test/retry",
         )
       },
       response = {
@@ -65,7 +65,7 @@ class SearchTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test/gzip",
+          path = "1/test/gzip",
           parameters = mapOf(),
           body = buildJsonObject {
             put(
@@ -88,7 +88,7 @@ class SearchTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test",
+          path = "1/test",
         )
       },
       intercept = {
@@ -105,7 +105,7 @@ class SearchTest {
     client.runTest(
       call = {
         customGet(
-          path = "/test",
+          path = "1/test",
         )
       },
       intercept = {
@@ -121,7 +121,7 @@ class SearchTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test",
+          path = "1/test",
         )
       },
       intercept = {

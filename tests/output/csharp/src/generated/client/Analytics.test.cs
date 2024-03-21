@@ -27,7 +27,7 @@ public class AnalyticsClientTests
   public async Task CommonApiTest0()
   {
     var client = new AnalyticsClient(new AnalyticsConfig("appId", "apiKey", "us"), _echo);
-    await client.CustomPostAsync("/test");
+    await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
     {
       var regexp = new Regex(
@@ -41,7 +41,7 @@ public class AnalyticsClientTests
   public async Task CommonApiTest1()
   {
     var client = new AnalyticsClient(new AnalyticsConfig("appId", "apiKey", "us"), _echo);
-    await client.CustomGetAsync("/test");
+    await client.CustomGetAsync("1/test");
     EchoResponse result = _echo.LastResponse;
 
     Assert.Equal(2000, result.ConnectTimeout.TotalMilliseconds);
@@ -52,7 +52,7 @@ public class AnalyticsClientTests
   public async Task CommonApiTest2()
   {
     var client = new AnalyticsClient(new AnalyticsConfig("appId", "apiKey", "us"), _echo);
-    await client.CustomPostAsync("/test");
+    await client.CustomPostAsync("1/test");
     EchoResponse result = _echo.LastResponse;
 
     Assert.Equal(2000, result.ConnectTimeout.TotalMilliseconds);
@@ -73,7 +73,7 @@ public class AnalyticsClientTests
   public async Task ParametersTest1()
   {
     var client = new AnalyticsClient(new AnalyticsConfig("my-app-id", "my-api-key", "de"), _echo);
-    await client.CustomPostAsync("/test");
+    await client.CustomPostAsync("test");
     EchoResponse result = _echo.LastResponse;
 
     Assert.Equal("analytics.de.algolia.com", result.Host);

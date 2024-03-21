@@ -10,7 +10,7 @@ void snippetForcustomPost() async {
 
   // Call the API
   final response = await client.customPost(
-    path: "/test/minimal",
+    path: "test/minimal",
   );
   // SEPARATOR<
 }

@@ -21,7 +21,7 @@ func SnippetForCustomDeleteOfAnalytics() {
 
 	// Call the API
 	resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
-		"/test/minimal",
+		"test/minimal",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -49,7 +49,7 @@ func SnippetForCustomGetOfAnalytics() {
 
 	// Call the API
 	resp, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"/test/minimal",
+		"test/minimal",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -77,7 +77,7 @@ func SnippetForCustomPostOfAnalytics() {
 
 	// Call the API
 	resp, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"/test/minimal",
+		"test/minimal",
 	))
 	if err != nil {
 		// handle the eventual error
@@ -105,7 +105,7 @@ func SnippetForCustomPutOfAnalytics() {
 
 	// Call the API
 	resp, err := client.CustomPut(client.NewApiCustomPutRequest(
-		"/test/minimal",
+		"test/minimal",
 	))
 	if err != nil {
 		// handle the eventual error

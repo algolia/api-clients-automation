@@ -46,7 +46,7 @@ class PersonalizationClientClientTests {
   void commonApiTest0() {
     PersonalizationClient client = createClient();
 
-    client.customPost("/test");
+    client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
     {
       String regexp =
@@ -66,7 +66,7 @@ class PersonalizationClientClientTests {
   void commonApiTest1() {
     PersonalizationClient client = createClient();
 
-    client.customGet("/test");
+    client.customGet("1/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);
@@ -78,7 +78,7 @@ class PersonalizationClientClientTests {
   void commonApiTest2() {
     PersonalizationClient client = createClient();
 
-    client.customPost("/test");
+    client.customPost("1/test");
     EchoResponse result = echo.getLastResponse();
 
     assertEquals(2000, result.connectTimeout);

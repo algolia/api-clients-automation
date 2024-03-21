@@ -11,7 +11,7 @@ export async function snippetForcustomPost(): Promise<void> {
   const client = liteClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
   // Call the API
-  const response = await client.customPost({ path: '/test/minimal' });
+  const response = await client.customPost({ path: 'test/minimal' });
 
   // use typed response
   console.log(response);

@@ -35,10 +35,10 @@ const e2eClient = insightsClient(
 describe('customDelete', () => {
   test('allow del method for a custom path with minimal parameters', async () => {
     const req = (await client.customDelete({
-      path: '/test/minimal',
+      path: 'test/minimal',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -46,11 +46,11 @@ describe('customDelete', () => {
 
   test('allow del method for a custom path with all parameters', async () => {
     const req = (await client.customDelete({
-      path: '/test/all',
+      path: 'test/all',
       parameters: { query: 'parameters' },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/test/all');
+    expect(req.path).toEqual('/test/all');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual({ query: 'parameters' });
@@ -60,10 +60,10 @@ describe('customDelete', () => {
 describe('customGet', () => {
   test('allow get method for a custom path with minimal parameters', async () => {
     const req = (await client.customGet({
-      path: '/test/minimal',
+      path: 'test/minimal',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -71,11 +71,11 @@ describe('customGet', () => {
 
   test('allow get method for a custom path with all parameters', async () => {
     const req = (await client.customGet({
-      path: '/test/all',
+      path: 'test/all',
       parameters: { query: 'parameters with space' },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/test/all');
+    expect(req.path).toEqual('/test/all');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual({
@@ -93,11 +93,11 @@ describe('customGet', () => {
     };
 
     const req = (await client.customGet(
-      { path: '/test/all', parameters: { query: 'to be overriden' } },
+      { path: 'test/all', parameters: { query: 'to be overriden' } },
       requestOptions
     )) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/test/all');
+    expect(req.path).toEqual('/test/all');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual({
@@ -113,10 +113,10 @@ describe('customGet', () => {
 describe('customPost', () => {
   test('allow post method for a custom path with minimal parameters', async () => {
     const req = (await client.customPost({
-      path: '/test/minimal',
+      path: 'test/minimal',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({});
     expect(req.searchParams).toStrictEqual(undefined);
@@ -124,12 +124,12 @@ describe('customPost', () => {
 
   test('allow post method for a custom path with all parameters', async () => {
     const req = (await client.customPost({
-      path: '/test/all',
+      path: 'test/all',
       parameters: { query: 'parameters' },
       body: { body: 'parameters' },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/test/all');
+    expect(req.path).toEqual('/test/all');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ body: 'parameters' });
     expect(req.searchParams).toStrictEqual({ query: 'parameters' });
@@ -142,14 +142,14 @@ describe('customPost', () => {
 
     const req = (await client.customPost(
       {
-        path: '/test/requestOptions',
+        path: 'test/requestOptions',
         parameters: { query: 'parameters' },
         body: { facet: 'filters' },
       },
       requestOptions
     )) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/test/requestOptions');
+    expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({ query: 'myQueryParameter' });
@@ -162,14 +162,14 @@ describe('customPost', () => {
 
     const req = (await client.customPost(
       {
-        path: '/test/requestOptions',
+        path: 'test/requestOptions',
         parameters: { query: 'parameters' },
         body: { facet: 'filters' },
       },
       requestOptions
     )) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/test/requestOptions');
+    expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({
@@ -185,14 +185,14 @@ describe('customPost', () => {
 
     const req = (await client.customPost(
       {
-        path: '/test/requestOptions',
+        path: 'test/requestOptions',
         parameters: { query: 'parameters' },
         body: { facet: 'filters' },
       },
       requestOptions
     )) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/test/requestOptions');
+    expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({ query: 'parameters' });
@@ -208,14 +208,14 @@ describe('customPost', () => {
 
     const req = (await client.customPost(
       {
-        path: '/test/requestOptions',
+        path: 'test/requestOptions',
         parameters: { query: 'parameters' },
         body: { facet: 'filters' },
       },
       requestOptions
     )) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/test/requestOptions');
+    expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({ query: 'parameters' });
@@ -231,14 +231,14 @@ describe('customPost', () => {
 
     const req = (await client.customPost(
       {
-        path: '/test/requestOptions',
+        path: 'test/requestOptions',
         parameters: { query: 'parameters' },
         body: { facet: 'filters' },
       },
       requestOptions
     )) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/test/requestOptions');
+    expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({
@@ -254,14 +254,14 @@ describe('customPost', () => {
 
     const req = (await client.customPost(
       {
-        path: '/test/requestOptions',
+        path: 'test/requestOptions',
         parameters: { query: 'parameters' },
         body: { facet: 'filters' },
       },
       requestOptions
     )) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/test/requestOptions');
+    expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({
@@ -277,14 +277,14 @@ describe('customPost', () => {
 
     const req = (await client.customPost(
       {
-        path: '/test/requestOptions',
+        path: 'test/requestOptions',
         parameters: { query: 'parameters' },
         body: { facet: 'filters' },
       },
       requestOptions
     )) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/test/requestOptions');
+    expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({
@@ -300,14 +300,14 @@ describe('customPost', () => {
 
     const req = (await client.customPost(
       {
-        path: '/test/requestOptions',
+        path: 'test/requestOptions',
         parameters: { query: 'parameters' },
         body: { facet: 'filters' },
       },
       requestOptions
     )) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/test/requestOptions');
+    expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({
@@ -323,14 +323,14 @@ describe('customPost', () => {
 
     const req = (await client.customPost(
       {
-        path: '/test/requestOptions',
+        path: 'test/requestOptions',
         parameters: { query: 'parameters' },
         body: { facet: 'filters' },
       },
       requestOptions
     )) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/test/requestOptions');
+    expect(req.path).toEqual('/test/requestOptions');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ facet: 'filters' });
     expect(req.searchParams).toStrictEqual({
@@ -343,10 +343,10 @@ describe('customPost', () => {
 describe('customPut', () => {
   test('allow put method for a custom path with minimal parameters', async () => {
     const req = (await client.customPut({
-      path: '/test/minimal',
+      path: 'test/minimal',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.path).toEqual('/test/minimal');
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual({});
     expect(req.searchParams).toStrictEqual(undefined);
@@ -354,12 +354,12 @@ describe('customPut', () => {
 
   test('allow put method for a custom path with all parameters', async () => {
     const req = (await client.customPut({
-      path: '/test/all',
+      path: 'test/all',
       parameters: { query: 'parameters' },
       body: { body: 'parameters' },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/test/all');
+    expect(req.path).toEqual('/test/all');
     expect(req.method).toEqual('PUT');
     expect(req.data).toEqual({ body: 'parameters' });
     expect(req.searchParams).toStrictEqual({ query: 'parameters' });
@@ -426,7 +426,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1710720000000,
+          timestamp: 1710979200000,
           objectIDs: ['9780545139700', '9780439784542'],
           queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
         },
@@ -436,7 +436,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1710720000000,
+          timestamp: 1710979200000,
           objectIDs: ['9780545139700', '9780439784542'],
         },
       ],
@@ -452,7 +452,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1710720000000,
+          timestamp: 1710979200000,
           objectIDs: ['9780545139700', '9780439784542'],
           queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
         },
@@ -462,7 +462,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1710720000000,
+          timestamp: 1710979200000,
           objectIDs: ['9780545139700', '9780439784542'],
         },
       ],
@@ -477,7 +477,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1710720000000,
+          timestamp: 1710979200000,
           objectIDs: ['9780545139700', '9780439784542'],
           queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
         },
@@ -487,7 +487,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1710720000000,
+          timestamp: 1710979200000,
           objectIDs: ['9780545139700', '9780439784542'],
         },
       ],

@@ -34,7 +34,7 @@ func TestAnalyticscommonApi0(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)
@@ -47,7 +47,7 @@ func TestAnalyticscommonApi1(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
 	_ = echo
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)
@@ -61,7 +61,7 @@ func TestAnalyticscommonApi2(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)
@@ -113,7 +113,7 @@ func TestAnalyticsparameters1(t *testing.T) {
 	client, err = analytics.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"/test",
+		"test",
 	),
 	)
 	require.NoError(t, err)

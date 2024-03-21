@@ -18,7 +18,7 @@ class AnalyticsTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test",
+          path = "1/test",
         )
       },
       intercept = {
@@ -35,7 +35,7 @@ class AnalyticsTest {
     client.runTest(
       call = {
         customGet(
-          path = "/test",
+          path = "1/test",
         )
       },
       intercept = {
@@ -51,7 +51,7 @@ class AnalyticsTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test",
+          path = "1/test",
         )
       },
       intercept = {
@@ -82,7 +82,7 @@ class AnalyticsTest {
     client.runTest(
       call = {
         customPost(
-          path = "/test",
+          path = "test",
         )
       },
       intercept = {

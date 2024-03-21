@@ -39,7 +39,7 @@ class SearchTest extends AnyFunSuite {
 
     Await.ready(
       client.customGet[Any](
-        path = "/test"
+        path = "test"
       ),
       Duration.Inf
     )
@@ -52,7 +52,7 @@ class SearchTest extends AnyFunSuite {
 
     Await.ready(
       client.customPost[Any](
-        path = "/test"
+        path = "test"
       ),
       Duration.Inf
     )
@@ -77,7 +77,7 @@ class SearchTest extends AnyFunSuite {
 
     var res = Await.result(
       client.customGet[Any](
-        path = "/test/retry"
+        path = "1/test/retry"
       ),
       Duration.Inf
     )
@@ -98,7 +98,7 @@ class SearchTest extends AnyFunSuite {
 
     var res = Await.result(
       client.customPost[Any](
-        path = "/test/gzip",
+        path = "1/test/gzip",
         parameters = Some(Map()),
         body = Some(JObject(List(JField("message", JString("this is a compressed body")))))
       ),
@@ -116,7 +116,7 @@ class SearchTest extends AnyFunSuite {
 
     Await.ready(
       client.customPost[Any](
-        path = "/test"
+        path = "1/test"
       ),
       Duration.Inf
     )
@@ -131,7 +131,7 @@ class SearchTest extends AnyFunSuite {
 
     Await.ready(
       client.customGet[Any](
-        path = "/test"
+        path = "1/test"
       ),
       Duration.Inf
     )
@@ -144,7 +144,7 @@ class SearchTest extends AnyFunSuite {
 
     Await.ready(
       client.customPost[Any](
-        path = "/test"
+        path = "1/test"
       ),
       Duration.Inf
     )

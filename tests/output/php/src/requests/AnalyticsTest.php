@@ -51,12 +51,12 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->customDelete(
-            '/test/minimal',
+            'test/minimal',
         );
 
         $this->assertRequests([
             [
-                'path' => '/1/test/minimal',
+                'path' => '/test/minimal',
                 'method' => 'DELETE',
                 'body' => null,
             ],
@@ -71,14 +71,14 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->customDelete(
-            '/test/all',
+            'test/all',
             ['query' => 'parameters',
             ],
         );
 
         $this->assertRequests([
             [
-                'path' => '/1/test/all',
+                'path' => '/test/all',
                 'method' => 'DELETE',
                 'body' => null,
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
@@ -94,12 +94,12 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->customGet(
-            '/test/minimal',
+            'test/minimal',
         );
 
         $this->assertRequests([
             [
-                'path' => '/1/test/minimal',
+                'path' => '/test/minimal',
                 'method' => 'GET',
                 'body' => null,
             ],
@@ -114,14 +114,14 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->customGet(
-            '/test/all',
+            'test/all',
             ['query' => 'parameters with space',
             ],
         );
 
         $this->assertRequests([
             [
-                'path' => '/1/test/all',
+                'path' => '/test/all',
                 'method' => 'GET',
                 'body' => null,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space"}', true),
@@ -147,7 +147,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             ],
         ];
         $client->customGet(
-            '/test/all',
+            'test/all',
             ['query' => 'to be overriden',
             ],
             $requestOptions
@@ -155,7 +155,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
-                'path' => '/1/test/all',
+                'path' => '/test/all',
                 'method' => 'GET',
                 'body' => null,
                 'queryParameters' => json_decode('{"query":"parameters%20with%20space","and%20an%20array":"array%2Cwith%20spaces"}', true),
@@ -172,12 +172,12 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->customPost(
-            '/test/minimal',
+            'test/minimal',
         );
 
         $this->assertRequests([
             [
-                'path' => '/1/test/minimal',
+                'path' => '/test/minimal',
                 'method' => 'POST',
                 'body' => json_decode('{}'),
             ],
@@ -192,7 +192,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->customPost(
-            '/test/all',
+            'test/all',
             ['query' => 'parameters',
             ],
             ['body' => 'parameters',
@@ -201,7 +201,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
-                'path' => '/1/test/all',
+                'path' => '/test/all',
                 'method' => 'POST',
                 'body' => json_decode('{"body":"parameters"}'),
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
@@ -224,7 +224,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             ],
         ];
         $client->customPost(
-            '/test/requestOptions',
+            'test/requestOptions',
             ['query' => 'parameters',
             ],
             ['facet' => 'filters',
@@ -234,7 +234,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
-                'path' => '/1/test/requestOptions',
+                'path' => '/test/requestOptions',
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
                 'queryParameters' => json_decode('{"query":"myQueryParameter"}', true),
@@ -257,7 +257,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             ],
         ];
         $client->customPost(
-            '/test/requestOptions',
+            'test/requestOptions',
             ['query' => 'parameters',
             ],
             ['facet' => 'filters',
@@ -267,7 +267,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
-                'path' => '/1/test/requestOptions',
+                'path' => '/test/requestOptions',
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
                 'queryParameters' => json_decode('{"query":"parameters","query2":"myQueryParameter"}', true),
@@ -290,7 +290,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             ],
         ];
         $client->customPost(
-            '/test/requestOptions',
+            'test/requestOptions',
             ['query' => 'parameters',
             ],
             ['facet' => 'filters',
@@ -300,7 +300,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
-                'path' => '/1/test/requestOptions',
+                'path' => '/test/requestOptions',
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
@@ -324,7 +324,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             ],
         ];
         $client->customPost(
-            '/test/requestOptions',
+            'test/requestOptions',
             ['query' => 'parameters',
             ],
             ['facet' => 'filters',
@@ -334,7 +334,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
-                'path' => '/1/test/requestOptions',
+                'path' => '/test/requestOptions',
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
                 'queryParameters' => json_decode('{"query":"parameters"}', true),
@@ -358,7 +358,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             ],
         ];
         $client->customPost(
-            '/test/requestOptions',
+            'test/requestOptions',
             ['query' => 'parameters',
             ],
             ['facet' => 'filters',
@@ -368,7 +368,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
-                'path' => '/1/test/requestOptions',
+                'path' => '/test/requestOptions',
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
                 'queryParameters' => json_decode('{"query":"parameters","isItWorking":"true"}', true),
@@ -391,7 +391,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             ],
         ];
         $client->customPost(
-            '/test/requestOptions',
+            'test/requestOptions',
             ['query' => 'parameters',
             ],
             ['facet' => 'filters',
@@ -401,7 +401,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
-                'path' => '/1/test/requestOptions',
+                'path' => '/test/requestOptions',
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
                 'queryParameters' => json_decode('{"query":"parameters","myParam":"2"}', true),
@@ -425,7 +425,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             ],
         ];
         $client->customPost(
-            '/test/requestOptions',
+            'test/requestOptions',
             ['query' => 'parameters',
             ],
             ['facet' => 'filters',
@@ -435,7 +435,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
-                'path' => '/1/test/requestOptions',
+                'path' => '/test/requestOptions',
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
                 'queryParameters' => json_decode('{"query":"parameters","myParam":"b%20and%20c%2Cd"}', true),
@@ -459,7 +459,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             ],
         ];
         $client->customPost(
-            '/test/requestOptions',
+            'test/requestOptions',
             ['query' => 'parameters',
             ],
             ['facet' => 'filters',
@@ -469,7 +469,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
-                'path' => '/1/test/requestOptions',
+                'path' => '/test/requestOptions',
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
                 'queryParameters' => json_decode('{"query":"parameters","myParam":"true%2Ctrue%2Cfalse"}', true),
@@ -493,7 +493,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
             ],
         ];
         $client->customPost(
-            '/test/requestOptions',
+            'test/requestOptions',
             ['query' => 'parameters',
             ],
             ['facet' => 'filters',
@@ -503,7 +503,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
-                'path' => '/1/test/requestOptions',
+                'path' => '/test/requestOptions',
                 'method' => 'POST',
                 'body' => json_decode('{"facet":"filters"}'),
                 'queryParameters' => json_decode('{"query":"parameters","myParam":"1%2C2"}', true),
@@ -519,12 +519,12 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->customPut(
-            '/test/minimal',
+            'test/minimal',
         );
 
         $this->assertRequests([
             [
-                'path' => '/1/test/minimal',
+                'path' => '/test/minimal',
                 'method' => 'PUT',
                 'body' => json_decode('{}'),
             ],
@@ -539,7 +539,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->customPut(
-            '/test/all',
+            'test/all',
             ['query' => 'parameters',
             ],
             ['body' => 'parameters',
@@ -548,7 +548,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
 
         $this->assertRequests([
             [
-                'path' => '/1/test/all',
+                'path' => '/test/all',
                 'method' => 'PUT',
                 'body' => json_decode('{"body":"parameters"}'),
                 'queryParameters' => json_decode('{"query":"parameters"}', true),

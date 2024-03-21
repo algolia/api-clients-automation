@@ -18,13 +18,13 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customDeleteWithHTTPInfo(path: "/test/minimal")
+        let response = try await client.customDeleteWithHTTPInfo(path: "test/minimal")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         XCTAssertNil(echoResponse.originalBodyData)
 
-        XCTAssertEqual(echoResponse.path, "/1/test/minimal")
+        XCTAssertEqual(echoResponse.path, "/test/minimal")
         XCTAssertEqual(echoResponse.method, HTTPMethod.delete)
 
         XCTAssertNil(echoResponse.queryParameters)
@@ -40,7 +40,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customDeleteWithHTTPInfo(
-            path: "/test/all",
+            path: "test/all",
             parameters: ["query": AnyCodable("parameters")]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -48,7 +48,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         XCTAssertNil(echoResponse.originalBodyData)
 
-        XCTAssertEqual(echoResponse.path, "/1/test/all")
+        XCTAssertEqual(echoResponse.path, "/test/all")
         XCTAssertEqual(echoResponse.method, HTTPMethod.delete)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\"}".data(using: .utf8))
@@ -69,13 +69,13 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customGetWithHTTPInfo(path: "/test/minimal")
+        let response = try await client.customGetWithHTTPInfo(path: "test/minimal")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         XCTAssertNil(echoResponse.originalBodyData)
 
-        XCTAssertEqual(echoResponse.path, "/1/test/minimal")
+        XCTAssertEqual(echoResponse.path, "/test/minimal")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         XCTAssertNil(echoResponse.queryParameters)
@@ -91,7 +91,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customGetWithHTTPInfo(
-            path: "/test/all",
+            path: "test/all",
             parameters: ["query": AnyCodable("parameters with space")]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -99,7 +99,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         XCTAssertNil(echoResponse.originalBodyData)
 
-        XCTAssertEqual(echoResponse.path, "/1/test/all")
+        XCTAssertEqual(echoResponse.path, "/test/all")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters%20with%20space\"}".data(using: .utf8))
@@ -127,7 +127,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         )
 
         let response = try await client.customGetWithHTTPInfo(
-            path: "/test/all",
+            path: "test/all",
             parameters: ["query": AnyCodable("to be overriden")],
             requestOptions: requestOptions
         )
@@ -136,7 +136,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         XCTAssertNil(echoResponse.originalBodyData)
 
-        XCTAssertEqual(echoResponse.path, "/1/test/all")
+        XCTAssertEqual(echoResponse.path, "/test/all")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         let expectedQueryParameters =
@@ -169,7 +169,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPostWithHTTPInfo(path: "/test/minimal")
+        let response = try await client.customPostWithHTTPInfo(path: "test/minimal")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -181,7 +181,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/test/minimal")
+        XCTAssertEqual(echoResponse.path, "/test/minimal")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
@@ -197,7 +197,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customPostWithHTTPInfo(
-            path: "/test/all",
+            path: "test/all",
             parameters: ["query": AnyCodable("parameters")],
             body: ["body": "parameters"]
         )
@@ -212,7 +212,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/test/all")
+        XCTAssertEqual(echoResponse.path, "/test/all")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\"}".data(using: .utf8))
@@ -238,7 +238,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         )
 
         let response = try await client.customPostWithHTTPInfo(
-            path: "/test/requestOptions",
+            path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
             requestOptions: requestOptions
@@ -254,7 +254,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
+        XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"myQueryParameter\"}".data(using: .utf8))
@@ -280,7 +280,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         )
 
         let response = try await client.customPostWithHTTPInfo(
-            path: "/test/requestOptions",
+            path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
             requestOptions: requestOptions
@@ -296,7 +296,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
+        XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap(
@@ -325,7 +325,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         )
 
         let response = try await client.customPostWithHTTPInfo(
-            path: "/test/requestOptions",
+            path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
             requestOptions: requestOptions
@@ -341,7 +341,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
+        XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\"}".data(using: .utf8))
@@ -375,7 +375,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         )
 
         let response = try await client.customPostWithHTTPInfo(
-            path: "/test/requestOptions",
+            path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
             requestOptions: requestOptions
@@ -391,7 +391,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
+        XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\"}".data(using: .utf8))
@@ -425,7 +425,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         )
 
         let response = try await client.customPostWithHTTPInfo(
-            path: "/test/requestOptions",
+            path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
             requestOptions: requestOptions
@@ -441,7 +441,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
+        XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap(
@@ -470,7 +470,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         )
 
         let response = try await client.customPostWithHTTPInfo(
-            path: "/test/requestOptions",
+            path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
             requestOptions: requestOptions
@@ -486,7 +486,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
+        XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap(
@@ -515,7 +515,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         )
 
         let response = try await client.customPostWithHTTPInfo(
-            path: "/test/requestOptions",
+            path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
             requestOptions: requestOptions
@@ -531,7 +531,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
+        XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap(
@@ -560,7 +560,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         )
 
         let response = try await client.customPostWithHTTPInfo(
-            path: "/test/requestOptions",
+            path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
             requestOptions: requestOptions
@@ -576,7 +576,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
+        XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap(
@@ -605,7 +605,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         )
 
         let response = try await client.customPostWithHTTPInfo(
-            path: "/test/requestOptions",
+            path: "test/requestOptions",
             parameters: ["query": AnyCodable("parameters")],
             body: ["facet": "filters"],
             requestOptions: requestOptions
@@ -621,7 +621,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/test/requestOptions")
+        XCTAssertEqual(echoResponse.path, "/test/requestOptions")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters = try XCTUnwrap(
@@ -645,7 +645,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.customPutWithHTTPInfo(path: "/test/minimal")
+        let response = try await client.customPutWithHTTPInfo(path: "test/minimal")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -657,7 +657,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/test/minimal")
+        XCTAssertEqual(echoResponse.path, "/test/minimal")
         XCTAssertEqual(echoResponse.method, HTTPMethod.put)
 
         XCTAssertNil(echoResponse.queryParameters)
@@ -673,7 +673,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         let client = RecommendClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.customPutWithHTTPInfo(
-            path: "/test/all",
+            path: "test/all",
             parameters: ["query": AnyCodable("parameters")],
             body: ["body": "parameters"]
         )
@@ -688,7 +688,7 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/test/all")
+        XCTAssertEqual(echoResponse.path, "/test/all")
         XCTAssertEqual(echoResponse.method, HTTPMethod.put)
 
         let expectedQueryParameters = try XCTUnwrap("{\"query\":\"parameters\"}".data(using: .utf8))

@@ -48,7 +48,7 @@ func TestSearchapi0(t *testing.T) {
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
-		"/test",
+		"test",
 	),
 	)
 	require.NoError(t, err)
@@ -73,7 +73,7 @@ func TestSearchapi1(t *testing.T) {
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"/test",
+		"test",
 	),
 	)
 	require.NoError(t, err)
@@ -98,7 +98,7 @@ func TestSearchapi2(t *testing.T) {
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"/test/retry",
+		"1/test/retry",
 	),
 	)
 	require.NoError(t, err)
@@ -126,7 +126,7 @@ func TestSearchapi3(t *testing.T) {
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err := client.CustomPost(client.NewApiCustomPostRequest(
-		"/test/gzip",
+		"1/test/gzip",
 	).WithParameters(map[string]any{}).WithBody(map[string]any{"message": "this is a compressed body"}),
 	)
 	require.NoError(t, err)
@@ -141,7 +141,7 @@ func TestSearchcommonApi0(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)
@@ -154,7 +154,7 @@ func TestSearchcommonApi1(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)
@@ -168,7 +168,7 @@ func TestSearchcommonApi2(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
-		"/test",
+		"1/test",
 	),
 	)
 	require.NoError(t, err)

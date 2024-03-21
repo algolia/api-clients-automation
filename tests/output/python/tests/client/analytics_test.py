@@ -21,7 +21,7 @@ class TestAnalyticsClient:
         self.create_client()
 
         _req = await self._client.custom_post_with_http_info(
-            path="/test",
+            path="1/test",
         )
         regex_user_agent = compile(
             "^Algolia for Python \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Analytics (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$"
@@ -35,7 +35,7 @@ class TestAnalyticsClient:
         self.create_client()
 
         _req = await self._client.custom_get_with_http_info(
-            path="/test",
+            path="1/test",
         )
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 5000
@@ -47,7 +47,7 @@ class TestAnalyticsClient:
         self.create_client()
 
         _req = await self._client.custom_post_with_http_info(
-            path="/test",
+            path="1/test",
         )
         assert _req.timeouts.get("connect") == 2000
         assert _req.timeouts.get("response") == 30000
@@ -76,7 +76,7 @@ class TestAnalyticsClient:
             config=_config, transporter=EchoTransporter(_config)
         )
         _req = await self._client.custom_post_with_http_info(
-            path="/test",
+            path="test",
         )
         assert _req.host == "analytics.de.algolia.com"
 
