@@ -76,6 +76,25 @@ def snippet_for_custom_put
   # SEPARATOR<
 end
 
+# Snippet for the getAddToCartRate method.
+#
+# get getAddToCartRate with minimal parameters
+def snippet_for_get_add_to_cart_rate
+  # >SEPARATOR getAddToCartRate
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+  # Call the API
+  resp = client.get_add_to_cart_rate("index")
+
+  # use the class directly
+  puts resp
+
+  # print the JSON response
+  puts resp.to_json
+  # SEPARATOR<
+end
+
 # Snippet for the getAverageClickPosition method.
 #
 # get getAverageClickPosition with minimal parameters
@@ -133,16 +152,16 @@ def snippet_for_get_click_through_rate
   # SEPARATOR<
 end
 
-# Snippet for the getConversationRate method.
+# Snippet for the getConversionRate method.
 #
 # get getConversationRate with minimal parameters
-def snippet_for_get_conversation_rate
-  # >SEPARATOR getConversationRate
+def snippet_for_get_conversion_rate
+  # >SEPARATOR getConversionRate
   # Initialize the client
   client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
 
   # Call the API
-  resp = client.get_conversation_rate("index")
+  resp = client.get_conversion_rate("index")
 
   # use the class directly
   puts resp
@@ -181,6 +200,44 @@ def snippet_for_get_no_results_rate
 
   # Call the API
   resp = client.get_no_results_rate("index")
+
+  # use the class directly
+  puts resp
+
+  # print the JSON response
+  puts resp.to_json
+  # SEPARATOR<
+end
+
+# Snippet for the getPurchaseRate method.
+#
+# get getPurchaseRate with minimal parameters
+def snippet_for_get_purchase_rate
+  # >SEPARATOR getPurchaseRate
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+  # Call the API
+  resp = client.get_purchase_rate("index")
+
+  # use the class directly
+  puts resp
+
+  # print the JSON response
+  puts resp.to_json
+  # SEPARATOR<
+end
+
+# Snippet for the getRevenue method.
+#
+# get getRevenue with minimal parameters
+def snippet_for_get_revenue
+  # >SEPARATOR getRevenue
+  # Initialize the client
+  client = Algolia::AnalyticsClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+  # Call the API
+  resp = client.get_revenue("index")
 
   # use the class directly
   puts resp

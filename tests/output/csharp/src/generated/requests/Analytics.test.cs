@@ -538,6 +538,54 @@ public class AnalyticsClientRequestTests
     }
   }
 
+  [Fact(DisplayName = "get getAddToCartRate with minimal parameters")]
+  public async Task GetAddToCartRateTest0()
+  {
+    await _client.GetAddToCartRateAsync("index");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/conversions/addToCartRate", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"index\":\"index\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+  }
+
+  [Fact(DisplayName = "get getAddToCartRate with all parameters")]
+  public async Task GetAddToCartRateTest1()
+  {
+    await _client.GetAddToCartRateAsync("index", "1999-09-19", "2001-01-01", "tag");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/conversions/addToCartRate", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+  }
+
   [Fact(DisplayName = "get getAverageClickPosition with minimal parameters")]
   public async Task GetAverageClickPositionTest0()
   {
@@ -683,9 +731,9 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getConversationRate with minimal parameters")]
-  public async Task GetConversationRateTest0()
+  public async Task GetConversionRateTest0()
   {
-    await _client.GetConversationRateAsync("index");
+    await _client.GetConversionRateAsync("index");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/conversions/conversionRate", req.Path);
@@ -707,9 +755,9 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getConversationRate with all parameters")]
-  public async Task GetConversationRateTest1()
+  public async Task GetConversionRateTest1()
   {
-    await _client.GetConversationRateAsync("index", "1999-09-19", "2001-01-01", "tag");
+    await _client.GetConversionRateAsync("index", "1999-09-19", "2001-01-01", "tag");
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/conversions/conversionRate", req.Path);
@@ -809,6 +857,102 @@ public class AnalyticsClientRequestTests
 
     var req = _echo.LastResponse;
     Assert.Equal("/2/searches/noResultRate", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+  }
+
+  [Fact(DisplayName = "get getPurchaseRate with minimal parameters")]
+  public async Task GetPurchaseRateTest0()
+  {
+    await _client.GetPurchaseRateAsync("index");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/conversions/purchaseRate", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"index\":\"index\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+  }
+
+  [Fact(DisplayName = "get getPurchaseRate with all parameters")]
+  public async Task GetPurchaseRateTest1()
+  {
+    await _client.GetPurchaseRateAsync("index", "1999-09-19", "2001-01-01", "tag");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/conversions/purchaseRate", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+  }
+
+  [Fact(DisplayName = "get getRevenue with minimal parameters")]
+  public async Task GetRevenueTest0()
+  {
+    await _client.GetRevenueAsync("index");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/conversions/revenue", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"index\":\"index\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
+  }
+
+  [Fact(DisplayName = "get getRevenue with all parameters")]
+  public async Task GetRevenueTest1()
+  {
+    await _client.GetRevenueAsync("index", "1999-09-19", "2001-01-01", "tag");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/2/conversions/revenue", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
@@ -1301,6 +1445,7 @@ public class AnalyticsClientRequestTests
       "index",
       "mySearch",
       true,
+      true,
       "1999-09-19",
       "2001-01-01",
       21,
@@ -1313,7 +1458,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"index\":\"index\",\"search\":\"mySearch\",\"clickAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
+      "{\"index\":\"index\",\"search\":\"mySearch\",\"clickAnalytics\":\"true\",\"revenueAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
     );
     Assert.NotNull(expectedQuery);
 
@@ -1357,6 +1502,7 @@ public class AnalyticsClientRequestTests
     await _client.GetTopSearchesAsync(
       "index",
       true,
+      true,
       "1999-09-19",
       "2001-01-01",
       Enum.Parse<OrderBy>("SearchCount"),
@@ -1371,7 +1517,7 @@ public class AnalyticsClientRequestTests
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"index\":\"index\",\"clickAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"orderBy\":\"searchCount\",\"direction\":\"asc\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
+      "{\"index\":\"index\",\"clickAnalytics\":\"true\",\"revenueAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"orderBy\":\"searchCount\",\"direction\":\"asc\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
     );
     Assert.NotNull(expectedQuery);
 

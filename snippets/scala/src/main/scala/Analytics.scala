@@ -89,6 +89,25 @@ class SnippetAnalyticsClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the getAddToCartRate method.
+    *
+    * get getAddToCartRate with minimal parameters
+    */
+  def snippetForAnalyticsClientGetAddToCartRate(): Unit = {
+    // >SEPARATOR getAddToCartRate
+    // Initialize the client
+    val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+    // Call the API
+    val res = client.getAddToCartRate(
+      index = "index"
+    )
+
+    // Use the response
+    val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
   /** Snippet for the getAverageClickPosition method.
     *
     * get getAverageClickPosition with minimal parameters
@@ -146,17 +165,17 @@ class SnippetAnalyticsClient {
     // SEPARATOR<
   }
 
-  /** Snippet for the getConversationRate method.
+  /** Snippet for the getConversionRate method.
     *
     * get getConversationRate with minimal parameters
     */
-  def snippetForAnalyticsClientGetConversationRate(): Unit = {
-    // >SEPARATOR getConversationRate
+  def snippetForAnalyticsClientGetConversionRate(): Unit = {
+    // >SEPARATOR getConversionRate
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getConversationRate(
+    val res = client.getConversionRate(
       index = "index"
     )
 
@@ -195,6 +214,44 @@ class SnippetAnalyticsClient {
 
     // Call the API
     val res = client.getNoResultsRate(
+      index = "index"
+    )
+
+    // Use the response
+    val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the getPurchaseRate method.
+    *
+    * get getPurchaseRate with minimal parameters
+    */
+  def snippetForAnalyticsClientGetPurchaseRate(): Unit = {
+    // >SEPARATOR getPurchaseRate
+    // Initialize the client
+    val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+    // Call the API
+    val res = client.getPurchaseRate(
+      index = "index"
+    )
+
+    // Use the response
+    val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the getRevenue method.
+    *
+    * get getRevenue with minimal parameters
+    */
+  def snippetForAnalyticsClientGetRevenue(): Unit = {
+    // >SEPARATOR getRevenue
+    // Initialize the client
+    val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
+
+    // Call the API
+    val res = client.getRevenue(
       index = "index"
     )
 

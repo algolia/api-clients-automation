@@ -116,6 +116,34 @@ func SnippetForCustomPutOfAnalytics() {
 	print(resp)
 	// SEPARATOR<
 }
+func SnippetForGetAddToCartRateOfAnalytics() {
+	/*
+	   Snippet for the getAddToCartRate method.
+
+	   get getAddToCartRate with minimal parameters
+	*/
+
+	// >SEPARATOR getAddToCartRate
+	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
+	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	resp, err := client.GetAddToCartRate(client.NewApiGetAddToCartRateRequest(
+		"index",
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(resp)
+	// SEPARATOR<
+}
 func SnippetForGetAverageClickPositionOfAnalytics() {
 	/*
 	   Snippet for the getAverageClickPosition method.
@@ -200,14 +228,14 @@ func SnippetForGetClickThroughRateOfAnalytics() {
 	print(resp)
 	// SEPARATOR<
 }
-func SnippetForGetConversationRateOfAnalytics() {
+func SnippetForGetConversionRateOfAnalytics() {
 	/*
-	   Snippet for the getConversationRate method.
+	   Snippet for the getConversionRate method.
 
 	   get getConversationRate with minimal parameters
 	*/
 
-	// >SEPARATOR getConversationRate
+	// >SEPARATOR getConversionRate
 	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
 	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
 	if err != nil {
@@ -216,7 +244,7 @@ func SnippetForGetConversationRateOfAnalytics() {
 	}
 
 	// Call the API
-	resp, err := client.GetConversationRate(client.NewApiGetConversationRateRequest(
+	resp, err := client.GetConversionRate(client.NewApiGetConversionRateRequest(
 		"index",
 	))
 	if err != nil {
@@ -273,6 +301,62 @@ func SnippetForGetNoResultsRateOfAnalytics() {
 
 	// Call the API
 	resp, err := client.GetNoResultsRate(client.NewApiGetNoResultsRateRequest(
+		"index",
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(resp)
+	// SEPARATOR<
+}
+func SnippetForGetPurchaseRateOfAnalytics() {
+	/*
+	   Snippet for the getPurchaseRate method.
+
+	   get getPurchaseRate with minimal parameters
+	*/
+
+	// >SEPARATOR getPurchaseRate
+	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
+	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	resp, err := client.GetPurchaseRate(client.NewApiGetPurchaseRateRequest(
+		"index",
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(resp)
+	// SEPARATOR<
+}
+func SnippetForGetRevenueOfAnalytics() {
+	/*
+	   Snippet for the getRevenue method.
+
+	   get getRevenue with minimal parameters
+	*/
+
+	// >SEPARATOR getRevenue
+	// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION
+	client, err := analytics.NewClient("YOUR_APP_ID", "YOUR_API_KEY", analytics.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	resp, err := client.GetRevenue(client.NewApiGetRevenueRequest(
 		"index",
 	))
 	if err != nil {

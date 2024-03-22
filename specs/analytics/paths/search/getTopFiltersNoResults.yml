@@ -1,11 +1,14 @@
 get:
   tags:
-    - search
+    - filter
   operationId: getTopFiltersNoResults
   x-acl:
     - analytics
-  summary: Get top filters for a no result search.
-  description: Returns top filters for filter-enabled searches that don't return results. Limited to the 1,000 most recently used filters.
+  summary: Retrieve top filters for a search without results.
+  description: |
+    Retrieves the most frequently used filters for a search that didn't return any results.
+
+    To get the most frequent searches without results, use the [Retrieve searches without results](#tag/search/operation/getSearchesNoResults) operation.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../common/parameters.yml#/Search'
@@ -17,6 +20,13 @@ get:
   responses:
     '200':
       description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:

@@ -26,7 +26,7 @@ public class TopSearchesResponse implements GetTopSearchesResponse {
     return this;
   }
 
-  /** Top searches with their hits count. */
+  /** Most popular searches and their number of search results (hits). */
   @javax.annotation.Nonnull
   public List<TopSearch> getSearches() {
     return searches;

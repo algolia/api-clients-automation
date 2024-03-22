@@ -6,16 +6,16 @@ require 'time'
 module Algolia
   module Analytics
     class GetNoResultsRateResponse
-      # [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+      # No results rate, calculated as number of searches with zero results divided by the total number of searches.
       attr_accessor :rate
 
-      # Number of occurrences.
+      # Number of searches.
       attr_accessor :count
 
-      # Number of occurrences.
+      # Number of searches without any results.
       attr_accessor :no_result_count
 
-      # Overall count of searches without results plus a daily breakdown.
+      # Daily no results rates.
       attr_accessor :dates
 
       # Attribute mapping from ruby-style variable name to JSON key.
@@ -39,7 +39,7 @@ module Algolia
           :rate => :Float,
           :count => :Integer,
           :no_result_count => :Integer,
-          :dates => :'Array<NoResultsRateEvent>'
+          :dates => :'Array<DailyNoResultsRates>'
         }
       end
 

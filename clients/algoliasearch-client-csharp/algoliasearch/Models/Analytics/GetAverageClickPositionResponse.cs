@@ -24,36 +24,36 @@ public partial class GetAverageClickPositionResponse
   /// <summary>
   /// Initializes a new instance of the GetAverageClickPositionResponse class.
   /// </summary>
-  /// <param name="average">Average count of all click events. (required).</param>
-  /// <param name="clickCount">Number of click events. (required).</param>
-  /// <param name="dates">Average click positions. (required).</param>
-  public GetAverageClickPositionResponse(double average, int clickCount, List<AverageClickEvent> dates)
+  /// <param name="average">Average position of a clicked search result in the list of search results. If null, Algolia didn&#39;t receive any search requests with &#x60;clickAnalytics&#x60; set to true.  (required).</param>
+  /// <param name="clickCount">Number of clicks associated with this search. (required) (default to 0).</param>
+  /// <param name="dates">Daily average click positions. (required).</param>
+  public GetAverageClickPositionResponse(double? average, int clickCount, List<DailyAverageClicks> dates)
   {
-    Average = average;
+    Average = average ?? throw new ArgumentNullException(nameof(average));
     ClickCount = clickCount;
     Dates = dates ?? throw new ArgumentNullException(nameof(dates));
   }
 
   /// <summary>
-  /// Average count of all click events.
+  /// Average position of a clicked search result in the list of search results. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true. 
   /// </summary>
-  /// <value>Average count of all click events.</value>
+  /// <value>Average position of a clicked search result in the list of search results. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true. </value>
   [JsonPropertyName("average")]
-  public double Average { get; set; }
+  public double? Average { get; set; }
 
   /// <summary>
-  /// Number of click events.
+  /// Number of clicks associated with this search.
   /// </summary>
-  /// <value>Number of click events.</value>
+  /// <value>Number of clicks associated with this search.</value>
   [JsonPropertyName("clickCount")]
   public int ClickCount { get; set; }
 
   /// <summary>
-  /// Average click positions.
+  /// Daily average click positions.
   /// </summary>
-  /// <value>Average click positions.</value>
+  /// <value>Daily average click positions.</value>
   [JsonPropertyName("dates")]
-  public List<AverageClickEvent> Dates { get; set; }
+  public List<DailyAverageClicks> Dates { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object
@@ -92,7 +92,7 @@ public partial class GetAverageClickPositionResponse
     }
 
     return
-        (Average == input.Average || Average.Equals(input.Average)) &&
+        (Average == input.Average || (Average != null && Average.Equals(input.Average))) &&
         (ClickCount == input.ClickCount || ClickCount.Equals(input.ClickCount)) &&
         (Dates == input.Dates || Dates != null && input.Dates != null && Dates.SequenceEqual(input.Dates));
   }
@@ -106,7 +106,10 @@ public partial class GetAverageClickPositionResponse
     unchecked // Overflow is fine, just wrap
     {
       int hashCode = 41;
-      hashCode = (hashCode * 59) + Average.GetHashCode();
+      if (Average != null)
+      {
+        hashCode = (hashCode * 59) + Average.GetHashCode();
+      }
       hashCode = (hashCode * 59) + ClickCount.GetHashCode();
       if (Dates != null)
       {

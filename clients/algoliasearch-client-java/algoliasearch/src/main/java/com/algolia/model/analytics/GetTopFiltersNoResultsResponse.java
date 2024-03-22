@@ -5,7 +5,6 @@ package com.algolia.model.analytics;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,7 +12,7 @@ import java.util.Objects;
 public class GetTopFiltersNoResultsResponse {
 
   @JsonProperty("values")
-  private List<GetTopFiltersNoResultsValues> values = new ArrayList<>();
+  private List<GetTopFiltersNoResultsValues> values;
 
   public GetTopFiltersNoResultsResponse setValues(List<GetTopFiltersNoResultsValues> values) {
     this.values = values;
@@ -25,8 +24,12 @@ public class GetTopFiltersNoResultsResponse {
     return this;
   }
 
-  /** Filters with no results. */
-  @javax.annotation.Nonnull
+  /**
+   * Filters for searches without any results. If null, the search term specified with the `search`
+   * parameter is not a search without results, or the `search` parameter is absent from the
+   * request.
+   */
+  @javax.annotation.Nullable
   public List<GetTopFiltersNoResultsValues> getValues() {
     return values;
   }

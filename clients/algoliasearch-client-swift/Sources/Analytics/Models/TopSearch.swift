@@ -7,9 +7,9 @@ import Foundation
 #endif
 
 public struct TopSearch: Codable, JSONEncodable, Hashable {
-    /// User query.
+    /// Search query.
     public var search: String
-    /// Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).
+    /// Number of searches.
     public var count: Int
     /// Number of results (hits).
     public var nbHits: Int

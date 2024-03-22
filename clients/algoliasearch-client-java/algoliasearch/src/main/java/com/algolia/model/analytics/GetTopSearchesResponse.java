@@ -43,6 +43,19 @@ public interface GetTopSearchesResponse {
           );
         }
       }
+      // deserialize TopSearchesResponseWithRevenueAnalytics
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(TopSearchesResponseWithRevenueAnalytics.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf TopSearchesResponseWithRevenueAnalytics (error: " +
+            e.getMessage() +
+            ") (type: TopSearchesResponseWithRevenueAnalytics)"
+          );
+        }
+      }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
     }
 

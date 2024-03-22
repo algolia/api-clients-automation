@@ -25,7 +25,7 @@ public class GetTopCountriesResponse {
     return this;
   }
 
-  /** Countries */
+  /** Countries and number of searches. */
   @javax.annotation.Nonnull
   public List<TopCountry> getCountries() {
     return countries;

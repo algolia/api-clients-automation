@@ -1,0 +1,73 @@
+get:
+  tags:
+    - click
+  operationId: getPurchaseRate
+  x-acl:
+    - analytics
+  summary: Retrieve purchase rate.
+  description: |
+    Retrieves the purchase rate for all of your searches with at least one purchase event, including a daily breakdown.
+
+    By default, the analyzed period includes the last eight days including the current day.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/Index'
+    - $ref: '../../../common/parameters.yml#/StartDate'
+    - $ref: '../../../common/parameters.yml#/EndDate'
+    - $ref: '../../common/parameters.yml#/Tags'
+  responses:
+    '200':
+      description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
+      content:
+        application/json:
+          schema:
+            title: getPurchaseRateResponse
+            type: object
+            additionalProperties: false
+            required:
+              - dates
+              - trackedSearchCount
+              - purchaseCount
+              - rate
+            properties:
+              rate:
+                $ref: '../../common/parameters.yml#/purchaseRate'
+              trackedSearchCount:
+                $ref: '../../common/parameters.yml#/trackedSearchCount'
+              purchaseCount:
+                $ref: '../../common/parameters.yml#/purchaseCount'
+              dates:
+                type: array
+                description: Daily purchase rates.
+                items:
+                  type: object
+                  title: dailyPurchaseRates
+                  additionalProperties: false
+                  required:
+                    - rate
+                    - trackedSearchCount
+                    - purchaseCount
+                    - date
+                  properties:
+                    rate:
+                      $ref: '../../common/parameters.yml#/purchaseRate'
+                    trackedSearchCount:
+                      $ref: '../../common/parameters.yml#/trackedSearchCount'
+                    purchaseCount:
+                      $ref: '../../common/parameters.yml#/purchaseCount'
+                    date:
+                      $ref: '../../common/parameters.yml#/date'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

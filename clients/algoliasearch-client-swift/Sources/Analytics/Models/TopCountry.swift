@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 public struct TopCountry: Codable, JSONEncodable, Hashable {
-    /// Country.
+    /// Country code.
     public var country: String
     /// Number of occurrences.
     public var count: Int

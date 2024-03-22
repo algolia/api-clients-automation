@@ -1,11 +1,14 @@
 get:
   tags:
-    - search
+    - click
   operationId: getNoClickRate
   x-acl:
     - analytics
-  summary: Get no click rate.
-  description: Returns the rate at which searches don't lead to any clicks. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without clicks.
+  summary: Retrieve no click rate.
+  description: |
+    Retrieves the fraction of searches that didn't lead to any click within a time range, including a daily breakdown.
+
+    By default, the analyzed period includes the last eight days including the current day.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'
@@ -14,6 +17,13 @@ get:
   responses:
     '200':
       description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:
@@ -27,17 +37,17 @@ get:
               - rate
             properties:
               rate:
-                $ref: '../../common/parameters.yml#/rate'
+                $ref: '../../common/parameters.yml#/noClickRate'
               count:
-                $ref: '../../common/parameters.yml#/clickCount'
+                $ref: '../../common/parameters.yml#/trackedSearchCount'
               noClickCount:
-                $ref: '../../common/parameters.yml#/clickCount'
+                $ref: '../../common/parameters.yml#/noClickCount'
               dates:
                 type: array
-                description: Overall count of searches without clicks plus a daily breakdown.
+                description: Daily no click rates.
                 items:
                   type: object
-                  title: noClickRateEvent
+                  title: dailyNoClickRates
                   additionalProperties: false
                   required:
                     - rate
@@ -46,11 +56,11 @@ get:
                     - date
                   properties:
                     rate:
-                      $ref: '../../common/parameters.yml#/rate'
+                      $ref: '../../common/parameters.yml#/noClickRate'
                     count:
-                      $ref: '../../common/parameters.yml#/count'
+                      $ref: '../../common/parameters.yml#/trackedSearchCount'
                     noClickCount:
-                      $ref: '../../common/parameters.yml#/clickCount'
+                      $ref: '../../common/parameters.yml#/noClickCount'
                     date:
                       $ref: '../../common/parameters.yml#/date'
     '400':

@@ -1,0 +1,73 @@
+get:
+  tags:
+    - click
+  operationId: getAddToCartRate
+  x-acl:
+    - analytics
+  summary: Retrieve add-to-cart rate.
+  description: |
+    Retrieves the add-to-cart rate for all of your searches with at least one add-to-cart event, including a daily breakdown.
+
+    By default, the analyzed period includes the last eight days including the current day.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/Index'
+    - $ref: '../../../common/parameters.yml#/StartDate'
+    - $ref: '../../../common/parameters.yml#/EndDate'
+    - $ref: '../../common/parameters.yml#/Tags'
+  responses:
+    '200':
+      description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
+      content:
+        application/json:
+          schema:
+            title: getAddToCartRateResponse
+            type: object
+            additionalProperties: false
+            required:
+              - dates
+              - trackedSearchCount
+              - addToCartCount
+              - rate
+            properties:
+              rate:
+                $ref: '../../common/parameters.yml#/addToCartRate'
+              trackedSearchCount:
+                $ref: '../../common/parameters.yml#/trackedSearchCount'
+              addToCartCount:
+                $ref: '../../common/parameters.yml#/addToCartCount'
+              dates:
+                type: array
+                description: Daily add-to-cart rates.
+                items:
+                  type: object
+                  title: dailyAddToCartRates
+                  additionalProperties: false
+                  required:
+                    - rate
+                    - trackedSearchCount
+                    - addToCartCount
+                    - date
+                  properties:
+                    rate:
+                      $ref: '../../common/parameters.yml#/addToCartRate'
+                    trackedSearchCount:
+                      $ref: '../../common/parameters.yml#/trackedSearchCount'
+                    addToCartCount:
+                      $ref: '../../common/parameters.yml#/addToCartCount'
+                    date:
+                      $ref: '../../common/parameters.yml#/date'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

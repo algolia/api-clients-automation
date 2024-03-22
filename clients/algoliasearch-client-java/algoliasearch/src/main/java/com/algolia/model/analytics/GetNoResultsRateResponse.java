@@ -22,7 +22,7 @@ public class GetNoResultsRateResponse {
   private Integer noResultCount;
 
   @JsonProperty("dates")
-  private List<NoResultsRateEvent> dates = new ArrayList<>();
+  private List<DailyNoResultsRates> dates = new ArrayList<>();
 
   public GetNoResultsRateResponse setRate(Double rate) {
     this.rate = rate;
@@ -30,9 +30,8 @@ public class GetNoResultsRateResponse {
   }
 
   /**
-   * [Click-through rate
-   * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
-   * minimum: 0 maximum: 1
+   * No results rate, calculated as number of searches with zero results divided by the total number
+   * of searches. minimum: 0 maximum: 1
    */
   @javax.annotation.Nonnull
   public Double getRate() {
@@ -44,7 +43,7 @@ public class GetNoResultsRateResponse {
     return this;
   }
 
-  /** Number of occurrences. */
+  /** Number of searches. */
   @javax.annotation.Nonnull
   public Integer getCount() {
     return count;
@@ -55,25 +54,25 @@ public class GetNoResultsRateResponse {
     return this;
   }
 
-  /** Number of occurrences. */
+  /** Number of searches without any results. */
   @javax.annotation.Nonnull
   public Integer getNoResultCount() {
     return noResultCount;
   }
 
-  public GetNoResultsRateResponse setDates(List<NoResultsRateEvent> dates) {
+  public GetNoResultsRateResponse setDates(List<DailyNoResultsRates> dates) {
     this.dates = dates;
     return this;
   }
 
-  public GetNoResultsRateResponse addDates(NoResultsRateEvent datesItem) {
+  public GetNoResultsRateResponse addDates(DailyNoResultsRates datesItem) {
     this.dates.add(datesItem);
     return this;
   }
 
-  /** Overall count of searches without results plus a daily breakdown. */
+  /** Daily no results rates. */
   @javax.annotation.Nonnull
-  public List<NoResultsRateEvent> getDates() {
+  public List<DailyNoResultsRates> getDates() {
     return dates;
   }
 

@@ -756,6 +756,71 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
+    /// get getAddToCartRate with minimal parameters
+    func testGetAddToCartRateTest0() async throws {
+        let configuration = try AnalyticsClientConfiguration(
+            appID: AnalyticsClientRequestsTests.APPLICATION_ID,
+            apiKey: AnalyticsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AnalyticsClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.getAddToCartRateWithHTTPInfo(index: "index")
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/2/conversions/addToCartRate")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        let expectedQueryParameters = try XCTUnwrap("{\"index\":\"index\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// get getAddToCartRate with all parameters
+    func testGetAddToCartRateTest1() async throws {
+        let configuration = try AnalyticsClientConfiguration(
+            appID: AnalyticsClientRequestsTests.APPLICATION_ID,
+            apiKey: AnalyticsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AnalyticsClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.getAddToCartRateWithHTTPInfo(
+            index: "index",
+            startDate: "1999-09-19",
+            endDate: "2001-01-01",
+            tags: "tag"
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/2/conversions/addToCartRate")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        let expectedQueryParameters =
+            try XCTUnwrap(
+                "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                    .data(using: .utf8)
+            )
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
     /// get getAverageClickPosition with minimal parameters
     func testGetAverageClickPositionTest0() async throws {
         let configuration = try AnalyticsClientConfiguration(
@@ -952,7 +1017,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getConversationRate with minimal parameters
-    func testGetConversationRateTest0() async throws {
+    func testGetConversionRateTest0() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -961,7 +1026,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getConversationRateWithHTTPInfo(index: "index")
+        let response = try await client.getConversionRateWithHTTPInfo(index: "index")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -980,7 +1045,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getConversationRate with all parameters
-    func testGetConversationRateTest1() async throws {
+    func testGetConversionRateTest1() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -989,7 +1054,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.getConversationRateWithHTTPInfo(
+        let response = try await client.getConversionRateWithHTTPInfo(
             index: "index",
             startDate: "1999-09-19",
             endDate: "2001-01-01",
@@ -1131,6 +1196,136 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.originalBodyData)
 
         XCTAssertEqual(echoResponse.path, "/2/searches/noResultRate")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        let expectedQueryParameters =
+            try XCTUnwrap(
+                "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                    .data(using: .utf8)
+            )
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// get getPurchaseRate with minimal parameters
+    func testGetPurchaseRateTest0() async throws {
+        let configuration = try AnalyticsClientConfiguration(
+            appID: AnalyticsClientRequestsTests.APPLICATION_ID,
+            apiKey: AnalyticsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AnalyticsClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.getPurchaseRateWithHTTPInfo(index: "index")
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/2/conversions/purchaseRate")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        let expectedQueryParameters = try XCTUnwrap("{\"index\":\"index\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// get getPurchaseRate with all parameters
+    func testGetPurchaseRateTest1() async throws {
+        let configuration = try AnalyticsClientConfiguration(
+            appID: AnalyticsClientRequestsTests.APPLICATION_ID,
+            apiKey: AnalyticsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AnalyticsClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.getPurchaseRateWithHTTPInfo(
+            index: "index",
+            startDate: "1999-09-19",
+            endDate: "2001-01-01",
+            tags: "tag"
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/2/conversions/purchaseRate")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        let expectedQueryParameters =
+            try XCTUnwrap(
+                "{\"index\":\"index\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"tags\":\"tag\"}"
+                    .data(using: .utf8)
+            )
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// get getRevenue with minimal parameters
+    func testGetRevenueTest0() async throws {
+        let configuration = try AnalyticsClientConfiguration(
+            appID: AnalyticsClientRequestsTests.APPLICATION_ID,
+            apiKey: AnalyticsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AnalyticsClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.getRevenueWithHTTPInfo(index: "index")
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/2/conversions/revenue")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        let expectedQueryParameters = try XCTUnwrap("{\"index\":\"index\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
+    }
+
+    /// get getRevenue with all parameters
+    func testGetRevenueTest1() async throws {
+        let configuration = try AnalyticsClientConfiguration(
+            appID: AnalyticsClientRequestsTests.APPLICATION_ID,
+            apiKey: AnalyticsClientRequestsTests.API_KEY,
+            region: Region.us
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = AnalyticsClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.getRevenueWithHTTPInfo(
+            index: "index",
+            startDate: "1999-09-19",
+            endDate: "2001-01-01",
+            tags: "tag"
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/2/conversions/revenue")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         let expectedQueryParameters =
@@ -1759,6 +1954,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
             index: "index",
             search: "mySearch",
             clickAnalytics: true,
+            revenueAnalytics: true,
             startDate: "1999-09-19",
             endDate: "2001-01-01",
             limit: 21,
@@ -1775,7 +1971,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
         let expectedQueryParameters =
             try XCTUnwrap(
-                "{\"index\":\"index\",\"search\":\"mySearch\",\"clickAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
+                "{\"index\":\"index\",\"search\":\"mySearch\",\"clickAnalytics\":\"true\",\"revenueAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
                     .data(using: .utf8)
             )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
@@ -1827,6 +2023,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         let response = try await client.getTopSearchesWithHTTPInfo(
             index: "index",
             clickAnalytics: true,
+            revenueAnalytics: true,
             startDate: "1999-09-19",
             endDate: "2001-01-01",
             orderBy: OrderBy.searchCount,
@@ -1845,7 +2042,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
 
         let expectedQueryParameters =
             try XCTUnwrap(
-                "{\"index\":\"index\",\"clickAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"orderBy\":\"searchCount\",\"direction\":\"asc\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
+                "{\"index\":\"index\",\"clickAnalytics\":\"true\",\"revenueAnalytics\":\"true\",\"startDate\":\"1999-09-19\",\"endDate\":\"2001-01-01\",\"orderBy\":\"searchCount\",\"direction\":\"asc\",\"limit\":\"21\",\"offset\":\"42\",\"tags\":\"tag\"}"
                     .data(using: .utf8)
             )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(

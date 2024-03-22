@@ -22,8 +22,8 @@ public class TopHitWithAnalytics {
   @JsonProperty("conversionRate")
   private Double conversionRate;
 
-  @JsonProperty("trackedSearchCount")
-  private Integer trackedSearchCount;
+  @JsonProperty("trackedHitCount")
+  private Integer trackedHitCount;
 
   @JsonProperty("clickCount")
   private Integer clickCount;
@@ -36,7 +36,7 @@ public class TopHitWithAnalytics {
     return this;
   }
 
-  /** Hit. */
+  /** Object ID of a record that's returned as a search result. */
   @javax.annotation.Nonnull
   public String getHit() {
     return hit;
@@ -59,11 +59,11 @@ public class TopHitWithAnalytics {
   }
 
   /**
-   * [Click-through rate
-   * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
-   * minimum: 0 maximum: 1
+   * Click-through rate, calculated as number of tracked searches with at least one click event
+   * divided by the number of tracked searches. If null, Algolia didn't receive any search requests
+   * with `clickAnalytics` set to true. minimum: 0 maximum: 1
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Double getClickThroughRate() {
     return clickThroughRate;
   }
@@ -74,26 +74,27 @@ public class TopHitWithAnalytics {
   }
 
   /**
-   * [Conversion rate
-   * (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+   * Conversion rate, calculated as number of tracked searches with at least one conversion event
+   * divided by the number of tracked searches. If null, Algolia didn't receive any search requests
+   * with `clickAnalytics` set to true. minimum: 0 maximum: 1
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Double getConversionRate() {
     return conversionRate;
   }
 
-  public TopHitWithAnalytics setTrackedSearchCount(Integer trackedSearchCount) {
-    this.trackedSearchCount = trackedSearchCount;
+  public TopHitWithAnalytics setTrackedHitCount(Integer trackedHitCount) {
+    this.trackedHitCount = trackedHitCount;
     return this;
   }
 
   /**
-   * Number of tracked searches. This is the number of search requests where the `clickAnalytics`
-   * parameter is `true`.
+   * Number of tracked searches. Tracked searches are search requests where the `clickAnalytics`
+   * parameter is true.
    */
-  @javax.annotation.Nullable
-  public Integer getTrackedSearchCount() {
-    return trackedSearchCount;
+  @javax.annotation.Nonnull
+  public Integer getTrackedHitCount() {
+    return trackedHitCount;
   }
 
   public TopHitWithAnalytics setClickCount(Integer clickCount) {
@@ -101,7 +102,7 @@ public class TopHitWithAnalytics {
     return this;
   }
 
-  /** Number of click events. */
+  /** Number of clicks associated with this search. minimum: 0 */
   @javax.annotation.Nonnull
   public Integer getClickCount() {
     return clickCount;
@@ -112,7 +113,7 @@ public class TopHitWithAnalytics {
     return this;
   }
 
-  /** Number of converted clicks. */
+  /** Number of conversions from this search. minimum: 0 */
   @javax.annotation.Nonnull
   public Integer getConversionCount() {
     return conversionCount;
@@ -132,7 +133,7 @@ public class TopHitWithAnalytics {
       Objects.equals(this.count, topHitWithAnalytics.count) &&
       Objects.equals(this.clickThroughRate, topHitWithAnalytics.clickThroughRate) &&
       Objects.equals(this.conversionRate, topHitWithAnalytics.conversionRate) &&
-      Objects.equals(this.trackedSearchCount, topHitWithAnalytics.trackedSearchCount) &&
+      Objects.equals(this.trackedHitCount, topHitWithAnalytics.trackedHitCount) &&
       Objects.equals(this.clickCount, topHitWithAnalytics.clickCount) &&
       Objects.equals(this.conversionCount, topHitWithAnalytics.conversionCount)
     );
@@ -140,7 +141,7 @@ public class TopHitWithAnalytics {
 
   @Override
   public int hashCode() {
-    return Objects.hash(hit, count, clickThroughRate, conversionRate, trackedSearchCount, clickCount, conversionCount);
+    return Objects.hash(hit, count, clickThroughRate, conversionRate, trackedHitCount, clickCount, conversionCount);
   }
 
   @Override
@@ -151,7 +152,7 @@ public class TopHitWithAnalytics {
     sb.append("    count: ").append(toIndentedString(count)).append("\n");
     sb.append("    clickThroughRate: ").append(toIndentedString(clickThroughRate)).append("\n");
     sb.append("    conversionRate: ").append(toIndentedString(conversionRate)).append("\n");
-    sb.append("    trackedSearchCount: ").append(toIndentedString(trackedSearchCount)).append("\n");
+    sb.append("    trackedHitCount: ").append(toIndentedString(trackedHitCount)).append("\n");
     sb.append("    clickCount: ").append(toIndentedString(clickCount)).append("\n");
     sb.append("    conversionCount: ").append(toIndentedString(conversionCount)).append("\n");
     sb.append("}");

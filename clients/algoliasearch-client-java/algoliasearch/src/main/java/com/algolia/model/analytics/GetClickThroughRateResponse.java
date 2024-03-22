@@ -22,7 +22,7 @@ public class GetClickThroughRateResponse {
   private Integer trackedSearchCount;
 
   @JsonProperty("dates")
-  private List<ClickThroughRateEvent> dates = new ArrayList<>();
+  private List<DailyClickThroughRates> dates = new ArrayList<>();
 
   public GetClickThroughRateResponse setRate(Double rate) {
     this.rate = rate;
@@ -30,11 +30,11 @@ public class GetClickThroughRateResponse {
   }
 
   /**
-   * [Click-through rate
-   * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
-   * minimum: 0 maximum: 1
+   * Click-through rate, calculated as number of tracked searches with at least one click event
+   * divided by the number of tracked searches. If null, Algolia didn't receive any search requests
+   * with `clickAnalytics` set to true. minimum: 0 maximum: 1
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Double getRate() {
     return rate;
   }
@@ -44,7 +44,7 @@ public class GetClickThroughRateResponse {
     return this;
   }
 
-  /** Number of click events. */
+  /** Number of clicks associated with this search. minimum: 0 */
   @javax.annotation.Nonnull
   public Integer getClickCount() {
     return clickCount;
@@ -56,27 +56,27 @@ public class GetClickThroughRateResponse {
   }
 
   /**
-   * Number of tracked searches. This is the number of search requests where the `clickAnalytics`
-   * parameter is `true`.
+   * Number of tracked searches. Tracked searches are search requests where the `clickAnalytics`
+   * parameter is true.
    */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public Integer getTrackedSearchCount() {
     return trackedSearchCount;
   }
 
-  public GetClickThroughRateResponse setDates(List<ClickThroughRateEvent> dates) {
+  public GetClickThroughRateResponse setDates(List<DailyClickThroughRates> dates) {
     this.dates = dates;
     return this;
   }
 
-  public GetClickThroughRateResponse addDates(ClickThroughRateEvent datesItem) {
+  public GetClickThroughRateResponse addDates(DailyClickThroughRates datesItem) {
     this.dates.add(datesItem);
     return this;
   }
 
-  /** Click-through rate events. */
+  /** Daily click-through rates. */
   @javax.annotation.Nonnull
-  public List<ClickThroughRateEvent> getDates() {
+  public List<DailyClickThroughRates> getDates() {
     return dates;
   }
 

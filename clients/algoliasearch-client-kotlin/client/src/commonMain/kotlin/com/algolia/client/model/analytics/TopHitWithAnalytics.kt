@@ -7,35 +7,35 @@ import kotlinx.serialization.json.*
 /**
  * TopHitWithAnalytics
  *
- * @param hit Hit.
+ * @param hit Object ID of a record that's returned as a search result.
  * @param count Number of occurrences.
- * @param clickThroughRate [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
- * @param conversionRate [Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
- * @param trackedSearchCount Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
- * @param clickCount Number of click events.
- * @param conversionCount Number of converted clicks.
+ * @param clickThroughRate Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+ * @param conversionRate Conversion rate, calculated as number of tracked searches with at least one conversion event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+ * @param trackedHitCount Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
+ * @param clickCount Number of clicks associated with this search.
+ * @param conversionCount Number of conversions from this search.
  */
 @Serializable
 public data class TopHitWithAnalytics(
 
-  /** Hit. */
+  /** Object ID of a record that's returned as a search result. */
   @SerialName(value = "hit") val hit: String,
 
   /** Number of occurrences. */
   @SerialName(value = "count") val count: Int,
 
-  /** [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).  */
+  /** Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.  */
   @SerialName(value = "clickThroughRate") val clickThroughRate: Double,
 
-  /** [Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).  */
+  /** Conversion rate, calculated as number of tracked searches with at least one conversion event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.  */
   @SerialName(value = "conversionRate") val conversionRate: Double,
 
-  /** Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`. */
-  @SerialName(value = "trackedSearchCount") val trackedSearchCount: Int,
+  /** Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true. */
+  @SerialName(value = "trackedHitCount") val trackedHitCount: Int,
 
-  /** Number of click events. */
+  /** Number of clicks associated with this search. */
   @SerialName(value = "clickCount") val clickCount: Int,
 
-  /** Number of converted clicks. */
+  /** Number of conversions from this search. */
   @SerialName(value = "conversionCount") val conversionCount: Int,
 )

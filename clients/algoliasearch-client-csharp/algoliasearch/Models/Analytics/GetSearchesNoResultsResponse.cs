@@ -24,18 +24,18 @@ public partial class GetSearchesNoResultsResponse
   /// <summary>
   /// Initializes a new instance of the GetSearchesNoResultsResponse class.
   /// </summary>
-  /// <param name="searches">Searches with no results. (required).</param>
-  public GetSearchesNoResultsResponse(List<SearchNoResultEvent> searches)
+  /// <param name="searches">Searches without results. (required).</param>
+  public GetSearchesNoResultsResponse(List<DailySearchesNoResults> searches)
   {
     Searches = searches ?? throw new ArgumentNullException(nameof(searches));
   }
 
   /// <summary>
-  /// Searches with no results.
+  /// Searches without results.
   /// </summary>
-  /// <value>Searches with no results.</value>
+  /// <value>Searches without results.</value>
   [JsonPropertyName("searches")]
-  public List<SearchNoResultEvent> Searches { get; set; }
+  public List<DailySearchesNoResults> Searches { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

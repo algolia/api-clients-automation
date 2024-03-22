@@ -1,11 +1,14 @@
 get:
   tags:
-    - search
+    - filter
   operationId: getTopFilterAttributes
   x-acl:
     - analytics
-  summary: Get top filterable attributes.
-  description: Return the most popular [filterable attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in the 1,000 most recently used filters.
+  summary: Retrieve top filters.
+  description: |
+    Retrieves the most frequently used filter attributes.
+
+    These are attributes of your records that you included in the `attributesForFaceting` setting.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../common/parameters.yml#/Search'
@@ -17,6 +20,13 @@ get:
   responses:
     '200':
       description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:

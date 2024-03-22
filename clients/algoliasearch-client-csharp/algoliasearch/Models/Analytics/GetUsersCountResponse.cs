@@ -24,27 +24,27 @@ public partial class GetUsersCountResponse
   /// <summary>
   /// Initializes a new instance of the GetUsersCountResponse class.
   /// </summary>
-  /// <param name="count">Number of occurrences. (required).</param>
-  /// <param name="dates">User count. (required).</param>
-  public GetUsersCountResponse(int count, List<UserWithDate> dates)
+  /// <param name="count">Number of unique users. (required).</param>
+  /// <param name="dates">Daily number of unique users. (required).</param>
+  public GetUsersCountResponse(int count, List<DailyUsers> dates)
   {
     Count = count;
     Dates = dates ?? throw new ArgumentNullException(nameof(dates));
   }
 
   /// <summary>
-  /// Number of occurrences.
+  /// Number of unique users.
   /// </summary>
-  /// <value>Number of occurrences.</value>
+  /// <value>Number of unique users.</value>
   [JsonPropertyName("count")]
   public int Count { get; set; }
 
   /// <summary>
-  /// User count.
+  /// Daily number of unique users.
   /// </summary>
-  /// <value>User count.</value>
+  /// <value>Daily number of unique users.</value>
   [JsonPropertyName("dates")]
-  public List<UserWithDate> Dates { get; set; }
+  public List<DailyUsers> Dates { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object

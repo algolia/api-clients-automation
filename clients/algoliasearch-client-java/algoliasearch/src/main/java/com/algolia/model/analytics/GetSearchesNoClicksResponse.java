@@ -13,21 +13,21 @@ import java.util.Objects;
 public class GetSearchesNoClicksResponse {
 
   @JsonProperty("searches")
-  private List<SearchNoClickEvent> searches = new ArrayList<>();
+  private List<DailySearchesNoClicks> searches = new ArrayList<>();
 
-  public GetSearchesNoClicksResponse setSearches(List<SearchNoClickEvent> searches) {
+  public GetSearchesNoClicksResponse setSearches(List<DailySearchesNoClicks> searches) {
     this.searches = searches;
     return this;
   }
 
-  public GetSearchesNoClicksResponse addSearches(SearchNoClickEvent searchesItem) {
+  public GetSearchesNoClicksResponse addSearches(DailySearchesNoClicks searchesItem) {
     this.searches.add(searchesItem);
     return this;
   }
 
-  /** Searches with no clicks. */
+  /** Searches without any clicks. */
   @javax.annotation.Nonnull
-  public List<SearchNoClickEvent> getSearches() {
+  public List<DailySearchesNoClicks> getSearches() {
     return searches;
   }
 

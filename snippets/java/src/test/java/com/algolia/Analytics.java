@@ -57,6 +57,19 @@ class SnippetAnalyticsClient {
     // SEPARATOR<
   }
 
+  // Snippet for the getAddToCartRate method.
+  //
+  // get getAddToCartRate with minimal parameters
+  void snippetForGetAddToCartRate() {
+    // >SEPARATOR getAddToCartRate
+    // Initialize the client
+    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.getAddToCartRate("index");
+    // SEPARATOR<
+  }
+
   // Snippet for the getAverageClickPosition method.
   //
   // get getAverageClickPosition with minimal parameters
@@ -96,16 +109,16 @@ class SnippetAnalyticsClient {
     // SEPARATOR<
   }
 
-  // Snippet for the getConversationRate method.
+  // Snippet for the getConversionRate method.
   //
   // get getConversationRate with minimal parameters
-  void snippetForGetConversationRate() {
-    // >SEPARATOR getConversationRate
+  void snippetForGetConversionRate() {
+    // >SEPARATOR getConversionRate
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
-    client.getConversationRate("index");
+    client.getConversionRate("index");
     // SEPARATOR<
   }
 
@@ -132,6 +145,32 @@ class SnippetAnalyticsClient {
 
     // Call the API
     client.getNoResultsRate("index");
+    // SEPARATOR<
+  }
+
+  // Snippet for the getPurchaseRate method.
+  //
+  // get getPurchaseRate with minimal parameters
+  void snippetForGetPurchaseRate() {
+    // >SEPARATOR getPurchaseRate
+    // Initialize the client
+    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.getPurchaseRate("index");
+    // SEPARATOR<
+  }
+
+  // Snippet for the getRevenue method.
+  //
+  // get getRevenue with minimal parameters
+  void snippetForGetRevenue() {
+    // >SEPARATOR getRevenue
+    // Initialize the client
+    AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.getRevenue("index");
     // SEPARATOR<
   }
 

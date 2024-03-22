@@ -4,11 +4,13 @@ get:
   operationId: getAverageClickPosition
   x-acl:
     - analytics
-  summary: Get average click position.
-  description: >
-    Return the average click position for the complete time range and for individual days.
+  summary: Retrieve average click position.
+  description: |
+    Retrieves the average click position of your search results, including a daily breakdown.
 
-    > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn't receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
+    The average click position is the average of all clicked search results' positions.
+    For example, if users only ever click on the first result for any search, the average click position is 1.
+    By default, the analyzed period includes the last eight days including the current day.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'
@@ -17,6 +19,13 @@ get:
   responses:
     '200':
       description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:
@@ -29,15 +38,15 @@ get:
               - dates
             properties:
               average:
-                $ref: '../../common/parameters.yml#/average'
+                $ref: '../../common/parameters.yml#/averageClickPosition'
               clickCount:
                 $ref: '../../common/parameters.yml#/clickCount'
               dates:
                 type: array
-                description: Average click positions.
+                description: Daily average click positions.
                 items:
                   type: object
-                  title: averageClickEvent
+                  title: dailyAverageClicks
                   additionalProperties: false
                   required:
                     - average
@@ -45,7 +54,7 @@ get:
                     - date
                   properties:
                     average:
-                      $ref: '../../common/parameters.yml#/average'
+                      $ref: '../../common/parameters.yml#/averageClickPosition'
                     clickCount:
                       $ref: '../../common/parameters.yml#/clickCount'
                     date:

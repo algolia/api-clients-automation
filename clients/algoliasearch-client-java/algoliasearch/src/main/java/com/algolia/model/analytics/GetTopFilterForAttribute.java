@@ -14,7 +14,7 @@ public class GetTopFilterForAttribute {
   private String attribute;
 
   @JsonProperty("operator")
-  private String operator;
+  private Operator operator;
 
   @JsonProperty("value")
   private String value;
@@ -33,14 +33,14 @@ public class GetTopFilterForAttribute {
     return attribute;
   }
 
-  public GetTopFilterForAttribute setOperator(String operator) {
+  public GetTopFilterForAttribute setOperator(Operator operator) {
     this.operator = operator;
     return this;
   }
 
-  /** Operator. */
+  /** Get operator */
   @javax.annotation.Nonnull
-  public String getOperator() {
+  public Operator getOperator() {
     return operator;
   }
 

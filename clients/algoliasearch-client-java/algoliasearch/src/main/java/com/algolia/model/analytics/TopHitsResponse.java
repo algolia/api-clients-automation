@@ -26,7 +26,7 @@ public class TopHitsResponse implements GetTopHitsResponse {
     return this;
   }
 
-  /** Top hits. */
+  /** Most frequent search results. */
   @javax.annotation.Nonnull
   public List<TopHit> getHits() {
     return hits;

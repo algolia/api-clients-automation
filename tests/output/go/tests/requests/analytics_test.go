@@ -408,6 +408,46 @@ func TestAnalytics_CustomPut(t *testing.T) {
 	})
 }
 
+func TestAnalytics_GetAddToCartRate(t *testing.T) {
+	client, echo := createAnalyticsClient(t)
+	_ = echo
+
+	t.Run("get getAddToCartRate with minimal parameters", func(t *testing.T) {
+		_, err := client.GetAddToCartRate(client.NewApiGetAddToCartRateRequest(
+			"index",
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/2/conversions/addToCartRate", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
+	t.Run("get getAddToCartRate with all parameters", func(t *testing.T) {
+		_, err := client.GetAddToCartRate(client.NewApiGetAddToCartRateRequest(
+			"index",
+		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+		require.NoError(t, err)
+
+		require.Equal(t, "/2/conversions/addToCartRate", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
+}
+
 func TestAnalytics_GetAverageClickPosition(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
 	_ = echo
@@ -528,12 +568,12 @@ func TestAnalytics_GetClickThroughRate(t *testing.T) {
 	})
 }
 
-func TestAnalytics_GetConversationRate(t *testing.T) {
+func TestAnalytics_GetConversionRate(t *testing.T) {
 	client, echo := createAnalyticsClient(t)
 	_ = echo
 
 	t.Run("get getConversationRate with minimal parameters", func(t *testing.T) {
-		_, err := client.GetConversationRate(client.NewApiGetConversationRateRequest(
+		_, err := client.GetConversionRate(client.NewApiGetConversionRateRequest(
 			"index",
 		))
 		require.NoError(t, err)
@@ -550,7 +590,7 @@ func TestAnalytics_GetConversationRate(t *testing.T) {
 		}
 	})
 	t.Run("get getConversationRate with all parameters", func(t *testing.T) {
-		_, err := client.GetConversationRate(client.NewApiGetConversationRateRequest(
+		_, err := client.GetConversionRate(client.NewApiGetConversionRateRequest(
 			"index",
 		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
 		require.NoError(t, err)
@@ -636,6 +676,86 @@ func TestAnalytics_GetNoResultsRate(t *testing.T) {
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/searches/noResultRate", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
+}
+
+func TestAnalytics_GetPurchaseRate(t *testing.T) {
+	client, echo := createAnalyticsClient(t)
+	_ = echo
+
+	t.Run("get getPurchaseRate with minimal parameters", func(t *testing.T) {
+		_, err := client.GetPurchaseRate(client.NewApiGetPurchaseRateRequest(
+			"index",
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/2/conversions/purchaseRate", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
+	t.Run("get getPurchaseRate with all parameters", func(t *testing.T) {
+		_, err := client.GetPurchaseRate(client.NewApiGetPurchaseRateRequest(
+			"index",
+		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+		require.NoError(t, err)
+
+		require.Equal(t, "/2/conversions/purchaseRate", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","startDate":"1999-09-19","endDate":"2001-01-01","tags":"tag"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
+}
+
+func TestAnalytics_GetRevenue(t *testing.T) {
+	client, echo := createAnalyticsClient(t)
+	_ = echo
+
+	t.Run("get getRevenue with minimal parameters", func(t *testing.T) {
+		_, err := client.GetRevenue(client.NewApiGetRevenueRequest(
+			"index",
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/2/conversions/revenue", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
+	})
+	t.Run("get getRevenue with all parameters", func(t *testing.T) {
+		_, err := client.GetRevenue(client.NewApiGetRevenueRequest(
+			"index",
+		).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithTags("tag"))
+		require.NoError(t, err)
+
+		require.Equal(t, "/2/conversions/revenue", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1009,7 +1129,7 @@ func TestAnalytics_GetTopHits(t *testing.T) {
 	t.Run("get getTopHits with all parameters", func(t *testing.T) {
 		_, err := client.GetTopHits(client.NewApiGetTopHitsRequest(
 			"index",
-		).WithSearch("mySearch").WithClickAnalytics(true).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
+		).WithSearch("mySearch").WithClickAnalytics(true).WithRevenueAnalytics(true).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/hits", echo.Path)
@@ -1017,7 +1137,7 @@ func TestAnalytics_GetTopHits(t *testing.T) {
 
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","search":"mySearch","clickAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","search":"mySearch","clickAnalytics":"true","revenueAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
@@ -1049,7 +1169,7 @@ func TestAnalytics_GetTopSearches(t *testing.T) {
 	t.Run("get getTopSearches with all parameters", func(t *testing.T) {
 		_, err := client.GetTopSearches(client.NewApiGetTopSearchesRequest(
 			"index",
-		).WithClickAnalytics(true).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithOrderBy(analytics.OrderBy("searchCount")).WithDirection(analytics.Direction("asc")).WithLimit(21).WithOffset(42).WithTags("tag"))
+		).WithClickAnalytics(true).WithRevenueAnalytics(true).WithStartDate("1999-09-19").WithEndDate("2001-01-01").WithOrderBy(analytics.OrderBy("searchCount")).WithDirection(analytics.Direction("asc")).WithLimit(21).WithOffset(42).WithTags("tag"))
 		require.NoError(t, err)
 
 		require.Equal(t, "/2/searches", echo.Path)
@@ -1057,7 +1177,7 @@ func TestAnalytics_GetTopSearches(t *testing.T) {
 
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","clickAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","orderBy":"searchCount","direction":"asc","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
+		require.NoError(t, json.Unmarshal([]byte(`{"index":"index","clickAnalytics":"true","revenueAnalytics":"true","startDate":"1999-09-19","endDate":"2001-01-01","orderBy":"searchCount","direction":"asc","limit":"21","offset":"42","tags":"tag"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))

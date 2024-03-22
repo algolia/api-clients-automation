@@ -10,7 +10,7 @@ from typing import Any, Dict, List, Self
 
 from pydantic import BaseModel, Field, StrictInt
 
-from algoliasearch.analytics.models.user_with_date import UserWithDate
+from algoliasearch.analytics.models.daily_users import DailyUsers
 
 
 class GetUsersCountResponse(BaseModel):
@@ -18,8 +18,8 @@ class GetUsersCountResponse(BaseModel):
     GetUsersCountResponse
     """
 
-    count: StrictInt = Field(description="Number of occurrences.")
-    dates: List[UserWithDate] = Field(description="User count.")
+    count: StrictInt = Field(description="Number of unique users.")
+    dates: List[DailyUsers] = Field(description="Daily number of unique users.")
 
     model_config = {"populate_by_name": True, "validate_assignment": True}
 
@@ -67,7 +67,7 @@ class GetUsersCountResponse(BaseModel):
             {
                 "count": obj.get("count"),
                 "dates": (
-                    [UserWithDate.from_dict(_item) for _item in obj.get("dates")]
+                    [DailyUsers.from_dict(_item) for _item in obj.get("dates")]
                     if obj.get("dates") is not None
                     else None
                 ),

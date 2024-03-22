@@ -74,6 +74,23 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetAddToCartRate() {
+    // >SEPARATOR getAddToCartRate
+    // Initialize the client
+    val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.getAddToCartRate(
+      index = "index",
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetAverageClickPosition() {
     // >SEPARATOR getAverageClickPosition
     // Initialize the client
@@ -125,13 +142,13 @@ class SnippetAnalyticsClient {
     exitProcess(0)
   }
 
-  suspend fun snippetForGetConversationRate() {
-    // >SEPARATOR getConversationRate
+  suspend fun snippetForGetConversionRate() {
+    // >SEPARATOR getConversionRate
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    var response = client.getConversationRate(
+    var response = client.getConversionRate(
       index = "index",
     )
 
@@ -166,6 +183,40 @@ class SnippetAnalyticsClient {
 
     // Call the API
     var response = client.getNoResultsRate(
+      index = "index",
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForGetPurchaseRate() {
+    // >SEPARATOR getPurchaseRate
+    // Initialize the client
+    val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.getPurchaseRate(
+      index = "index",
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForGetRevenue() {
+    // >SEPARATOR getRevenue
+    // Initialize the client
+    val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.getRevenue(
       index = "index",
     )
 

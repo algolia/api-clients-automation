@@ -20,7 +20,8 @@ class TopSearchWithAnalytics extends \Algolia\AlgoliaSearch\Model\AbstractModel 
         'search' => 'string',
         'count' => 'int',
         'clickThroughRate' => 'float',
-        'averageClickPosition' => 'int',
+        'averageClickPosition' => 'float',
+        'clickPositions' => '\Algolia\AlgoliaSearch\Model\Analytics\ClickPositionsInner[]',
         'conversionRate' => 'float',
         'trackedSearchCount' => 'int',
         'clickCount' => 'int',
@@ -37,7 +38,8 @@ class TopSearchWithAnalytics extends \Algolia\AlgoliaSearch\Model\AbstractModel 
         'search' => null,
         'count' => null,
         'clickThroughRate' => 'double',
-        'averageClickPosition' => null,
+        'averageClickPosition' => 'double',
+        'clickPositions' => null,
         'conversionRate' => 'double',
         'trackedSearchCount' => null,
         'clickCount' => null,
@@ -56,6 +58,7 @@ class TopSearchWithAnalytics extends \Algolia\AlgoliaSearch\Model\AbstractModel 
         'count' => 'count',
         'clickThroughRate' => 'clickThroughRate',
         'averageClickPosition' => 'averageClickPosition',
+        'clickPositions' => 'clickPositions',
         'conversionRate' => 'conversionRate',
         'trackedSearchCount' => 'trackedSearchCount',
         'clickCount' => 'clickCount',
@@ -73,6 +76,7 @@ class TopSearchWithAnalytics extends \Algolia\AlgoliaSearch\Model\AbstractModel 
         'count' => 'setCount',
         'clickThroughRate' => 'setClickThroughRate',
         'averageClickPosition' => 'setAverageClickPosition',
+        'clickPositions' => 'setClickPositions',
         'conversionRate' => 'setConversionRate',
         'trackedSearchCount' => 'setTrackedSearchCount',
         'clickCount' => 'setClickCount',
@@ -90,6 +94,7 @@ class TopSearchWithAnalytics extends \Algolia\AlgoliaSearch\Model\AbstractModel 
         'count' => 'getCount',
         'clickThroughRate' => 'getClickThroughRate',
         'averageClickPosition' => 'getAverageClickPosition',
+        'clickPositions' => 'getClickPositions',
         'conversionRate' => 'getConversionRate',
         'trackedSearchCount' => 'getTrackedSearchCount',
         'clickCount' => 'getClickCount',
@@ -122,6 +127,9 @@ class TopSearchWithAnalytics extends \Algolia\AlgoliaSearch\Model\AbstractModel 
         }
         if (isset($data['averageClickPosition'])) {
             $this->container['averageClickPosition'] = $data['averageClickPosition'];
+        }
+        if (isset($data['clickPositions'])) {
+            $this->container['clickPositions'] = $data['clickPositions'];
         }
         if (isset($data['conversionRate'])) {
             $this->container['conversionRate'] = $data['conversionRate'];
@@ -220,18 +228,49 @@ class TopSearchWithAnalytics extends \Algolia\AlgoliaSearch\Model\AbstractModel 
         if (!isset($this->container['averageClickPosition']) || null === $this->container['averageClickPosition']) {
             $invalidProperties[] = "'averageClickPosition' can't be null";
         }
+        if ($this->container['averageClickPosition'] < 1) {
+            $invalidProperties[] = "invalid value for 'averageClickPosition', must be bigger than or equal to 1.";
+        }
+
+        if (!isset($this->container['clickPositions']) || null === $this->container['clickPositions']) {
+            $invalidProperties[] = "'clickPositions' can't be null";
+        }
+        if (count($this->container['clickPositions']) > 12) {
+            $invalidProperties[] = "invalid value for 'clickPositions', number of items must be less than or equal to 12.";
+        }
+
+        if (count($this->container['clickPositions']) < 12) {
+            $invalidProperties[] = "invalid value for 'clickPositions', number of items must be greater than or equal to 12.";
+        }
+
         if (!isset($this->container['conversionRate']) || null === $this->container['conversionRate']) {
             $invalidProperties[] = "'conversionRate' can't be null";
         }
+        if ($this->container['conversionRate'] > 1) {
+            $invalidProperties[] = "invalid value for 'conversionRate', must be smaller than or equal to 1.";
+        }
+
+        if ($this->container['conversionRate'] < 0) {
+            $invalidProperties[] = "invalid value for 'conversionRate', must be bigger than or equal to 0.";
+        }
+
         if (!isset($this->container['trackedSearchCount']) || null === $this->container['trackedSearchCount']) {
             $invalidProperties[] = "'trackedSearchCount' can't be null";
         }
         if (!isset($this->container['clickCount']) || null === $this->container['clickCount']) {
             $invalidProperties[] = "'clickCount' can't be null";
         }
+        if ($this->container['clickCount'] < 0) {
+            $invalidProperties[] = "invalid value for 'clickCount', must be bigger than or equal to 0.";
+        }
+
         if (!isset($this->container['conversionCount']) || null === $this->container['conversionCount']) {
             $invalidProperties[] = "'conversionCount' can't be null";
         }
+        if ($this->container['conversionCount'] < 0) {
+            $invalidProperties[] = "invalid value for 'conversionCount', must be bigger than or equal to 0.";
+        }
+
         if (!isset($this->container['nbHits']) || null === $this->container['nbHits']) {
             $invalidProperties[] = "'nbHits' can't be null";
         }
@@ -263,7 +302,7 @@ class TopSearchWithAnalytics extends \Algolia\AlgoliaSearch\Model\AbstractModel 
     /**
      * Sets search.
      *
-     * @param string $search user query
+     * @param string $search search query
      *
      * @return self
      */
@@ -287,7 +326,7 @@ class TopSearchWithAnalytics extends \Algolia\AlgoliaSearch\Model\AbstractModel 
     /**
      * Sets count.
      *
-     * @param int $count number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`)
+     * @param int $count number of searches
      *
      * @return self
      */
@@ -311,7 +350,7 @@ class TopSearchWithAnalytics extends \Algolia\AlgoliaSearch\Model\AbstractModel 
     /**
      * Sets clickThroughRate.
      *
-     * @param float $clickThroughRate [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+     * @param float $clickThroughRate Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
      *
      * @return self
      */
@@ -332,7 +371,7 @@ class TopSearchWithAnalytics extends \Algolia\AlgoliaSearch\Model\AbstractModel 
     /**
      * Gets averageClickPosition.
      *
-     * @return int
+     * @return float
      */
     public function getAverageClickPosition()
     {
@@ -342,13 +381,47 @@ class TopSearchWithAnalytics extends \Algolia\AlgoliaSearch\Model\AbstractModel 
     /**
      * Sets averageClickPosition.
      *
-     * @param int $averageClickPosition Average [position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position) of clicked search result.
+     * @param float $averageClickPosition Average position of a clicked search result in the list of search results. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
      *
      * @return self
      */
     public function setAverageClickPosition($averageClickPosition)
     {
+        if ($averageClickPosition < 1) {
+            throw new \InvalidArgumentException('invalid value for $averageClickPosition when calling TopSearchWithAnalytics., must be bigger than or equal to 1.');
+        }
+
         $this->container['averageClickPosition'] = $averageClickPosition;
+
+        return $this;
+    }
+
+    /**
+     * Gets clickPositions.
+     *
+     * @return \Algolia\AlgoliaSearch\Model\Analytics\ClickPositionsInner[]
+     */
+    public function getClickPositions()
+    {
+        return $this->container['clickPositions'] ?? null;
+    }
+
+    /**
+     * Sets clickPositions.
+     *
+     * @param \Algolia\AlgoliaSearch\Model\Analytics\ClickPositionsInner[] $clickPositions list of positions in the search results and clicks associated with this search
+     *
+     * @return self
+     */
+    public function setClickPositions($clickPositions)
+    {
+        if (count($clickPositions) > 12) {
+            throw new \InvalidArgumentException('invalid value for $clickPositions when calling TopSearchWithAnalytics., number of items must be less than or equal to 12.');
+        }
+        if (count($clickPositions) < 12) {
+            throw new \InvalidArgumentException('invalid length for $clickPositions when calling TopSearchWithAnalytics., number of items must be greater than or equal to 12.');
+        }
+        $this->container['clickPositions'] = $clickPositions;
 
         return $this;
     }
@@ -366,12 +439,19 @@ class TopSearchWithAnalytics extends \Algolia\AlgoliaSearch\Model\AbstractModel 
     /**
      * Sets conversionRate.
      *
-     * @param float $conversionRate [Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+     * @param float $conversionRate Conversion rate, calculated as number of tracked searches with at least one conversion event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
      *
      * @return self
      */
     public function setConversionRate($conversionRate)
     {
+        if ($conversionRate > 1) {
+            throw new \InvalidArgumentException('invalid value for $conversionRate when calling TopSearchWithAnalytics., must be smaller than or equal to 1.');
+        }
+        if ($conversionRate < 0) {
+            throw new \InvalidArgumentException('invalid value for $conversionRate when calling TopSearchWithAnalytics., must be bigger than or equal to 0.');
+        }
+
         $this->container['conversionRate'] = $conversionRate;
 
         return $this;
@@ -390,7 +470,7 @@ class TopSearchWithAnalytics extends \Algolia\AlgoliaSearch\Model\AbstractModel 
     /**
      * Sets trackedSearchCount.
      *
-     * @param int $trackedSearchCount Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
+     * @param int $trackedSearchCount Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
      *
      * @return self
      */
@@ -414,12 +494,16 @@ class TopSearchWithAnalytics extends \Algolia\AlgoliaSearch\Model\AbstractModel 
     /**
      * Sets clickCount.
      *
-     * @param int $clickCount number of click events
+     * @param int $clickCount number of clicks associated with this search
      *
      * @return self
      */
     public function setClickCount($clickCount)
     {
+        if ($clickCount < 0) {
+            throw new \InvalidArgumentException('invalid value for $clickCount when calling TopSearchWithAnalytics., must be bigger than or equal to 0.');
+        }
+
         $this->container['clickCount'] = $clickCount;
 
         return $this;
@@ -438,12 +522,16 @@ class TopSearchWithAnalytics extends \Algolia\AlgoliaSearch\Model\AbstractModel 
     /**
      * Sets conversionCount.
      *
-     * @param int $conversionCount number of converted clicks
+     * @param int $conversionCount number of conversions from this search
      *
      * @return self
      */
     public function setConversionCount($conversionCount)
     {
+        if ($conversionCount < 0) {
+            throw new \InvalidArgumentException('invalid value for $conversionCount when calling TopSearchWithAnalytics., must be bigger than or equal to 0.');
+        }
+
         $this->container['conversionCount'] = $conversionCount;
 
         return $this;

@@ -7,12 +7,12 @@ import Foundation
 #endif
 
 public struct GetUsersCountResponse: Codable, JSONEncodable, Hashable {
-    /// Number of occurrences.
+    /// Number of unique users.
     public var count: Int
-    /// User count.
-    public var dates: [UserWithDate]
+    /// Daily number of unique users.
+    public var dates: [DailyUsers]
 
-    public init(count: Int, dates: [UserWithDate]) {
+    public init(count: Int, dates: [DailyUsers]) {
         self.count = count
         self.dates = dates
     }

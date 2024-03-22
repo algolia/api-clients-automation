@@ -1,0 +1,55 @@
+get:
+  tags:
+    - click
+  operationId: getRevenue
+  x-acl:
+    - analytics
+  summary: Retrieve revenue data.
+  description: |
+    Retrieves revenue-related metrics, such as the total revenue or the average order value.
+
+    To retrieve revenue-related metrics, sent purchase events.
+    By default, the analyzed period includes the last eight days including the current day.
+  parameters:
+    - $ref: '../../../common/parameters.yml#/Index'
+    - $ref: '../../../common/parameters.yml#/StartDate'
+    - $ref: '../../../common/parameters.yml#/EndDate'
+    - $ref: '../../common/parameters.yml#/Tags'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: getRevenue
+            type: object
+            additionalProperties: false
+            required:
+              - currencies
+              - dates
+            properties:
+              currencies:
+                $ref: '../../common/parameters.yml#/currencies'
+              dates:
+                type: array
+                description: Daily revenue.
+                items:
+                  type: object
+                  title: dailyRevenue
+                  additionalProperties: false
+                  required:
+                    - currencies
+                    - date
+                  properties:
+                    currencies:
+                      $ref: '../../common/parameters.yml#/currencies'
+                    date:
+                      $ref: '../../common/parameters.yml#/date'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+    '402':
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
+    '403':
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
+    '404':
+      $ref: '../../../common/responses/IndexNotFound.yml'

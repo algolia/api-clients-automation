@@ -366,6 +366,38 @@ describe('customPut', () => {
   });
 });
 
+describe('getAddToCartRate', () => {
+  test('get getAddToCartRate with minimal parameters', async () => {
+    const req = (await client.getAddToCartRate({
+      index: 'index',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/conversions/addToCartRate');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({ index: 'index' });
+  });
+
+  test('get getAddToCartRate with all parameters', async () => {
+    const req = (await client.getAddToCartRate({
+      index: 'index',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      tags: 'tag',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/conversions/addToCartRate');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({
+      index: 'index',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      tags: 'tag',
+    });
+  });
+});
+
 describe('getAverageClickPosition', () => {
   test('get getAverageClickPosition with minimal parameters', async () => {
     const req = (await client.getAverageClickPosition({
@@ -462,9 +494,9 @@ describe('getClickThroughRate', () => {
   });
 });
 
-describe('getConversationRate', () => {
+describe('getConversionRate', () => {
   test('get getConversationRate with minimal parameters', async () => {
-    const req = (await client.getConversationRate({
+    const req = (await client.getConversionRate({
       index: 'index',
     })) as unknown as EchoResponse;
 
@@ -475,7 +507,7 @@ describe('getConversationRate', () => {
   });
 
   test('get getConversationRate with all parameters', async () => {
-    const req = (await client.getConversationRate({
+    const req = (await client.getConversionRate({
       index: 'index',
       startDate: '1999-09-19',
       endDate: '2001-01-01',
@@ -547,6 +579,70 @@ describe('getNoResultsRate', () => {
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/2/searches/noResultRate');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({
+      index: 'index',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      tags: 'tag',
+    });
+  });
+});
+
+describe('getPurchaseRate', () => {
+  test('get getPurchaseRate with minimal parameters', async () => {
+    const req = (await client.getPurchaseRate({
+      index: 'index',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/conversions/purchaseRate');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({ index: 'index' });
+  });
+
+  test('get getPurchaseRate with all parameters', async () => {
+    const req = (await client.getPurchaseRate({
+      index: 'index',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      tags: 'tag',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/conversions/purchaseRate');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({
+      index: 'index',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      tags: 'tag',
+    });
+  });
+});
+
+describe('getRevenue', () => {
+  test('get getRevenue with minimal parameters', async () => {
+    const req = (await client.getRevenue({
+      index: 'index',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/conversions/revenue');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual({ index: 'index' });
+  });
+
+  test('get getRevenue with all parameters', async () => {
+    const req = (await client.getRevenue({
+      index: 'index',
+      startDate: '1999-09-19',
+      endDate: '2001-01-01',
+      tags: 'tag',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/2/conversions/revenue');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual({
@@ -882,6 +978,7 @@ describe('getTopHits', () => {
       index: 'index',
       search: 'mySearch',
       clickAnalytics: true,
+      revenueAnalytics: true,
       startDate: '1999-09-19',
       endDate: '2001-01-01',
       limit: 21,
@@ -896,6 +993,7 @@ describe('getTopHits', () => {
       index: 'index',
       search: 'mySearch',
       clickAnalytics: 'true',
+      revenueAnalytics: 'true',
       startDate: '1999-09-19',
       endDate: '2001-01-01',
       limit: '21',
@@ -921,6 +1019,7 @@ describe('getTopSearches', () => {
     const req = (await client.getTopSearches({
       index: 'index',
       clickAnalytics: true,
+      revenueAnalytics: true,
       startDate: '1999-09-19',
       endDate: '2001-01-01',
       orderBy: 'searchCount',
@@ -936,6 +1035,7 @@ describe('getTopSearches', () => {
     expect(req.searchParams).toStrictEqual({
       index: 'index',
       clickAnalytics: 'true',
+      revenueAnalytics: 'true',
       startDate: '1999-09-19',
       endDate: '2001-01-01',
       orderBy: 'searchCount',

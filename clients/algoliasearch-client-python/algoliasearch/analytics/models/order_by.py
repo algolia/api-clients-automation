@@ -12,7 +12,7 @@ from typing import Self
 
 class OrderBy(str, Enum):
     """
-    Method for ordering results. `clickThroughRate`, `conversionRate` and `averageClickPosition` are only available if the `clickAnalytics` parameter is `true`.
+    Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available.
     """
 
     """

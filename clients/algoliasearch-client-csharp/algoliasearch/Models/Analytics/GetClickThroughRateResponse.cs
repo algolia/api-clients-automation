@@ -24,45 +24,45 @@ public partial class GetClickThroughRateResponse
   /// <summary>
   /// Initializes a new instance of the GetClickThroughRateResponse class.
   /// </summary>
-  /// <param name="rate">[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).  (required).</param>
-  /// <param name="clickCount">Number of click events. (required).</param>
-  /// <param name="trackedSearchCount">Number of tracked searches. This is the number of search requests where the &#x60;clickAnalytics&#x60; parameter is &#x60;true&#x60;. (required).</param>
-  /// <param name="dates">Click-through rate events. (required).</param>
-  public GetClickThroughRateResponse(double rate, int clickCount, int? trackedSearchCount, List<ClickThroughRateEvent> dates)
+  /// <param name="rate">Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn&#39;t receive any search requests with &#x60;clickAnalytics&#x60; set to true.  (required).</param>
+  /// <param name="clickCount">Number of clicks associated with this search. (required) (default to 0).</param>
+  /// <param name="trackedSearchCount">Number of tracked searches. Tracked searches are search requests where the &#x60;clickAnalytics&#x60; parameter is true. (required) (default to 0).</param>
+  /// <param name="dates">Daily click-through rates. (required).</param>
+  public GetClickThroughRateResponse(double? rate, int clickCount, int trackedSearchCount, List<DailyClickThroughRates> dates)
   {
-    Rate = rate;
+    Rate = rate ?? throw new ArgumentNullException(nameof(rate));
     ClickCount = clickCount;
-    TrackedSearchCount = trackedSearchCount ?? throw new ArgumentNullException(nameof(trackedSearchCount));
+    TrackedSearchCount = trackedSearchCount;
     Dates = dates ?? throw new ArgumentNullException(nameof(dates));
   }
 
   /// <summary>
-  /// [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate). 
+  /// Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true. 
   /// </summary>
-  /// <value>[Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate). </value>
+  /// <value>Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true. </value>
   [JsonPropertyName("rate")]
-  public double Rate { get; set; }
+  public double? Rate { get; set; }
 
   /// <summary>
-  /// Number of click events.
+  /// Number of clicks associated with this search.
   /// </summary>
-  /// <value>Number of click events.</value>
+  /// <value>Number of clicks associated with this search.</value>
   [JsonPropertyName("clickCount")]
   public int ClickCount { get; set; }
 
   /// <summary>
-  /// Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
+  /// Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
   /// </summary>
-  /// <value>Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.</value>
+  /// <value>Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.</value>
   [JsonPropertyName("trackedSearchCount")]
-  public int? TrackedSearchCount { get; set; }
+  public int TrackedSearchCount { get; set; }
 
   /// <summary>
-  /// Click-through rate events.
+  /// Daily click-through rates.
   /// </summary>
-  /// <value>Click-through rate events.</value>
+  /// <value>Daily click-through rates.</value>
   [JsonPropertyName("dates")]
-  public List<ClickThroughRateEvent> Dates { get; set; }
+  public List<DailyClickThroughRates> Dates { get; set; }
 
   /// <summary>
   /// Returns the string presentation of the object
@@ -102,9 +102,9 @@ public partial class GetClickThroughRateResponse
     }
 
     return
-        (Rate == input.Rate || Rate.Equals(input.Rate)) &&
+        (Rate == input.Rate || (Rate != null && Rate.Equals(input.Rate))) &&
         (ClickCount == input.ClickCount || ClickCount.Equals(input.ClickCount)) &&
-        (TrackedSearchCount == input.TrackedSearchCount || (TrackedSearchCount != null && TrackedSearchCount.Equals(input.TrackedSearchCount))) &&
+        (TrackedSearchCount == input.TrackedSearchCount || TrackedSearchCount.Equals(input.TrackedSearchCount)) &&
         (Dates == input.Dates || Dates != null && input.Dates != null && Dates.SequenceEqual(input.Dates));
   }
 
@@ -117,12 +117,12 @@ public partial class GetClickThroughRateResponse
     unchecked // Overflow is fine, just wrap
     {
       int hashCode = 41;
-      hashCode = (hashCode * 59) + Rate.GetHashCode();
-      hashCode = (hashCode * 59) + ClickCount.GetHashCode();
-      if (TrackedSearchCount != null)
+      if (Rate != null)
       {
-        hashCode = (hashCode * 59) + TrackedSearchCount.GetHashCode();
+        hashCode = (hashCode * 59) + Rate.GetHashCode();
       }
+      hashCode = (hashCode * 59) + ClickCount.GetHashCode();
+      hashCode = (hashCode * 59) + TrackedSearchCount.GetHashCode();
       if (Dates != null)
       {
         hashCode = (hashCode * 59) + Dates.GetHashCode();

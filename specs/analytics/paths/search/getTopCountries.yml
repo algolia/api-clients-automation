@@ -1,11 +1,11 @@
 get:
   tags:
-    - search
+    - user
   operationId: getTopCountries
   x-acl:
     - analytics
-  summary: Get top countries.
-  description: Returns top countries. Limited to the 1,000 most frequent ones.
+  summary: Retrieve top countries.
+  description: Retrieves the countries with the most searches to your index.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'
@@ -16,6 +16,13 @@ get:
   responses:
     '200':
       description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:
@@ -27,7 +34,7 @@ get:
             properties:
               countries:
                 type: array
-                description: Countries
+                description: Countries and number of searches.
                 items:
                   type: object
                   title: topCountry
@@ -37,7 +44,7 @@ get:
                     - count
                   properties:
                     country:
-                      description: Country.
+                      description: Country code.
                       type: string
                       example: 'UK'
                     count:

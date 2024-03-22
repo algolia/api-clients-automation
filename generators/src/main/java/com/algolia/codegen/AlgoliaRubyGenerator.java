@@ -95,6 +95,20 @@ public class AlgoliaRubyGenerator extends RubyClientCodegen {
     switch (value) {
       case "*":
         return "ALL";
+      case ":":
+        return "APPLY";
+      case "=":
+        return "EQUALS";
+      case "!=":
+        return "NOT_EQUALS";
+      case "<":
+        return "LESS_THAN";
+      case "<=":
+        return "LESS_EQUALS";
+      case ">":
+        return "GREATER_THAN";
+      case ">=":
+        return "GREATER_EQUALS";
     }
 
     return super.toEnumVarName(value, datatype);

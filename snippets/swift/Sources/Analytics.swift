@@ -56,6 +56,19 @@ final class AnalyticsClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the getAddToCartRate method.
+    ///
+    /// get getAddToCartRate with minimal parameters
+    func snippetForGetAddToCartRate() async throws {
+        // >SEPARATOR getAddToCartRate
+        // Initialize the client
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        _ = try await client.getAddToCartRate(index: "index")
+        // SEPARATOR<
+    }
+
     /// Snippet for the getAverageClickPosition method.
     ///
     /// get getAverageClickPosition with minimal parameters
@@ -95,16 +108,16 @@ final class AnalyticsClientSnippet {
         // SEPARATOR<
     }
 
-    /// Snippet for the getConversationRate method.
+    /// Snippet for the getConversionRate method.
     ///
     /// get getConversationRate with minimal parameters
-    func snippetForGetConversationRate() async throws {
-        // >SEPARATOR getConversationRate
+    func snippetForGetConversionRate() async throws {
+        // >SEPARATOR getConversionRate
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getConversationRate(index: "index")
+        _ = try await client.getConversionRate(index: "index")
         // SEPARATOR<
     }
 
@@ -131,6 +144,32 @@ final class AnalyticsClientSnippet {
 
         // Call the API
         _ = try await client.getNoResultsRate(index: "index")
+        // SEPARATOR<
+    }
+
+    /// Snippet for the getPurchaseRate method.
+    ///
+    /// get getPurchaseRate with minimal parameters
+    func snippetForGetPurchaseRate() async throws {
+        // >SEPARATOR getPurchaseRate
+        // Initialize the client
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        _ = try await client.getPurchaseRate(index: "index")
+        // SEPARATOR<
+    }
+
+    /// Snippet for the getRevenue method.
+    ///
+    /// get getRevenue with minimal parameters
+    func snippetForGetRevenue() async throws {
+        // >SEPARATOR getRevenue
+        // Initialize the client
+        let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        _ = try await client.getRevenue(index: "index")
         // SEPARATOR<
     }
 

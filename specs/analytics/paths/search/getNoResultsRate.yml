@@ -4,8 +4,11 @@ get:
   operationId: getNoResultsRate
   x-acl:
     - analytics
-  summary: Get no results rate.
-  description: Returns the rate at which searches didn't return any results.
+  summary: Retrieve no results rate.
+  description: |
+    Retrieves the fraction of searches that didn't return any results within a time range, including a daily breakdown.
+
+    By default, the analyzed period includes the last eight days including the current day.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'
@@ -14,6 +17,13 @@ get:
   responses:
     '200':
       description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:
@@ -27,17 +37,17 @@ get:
               - dates
             properties:
               rate:
-                $ref: '../../common/parameters.yml#/rate'
+                $ref: '../../common/parameters.yml#/noResultsRate'
               count:
-                $ref: '../../../common/parameters.yml#/count'
+                $ref: '../../common/parameters.yml#/count'
               noResultCount:
-                $ref: '../../../common/parameters.yml#/count'
+                $ref: '../../common/parameters.yml#/noResultCount'
               dates:
                 type: array
-                description: Overall count of searches without results plus a daily breakdown.
+                description: Daily no results rates.
                 items:
                   type: object
-                  title: noResultsRateEvent
+                  title: dailyNoResultsRates
                   additionalProperties: false
                   required:
                     - date
@@ -52,7 +62,7 @@ get:
                     count:
                       $ref: '../../common/parameters.yml#/count'
                     rate:
-                      $ref: '../../common/parameters.yml#/rate'
+                      $ref: '../../common/parameters.yml#/noResultsRate'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

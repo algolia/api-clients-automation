@@ -4,8 +4,11 @@ get:
   operationId: getSearchesCount
   x-acl:
     - analytics
-  summary: Get number of searches.
-  description: Returns the number of searches within a time range.
+  summary: Retrieve number of searches.
+  description: |
+    Retrieves the number of searches within a time range, including a daily breakdown.
+
+    By default, the analyzed period includes the last eight days including the current day.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../../common/parameters.yml#/StartDate'
@@ -14,6 +17,13 @@ get:
   responses:
     '200':
       description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:
@@ -28,10 +38,10 @@ get:
                 $ref: '../../../common/parameters.yml#/count'
               dates:
                 type: array
-                description: Search events with their associated dates and hit counts.
+                description: Daily number of searches.
                 items:
                   type: object
-                  title: searchEvent
+                  title: dailySearches
                   additionalProperties: false
                   required:
                     - date

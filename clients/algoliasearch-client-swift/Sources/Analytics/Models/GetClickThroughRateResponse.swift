@@ -14,18 +14,24 @@ public struct GetClickThroughRateResponse: Codable, JSONEncodable, Hashable {
         exclusiveMaximum: false,
         multipleOf: nil
     )
-    /// [Click-through rate
-    /// (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
-    public var rate: Double
-    /// Number of click events.
+    static let clickCountRule = NumericRule<Int>(
+        minimum: 0,
+        exclusiveMinimum: false,
+        maximum: nil,
+        exclusiveMaximum: false,
+        multipleOf: nil
+    )
+    /// Click-through rate, calculated as number of tracked searches with at least one click event divided by the number
+    /// of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+    public var rate: Double?
+    /// Number of clicks associated with this search.
     public var clickCount: Int
-    /// Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is
-    /// `true`.
-    public var trackedSearchCount: Int?
-    /// Click-through rate events.
-    public var dates: [ClickThroughRateEvent]
+    /// Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
+    public var trackedSearchCount: Int
+    /// Daily click-through rates.
+    public var dates: [DailyClickThroughRates]
 
-    public init(rate: Double, clickCount: Int, trackedSearchCount: Int?, dates: [ClickThroughRateEvent]) {
+    public init(rate: Double?, clickCount: Int, trackedSearchCount: Int, dates: [DailyClickThroughRates]) {
         self.rate = rate
         self.clickCount = clickCount
         self.trackedSearchCount = trackedSearchCount

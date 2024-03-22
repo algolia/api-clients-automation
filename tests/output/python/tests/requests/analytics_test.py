@@ -415,6 +415,45 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
+    async def test_get_add_to_cart_rate_0(self):
+        """
+        get getAddToCartRate with minimal parameters
+        """
+        _req = await self._client.get_add_to_cart_rate_with_http_info(
+            index="index",
+        )
+
+        assert _req.path == "/2/conversions/addToCartRate"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {"index": "index"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_add_to_cart_rate_1(self):
+        """
+        get getAddToCartRate with all parameters
+        """
+        _req = await self._client.get_add_to_cart_rate_with_http_info(
+            index="index",
+            start_date="1999-09-19",
+            end_date="2001-01-01",
+            tags="tag",
+        )
+
+        assert _req.path == "/2/conversions/addToCartRate"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {
+                "index": "index",
+                "startDate": "1999-09-19",
+                "endDate": "2001-01-01",
+                "tags": "tag",
+            }.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     async def test_get_average_click_position_0(self):
         """
         get getAverageClickPosition with minimal parameters
@@ -532,11 +571,11 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_conversation_rate_0(self):
+    async def test_get_conversion_rate_0(self):
         """
         get getConversationRate with minimal parameters
         """
-        _req = await self._client.get_conversation_rate_with_http_info(
+        _req = await self._client.get_conversion_rate_with_http_info(
             index="index",
         )
 
@@ -546,11 +585,11 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_conversation_rate_1(self):
+    async def test_get_conversion_rate_1(self):
         """
         get getConversationRate with all parameters
         """
-        _req = await self._client.get_conversation_rate_with_http_info(
+        _req = await self._client.get_conversion_rate_with_http_info(
             index="index",
             start_date="1999-09-19",
             end_date="2001-01-01",
@@ -636,6 +675,84 @@ class TestAnalyticsClient:
         )
 
         assert _req.path == "/2/searches/noResultRate"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {
+                "index": "index",
+                "startDate": "1999-09-19",
+                "endDate": "2001-01-01",
+                "tags": "tag",
+            }.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_purchase_rate_0(self):
+        """
+        get getPurchaseRate with minimal parameters
+        """
+        _req = await self._client.get_purchase_rate_with_http_info(
+            index="index",
+        )
+
+        assert _req.path == "/2/conversions/purchaseRate"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {"index": "index"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_purchase_rate_1(self):
+        """
+        get getPurchaseRate with all parameters
+        """
+        _req = await self._client.get_purchase_rate_with_http_info(
+            index="index",
+            start_date="1999-09-19",
+            end_date="2001-01-01",
+            tags="tag",
+        )
+
+        assert _req.path == "/2/conversions/purchaseRate"
+        assert _req.verb == "GET"
+        assert (
+            _req.query_parameters.items()
+            == {
+                "index": "index",
+                "startDate": "1999-09-19",
+                "endDate": "2001-01-01",
+                "tags": "tag",
+            }.items()
+        )
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_revenue_0(self):
+        """
+        get getRevenue with minimal parameters
+        """
+        _req = await self._client.get_revenue_with_http_info(
+            index="index",
+        )
+
+        assert _req.path == "/2/conversions/revenue"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {"index": "index"}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_revenue_1(self):
+        """
+        get getRevenue with all parameters
+        """
+        _req = await self._client.get_revenue_with_http_info(
+            index="index",
+            start_date="1999-09-19",
+            end_date="2001-01-01",
+            tags="tag",
+        )
+
+        assert _req.path == "/2/conversions/revenue"
         assert _req.verb == "GET"
         assert (
             _req.query_parameters.items()
@@ -1037,6 +1154,7 @@ class TestAnalyticsClient:
             index="index",
             search="mySearch",
             click_analytics=True,
+            revenue_analytics=True,
             start_date="1999-09-19",
             end_date="2001-01-01",
             limit=21,
@@ -1052,6 +1170,7 @@ class TestAnalyticsClient:
                 "index": "index",
                 "search": "mySearch",
                 "clickAnalytics": "true",
+                "revenueAnalytics": "true",
                 "startDate": "1999-09-19",
                 "endDate": "2001-01-01",
                 "limit": "21",
@@ -1083,6 +1202,7 @@ class TestAnalyticsClient:
         _req = await self._client.get_top_searches_with_http_info(
             index="index",
             click_analytics=True,
+            revenue_analytics=True,
             start_date="1999-09-19",
             end_date="2001-01-01",
             order_by="searchCount",
@@ -1099,6 +1219,7 @@ class TestAnalyticsClient:
             == {
                 "index": "index",
                 "clickAnalytics": "true",
+                "revenueAnalytics": "true",
                 "startDate": "1999-09-19",
                 "endDate": "2001-01-01",
                 "orderBy": "searchCount",

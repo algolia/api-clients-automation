@@ -4,12 +4,13 @@ get:
   operationId: getTopHits
   x-acl:
     - analytics
-  summary: Get top hits.
-  description: Return the most popular clicked results in the last 1,000 searches.
+  summary: Retrieve top search results.
+  description: Retrieves the object IDs of the most frequent search results.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'
     - $ref: '../../common/parameters.yml#/Search'
     - $ref: '../../common/parameters.yml#/ClickAnalytics'
+    - $ref: '../../common/parameters.yml#/RevenueAnalytics'
     - $ref: '../../../common/parameters.yml#/StartDate'
     - $ref: '../../../common/parameters.yml#/EndDate'
     - $ref: '../../../common/parameters.yml#/Limit'
@@ -18,6 +19,13 @@ get:
   responses:
     '200':
       description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../common/parameters.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../common/parameters.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../common/parameters.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:

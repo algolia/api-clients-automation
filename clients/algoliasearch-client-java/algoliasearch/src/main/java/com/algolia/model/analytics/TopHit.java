@@ -21,7 +21,7 @@ public class TopHit {
     return this;
   }
 
-  /** Hit. */
+  /** Object ID of a record that's returned as a search result. */
   @javax.annotation.Nonnull
   public String getHit() {
     return hit;

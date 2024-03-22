@@ -5,6 +5,8 @@ package com.algolia.model.analytics;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /** TopSearchWithAnalytics */
@@ -20,7 +22,10 @@ public class TopSearchWithAnalytics {
   private Double clickThroughRate;
 
   @JsonProperty("averageClickPosition")
-  private Integer averageClickPosition;
+  private Double averageClickPosition;
+
+  @JsonProperty("clickPositions")
+  private List<ClickPositionsInner> clickPositions = new ArrayList<>();
 
   @JsonProperty("conversionRate")
   private Double conversionRate;
@@ -42,7 +47,7 @@ public class TopSearchWithAnalytics {
     return this;
   }
 
-  /** User query. */
+  /** Search query. */
   @javax.annotation.Nonnull
   public String getSearch() {
     return search;
@@ -53,9 +58,7 @@ public class TopSearchWithAnalytics {
     return this;
   }
 
-  /**
-   * Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn't `true`).
-   */
+  /** Number of searches. */
   @javax.annotation.Nonnull
   public Integer getCount() {
     return count;
@@ -67,28 +70,43 @@ public class TopSearchWithAnalytics {
   }
 
   /**
-   * [Click-through rate
-   * (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
-   * minimum: 0 maximum: 1
+   * Click-through rate, calculated as number of tracked searches with at least one click event
+   * divided by the number of tracked searches. If null, Algolia didn't receive any search requests
+   * with `clickAnalytics` set to true. minimum: 0 maximum: 1
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Double getClickThroughRate() {
     return clickThroughRate;
   }
 
-  public TopSearchWithAnalytics setAverageClickPosition(Integer averageClickPosition) {
+  public TopSearchWithAnalytics setAverageClickPosition(Double averageClickPosition) {
     this.averageClickPosition = averageClickPosition;
     return this;
   }
 
   /**
-   * Average
-   * [position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position)
-   * of clicked search result.
+   * Average position of a clicked search result in the list of search results. If null, Algolia
+   * didn't receive any search requests with `clickAnalytics` set to true. minimum: 1
    */
-  @javax.annotation.Nonnull
-  public Integer getAverageClickPosition() {
+  @javax.annotation.Nullable
+  public Double getAverageClickPosition() {
     return averageClickPosition;
+  }
+
+  public TopSearchWithAnalytics setClickPositions(List<ClickPositionsInner> clickPositions) {
+    this.clickPositions = clickPositions;
+    return this;
+  }
+
+  public TopSearchWithAnalytics addClickPositions(ClickPositionsInner clickPositionsItem) {
+    this.clickPositions.add(clickPositionsItem);
+    return this;
+  }
+
+  /** List of positions in the search results and clicks associated with this search. */
+  @javax.annotation.Nonnull
+  public List<ClickPositionsInner> getClickPositions() {
+    return clickPositions;
   }
 
   public TopSearchWithAnalytics setConversionRate(Double conversionRate) {
@@ -97,10 +115,11 @@ public class TopSearchWithAnalytics {
   }
 
   /**
-   * [Conversion rate
-   * (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+   * Conversion rate, calculated as number of tracked searches with at least one conversion event
+   * divided by the number of tracked searches. If null, Algolia didn't receive any search requests
+   * with `clickAnalytics` set to true. minimum: 0 maximum: 1
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Double getConversionRate() {
     return conversionRate;
   }
@@ -111,10 +130,10 @@ public class TopSearchWithAnalytics {
   }
 
   /**
-   * Number of tracked searches. This is the number of search requests where the `clickAnalytics`
-   * parameter is `true`.
+   * Number of tracked searches. Tracked searches are search requests where the `clickAnalytics`
+   * parameter is true.
    */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public Integer getTrackedSearchCount() {
     return trackedSearchCount;
   }
@@ -124,7 +143,7 @@ public class TopSearchWithAnalytics {
     return this;
   }
 
-  /** Number of click events. */
+  /** Number of clicks associated with this search. minimum: 0 */
   @javax.annotation.Nonnull
   public Integer getClickCount() {
     return clickCount;
@@ -135,7 +154,7 @@ public class TopSearchWithAnalytics {
     return this;
   }
 
-  /** Number of converted clicks. */
+  /** Number of conversions from this search. minimum: 0 */
   @javax.annotation.Nonnull
   public Integer getConversionCount() {
     return conversionCount;
@@ -166,6 +185,7 @@ public class TopSearchWithAnalytics {
       Objects.equals(this.count, topSearchWithAnalytics.count) &&
       Objects.equals(this.clickThroughRate, topSearchWithAnalytics.clickThroughRate) &&
       Objects.equals(this.averageClickPosition, topSearchWithAnalytics.averageClickPosition) &&
+      Objects.equals(this.clickPositions, topSearchWithAnalytics.clickPositions) &&
       Objects.equals(this.conversionRate, topSearchWithAnalytics.conversionRate) &&
       Objects.equals(this.trackedSearchCount, topSearchWithAnalytics.trackedSearchCount) &&
       Objects.equals(this.clickCount, topSearchWithAnalytics.clickCount) &&
@@ -181,6 +201,7 @@ public class TopSearchWithAnalytics {
       count,
       clickThroughRate,
       averageClickPosition,
+      clickPositions,
       conversionRate,
       trackedSearchCount,
       clickCount,
@@ -197,6 +218,7 @@ public class TopSearchWithAnalytics {
     sb.append("    count: ").append(toIndentedString(count)).append("\n");
     sb.append("    clickThroughRate: ").append(toIndentedString(clickThroughRate)).append("\n");
     sb.append("    averageClickPosition: ").append(toIndentedString(averageClickPosition)).append("\n");
+    sb.append("    clickPositions: ").append(toIndentedString(clickPositions)).append("\n");
     sb.append("    conversionRate: ").append(toIndentedString(conversionRate)).append("\n");
     sb.append("    trackedSearchCount: ").append(toIndentedString(trackedSearchCount)).append("\n");
     sb.append("    clickCount: ").append(toIndentedString(clickCount)).append("\n");

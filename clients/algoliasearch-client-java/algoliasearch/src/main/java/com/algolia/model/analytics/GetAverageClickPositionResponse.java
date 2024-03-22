@@ -19,15 +19,18 @@ public class GetAverageClickPositionResponse {
   private Integer clickCount;
 
   @JsonProperty("dates")
-  private List<AverageClickEvent> dates = new ArrayList<>();
+  private List<DailyAverageClicks> dates = new ArrayList<>();
 
   public GetAverageClickPositionResponse setAverage(Double average) {
     this.average = average;
     return this;
   }
 
-  /** Average count of all click events. */
-  @javax.annotation.Nonnull
+  /**
+   * Average position of a clicked search result in the list of search results. If null, Algolia
+   * didn't receive any search requests with `clickAnalytics` set to true. minimum: 1
+   */
+  @javax.annotation.Nullable
   public Double getAverage() {
     return average;
   }
@@ -37,25 +40,25 @@ public class GetAverageClickPositionResponse {
     return this;
   }
 
-  /** Number of click events. */
+  /** Number of clicks associated with this search. minimum: 0 */
   @javax.annotation.Nonnull
   public Integer getClickCount() {
     return clickCount;
   }
 
-  public GetAverageClickPositionResponse setDates(List<AverageClickEvent> dates) {
+  public GetAverageClickPositionResponse setDates(List<DailyAverageClicks> dates) {
     this.dates = dates;
     return this;
   }
 
-  public GetAverageClickPositionResponse addDates(AverageClickEvent datesItem) {
+  public GetAverageClickPositionResponse addDates(DailyAverageClicks datesItem) {
     this.dates.add(datesItem);
     return this;
   }
 
-  /** Average click positions. */
+  /** Daily average click positions. */
   @javax.annotation.Nonnull
-  public List<AverageClickEvent> getDates() {
+  public List<DailyAverageClicks> getDates() {
     return dates;
   }
 

@@ -10,21 +10,21 @@ import (
 
 // GetClickThroughRateResponse struct for GetClickThroughRateResponse.
 type GetClickThroughRateResponse struct {
-	// [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
-	Rate float64 `json:"rate"`
-	// Number of click events.
+	// Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
+	Rate utils.NullableFloat64 `json:"rate"`
+	// Number of clicks associated with this search.
 	ClickCount int32 `json:"clickCount"`
-	// Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
-	TrackedSearchCount utils.NullableInt32 `json:"trackedSearchCount"`
-	// Click-through rate events.
-	Dates []ClickThroughRateEvent `json:"dates"`
+	// Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
+	TrackedSearchCount int32 `json:"trackedSearchCount"`
+	// Daily click-through rates.
+	Dates []DailyClickThroughRates `json:"dates"`
 }
 
 // NewGetClickThroughRateResponse instantiates a new GetClickThroughRateResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed.
-func NewGetClickThroughRateResponse(rate float64, clickCount int32, trackedSearchCount utils.NullableInt32, dates []ClickThroughRateEvent) *GetClickThroughRateResponse {
+func NewGetClickThroughRateResponse(rate utils.NullableFloat64, clickCount int32, trackedSearchCount int32, dates []DailyClickThroughRates) *GetClickThroughRateResponse {
 	this := &GetClickThroughRateResponse{}
 	this.Rate = rate
 	this.ClickCount = clickCount
@@ -39,27 +39,29 @@ func NewEmptyGetClickThroughRateResponse() *GetClickThroughRateResponse {
 }
 
 // GetRate returns the Rate field value.
+// If the value is explicit nil, the zero value for float64 will be returned.
 func (o *GetClickThroughRateResponse) GetRate() float64 {
-	if o == nil {
+	if o == nil || o.Rate.Get() == nil {
 		var ret float64
 		return ret
 	}
 
-	return o.Rate
+	return *o.Rate.Get()
 }
 
 // GetRateOk returns a tuple with the Rate field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned.
 func (o *GetClickThroughRateResponse) GetRateOk() (*float64, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Rate, true
+	return o.Rate.Get(), o.Rate.IsSet()
 }
 
 // SetRate sets field value.
 func (o *GetClickThroughRateResponse) SetRate(v float64) *GetClickThroughRateResponse {
-	o.Rate = v
+	o.Rate.Set(&v)
 	return o
 }
 
@@ -89,36 +91,34 @@ func (o *GetClickThroughRateResponse) SetClickCount(v int32) *GetClickThroughRat
 }
 
 // GetTrackedSearchCount returns the TrackedSearchCount field value.
-// If the value is explicit nil, the zero value for int32 will be returned.
 func (o *GetClickThroughRateResponse) GetTrackedSearchCount() int32 {
-	if o == nil || o.TrackedSearchCount.Get() == nil {
+	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return *o.TrackedSearchCount.Get()
+	return o.TrackedSearchCount
 }
 
 // GetTrackedSearchCountOk returns a tuple with the TrackedSearchCount field value
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned.
 func (o *GetClickThroughRateResponse) GetTrackedSearchCountOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.TrackedSearchCount.Get(), o.TrackedSearchCount.IsSet()
+	return &o.TrackedSearchCount, true
 }
 
 // SetTrackedSearchCount sets field value.
 func (o *GetClickThroughRateResponse) SetTrackedSearchCount(v int32) *GetClickThroughRateResponse {
-	o.TrackedSearchCount.Set(&v)
+	o.TrackedSearchCount = v
 	return o
 }
 
 // GetDates returns the Dates field value.
-func (o *GetClickThroughRateResponse) GetDates() []ClickThroughRateEvent {
+func (o *GetClickThroughRateResponse) GetDates() []DailyClickThroughRates {
 	if o == nil {
-		var ret []ClickThroughRateEvent
+		var ret []DailyClickThroughRates
 		return ret
 	}
 
@@ -127,7 +127,7 @@ func (o *GetClickThroughRateResponse) GetDates() []ClickThroughRateEvent {
 
 // GetDatesOk returns a tuple with the Dates field value
 // and a boolean to check if the value has been set.
-func (o *GetClickThroughRateResponse) GetDatesOk() ([]ClickThroughRateEvent, bool) {
+func (o *GetClickThroughRateResponse) GetDatesOk() ([]DailyClickThroughRates, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -135,7 +135,7 @@ func (o *GetClickThroughRateResponse) GetDatesOk() ([]ClickThroughRateEvent, boo
 }
 
 // SetDates sets field value.
-func (o *GetClickThroughRateResponse) SetDates(v []ClickThroughRateEvent) *GetClickThroughRateResponse {
+func (o *GetClickThroughRateResponse) SetDates(v []DailyClickThroughRates) *GetClickThroughRateResponse {
 	o.Dates = v
 	return o
 }
@@ -143,13 +143,13 @@ func (o *GetClickThroughRateResponse) SetDates(v []ClickThroughRateEvent) *GetCl
 func (o GetClickThroughRateResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
 	if true {
-		toSerialize["rate"] = o.Rate
+		toSerialize["rate"] = o.Rate.Get()
 	}
 	if true {
 		toSerialize["clickCount"] = o.ClickCount
 	}
 	if true {
-		toSerialize["trackedSearchCount"] = o.TrackedSearchCount.Get()
+		toSerialize["trackedSearchCount"] = o.TrackedSearchCount
 	}
 	if true {
 		toSerialize["dates"] = o.Dates
