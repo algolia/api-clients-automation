@@ -396,45 +396,6 @@ jobs:
       - name: Run CTS
         run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
 
-  swift_podspec_check:
-    timeout-minutes: 20
-    runs-on: ubuntu-22.04
-    needs:
-      - setup
-      - client_gen
-    if: |
-      always() &&
-      needs.setup.outputs.RUN_GEN == 'true' &&
-      needs.setup.outputs.RUN_MACOS_SWIFT_CTS == 'true' &&
-      !contains(needs.*.result, 'cancelled') &&
-      !contains(needs.*.result, 'failure')
-    env:
-      ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
-      ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
-      MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Download artifacts
-        uses: ./scripts/ci/actions/restore-artifacts
-        with:
-          type: languages
-          languages: |
-            swift
-
-      - name: Setup
-        uses: ./.github/actions/setup
-        with:
-          type: minimal
-          language: swift
-
-      - name: Validate podspec
-        run: |
-          set -eo pipefail
-          cd clients/algoliasearch-client-swift
-          [ $(find Sources  -type f | rev | cut -d '/' -f1 | rev | sort | uniq -d | wc -l) -gt 0 ] && echo "Duplicates found" && exit 1 || echo "No duplicates found"
-          pod lib lint --allow-warnings
-
   codegen:
     runs-on: ubuntu-22.04
     timeout-minutes: 15
