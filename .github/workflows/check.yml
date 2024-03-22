@@ -338,14 +338,6 @@ jobs:
             cat $FILE
           fi
 
-      - name: Run Swift CocoaPods validity
-        if: ${{ matrix.client.language == 'swift' && startsWith(github.ref, 'refs/heads/chore/prepare-release-') }}
-        run: |
-          set -eo pipefail
-          cd ${{ matrix.client.path }}
-          [ $(find Sources  -type f | rev | cut -d '/' -f1 | rev | sort | uniq -d | wc -l) -gt 0 ] && echo "Duplicates found" && exit 1 || echo "No duplicates found"
-          pod lib lint --allow-warnings
-
       - name: Remove previous CTS output
         run: rm -rf ${{ matrix.client.testsToDelete }} || true
 
@@ -403,6 +395,14 @@ jobs:
 
       - name: Run CTS
         run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
+
+      - name: Run Swift CocoaPods validity
+        if: ${{ startsWith(github.ref, 'refs/heads/chore/prepare-release-') }}
+        run: |
+          set -eo pipefail
+          cd clients/algoliasearch-client-swift
+          [ $(find Sources  -type f | rev | cut -d '/' -f1 | rev | sort | uniq -d | wc -l) -gt 0 ] && echo "Duplicates found" && exit 1 || echo "No duplicates found"
+          pod lib lint --allow-warnings
 
   codegen:
     runs-on: ubuntu-22.04
