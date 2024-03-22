@@ -397,7 +397,6 @@ jobs:
         run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
 
       - name: Run Swift CocoaPods validity
-        if: ${{ startsWith(github.ref, 'refs/heads/chore/prepare-release-') }}
         run: |
           set -eo pipefail
           cd clients/algoliasearch-client-swift
