@@ -504,11 +504,11 @@ final class SearchClientRequestsTests: XCTestCase {
             batchDictionaryEntriesParams: BatchDictionaryEntriesParams(requests: [
                 BatchDictionaryEntriesRequest(action: DictionaryAction.addEntry, body: DictionaryEntry(
                     objectID: "1",
-                    language: SupportedLanguage.en
+                    language: SearchSupportedLanguage.en
                 )),
                 BatchDictionaryEntriesRequest(
                     action: DictionaryAction.deleteEntry,
-                    body: DictionaryEntry(objectID: "2", language: SupportedLanguage.fr)
+                    body: DictionaryEntry(objectID: "2", language: SearchSupportedLanguage.fr)
                 ),
             ])
         )
@@ -547,7 +547,7 @@ final class SearchClientRequestsTests: XCTestCase {
                 requests: [
                     BatchDictionaryEntriesRequest(action: DictionaryAction.addEntry, body: DictionaryEntry(
                         objectID: "1",
-                        language: SupportedLanguage.en,
+                        language: SearchSupportedLanguage.en,
                         word: "fancy",
                         words: ["believe", "algolia"],
                         decomposition: ["trust", "algolia"],
@@ -557,7 +557,7 @@ final class SearchClientRequestsTests: XCTestCase {
                         action: DictionaryAction.deleteEntry,
                         body: DictionaryEntry(
                             objectID: "2",
-                            language: SupportedLanguage.fr,
+                            language: SearchSupportedLanguage.fr,
                             word: "humility",
                             words: ["candor", "algolia"],
                             decomposition: ["grit", "algolia"],
@@ -601,7 +601,7 @@ final class SearchClientRequestsTests: XCTestCase {
                 action: DictionaryAction.addEntry,
                 body: DictionaryEntry(from: [
                     "objectID": AnyCodable("1"),
-                    "language": AnyCodable(SupportedLanguage.en),
+                    "language": AnyCodable(SearchSupportedLanguage.en),
                     "additional": AnyCodable("try me"),
                 ])
             )])
@@ -634,7 +634,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.browseWithHTTPInfo(indexName: "cts_e2e_browse")
+        let response: Response<BrowseResponse<Hit>> = try await client.browseWithHTTPInfo(indexName: "cts_e2e_browse")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -656,7 +656,8 @@ final class SearchClientRequestsTests: XCTestCase {
             return
         }
 
-        let e2eResponse = try await e2eClient.browseWithHTTPInfo(indexName: "cts_e2e_browse")
+        let e2eResponse: Response<BrowseResponse<Hit>> = try await e2eClient
+            .browseWithHTTPInfo(indexName: "cts_e2e_browse")
         let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
         let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
 
@@ -680,7 +681,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.browseWithHTTPInfo(
+        let response: Response<BrowseResponse<Hit>> = try await client.browseWithHTTPInfo(
             indexName: "indexName",
             browseParams: BrowseParams.browseParamsObject(BrowseParamsObject(
                 query: "myQuery",
@@ -714,7 +715,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.browseWithHTTPInfo(
+        let response: Response<BrowseResponse<Hit>> = try await client.browseWithHTTPInfo(
             indexName: "indexName",
             browseParams: BrowseParams.browseParamsObject(BrowseParamsObject(cursor: "test"))
         )
@@ -1835,7 +1836,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client
+        let response: Response<GetObjectsResponse<Hit>> = try await client
             .getObjectsWithHTTPInfo(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(
                 attributesToRetrieve: ["attr1", "attr2"],
                 objectID: "uniqueID",
@@ -2755,7 +2756,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client
+        let response: Response<SearchResponses<Hit>> = try await client
             .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
                 SearchQuery
                     .searchForHits(SearchForHits(indexName: "cts_e2e_search_empty_index")),
@@ -2781,7 +2782,7 @@ final class SearchClientRequestsTests: XCTestCase {
             return
         }
 
-        let e2eResponse = try await e2eClient
+        let e2eResponse: Response<SearchResponses<Hit>> = try await e2eClient
             .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
                 SearchQuery
                     .searchForHits(SearchForHits(indexName: "cts_e2e_search_empty_index")),
@@ -2809,14 +2810,15 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(
-            requests: [SearchQuery.searchForFacets(SearchForFacets(
-                facet: "editor",
-                indexName: "cts_e2e_search_facet",
-                type: SearchTypeFacet.facet
-            ))],
-            strategy: SearchStrategy.stopIfEnoughMatches
-        ))
+        let response: Response<SearchResponses<Hit>> = try await client
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(
+                requests: [SearchQuery.searchForFacets(SearchForFacets(
+                    facet: "editor",
+                    indexName: "cts_e2e_search_facet",
+                    type: SearchTypeFacet.facet
+                ))],
+                strategy: SearchStrategy.stopIfEnoughMatches
+            ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2840,14 +2842,15 @@ final class SearchClientRequestsTests: XCTestCase {
             return
         }
 
-        let e2eResponse = try await e2eClient.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(
-            requests: [SearchQuery.searchForFacets(SearchForFacets(
-                facet: "editor",
-                indexName: "cts_e2e_search_facet",
-                type: SearchTypeFacet.facet
-            ))],
-            strategy: SearchStrategy.stopIfEnoughMatches
-        ))
+        let e2eResponse: Response<SearchResponses<Hit>> = try await e2eClient
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(
+                requests: [SearchQuery.searchForFacets(SearchForFacets(
+                    facet: "editor",
+                    indexName: "cts_e2e_search_facet",
+                    type: SearchTypeFacet.facet
+                ))],
+                strategy: SearchStrategy.stopIfEnoughMatches
+            ))
         let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
         let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
 
@@ -2871,7 +2874,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client
+        let response: Response<SearchResponses<Hit>> = try await client
             .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
                 SearchQuery
                     .searchForHits(SearchForHits(
@@ -2909,17 +2912,18 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(
-            requests: [SearchQuery.searchForFacets(SearchForFacets(
-                query: "theQuery",
-                maxFacetHits: 50,
-                facet: "theFacet",
-                indexName: "theIndexName",
-                facetQuery: "theFacetQuery",
-                type: SearchTypeFacet.facet
-            ))],
-            strategy: SearchStrategy.stopIfEnoughMatches
-        ))
+        let response: Response<SearchResponses<Hit>> = try await client
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(
+                requests: [SearchQuery.searchForFacets(SearchForFacets(
+                    query: "theQuery",
+                    maxFacetHits: 50,
+                    facet: "theFacet",
+                    indexName: "theIndexName",
+                    facetQuery: "theFacetQuery",
+                    type: SearchTypeFacet.facet
+                ))],
+                strategy: SearchStrategy.stopIfEnoughMatches
+            ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2948,19 +2952,22 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(
-            requests: [
-                SearchQuery.searchForHits(SearchForHits(indexName: "theIndexName")),
-                SearchQuery
-                    .searchForFacets(SearchForFacets(
-                        facet: "theFacet",
-                        indexName: "theIndexName2",
-                        type: SearchTypeFacet.facet
-                    )),
-                SearchQuery.searchForHits(SearchForHits(indexName: "theIndexName", type: SearchTypeDefault.`default`)),
-            ],
-            strategy: SearchStrategy.stopIfEnoughMatches
-        ))
+        let response: Response<SearchResponses<Hit>> = try await client
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(
+                requests: [
+                    SearchQuery.searchForHits(SearchForHits(indexName: "theIndexName")),
+                    SearchQuery
+                        .searchForFacets(SearchForFacets(
+                            facet: "theFacet",
+                            indexName: "theIndexName2",
+                            type: SearchTypeFacet.facet
+                        )),
+                    SearchQuery.searchForHits(
+                        SearchForHits(indexName: "theIndexName", type: SearchTypeDefault.`default`)
+                    ),
+                ],
+                strategy: SearchStrategy.stopIfEnoughMatches
+            ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -2989,22 +2996,23 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(
-            requests: [SearchQuery.searchForFacets(SearchForFacets(
-                query: "theQuery",
-                maxFacetHits: 50,
-                facet: "theFacet",
-                indexName: "theIndexName",
-                facetQuery: "theFacetQuery",
-                type: SearchTypeFacet.facet
-            )), SearchQuery.searchForHits(SearchForHits(
-                query: "myQuery",
-                hitsPerPage: 50,
-                indexName: "theIndexName",
-                type: SearchTypeDefault.`default`
-            ))],
-            strategy: SearchStrategy.stopIfEnoughMatches
-        ))
+        let response: Response<SearchResponses<Hit>> = try await client
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(
+                requests: [SearchQuery.searchForFacets(SearchForFacets(
+                    query: "theQuery",
+                    maxFacetHits: 50,
+                    facet: "theFacet",
+                    indexName: "theIndexName",
+                    facetQuery: "theFacetQuery",
+                    type: SearchTypeFacet.facet
+                )), SearchQuery.searchForHits(SearchForHits(
+                    query: "myQuery",
+                    hitsPerPage: 50,
+                    indexName: "theIndexName",
+                    type: SearchTypeDefault.`default`
+                ))],
+                strategy: SearchStrategy.stopIfEnoughMatches
+            ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -3033,39 +3041,40 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
-            SearchQuery.searchForHits(SearchForHits(
-                facetFilters: SearchFacetFilters.string("mySearch:filters"),
-                optionalFilters: SearchOptionalFilters.string("mySearch:filters"),
-                numericFilters: SearchNumericFilters.string("mySearch:filters"),
-                tagFilters: SearchTagFilters.string("mySearch:filters"),
-                reRankingApplyFilter: SearchReRankingApplyFilter.string("mySearch:filters"),
-                indexName: "theIndexName"
-            )),
-            SearchQuery.searchForHits(SearchForHits(
-                facetFilters: SearchFacetFilters.arrayOfSearchMixedSearchFilters([
-                    SearchMixedSearchFilters.string("mySearch:filters"),
-                    SearchMixedSearchFilters.arrayOfString(["mySearch:filters"]),
-                ]),
-                optionalFilters: SearchOptionalFilters.arrayOfSearchMixedSearchFilters([
-                    SearchMixedSearchFilters.string("mySearch:filters"),
-                    SearchMixedSearchFilters.arrayOfString(["mySearch:filters"]),
-                ]),
-                numericFilters: SearchNumericFilters.arrayOfSearchMixedSearchFilters([
-                    SearchMixedSearchFilters.string("mySearch:filters"),
-                    SearchMixedSearchFilters.arrayOfString(["mySearch:filters"]),
-                ]),
-                tagFilters: SearchTagFilters.arrayOfSearchMixedSearchFilters([
-                    SearchMixedSearchFilters.string("mySearch:filters"),
-                    SearchMixedSearchFilters.arrayOfString(["mySearch:filters"]),
-                ]),
-                reRankingApplyFilter: SearchReRankingApplyFilter.arrayOfSearchMixedSearchFilters([
-                    SearchMixedSearchFilters.string("mySearch:filters"),
-                    SearchMixedSearchFilters.arrayOfString(["mySearch:filters"]),
-                ]),
-                indexName: "theIndexName"
-            )),
-        ]))
+        let response: Response<SearchResponses<Hit>> = try await client
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
+                SearchQuery.searchForHits(SearchForHits(
+                    facetFilters: SearchFacetFilters.string("mySearch:filters"),
+                    optionalFilters: SearchOptionalFilters.string("mySearch:filters"),
+                    numericFilters: SearchNumericFilters.string("mySearch:filters"),
+                    tagFilters: SearchTagFilters.string("mySearch:filters"),
+                    reRankingApplyFilter: SearchReRankingApplyFilter.string("mySearch:filters"),
+                    indexName: "theIndexName"
+                )),
+                SearchQuery.searchForHits(SearchForHits(
+                    facetFilters: SearchFacetFilters.arrayOfSearchMixedSearchFilters([
+                        SearchMixedSearchFilters.string("mySearch:filters"),
+                        SearchMixedSearchFilters.arrayOfString(["mySearch:filters"]),
+                    ]),
+                    optionalFilters: SearchOptionalFilters.arrayOfSearchMixedSearchFilters([
+                        SearchMixedSearchFilters.string("mySearch:filters"),
+                        SearchMixedSearchFilters.arrayOfString(["mySearch:filters"]),
+                    ]),
+                    numericFilters: SearchNumericFilters.arrayOfSearchMixedSearchFilters([
+                        SearchMixedSearchFilters.string("mySearch:filters"),
+                        SearchMixedSearchFilters.arrayOfString(["mySearch:filters"]),
+                    ]),
+                    tagFilters: SearchTagFilters.arrayOfSearchMixedSearchFilters([
+                        SearchMixedSearchFilters.string("mySearch:filters"),
+                        SearchMixedSearchFilters.arrayOfString(["mySearch:filters"]),
+                    ]),
+                    reRankingApplyFilter: SearchReRankingApplyFilter.arrayOfSearchMixedSearchFilters([
+                        SearchMixedSearchFilters.string("mySearch:filters"),
+                        SearchMixedSearchFilters.arrayOfString(["mySearch:filters"]),
+                    ]),
+                    indexName: "theIndexName"
+                )),
+            ]))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -3094,7 +3103,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client
+        let response: Response<SearchResponses<Hit>> = try await client
             .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
                 SearchQuery
                     .searchForHits(SearchForHits(
@@ -3157,7 +3166,7 @@ final class SearchClientRequestsTests: XCTestCase {
                         ignorePlurals: SearchIgnorePlurals.bool(false),
                         removeStopWords: SearchRemoveStopWords.bool(true),
                         keepDiacriticsOnCharacters: "",
-                        queryLanguages: [SupportedLanguage.fr],
+                        queryLanguages: [SearchSupportedLanguage.fr],
                         decompoundQuery: true,
                         enableRules: true,
                         enablePersonalization: true,
@@ -3273,7 +3282,7 @@ final class SearchClientRequestsTests: XCTestCase {
                 query: "foo",
                 page: 4,
                 hitsPerPage: 2,
-                language: SupportedLanguage.fr
+                language: SearchSupportedLanguage.fr
             )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -3397,7 +3406,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchSingleIndexWithHTTPInfo(indexName: "indexName")
+        let response: Response<SearchResponse<Hit>> = try await client
+            .searchSingleIndexWithHTTPInfo(indexName: "indexName")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -3424,7 +3434,8 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchSingleIndexWithHTTPInfo(indexName: "cts_e2e_space in index")
+        let response: Response<SearchResponse<Hit>> = try await client
+            .searchSingleIndexWithHTTPInfo(indexName: "cts_e2e_space in index")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
@@ -3446,7 +3457,8 @@ final class SearchClientRequestsTests: XCTestCase {
             return
         }
 
-        let e2eResponse = try await e2eClient.searchSingleIndexWithHTTPInfo(indexName: "cts_e2e_space in index")
+        let e2eResponse: Response<SearchResponse<Hit>> = try await e2eClient
+            .searchSingleIndexWithHTTPInfo(indexName: "cts_e2e_space in index")
 
         XCTAssertEqual(e2eResponse.statusCode, 200)
     }
@@ -3460,7 +3472,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchSingleIndexWithHTTPInfo(
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
             indexName: "indexName",
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
                 query: "myQuery",
@@ -3494,7 +3506,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.searchSingleIndexWithHTTPInfo(
+        let response: Response<SearchResponse<Hit>> = try await client.searchSingleIndexWithHTTPInfo(
             indexName: "cts_e2e_browse",
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
                 query: "batman mask of the phantasm",
@@ -3525,7 +3537,7 @@ final class SearchClientRequestsTests: XCTestCase {
             return
         }
 
-        let e2eResponse = try await e2eClient.searchSingleIndexWithHTTPInfo(
+        let e2eResponse: Response<SearchResponse<Hit>> = try await e2eClient.searchSingleIndexWithHTTPInfo(
             indexName: "cts_e2e_browse",
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
                 query: "batman mask of the phantasm",
@@ -3891,7 +3903,7 @@ final class SearchClientRequestsTests: XCTestCase {
             indexName: "theIndexName",
             indexSettings: IndexSettings(
                 ignorePlurals: SearchIgnorePlurals
-                    .arrayOfSupportedLanguage([SupportedLanguage.fr])
+                    .arrayOfSearchSupportedLanguage([SearchSupportedLanguage.fr])
             ),
             forwardToReplicas: true
         )
@@ -3968,7 +3980,7 @@ final class SearchClientRequestsTests: XCTestCase {
             indexName: "theIndexName",
             indexSettings: IndexSettings(
                 removeStopWords: SearchRemoveStopWords
-                    .arrayOfSupportedLanguage([SupportedLanguage.fr])
+                    .arrayOfSearchSupportedLanguage([SearchSupportedLanguage.fr])
             ),
             forwardToReplicas: true
         )
@@ -4089,7 +4101,7 @@ final class SearchClientRequestsTests: XCTestCase {
                 attributesToTransliterate: ["algolia"],
                 camelCaseAttributes: ["algolia"],
                 decompoundedAttributes: ["algolia": "aloglia"],
-                indexLanguages: [SupportedLanguage.fr],
+                indexLanguages: [SearchSupportedLanguage.fr],
                 disablePrefixOnAttributes: ["algolia"],
                 allowCompressionOfIntegerArray: true,
                 numericAttributesForFiltering: ["algolia"],
@@ -4117,7 +4129,7 @@ final class SearchClientRequestsTests: XCTestCase {
                 ignorePlurals: SearchIgnorePlurals.bool(false),
                 removeStopWords: SearchRemoveStopWords.bool(false),
                 keepDiacriticsOnCharacters: "abc",
-                queryLanguages: [SupportedLanguage.fr],
+                queryLanguages: [SearchSupportedLanguage.fr],
                 decompoundQuery: false,
                 enableRules: true,
                 enablePersonalization: true,

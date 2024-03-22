@@ -62,3 +62,34 @@ describe('parameters', () => {
     expect(result.host).toEqual('status.algolia.com');
   });
 });
+
+describe('init', () => {
+  test('sets authMode', async () => {
+    const qpClient = monitoringClient('foo', 'bar', {
+      authMode: 'WithinQueryParameters',
+      requester: echoRequester(),
+    });
+    const headerClient = monitoringClient('foo', 'bar', {
+      authMode: 'WithinHeaders',
+      requester: echoRequester(),
+    });
+
+    const qpResult = (await qpClient.customGet({
+      path: '1/foo',
+    })) as unknown as EchoResponse;
+    expect(qpResult.searchParams).toEqual({
+      'x-algolia-api-key': 'bar',
+      'x-algolia-application-id': 'foo',
+    });
+
+    const headerResult = (await headerClient.customGet({
+      path: '1/bar',
+    })) as unknown as EchoResponse;
+    expect(headerResult.headers).toEqual({
+      accept: 'application/json',
+      'content-type': 'text/plain',
+      'x-algolia-api-key': 'bar',
+      'x-algolia-application-id': 'foo',
+    });
+  });
+});

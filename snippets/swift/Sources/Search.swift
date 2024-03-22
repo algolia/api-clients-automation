@@ -114,11 +114,11 @@ final class SearchClientSnippet {
             batchDictionaryEntriesParams: BatchDictionaryEntriesParams(requests: [
                 BatchDictionaryEntriesRequest(action: DictionaryAction.addEntry, body: DictionaryEntry(
                     objectID: "1",
-                    language: SupportedLanguage.en
+                    language: SearchSupportedLanguage.en
                 )),
                 BatchDictionaryEntriesRequest(
                     action: DictionaryAction.deleteEntry,
-                    body: DictionaryEntry(objectID: "2", language: SupportedLanguage.fr)
+                    body: DictionaryEntry(objectID: "2", language: SearchSupportedLanguage.fr)
                 ),
             ])
         )
@@ -134,7 +134,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.browse(indexName: "cts_e2e_browse")
+        let _: BrowseResponse<Hit> = try await client.browse(indexName: "cts_e2e_browse")
         // SEPARATOR<
     }
 
@@ -401,11 +401,12 @@ final class SearchClientSnippet {
         let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getObjects(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(
-            attributesToRetrieve: ["attr1", "attr2"],
-            objectID: "uniqueID",
-            indexName: "theIndexName"
-        )]))
+        let _: GetObjectsResponse<Hit> = try await client
+            .getObjects(getObjectsParams: GetObjectsParams(requests: [GetObjectsRequest(
+                attributesToRetrieve: ["attr1", "attr2"],
+                objectID: "uniqueID",
+                indexName: "theIndexName"
+            )]))
         // SEPARATOR<
     }
 
@@ -774,7 +775,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client
+        let _: SearchResponses<Hit> = try await client
             .search(searchMethodParams: SearchMethodParams(requests: [
                 SearchQuery
                     .searchForHits(SearchForHits(indexName: "cts_e2e_search_empty_index")),
@@ -836,7 +837,7 @@ final class SearchClientSnippet {
         let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.searchSingleIndex(indexName: "indexName")
+        let _: SearchResponse<Hit> = try await client.searchSingleIndex(indexName: "indexName")
         // SEPARATOR<
     }
 
