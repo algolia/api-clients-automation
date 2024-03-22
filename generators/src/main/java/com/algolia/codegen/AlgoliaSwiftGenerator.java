@@ -184,6 +184,8 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     additionalProperties.put(SWIFT_PACKAGE_PATH, "Sources" + File.separator + getClientName(CLIENT));
     additionalProperties.put(OBJC_COMPATIBLE, false);
     additionalProperties.put(USE_BACKTICK_ESCAPES, true);
+    additionalProperties.put(VALIDATABLE, false);
+    additionalProperties.put("hashableModels", false);
 
     additionalProperties.put("lambda.type-to-name", (Mustache.Lambda) (fragment, writer) -> writer.write(typeToName(fragment.execute())));
     additionalProperties.put(
@@ -281,56 +283,10 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     return name;
   }
 
-  private void markOneOfChildrenForSwift(Map<String, ModelsMap> models, CodegenModel model) {
-    var oneOfList = new ArrayList<Map<String, Object>>();
-    for (String oneOf : model.oneOf) {
-      var oneOfModel = new HashMap<String, Object>();
-      oneOfModel.put("type", oneOf);
-      var isList = oneOf.charAt(0) == '[' && oneOf.charAt(oneOf.length() - 1) == ']';
-      var isDictionary = isList && oneOf.contains(": ");
-      var name = oneOf;
-      if (isDictionary) {
-        isList = false;
-        name = oneOf.replace("[", "DictionaryOf").replace(": ", "To").replace("]", "");
-        oneOfModel.put("listElementType", oneOf.replace("[", "").replace("]", ""));
-      }
-      if (isList) {
-        name = oneOf.replace("[", "ArrayOf").replace("]", "");
-      }
-      oneOfModel.put("name", name);
-      oneOfModel.put("isList", isList);
-      oneOfModel.put("isDictionary", isDictionary);
-      OneOf.markCompounds(models, oneOf, oneOfModel, model);
-      oneOfList.add(oneOfModel);
-    }
-    oneOfList.sort(OneOf.comparator); // have fields with "discriminators" in the start of the list
-    model.vendorExtensions.put("x-one-of-list", oneOfList);
-  }
-
-  private void updateModelsOneOfForSwift(Map<String, ModelsMap> models, String modelPackage) {
-    for (ModelsMap modelContainer : models.values()) {
-      // modelContainers always have 1 and only 1 model in our specs
-      var model = modelContainer.getModels().get(0).getModel();
-      if (model.oneOf.isEmpty()) continue;
-      this.markOneOfChildrenForSwift(models, model);
-      OneOf.generateSealedChildren(models, modelPackage, model);
-      model.vendorExtensions.put("x-is-one-of", true);
-      model.vendorExtensions.put("x-one-of-explicit-name", Helpers.shouldUseExplicitOneOfName(model.oneOf));
-    }
-  }
-
   @Override
   public void processOpenAPI(OpenAPI openAPI) {
     super.processOpenAPI(openAPI);
     Helpers.generateServers(super.fromServers(openAPI.getServers()), additionalProperties);
-  }
-
-  @Override
-  public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
-    Map<String, ModelsMap> models = super.postProcessAllModels(objs);
-    this.updateModelsOneOfForSwift(models, modelPackage);
-    GenericPropagator.propagateGenericsToModels(models);
-    return models;
   }
 
   @Override
@@ -339,6 +295,70 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     Helpers.removeHelpers(operations);
     GenericPropagator.propagateGenericsToOperations(operations, models);
     return operations;
+  }
+
+  @Override
+  public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
+    Map<String, ModelsMap> models = super.postProcessAllModels(objs);
+    GenericPropagator.propagateGenericsToModels(models);
+    OneOf.updateModelsOneOf(models, modelPackage);
+    OneOf.addOneOfMetadata(models);
+    return models;
+  }
+
+  private Iterator getCurrentIterator(int i, CodegenModel cm) {
+    List<List<CodegenProperty>> varContainers = List.of(cm.vars, cm.allVars, cm.requiredVars, cm.optionalVars);
+    return varContainers.get(i).iterator();
+  }
+
+  @Override
+  public ModelsMap postProcessModels(ModelsMap modelsMap) {
+    ModelsMap processedModels = this.postProcessModelsEnum(modelsMap);
+
+    // Iterate through each model
+    for (ModelMap modelMap : processedModels.getModels()) {
+      CodegenModel codegenModel = modelMap.getModel();
+      var codegenModelVars = List
+        .of(codegenModel.vars, codegenModel.allVars, codegenModel.requiredVars, codegenModel.optionalVars)
+        .stream()
+        .flatMap(Collection::stream)
+        .toList();
+      boolean modelHasEscapedPropertyName = false;
+
+      // Iterate through each property of the model
+      for (CodegenProperty property : codegenModelVars) {
+        // Check if property name is different from base name
+        if (!property.name.equals(property.baseName)) {
+          property.vendorExtensions.put("x-codegen-escaped-property-name", true);
+          modelHasEscapedPropertyName = true;
+        }
+
+        // Check if the property is null encodable
+        if (
+          property.vendorExtensions.containsKey("x-null-encodable") &&
+          property.vendorExtensions.get("x-null-encodable").toString().equals("true")
+        ) {
+          // Set null encodable default value
+          if ("null".equals(property.defaultValue)) {
+            property.vendorExtensions.put("x-null-encodable-default-value", ".encodeValue(" + property.defaultValue + ")");
+          } else {
+            property.vendorExtensions.put("x-null-encodable-default-value", ".encodeNull");
+          }
+        }
+      }
+
+      // Set vendor extension if model has properties with escaped names
+      if (modelHasEscapedPropertyName) {
+        codegenModel.vendorExtensions.put("x-codegen-has-escaped-property-names", true);
+      }
+    }
+
+    return processedModels;
+  }
+
+  @Override
+  public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
+    return Helpers.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 
   @Override
@@ -382,11 +402,6 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
   @Override
   public String toApiName(String name) {
     return camelize(getApiNamePrefix() + name + getApiNameSuffix());
-  }
-
-  @Override
-  public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
-    return Helpers.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 
   @Override

@@ -1,5 +1,7 @@
 package com.algolia.codegen.cts.tests;
 
+import static org.openapitools.codegen.utils.StringUtils.camelize;
+
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
 import java.io.File;
@@ -89,6 +91,9 @@ public class TestsRequest extends TestsGenerator {
         test.put("method", operationId);
         test.put("testName", req.testName == null ? operationId + i : req.testName);
         test.put("testIndex", i);
+        if (ope.returnType != null && ope.returnType.length() > 0) {
+          test.put("returnType", camelize(ope.returnType));
+        }
 
         try {
           test.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
