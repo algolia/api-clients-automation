@@ -197,7 +197,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
       "lambda.to-codable",
       (Mustache.Lambda) (fragment, writer) -> {
         String initialType = fragment.execute();
-        writer.write(initialType.equalsIgnoreCase("AnyCodable") ? "[String: AnyCodable]" : initialType);
+        writer.write(initialType.equalsIgnoreCase("AnyCodable") ? "Codable" : initialType);
       }
     );
 
