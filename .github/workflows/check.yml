@@ -339,7 +339,7 @@ jobs:
           fi
 
       - name: Run Swift CocoaPods validity
-        if: ${{ matrix.client.language == 'swift' }} && startsWith(github.ref, 'refs/heads/chore/prepare-release-')
+        if: ${{ matrix.client.language == 'swift' && startsWith(github.ref, 'refs/heads/chore/prepare-release-') }}
         run: |
           set -eo pipefail
           cd ${{ matrix.client.path }}
