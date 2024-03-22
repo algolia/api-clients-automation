@@ -33,11 +33,11 @@ describe('api', () => {
   });
 
   it('throws with undefined API key', () => {
-    expect(() => algoliasearch('APP_ID', '')).toThrow("`apiKey` is missing")
+    expect(() => algoliasearch('APP_ID', '')).toThrow('`apiKey` is missing');
   });
 
   it('throws with undefined app ID', () => {
-    expect(() => algoliasearch('', 'API_KEY')).toThrow("`appId` is missing")
+    expect(() => algoliasearch('', 'API_KEY')).toThrow('`appId` is missing');
   });
 
   it('provides the search client at the root of the API', () => {
