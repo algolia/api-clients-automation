@@ -339,7 +339,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
           property.vendorExtensions.get("x-null-encodable").toString().equals("true")
         ) {
           // Set null encodable default value
-          if (property.defaultValue != null && !property.defaultValue.equals("null")) {
+          if ("null".equals(property.defaultValue)) {
             property.vendorExtensions.put("x-null-encodable-default-value", ".encodeValue(" + property.defaultValue + ")");
           } else {
             property.vendorExtensions.put("x-null-encodable-default-value", ".encodeNull");
