@@ -368,7 +368,6 @@ jobs:
       - client_gen
     if: |
       always() &&
-      github.ref == 'refs/heads/main' &&
       needs.setup.outputs.RUN_GEN == 'true' &&
       needs.setup.outputs.RUN_MACOS_SWIFT_CTS == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
