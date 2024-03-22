@@ -36,7 +36,7 @@ class BrowserTests: XCTestCase {
             ]),
         ]
 
-        let client = try MockSearchClient<BrowseResponse>(appID: "test-app-id", apiKey: "test-api-key")
+        let client = try MockSearchClient<BrowseResponse<Hit>>(appID: "test-app-id", apiKey: "test-api-key")
 
         client.setResponses([
             BrowseResponse(
@@ -172,7 +172,7 @@ class BrowserTests: XCTestCase {
 
     func testSearchForHitsSuccess() async throws {
         let indexName = "yourIndexName"
-        let expected: [SearchResponse] = try [
+        let expected: [SearchResponse<Hit>] = try [
             .init(
                 hitsPerPage: 2,
                 nbHits: 2,
@@ -212,7 +212,7 @@ class BrowserTests: XCTestCase {
             ),
         ]
 
-        let client = try MockSearchClient<SearchResponses>(appID: "test-app-id", apiKey: "test-api-key")
+        let client = try MockSearchClient<SearchResponses<Hit>>(appID: "test-app-id", apiKey: "test-api-key")
 
         client.setResponses([
             .init(results: [
@@ -221,7 +221,7 @@ class BrowserTests: XCTestCase {
             ]),
         ])
 
-        let responses = try await client.searchForHits(
+        let responses: [SearchResponse<Hit>] = try await client.searchForHitsWithResponse(
             searchMethodParams: SearchMethodParams(requests: [
                 .searchForHits(SearchForHits(
                     indexName: indexName
@@ -258,7 +258,7 @@ class BrowserTests: XCTestCase {
             ),
         ]
 
-        let client = try MockSearchClient<SearchResponses>(appID: "test-app-id", apiKey: "test-api-key")
+        let client = try MockSearchClient<SearchResponses<Hit>>(appID: "test-app-id", apiKey: "test-api-key")
 
         client.setResponses([
             .init(results: [

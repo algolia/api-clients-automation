@@ -1,29 +1,46 @@
-{{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} enum {{classname}}: Codable, JSONEncodable, AbstractEncodable{{#vendorExtensions.x-swift-hashable}}, Hashable{{/vendorExtensions.x-swift-hashable}} {
-    {{#oneOf}}
-    case {{#lambda.camelcase}}{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}}{{/lambda.camelcase}}({{{.}}})
-    {{/oneOf}}
+{{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} enum {{classname}}{{#vendorExtensions.x-has-child-generic}}<T: Codable>{{/vendorExtensions.x-has-child-generic}}: Codable, JSONEncodable, AbstractEncodable{{#vendorExtensions.x-swift-hashable}}, Hashable{{/vendorExtensions.x-swift-hashable}} {
+    {{#composedSchemas.oneOf}}
+    case {{#lambda.camelcase}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/lambda.camelcase}}({{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}})
+    {{/composedSchemas.oneOf}}
+
+    {{#composedSchemas.oneOf}}{{#vendorExtensions.x-discriminator-fields}}{{#-first}}
+        enum {{{datatypeWithEnum}}}DiscriminatorCodingKeys: String, CodingKey, CaseIterable { {{/-first}}
+            case {{{.}}} {{#-last}}
+        }
+      {{/-last}}{{/vendorExtensions.x-discriminator-fields}}{{/composedSchemas.oneOf}}
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
-        {{#oneOf}}
-        case .{{#lambda.camelcase}}{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}}{{/lambda.camelcase}}(let value):
+        {{#composedSchemas.oneOf}}
+        case .{{#lambda.camelcase}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/lambda.camelcase}}(let value):
             try container.encode(value)
-        {{/oneOf}}
+        {{/composedSchemas.oneOf}}
         }
     }
 
     public init(from decoder: Decoder) throws {
+        {{#composedSchemas.oneOf}}{{#vendorExtensions.x-discriminator-fields}}{{#-first}}
+          if let {{#lambda.camelcase}}{{{datatypeWithEnum}}}{{/lambda.camelcase}}DiscriminatorContainer = try? decoder.container(keyedBy: {{{datatypeWithEnum}}}DiscriminatorCodingKeys.self) {
+            if{{/-first}}{{^-first}} &&{{/-first}} {{#lambda.camelcase}}{{{datatypeWithEnum}}}{{/lambda.camelcase}}DiscriminatorContainer.contains(.{{{.}}}) {{#-last}}{
+              if let value = try? {{classname}}.{{#lambda.camelcase}}{{{datatypeWithEnum}}}{{/lambda.camelcase}}({{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}(from: decoder)) {
+                self = value
+                return
+              }
+          }
+        }
+        {{/-last}}{{/vendorExtensions.x-discriminator-fields}}{{/composedSchemas.oneOf}}
+
         let container = try decoder.singleValueContainer()
-        {{#oneOf}}
+        {{#composedSchemas.oneOf}}
         {{#-first}}
-        if let value = try? container.decode({{.}}.self) {
+        if let value = try? container.decode({{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}.self) {
         {{/-first}}
         {{^-first}}
-        } else if let value = try? container.decode({{{.}}}.self) {
+        } else if let value = try? container.decode({{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}.self) {
         {{/-first}}
-            self = .{{#lambda.camelcase}}{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}}{{/lambda.camelcase}}(value)
-        {{/oneOf}}
+            self = .{{#lambda.camelcase}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/lambda.camelcase}}(value)
+        {{/composedSchemas.oneOf}}
         } else {
             throw DecodingError.typeMismatch(Self.Type.self, .init(codingPath: decoder.codingPath, debugDescription: "Unable to decode instance of {{classname}}"))
         }
@@ -31,10 +48,10 @@
 
     public func GetActualInstance() -> Encodable {
         switch self {
-        {{#oneOf}}
-          case .{{#lambda.camelcase}}{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}}{{/lambda.camelcase}}(let value):
-          return value as {{{.}}}
-        {{/oneOf}}
+        {{#composedSchemas.oneOf}}
+          case .{{#lambda.camelcase}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/lambda.camelcase}}(let value):
+          return value as {{{datatypeWithEnum}}}
+        {{/composedSchemas.oneOf}}
         }
     }
 }

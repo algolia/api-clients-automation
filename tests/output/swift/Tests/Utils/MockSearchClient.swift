@@ -78,15 +78,15 @@ public class MockSearchClient<T>: SearchClient {
         return self.responses[self.loop] as! Response<GetApiKeyResponse>
     }
 
-    override public func browse(
+    override public func browse<U: Codable>(
         indexName _: String,
         browseParams _: BrowseParams? = nil,
         requestOptions _: RequestOptions? = nil
-    ) async throws -> BrowseResponse {
+    ) async throws -> BrowseResponse<U> {
         defer {
             loop += 1
         }
-        return self.responses[self.loop] as! BrowseResponse
+        return self.responses[self.loop] as! BrowseResponse<U>
     }
 
     override public func searchRules(
@@ -111,13 +111,13 @@ public class MockSearchClient<T>: SearchClient {
         return self.responses[self.loop] as! SearchSynonymsResponse
     }
 
-    override public func search(
+    override public func search<U: Codable>(
         searchMethodParams _: SearchMethodParams,
         requestOptions _: RequestOptions? = nil
-    ) async throws -> SearchResponses {
+    ) async throws -> SearchResponses<U> {
         defer {
             loop += 1
         }
-        return self.responses[self.loop] as! SearchResponses
+        return self.responses[self.loop] as! SearchResponses<U>
     }
 }
