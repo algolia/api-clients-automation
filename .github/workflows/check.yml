@@ -397,7 +397,9 @@ jobs:
         run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
 
       - name: Validate podspec
-        run: pod lib lint --allow-warnings
+        run: |
+          cd clients/algoliasearch-client-swift
+          pod lib lint --allow-warnings
 
   codegen:
     runs-on: ubuntu-22.04
