@@ -7248,7 +7248,7 @@ __metadata:
     "@types/jest": "npm:29.5.12"
     eslint: "npm:8.57.0"
     jest: "npm:29.7.0"
-    typescript: "npm:5.4.2"
+    typescript: "npm:5.4.3"
   languageName: unknown
   linkType: soft
 
@@ -9070,7 +9070,7 @@ __metadata:
     "@algolia/requester-browser-xhr": "link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http"
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
     parcel: "npm:2.12.0"
-    typescript: "npm:5.4.2"
+    typescript: "npm:5.4.3"
   languageName: unknown
   linkType: soft
 
@@ -9090,7 +9090,7 @@ __metadata:
     "@algolia/requester-node-http": "link:../../../clients/algoliasearch-client-javascript/packages/requester-node-http"
     algoliasearch: "link:../../../clients/algoliasearch-client-javascript/packages/algoliasearch"
     dotenv: "npm:16.4.5"
-    typescript: "npm:5.4.2"
+    typescript: "npm:5.4.3"
   languageName: unknown
   linkType: soft
 
@@ -12428,7 +12428,7 @@ __metadata:
     semver: "npm:7.6.0"
     spinnies: "npm:0.5.1"
     tsc-alias: "npm:1.8.8"
-    typescript: "npm:5.4.2"
+    typescript: "npm:5.4.3"
     vitest: "npm:1.4.0"
     zlib: "npm:1.0.5"
   languageName: unknown
@@ -13620,13 +13620,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.4.2":
-  version: 5.4.2
-  resolution: "typescript@npm:5.4.2"
+"typescript@npm:5.4.3":
+  version: 5.4.3
+  resolution: "typescript@npm:5.4.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: f8cfdc630ab1672f004e9561eb2916935b2d267792d07ce93e97fc601c7a65191af32033d5e9c0169b7dc37da7db9bf320f7432bc84527cb7697effaa4e4559d
+  checksum: de4c69f49a7ad4b1ea66a6dcc8b055ac34eb56af059a069d8988dd811c5e649be07e042e5bf573e8d0ac3ec2f30e6c999aa651cd09f6e9cbc6113749e8b6be20
   languageName: node
   linkType: hard
 
@@ -13640,13 +13640,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A5.4.2#optional!builtin<compat/typescript>":
-  version: 5.4.2
-  resolution: "typescript@patch:typescript@npm%3A5.4.2#optional!builtin<compat/typescript>::version=5.4.2&hash=e012d7"
+"typescript@patch:typescript@npm%3A5.4.3#optional!builtin<compat/typescript>":
+  version: 5.4.3
+  resolution: "typescript@patch:typescript@npm%3A5.4.3#optional!builtin<compat/typescript>::version=5.4.3&hash=e012d7"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: ef4fc2994cc0219dc9ada94c92106ba8d44cbfd7a0328ed6f8d730311caf66e114cdfa07fbc6f369bfc0fc182d9493851b3bf1644c06fc5818690b19ee960d72
+  checksum: 3abea475798fdf7ee46e75dafc50c85f30fd1e7061559ec2af61646f23d16c91742703f04f0ac55be52f58ca05c02f77404b7b94bbad16278c9a54c9eeb4f4ea
   languageName: node
   linkType: hard
 
