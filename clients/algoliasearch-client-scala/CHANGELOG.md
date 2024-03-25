@@ -1,3 +1,8 @@
+## [2.0.0-alpha.14](https://github.com/algolia/algoliasearch-client-scala/compare/2.0.0-alpha.13...2.0.0-alpha.14)
+
+- [10c9339c8](https://github.com/algolia/api-clients-automation/commit/10c9339c8) fix(specs): more flexible custom methods ([#2889](https://github.com/algolia/api-clients-automation/pull/2889)) by [@damcou](https://github.com/damcou/)
+- [9e0a14961](https://github.com/algolia/api-clients-automation/commit/9e0a14961) chore(scala): set sonatype target ([#2887](https://github.com/algolia/api-clients-automation/pull/2887)) by [@aallam](https://github.com/aallam/)
+
 ## [2.0.0-alpha.13](https://github.com/algolia/algoliasearch-client-scala/compare/2.0.0-alpha.12...2.0.0-alpha.13)
 
 - [7dc719cbe](https://github.com/algolia/api-clients-automation/commit/7dc719cbe) fix(specs): make languages an enum ([#2865](https://github.com/algolia/api-clients-automation/pull/2865)) by [@kai687](https://github.com/kai687/)
