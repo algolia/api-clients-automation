@@ -368,7 +368,7 @@ jobs:
       - client_gen
     if: |
       always() &&
-      github.ref == 'refs/heads/main' &&
+      startsWith(github.ref, 'refs/heads/chore/prepare-release-') &&
       needs.setup.outputs.RUN_GEN == 'true' &&
       needs.setup.outputs.RUN_MACOS_SWIFT_CTS == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
@@ -396,8 +396,12 @@ jobs:
       - name: Run CTS
         run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
 
-      - name: Validate podspec
-        run: pod lib lint --allow-warnings
+      - name: Run Swift CocoaPods validity
+        run: |
+          set -eo pipefail
+          cd clients/algoliasearch-client-swift
+          [ $(find Sources  -type f | rev | cut -d '/' -f1 | rev | sort | uniq -d | wc -l) -gt 0 ] && echo "Duplicates found" && exit 1 || echo "No duplicates found"
+          pod lib lint --allow-warnings
 
   codegen:
     runs-on: ubuntu-22.04
