@@ -29,38 +29,38 @@ DeleteResponse:
 
 authenticationID:
   type: string
-  format: uuid
-  description: Unique identifier of an authentication resource.
+  # format: uuid
+  description: Universally unique identifier (UUID) of an authentication resource.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
 destinationID:
   type: string
-  format: uuid
-  description: Unique identifier of a destination resource.
+  # format: uuid
+  description: Universally unique identifier (UUID) of a destination resource.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
 sourceID:
   type: string
-  format: uuid
-  description: Unique identifier of a source.
+  # format: uuid
+  description: Universally uniqud identifier (UUID) of a source.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
 taskID:
   type: string
-  format: uuid
-  description: Unique identifier of a task.
+  # format: uuid
+  description: Universally unique identifier (UUID) of a task.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
 runID:
   type: string
-  format: uuid
-  description: Unique identifier of a task run.
+  # format: uuid
+  description: Universally unique identifier (UUID) of a task run.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
 eventID:
   type: string
-  format: uuid
-  description: Unique identifier of an event.
+  # format: uuid
+  description: Universally unique identifier (UUID) of an event.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
 name:
