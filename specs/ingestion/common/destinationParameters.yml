@@ -14,7 +14,7 @@ type:
 authenticationID:
   name: authenticationID
   in: query
-  description: Authentication IDs used by destinations.
+  description: Authentication ID used by destinations.
   required: false
   style: form
   explode: false

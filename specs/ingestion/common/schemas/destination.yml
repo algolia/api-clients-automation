@@ -111,7 +111,7 @@ DestinationType:
     <dt><code>insights</code></dt>
     <dd>Data is recorded as user events in the Insights API.</dd>
     </dl>.
-  enum: [search, insights, flow]
+  enum: [search, insights]
 
 DestinationIndexPrefix:
   type: object

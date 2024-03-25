@@ -19,7 +19,7 @@ eventType:
 runStatus:
   name: status
   in: query
-  description: Event status for filtering the list of task runs.
+  description: Run status for filtering the list of task runs.
   schema:
     type: array
     items:
