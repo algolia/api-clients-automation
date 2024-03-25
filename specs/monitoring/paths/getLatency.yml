@@ -1,6 +1,6 @@
 get:
-  summary: Get search latency times.
-  description: List the average latency for search requests for selected clusters.
+  summary: Retrieve search latency times.
+  description: Retrieves the average latency for search requests for selected clusters.
   operationId: getLatency
   security: []
   tags:

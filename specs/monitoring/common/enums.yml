@@ -22,7 +22,7 @@ Period:
 Region:
   title: region
   type: string
-  description: The region where the cluster is located.
+  description: Region where the cluster is located.
   enum:
     - au
     - br
