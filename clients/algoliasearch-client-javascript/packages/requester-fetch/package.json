@@ -1,6 +1,6 @@
 {
   "name": "@algolia/requester-fetch",
-  "version": "5.0.0-alpha.109",
+  "version": "5.0.0-alpha.110",
   "description": "Promise-based request library using Fetch.",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
@@ -20,18 +20,18 @@
     "test": "jest"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-alpha.109"
+    "@algolia/client-common": "5.0.0-alpha.110"
   },
   "devDependencies": {
-    "@babel/preset-env": "7.24.0",
-    "@babel/preset-typescript": "7.23.3",
+    "@babel/preset-env": "7.24.3",
+    "@babel/preset-typescript": "7.24.1",
     "@types/jest": "29.5.12",
-    "@types/node": "20.11.28",
+    "@types/node": "20.11.30",
     "cross-fetch": "4.0.0",
     "jest": "29.7.0",
     "nock": "13.5.4",
     "ts-jest": "29.1.2",
-    "typescript": "5.4.2"
+    "typescript": "5.4.3"
   },
   "engines": {
     "node": ">= 14.0.0"

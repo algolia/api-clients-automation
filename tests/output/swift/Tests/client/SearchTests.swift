@@ -72,7 +72,7 @@ final class SearchClientClientTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.customPostWithHTTPInfo(
             path: "1/test/gzip",
-            parameters: [:],
+            parameters: [String: AnyCodable](),
             body: ["message": "this is a compressed body"]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -190,7 +190,7 @@ final class SearchClientClientTests: XCTestCase {
             let response = try await client.addOrUpdateObjectWithHTTPInfo(
                 indexName: TestNullString(),
                 objectID: "my-object-id",
-                body: [:]
+                body: [String: AnyCodable]()
             )
             let responseBodyData = try XCTUnwrap(response.bodyData)
             let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -206,7 +206,7 @@ final class SearchClientClientTests: XCTestCase {
             let response = try await client.addOrUpdateObjectWithHTTPInfo(
                 indexName: "my-index-name",
                 objectID: TestNullString(),
-                body: [:]
+                body: [String: AnyCodable]()
             )
             let responseBodyData = try XCTUnwrap(response.bodyData)
             let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)

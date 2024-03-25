@@ -35,24 +35,23 @@ Task {
           .init(firstname: "Warren", lastname: "Speach", followers: 42, company: "Norwalk Crmc")
         ]
 
-        let client = SearchClient(appId: applicationID, apiKey: apiKey)
+        let client = try SearchClient(appID: applicationID, apiKey: apiKey)
 
         for contact in contacts {
-            let saveObjRes = try await client.saveObject(indexName: "contacts", body: contact)
-//            let saveObjRes = try await client.saveObject(indexName: "contacts", body: contact, requestOptions: RequestOptions(headers: ["X-Algolia-Test": "True"], body: ["age": contact.followers]))
+            let saveObjRes = try await client.saveObject(indexName: "contacts", body: contacts)
             while true {
                 let taskResponse = try await client.getTask(indexName: "contacts", taskID: saveObjRes.taskID)
-                if taskResponse.status == TaskStatus.published {
+                if taskResponse.status == SearchTaskStatus.published {
                     break
                 }
             }
         }
 
-        let searchParams = SearchParamsObject(query: "Jimmy")
+        let searchParams = SearchSearchParamsObject(query: "Jimmy")
 
-        let res = try await client.searchSingleIndex(
+        let res: SearchResponse<Contact> = try await client.searchSingleIndex(
             indexName: "contacts",
-            searchParams: .searchParamsObject(searchParams)
+            searchParams: .searchSearchParamsObject(searchParams)
         )
 
         dump(res.hits[0])

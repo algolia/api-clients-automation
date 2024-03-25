@@ -368,7 +368,7 @@ jobs:
       - client_gen
     if: |
       always() &&
-      startsWith(github.ref, 'refs/heads/chore/prepare-release-') &&
+      startsWith(github.head_ref, 'chore/prepare-release-') &&
       needs.setup.outputs.RUN_GEN == 'true' &&
       needs.setup.outputs.RUN_MACOS_SWIFT_CTS == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
