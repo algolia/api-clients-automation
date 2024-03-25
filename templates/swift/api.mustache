@@ -106,7 +106,7 @@ import Foundation
           throw AlgoliaError.invalidArgument("{{{paramName}}}", "{{{operationId}}}")
         }
 
-        {{/required}}{{/isString}}{{/queryParams}}{{#bodyParam}}{{#isFreeFormObject}}{{#required}}guard !{{{paramName}}}.isEmpty else {
+        {{/required}}{{/isString}}{{/queryParams}}{{#bodyParam}}{{#isFreeFormObject}}{{#required}}guard {{{paramName}}} != nil, let {{{paramName}}}Dictionary = {{{paramName}}} as? [String: Codable], !{{{paramName}}}Dictionary.isEmpty else {
           throw AlgoliaError.invalidArgument("{{{paramName}}}", "{{{operationId}}}")
         }
 
