@@ -63,7 +63,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -74,7 +75,8 @@ paths:
             // Call the API
 
             var response = await client.CustomGetAsync("test/minimal");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -87,7 +89,8 @@ paths:
             final response = await client.customGet(
               path: "test/minimal",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -107,7 +110,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -118,7 +122,8 @@ paths:
             // Call the API
 
             client.customGet("test/minimal");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -128,7 +133,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -146,7 +152,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -165,7 +172,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -180,7 +188,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: >
             # Initialize the client
 
@@ -201,7 +210,8 @@ paths:
             # print the JSON response
 
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -219,7 +229,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -259,7 +270,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -270,7 +282,8 @@ paths:
             // Call the API
 
             var response = await client.CustomPostAsync("test/minimal");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -283,7 +296,8 @@ paths:
             final response = await client.customPost(
               path: "test/minimal",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -303,7 +317,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -314,7 +329,8 @@ paths:
             // Call the API
 
             client.customPost("test/minimal");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -324,7 +340,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -342,7 +359,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -361,7 +379,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -376,7 +395,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: >
             # Initialize the client
 
@@ -397,7 +417,8 @@ paths:
             # print the JSON response
 
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -415,7 +436,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -455,7 +477,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -466,7 +489,8 @@ paths:
             // Call the API
 
             var response = await client.CustomPutAsync("test/minimal");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -479,7 +503,8 @@ paths:
             final response = await client.customPut(
               path: "test/minimal",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -499,7 +524,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -510,7 +536,8 @@ paths:
             // Call the API
 
             client.customPut("test/minimal");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -520,7 +547,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -538,7 +566,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -557,7 +586,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -572,7 +602,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: >
             # Initialize the client
 
@@ -593,7 +624,8 @@ paths:
             # print the JSON response
 
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -611,7 +643,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -645,7 +678,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -656,7 +690,8 @@ paths:
             // Call the API
 
             var response = await client.CustomDeleteAsync("test/minimal");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -669,7 +704,8 @@ paths:
             final response = await client.customDelete(
               path: "test/minimal",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := recommend.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -689,7 +725,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -700,7 +737,8 @@ paths:
             // Call the API
 
             client.customDelete("test/minimal");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: >
             // Initialize the client
 
@@ -716,7 +754,8 @@ paths:
             // use typed response
 
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -734,7 +773,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -753,7 +793,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -768,7 +809,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: >
             # Initialize the client
 
@@ -789,7 +831,8 @@ paths:
             # print the JSON response
 
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -807,7 +850,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -875,7 +919,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -902,7 +947,8 @@ paths:
                 },
               }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -924,7 +970,8 @@ paths:
                 ],
               ),
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client
 
@@ -955,7 +1002,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -977,7 +1025,8 @@ paths:
                   )
                 )
             );
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -996,7 +1045,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -1023,7 +1073,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -1049,7 +1100,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -1073,7 +1125,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: >
             # Initialize the client
 
@@ -1100,7 +1153,8 @@ paths:
             # print the JSON response
 
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -1127,7 +1181,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -1178,7 +1233,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -1193,7 +1249,8 @@ paths:
               Enum.Parse<RecommendModels>("RelatedProducts"),
               "objectID"
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -1208,7 +1265,8 @@ paths:
               model: RecommendModels.fromJson("related-products"),
               objectID: "objectID",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client
 
@@ -1236,7 +1294,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -1248,7 +1307,8 @@ paths:
 
             client.getRecommendRule("indexName",
             RecommendModels.fromValue("related-products"), "objectID");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -1262,7 +1322,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -1282,7 +1343,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -1303,7 +1365,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -1320,7 +1383,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: >
             # Initialize the client
 
@@ -1342,7 +1406,8 @@ paths:
             # print the JSON response
 
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -1362,7 +1427,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -1403,7 +1469,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -1418,7 +1485,8 @@ paths:
               Enum.Parse<RecommendModels>("RelatedProducts"),
               "objectID"
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -1433,7 +1501,8 @@ paths:
               model: RecommendModels.fromJson("related-products"),
               objectID: "objectID",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client
 
@@ -1461,7 +1530,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -1473,7 +1543,8 @@ paths:
 
             client.deleteRecommendRule("indexName",
             RecommendModels.fromValue("related-products"), "objectID");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -1487,7 +1558,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -1507,7 +1579,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -1528,7 +1601,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -1545,7 +1619,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: >
             # Initialize the client
 
@@ -1567,7 +1642,8 @@ paths:
             # print the JSON response
 
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -1587,7 +1663,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -1647,7 +1724,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -1662,7 +1740,8 @@ paths:
               Enum.Parse<RecommendModels>("RelatedProducts"),
               12345L
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -1677,7 +1756,8 @@ paths:
               model: RecommendModels.fromJson("related-products"),
               taskID: 12345,
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client
 
@@ -1705,7 +1785,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -1717,7 +1798,8 @@ paths:
 
             client.getRecommendStatus("indexName",
             RecommendModels.fromValue("related-products"), 12345L);
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -1731,7 +1813,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -1751,7 +1834,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -1772,7 +1856,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -1789,7 +1874,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: >
             # Initialize the client
 
@@ -1811,7 +1897,8 @@ paths:
             # print the JSON response
 
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -1831,7 +1918,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -1926,7 +2014,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -1940,7 +2029,8 @@ paths:
               "indexName",
               Enum.Parse<RecommendModels>("RelatedProducts")
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -1954,7 +2044,8 @@ paths:
               indexName: "indexName",
               model: RecommendModels.fromJson("related-products"),
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client
 
@@ -1982,7 +2073,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -1994,7 +2086,8 @@ paths:
 
             client.searchRecommendRules("indexName",
             RecommendModels.fromValue("related-products"));
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -2007,7 +2100,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -2026,7 +2120,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -2046,7 +2141,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = RecommendClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -2062,7 +2158,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: >
             # Initialize the client
 
@@ -2084,7 +2181,8 @@ paths:
             # print the JSON response
 
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -2103,7 +2201,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 

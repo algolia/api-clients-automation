@@ -62,7 +62,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: |
             // Initialize the client
             var client = new QuerySuggestionsClient(
@@ -71,7 +72,8 @@ paths:
 
             // Call the API
             var response = await client.CustomGetAsync("test/minimal");
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client with your application region, eg.
             suggestions.YOUR_APP_ID_REGION
@@ -100,7 +102,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -112,7 +115,8 @@ paths:
             // Call the API
 
             client.customGet("test/minimal");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = querySuggestionsClient(
@@ -126,7 +130,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -144,7 +149,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -163,7 +169,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = QuerySuggestionsClient(
@@ -180,7 +187,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
@@ -197,7 +205,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -215,7 +224,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -255,7 +265,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: |
             // Initialize the client
             var client = new QuerySuggestionsClient(
@@ -264,7 +275,8 @@ paths:
 
             // Call the API
             var response = await client.CustomPostAsync("test/minimal");
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client with your application region, eg.
             suggestions.YOUR_APP_ID_REGION
@@ -293,7 +305,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -305,7 +318,8 @@ paths:
             // Call the API
 
             client.customPost("test/minimal");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = querySuggestionsClient(
@@ -319,7 +333,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -337,7 +352,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -356,7 +372,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = QuerySuggestionsClient(
@@ -373,7 +390,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
@@ -390,7 +408,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -408,7 +427,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -448,7 +468,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: |
             // Initialize the client
             var client = new QuerySuggestionsClient(
@@ -457,7 +478,8 @@ paths:
 
             // Call the API
             var response = await client.CustomPutAsync("test/minimal");
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client with your application region, eg.
             suggestions.YOUR_APP_ID_REGION
@@ -486,7 +508,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -498,7 +521,8 @@ paths:
             // Call the API
 
             client.customPut("test/minimal");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = querySuggestionsClient(
@@ -512,7 +536,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -530,7 +555,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -549,7 +575,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = QuerySuggestionsClient(
@@ -566,7 +593,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
@@ -583,7 +611,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -601,7 +630,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -635,7 +665,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: |
             // Initialize the client
             var client = new QuerySuggestionsClient(
@@ -644,7 +675,8 @@ paths:
 
             // Call the API
             var response = await client.CustomDeleteAsync("test/minimal");
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client with your application region, eg.
             suggestions.YOUR_APP_ID_REGION
@@ -673,7 +705,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -685,7 +718,8 @@ paths:
             // Call the API
 
             client.customDelete("test/minimal");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: >
             // Initialize the client
 
@@ -705,7 +739,8 @@ paths:
             // use typed response
 
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -723,7 +758,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -742,7 +778,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = QuerySuggestionsClient(
@@ -759,7 +796,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
@@ -776,7 +814,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -794,7 +833,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -826,7 +866,8 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: |
             // Initialize the client
             var client = new QuerySuggestionsClient(
@@ -835,7 +876,8 @@ paths:
 
             // Call the API
             var response = await client.GetAllConfigsAsync();
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client with your application region, eg.
             suggestions.YOUR_APP_ID_REGION
@@ -862,7 +904,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -874,7 +917,8 @@ paths:
             // Call the API
 
             client.getAllConfigs();
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = querySuggestionsClient(
@@ -888,7 +932,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -904,7 +949,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -921,7 +967,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = QuerySuggestionsClient(
@@ -936,7 +983,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
@@ -953,7 +1001,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -971,7 +1020,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -1023,7 +1073,8 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: |
             // Initialize the client
             var client = new QuerySuggestionsClient(
@@ -1052,7 +1103,8 @@ paths:
                 Exclude = new List<string> { "test" },
               }
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client with your application region, eg.
             suggestions.YOUR_APP_ID_REGION
@@ -1089,7 +1141,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -1114,7 +1167,8 @@ paths:
                 .setLanguages(Languages.of(List.of("french")))
                 .setExclude(List.of("test"))
             );
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = querySuggestionsClient(
@@ -1139,7 +1193,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -1172,7 +1227,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -1217,7 +1273,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = QuerySuggestionsClient(
@@ -1261,7 +1318,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
@@ -1289,7 +1347,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -1324,7 +1383,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -1370,7 +1430,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -1383,7 +1444,8 @@ paths:
 
             var response = await
             client.GetConfigAsync("cts_e2e_browse_query_suggestions");
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client with your application region, eg.
             suggestions.YOUR_APP_ID_REGION
@@ -1412,7 +1474,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -1424,7 +1487,8 @@ paths:
             // Call the API
 
             client.getConfig("cts_e2e_browse_query_suggestions");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = querySuggestionsClient(
@@ -1440,7 +1504,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -1458,7 +1523,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -1477,7 +1543,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = QuerySuggestionsClient(
@@ -1494,7 +1561,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
@@ -1511,7 +1579,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -1529,7 +1598,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -1577,7 +1647,8 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError-2'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: |
             // Initialize the client
             var client = new QuerySuggestionsClient(
@@ -1606,7 +1677,8 @@ paths:
                 Exclude = new List<string> { "test" },
               }
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client with your application region, eg.
             suggestions.YOUR_APP_ID_REGION
@@ -1643,7 +1715,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -1668,7 +1741,8 @@ paths:
                 .setLanguages(Languages.of(List.of("french")))
                 .setExclude(List.of("test"))
             );
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = querySuggestionsClient(
@@ -1695,7 +1769,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -1728,7 +1803,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -1773,7 +1849,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = QuerySuggestionsClient(
@@ -1817,7 +1894,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
@@ -1845,7 +1923,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -1880,7 +1959,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -1937,7 +2017,8 @@ paths:
         '500':
           $ref: '#/components/responses/InternalError-2'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: |
             // Initialize the client
             var client = new QuerySuggestionsClient(
@@ -1946,7 +2027,8 @@ paths:
 
             // Call the API
             var response = await client.DeleteConfigAsync("theIndexName");
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client with your application region, eg.
             suggestions.YOUR_APP_ID_REGION
@@ -1975,7 +2057,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -1987,7 +2070,8 @@ paths:
             // Call the API
 
             client.deleteConfig("theIndexName");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: >
             // Initialize the client
 
@@ -2007,7 +2091,8 @@ paths:
             // use typed response
 
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -2025,7 +2110,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -2044,7 +2130,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = QuerySuggestionsClient(
@@ -2061,7 +2148,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
@@ -2078,7 +2166,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -2096,7 +2185,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -2159,7 +2249,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: |
             // Initialize the client
             var client = new QuerySuggestionsClient(
@@ -2168,7 +2259,8 @@ paths:
 
             // Call the API
             var response = await client.GetConfigStatusAsync("theIndexName");
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client with your application region, eg.
             suggestions.YOUR_APP_ID_REGION
@@ -2198,7 +2290,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -2210,7 +2303,8 @@ paths:
             // Call the API
 
             client.getConfigStatus("theIndexName");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: >
             // Initialize the client
 
@@ -2230,7 +2324,8 @@ paths:
             // use typed response
 
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -2248,7 +2343,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -2267,7 +2363,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = QuerySuggestionsClient(
@@ -2284,7 +2381,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
@@ -2301,7 +2399,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -2319,7 +2418,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -2380,7 +2480,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: |
             // Initialize the client
             var client = new QuerySuggestionsClient(
@@ -2389,7 +2490,8 @@ paths:
 
             // Call the API
             var response = await client.GetLogFileAsync("theIndexName");
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client with your application region, eg.
             suggestions.YOUR_APP_ID_REGION
@@ -2418,7 +2520,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -2430,7 +2533,8 @@ paths:
             // Call the API
 
             client.getLogFile("theIndexName");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: >
             // Initialize the client
 
@@ -2450,7 +2554,8 @@ paths:
             // use typed response
 
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -2468,7 +2573,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -2487,7 +2593,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = QuerySuggestionsClient(
@@ -2504,7 +2611,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::QuerySuggestionsClient.create(
@@ -2521,7 +2629,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -2539,7 +2648,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 

@@ -307,7 +307,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -318,7 +319,8 @@ paths:
             // Call the API
 
             var response = await client.CustomGetAsync("test/minimal");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -331,7 +333,8 @@ paths:
             final response = await client.customGet(
               path: "test/minimal",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -351,7 +354,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -362,7 +366,8 @@ paths:
             // Call the API
 
             client.customGet("test/minimal");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -372,7 +377,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -390,7 +396,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -409,7 +416,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -424,7 +432,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -437,7 +446,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -455,7 +465,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -495,7 +506,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -506,7 +518,8 @@ paths:
             // Call the API
 
             var response = await client.CustomPostAsync("test/minimal");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -519,7 +532,8 @@ paths:
             final response = await client.customPost(
               path: "test/minimal",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -539,7 +553,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -550,7 +565,8 @@ paths:
             // Call the API
 
             client.customPost("test/minimal");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -560,7 +576,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -578,7 +595,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -597,7 +615,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -612,7 +631,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -625,7 +645,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -643,7 +664,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -683,7 +705,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -694,7 +717,8 @@ paths:
             // Call the API
 
             var response = await client.CustomPutAsync("test/minimal");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -707,7 +731,8 @@ paths:
             final response = await client.customPut(
               path: "test/minimal",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -727,7 +752,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -738,7 +764,8 @@ paths:
             // Call the API
 
             client.customPut("test/minimal");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -748,7 +775,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -766,7 +794,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -785,7 +814,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -800,7 +830,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -813,7 +844,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -831,7 +863,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -865,7 +898,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -876,7 +910,8 @@ paths:
             // Call the API
 
             var response = await client.CustomDeleteAsync("test/minimal");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -889,7 +924,8 @@ paths:
             final response = await client.customDelete(
               path: "test/minimal",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -909,7 +945,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -920,7 +957,8 @@ paths:
             // Call the API
 
             client.customDelete("test/minimal");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: >
             // Initialize the client
 
@@ -936,7 +974,8 @@ paths:
             // use typed response
 
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -954,7 +993,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -973,7 +1013,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -988,7 +1029,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -1001,7 +1043,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -1019,7 +1062,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -1072,7 +1116,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -1084,7 +1129,8 @@ paths:
 
             var response = await
             client.SearchSingleIndexAsync<Object>("indexName");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -1097,7 +1143,8 @@ paths:
             final response = await client.searchSingleIndex(
               indexName: "indexName",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client
 
@@ -1125,7 +1172,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -1136,7 +1184,8 @@ paths:
             // Call the API
 
             client.searchSingleIndex("indexName", Hit.class);
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: >
             // Initialize the client
 
@@ -1152,7 +1201,8 @@ paths:
             // use typed response
 
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -1170,7 +1220,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -1189,7 +1240,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -1204,7 +1256,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -1217,7 +1270,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -1235,7 +1289,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -1315,7 +1370,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -1334,7 +1390,8 @@ paths:
                 },
               }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -1353,7 +1410,8 @@ paths:
                 ],
               ),
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -1376,7 +1434,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -1389,7 +1448,8 @@ paths:
             client.search(new SearchMethodParams().setRequests(List.of(new
             SearchForHits().setIndexName("cts_e2e_search_empty_index"))),
             Hit.class);
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -1401,7 +1461,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -1425,7 +1486,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -1448,7 +1510,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -1469,7 +1532,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: >
             # Initialize the client
 
@@ -1490,7 +1554,8 @@ paths:
             # print the JSON response
 
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -1514,7 +1579,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -1590,7 +1656,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -1602,7 +1669,8 @@ paths:
 
             var response = await client.SearchForFacetValuesAsync("indexName",
             "facetName");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -1616,7 +1684,8 @@ paths:
               indexName: "indexName",
               facetName: "facetName",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client
 
@@ -1644,7 +1713,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -1655,7 +1725,8 @@ paths:
             // Call the API
 
             client.searchForFacetValues("indexName", "facetName");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -1668,7 +1739,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -1687,7 +1759,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -1707,7 +1780,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -1723,7 +1797,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -1736,7 +1811,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -1755,7 +1831,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -1818,7 +1895,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -1829,7 +1907,8 @@ paths:
             // Call the API
 
             var response = await client.BrowseAsync<Object>("cts_e2e_browse");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -1842,7 +1921,8 @@ paths:
             final response = await client.browse(
               indexName: "cts_e2e_browse",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -1862,7 +1942,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -1873,7 +1954,8 @@ paths:
             // Call the API
 
             client.browse("cts_e2e_browse", Hit.class);
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: >
             // Initialize the client
 
@@ -1889,7 +1971,8 @@ paths:
             // use typed response
 
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -1907,7 +1990,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -1926,7 +2010,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -1941,7 +2026,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -1954,7 +2040,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -1972,7 +2059,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -2055,7 +2143,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -2069,7 +2158,8 @@ paths:
               "theIndexName",
               new Dictionary<string, string> { { "objectID", "id" }, { "test", "val" } }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -2086,7 +2176,8 @@ paths:
                 'test': "val",
               },
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -2106,7 +2197,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -2118,7 +2210,8 @@ paths:
 
             client.saveObject("theIndexName", Map.of("objectID", "id", "test",
             "val"));
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -2131,7 +2224,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -2159,7 +2253,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -2181,7 +2276,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -2200,7 +2296,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: >
             # Initialize the client
 
@@ -2221,7 +2318,8 @@ paths:
             # print the JSON response
 
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -2240,7 +2338,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -2293,7 +2392,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -2304,7 +2404,8 @@ paths:
             // Call the API
 
             var response = await client.DeleteIndexAsync("theIndexName");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -2317,7 +2418,8 @@ paths:
             final response = await client.deleteIndex(
               indexName: "theIndexName",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -2337,7 +2439,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -2348,7 +2451,8 @@ paths:
             // Call the API
 
             client.deleteIndex("theIndexName");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: >
             // Initialize the client
 
@@ -2364,7 +2468,8 @@ paths:
             // use typed response
 
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -2382,7 +2487,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -2401,7 +2507,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -2416,7 +2523,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -2429,7 +2537,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -2447,7 +2556,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -2516,7 +2626,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -2531,7 +2642,8 @@ paths:
               "uniqueID",
               new List<string> { "attr1", "attr2" }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -2549,7 +2661,8 @@ paths:
                 "attr2",
               ],
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -2570,7 +2683,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -2582,7 +2696,8 @@ paths:
 
             client.getObject("theIndexName", "uniqueID", List.of("attr1",
             "attr2"));
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -2596,7 +2711,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -2616,7 +2732,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -2641,7 +2758,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -2661,7 +2779,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: >
             # Initialize the client
 
@@ -2682,7 +2801,8 @@ paths:
             # print the JSON response
 
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -2702,7 +2822,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -2760,7 +2881,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -2775,7 +2897,8 @@ paths:
               "uniqueID",
               new Dictionary<string, string> { { "key", "value" } }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -2792,7 +2915,8 @@ paths:
                 'key': "value",
               },
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client
 
@@ -2820,7 +2944,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -2832,7 +2957,8 @@ paths:
 
             client.addOrUpdateObject("indexName", "uniqueID", Map.of("key",
             "value"));
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -2846,7 +2972,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -2871,7 +2998,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -2893,7 +3021,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -2912,7 +3041,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: >
             # Initialize the client
 
@@ -2933,7 +3063,8 @@ paths:
             # print the JSON response
 
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -2953,7 +3084,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -2996,7 +3128,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -3008,7 +3141,8 @@ paths:
 
             var response = await client.DeleteObjectAsync("theIndexName",
             "uniqueID");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -3022,7 +3156,8 @@ paths:
               indexName: "theIndexName",
               objectID: "uniqueID",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -3042,7 +3177,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -3053,7 +3189,8 @@ paths:
             // Call the API
 
             client.deleteObject("theIndexName", "uniqueID");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -3066,7 +3203,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -3085,7 +3223,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -3105,7 +3244,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -3121,7 +3261,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -3134,7 +3275,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -3153,7 +3295,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -3202,7 +3345,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -3216,7 +3360,8 @@ paths:
               "theIndexName",
               new DeleteByParams { Filters = "brand:brandName", }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -3232,7 +3377,8 @@ paths:
                 filters: "brand:brandName",
               ),
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -3253,7 +3399,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -3265,7 +3412,8 @@ paths:
 
             client.deleteBy("theIndexName", new
             DeleteByParams().setFilters("brand:brandName"));
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -3278,7 +3426,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -3299,7 +3448,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -3320,7 +3470,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -3338,7 +3489,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: >
             # Initialize the client
 
@@ -3359,7 +3511,8 @@ paths:
             # print the JSON response
 
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -3380,7 +3533,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -3419,7 +3573,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -3430,7 +3585,8 @@ paths:
             // Call the API
 
             var response = await client.ClearObjectsAsync("theIndexName");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -3443,7 +3599,8 @@ paths:
             final response = await client.clearObjects(
               indexName: "theIndexName",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -3463,7 +3620,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -3474,7 +3632,8 @@ paths:
             // Call the API
 
             client.clearObjects("theIndexName");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: >
             // Initialize the client
 
@@ -3490,7 +3649,8 @@ paths:
             // use typed response
 
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -3508,7 +3668,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -3527,7 +3688,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -3542,7 +3704,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -3555,7 +3718,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -3573,7 +3737,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -3632,7 +3797,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -3661,7 +3827,8 @@ paths:
               },
               true
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -3683,7 +3850,8 @@ paths:
               },
               createIfNotExists: true,
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client
 
@@ -3712,7 +3880,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -3733,7 +3902,8 @@ paths:
               ),
               true
             );
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -3751,7 +3921,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -3778,7 +3949,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -3804,7 +3976,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -3828,7 +4001,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -3846,7 +4020,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -3873,7 +4048,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -3985,7 +4161,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -4009,7 +4186,8 @@ paths:
                 },
               }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -4032,7 +4210,8 @@ paths:
                 ],
               ),
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -4054,7 +4233,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -4069,7 +4249,8 @@ paths:
               new BatchWriteParams()
                 .setRequests(List.of(new BatchRequest().setAction(Action.fromValue("addObject")).setBody(Map.of("key", "value"))))
             );
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -4084,7 +4265,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -4115,7 +4297,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -4141,7 +4324,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -4166,7 +4350,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -4182,7 +4367,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -4208,7 +4394,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -4318,7 +4505,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -4342,7 +4530,8 @@ paths:
                 },
               }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -4365,7 +4554,8 @@ paths:
                 ],
               ),
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -4387,7 +4577,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -4405,7 +4596,8 @@ paths:
                   )
                 )
             );
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -4423,7 +4615,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -4454,7 +4647,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -4480,7 +4674,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -4505,7 +4700,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -4524,7 +4720,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -4550,7 +4747,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -4653,7 +4851,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -4677,7 +4876,8 @@ paths:
                 },
               }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -4701,7 +4901,8 @@ paths:
                 ],
               ),
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -4724,7 +4925,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -4743,7 +4945,8 @@ paths:
                 ),
               Hit.class
             );
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -4761,7 +4964,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -4787,7 +4991,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -4816,7 +5021,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -4842,7 +5048,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -4864,7 +5071,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -4890,7 +5098,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -4933,7 +5142,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -4944,7 +5154,8 @@ paths:
             // Call the API
 
             var response = await client.GetSettingsAsync("cts_e2e_settings");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -4957,7 +5168,8 @@ paths:
             final response = await client.getSettings(
               indexName: "cts_e2e_settings",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -4977,7 +5189,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -4988,7 +5201,8 @@ paths:
             // Call the API
 
             client.getSettings("cts_e2e_settings");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: >
             // Initialize the client
 
@@ -5004,7 +5218,8 @@ paths:
             // use typed response
 
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -5022,7 +5237,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -5041,7 +5257,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -5056,7 +5273,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -5069,7 +5287,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -5087,7 +5306,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -5137,7 +5357,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -5152,7 +5373,8 @@ paths:
               new IndexSettings { PaginationLimitedTo = 10, },
               true
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -5169,7 +5391,8 @@ paths:
               ),
               forwardToReplicas: true,
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -5190,7 +5413,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -5202,7 +5426,8 @@ paths:
 
             client.setSettings("cts_e2e_settings", new
             IndexSettings().setPaginationLimitedTo(10), true);
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -5216,7 +5441,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -5238,7 +5464,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -5260,7 +5487,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -5279,7 +5507,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -5296,7 +5525,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -5318,7 +5548,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -5364,7 +5595,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -5375,7 +5607,8 @@ paths:
             // Call the API
 
             var response = await client.GetSynonymAsync("indexName", "id1");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -5389,7 +5622,8 @@ paths:
               indexName: "indexName",
               objectID: "id1",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -5409,7 +5643,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -5420,7 +5655,8 @@ paths:
             // Call the API
 
             client.getSynonym("indexName", "id1");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -5433,7 +5669,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -5452,7 +5689,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -5472,7 +5710,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -5488,7 +5727,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -5501,7 +5741,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -5520,7 +5761,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -5586,7 +5828,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -5607,7 +5850,8 @@ paths:
               },
               true
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -5631,7 +5875,8 @@ paths:
               ),
               forwardToReplicas: true,
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -5653,7 +5898,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -5669,7 +5915,8 @@ paths:
               new SynonymHit().setObjectID("id1").setType(SynonymType.fromValue("synonym")).setSynonyms(List.of("car", "vehicule", "auto")),
               true
             );
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -5688,7 +5935,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -5713,7 +5961,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -5744,7 +5993,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -5770,7 +6020,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -5788,7 +6039,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -5813,7 +6065,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -5857,7 +6110,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -5868,7 +6122,8 @@ paths:
             // Call the API
 
             var response = await client.DeleteSynonymAsync("indexName", "id1");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -5882,7 +6137,8 @@ paths:
               indexName: "indexName",
               objectID: "id1",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -5902,7 +6158,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -5913,7 +6170,8 @@ paths:
             // Call the API
 
             client.deleteSynonym("indexName", "id1");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -5926,7 +6184,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -5945,7 +6204,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -5965,7 +6225,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -5981,7 +6242,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -5994,7 +6256,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -6013,7 +6276,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -6058,7 +6322,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -6089,7 +6354,8 @@ paths:
               true,
               false
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -6125,7 +6391,8 @@ paths:
               forwardToReplicas: true,
               replaceExistingSynonyms: false,
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -6148,7 +6415,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -6171,7 +6439,8 @@ paths:
               true,
               false
             );
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -6198,7 +6467,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -6231,7 +6501,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -6276,7 +6547,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -6314,7 +6586,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -6338,7 +6611,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -6371,7 +6645,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -6419,7 +6694,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -6430,7 +6706,8 @@ paths:
             // Call the API
 
             var response = await client.ClearSynonymsAsync("indexName");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -6443,7 +6720,8 @@ paths:
             final response = await client.clearSynonyms(
               indexName: "indexName",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -6463,7 +6741,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -6474,7 +6753,8 @@ paths:
             // Call the API
 
             client.clearSynonyms("indexName");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: >
             // Initialize the client
 
@@ -6490,7 +6770,8 @@ paths:
             // use typed response
 
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -6508,7 +6789,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -6527,7 +6809,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -6542,7 +6825,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -6555,7 +6839,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -6573,7 +6858,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -6630,7 +6916,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -6641,7 +6928,8 @@ paths:
             // Call the API
 
             var response = await client.SearchSynonymsAsync("indexName");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -6654,7 +6942,8 @@ paths:
             final response = await client.searchSynonyms(
               indexName: "indexName",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client
 
@@ -6682,7 +6971,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -6693,7 +6983,8 @@ paths:
             // Call the API
 
             client.searchSynonyms("indexName");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: >
             // Initialize the client
 
@@ -6709,7 +7000,8 @@ paths:
             // use typed response
 
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -6727,7 +7019,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -6746,7 +7039,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -6761,7 +7055,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -6774,7 +7069,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -6792,7 +7088,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -6840,7 +7137,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -6851,7 +7149,8 @@ paths:
             // Call the API
 
             var response = await client.ListApiKeysAsync();
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -6862,7 +7161,8 @@ paths:
             // Call the API
 
             final response = await client.listApiKeys();
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -6880,7 +7180,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -6891,7 +7192,8 @@ paths:
             // Call the API
 
             client.listApiKeys();
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -6901,7 +7203,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -6917,7 +7220,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -6934,7 +7238,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -6947,7 +7252,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -6960,7 +7266,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -6978,7 +7285,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -7019,7 +7327,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -7039,7 +7348,8 @@ paths:
                 MaxHitsPerQuery = 20,
               }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -7061,7 +7371,8 @@ paths:
                 maxHitsPerQuery: 20,
               ),
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -7083,7 +7394,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -7101,7 +7413,8 @@ paths:
                 .setMaxQueriesPerIPPerHour(100)
                 .setMaxHitsPerQuery(20)
             );
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -7117,7 +7430,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -7141,7 +7455,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -7169,7 +7484,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -7193,7 +7509,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -7214,7 +7531,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -7238,7 +7556,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -7288,7 +7607,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -7299,7 +7619,8 @@ paths:
             // Call the API
 
             var response = await client.GetApiKeyAsync("myTestApiKey");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -7312,7 +7633,8 @@ paths:
             final response = await client.getApiKey(
               key: "myTestApiKey",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -7332,7 +7654,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -7343,7 +7666,8 @@ paths:
             // Call the API
 
             client.getApiKey("myTestApiKey");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -7353,7 +7677,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -7371,7 +7696,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -7390,7 +7716,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -7405,7 +7732,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -7418,7 +7746,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -7436,7 +7765,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -7492,7 +7822,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -7512,7 +7843,8 @@ paths:
                 MaxHitsPerQuery = 20,
               }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -7534,7 +7866,8 @@ paths:
                 maxHitsPerQuery: 20,
               ),
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -7556,7 +7889,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -7574,7 +7908,8 @@ paths:
                 .setMaxQueriesPerIPPerHour(100)
                 .setMaxHitsPerQuery(20)
             );
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -7592,7 +7927,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -7616,7 +7952,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -7644,7 +7981,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -7668,7 +8006,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -7689,7 +8028,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -7713,7 +8053,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -7765,7 +8106,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -7776,7 +8118,8 @@ paths:
             // Call the API
 
             var response = await client.DeleteApiKeyAsync("myTestApiKey");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -7789,7 +8132,8 @@ paths:
             final response = await client.deleteApiKey(
               key: "myTestApiKey",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -7809,7 +8153,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -7820,7 +8165,8 @@ paths:
             // Call the API
 
             client.deleteApiKey("myTestApiKey");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -7830,7 +8176,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -7848,7 +8195,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -7867,7 +8215,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -7882,7 +8231,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -7895,7 +8245,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -7913,7 +8264,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -7961,7 +8313,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -7972,7 +8325,8 @@ paths:
             // Call the API
 
             var response = await client.RestoreApiKeyAsync("myApiKey");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -7985,7 +8339,8 @@ paths:
             final response = await client.restoreApiKey(
               key: "myApiKey",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -8005,7 +8360,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -8016,7 +8372,8 @@ paths:
             // Call the API
 
             client.restoreApiKey("myApiKey");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -8026,7 +8383,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -8044,7 +8402,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -8063,7 +8422,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -8078,7 +8438,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -8091,7 +8452,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -8109,7 +8471,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -8152,7 +8515,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -8163,7 +8527,8 @@ paths:
             // Call the API
 
             var response = await client.GetRuleAsync("indexName", "id1");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -8177,7 +8542,8 @@ paths:
               indexName: "indexName",
               objectID: "id1",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -8197,7 +8563,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -8208,7 +8575,8 @@ paths:
             // Call the API
 
             client.getRule("indexName", "id1");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -8221,7 +8589,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -8240,7 +8609,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -8260,7 +8630,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -8276,7 +8647,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -8289,7 +8661,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -8308,7 +8681,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -8361,7 +8735,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -8383,7 +8758,8 @@ paths:
                 },
               }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -8406,7 +8782,8 @@ paths:
                 ],
               ),
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -8428,7 +8805,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -8445,7 +8823,8 @@ paths:
                 .setObjectID("id1")
                 .setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.fromValue("contains"))))
             );
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -8462,7 +8841,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -8490,7 +8870,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -8517,7 +8898,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -8542,7 +8924,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -8562,7 +8945,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -8592,7 +8976,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -8637,7 +9022,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -8648,7 +9034,8 @@ paths:
             // Call the API
 
             var response = await client.DeleteRuleAsync("indexName", "id1");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -8662,7 +9049,8 @@ paths:
               indexName: "indexName",
               objectID: "id1",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -8682,7 +9070,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -8693,7 +9082,8 @@ paths:
             // Call the API
 
             client.deleteRule("indexName", "id1");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -8706,7 +9096,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -8725,7 +9116,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -8745,7 +9137,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -8761,7 +9154,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -8774,7 +9168,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -8793,7 +9188,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -8847,7 +9243,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -8879,7 +9276,8 @@ paths:
                 }
               }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -8912,7 +9310,8 @@ paths:
                 ),
               ],
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -8935,7 +9334,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -8956,7 +9356,8 @@ paths:
                   .setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.fromValue("contains"))))
               )
             );
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -8978,7 +9379,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -9016,7 +9418,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -9052,7 +9455,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -9087,7 +9491,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -9115,7 +9520,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -9157,7 +9563,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -9204,7 +9611,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -9215,7 +9623,8 @@ paths:
             // Call the API
 
             var response = await client.ClearRulesAsync("indexName");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -9228,7 +9637,8 @@ paths:
             final response = await client.clearRules(
               indexName: "indexName",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -9248,7 +9658,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -9259,7 +9670,8 @@ paths:
             // Call the API
 
             client.clearRules("indexName");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: >
             // Initialize the client
 
@@ -9275,7 +9687,8 @@ paths:
             // use typed response
 
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -9293,7 +9706,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -9312,7 +9726,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -9327,7 +9742,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -9340,7 +9756,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -9358,7 +9775,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -9450,7 +9868,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -9464,7 +9883,8 @@ paths:
               "indexName",
               new SearchRulesParams { Query = "something", }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -9480,7 +9900,8 @@ paths:
                 query: "something",
               ),
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -9501,7 +9922,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -9513,7 +9935,8 @@ paths:
 
             client.searchRules("indexName", new
             SearchRulesParams().setQuery("something"));
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -9526,7 +9949,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -9547,7 +9971,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -9568,7 +9993,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -9586,7 +10012,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: >
             # Initialize the client
 
@@ -9607,7 +10034,8 @@ paths:
             # print the JSON response
 
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -9630,7 +10058,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -9702,7 +10131,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -9739,7 +10169,8 @@ paths:
                 },
               }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -9770,7 +10201,8 @@ paths:
                 ],
               ),
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client
 
@@ -9802,7 +10234,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -9826,7 +10259,8 @@ paths:
                   )
                 )
             );
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -9844,7 +10278,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -9880,7 +10315,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -9913,7 +10349,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -9946,7 +10383,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -9976,7 +10414,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -10012,7 +10451,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -10084,7 +10524,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -10098,7 +10539,8 @@ paths:
               Enum.Parse<DictionaryType>("Stopwords"),
               new SearchDictionaryEntriesParams { Query = "about", }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -10114,7 +10556,8 @@ paths:
                 query: "about",
               ),
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client
 
@@ -10143,7 +10586,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -10155,7 +10599,8 @@ paths:
 
             client.searchDictionaryEntries(DictionaryType.fromValue("stopwords"),
             new SearchDictionaryEntriesParams().setQuery("about"));
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -10168,7 +10613,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -10189,7 +10635,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -10210,7 +10657,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -10228,7 +10676,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -10244,7 +10693,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -10265,7 +10715,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -10313,7 +10764,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -10324,7 +10776,8 @@ paths:
             // Call the API
 
             var response = await client.GetDictionarySettingsAsync();
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -10335,7 +10788,8 @@ paths:
             // Call the API
 
             final response = await client.getDictionarySettings();
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -10353,7 +10807,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -10364,7 +10819,8 @@ paths:
             // Call the API
 
             client.getDictionarySettings();
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -10374,7 +10830,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -10390,7 +10847,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -10407,7 +10865,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -10420,7 +10879,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -10433,7 +10893,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -10451,7 +10912,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -10500,7 +10962,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -10524,7 +10987,8 @@ paths:
                 },
               }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -10545,7 +11009,8 @@ paths:
                 ),
               ),
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client
 
@@ -10575,7 +11040,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -10589,7 +11055,8 @@ paths:
               new DictionarySettingsParams()
                 .setDisableStandardEntries(new StandardEntries().setPlurals(Map.of("fr", false, "en", false, "ru", true)))
             );
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -10601,7 +11068,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -10623,7 +11091,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -10647,7 +11116,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -10670,7 +11140,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -10691,7 +11162,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -10713,7 +11185,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -10766,7 +11239,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -10777,7 +11251,8 @@ paths:
             // Call the API
 
             var response = await client.GetDictionaryLanguagesAsync();
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -10788,7 +11263,8 @@ paths:
             // Call the API
 
             final response = await client.getDictionaryLanguages();
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -10806,7 +11282,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -10817,7 +11294,8 @@ paths:
             // Call the API
 
             client.getDictionaryLanguages();
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -10827,7 +11305,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -10843,7 +11322,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -10860,7 +11340,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -10873,7 +11354,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -10886,7 +11368,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -10904,7 +11387,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -10957,7 +11441,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -10971,7 +11456,8 @@ paths:
               "userID",
               new AssignUserIdParams { Cluster = "theCluster", }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -10987,7 +11473,8 @@ paths:
                 cluster: "theCluster",
               ),
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -11008,7 +11495,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -11020,7 +11508,8 @@ paths:
 
             client.assignUserId("userID", new
             AssignUserIdParams().setCluster("theCluster"));
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -11033,7 +11522,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -11054,7 +11544,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -11075,7 +11566,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -11093,7 +11585,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: >
             # Initialize the client
 
@@ -11114,7 +11607,8 @@ paths:
             # print the JSON response
 
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -11135,7 +11629,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -11193,7 +11688,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -11204,7 +11700,8 @@ paths:
             // Call the API
 
             var response = await client.ListUserIdsAsync();
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -11215,7 +11712,8 @@ paths:
             // Call the API
 
             final response = await client.listUserIds();
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -11233,7 +11731,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -11244,7 +11743,8 @@ paths:
             // Call the API
 
             client.listUserIds();
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -11254,7 +11754,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -11270,7 +11771,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -11287,7 +11789,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -11300,7 +11803,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -11313,7 +11817,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -11331,7 +11836,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -11392,7 +11898,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -11410,7 +11917,8 @@ paths:
                 Users = new List<string> { "user1", "user2" },
               }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -11430,7 +11938,8 @@ paths:
                 ],
               ),
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client
 
@@ -11460,7 +11969,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -11473,7 +11983,8 @@ paths:
             client.batchAssignUserIds("userID", new
             BatchAssignUserIdsParams().setCluster("theCluster").setUsers(List.of("user1",
             "user2")));
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -11489,7 +12000,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -11511,7 +12023,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -11537,7 +12050,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -11559,7 +12073,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -11575,7 +12090,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -11597,7 +12113,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -11662,7 +12179,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -11673,7 +12191,8 @@ paths:
             // Call the API
 
             var response = await client.GetTopUserIdsAsync();
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -11684,7 +12203,8 @@ paths:
             // Call the API
 
             final response = await client.getTopUserIds();
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -11702,7 +12222,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -11713,7 +12234,8 @@ paths:
             // Call the API
 
             client.getTopUserIds();
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -11723,7 +12245,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -11739,7 +12262,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -11756,7 +12280,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -11769,7 +12294,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -11782,7 +12308,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -11800,7 +12327,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -11845,7 +12373,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -11856,7 +12385,8 @@ paths:
             // Call the API
 
             var response = await client.GetUserIdAsync("uniqueID");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -11869,7 +12399,8 @@ paths:
             final response = await client.getUserId(
               userID: "uniqueID",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -11889,7 +12420,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -11900,7 +12432,8 @@ paths:
             // Call the API
 
             client.getUserId("uniqueID");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -11910,7 +12443,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -11928,7 +12462,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -11947,7 +12482,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -11962,7 +12498,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -11975,7 +12512,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -11993,7 +12531,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -12037,7 +12576,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -12048,7 +12588,8 @@ paths:
             // Call the API
 
             var response = await client.RemoveUserIdAsync("uniqueID");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -12061,7 +12602,8 @@ paths:
             final response = await client.removeUserId(
               userID: "uniqueID",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -12081,7 +12623,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -12092,7 +12635,8 @@ paths:
             // Call the API
 
             client.removeUserId("uniqueID");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -12102,7 +12646,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -12120,7 +12665,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -12139,7 +12685,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -12154,7 +12701,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -12167,7 +12715,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -12185,7 +12734,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -12234,7 +12784,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -12245,7 +12796,8 @@ paths:
             // Call the API
 
             var response = await client.ListClustersAsync();
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -12256,7 +12808,8 @@ paths:
             // Call the API
 
             final response = await client.listClusters();
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -12274,7 +12827,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -12285,7 +12839,8 @@ paths:
             // Call the API
 
             client.listClusters();
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -12295,7 +12850,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -12311,7 +12867,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -12328,7 +12885,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -12341,7 +12899,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -12354,7 +12913,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -12372,7 +12932,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -12498,7 +13059,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -12517,7 +13079,8 @@ paths:
                 HitsPerPage = 10,
               }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -12535,7 +13098,8 @@ paths:
                 hitsPerPage: 10,
               ),
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -12556,7 +13120,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -12568,7 +13133,8 @@ paths:
 
             client.searchUserIds(new
             SearchUserIdsParams().setQuery("test").setClusterName("theClusterName").setPage(5).setHitsPerPage(10));
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -12583,7 +13149,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -12606,7 +13173,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -12629,7 +13197,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -12649,7 +13218,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -12669,7 +13239,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -12692,7 +13263,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -12764,7 +13336,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -12775,7 +13348,8 @@ paths:
             // Call the API
 
             var response = await client.HasPendingMappingsAsync();
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -12786,7 +13360,8 @@ paths:
             // Call the API
 
             final response = await client.hasPendingMappings();
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client
 
@@ -12812,7 +13387,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -12823,7 +13399,8 @@ paths:
             // Call the API
 
             client.hasPendingMappings();
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -12833,7 +13410,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -12849,7 +13427,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -12866,7 +13445,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -12879,7 +13459,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -12892,7 +13473,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -12910,7 +13492,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -12946,7 +13529,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -12957,7 +13541,8 @@ paths:
             // Call the API
 
             var response = await client.GetSourcesAsync();
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -12968,7 +13553,8 @@ paths:
             // Call the API
 
             final response = await client.getSources();
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -12986,7 +13572,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -12997,7 +13584,8 @@ paths:
             // Call the API
 
             client.getSources();
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -13007,7 +13595,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -13023,7 +13612,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -13040,7 +13630,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -13053,7 +13644,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -13066,7 +13658,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -13084,7 +13677,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -13133,7 +13727,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -13149,7 +13744,8 @@ paths:
                 new Source { VarSource = "theSource", Description = "theDescription", }
               }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -13167,7 +13763,8 @@ paths:
                 ),
               ],
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client
 
@@ -13196,7 +13793,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -13208,7 +13806,8 @@ paths:
 
             client.replaceSources(List.of(new
             Source().setSource("theSource").setDescription("theDescription")));
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -13220,7 +13819,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -13243,7 +13843,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -13266,7 +13867,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -13286,7 +13888,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -13304,7 +13907,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -13327,7 +13931,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -13367,7 +13972,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -13380,7 +13986,8 @@ paths:
             var response = await client.AppendSourceAsync(
               new Source { VarSource = "theSource", Description = "theDescription", }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -13396,7 +14003,8 @@ paths:
                 description: "theDescription",
               ),
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -13417,7 +14025,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -13429,7 +14038,8 @@ paths:
 
             client.appendSource(new
             Source().setSource("theSource").setDescription("theDescription"));
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -13442,7 +14052,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -13463,7 +14074,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -13484,7 +14096,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -13502,7 +14115,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -13520,7 +14134,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -13541,7 +14156,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -13593,7 +14209,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -13604,7 +14221,8 @@ paths:
             // Call the API
 
             var response = await client.DeleteSourceAsync("theSource");
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -13617,7 +14235,8 @@ paths:
             final response = await client.deleteSource(
               source: "theSource",
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -13637,7 +14256,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -13648,7 +14268,8 @@ paths:
             // Call the API
 
             client.deleteSource("theSource");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -13658,7 +14279,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -13676,7 +14298,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -13695,7 +14318,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -13710,7 +14334,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -13723,7 +14348,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -13741,7 +14367,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -13958,7 +14585,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -13969,7 +14597,8 @@ paths:
             // Call the API
 
             var response = await client.GetLogsAsync();
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -13980,7 +14609,8 @@ paths:
             // Call the API
 
             final response = await client.getLogs();
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -13998,7 +14628,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -14009,7 +14640,8 @@ paths:
             // Call the API
 
             client.getLogs();
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -14019,7 +14651,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -14035,7 +14668,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -14052,7 +14686,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -14065,7 +14700,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -14078,7 +14714,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -14096,7 +14733,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -14162,7 +14800,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -14173,7 +14812,8 @@ paths:
             // Call the API
 
             var response = await client.GetTaskAsync("theIndexName", 123L);
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -14187,7 +14827,8 @@ paths:
               indexName: "theIndexName",
               taskID: 123,
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -14207,7 +14848,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -14218,7 +14860,8 @@ paths:
             // Call the API
 
             client.getTask("theIndexName", 123L);
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -14231,7 +14874,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -14250,7 +14894,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -14270,7 +14915,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -14286,7 +14932,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -14299,7 +14946,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -14318,7 +14966,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -14425,7 +15074,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -14448,7 +15098,8 @@ paths:
                 },
               }
             );
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -14469,7 +15120,8 @@ paths:
                 ],
               ),
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client
 
@@ -14499,7 +15151,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -14516,7 +15169,8 @@ paths:
                 .setDestination("dest")
                 .setScope(List.of(ScopeType.fromValue("rules"), ScopeType.fromValue("settings")))
             );
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -14533,7 +15187,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -14556,7 +15211,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -14583,7 +15239,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -14606,7 +15263,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -14622,7 +15280,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -14645,7 +15304,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -14696,7 +15356,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: >
             // Initialize the client
 
@@ -14707,7 +15368,8 @@ paths:
             // Call the API
 
             var response = await client.ListIndicesAsync();
-        - lang: Dart
+        - lang: dart
+          label: Dart
           source: >
             // Initialize the client
 
@@ -14718,7 +15380,8 @@ paths:
             // Call the API
 
             final response = await client.listIndices();
-        - lang: Go
+        - lang: go
+          label: Go
           source: |
             // Initialize the client
             client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -14736,7 +15399,8 @@ paths:
 
             // use the model directly
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -14747,7 +15411,8 @@ paths:
             // Call the API
 
             client.listIndices();
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
@@ -14757,7 +15422,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -14773,7 +15439,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -14790,7 +15457,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: |
             # Initialize the client
             _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
@@ -14803,7 +15471,8 @@ paths:
 
             # print the JSON response
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
@@ -14816,7 +15485,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -14834,7 +15504,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
