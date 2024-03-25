@@ -69,11 +69,12 @@ type Tag = {
 type Method = 'delete' | 'get' | 'options' | 'patch' | 'post' | 'put';
 
 export type CodeSamples = {
-  lang:
+  lang: string;
+  label:
     | 'C'
+    | 'C#'
     | 'C++'
     | 'CoffeeScript'
-    | 'CSharp'
     | 'CSS'
     | 'Dart'
     | 'DM'
@@ -105,5 +106,9 @@ export type SnippetSamples = Record<Language, Record<string, string>>;
  */
 type Path = Record<
   Method,
-  Record<string, any> & { operationId: string; 'x-codeSamples': CodeSamples[]; summary: string }
+  Record<string, any> & {
+    operationId: string;
+    'x-codeSamples': CodeSamples[];
+    summary: string;
+  }
 >;
