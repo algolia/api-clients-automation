@@ -69,7 +69,32 @@ type Tag = {
 type Method = 'delete' | 'get' | 'options' | 'patch' | 'post' | 'put';
 
 export type CodeSamples = {
-  lang: string;
+  lang:
+    | 'c'
+    | 'c++'
+    | 'coffeescript'
+    | 'csharp'
+    | 'css'
+    | 'dart'
+    | 'dm'
+    | 'elixir'
+    | 'go'
+    | 'groovy'
+    | 'html'
+    | 'java'
+    | 'javascript'
+    | 'kotlin'
+    | 'objective-c'
+    | 'perl'
+    | 'php'
+    | 'powershell'
+    | 'python'
+    | 'ruby'
+    | 'rust'
+    | 'scala'
+    | 'shell'
+    | 'swift'
+    | 'typescript';
   label:
     | 'C'
     | 'C#'
