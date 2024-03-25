@@ -1,8 +1,8 @@
 get:
   tags:
     - sources
-  summary: Get a source.
-  description: Get the source of the given sourceID.
+  summary: Retrieve a source.
+  description: Retrieve a source by its ID.
   operationId: getSource
   x-acl:
     - addObject
@@ -24,7 +24,7 @@ patch:
   tags:
     - sources
   summary: Update a source.
-  description: Update the source of the given sourceID.
+  description: Updates a source by its ID.
   operationId: updateSource
   x-acl:
     - addObject
@@ -52,7 +52,7 @@ delete:
   tags:
     - sources
   summary: Delete a source.
-  description: Soft delete the source of the given sourceID.
+  description: Deletes a source by its ID. You can't delete sources that are referenced in tasks.
   operationId: deleteSource
   x-acl:
     - addObject

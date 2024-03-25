@@ -1,8 +1,8 @@
 post:
   tags:
     - sources
-  summary: Search among sources.
-  description: Search among sources with a defined set of parameters.
+  summary: Search for sources.
+  description: Searches for sources.
   operationId: searchSources
   x-acl:
     - addObject

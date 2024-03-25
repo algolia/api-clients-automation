@@ -1,7 +1,7 @@
 enabled:
   name: enabled
   in: query
-  description: Whether the task is enabled or not.
+  description: Whether to filter the list of tasks by the `enabled` status.
   required: false
   schema:
     type: boolean
@@ -10,12 +10,12 @@ action:
   name: action
   in: query
   required: false
-  description: The action of the tasks to retrieve.
+  description: Actions for filtering the list of tasks.
   style: form
   explode: false
   schema:
     type: array
-    description: An array of actions to perform on the Algolia index.
+    description: Actions to perform on the Algolia index.
     items:
       $ref: './schemas/task.yml#/ActionType'
     example: save,replace,partial,append
@@ -23,7 +23,7 @@ action:
 sourceID:
   name: sourceID
   in: query
-  description: The sourceIDs of the tasks to retrieve.
+  description: Source IDs for filtering the list of tasks.
   required: false
   style: form
   explode: false
@@ -35,7 +35,7 @@ sourceID:
 destinationID:
   name: destinationID
   in: query
-  description: The destinationIDs of the tasks to retrieve.
+  description: Destination IDs for filtering the list of tasks.
   required: false
   style: form
   explode: false
@@ -47,7 +47,7 @@ destinationID:
 triggerType:
   name: triggerType
   in: query
-  description: The trigger type of the task.
+  description: Type of task trigger for filtering the list of tasks.
   required: false
   style: form
   explode: false
@@ -60,12 +60,13 @@ triggerType:
 sort:
   name: sort
   in: query
-  description: The key by which the list should be sorted.
+  description: Property by which to sort the list of tasks.
   required: false
   schema:
     $ref: '#/taskSortKeys'
 
 taskSortKeys:
   type: string
-  description: Used to sort the Task list endpoint.
+  description: Property by which to sort the list of tasks.
+  default: createdAt
   enum: [enabled, triggerType, action, updatedAt, createdAt]

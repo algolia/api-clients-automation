@@ -1,7 +1,7 @@
 type:
   name: type
   in: query
-  description: The type of the destinations to retrive.
+  description: Destination type.
   required: false
   style: form
   explode: false
@@ -14,7 +14,7 @@ type:
 authenticationID:
   name: authenticationID
   in: query
-  description: The authenticationIDs of the destinations to retrive.
+  description: Authentication IDs used by destinations.
   required: false
   style: form
   explode: false
@@ -26,12 +26,14 @@ authenticationID:
 sort:
   name: sort
   in: query
-  description: The key by which the list should be sorted.
+  description: Property by which to sort the destinations.
   required: false
+  example: type
   schema:
     $ref: '#/destinationSortKeys'
 
 destinationSortKeys:
   type: string
-  description: Used to sort the Destination list endpoint.
+  description: Property by which to sort the destinations.
+  default: createdAt
   enum: [name, type, updatedAt, createdAt]

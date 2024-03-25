@@ -1,8 +1,8 @@
 get:
   tags:
     - observability
-  summary: Get a list of runs.
-  description: Get a list of runs for the given query parameters, with pagination details.
+  summary: List task runs.
+  description: Retrieve a list of task runs.
   operationId: getRuns
   x-acl:
     - addObject
@@ -17,12 +17,12 @@ get:
     - $ref: '../../common/parameters.yml#/order'
     - name: startDate
       in: query
-      description: The start date (in RFC3339 format) of the runs fetching window. Defaults to 'now'-7 days if omitted.
+      description: Date in RFC3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
       schema:
         type: string
     - name: endDate
       in: query
-      description: The end date (in RFC3339 format) of the runs fetching window. Defaults to 'now' days if omitted.
+      description: Date in RFC3339 format for the latest run to retrieve. By default, the current day is used.
       schema:
         type: string
   responses:

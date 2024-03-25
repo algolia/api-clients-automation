@@ -1,8 +1,8 @@
 get:
   tags:
     - authentications
-  summary: Get a list of authentications.
-  description: Get a list of authentications for the given query parameters, with pagination details.
+  summary: List authentication resources.
+  description: Retrieves a list of all authentication resources.
   operationId: getAuthentications
   x-acl:
     - addObject
@@ -40,8 +40,8 @@ get:
 post:
   tags:
     - authentications
-  summary: Create a authentication.
-  description: Create a authentication.
+  summary: Create an authentication resource.
+  description: Creates a new authentication resource.
   operationId: createAuthentication
   x-acl:
     - addObject

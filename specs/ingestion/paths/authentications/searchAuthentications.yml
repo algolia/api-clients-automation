@@ -1,8 +1,8 @@
 post:
   tags:
     - authentications
-  summary: Search among authentications.
-  description: Search among authentications with a defined set of parameters.
+  summary: Search for authentication resources.
+  description: Searches for authentication resources.
   operationId: searchAuthentications
   x-acl:
     - addObject

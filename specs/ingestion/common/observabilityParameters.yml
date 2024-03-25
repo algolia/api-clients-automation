@@ -1,7 +1,7 @@
 eventStatus:
   name: status
   in: query
-  description: Filter the status of the events.
+  description: Event status for filtering the list of task runs.
   schema:
     type: array
     items:
@@ -10,7 +10,7 @@ eventStatus:
 eventType:
   name: type
   in: query
-  description: Filter the type of the events.
+  description: Event type for filtering the list of task runs.
   schema:
     type: array
     items:
@@ -19,7 +19,7 @@ eventType:
 runStatus:
   name: status
   in: query
-  description: Filter the status of the runs.
+  description: Event status for filtering the list of task runs.
   schema:
     type: array
     items:
@@ -28,32 +28,33 @@ runStatus:
 taskID:
   name: taskID
   in: query
-  description: Filter by taskID.
+  description: Task ID for filtering the list of task runs.
   schema:
     $ref: './schemas/common.yml#/taskID'
 
 runSort:
   name: sort
   in: query
-  description: The key by which the list should be sorted.
+  description: Property by which to sort the list of task runs.
   required: false
   schema:
     $ref: '#/runSortKeys'
 
 runSortKeys:
   type: string
-  description: Used to sort the Run list endpoint.
+  description: Property by which to sort the list of task runs.
+  default: createdAt
   enum: [status, updatedAt, createdAt]
 
 eventSort:
   name: sort
   in: query
-  description: The key by which the list should be sorted.
+  description: Property by which to sort the list of task run events.
   required: false
   schema:
     $ref: '#/eventSortKeys'
 
 eventSortKeys:
   type: string
-  description: Used to sort the Event list endpoint.
+  description: Property by which to sort the list of task run events.
   enum: [status, type, publishedAt]

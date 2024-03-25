@@ -15,7 +15,7 @@ Task:
     enabled:
       type: boolean
       default: true
-      description: Whether the task is enabled or not.
+      description: Whether the task is enabled.
     failureThreshold:
       $ref: '#/failureThreshold'
     action:
@@ -37,6 +37,7 @@ Task:
     - createdAt
 
 Trigger:
+  description: Trigger that runs the task.
   oneOf:
     - $ref: '#/OnDemandTrigger'
     - $ref: '#/ScheduleTrigger'
@@ -46,7 +47,7 @@ Trigger:
 TaskCreate:
   type: object
   additionalProperties: false
-  description: The payload for a task creation.
+  description: API request body for creating a task.
   properties:
     sourceID:
       $ref: './common.yml#/sourceID'
@@ -58,7 +59,7 @@ TaskCreate:
       $ref: '#/ActionType'
     enabled:
       type: boolean
-      description: Whether the task is enabled or not.
+      description: Whether the task is enabled.
     failureThreshold:
       $ref: '#/failureThreshold'
     input:
@@ -82,7 +83,7 @@ TaskCreateTrigger:
 TaskCreateResponse:
   type: object
   additionalProperties: false
-  description: The response from the API after a task creation.
+  description: API response for creating a task.
   properties:
     taskID:
       $ref: './common.yml#/taskID'
@@ -95,7 +96,7 @@ TaskCreateResponse:
 TaskUpdate:
   type: object
   additionalProperties: false
-  description: The payload for a task update.
+  description: API request body for updating a task.
   properties:
     destinationID:
       $ref: './common.yml#/destinationID'
@@ -105,13 +106,13 @@ TaskUpdate:
       $ref: '#/TaskInput'
     enabled:
       type: boolean
-      description: Whether the task is enabled or not.
+      description: Whether the task is enabled.
     failureThreshold:
       $ref: '#/failureThreshold'
 
 TaskUpdateResponse:
   type: object
-  description: The response from the API after a task update.
+  description: API response for updating a task.
   additionalProperties: false
   properties:
     taskID:
@@ -129,16 +130,17 @@ TaskSearch:
     taskIDs:
       type: array
       items:
-        type: string
+        $ref: './common.yml#/taskID'
   required:
     - taskIDs
 
 ActionType:
   type: string
-  description: The action to perform on the Algolia index.
-  enum: ['replace', 'save', 'partial', 'append']
+  description: Action to perform on the Algolia index.
+  enum: [replace, save, partial, append]
 
 TaskInput:
+  description: Configuration of the task, depending on its type.
   oneOf:
     - $ref: '#/OnDemandDateUtilsInput'
     - $ref: '#/ScheduleDateUtilsInput'
@@ -147,7 +149,7 @@ TaskInput:
 TriggerInput:
   type: object
   additionalProperties: false
-  description: The trigger input of a task.
+  description: Trigger for a task.
   properties:
     type:
       $ref: '#/TriggerType'
@@ -157,7 +159,7 @@ TriggerInput:
 TriggerUpdateInput:
   type: object
   additionalProperties: false
-  description: The trigger input for a task update.
+  description: Trigger for a task update.
   properties:
     cron:
       $ref: '#/Cron'
@@ -166,34 +168,62 @@ TriggerUpdateInput:
 
 TriggerType:
   type: string
-  description: >
-    The type of the task reflect how it can be used:
-      - onDemand: a task that runs manually
-      - schedule: a task that runs regularly, following a given cron expression
-      - subscription: a task that runs after a subscription event is received from an integration (e.g. Webhook).
-      - streaming: a task that runs continuously.
-  enum: ['onDemand', 'schedule', 'subscription', 'streaming']
+  description: |
+    Task trigger, describing when a task should run.
+
+    <dl>
+    <dt><code>onDemand</code></dt>
+    <dd>
+
+    Manually trigger the task with the `/run` endpoint.
+
+    </dd>
+    <dt><code>schedule</code></dt>
+    <dd>
+
+    Regularly trigger the task on a `cron` schedule.
+
+    </dd>
+
+    <dt><code>subscription</code></dt>
+
+    <dd>
+
+    Trigger the task after an event is received, such as, a webhook.
+
+    </dd>
+
+    <dt><code>streaming</code></dt>
+
+    <dd>
+
+    Run the task continuously.
+
+    </dd>
+    </dl>.
+  enum: [onDemand, schedule, subscription, streaming]
 
 # schedule trigger
 
 LastRun:
-  description: The last time the scheduled task ran (RFC3339 format).
+  description: The last time the scheduled task ran in RFC3339 format.
   type: string
 
 Cron:
   type: string
-  description: A cron expression that represent at which regularity the task should run.
+  description: Cron expression for the task's schedule.
   example: '* * 1 * *'
 
 ScheduleTriggerType:
   type: string
-  description: A task which is triggered by a schedule (cron expression).
-  enum: ['schedule']
+  description: Task runs on a schedule.
+  enum: [schedule]
 
 ScheduleTriggerInput:
+  title: Schedule
   type: object
   additionalProperties: false
-  description: The trigger input for a task of type 'schedule'.
+  description: Trigger input for scheduled tasks.
   properties:
     type:
       $ref: '#/ScheduleTriggerType'
@@ -206,7 +236,7 @@ ScheduleTriggerInput:
 ScheduleTrigger:
   type: object
   additionalProperties: false
-  description: The trigger information for a task of type 'schedule'.
+  description: Trigger information for scheduled tasks.
   properties:
     type:
       $ref: '#/ScheduleTriggerType'
@@ -215,7 +245,7 @@ ScheduleTrigger:
     lastRun:
       $ref: '#/LastRun'
     nextRun:
-      description: The next scheduled run of the task (RFC3339 format).
+      description: The next scheduled run of the task in RFC3339 format.
       type: string
   required:
     - type
@@ -226,13 +256,14 @@ ScheduleTrigger:
 
 OnDemandTriggerType:
   type: string
-  description: A task which is manually executed via the run task endpoint.
-  enum: ['onDemand']
+  description: Task is run manually, with the `/run` endpoint.
+  enum: [onDemand]
 
 OnDemandTriggerInput:
+  title: On demand
   type: object
   additionalProperties: false
-  description: The trigger information of a task of type `onDemand`.
+  description: Trigger information for manually-triggered tasks.
   properties:
     type:
       $ref: '#/OnDemandTriggerType'
@@ -242,7 +273,7 @@ OnDemandTriggerInput:
 OnDemandTrigger:
   type: object
   additionalProperties: false
-  description: The trigger information of a task of type `onDemand`.
+  description: Trigger information for manually-triggered tasks.
   properties:
     type:
       $ref: '#/OnDemandTriggerType'
@@ -255,13 +286,14 @@ OnDemandTrigger:
 
 SubscriptionTriggerType:
   type: string
-  description: A task which is triggered by an external subscription (e.g. Webhook).
-  enum: ['subscription']
+  description: Task runs after receiving subscribed event.
+  enum: [subscription]
 
 SubscriptionTrigger:
+  title: Subscription
   type: object
   additionalProperties: false
-  description: The trigger input for a task of type 'subscription'.
+  description: Trigger input for subscription tasks.
   properties:
     type:
       $ref: '#/SubscriptionTriggerType'
@@ -272,13 +304,14 @@ SubscriptionTrigger:
 
 StreamingTriggerType:
   type: string
-  description: A task that runs continuously.
-  enum: ['streaming']
+  description: Task runs continuously.
+  enum: [streaming]
 
 StreamingTrigger:
+  title: Streaming
   type: object
   additionalProperties: false
-  description: The trigger input for a task of type 'streaming'.
+  description: Trigger input for continuously running tasks.
   properties:
     type:
       $ref: '#/StreamingTriggerType'
@@ -326,14 +359,18 @@ MappingKitAction:
     - trigger
     - fieldDirectives
 
+MappingFormatSchema:
+  type: string
+  description: Mapping format schema.
+  enum: ['mappingkit/v1']
+
 MappingInput:
   type: object
   additionalProperties: false
-  description: Transformations to apply to source, serialized as a JSON string.
+  description: Transformations to apply to the source, serialized as a JSON string.
   properties:
     format:
-      description: Name of the mapping format schema, `mappingkit/v1` is currently the only supported format.
-      type: string
+      $ref: '#/MappingFormatSchema'
     actions:
       type: array
       items:
@@ -343,15 +380,16 @@ MappingInput:
     - actions
 
 OnDemandDateUtilsInput:
+  title: On demand date range
   type: object
   additionalProperties: false
-  description: The input for an `onDemand` task whose source is of type `bigquery` and for which extracted data spans a given time range.
+  description: Input for a manually-triggered task whose source is of type `bigquery` and for which extracted data spans a given time range.
   properties:
     startDate:
-      description: The start date of the extraction (RFC3339 format).
+      description: Earliest date in RFC3339 format of the extracted data from Big Query.
       type: string
     endDate:
-      description: The end date of the extraction (RFC3339 format).
+      description: Latest date in RFC3339 format of the extracted data from Big Query.
       type: string
     mapping:
       $ref: '#/MappingInput'
@@ -360,12 +398,13 @@ OnDemandDateUtilsInput:
     - endDate
 
 ScheduleDateUtilsInput:
+  title: Schedule dates
   type: object
   additionalProperties: false
-  description: The input for a `schedule` task whose source is of type `bigquery` and for which extracted data spans a fixed number of days.
+  description: Input for scheduled tasks whose source is of type `bigquery` and for which extracted data spans a fixed number of days.
   properties:
     timeframe:
-      description: The timeframe of the extraction, in number of days from today.
+      description: Number of days in the past until the current day for which to extract Big Query data.
       type: integer
       minimum: 1
       maximum: 30
@@ -375,9 +414,10 @@ ScheduleDateUtilsInput:
     - timeframe
 
 StreamingUtilsInput:
+  title: Streaming input
   type: object
   additionalProperties: false
-  description: The input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which extracted data is continuously streamed.
+  description: Input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which extracted data is continuously streamed.
   properties:
     mapping:
       $ref: '#/MappingInput'
@@ -388,4 +428,4 @@ failureThreshold:
   type: integer
   minimum: 0
   maximum: 100
-  description: A percentage representing the accepted failure threshold to determine if a `run` succeeded or not.
+  description: Maximum accepted percentage of failures for a task run to finish successfully.

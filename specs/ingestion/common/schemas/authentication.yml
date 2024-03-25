@@ -1,6 +1,6 @@
 Authentication:
   type: object
-  description: An authentication is used to login into a Source or a Destination, with obfuscated input.
+  description: Resource representing the information required to authenticate with a source or a destination.
   additionalProperties: false
   properties:
     authenticationID:
@@ -26,7 +26,7 @@ Authentication:
 
 AuthenticationCreate:
   type: object
-  description: The payload when creating an authentication.
+  description: Request body for creating a new authentication resource.
   additionalProperties: false
   properties:
     type:
@@ -44,7 +44,7 @@ AuthenticationCreate:
 
 AuthenticationCreateResponse:
   type: object
-  description: Response from the API when the Authentication is successfully created.
+  description: API response for the successful creation of an authentication resource.
   additionalProperties: false
   properties:
     authenticationID:
@@ -60,7 +60,7 @@ AuthenticationCreateResponse:
 
 AuthenticationUpdate:
   type: object
-  description: Payload to partially update an Authentication.
+  description: Request body for updating an authentication resource.
   additionalProperties: false
   properties:
     type:
@@ -75,7 +75,7 @@ AuthenticationUpdate:
 AuthenticationUpdateResponse:
   type: object
   additionalProperties: false
-  description: Response from the API when the Authentication is successfully updated.
+  description: API response for a successful update of an authentication resource.
   properties:
     authenticationID:
       $ref: './common.yml#/authenticationID'
@@ -91,7 +91,7 @@ AuthenticationUpdateResponse:
 AuthenticationSearch:
   type: object
   additionalProperties: false
-  description: Payload to search for multiple authentications, based on the given `authenticationIDs`.
+  description: Request body for searching for authentication resources.
   properties:
     authenticationIDs:
       type: array
@@ -102,141 +102,174 @@ AuthenticationSearch:
 
 AuthenticationType:
   type: string
-  description: Type of the Authentication, defines what kind of object is stored in the input.
-  enum: ['googleServiceAccount', 'basic', 'apiKey', 'oauth', 'algolia']
+  description: Type of authentication. This determines the type of credentials required in the `input` object.
+  enum: [googleServiceAccount, basic, apiKey, oauth, algolia]
 
 Platform:
   oneOf:
     - type: string
-      description: Describe which platform the Authentication is used for.
-      enum: ['bigcommerce', 'commercetools']
+      nullable: true
+      description: |
+        Name of an ecommerce platform with which to authenticate.
+        This determines which authentication type you can select.
+      enum: [bigcommerce, commercetools, shopify]
     - type: 'null'
 
 AuthGoogleServiceAccountPartial:
+  title: Google service account
   type: object
-  description: Authentication input to connect to a Google service (e.g. BigQuery).
+  description: Credentials for authenticating with a Google service account, such as BigQuery.
   additionalProperties: false
   properties:
     clientEmail:
       type: string
-      description: Email address of the Service Account.
+      description: Email address of the Google service account.
       example: service-account-name@project-id.iam.gserviceaccount.com
     privateKey:
       type: string
-      description: Private key of the Service Account.
+      description: Private key of the Google service account. This field is `null` in the API response.
 
 AuthBasicPartial:
+  title: Basic
   type: object
-  description: Authentication input for Basic login with username and password.
+  description: Credentials for authenticating with user name and password.
   additionalProperties: false
   properties:
     username:
       type: string
+      description: Username.
     password:
       type: string
+      description: Password. This field is `null` in the API response.
 
 AuthAPIKeyPartial:
+  title: API key
   type: object
-  description: Authentication input used for token credentials.
+  description: Credentials for authenticating with an API key.
   additionalProperties: false
   properties:
     key:
       type: string
+      description: API key. This field is `null` in the API response.
 
 AuthOAuthPartial:
+  title: OAuth
   type: object
-  description: Authentication input for OAuth login.
+  description: Credentials for authenticating with OAuth 2.0.
   additionalProperties: false
   properties:
     url:
       type: string
-      description: The OAuth endpoint URL.
+      description: URL for the OAuth endpoint.
     client_id:
       type: string
-      description: The clientID.
+      description: Client ID.
     client_secret:
       type: string
-      description: The secret.
+      description: Client secret. This field is `null` in the API response.
+    scope:
+      type: string
+      default: ''
+      description: OAuth scope.
 
 AuthAlgoliaPartial:
+  title: Algolia
   type: object
+  description: Credentials for authenticating with Algolia.
   additionalProperties: false
   properties:
     appID:
       type: string
-      description: Algolia Application ID.
+      description: Algolia application ID.
     apiKey:
       type: string
-      description: Algolia API Key, with the correct rights to push to an index and change settings.
+      description: |
+        Algolia API key with the ACL: `addObject`, `deleteObject`, `settings`, `editSettings`, `listIndexes`, `deleteIndex`.
+        This field is `null` in the API response.
 
 AuthGoogleServiceAccount:
+  title: Google service account
   type: object
-  description: Authentication input to connect to a Google service (e.g. BigQuery).
+  description: Credentials for authenticating with a Google service account, such as BigQuery.
   additionalProperties: false
   properties:
     clientEmail:
       type: string
-      description: Email address of the Service Account.
+      description: Email address of the Google service account.
       example: service-account-name@project-id.iam.gserviceaccount.com
     privateKey:
       type: string
-      description: Private key of the Service Account.
+      description: Private key of the Google service account. This field is `null` in the API response.
   required:
     - clientEmail
     - privateKey
 
 AuthBasic:
+  title: Basic
   type: object
-  description: Authentication input for Basic login with username and password.
+  description: Credentials for authenticating with user name and password.
   additionalProperties: false
   properties:
     username:
       type: string
+      description: Username.
     password:
       type: string
+      description: Password. This field is `null` in the API response.
   required:
     - username
     - password
 
 AuthAPIKey:
+  title: API key
   type: object
-  description: Authentication input used for token credentials.
+  description: Credentials for authenticating with an API key.
   additionalProperties: false
   properties:
     key:
       type: string
+      description: API key. This field is `null` in the API response.
   required:
     - key
 
 AuthOAuth:
+  title: OAuth
   type: object
-  description: Authentication input for OAuth login.
+  description: Credentials for authenticating with OAuth 2.0.
   additionalProperties: false
   properties:
     url:
       type: string
-      description: The OAuth endpoint URL.
+      description: URL for the OAuth endpoint.
     client_id:
       type: string
-      description: The clientID.
+      description: Client ID.
     client_secret:
       type: string
-      description: The secret.
+      description: Client secret. This field is `null` in the API response.
+    scope:
+      type: string
+      default: ''
+      description: OAuth scope.
   required:
     - url
     - client_id
     - client_secret
 
 AuthAlgolia:
+  title: Algolia
   type: object
   additionalProperties: false
+  description: Credentials for authenticating with Algolia.
   properties:
     appID:
       type: string
-      description: Algolia Application ID.
+      description: Algolia application ID.
     apiKey:
       type: string
-      description: Algolia API Key, with the correct rights to push to an index and change settings.
+      description: |
+        Algolia API key with the ACL: `addObject`, `deleteObject`, `settings`, `editSettings`, `listIndexes`, `deleteIndex`.
+        This field is `null` in the API response.
   required:
     - appID
     - apiKey
