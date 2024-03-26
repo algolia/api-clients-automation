@@ -10,7 +10,7 @@ This section hosts informations about the [usage of the API clients](https://git
 
 Generated code in production can be find on repository of the clients.
 
-- [C#](https://github.com/algolia/algoliasearch-client-chsarp/tree/next)
+- [C#](https://github.com/algolia/algoliasearch-client-csharp/tree/next)
 - [Dart](https://github.com/algolia/algoliasearch-client-dart/)
 - [Go](https://github.com/algolia/algoliasearch-client-go/tree/next/)
 - [Java](https://github.com/algolia/algoliasearch-client-java/tree/next/)
