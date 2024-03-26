@@ -9,7 +9,6 @@ import Core
 import Foundation
 import XCTest
 
-public typealias TestNullObject = [String: AnyCodable]
 public typealias TestNullString = String
 
 public extension Data {
