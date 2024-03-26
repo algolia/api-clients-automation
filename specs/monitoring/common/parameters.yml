@@ -17,8 +17,8 @@ MetricInPath:
   description: |
     Metric to report.
 
-    For more information about the individual metrics, see the response.
-    To include all metrics, use `*` as the parameter.
+    For more information about the individual metrics, see the description of the API response.
+    To include all metrics, use `*`.
   schema:
     $ref: './enums.yml#/Metric'
 
