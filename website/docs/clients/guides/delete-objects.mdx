@@ -65,7 +65,7 @@ client.batch(
     batchWriteParams = BatchWriteParams(
         requests = objectIDs.map { objectID ->
             BatchRequest(
-                action = Action.Delete,
+                action = Action.DELETE_OBJECT,
                 body = buildJsonObject {
                     put("objectID", JsonPrimitive(objectID))
                 },
@@ -86,7 +86,7 @@ await client.batch(
   batchWriteParams: BatchWriteParams(
     requests: objectIDs
         .map((id) => BatchRequest(
-              action: Action.delete,
+              action: Action.deleteObject,
               body: {'objectID': id},
             ))
         .toList(),
@@ -115,7 +115,7 @@ batchRequests := make([]search.BatchRequest, 0, len(objectIDs))
 for _, objectID := range objectIDs {
   batchRequests = append(
     batchRequests,
-    *search.NewBatchRequest(search.ACTION_DELETE, map[string]any{"objectID": objectID}),
+    *search.NewBatchRequest(search.ACTION_DELETE_OBJECT, map[string]any{"objectID": objectID}),
   )
 }
 
@@ -157,7 +157,7 @@ var objectIDs = new List<string> { "1", "2", "3", "4", "5" };
 var requests = objectIDs
   .Select(objectId => new BatchRequest
   {
-    Action = Algolia.Search.Models.Search.Action.Delete,
+    Action = Algolia.Search.Models.Search.Action.DeleteObject,
     Body = new { objectID = objectId }
   }).ToList();
 
