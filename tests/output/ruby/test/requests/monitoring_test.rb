@@ -353,18 +353,6 @@ class TestMonitoringClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # getInventory
-  def test_get_inventory0
-    req = @client.get_inventory_with_http_info
-
-    assert_equal(:get, req.method)
-    assert_equal('/1/inventory/servers', req.path)
-    assert_equal({}.to_a, req.query_params.to_a)
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-
-    assert(req.body.nil?, 'body is not nil')
-  end
-
   # getLatency
   def test_get_latency0
     req = @client.get_latency_with_http_info("c1-de")
@@ -395,6 +383,18 @@ class TestMonitoringClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/reachability/c1-de/probes', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, 'body is not nil')
+  end
+
+  # getInventory
+  def test_get_servers0
+    req = @client.get_servers_with_http_info
+
+    assert_equal(:get, req.method)
+    assert_equal('/1/inventory/servers', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 

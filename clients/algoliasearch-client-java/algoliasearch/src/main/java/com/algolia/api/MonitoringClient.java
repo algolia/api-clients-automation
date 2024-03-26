@@ -452,7 +452,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * List known incidents for selected clusters.
+   * Retrieves known incidents for the selected clusters.
    *
    * @param clusters Subset of clusters, separated by comma. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -464,7 +464,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * List known incidents for selected clusters.
+   * Retrieves known incidents for the selected clusters.
    *
    * @param clusters Subset of clusters, separated by comma. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -474,7 +474,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List known incidents for selected clusters.
+   * (asynchronously) Retrieves known incidents for the selected clusters.
    *
    * @param clusters Subset of clusters, separated by comma. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -491,7 +491,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List known incidents for selected clusters.
+   * (asynchronously) Retrieves known incidents for the selected clusters.
    *
    * @param clusters Subset of clusters, separated by comma. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -501,7 +501,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * Report whether a cluster is operational.
+   * Retrieves the status of selected clusters.
    *
    * @param clusters Subset of clusters, separated by comma. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -513,7 +513,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * Report whether a cluster is operational.
+   * Retrieves the status of selected clusters.
    *
    * @param clusters Subset of clusters, separated by comma. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -523,7 +523,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Report whether a cluster is operational.
+   * (asynchronously) Retrieves the status of selected clusters.
    *
    * @param clusters Subset of clusters, separated by comma. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -540,7 +540,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Report whether a cluster is operational.
+   * (asynchronously) Retrieves the status of selected clusters.
    *
    * @param clusters Subset of clusters, separated by comma. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -550,7 +550,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * List known incidents for all clusters.
+   * Retrieves known incidents for all clusters.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -561,7 +561,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * List known incidents for all clusters.
+   * Retrieves known incidents for all clusters.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -570,7 +570,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List known incidents for all clusters.
+   * (asynchronously) Retrieves known incidents for all clusters.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -583,7 +583,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List known incidents for all clusters.
+   * (asynchronously) Retrieves known incidents for all clusters.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -592,7 +592,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * List the average times for indexing operations for selected clusters.
+   * Retrieves average times for indexing operations for selected clusters.
    *
    * @param clusters Subset of clusters, separated by comma. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -604,7 +604,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * List the average times for indexing operations for selected clusters.
+   * Retrieves average times for indexing operations for selected clusters.
    *
    * @param clusters Subset of clusters, separated by comma. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -614,7 +614,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List the average times for indexing operations for selected clusters.
+   * (asynchronously) Retrieves average times for indexing operations for selected clusters.
    *
    * @param clusters Subset of clusters, separated by comma. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -631,7 +631,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List the average times for indexing operations for selected clusters.
+   * (asynchronously) Retrieves average times for indexing operations for selected clusters.
    *
    * @param clusters Subset of clusters, separated by comma. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -641,61 +641,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * List the servers belonging to clusters. The response depends on whether you authenticate your
-   * API request: - With authentication, the response lists the servers assigned to your Algolia
-   * application's cluster. - Without authentication, the response lists the servers for all Algolia
-   * clusters.
-   *
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public InventoryResponse getInventory(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(getInventoryAsync(requestOptions));
-  }
-
-  /**
-   * List the servers belonging to clusters. The response depends on whether you authenticate your
-   * API request: - With authentication, the response lists the servers assigned to your Algolia
-   * application's cluster. - Without authentication, the response lists the servers for all Algolia
-   * clusters.
-   *
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public InventoryResponse getInventory() throws AlgoliaRuntimeException {
-    return this.getInventory(null);
-  }
-
-  /**
-   * (asynchronously) List the servers belonging to clusters. The response depends on whether you
-   * authenticate your API request: - With authentication, the response lists the servers assigned
-   * to your Algolia application's cluster. - Without authentication, the response lists the servers
-   * for all Algolia clusters.
-   *
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<InventoryResponse> getInventoryAsync(RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest.builder().setPath("/1/inventory/servers").setMethod("GET").build();
-
-    return executeAsync(request, requestOptions, new TypeReference<InventoryResponse>() {});
-  }
-
-  /**
-   * (asynchronously) List the servers belonging to clusters. The response depends on whether you
-   * authenticate your API request: - With authentication, the response lists the servers assigned
-   * to your Algolia application's cluster. - Without authentication, the response lists the servers
-   * for all Algolia clusters.
-   *
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<InventoryResponse> getInventoryAsync() throws AlgoliaRuntimeException {
-    return this.getInventoryAsync(null);
-  }
-
-  /**
-   * List the average latency for search requests for selected clusters.
+   * Retrieves the average latency for search requests for selected clusters.
    *
    * @param clusters Subset of clusters, separated by comma. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -707,7 +653,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * List the average latency for search requests for selected clusters.
+   * Retrieves the average latency for search requests for selected clusters.
    *
    * @param clusters Subset of clusters, separated by comma. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -717,7 +663,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List the average latency for search requests for selected clusters.
+   * (asynchronously) Retrieves the average latency for search requests for selected clusters.
    *
    * @param clusters Subset of clusters, separated by comma. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -734,7 +680,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List the average latency for search requests for selected clusters.
+   * (asynchronously) Retrieves the average latency for search requests for selected clusters.
    *
    * @param clusters Subset of clusters, separated by comma. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -744,10 +690,13 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * Report the aggregate value of a metric for a selected period of time.
+   * Retrieves metrics related to your Algolia infrastructure, aggregated over a selected time
+   * window. Access to this API is available as part of the [Premium or Elevate
+   * plans](https://www.algolia.com/pricing). You must authenticate requests with the
+   * `x-algolia-application-id` and `x-algolia-api-key` headers (using the Monitoring API key).
    *
    * @param metric Metric to report. For more information about the individual metrics, see the
-   *     response. To include all metrics, use `*` as the parameter. (required)
+   *     description of the API response. To include all metrics, use `*`. (required)
    * @param period Period over which to aggregate the metrics: - `minute`. Aggregate the last
    *     minute. 1 data point per 10 seconds. - `hour`. Aggregate the last hour. 1 data point per
    *     minute. - `day`. Aggregate the last day. 1 data point per 10 minutes. - `week`. Aggregate
@@ -763,10 +712,13 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * Report the aggregate value of a metric for a selected period of time.
+   * Retrieves metrics related to your Algolia infrastructure, aggregated over a selected time
+   * window. Access to this API is available as part of the [Premium or Elevate
+   * plans](https://www.algolia.com/pricing). You must authenticate requests with the
+   * `x-algolia-application-id` and `x-algolia-api-key` headers (using the Monitoring API key).
    *
    * @param metric Metric to report. For more information about the individual metrics, see the
-   *     response. To include all metrics, use `*` as the parameter. (required)
+   *     description of the API response. To include all metrics, use `*`. (required)
    * @param period Period over which to aggregate the metrics: - `minute`. Aggregate the last
    *     minute. 1 data point per 10 seconds. - `hour`. Aggregate the last hour. 1 data point per
    *     minute. - `day`. Aggregate the last day. 1 data point per 10 minutes. - `week`. Aggregate
@@ -779,10 +731,13 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Report the aggregate value of a metric for a selected period of time.
+   * (asynchronously) Retrieves metrics related to your Algolia infrastructure, aggregated over a
+   * selected time window. Access to this API is available as part of the [Premium or Elevate
+   * plans](https://www.algolia.com/pricing). You must authenticate requests with the
+   * `x-algolia-application-id` and `x-algolia-api-key` headers (using the Monitoring API key).
    *
    * @param metric Metric to report. For more information about the individual metrics, see the
-   *     response. To include all metrics, use `*` as the parameter. (required)
+   *     description of the API response. To include all metrics, use `*`. (required)
    * @param period Period over which to aggregate the metrics: - `minute`. Aggregate the last
    *     minute. 1 data point per 10 seconds. - `hour`. Aggregate the last hour. 1 data point per
    *     minute. - `day`. Aggregate the last day. 1 data point per 10 minutes. - `week`. Aggregate
@@ -810,10 +765,13 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Report the aggregate value of a metric for a selected period of time.
+   * (asynchronously) Retrieves metrics related to your Algolia infrastructure, aggregated over a
+   * selected time window. Access to this API is available as part of the [Premium or Elevate
+   * plans](https://www.algolia.com/pricing). You must authenticate requests with the
+   * `x-algolia-application-id` and `x-algolia-api-key` headers (using the Monitoring API key).
    *
    * @param metric Metric to report. For more information about the individual metrics, see the
-   *     response. To include all metrics, use `*` as the parameter. (required)
+   *     description of the API response. To include all metrics, use `*`. (required)
    * @param period Period over which to aggregate the metrics: - `minute`. Aggregate the last
    *     minute. 1 data point per 10 seconds. - `hour`. Aggregate the last hour. 1 data point per
    *     minute. - `day`. Aggregate the last day. 1 data point per 10 minutes. - `week`. Aggregate
@@ -877,10 +835,61 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * Report whether clusters are operational. The response depends on whether you authenticate your
-   * API request. - With authentication, the response includes the status of the cluster assigned to
-   * your Algolia application. - Without authentication, the response lists the statuses of all
-   * public Algolia clusters.
+   * Retrieves the servers that belong to clusters. The response depends on whether you authenticate
+   * your API request: - With authentication, the response lists the servers assigned to your
+   * Algolia application's cluster. - Without authentication, the response lists the servers for all
+   * Algolia clusters.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public InventoryResponse getServers(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getServersAsync(requestOptions));
+  }
+
+  /**
+   * Retrieves the servers that belong to clusters. The response depends on whether you authenticate
+   * your API request: - With authentication, the response lists the servers assigned to your
+   * Algolia application's cluster. - Without authentication, the response lists the servers for all
+   * Algolia clusters.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public InventoryResponse getServers() throws AlgoliaRuntimeException {
+    return this.getServers(null);
+  }
+
+  /**
+   * (asynchronously) Retrieves the servers that belong to clusters. The response depends on whether
+   * you authenticate your API request: - With authentication, the response lists the servers
+   * assigned to your Algolia application's cluster. - Without authentication, the response lists
+   * the servers for all Algolia clusters.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<InventoryResponse> getServersAsync(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder().setPath("/1/inventory/servers").setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<InventoryResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Retrieves the servers that belong to clusters. The response depends on whether
+   * you authenticate your API request: - With authentication, the response lists the servers
+   * assigned to your Algolia application's cluster. - Without authentication, the response lists
+   * the servers for all Algolia clusters.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<InventoryResponse> getServersAsync() throws AlgoliaRuntimeException {
+    return this.getServersAsync(null);
+  }
+
+  /**
+   * Retrieves the status of all Algolia clusters and instances.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -891,10 +900,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * Report whether clusters are operational. The response depends on whether you authenticate your
-   * API request. - With authentication, the response includes the status of the cluster assigned to
-   * your Algolia application. - Without authentication, the response lists the statuses of all
-   * public Algolia clusters.
+   * Retrieves the status of all Algolia clusters and instances.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -903,10 +909,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Report whether clusters are operational. The response depends on whether you
-   * authenticate your API request. - With authentication, the response includes the status of the
-   * cluster assigned to your Algolia application. - Without authentication, the response lists the
-   * statuses of all public Algolia clusters.
+   * (asynchronously) Retrieves the status of all Algolia clusters and instances.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -919,10 +922,7 @@ public class MonitoringClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Report whether clusters are operational. The response depends on whether you
-   * authenticate your API request. - With authentication, the response includes the status of the
-   * cluster assigned to your Algolia application. - Without authentication, the response lists the
-   * statuses of all public Algolia clusters.
+   * (asynchronously) Retrieves the status of all Algolia clusters and instances.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */

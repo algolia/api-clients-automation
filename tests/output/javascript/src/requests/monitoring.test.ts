@@ -391,17 +391,6 @@ describe('getIndexingTime', () => {
   });
 });
 
-describe('getInventory', () => {
-  test('getInventory', async () => {
-    const req = (await client.getInventory()) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/1/inventory/servers');
-    expect(req.method).toEqual('GET');
-    expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
-});
-
 describe('getLatency', () => {
   test('getLatency', async () => {
     const req = (await client.getLatency({
@@ -436,6 +425,17 @@ describe('getReachability', () => {
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/reachability/c1-de/probes');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('getServers', () => {
+  test('getInventory', async () => {
+    const req = (await client.getServers()) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/inventory/servers');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);

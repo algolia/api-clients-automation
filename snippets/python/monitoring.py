@@ -183,27 +183,6 @@ async def snippet_for_get_indexing_time():
     # SEPARATOR<
 
 
-async def snippet_for_get_inventory():
-    """
-    Snippet for the getInventory method.
-
-    getInventory
-    """
-    # >SEPARATOR getInventory
-    # Initialize the client
-    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
-
-    # Call the API
-    resp = await _client.get_inventory()
-
-    # use the class directly
-    print(resp)
-
-    # print the JSON response
-    print(resp.to_json())
-    # SEPARATOR<
-
-
 async def snippet_for_get_latency():
     """
     Snippet for the getLatency method.
@@ -265,6 +244,27 @@ async def snippet_for_get_reachability():
     resp = await _client.get_reachability(
         clusters="c1-de",
     )
+
+    # use the class directly
+    print(resp)
+
+    # print the JSON response
+    print(resp.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_get_servers():
+    """
+    Snippet for the getServers method.
+
+    getInventory
+    """
+    # >SEPARATOR getServers
+    # Initialize the client
+    _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    resp = await _client.get_servers()
 
     # use the class directly
     print(resp)

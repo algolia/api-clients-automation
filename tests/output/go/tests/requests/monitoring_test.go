@@ -454,21 +454,6 @@ func TestMonitoring_GetIndexingTime(t *testing.T) {
 	})
 }
 
-func TestMonitoring_GetInventory(t *testing.T) {
-	client, echo := createMonitoringClient(t)
-	_ = echo
-
-	t.Run("getInventory", func(t *testing.T) {
-		_, err := client.GetInventory()
-		require.NoError(t, err)
-
-		require.Equal(t, "/1/inventory/servers", echo.Path)
-		require.Equal(t, "GET", echo.Method)
-
-		require.Nil(t, echo.Body)
-	})
-}
-
 func TestMonitoring_GetLatency(t *testing.T) {
 	client, echo := createMonitoringClient(t)
 	_ = echo
@@ -514,6 +499,21 @@ func TestMonitoring_GetReachability(t *testing.T) {
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/reachability/c1-de/probes", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+	})
+}
+
+func TestMonitoring_GetServers(t *testing.T) {
+	client, echo := createMonitoringClient(t)
+	_ = echo
+
+	t.Run("getInventory", func(t *testing.T) {
+		_, err := client.GetServers()
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/inventory/servers", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)

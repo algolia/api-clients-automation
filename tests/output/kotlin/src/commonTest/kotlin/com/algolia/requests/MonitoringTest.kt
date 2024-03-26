@@ -534,22 +534,6 @@ class MonitoringTest {
     )
   }
 
-  // getInventory
-
-  @Test
-  fun `getInventory`() = runTest {
-    client.runTest(
-      call = {
-        getInventory()
-      },
-      intercept = {
-        assertEquals("/1/inventory/servers".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("GET"), it.method)
-        assertNoBody(it.body)
-      },
-    )
-  }
-
   // getLatency
 
   @Test
@@ -599,6 +583,22 @@ class MonitoringTest {
       },
       intercept = {
         assertEquals("/1/reachability/c1-de/probes".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // getServers
+
+  @Test
+  fun `getInventory`() = runTest {
+    client.runTest(
+      call = {
+        getServers()
+      },
+      intercept = {
+        assertEquals("/1/inventory/servers".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
         assertNoBody(it.body)
       },

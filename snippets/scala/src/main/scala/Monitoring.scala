@@ -164,24 +164,6 @@ class SnippetMonitoringClient {
     // SEPARATOR<
   }
 
-  /** Snippet for the getInventory method.
-    *
-    * getInventory
-    */
-  def snippetForMonitoringClientGetInventory(): Unit = {
-    // >SEPARATOR getInventory
-    // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
-
-    // Call the API
-    val res = client.getInventory(
-    )
-
-    // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
   /** Snippet for the getLatency method.
     *
     * getLatency
@@ -233,6 +215,24 @@ class SnippetMonitoringClient {
     // Call the API
     val res = client.getReachability(
       clusters = "c1-de"
+    )
+
+    // Use the response
+    val value = Await.result(res, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the getServers method.
+    *
+    * getInventory
+    */
+  def snippetForMonitoringClientGetServers(): Unit = {
+    // >SEPARATOR getServers
+    // Initialize the client
+    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    val res = client.getServers(
     )
 
     // Use the response

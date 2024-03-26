@@ -140,21 +140,6 @@ class SnippetMonitoringClient {
     exitProcess(0)
   }
 
-  suspend fun snippetForGetInventory() {
-    // >SEPARATOR getInventory
-    // Initialize the client
-    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
-
-    // Call the API
-    var response = client.getInventory()
-
-    // Use the response
-    println(response)
-    // SEPARATOR<
-
-    exitProcess(0)
-  }
-
   suspend fun snippetForGetLatency() {
     // >SEPARATOR getLatency
     // Initialize the client
@@ -199,6 +184,21 @@ class SnippetMonitoringClient {
     var response = client.getReachability(
       clusters = "c1-de",
     )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForGetServers() {
+    // >SEPARATOR getServers
+    // Initialize the client
+    val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.getServers()
 
     // Use the response
     println(response)
