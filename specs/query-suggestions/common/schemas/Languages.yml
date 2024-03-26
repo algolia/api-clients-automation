@@ -1,10 +1,13 @@
 title: languages
 description: |
-  Set the language for deduplicating singular and plural suggestions.
+  Language for deduplicating singular and plural suggestions.
   If specified, only the more popular form is included.
 oneOf:
   - type: array
+    default: []
+    description: Languages for which to deduplicate singular and plural forms.
     items:
       type: string
+      description: Two-letter country code.
   - type: boolean
-    default: false
+    description: If true, deduplication is enabled for all suggestions.

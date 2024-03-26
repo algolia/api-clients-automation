@@ -9,17 +9,17 @@ properties:
   languages:
     $ref: './Languages.yml'
   exclude:
-    oneOf:
-      - type: array
-        description: Patterns to exclude from query suggestions.
-        items:
-          type: string
-      - type: 'null'
+    type: array
+    nullable: true
+    description: Patterns or words to exclude from the suggestions.
+    items:
+      type: string
+      description: Word or regular expression to exclude from the suggestions.
   enablePersonalization:
     type: boolean
     default: false
-    description: Turn on personalized query suggestions.
+    description: Whether to turn on personalized query suggestions.
   allowSpecialCharacters:
     type: boolean
     default: false
-    description: Allow suggestions with special characters.
+    description: Whether to include suggestions with special characters.

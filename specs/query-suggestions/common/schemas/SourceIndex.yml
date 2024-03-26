@@ -13,31 +13,33 @@ properties:
     type: boolean
     default: false
     description: |
-      If true, Query Suggestions uses all replicas of the primary index to find popular searches.
+      If true, Query Suggestions uses all replica indices to find popular searches.
       If false, only the primary index is used.
     example: false
   analyticsTags:
-    oneOf:
-      - type: array
-        description: |
-          [Analytics tags](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) for filtering the popular searches.
-        items:
-          type: string
-      - type: 'null'
+    type: array
+    nullable: true
+    default: null
+    description: |
+      Analytics tags for filtering the popular searches.
+      For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+    items:
+      type: string
   facets:
-    oneOf:
-      - type: array
-        items:
-          $ref: './Facet.yml'
-        description: |
-          Facets to use as top categories with your suggestions.
+    type: array
+    nullable: true
+    default: null
+    items:
+      $ref: './Facet.yml'
+    description: |
+      Facets to use as top categories with your suggestions.
 
-          If provided, Query Suggestions adds the top facet values to each suggestion.
-        example:
-          - {'attribute': 'category', 'amount': 3}
-          - {'attribute': 'brand', 'amount': 2}
-
-      - type: 'null'
+      If provided, Query Suggestions adds the top facet values to each suggestion.
+    example:
+      - attribute: category
+        amount: 3
+      - attribute: brand
+        amount: 2
   minHits:
     type: integer
     minimum: 0
@@ -45,7 +47,7 @@ properties:
     description: |
       Minimum number of hits required to be included as a suggestion.
 
-      A search query must at least generate `minHits` hits to be included in the Query Suggestions index.
+      A search query must at least generate `minHits` search results to be included in the Query Suggestions index.
   minLetters:
     type: integer
     minimum: 0
@@ -56,6 +58,8 @@ properties:
       A search query must be at least `minLetters` long to be included in the Query Suggestions index.
   generate:
     type: array
+    nullable: true
+    default: null
     items:
       type: array
       items:
@@ -67,21 +71,21 @@ properties:
         such as "blue adidas", "red adidas", "blue nike", "red nike", etc.
 
         You can include nested lists.
-      example: ['color', 'brand']
+      example: [color, brand]
   external:
-    oneOf:
-      - type: array
-        items:
-          type: string
-        description: |
-          Algolia indices with popular searches to use as query suggestions.
+    type: array
+    nullable: true
+    default: null
+    items:
+      type: string
+    description: |
+      Algolia indices with popular searches to use as query suggestions.
 
-          Records of these indices must have these attributes:
+      Records of these indices must have these attributes:
 
-            - `query`: search query which will be added as a suggestion
-            - `count`: measure of popularity of that search query
+      - `query`: search query which will be added as a suggestion
+      - `count`: measure of popularity of that search query
 
-          For example, you can export popular searches from an external analytics tool, such as Google Analytics or Adobe Analytics,
-          and feed this data into an external Algolia index.
-          You can use this external index to generate query suggestions until your Algolia analytics has collected enough data.
-      - type: 'null'
+      For example, you can export popular searches from an external analytics provider, such as Google Analytics or Adobe Analytics,
+      and feed this data into an Algolia index.
+      You can use this index to generate query suggestions until your Algolia Analytics has collected enough data.

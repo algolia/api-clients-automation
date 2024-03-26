@@ -4,8 +4,8 @@ get:
   operationId: getConfigStatus
   x-acl:
     - settings
-  summary: Get configuration status.
-  description: Report the status of a Query Suggestions index.
+  summary: Retrieve configuration status.
+  description: Reports the status of a Query Suggestions index.
   parameters:
     - $ref: '../common/parameters.yml#/IndexName'
   responses:
@@ -21,7 +21,7 @@ get:
                 $ref: '../common/schemas/QuerySuggestionsIndexName.yml'
               isRunning:
                 type: boolean
-                description: Indicates whether the creation or update of the Query Suggestions is in progress.
+                description: Whether the creation or update of the Query Suggestions index is in progress.
                 example: false
               lastBuiltAt:
                 type: string

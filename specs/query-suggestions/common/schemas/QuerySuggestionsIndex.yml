@@ -16,16 +16,18 @@ QuerySuggestionsIndex:
       type: array
       items:
         type: string
-      description: De-duplicate singular and plural suggestions. For example, let's say your index contains English content, and that two suggestions “shoe” and “shoes” end up in your Query Suggestions index. If the English language is configured, only the most popular of those two suggestions would remain.
+      description: |
+        Languages for which to deduplicate singular and plural suggestions.
+        For the configured languages, only the most popular variant will be included in the Query Suggestions index.
     exclude:
       type: array
       items:
         type: string
-      description: List of words and patterns to exclude from the Query Suggestions index.
+      description: Words and patterns to exclude from the Query Suggestions index.
 
 SourceIndicesWithReplicas:
   type: array
-  description: List of source indices used to generate a Query Suggestions index.
+  description: Source indices used to generate a Query Suggestions index.
   items:
     $ref: '#/SourceIndexWithReplicas'
 

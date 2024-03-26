@@ -5,7 +5,7 @@ get:
   x-acl:
     - settings
   summary: List configurations.
-  description: List all Query Suggestions configurations of your Algolia application.
+  description: Retrieves all Query Suggestions configurations of your Algolia application.
   responses:
     '200':
       description: OK
@@ -14,7 +14,7 @@ get:
           schema:
             type: array
             items:
-              $ref: '../common/schemas/QuerySuggestionsConfigurationResponse.yml#/QuerySuggestionsConfigurationResponse'
+              $ref: '../common/responses/QuerySuggestionsConfigurationResponse.yml#/QuerySuggestionsConfigurationResponse'
     '401':
       $ref: '../common/responses/Unauthorized.yml'
 
@@ -26,7 +26,7 @@ post:
     - editSettings
   summary: Create a configuration.
   description: |
-    Create a new Query Suggestions configuration.
+    Creates a new Query Suggestions configuration.
 
     You can have up to 100 configurations per Algolia application.
   requestBody:
@@ -41,13 +41,13 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../common/schemas/BaseResponse.yml'
+            $ref: '../common/responses/BaseResponse.yml'
           examples:
             Created:
               summary: Configuration created.
               value:
-                'status': 200
-                'message': 'Configuration was created, and a new indexing job has been scheduled.'
+                status: 200
+                message: Configuration was created, and a new indexing job has been scheduled.
     '400':
       $ref: '../common/responses/BadRequest.yml'
     '401':

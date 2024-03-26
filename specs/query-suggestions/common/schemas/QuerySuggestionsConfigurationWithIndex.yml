@@ -5,14 +5,8 @@ QuerySuggestionsConfigurationWithIndex:
     - indexName
     - sourceIndices
   allOf:
-    - $ref: '#/baseQuerySuggestionsConfigurationWithIndex'
+    - type: object
+      properties:
+        indexName:
+          $ref: './QuerySuggestionsIndexName.yml'
     - $ref: './QuerySuggestionsConfiguration.yml'
-
-baseQuerySuggestionsConfigurationWithIndex:
-  type: object
-  additionalProperties: false
-  required:
-    - indexName
-  properties:
-    indexName:
-      $ref: './QuerySuggestionsIndexName.yml'
