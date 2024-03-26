@@ -226,32 +226,6 @@ func SnippetForGetIndexingTimeOfMonitoring() {
 	print(resp)
 	// SEPARATOR<
 }
-func SnippetForGetInventoryOfMonitoring() {
-	/*
-	   Snippet for the getInventory method.
-
-	   getInventory
-	*/
-
-	// >SEPARATOR getInventory
-	// Initialize the client
-	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
-	if err != nil {
-		// The client can fail to initialize if you pass an invalid parameter.
-		panic(err)
-	}
-
-	// Call the API
-	resp, err := client.GetInventory()
-	if err != nil {
-		// handle the eventual error
-		panic(err)
-	}
-
-	// use the model directly
-	print(resp)
-	// SEPARATOR<
-}
 func SnippetForGetLatencyOfMonitoring() {
 	/*
 	   Snippet for the getLatency method.
@@ -327,6 +301,32 @@ func SnippetForGetReachabilityOfMonitoring() {
 	resp, err := client.GetReachability(client.NewApiGetReachabilityRequest(
 		"c1-de",
 	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(resp)
+	// SEPARATOR<
+}
+func SnippetForGetServersOfMonitoring() {
+	/*
+	   Snippet for the getServers method.
+
+	   getInventory
+	*/
+
+	// >SEPARATOR getServers
+	// Initialize the client
+	client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	resp, err := client.GetServers()
 	if err != nil {
 		// handle the eventual error
 		panic(err)

@@ -59,8 +59,7 @@ public class Server {
   }
 
   /**
-   * Included to support legacy applications. Do not rely on this attribute being present in the
-   * response. Use `is_replica` instead.
+   * Included to support legacy applications. Use `is_replica` instead.
    *
    * @deprecated
    */
@@ -75,7 +74,7 @@ public class Server {
     return this;
   }
 
-  /** Indicates whether this server is a replica of another server. */
+  /** Whether this server is a replica of another server. */
   @javax.annotation.Nullable
   public Boolean getIsReplica() {
     return isReplica;

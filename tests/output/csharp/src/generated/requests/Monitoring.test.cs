@@ -558,17 +558,6 @@ public class MonitoringClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getInventory")]
-  public async Task GetInventoryTest0()
-  {
-    await _client.GetInventoryAsync();
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/1/inventory/servers", req.Path);
-    Assert.Equal("GET", req.Method.ToString());
-    Assert.Null(req.Body);
-  }
-
   [Fact(DisplayName = "getLatency")]
   public async Task GetLatencyTest0()
   {
@@ -598,6 +587,17 @@ public class MonitoringClientRequestTests
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/reachability/c1-de/probes", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
+  [Fact(DisplayName = "getInventory")]
+  public async Task GetServersTest0()
+  {
+    await _client.GetServersAsync();
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/inventory/servers", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
   }

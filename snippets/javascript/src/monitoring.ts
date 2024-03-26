@@ -130,22 +130,6 @@ export async function snippetForgetIndexingTime(): Promise<void> {
   // SEPARATOR<
 }
 
-// Snippet for the getInventory method.
-//
-// getInventory
-export async function snippetForgetInventory(): Promise<void> {
-  // >SEPARATOR getInventory
-  // Initialize the client
-  const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
-
-  // Call the API
-  const response = await client.getInventory();
-
-  // use typed response
-  console.log(response);
-  // SEPARATOR<
-}
-
 // Snippet for the getLatency method.
 //
 // getLatency
@@ -191,6 +175,22 @@ export async function snippetForgetReachability(): Promise<void> {
 
   // Call the API
   const response = await client.getReachability({ clusters: 'c1-de' });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getServers method.
+//
+// getInventory
+export async function snippetForgetServers(): Promise<void> {
+  // >SEPARATOR getServers
+  // Initialize the client
+  const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.getServers();
 
   // use typed response
   console.log(response);

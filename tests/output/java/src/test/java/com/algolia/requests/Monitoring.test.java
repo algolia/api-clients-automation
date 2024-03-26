@@ -595,18 +595,6 @@ class MonitoringClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getInventory")
-  void getInventoryTest0() {
-    assertDoesNotThrow(() -> {
-      client.getInventory();
-    });
-    EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/inventory/servers", req.path);
-    assertEquals("GET", req.method);
-    assertNull(req.body);
-  }
-
-  @Test
   @DisplayName("getLatency")
   void getLatencyTest0() {
     assertDoesNotThrow(() -> {
@@ -638,6 +626,18 @@ class MonitoringClientRequestsTests {
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/reachability/c1-de/probes", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
+  @DisplayName("getInventory")
+  void getServersTest0() {
+    assertDoesNotThrow(() -> {
+      client.getServers();
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/inventory/servers", req.path);
     assertEquals("GET", req.method);
     assertNull(req.body);
   }

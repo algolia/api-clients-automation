@@ -109,19 +109,6 @@ class SnippetMonitoringClient {
     // SEPARATOR<
   }
 
-  // Snippet for the getInventory method.
-  //
-  // getInventory
-  void snippetForGetInventory() {
-    // >SEPARATOR getInventory
-    // Initialize the client
-    MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
-
-    // Call the API
-    client.getInventory();
-    // SEPARATOR<
-  }
-
   // Snippet for the getLatency method.
   //
   // getLatency
@@ -158,6 +145,19 @@ class SnippetMonitoringClient {
 
     // Call the API
     client.getReachability("c1-de");
+    // SEPARATOR<
+  }
+
+  // Snippet for the getServers method.
+  //
+  // getInventory
+  void snippetForGetServers() {
+    // >SEPARATOR getServers
+    // Initialize the client
+    MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.getServers();
     // SEPARATOR<
   }
 

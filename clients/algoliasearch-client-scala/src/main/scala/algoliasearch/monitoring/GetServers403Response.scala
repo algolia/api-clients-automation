@@ -18,41 +18,8 @@
   */
 package algoliasearch.monitoring
 
-import org.json4s._
-
-sealed trait Status
-
-/** Status of the cluster.
+/** GetServers403Response
   */
-object Status {
-  case object Operational extends Status {
-    override def toString = "operational"
-  }
-  case object DegradedPerformance extends Status {
-    override def toString = "degraded_performance"
-  }
-  case object PartialOutage extends Status {
-    override def toString = "partial_outage"
-  }
-  case object MajorOutage extends Status {
-    override def toString = "major_outage"
-  }
-  val values: Seq[Status] = Seq(Operational, DegradedPerformance, PartialOutage, MajorOutage)
-
-  def withName(name: String): Status = Status.values
-    .find(_.toString == name)
-    .getOrElse(throw new MappingException(s"Unknown Status value: $name"))
-}
-
-class StatusSerializer
-    extends CustomSerializer[Status](_ =>
-      (
-        {
-          case JString(value) => Status.withName(value)
-          case JNull          => null
-        },
-        { case value: Status =>
-          JString(value.toString)
-        }
-      )
-    )
+case class GetServers403Response(
+    reason: Option[String] = scala.None
+)

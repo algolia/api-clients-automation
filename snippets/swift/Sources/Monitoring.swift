@@ -108,19 +108,6 @@ final class MonitoringClientSnippet {
         // SEPARATOR<
     }
 
-    /// Snippet for the getInventory method.
-    ///
-    /// getInventory
-    func snippetForGetInventory() async throws {
-        // >SEPARATOR getInventory
-        // Initialize the client
-        let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
-
-        // Call the API
-        _ = try await client.getInventory()
-        // SEPARATOR<
-    }
-
     /// Snippet for the getLatency method.
     ///
     /// getLatency
@@ -157,6 +144,19 @@ final class MonitoringClientSnippet {
 
         // Call the API
         _ = try await client.getReachability(clusters: "c1-de")
+        // SEPARATOR<
+    }
+
+    /// Snippet for the getServers method.
+    ///
+    /// getInventory
+    func snippetForGetServers() async throws {
+        // >SEPARATOR getServers
+        // Initialize the client
+        let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+
+        // Call the API
+        _ = try await client.getServers()
         // SEPARATOR<
     }
 
