@@ -92,7 +92,7 @@ paths:
   /1/incidents/{clusters}:
     $ref: 'paths/getClusterIncidents.yml'
   /1/inventory/servers:
-    $ref: 'paths/getInventory.yml'
+    $ref: 'paths/getServers.yml'
   /1/latency/{clusters}:
     $ref: 'paths/getLatency.yml'
   /1/indexing/{clusters}:
