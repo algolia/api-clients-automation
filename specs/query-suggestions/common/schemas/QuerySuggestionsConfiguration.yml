@@ -5,16 +5,18 @@ QuerySuggestionsConfigurationWithIndex:
     - indexName
     - sourceIndices
   allOf:
-    - type: object
-      properties:
-        indexName:
-          $ref: './QuerySuggestionsIndexName.yml'
+    - $ref: '#/QuerySuggestionsIndexName'
     - $ref: '#/QuerySuggestionsConfiguration'
+
+QuerySuggestionsIndexName:
+  type: object
+  properties:
+    indexName:
+      $ref: './QuerySuggestionsIndexName.yml'
 
 QuerySuggestionsConfiguration:
   type: object
   description: Query Suggestions configuration.
-  additionalProperties: false
   required:
     - sourceIndices
   properties:
@@ -29,6 +31,7 @@ QuerySuggestionsConfiguration:
     exclude:
       type: array
       nullable: true
+      default: null
       description: Patterns or words to exclude from the suggestions.
       items:
         type: string
@@ -58,10 +61,8 @@ Languages:
       description: If true, deduplication is enabled for all suggestions.
 
 SourceIndex:
-  title: sourceIndex
   type: object
   description: Configuration of an Algolia index for Query Suggestions.
-  additionalProperties: false
   required:
     - indexName
   properties:
@@ -131,7 +132,8 @@ SourceIndex:
           such as "blue adidas", "red adidas", "blue nike", "red nike", etc.
 
           You can include nested lists.
-        example: [color, brand]
+        example:
+          - [color, brand]
     external:
       type: array
       nullable: true
@@ -151,10 +153,8 @@ SourceIndex:
         You can use this index to generate query suggestions until your Algolia Analytics has collected enough data.
 
 Facet:
-  title: facet
   description: Facet to use as category.
   type: object
-  additionalProperties: false
   properties:
     attribute:
       type: string
