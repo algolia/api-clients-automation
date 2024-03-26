@@ -42,6 +42,9 @@ export type Spec = {
   servers: Server[];
   tags: Tag[];
   paths: Path[];
+  components: {
+    schemas: Record<string, any>;
+  };
 };
 
 /**

@@ -20,6 +20,7 @@
   {{> algoliasearch/builds/initClients}}
 
   return {
+    ...createRecommendClient(commonOptions),
     ...createSearchClient(commonOptions),
     /**
      * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
