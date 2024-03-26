@@ -1,6 +1,6 @@
 get:
   summary: Retrieve servers.
-  operationId: getInventory
+  operationId: getServers
   security:
     - appId: []
     - apiKey: []
