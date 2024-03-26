@@ -47,7 +47,7 @@ BatchWriteParams batchWriteParams = new BatchWriteParams();
 for (String objectID : objectIDs) {
     batchWriteParams.addRequests(
             new BatchRequest()
-                    .setAction(Action.DELETE)
+                    .setAction(Action.DELETE_OBJECT)
                     .setBody(Collections.singletonMap("objectID", objectID))
     );
 }
