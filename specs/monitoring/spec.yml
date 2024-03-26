@@ -32,7 +32,7 @@ info:
 
     # Response status and errors
 
-    The Analytics API returns JSON responses.
+    The Monitoring API returns JSON responses.
     Since JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.
 
     Successful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.
