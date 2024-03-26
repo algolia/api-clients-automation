@@ -37,7 +37,7 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../common/schemas/QuerySuggestionsConfiguration.yml'
+          $ref: '../common/schemas/QuerySuggestionsConfiguration.yml#/QuerySuggestionsConfiguration'
   responses:
     '200':
       description: OK

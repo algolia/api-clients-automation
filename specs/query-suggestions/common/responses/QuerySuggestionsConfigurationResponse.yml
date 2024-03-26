@@ -7,7 +7,7 @@ QuerySuggestionsConfigurationResponse:
         appId:
           type: string
           description: Algolia application ID to which this Query Suggestions configuration belongs.
-    - $ref: '../schemas/QuerySuggestionsConfigurationWithIndex.yml#/QuerySuggestionsConfigurationWithIndex'
+    - $ref: '../schemas/QuerySuggestionsConfiguration.yml#/QuerySuggestionsConfigurationWithIndex'
   required:
     - appId
     - allowSpecialCharacters

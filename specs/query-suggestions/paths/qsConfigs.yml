@@ -34,7 +34,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '../common/schemas/QuerySuggestionsConfigurationWithIndex.yml#/QuerySuggestionsConfigurationWithIndex'
+          $ref: '../common/schemas/QuerySuggestionsConfiguration.yml#/QuerySuggestionsConfigurationWithIndex'
   responses:
     '200':
       description: OK
