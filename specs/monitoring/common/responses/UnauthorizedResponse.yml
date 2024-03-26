@@ -6,5 +6,5 @@ content:
     examples:
       Unauthorized:
         summary: Invalid credentials.
-        description: Make sure to use the Monitoring API key if you authenticate your API requests.
+        description: Use the Monitoring API key.
         value: Invalid credentials

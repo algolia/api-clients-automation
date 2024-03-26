@@ -13,13 +13,12 @@ properties:
     deprecated: true
     description: |
       Included to support legacy applications.
-      Do not rely on this attribute being present in the response.
       Use `is_replica` instead.
     example: false
   is_replica:
     type: boolean
     default: false
-    description: Indicates whether this server is a replica of another server.
+    description: Whether this server is a replica of another server.
     example: false
   cluster:
     type: string

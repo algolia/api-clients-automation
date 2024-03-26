@@ -1,6 +1,10 @@
 get:
-  summary: Get metrics for a given period.
-  description: Report the aggregate value of a metric for a selected period of time.
+  summary: Retrieve metrics.
+  description: |
+    Retrieves metrics related to your Algolia infrastructure, aggregated over a selected time window.
+
+    Access to this API is available as part of the [Premium or Elevate plans](https://www.algolia.com/pricing).
+    You must authenticate requests with the `x-algolia-application-id` and `x-algolia-api-key` headers (using the Monitoring API key).
   operationId: getMetrics
   tags:
     - infrastructure

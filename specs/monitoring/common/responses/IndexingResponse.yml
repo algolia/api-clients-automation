@@ -11,7 +11,7 @@ content:
           properties:
             indexing:
               additionalProperties:
-                x-additionalPropertiesName: times
+                x-additionalPropertiesName: cluster
                 $ref: '../schemas/Time.yml'
     examples:
       Success:

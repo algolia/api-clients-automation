@@ -1,6 +1,6 @@
 get:
-  summary: List incidents.
-  description: List known incidents for all clusters.
+  summary: Retrieve all incidents.
+  description: Retrieves known incidents for all clusters.
   operationId: getIncidents
   security: []
   tags:

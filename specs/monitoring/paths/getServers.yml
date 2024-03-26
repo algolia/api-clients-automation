@@ -1,11 +1,11 @@
 get:
-  summary: List servers.
-  operationId: getInventory
+  summary: Retrieve servers.
+  operationId: getServers
   security:
     - appId: []
     - apiKey: []
   description: |
-    List the servers belonging to clusters.
+    Retrieves the servers that belong to clusters.
 
     The response depends on whether you authenticate your API request:
 

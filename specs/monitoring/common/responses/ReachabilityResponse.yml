@@ -5,7 +5,7 @@ content:
       title: ReachabilityResponse
       type: object
       additionalProperties:
-        x-additionalPropertiesName: Server
+        x-additionalPropertiesName: cluster
         $ref: '../schemas/Probes.yml'
     examples:
       Success:

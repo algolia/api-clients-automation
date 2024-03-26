@@ -1,6 +1,6 @@
 get:
-  summary: List statuses of selected clusters.
-  description: Report whether a cluster is operational.
+  summary: Retrieve cluster status.
+  description: Retrieves the status of selected clusters.
   operationId: getClusterStatus
   tags:
     - status

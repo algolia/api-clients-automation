@@ -46,7 +46,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: |
             // Initialize the client
             var client = new PersonalizationClient(
@@ -55,7 +56,8 @@ paths:
 
             // Call the API
             var response = await client.CustomGetAsync("test/minimal");
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client with your application region, eg.
             personalization.YOUR_APP_ID_REGION
@@ -84,7 +86,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -96,7 +99,8 @@ paths:
             // Call the API
 
             client.customGet("test/minimal");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = personalizationClient(
@@ -110,7 +114,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -128,7 +133,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -147,7 +153,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: >
             # Initialize the client
 
@@ -170,7 +177,8 @@ paths:
             # print the JSON response
 
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::PersonalizationClient.create(
@@ -187,7 +195,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -205,7 +214,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -245,7 +255,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: |
             // Initialize the client
             var client = new PersonalizationClient(
@@ -254,7 +265,8 @@ paths:
 
             // Call the API
             var response = await client.CustomPostAsync("test/minimal");
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client with your application region, eg.
             personalization.YOUR_APP_ID_REGION
@@ -283,7 +295,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -295,7 +308,8 @@ paths:
             // Call the API
 
             client.customPost("test/minimal");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = personalizationClient(
@@ -309,7 +323,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -327,7 +342,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -346,7 +362,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: >
             # Initialize the client
 
@@ -369,7 +386,8 @@ paths:
             # print the JSON response
 
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::PersonalizationClient.create(
@@ -386,7 +404,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -404,7 +423,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -444,7 +464,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: |
             // Initialize the client
             var client = new PersonalizationClient(
@@ -453,7 +474,8 @@ paths:
 
             // Call the API
             var response = await client.CustomPutAsync("test/minimal");
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client with your application region, eg.
             personalization.YOUR_APP_ID_REGION
@@ -482,7 +504,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -494,7 +517,8 @@ paths:
             // Call the API
 
             client.customPut("test/minimal");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = personalizationClient(
@@ -508,7 +532,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -526,7 +551,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -545,7 +571,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: >
             # Initialize the client
 
@@ -568,7 +595,8 @@ paths:
             # print the JSON response
 
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::PersonalizationClient.create(
@@ -585,7 +613,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -603,7 +632,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -637,7 +667,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: |
             // Initialize the client
             var client = new PersonalizationClient(
@@ -646,7 +677,8 @@ paths:
 
             // Call the API
             var response = await client.CustomDeleteAsync("test/minimal");
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client with your application region, eg.
             personalization.YOUR_APP_ID_REGION
@@ -675,7 +707,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -687,7 +720,8 @@ paths:
             // Call the API
 
             client.customDelete("test/minimal");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: >
             // Initialize the client
 
@@ -707,7 +741,8 @@ paths:
             // use typed response
 
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -725,7 +760,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -744,7 +780,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: >
             # Initialize the client
 
@@ -767,7 +804,8 @@ paths:
             # print the JSON response
 
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::PersonalizationClient.create(
@@ -784,7 +822,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -802,7 +841,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -864,7 +904,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: |
             // Initialize the client
             var client = new PersonalizationClient(
@@ -873,7 +914,8 @@ paths:
 
             // Call the API
             var response = await client.GetUserTokenProfileAsync("UserToken");
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client with your application region, eg.
             personalization.YOUR_APP_ID_REGION
@@ -903,7 +945,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -915,7 +958,8 @@ paths:
             // Call the API
 
             client.getUserTokenProfile("UserToken");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: >
             // Initialize the client
 
@@ -935,7 +979,8 @@ paths:
             // use typed response
 
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -953,7 +998,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -972,7 +1018,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: >
             # Initialize the client
 
@@ -995,7 +1042,8 @@ paths:
             # print the JSON response
 
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::PersonalizationClient.create(
@@ -1012,7 +1060,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -1030,7 +1079,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -1095,7 +1145,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: |
             // Initialize the client
             var client = new PersonalizationClient(
@@ -1104,7 +1155,8 @@ paths:
 
             // Call the API
             var response = await client.DeleteUserProfileAsync("UserToken");
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client with your application region, eg.
             personalization.YOUR_APP_ID_REGION
@@ -1134,7 +1186,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -1146,7 +1199,8 @@ paths:
             // Call the API
 
             client.deleteUserProfile("UserToken");
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: >
             // Initialize the client
 
@@ -1166,7 +1220,8 @@ paths:
             // use typed response
 
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -1184,7 +1239,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -1203,7 +1259,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: >
             # Initialize the client
 
@@ -1226,7 +1283,8 @@ paths:
             # print the JSON response
 
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::PersonalizationClient.create(
@@ -1243,7 +1301,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -1261,7 +1320,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -1299,7 +1359,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: |
             // Initialize the client
             var client = new PersonalizationClient(
@@ -1308,7 +1369,8 @@ paths:
 
             // Call the API
             var response = await client.GetPersonalizationStrategyAsync();
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client with your application region, eg.
             personalization.YOUR_APP_ID_REGION
@@ -1335,7 +1397,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -1347,7 +1410,8 @@ paths:
             // Call the API
 
             client.getPersonalizationStrategy();
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = personalizationClient(
@@ -1361,7 +1425,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -1377,7 +1442,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -1394,7 +1460,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: >
             # Initialize the client
 
@@ -1415,7 +1482,8 @@ paths:
             # print the JSON response
 
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::PersonalizationClient.create(
@@ -1432,7 +1500,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -1450,7 +1519,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 
@@ -1501,7 +1571,8 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       x-codeSamples:
-        - lang: CSharp
+        - lang: csharp
+          label: C#
           source: |
             // Initialize the client
             var client = new PersonalizationClient(
@@ -1528,7 +1599,8 @@ paths:
                 PersonalizationImpact = 42,
               }
             );
-        - lang: Go
+        - lang: go
+          label: Go
           source: >
             // Initialize the client with your application region, eg.
             personalization.YOUR_APP_ID_REGION
@@ -1561,7 +1633,8 @@ paths:
             // use the model directly
 
             print(resp)
-        - lang: Java
+        - lang: java
+          label: Java
           source: >
             // Initialize the client
 
@@ -1578,7 +1651,8 @@ paths:
                 .setFacetScoring(List.of(new FacetScoring().setScore(42).setFacetName("Event")))
                 .setPersonalizationImpact(42)
             );
-        - lang: JavaScript
+        - lang: javascript
+          label: JavaScript
           source: |
             // Initialize the client
             const client = personalizationClient(
@@ -1596,7 +1670,8 @@ paths:
 
             // use typed response
             console.log(response);
-        - lang: Kotlin
+        - lang: kotlin
+          label: Kotlin
           source: >
             // Initialize the client
 
@@ -1629,7 +1704,8 @@ paths:
             // Use the response
 
             println(response)
-        - lang: PHP
+        - lang: php
+          label: PHP
           source: >
             // Initialize the client
 
@@ -1660,7 +1736,8 @@ paths:
             // play with the response
 
             var_dump($response);
-        - lang: Python
+        - lang: python
+          label: Python
           source: >
             # Initialize the client
 
@@ -1698,7 +1775,8 @@ paths:
             # print the JSON response
 
             print(resp.to_json())
-        - lang: Ruby
+        - lang: ruby
+          label: Ruby
           source: |
             # Initialize the client
             client = Algolia::PersonalizationClient.create(
@@ -1725,7 +1803,8 @@ paths:
 
             # print the JSON response
             puts resp.to_json
-        - lang: Scala
+        - lang: scala
+          label: Scala
           source: >
             // Initialize the client
 
@@ -1758,7 +1837,8 @@ paths:
             // Use the response
 
             val value = Await.result(res, Duration(100, "sec"))
-        - lang: Swift
+        - lang: swift
+          label: Swift
           source: >
             // Initialize the client
 

@@ -9,16 +9,16 @@ import type { CodeSamples, Language, SnippetSamples, Spec } from './types.js';
 
 const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'customPost'];
 
-function mapLanguageToCodeSampleSupporter(language: Language): CodeSamples['lang'] {
+function getCodeSampleLabel(language: Language): CodeSamples['label'] {
   switch (language) {
     case 'csharp':
-      return 'CSharp';
+      return 'C#';
     case 'javascript':
       return 'JavaScript';
     case 'php':
       return 'PHP';
     default:
-      return capitalize(language) as CodeSamples['lang'];
+      return capitalize(language) as CodeSamples['label'];
   }
 }
 
@@ -94,7 +94,7 @@ async function transformBundle({
 
   const bundledSpec = yaml.load(await fsp.readFile(bundledPath, 'utf8')) as Spec;
   const tagsDefinitions = bundledSpec.tags;
-  const snippetSamples = !docs ? {} : await transformSnippetsToCodeSamples(clientName);
+  const snippetSamples = docs ? await transformSnippetsToCodeSamples(clientName) : {};
 
   for (const [pathKey, pathMethods] of Object.entries(bundledSpec.paths)) {
     for (const [method, specMethod] of Object.entries(pathMethods)) {
@@ -121,7 +121,8 @@ async function transformBundle({
         }
 
         specMethod['x-codeSamples'].push({
-          lang: mapLanguageToCodeSampleSupporter(gen.language),
+          lang: gen.language,
+          label: getCodeSampleLabel(gen.language),
           source: snippetSamples[gen.language][specMethod.operationId],
         });
       }
