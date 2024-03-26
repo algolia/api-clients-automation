@@ -16,8 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
           ref: main
+          fetch-depth: 0
 
       - name: Setup
         id: setup

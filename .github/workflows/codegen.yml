@@ -12,8 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+          ref: ${{ github.head_ref }}
           fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Setup
         uses: ./.github/actions/setup
@@ -34,8 +35,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
           ref: main
+          fetch-depth: 0
 
       - name: Setup
         uses: ./.github/actions/setup
