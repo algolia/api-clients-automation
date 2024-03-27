@@ -1,0 +1,18 @@
+limit:
+  name: limit
+  description: The maximum number of samples to return.
+  in: query
+  required: false
+  schema:
+    type: integer
+    minimum: 1
+    example: 2
+
+filter:
+  name: filter
+  description: The filter expression to apply to the list of samples. Should be in the format `key = value`.
+  in: query
+  required: false
+  schema:
+    type: string
+    example: event_name = "add_to_cart"
