@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Serializers.swift
 //  
 //
 //  Created by Algolia on 27/03/2024.
@@ -33,7 +33,7 @@ class SerializersTests: XCTestCase {
         )
         
         let jsonData = try XCTUnwrap(data)
-        let serializedObject = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData) as EventsItems
+        let serializedObject = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
         
         XCTAssertEqual(expectedResult, serializedObject)
     }
@@ -58,7 +58,7 @@ class SerializersTests: XCTestCase {
         )
         
         let jsonData = try XCTUnwrap(data)
-        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData) as EventsItems
+        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
         
         XCTAssertEqual(expectedResult, serializedObject)
     }
@@ -84,7 +84,7 @@ class SerializersTests: XCTestCase {
         )
         
         let jsonData = try XCTUnwrap(data)
-        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData) as EventsItems
+        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
         
         XCTAssertEqual(expectedResult, serializedObject)
     }
@@ -109,7 +109,7 @@ class SerializersTests: XCTestCase {
         )
         
         let jsonData = try XCTUnwrap(data)
-        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData) as EventsItems
+        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
         
         XCTAssertEqual(expectedResult, serializedObject)
     }
@@ -132,7 +132,7 @@ class SerializersTests: XCTestCase {
         )
         
         let jsonData = try XCTUnwrap(data)
-        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData) as EventsItems
+        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
         
         XCTAssertEqual(expectedResult, serializedObject)
     }
@@ -156,7 +156,7 @@ class SerializersTests: XCTestCase {
         )
         
         let jsonData = try XCTUnwrap(data)
-        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData) as EventsItems
+        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
         
         XCTAssertEqual(expectedResult, serializedObject)
     }
@@ -180,7 +180,7 @@ class SerializersTests: XCTestCase {
         )
         
         let jsonData = try XCTUnwrap(data)
-        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData) as EventsItems
+        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
         
         XCTAssertEqual(expectedResult, serializedObject)
     }
@@ -203,7 +203,7 @@ class SerializersTests: XCTestCase {
         )
         
         let jsonData = try XCTUnwrap(data)
-        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData) as EventsItems
+        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
         
         XCTAssertEqual(expectedResult, serializedObject)
     }
@@ -226,7 +226,7 @@ class SerializersTests: XCTestCase {
         )
         
         let jsonData = try XCTUnwrap(data)
-        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData) as EventsItems
+        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
         
         XCTAssertEqual(expectedResult, serializedObject)
     }
@@ -249,7 +249,7 @@ class SerializersTests: XCTestCase {
         )
         
         let jsonData = try XCTUnwrap(data)
-        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData) as EventsItems
+        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
         
         XCTAssertEqual(expectedResult, serializedObject)
     }
@@ -272,7 +272,7 @@ class SerializersTests: XCTestCase {
         )
         
         let jsonData = try XCTUnwrap(data)
-        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData) as EventsItems
+        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
         
         XCTAssertEqual(expectedResult, serializedObject)
     }
@@ -295,7 +295,7 @@ class SerializersTests: XCTestCase {
         )
         
         let jsonData = try XCTUnwrap(data)
-        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData) as EventsItems
+        let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
         
         XCTAssertEqual(expectedResult, serializedObject)
     }
