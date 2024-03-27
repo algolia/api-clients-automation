@@ -5,14 +5,11 @@ QuerySuggestionsConfigurationWithIndex:
     - indexName
     - sourceIndices
   allOf:
-    - $ref: '#/QuerySuggestionsIndexName'
+    - type: object
+      properties:
+        indexName:
+          $ref: './QuerySuggestionsIndexName.yml'
     - $ref: '#/QuerySuggestionsConfiguration'
-
-QuerySuggestionsIndexName:
-  type: object
-  properties:
-    indexName:
-      $ref: './QuerySuggestionsIndexName.yml'
 
 QuerySuggestionsConfiguration:
   type: object
@@ -121,19 +118,19 @@ SourceIndex:
       type: array
       nullable: true
       default: null
+      description: |
+        Facets used for generating query suggestions from facet values.
+
+        For example, if you set `generate: ["color", "brand"]`, combinations from the facet values are added as query suggestions,
+        such as "blue adidas", "red adidas", "blue nike", "red nike", etc.
+
+        You can include nested lists.
+      example:
+        - [color, brand]
       items:
         type: array
         items:
           type: string
-        description: |
-          Facets used for generating query suggestions from facet values.
-
-          For example, if you set `generate: ["color", "brand"]`, combinations from the facet values are added as query suggestions,
-          such as "blue adidas", "red adidas", "blue nike", "red nike", etc.
-
-          You can include nested lists.
-        example:
-          - [color, brand]
     external:
       type: array
       nullable: true
