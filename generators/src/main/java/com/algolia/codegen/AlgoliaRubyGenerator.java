@@ -33,7 +33,7 @@ public class AlgoliaRubyGenerator extends RubyClientCodegen {
 
     super.processOpts();
 
-    // // Generation notice, added on every generated files
+    // Generation notice, added on every generated files
     Helpers.setGenerationBanner(additionalProperties);
 
     // Prevent all useless file to generate
