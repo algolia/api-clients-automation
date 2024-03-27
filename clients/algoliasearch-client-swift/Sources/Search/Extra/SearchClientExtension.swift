@@ -190,7 +190,7 @@ public extension SearchClient {
     /// - parameter requestOptions: The request options
     /// - returns: BrowseResponse
     @discardableResult
-    func browseObjects<T: Codable>(
+    func browseObjects<T: Codable & Hashable>(
         in indexName: String,
         browseParams: BrowseParamsObject,
         validate: (BrowseResponse<T>) -> Bool = { response in
@@ -308,7 +308,7 @@ public extension SearchClient {
     /// You can use `Hit` as a default.
     /// Disclaimer: We don't assert that the parameters you pass to this method only contains `hits` requests to prevent
     /// impacting search performances, this helper is purely for typing purposes.
-    func searchForHitsWithResponse<T: Codable>(
+    func searchForHitsWithResponse<T: Codable & Hashable>(
         searchMethodParams: SearchMethodParams,
         requestOptions: RequestOptions? = nil
     ) async throws -> [SearchResponse<T>] {
@@ -330,7 +330,7 @@ public extension SearchClient {
     /// facets. It returns the records casted as the provided generic type parameter. You can use `Hit` as a default.
     /// Disclaimer: We don't assert that the parameters you pass to this method only contains `hits` requests to prevent
     /// impacting search performances, this helper is purely for typing purposes.
-    func searchForHits<T: Codable>(
+    func searchForHits<T: Codable & Hashable>(
         searchMethodParams: SearchMethodParams,
         requestOptions: RequestOptions? = nil
     ) async throws -> [T] {
