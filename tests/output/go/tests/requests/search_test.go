@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
@@ -2381,5 +2382,41 @@ func TestSearch_UpdateApiKey(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20}`)
+	})
+}
+
+func TestSearch_GenerateSecuredApiKey(t *testing.T) {
+	client, echo := createSearchClient(t)
+	_ = echo
+
+	t.Run("generates a key without restrictions", func(t *testing.T) {
+		key, err := client.GenerateSecuredApiKey("foo", nil)
+		require.NoError(t, err)
+
+		require.Equal(t, "NjgzNzE2ZDlkN2Y4MmVlZDE3NGM2Y2FlYmUwODZlZTkzMzc2Yzc5ZDdjNjFkZDY3MGVhMDBmN2Y4ZDZlYjBhOA==", key)
+	})
+
+	t.Run("generates a key with restrictions", func(t *testing.T) {
+		key, err := client.GenerateSecuredApiKey("foo", search.NewSecuredAPIKeyRestrictions().SetValidUntil(100).SetRestrictIndices([]string{"bar"}).SetRestrictSources("192,168.1.0/24").SetUserToken("foobarbaz").SetSearchParams(search.NewSearchParamsObject().SetQuery("foo")))
+		require.NoError(t, err)
+
+		require.Equal(t, "NGMxODk0MjViNjM3ODcxNjc4NWU4Y2I5NGIxNDAzMTg4MjU5Mjc4YTEwMzU4Mjk2YjBiMmVjOWViYTIyOTBiY3F1ZXJ5PWZvbyZyZXN0cmljdEluZGljZXM9YmFyJnJlc3RyaWN0U291cmNlcz0xOTIlMkMxNjguMS4wJTJGMjQmdXNlclRva2VuPWZvb2JhcmJheiZ2YWxpZFVudGlsPTEwMA==", key)
+	})
+}
+
+func TestSearch_GetSecuredApiKeyRemainingVaildity(t *testing.T) {
+	client, echo := createSearchClient(t)
+	_ = echo
+
+	t.Run("is able to check the remaining validity of a key", func(t *testing.T) {
+		key, err := client.GenerateSecuredApiKey("foo", search.NewSecuredAPIKeyRestrictions().SetValidUntil(42))
+		require.NoError(t, err)
+
+		require.Equal(t, "NDI5ZjRkMTRiNTBlZmExZWIyN2I3NzczOGUwMzE0NjYwMDU1M2M3NjYyY2IxODZhMDAxMWEwOWJmZjE5MzY0NnZhbGlkVW50aWw9NDI=", key)
+
+		validity, err := client.GetSecuredApiKeyRemainingValidity(key)
+		require.NoError(t, err)
+
+		require.Greater(t, validity, -time.Now().UnixNano())
 	})
 }
