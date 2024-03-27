@@ -784,27 +784,6 @@ final class MonitoringClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getInventory
-    func testGetInventoryTest0() async throws {
-        let configuration = try MonitoringClientConfiguration(
-            appID: MonitoringClientRequestsTests.APPLICATION_ID,
-            apiKey: MonitoringClientRequestsTests.API_KEY
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = MonitoringClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client.getInventoryWithHTTPInfo()
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        XCTAssertNil(echoResponse.originalBodyData)
-
-        XCTAssertEqual(echoResponse.path, "/1/inventory/servers")
-        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
-
-        XCTAssertNil(echoResponse.queryParameters)
-    }
-
     /// getLatency
     func testGetLatencyTest0() async throws {
         let configuration = try MonitoringClientConfiguration(
@@ -863,6 +842,27 @@ final class MonitoringClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.originalBodyData)
 
         XCTAssertEqual(echoResponse.path, "/1/reachability/c1-de/probes")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.get)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// getInventory
+    func testGetServersTest0() async throws {
+        let configuration = try MonitoringClientConfiguration(
+            appID: MonitoringClientRequestsTests.APPLICATION_ID,
+            apiKey: MonitoringClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = MonitoringClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.getServersWithHTTPInfo()
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        XCTAssertNil(echoResponse.originalBodyData)
+
+        XCTAssertEqual(echoResponse.path, "/1/inventory/servers")
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         XCTAssertNil(echoResponse.queryParameters)

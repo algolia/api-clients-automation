@@ -452,18 +452,6 @@ class TestMonitoringClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_inventory_0(self):
-        """
-        getInventory
-        """
-        _req = await self._client.get_inventory_with_http_info()
-
-        assert _req.path == "/1/inventory/servers"
-        assert _req.verb == "GET"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert _req.data is None
-
     async def test_get_latency_0(self):
         """
         getLatency
@@ -502,6 +490,18 @@ class TestMonitoringClient:
         )
 
         assert _req.path == "/1/reachability/c1-de/probes"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_servers_0(self):
+        """
+        getInventory
+        """
+        _req = await self._client.get_servers_with_http_info()
+
+        assert _req.path == "/1/inventory/servers"
         assert _req.verb == "GET"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()

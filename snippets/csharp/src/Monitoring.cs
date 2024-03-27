@@ -134,22 +134,6 @@ public class SnippetMonitoringClient
   }
 
   /// <summary>
-  /// Snippet for the GetInventory method.
-  ///
-  /// getInventory
-  /// </summary>
-  public async Task SnippetForMonitoringClientGetInventory()
-  {
-    // >SEPARATOR getInventory
-    // Initialize the client
-    var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
-
-    // Call the API
-    var response = await client.GetInventoryAsync();
-    // SEPARATOR<
-  }
-
-  /// <summary>
   /// Snippet for the GetLatency method.
   ///
   /// getLatency
@@ -197,6 +181,22 @@ public class SnippetMonitoringClient
 
     // Call the API
     var response = await client.GetReachabilityAsync("c1-de");
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetServers method.
+  ///
+  /// getInventory
+  /// </summary>
+  public async Task SnippetForMonitoringClientGetServers()
+  {
+    // >SEPARATOR getServers
+    // Initialize the client
+    var client = new MonitoringClient(new MonitoringConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.GetServersAsync();
     // SEPARATOR<
   }
 

@@ -152,25 +152,6 @@ def snippet_for_get_indexing_time
   # SEPARATOR<
 end
 
-# Snippet for the getInventory method.
-#
-# getInventory
-def snippet_for_get_inventory
-  # >SEPARATOR getInventory
-  # Initialize the client
-  client = Algolia::MonitoringClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
-
-  # Call the API
-  resp = client.get_inventory
-
-  # use the class directly
-  puts resp
-
-  # print the JSON response
-  puts resp.to_json
-  # SEPARATOR<
-end
-
 # Snippet for the getLatency method.
 #
 # getLatency
@@ -219,6 +200,25 @@ def snippet_for_get_reachability
 
   # Call the API
   resp = client.get_reachability("c1-de")
+
+  # use the class directly
+  puts resp
+
+  # print the JSON response
+  puts resp.to_json
+  # SEPARATOR<
+end
+
+# Snippet for the getServers method.
+#
+# getInventory
+def snippet_for_get_servers
+  # >SEPARATOR getServers
+  # Initialize the client
+  client = Algolia::MonitoringClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+  # Call the API
+  resp = client.get_servers
 
   # use the class directly
   puts resp

@@ -8,7 +8,7 @@ content:
         status:
           type: object
           additionalProperties:
-            x-additionalPropertiesName: status
+            x-additionalPropertiesName: cluster
             $ref: '../enums.yml#/Status'
     examples:
       Success:

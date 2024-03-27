@@ -1,13 +1,74 @@
 openapi: 3.0.2
 info:
   title: Algolia Monitoring API
-  description: |
-    The Monitoring API lets you check the status and performance of your Algolia
-    infrastructure.
+  description: >
+    The Monitoring API lets you check the status of your Algolia infrastructure.
 
-    > **Note**: The Monitoring API is available on [Premium
-    plans](https://www.algolia.com/pricing/) and plans including the Enterprise
-    add-on.
+
+    # Base URLs
+
+
+    The base URL for making requests to the Monitoring API is:
+
+
+    - `https://status.algolia.com`
+
+
+    **All requests must use HTTPS.**
+
+
+    # Availability and authentication
+
+
+    Access to the [Infrastructure](#tag/infrastructure) endpoints
+
+    is available as part of the [Premium or Elevate
+    plans](https://www.algolia.com/pricing).
+
+
+    To authenticate requests to the Infrastructure endpoints, add these headers:
+
+
+    <dl>
+
+    <dt><code>x-algolia-application-id</code></dt>
+
+    <dd>Your Algolia application ID.</dd>
+
+    <dt><code>x-algolia-api-key</code></dt>
+
+    <dd>Your Monitoring API key.</dd>
+
+    </dl>
+
+
+    You can find your application ID and API key in the [Algolia
+    dashboard](https://dashboard.algolia.com/account).
+
+
+    Other endpoints don't require authentication.
+
+
+    # Response status and errors
+
+
+    The Monitoring API returns JSON responses.
+
+    Since JSON doesn't guarantee any specific ordering, don't rely on the order
+    of attributes in the API response.
+
+
+    Successful responses return a `2xx` status. Client errors return a `4xx`
+    status. Server errors are indicated by a `5xx` status.
+
+    Error responses have a `message` property with more information.
+
+
+    # Version
+
+
+    The current version of the Monitoring API is version 1, as indicated by the
+    `/1/` in each endpoint's URL.
   version: 1.0.0
 servers:
   - url: https://status.algolia.com
@@ -26,16 +87,7 @@ tags:
       servers.
     x-displayName: Monitoring
   - name: status
-    description: |
-      Report the status of your clusters.
-
-      At Algolia, your application is hosted on a [cluster with three
-      servers](https://www.algolia.com/doc/guides/scaling/servers-clusters/).
-
-      Cluster names follow a pattern: `c{[0-9]+}-{region}` where `{region}` is
-      one of the supported Algolia regions.
-
-      Server names follow the pattern: `{cluster-name}-{1|2|3}`.
+    description: Report the status of Algolia clusters.
     x-displayName: Status
 paths:
   /{path}:
@@ -808,22 +860,11 @@ paths:
   /1/status:
     get:
       operationId: getStatus
-      summary: List cluster statuses.
+      summary: Retrieve status of all clusters.
+      security: []
       tags:
         - status
-      security:
-        - appId: []
-        - apiKey: []
-      description: |
-        Report whether clusters are operational.
-
-        The response depends on whether you authenticate your API request.
-
-        - With authentication, the response includes the status of the cluster
-        assigned to your Algolia application.
-
-        - Without authentication, the response lists the statuses of all public
-        Algolia clusters.
+      description: Retrieves the status of all Algolia clusters and instances.
       responses:
         '200':
           $ref: '#/components/responses/StatusResponse'
@@ -988,8 +1029,8 @@ paths:
             _ = try await client.getStatus()
   /1/status/{clusters}:
     get:
-      summary: List statuses of selected clusters.
-      description: Report whether a cluster is operational.
+      summary: Retrieve cluster status.
+      description: Retrieves the status of selected clusters.
       operationId: getClusterStatus
       tags:
         - status
@@ -1184,8 +1225,8 @@ paths:
             _ = try await client.getClusterStatus(clusters: "c1-de")
   /1/incidents:
     get:
-      summary: List incidents.
-      description: List known incidents for all clusters.
+      summary: Retrieve all incidents.
+      description: Retrieves known incidents for all clusters.
       operationId: getIncidents
       security: []
       tags:
@@ -1354,8 +1395,8 @@ paths:
             _ = try await client.getIncidents()
   /1/incidents/{clusters}:
     get:
-      summary: List incidents for selected clusters.
-      description: List known incidents for selected clusters.
+      summary: Retrieve cluster incidents.
+      description: Retrieves known incidents for the selected clusters.
       operationId: getClusterIncidents
       tags:
         - incidents
@@ -1550,13 +1591,13 @@ paths:
             _ = try await client.getClusterIncidents(clusters: "c1-de")
   /1/inventory/servers:
     get:
-      summary: List servers.
-      operationId: getInventory
+      summary: Retrieve servers.
+      operationId: getServers
       security:
         - appId: []
         - apiKey: []
       description: |
-        List the servers belonging to clusters.
+        Retrieves the servers that belong to clusters.
 
         The response depends on whether you authenticate your API request:
 
@@ -1584,7 +1625,7 @@ paths:
 
             // Call the API
 
-            var response = await client.GetInventoryAsync();
+            var response = await client.GetServersAsync();
         - lang: go
           label: Go
           source: |
@@ -1596,7 +1637,7 @@ paths:
             }
 
             // Call the API
-            resp, err := client.GetInventory()
+            resp, err := client.GetServers()
             if err != nil {
               // handle the eventual error
               panic(err)
@@ -1615,7 +1656,7 @@ paths:
 
             // Call the API
 
-            client.getInventory();
+            client.getServers();
         - lang: javascript
           label: JavaScript
           source: |
@@ -1623,7 +1664,7 @@ paths:
             const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
             // Call the API
-            const response = await client.getInventory();
+            const response = await client.getServers();
 
             // use typed response
             console.log(response);
@@ -1638,7 +1679,7 @@ paths:
 
             // Call the API
 
-            var response = client.getInventory()
+            var response = client.getServers()
 
 
             // Use the response
@@ -1656,7 +1697,7 @@ paths:
 
             // Call the API
 
-            $response = $client->getInventory();
+            $response = $client->getServers();
 
 
             // play with the response
@@ -1669,7 +1710,7 @@ paths:
             _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.get_inventory()
+            resp = await _client.get_servers()
 
             # use the class directly
             print(resp)
@@ -1687,7 +1728,7 @@ paths:
 
             # Call the API
 
-            resp = client.get_inventory
+            resp = client.get_servers
 
 
             # use the class directly
@@ -1709,7 +1750,7 @@ paths:
 
             // Call the API
 
-            val res = client.getInventory(
+            val res = client.getServers(
 
             )
 
@@ -1728,11 +1769,11 @@ paths:
 
             // Call the API
 
-            _ = try await client.getInventory()
+            _ = try await client.getServers()
   /1/latency/{clusters}:
     get:
-      summary: Get search latency times.
-      description: List the average latency for search requests for selected clusters.
+      summary: Retrieve search latency times.
+      description: Retrieves the average latency for search requests for selected clusters.
       operationId: getLatency
       security: []
       tags:
@@ -1911,8 +1952,8 @@ paths:
             _ = try await client.getLatency(clusters: "c1-de")
   /1/indexing/{clusters}:
     get:
-      summary: Get indexing times.
-      description: List the average times for indexing operations for selected clusters.
+      summary: Retrieve indexing times.
+      description: Retrieves average times for indexing operations for selected clusters.
       operationId: getIndexingTime
       security: []
       tags:
@@ -2299,8 +2340,17 @@ paths:
             _ = try await client.getReachability(clusters: "c1-de")
   /1/infrastructure/{metric}/period/{period}:
     get:
-      summary: Get metrics for a given period.
-      description: Report the aggregate value of a metric for a selected period of time.
+      summary: Retrieve metrics.
+      description: >
+        Retrieves metrics related to your Algolia infrastructure, aggregated
+        over a selected time window.
+
+
+        Access to this API is available as part of the [Premium or Elevate
+        plans](https://www.algolia.com/pricing).
+
+        You must authenticate requests with the `x-algolia-application-id` and
+        `x-algolia-api-key` headers (using the Monitoring API key).
       operationId: getMetrics
       tags:
         - infrastructure
@@ -2500,7 +2550,7 @@ components:
       type: apiKey
       in: header
       name: X-Algolia-API-Key
-      description: Your Algolia API key. Make sure to use your Monitoring API key.
+      description: Your Algolia Monitoring API key.
   parameters:
     PathInPath:
       name: path
@@ -2529,11 +2579,14 @@ components:
       name: metric
       in: path
       required: true
-      description: |
+      description: >
         Metric to report.
 
-        For more information about the individual metrics, see the response.
-        To include all metrics, use `*` as the parameter.
+
+        For more information about the individual metrics, see the description
+        of the API response.
+
+        To include all metrics, use `*`.
       schema:
         $ref: '#/components/schemas/Metric'
     PeriodInPath:
@@ -2600,7 +2653,7 @@ components:
     Region:
       title: region
       type: string
-      description: The region where the cluster is located.
+      description: Region where the cluster is located.
       enum:
         - au
         - br
@@ -2644,13 +2697,12 @@ components:
           deprecated: true
           description: |
             Included to support legacy applications.
-            Do not rely on this attribute being present in the response.
             Use `is_replica` instead.
           example: false
         is_replica:
           type: boolean
           default: false
-          description: Indicates whether this server is a replica of another server.
+          description: Whether this server is a replica of another server.
           example: false
         cluster:
           type: string
@@ -2753,7 +2805,7 @@ components:
               status:
                 type: object
                 additionalProperties:
-                  x-additionalPropertiesName: status
+                  x-additionalPropertiesName: cluster
                   $ref: '#/components/schemas/Status'
           examples:
             Success:
@@ -2769,9 +2821,7 @@ components:
           examples:
             Unauthorized:
               summary: Invalid credentials.
-              description: >-
-                Make sure to use the Monitoring API key if you authenticate your
-                API requests.
+              description: Use the Monitoring API key.
               value: Invalid credentials
     NotFoundResponse:
       description: Not Found.
@@ -2802,15 +2852,17 @@ components:
                   m134-de:
                     - t: 1687441685000
                       v:
-                        title: >-
+                        title: >
                           Incident on cluster m134-de: Everything operating
                           normally.
                         status: operational
                     - t: 1687441579000
                       v:
-                        title: >-
+                        title: >
                           Incident on cluster m134-de: We are encountering a
-                          major issue that impact all API calls.
+                          major
+
+                          issue that impact all API calls.
                         status: major_outage
     InventoryResponse:
       description: OK
@@ -2919,7 +2971,7 @@ components:
                 properties:
                   indexing:
                     additionalProperties:
-                      x-additionalPropertiesName: times
+                      x-additionalPropertiesName: cluster
                       $ref: '#/components/schemas/Time'
           examples:
             Success:
@@ -2941,7 +2993,7 @@ components:
             title: ReachabilityResponse
             type: object
             additionalProperties:
-              x-additionalPropertiesName: Server
+              x-additionalPropertiesName: cluster
               $ref: '#/components/schemas/Probes'
           examples:
             Success:
@@ -3045,3 +3097,10 @@ components:
                 reason: >-
                   The infrastructure usage API is only available on Enterprise
                   plans. Please contact enterprise@algolia.com for more detail.
+x-tagGroups:
+  - name: General
+    tags:
+      - status
+      - incidents
+      - infrastructure
+      - monitoring-tag

@@ -1,6 +1,6 @@
 get:
-  summary: List incidents for selected clusters.
-  description: List known incidents for selected clusters.
+  summary: Retrieve cluster incidents.
+  description: Retrieves known incidents for the selected clusters.
   operationId: getClusterIncidents
   tags:
     - incidents

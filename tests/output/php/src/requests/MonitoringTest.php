@@ -626,24 +626,6 @@ class MonitoringTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for GetInventory
-     * getInventory.
-     */
-    public function testGetInventory0()
-    {
-        $client = $this->getClient();
-        $client->getInventory();
-
-        $this->assertRequests([
-            [
-                'path' => '/1/inventory/servers',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    /**
      * Test case for GetLatency
      * getLatency.
      */
@@ -698,6 +680,24 @@ class MonitoringTest extends TestCase implements HttpClientInterface
         $this->assertRequests([
             [
                 'path' => '/1/reachability/c1-de/probes',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetServers
+     * getInventory.
+     */
+    public function testGetServers0()
+    {
+        $client = $this->getClient();
+        $client->getServers();
+
+        $this->assertRequests([
+            [
+                'path' => '/1/inventory/servers',
                 'method' => 'GET',
                 'body' => null,
             ],

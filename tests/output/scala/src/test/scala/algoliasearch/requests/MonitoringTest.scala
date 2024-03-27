@@ -570,19 +570,6 @@ class MonitoringTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getInventory") {
-    val (client, echo) = testClient()
-    val future = client.getInventory(
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/inventory/servers")
-    assert(res.method == "GET")
-    assert(res.body.isEmpty)
-  }
-
   test("getLatency") {
     val (client, echo) = testClient()
     val future = client.getLatency(
@@ -622,6 +609,19 @@ class MonitoringTest extends AnyFunSuite {
     val res = echo.lastResponse.get
 
     assert(res.path == "/1/reachability/c1-de/probes")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getInventory") {
+    val (client, echo) = testClient()
+    val future = client.getServers(
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/inventory/servers")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
   }

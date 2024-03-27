@@ -171,25 +171,6 @@ class SnippetMonitoringClient
     }
 
     /**
-     * Snippet for the GetInventory method.
-     *
-     * getInventory
-     */
-    public function snippetForGetInventory()
-    {
-        // >SEPARATOR getInventory
-        // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
-
-        // Call the API
-        $response = $client->getInventory();
-
-        // play with the response
-        var_dump($response);
-        // SEPARATOR<
-    }
-
-    /**
      * Snippet for the GetLatency method.
      *
      * getLatency
@@ -247,6 +228,25 @@ class SnippetMonitoringClient
         $response = $client->getReachability(
             'c1-de',
         );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetServers method.
+     *
+     * getInventory
+     */
+    public function snippetForGetServers()
+    {
+        // >SEPARATOR getServers
+        // Initialize the client
+        $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->getServers();
 
         // play with the response
         var_dump($response);

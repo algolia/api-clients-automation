@@ -6,7 +6,7 @@ package com.algolia.model.monitoring;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** The region where the cluster is located. */
+/** Region where the cluster is located. */
 public enum Region {
   AU("au"),
 
