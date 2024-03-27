@@ -60,6 +60,8 @@ public class AlgoliaScalaGenerator extends ScalaSttpClientCodegen {
     additionalProperties.put("lambda.escape-path", (Mustache.Lambda) (fragment, writer) -> writer.write(escapePath(fragment.execute())));
     super.processOpts();
     setApiNameSuffix(Helpers.API_SUFFIX);
+
+    // Generation notice, added on every generated files
     Helpers.setGenerationBanner(additionalProperties);
 
     // Prevent non-apis files generation

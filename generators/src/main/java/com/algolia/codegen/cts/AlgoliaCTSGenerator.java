@@ -172,6 +172,9 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
       // special lambda for dynamic templates
       bundle.put("dynamicTemplate", new DynamicTemplateLambda(this));
 
+      // Generation notice, added on every generated files
+      bundle.put("generationBanner", Helpers.setGenerationBanner(additionalProperties));
+
       return bundle;
     } catch (CTSException e) {
       if (e.isSkipable()) {
