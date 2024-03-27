@@ -6,6 +6,7 @@ import (
   "net/url"
   "os"
   "testing"
+  "time"
 
   "github.com/kinbiko/jsonassert"
   "github.com/stretchr/testify/require"
@@ -136,3 +137,7 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
 }
 
 {{/blocksRequests}}
+
+{{#isSearchClient}}
+{{> tests/requests/helpers}}
+{{/isSearchClient}}
