@@ -6,7 +6,7 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Gets or Sets RunType */
+/** Task run type. */
 public enum RunType {
   REINDEX("reindex"),
 

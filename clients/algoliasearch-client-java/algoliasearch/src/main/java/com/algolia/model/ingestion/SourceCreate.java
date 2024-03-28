@@ -38,7 +38,7 @@ public class SourceCreate {
     return this;
   }
 
-  /** Get name */
+  /** Descriptive name of the source. */
   @javax.annotation.Nonnull
   public String getName() {
     return name;
@@ -60,7 +60,7 @@ public class SourceCreate {
     return this;
   }
 
-  /** The authentication UUID. */
+  /** Universally unique identifier (UUID) of an authentication resource. */
   @javax.annotation.Nullable
   public String getAuthenticationID() {
     return authenticationID;

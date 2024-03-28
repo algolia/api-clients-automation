@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** Payload to search for multiple authentications, based on the given `authenticationIDs`. */
+/** Request body for searching for authentication resources. */
 public class AuthenticationSearch {
 
   @JsonProperty("authenticationIDs")

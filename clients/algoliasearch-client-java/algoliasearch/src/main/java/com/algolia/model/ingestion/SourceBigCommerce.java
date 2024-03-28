@@ -33,7 +33,7 @@ public class SourceBigCommerce implements SourceInput {
     return this;
   }
 
-  /** The store hash identifying the store the shopper is signing in to. */
+  /** Store hash identifying your BigCommerce store. */
   @javax.annotation.Nonnull
   public String getStoreHash() {
     return storeHash;

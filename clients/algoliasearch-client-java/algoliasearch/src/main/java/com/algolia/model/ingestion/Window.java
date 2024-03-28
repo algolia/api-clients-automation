@@ -7,10 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/**
- * The window parameter represents the holds the dates used to query the Observability data from the
- * database in a given window.
- */
+/** Time window by which to filter the observability data. */
 public class Window {
 
   @JsonProperty("startDate")
@@ -24,7 +21,7 @@ public class Window {
     return this;
   }
 
-  /** A date in format RFC3339 representing the oldest possible data in query window. */
+  /** Date in RFC3339 format representing the oldest data in the time window. */
   @javax.annotation.Nonnull
   public String getStartDate() {
     return startDate;
@@ -35,7 +32,7 @@ public class Window {
     return this;
   }
 
-  /** A date in format RFC3339 representing the newest possible data in query window. */
+  /** Date in RFC3339 format representing the newest data in the time window. */
   @javax.annotation.Nonnull
   public String getEndDate() {
     return endDate;

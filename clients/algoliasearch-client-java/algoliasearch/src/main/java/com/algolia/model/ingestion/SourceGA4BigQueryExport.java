@@ -25,7 +25,7 @@ public class SourceGA4BigQueryExport implements SourceInput, SourceUpdateInput {
     return this;
   }
 
-  /** GCP project ID that the BigQuery Export writes to. */
+  /** GCP project ID that the BigQuery export writes to. */
   @javax.annotation.Nonnull
   public String getProjectID() {
     return projectID;
@@ -36,7 +36,7 @@ public class SourceGA4BigQueryExport implements SourceInput, SourceUpdateInput {
     return this;
   }
 
-  /** BigQuery dataset ID that the BigQuery Export writes to. */
+  /** BigQuery dataset ID that the BigQuery export writes to. */
   @javax.annotation.Nonnull
   public String getDatasetID() {
     return datasetID;
@@ -47,10 +47,7 @@ public class SourceGA4BigQueryExport implements SourceInput, SourceUpdateInput {
     return this;
   }
 
-  /**
-   * Prefix of the tables that the BigQuery Export writes to (i.e. events_intraday_ for streaming,
-   * events_ for daily).
-   */
+  /** Prefix of the tables that the BigQuery Export writes to. */
   @javax.annotation.Nonnull
   public String getTablePrefix() {
     return tablePrefix;

@@ -6,7 +6,10 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** An identifier that pairs with the outcome reason. */
+/**
+ * A code for the task run's outcome. A readable description of the code is included in the `reason`
+ * response property.
+ */
 public enum RunReasonCode {
   INTERNAL("internal"),
 

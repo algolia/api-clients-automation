@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** The trigger information for a task of type 'schedule'. */
+/** Trigger information for scheduled tasks. */
 @JsonDeserialize(as = ScheduleTrigger.class)
 public class ScheduleTrigger implements Trigger {
 
@@ -39,7 +39,7 @@ public class ScheduleTrigger implements Trigger {
     return this;
   }
 
-  /** A cron expression that represent at which regularity the task should run. */
+  /** Cron expression for the task's schedule. */
   @javax.annotation.Nonnull
   public String getCron() {
     return cron;
@@ -50,7 +50,7 @@ public class ScheduleTrigger implements Trigger {
     return this;
   }
 
-  /** The last time the scheduled task ran (RFC3339 format). */
+  /** The last time the scheduled task ran in RFC3339 format. */
   @javax.annotation.Nullable
   public String getLastRun() {
     return lastRun;
@@ -61,7 +61,7 @@ public class ScheduleTrigger implements Trigger {
     return this;
   }
 
-  /** The next scheduled run of the task (RFC3339 format). */
+  /** The next scheduled run of the task in RFC3339 format. */
   @javax.annotation.Nonnull
   public String getNextRun() {
     return nextRun;

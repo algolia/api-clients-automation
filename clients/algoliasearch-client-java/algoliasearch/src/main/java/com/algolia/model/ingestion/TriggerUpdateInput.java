@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** The trigger input for a task update. */
+/** Trigger for a task update. */
 public class TriggerUpdateInput {
 
   @JsonProperty("cron")
@@ -18,7 +18,7 @@ public class TriggerUpdateInput {
     return this;
   }
 
-  /** A cron expression that represent at which regularity the task should run. */
+  /** Cron expression for the task's schedule. */
   @javax.annotation.Nonnull
   public String getCron() {
     return cron;

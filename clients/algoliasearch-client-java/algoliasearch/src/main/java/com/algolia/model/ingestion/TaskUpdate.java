@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** The payload for a task update. */
+/** API request body for updating a task. */
 public class TaskUpdate {
 
   @JsonProperty("destinationID")
@@ -30,7 +30,7 @@ public class TaskUpdate {
     return this;
   }
 
-  /** The destination UUID. */
+  /** Universally unique identifier (UUID) of a destination resource. */
   @javax.annotation.Nullable
   public String getDestinationID() {
     return destinationID;
@@ -63,7 +63,7 @@ public class TaskUpdate {
     return this;
   }
 
-  /** Whether the task is enabled or not. */
+  /** Whether the task is enabled. */
   @javax.annotation.Nullable
   public Boolean getEnabled() {
     return enabled;
@@ -75,8 +75,8 @@ public class TaskUpdate {
   }
 
   /**
-   * A percentage representing the accepted failure threshold to determine if a `run` succeeded or
-   * not. minimum: 0 maximum: 100
+   * Maximum accepted percentage of failures for a task run to finish successfully. minimum: 0
+   * maximum: 100
    */
   @javax.annotation.Nullable
   public Integer getFailureThreshold() {

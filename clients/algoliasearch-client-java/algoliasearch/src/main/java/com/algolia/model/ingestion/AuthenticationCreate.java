@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** The payload when creating an authentication. */
+/** Request body for creating a new authentication resource. */
 public class AuthenticationCreate {
 
   @JsonProperty("type")
@@ -38,7 +38,7 @@ public class AuthenticationCreate {
     return this;
   }
 
-  /** An human readable name describing the object. */
+  /** Descriptive name for the resource. */
   @javax.annotation.Nonnull
   public String getName() {
     return name;

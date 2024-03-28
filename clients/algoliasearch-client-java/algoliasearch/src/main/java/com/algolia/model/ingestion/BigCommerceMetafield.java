@@ -21,7 +21,7 @@ public class BigCommerceMetafield {
     return this;
   }
 
-  /** The namespace of the metafield. */
+  /** Namespace of the metafield. */
   @javax.annotation.Nonnull
   public String getNamespace() {
     return namespace;
@@ -32,7 +32,7 @@ public class BigCommerceMetafield {
     return this;
   }
 
-  /** The key identifier of the metafield. */
+  /** Key identifier of the metafield. */
   @javax.annotation.Nonnull
   public String getKey() {
     return key;

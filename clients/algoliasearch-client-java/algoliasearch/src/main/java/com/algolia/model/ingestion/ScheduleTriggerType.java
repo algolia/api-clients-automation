@@ -6,7 +6,7 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** A task which is triggered by a schedule (cron expression). */
+/** Task runs on a schedule. */
 public enum ScheduleTriggerType {
   SCHEDULE("schedule");
 

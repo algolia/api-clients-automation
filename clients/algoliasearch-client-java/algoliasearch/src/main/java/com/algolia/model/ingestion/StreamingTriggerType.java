@@ -6,7 +6,7 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** A task that runs continuously. */
+/** Task runs continuously. */
 public enum StreamingTriggerType {
   STREAMING("streaming");
 

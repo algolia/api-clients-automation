@@ -6,7 +6,7 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** A task which is triggered by an external subscription (e.g. Webhook). */
+/** Task runs after receiving subscribed event. */
 public enum SubscriptionTriggerType {
   SUBSCRIPTION("subscription");
 

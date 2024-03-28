@@ -6,7 +6,7 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Gets or Sets RunStatus */
+/** Task run status. */
 public enum RunStatus {
   CREATED("created"),
 

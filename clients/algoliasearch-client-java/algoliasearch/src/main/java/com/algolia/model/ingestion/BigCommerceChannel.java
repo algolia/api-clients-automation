@@ -23,7 +23,7 @@ public class BigCommerceChannel {
     return this;
   }
 
-  /** The ID of the bigcommerce channel. */
+  /** ID of the BigCommerce channel. */
   @javax.annotation.Nonnull
   public Integer getId() {
     return id;
@@ -42,10 +42,7 @@ public class BigCommerceChannel {
     return this;
   }
 
-  /**
-   * An array of currencies for the given channel `ID`, a currency is a trigram string that
-   * represents the currency code.
-   */
+  /** Currencies for the given channel. */
   @javax.annotation.Nullable
   public List<String> getCurrencies() {
     return currencies;

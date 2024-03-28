@@ -10,17 +10,21 @@ import com.fasterxml.jackson.databind.annotation.*;
 public enum SourceType {
   BIGCOMMERCE("bigcommerce"),
 
-  COMMERCETOOLS("commercetools"),
+  BIGQUERY("bigquery"),
 
-  JSON("json"),
+  COMMERCETOOLS("commercetools"),
 
   CSV("csv"),
 
-  BIGQUERY("bigquery"),
-
   DOCKER("docker"),
 
-  GA_4BIGQUERY_EXPORT("ga4BigqueryExport");
+  GA_4BIGQUERY_EXPORT("ga4BigqueryExport"),
+
+  JSON("json"),
+
+  SHOPIFY("shopify"),
+
+  SFCC("sfcc");
 
   private final String value;
 

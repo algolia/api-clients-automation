@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** A destination describe how the data is indexed on the Algolia side. */
+/** Destinations are Algolia resources like indices or event streams. */
 public class Destination {
 
   @JsonProperty("destinationID")
@@ -36,7 +36,7 @@ public class Destination {
     return this;
   }
 
-  /** The destination UUID. */
+  /** Universally unique identifier (UUID) of a destination resource. */
   @javax.annotation.Nonnull
   public String getDestinationID() {
     return destinationID;
@@ -58,7 +58,7 @@ public class Destination {
     return this;
   }
 
-  /** An human readable name describing the object. */
+  /** Descriptive name for the resource. */
   @javax.annotation.Nonnull
   public String getName() {
     return name;
@@ -80,7 +80,7 @@ public class Destination {
     return this;
   }
 
-  /** Date of creation (RFC3339 format). */
+  /** Date of creation in RFC3339 format. */
   @javax.annotation.Nonnull
   public String getCreatedAt() {
     return createdAt;
@@ -91,7 +91,7 @@ public class Destination {
     return this;
   }
 
-  /** Date of last update (RFC3339 format). */
+  /** Date of last update in RFC3339 format. */
   @javax.annotation.Nullable
   public String getUpdatedAt() {
     return updatedAt;
@@ -102,7 +102,7 @@ public class Destination {
     return this;
   }
 
-  /** The authentication UUID. */
+  /** Universally unique identifier (UUID) of an authentication resource. */
   @javax.annotation.Nullable
   public String getAuthenticationID() {
     return authenticationID;

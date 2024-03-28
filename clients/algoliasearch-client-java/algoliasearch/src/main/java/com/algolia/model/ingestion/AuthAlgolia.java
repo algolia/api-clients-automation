@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** AuthAlgolia */
+/** Credentials for authenticating with Algolia. */
 @JsonDeserialize(as = AuthAlgolia.class)
 public class AuthAlgolia implements AuthInput {
 
@@ -22,7 +22,7 @@ public class AuthAlgolia implements AuthInput {
     return this;
   }
 
-  /** Algolia Application ID. */
+  /** Algolia application ID. */
   @javax.annotation.Nonnull
   public String getAppID() {
     return appID;
@@ -33,7 +33,10 @@ public class AuthAlgolia implements AuthInput {
     return this;
   }
 
-  /** Algolia API Key, with the correct rights to push to an index and change settings. */
+  /**
+   * Algolia API key with the ACL: `addObject`, `deleteObject`, `settings`, `editSettings`,
+   * `listIndexes`, `deleteIndex`. This field is `null` in the API response.
+   */
   @javax.annotation.Nonnull
   public String getApiKey() {
     return apiKey;

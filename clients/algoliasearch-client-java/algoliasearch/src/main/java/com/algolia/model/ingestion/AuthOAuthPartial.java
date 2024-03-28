@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** Authentication input for OAuth login. */
+/** Credentials for authenticating with OAuth 2.0. */
 @JsonDeserialize(as = AuthOAuthPartial.class)
 public class AuthOAuthPartial implements AuthInputPartial {
 
@@ -20,12 +20,15 @@ public class AuthOAuthPartial implements AuthInputPartial {
   @JsonProperty("client_secret")
   private String clientSecret;
 
+  @JsonProperty("scope")
+  private String scope;
+
   public AuthOAuthPartial setUrl(String url) {
     this.url = url;
     return this;
   }
 
-  /** The OAuth endpoint URL. */
+  /** URL for the OAuth endpoint. */
   @javax.annotation.Nullable
   public String getUrl() {
     return url;
@@ -36,7 +39,7 @@ public class AuthOAuthPartial implements AuthInputPartial {
     return this;
   }
 
-  /** The clientID. */
+  /** Client ID. */
   @javax.annotation.Nullable
   public String getClientId() {
     return clientId;
@@ -47,10 +50,21 @@ public class AuthOAuthPartial implements AuthInputPartial {
     return this;
   }
 
-  /** The secret. */
+  /** Client secret. This field is `null` in the API response. */
   @javax.annotation.Nullable
   public String getClientSecret() {
     return clientSecret;
+  }
+
+  public AuthOAuthPartial setScope(String scope) {
+    this.scope = scope;
+    return this;
+  }
+
+  /** OAuth scope. */
+  @javax.annotation.Nullable
+  public String getScope() {
+    return scope;
   }
 
   @Override
@@ -65,13 +79,14 @@ public class AuthOAuthPartial implements AuthInputPartial {
     return (
       Objects.equals(this.url, authOAuthPartial.url) &&
       Objects.equals(this.clientId, authOAuthPartial.clientId) &&
-      Objects.equals(this.clientSecret, authOAuthPartial.clientSecret)
+      Objects.equals(this.clientSecret, authOAuthPartial.clientSecret) &&
+      Objects.equals(this.scope, authOAuthPartial.scope)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(url, clientId, clientSecret);
+    return Objects.hash(url, clientId, clientSecret, scope);
   }
 
   @Override
@@ -81,6 +96,7 @@ public class AuthOAuthPartial implements AuthInputPartial {
     sb.append("    url: ").append(toIndentedString(url)).append("\n");
     sb.append("    clientId: ").append(toIndentedString(clientId)).append("\n");
     sb.append("    clientSecret: ").append(toIndentedString(clientSecret)).append("\n");
+    sb.append("    scope: ").append(toIndentedString(scope)).append("\n");
     sb.append("}");
     return sb.toString();
   }

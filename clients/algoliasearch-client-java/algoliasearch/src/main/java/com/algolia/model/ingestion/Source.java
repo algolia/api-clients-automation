@@ -36,7 +36,7 @@ public class Source {
     return this;
   }
 
-  /** The source UUID. */
+  /** Universally uniqud identifier (UUID) of a source. */
   @javax.annotation.Nonnull
   public String getSourceID() {
     return sourceID;
@@ -80,7 +80,7 @@ public class Source {
     return this;
   }
 
-  /** The authentication UUID. */
+  /** Universally unique identifier (UUID) of an authentication resource. */
   @javax.annotation.Nullable
   public String getAuthenticationID() {
     return authenticationID;
@@ -91,7 +91,7 @@ public class Source {
     return this;
   }
 
-  /** Date of creation (RFC3339 format). */
+  /** Date of creation in RFC3339 format. */
   @javax.annotation.Nonnull
   public String getCreatedAt() {
     return createdAt;
@@ -102,7 +102,7 @@ public class Source {
     return this;
   }
 
-  /** Date of last update (RFC3339 format). */
+  /** Date of last update in RFC3339 format. */
   @javax.annotation.Nullable
   public String getUpdatedAt() {
     return updatedAt;

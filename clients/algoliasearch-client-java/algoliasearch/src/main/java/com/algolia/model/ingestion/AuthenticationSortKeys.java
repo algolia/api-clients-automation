@@ -6,7 +6,7 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Used to sort the Authentication list endpoint. */
+/** Property by which to sort the list of authentication resources. */
 public enum AuthenticationSortKeys {
   NAME("name"),
 

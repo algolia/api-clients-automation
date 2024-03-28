@@ -41,7 +41,7 @@ public class Event {
     return this;
   }
 
-  /** The event UUID. */
+  /** Universally unique identifier (UUID) of an event. */
   @javax.annotation.Nonnull
   public String getEventID() {
     return eventID;
@@ -52,7 +52,7 @@ public class Event {
     return this;
   }
 
-  /** The run UUID. */
+  /** Universally unique identifier (UUID) of a task run. */
   @javax.annotation.Nonnull
   public String getRunID() {
     return runID;
@@ -126,7 +126,7 @@ public class Event {
     return this;
   }
 
-  /** Date of publish (RFC3339 format). */
+  /** Date of publish RFC3339 format. */
   @javax.annotation.Nonnull
   public String getPublishedAt() {
     return publishedAt;
