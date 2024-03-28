@@ -11,7 +11,10 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"regexp"
 	"slices"
+	"sort"
+	"strconv"
 	"strings"
 	"time"
 
@@ -9021,7 +9024,7 @@ If the operation is "delete" or "add", the apiKey parameter is not used.
 	@return *GetApiKeyResponse - API key response.
 	@return error - Error if any.
 */
-func (c *APIClient) WaitForApiKeyWitOptions(
+func (c *APIClient) WaitForApiKeyWithOptions(
 	operation ApiKeyOperation,
 	key string,
 	apiKey *ApiKey,
@@ -9168,28 +9171,11 @@ func (c *APIClient) WaitForApiKeyWithContext(
 	)
 }
 
-// GenerateSecuredApiKey generates a public API key intended to restrict access
-// to certain records. This new key is built upon the existing key named
-// `parentApiKey` and the following options:.
-func (c *APIClient) GenerateSecuredApiKey(parentApiKey string, restrictions *SecuredAPIKeyRestrictions) (string, error) {
-	h := hmac.New(sha256.New, []byte(parentApiKey))
-
-	message, err := encodeRestrictions(restrictions)
-	if err != nil {
-		return "", err
-	}
-	_, err = h.Write([]byte(message))
-	if err != nil {
-		return "", fmt.Errorf("failed to compute HMAC: %w", err)
-	}
-
-	checksum := hex.EncodeToString(h.Sum(nil))
-	key := base64.StdEncoding.EncodeToString([]byte(checksum + message))
-
-	return key, nil
-}
-
 func encodeRestrictions(restrictions *SecuredAPIKeyRestrictions) (string, error) {
+	if restrictions == nil {
+		return "", nil
+	}
+
 	toSerialize := map[string]any{}
 	if restrictions.Filters != nil {
 		toSerialize["filters"] = *restrictions.Filters
@@ -9218,10 +9204,156 @@ func encodeRestrictions(restrictions *SecuredAPIKeyRestrictions) (string, error)
 		}
 	}
 
+	// sort the keys to ensure consistent encoding
+	keys := make([]string, 0, len(toSerialize))
+	for k := range toSerialize {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+
 	queryString := make([]string, 0, len(toSerialize))
-	for k, v := range toSerialize {
-		queryString = append(queryString, k+"="+queryParameterToString(v))
+	for _, k := range keys {
+		queryString = append(queryString, k+"="+queryParameterToString(toSerialize[k]))
 	}
 
 	return strings.Join(queryString, "&"), nil
+}
+
+// GenerateSecuredApiKey generates a public API key intended to restrict access
+// to certain records. This new key is built upon the existing key named
+// `parentApiKey` and the following options.
+func (c *APIClient) GenerateSecuredApiKey(parentApiKey string, restrictions *SecuredAPIKeyRestrictions) (string, error) {
+	h := hmac.New(sha256.New, []byte(parentApiKey))
+
+	message, err := encodeRestrictions(restrictions)
+	if err != nil {
+		return "", err
+	}
+	_, err = h.Write([]byte(message))
+	if err != nil {
+		return "", fmt.Errorf("failed to compute HMAC: %w", err)
+	}
+
+	checksum := hex.EncodeToString(h.Sum(nil))
+	key := base64.StdEncoding.EncodeToString([]byte(checksum + message))
+
+	return key, nil
+}
+
+// GetSecuredApiKeyRemainingValidity retrieves the remaining validity of the previously generated `securedApiKey`, the `ValidUntil` parameter must have been provided.
+func (c *APIClient) GetSecuredApiKeyRemainingValidity(securedApiKey string) (time.Duration, error) {
+	if len(securedApiKey) == 0 {
+		return 0, fmt.Errorf("given secured API key is empty: %s", securedApiKey)
+	}
+
+	decoded, err := base64.StdEncoding.DecodeString(securedApiKey)
+	if err != nil {
+		return 0, fmt.Errorf("unable to decode given secured API key: %s", err)
+	}
+
+	submatch := regexp.MustCompile(`validUntil=(\d{1,10})`).FindSubmatch(decoded)
+
+	if len(submatch) != 2 {
+		return 0, fmt.Errorf("unable to find `validUntil` parameter in the given secured API key: %s", string(decoded))
+	}
+
+	ts, err := strconv.Atoi(string(submatch[1]))
+	if err != nil {
+		return 0, fmt.Errorf("invalid format for the received `validUntil` value: %s", string(submatch[1]))
+	}
+
+	return time.Until(time.Unix(int64(ts), 0)), nil
+}
+
+// ChunkedBatch chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
+func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, action *Action, waitForTasks *bool, batchSize *int) ([]BatchResponse, error) {
+	var (
+		defaultBatchSize   = 1000
+		defaultAction      = ACTION_ADD_OBJECT
+		defaultWaitForTask = false
+	)
+
+	if batchSize == nil {
+		batchSize = &defaultBatchSize
+	}
+
+	if action == nil {
+		action = &defaultAction
+	}
+
+	if waitForTasks == nil {
+		waitForTasks = &defaultWaitForTask
+	}
+
+	requests := make([]BatchRequest, 0, len(objects)%1000)
+	responses := make([]BatchResponse, 0, len(objects)%1000)
+
+	for i, obj := range objects {
+		requests = append(requests, *NewBatchRequest(*action, obj))
+
+		if i%*batchSize == 0 {
+			resp, err := c.Batch(c.NewApiBatchRequest(indexName, NewBatchWriteParams(requests)))
+			if err != nil {
+				return nil, err
+			}
+
+			responses = append(responses, *resp)
+			requests = make([]BatchRequest, 0, len(objects)%1000)
+		}
+	}
+
+	if *waitForTasks {
+		for _, resp := range responses {
+			_, err := c.WaitForTask(indexName, resp.TaskID, nil, nil, nil)
+			if err != nil {
+				return nil, err
+			}
+		}
+	}
+
+	return responses, nil
+}
+
+type ReplaceAllObjectsResponse struct {
+	CopyOperationResponse *UpdatedAtResponse
+	BatchResponses        []BatchResponse
+	MoveOperationResponse *UpdatedAtResponse
+}
+
+// ReplaceAllObjects replaces all objects (records) in the given `indexName` with the given `objects`. A temporary index is created during this process in order to backup your data.
+func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any, batchSize *int) (*ReplaceAllObjectsResponse, error) {
+	tmpIndex := fmt.Sprintf("%s_tmp_%d", indexName, time.Now().UnixNano())
+
+	copyResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATIONTYPE_COPY, tmpIndex, WithOperationIndexParamsScope([]ScopeType{SCOPETYPE_RULES, SCOPETYPE_SETTINGS, SCOPETYPE_SYNONYMS}))))
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = c.WaitForTask(indexName, copyResp.TaskID, nil, nil, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	waitForTask := true
+
+	batchResp, err := c.ChunkedBatch(tmpIndex, objects, nil, &waitForTask, batchSize)
+	if err != nil {
+		return nil, err
+	}
+
+	moveResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(tmpIndex, NewOperationIndexParams(OPERATIONTYPE_MOVE, indexName)))
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = c.WaitForTask(indexName, moveResp.TaskID, nil, nil, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return &ReplaceAllObjectsResponse{
+		CopyOperationResponse: copyResp,
+		BatchResponses:        batchResp,
+		MoveOperationResponse: moveResp,
+	}, nil
 }

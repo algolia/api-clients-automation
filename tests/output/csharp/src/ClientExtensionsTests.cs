@@ -681,7 +681,8 @@ public class ClientExtensionsTests
             )
           }
         )
-      ).Returns(
+      )
+      .Returns(
         Task.FromResult(
           new AlgoliaHttpResponse
           {
@@ -693,13 +694,16 @@ public class ClientExtensionsTests
         )
       );
 
-    var results =
-      await client.ReplaceAllObjectsAsync("my-test-index", new List<object> { new(), new(), new() }, batchSize: 2);
+    var results = await client.ReplaceAllObjectsAsync(
+      "my-test-index",
+      new List<object> { new(), new(), new() },
+      batchSize: 2
+    );
 
     httpMock.VerifyAll();
 
     Assert.Equal(1, results.CopyOperationResponse.TaskID);
-    Assert.Equal([2,3], results.BatchResponses.Select(r => r.TaskID));
+    Assert.Equal([2, 3], results.BatchResponses.Select(r => r.TaskID));
     Assert.Equal(4, results.MoveOperationResponse.TaskID);
   }
 }

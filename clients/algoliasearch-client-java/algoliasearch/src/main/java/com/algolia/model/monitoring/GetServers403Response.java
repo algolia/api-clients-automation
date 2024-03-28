@@ -7,13 +7,13 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** GetInventory403Response */
-public class GetInventory403Response {
+/** GetServers403Response */
+public class GetServers403Response {
 
   @JsonProperty("reason")
   private String reason;
 
-  public GetInventory403Response setReason(String reason) {
+  public GetServers403Response setReason(String reason) {
     this.reason = reason;
     return this;
   }
@@ -32,8 +32,8 @@ public class GetInventory403Response {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    GetInventory403Response getInventory403Response = (GetInventory403Response) o;
-    return Objects.equals(this.reason, getInventory403Response.reason);
+    GetServers403Response getServers403Response = (GetServers403Response) o;
+    return Objects.equals(this.reason, getServers403Response.reason);
   }
 
   @Override
@@ -44,7 +44,7 @@ public class GetInventory403Response {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class GetInventory403Response {\n");
+    sb.append("class GetServers403Response {\n");
     sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
     sb.append("}");
     return sb.toString();

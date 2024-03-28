@@ -43,4 +43,4 @@ jobs:
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
-        run: sbt +sonatypeBundleRelease
+        run: sbt sonatypeBundleRelease
