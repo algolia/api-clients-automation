@@ -11,7 +11,7 @@
     "response": {
       "statusCode": 200,
       "body": {
-        "appId": "T8JK9S7I7X",
+        "appID": "T8JK9S7I7X",
         "allowSpecialCharacters": true,
         "enablePersonalization": false,
         "exclude": [
