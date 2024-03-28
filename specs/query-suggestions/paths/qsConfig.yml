@@ -4,8 +4,8 @@ get:
   operationId: getConfig
   x-acl:
     - settings
-  summary: Get a configuration.
-  description: Get a single Query Suggestions configuration.
+  summary: Retrieve a configuration.
+  description: Retrieves a single Query Suggestions configuration by its index name.
   parameters:
     - $ref: '../common/parameters.yml#/IndexName'
   responses:
@@ -14,7 +14,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../common/schemas/QuerySuggestionsConfigurationResponse.yml#/QuerySuggestionsConfigurationResponse'
+            $ref: '../common/responses/QuerySuggestionsConfigurationResponse.yml#/QuerySuggestionsConfigurationResponse'
     '400':
       $ref: '../common/responses/BadRequest.yml'
     '401':
@@ -29,7 +29,7 @@ put:
   x-acl:
     - editSettings
   summary: Update a configuration.
-  description: Update a QuerySuggestions configuration.
+  description: Updates a QuerySuggestions configuration.
   parameters:
     - $ref: '../common/parameters.yml#/IndexName'
   requestBody:
@@ -37,21 +37,21 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../common/schemas/QuerySuggestionsConfiguration.yml'
+          $ref: '../common/schemas/QuerySuggestionsConfiguration.yml#/QuerySuggestionsConfiguration'
   responses:
     '200':
       description: OK
       content:
         application/json:
           schema:
-            $ref: '../common/schemas/BaseResponse.yml'
+            $ref: '../common/responses/BaseResponse.yml'
           examples:
             Created:
               summary: Configuration created.
               value:
                 'status': 200
                 'message': 'Configuration was updated, and a new indexing job has been scheduled.'
-                
+
     '401':
       $ref: '../common/responses/Unauthorized.yml'
     '500':
@@ -65,10 +65,10 @@ delete:
     - editSettings
   summary: Delete a configuration.
   description: |
-    Delete a Query Suggestions configuration.
+    Deletes a Query Suggestions configuration.
 
     Deleting only removes the configuration and stops updates to the Query Suggestions index.
-    The Query Suggestions index itself is not deleted.
+    To delete the Query Suggestions index itself, use the Search API and the [Delete an index](/specs/search#tag/Indices/operation/deleteIndex) operation.
   parameters:
     - $ref: '../common/parameters.yml#/IndexName'
   responses:
@@ -77,14 +77,14 @@ delete:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BaseResponse'
+            $ref: '../common/responses/BaseResponse.yml'
           examples:
             Created:
               summary: Configuration created.
               value:
                 'status': 200
                 'message': 'Configuration was deleted with success.'
-                
+
     '401':
       $ref: '../common/responses/Unauthorized.yml'
     '500':
