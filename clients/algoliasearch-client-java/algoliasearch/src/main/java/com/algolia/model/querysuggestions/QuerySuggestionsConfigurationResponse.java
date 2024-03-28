@@ -9,17 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** QuerySuggestionsConfigurationResponse */
+/** API response for retrieving Query Suggestions configurations. */
 public class QuerySuggestionsConfigurationResponse {
 
-  @JsonProperty("sourceIndicesAPIKey")
-  private String sourceIndicesAPIKey;
-
-  @JsonProperty("suggestionsIndicesAPIKey")
-  private String suggestionsIndicesAPIKey;
-
-  @JsonProperty("externalIndicesAPIKey")
-  private String externalIndicesAPIKey;
+  @JsonProperty("appID")
+  private String appID;
 
   @JsonProperty("indexName")
   private String indexName;
@@ -39,37 +33,15 @@ public class QuerySuggestionsConfigurationResponse {
   @JsonProperty("allowSpecialCharacters")
   private Boolean allowSpecialCharacters;
 
-  public QuerySuggestionsConfigurationResponse setSourceIndicesAPIKey(String sourceIndicesAPIKey) {
-    this.sourceIndicesAPIKey = sourceIndicesAPIKey;
+  public QuerySuggestionsConfigurationResponse setAppID(String appID) {
+    this.appID = appID;
     return this;
   }
 
-  /** API key used to read from your source index. */
-  @javax.annotation.Nullable
-  public String getSourceIndicesAPIKey() {
-    return sourceIndicesAPIKey;
-  }
-
-  public QuerySuggestionsConfigurationResponse setSuggestionsIndicesAPIKey(String suggestionsIndicesAPIKey) {
-    this.suggestionsIndicesAPIKey = suggestionsIndicesAPIKey;
-    return this;
-  }
-
-  /** API key used to write and configure your Query Suggestions index. */
-  @javax.annotation.Nullable
-  public String getSuggestionsIndicesAPIKey() {
-    return suggestionsIndicesAPIKey;
-  }
-
-  public QuerySuggestionsConfigurationResponse setExternalIndicesAPIKey(String externalIndicesAPIKey) {
-    this.externalIndicesAPIKey = externalIndicesAPIKey;
-    return this;
-  }
-
-  /** API key used to read from external Algolia indices. */
-  @javax.annotation.Nullable
-  public String getExternalIndicesAPIKey() {
-    return externalIndicesAPIKey;
+  /** Algolia application ID to which this Query Suggestions configuration belongs. */
+  @javax.annotation.Nonnull
+  public String getAppID() {
+    return appID;
   }
 
   public QuerySuggestionsConfigurationResponse setIndexName(String indexName) {
@@ -77,7 +49,7 @@ public class QuerySuggestionsConfigurationResponse {
     return this;
   }
 
-  /** Query Suggestions index name. */
+  /** Name of the Query Suggestions index. */
   @javax.annotation.Nonnull
   public String getIndexName() {
     return indexName;
@@ -105,7 +77,7 @@ public class QuerySuggestionsConfigurationResponse {
   }
 
   /** Get languages */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public Languages getLanguages() {
     return languages;
   }
@@ -116,14 +88,11 @@ public class QuerySuggestionsConfigurationResponse {
   }
 
   public QuerySuggestionsConfigurationResponse addExclude(String excludeItem) {
-    if (this.exclude == null) {
-      this.exclude = new ArrayList<>();
-    }
     this.exclude.add(excludeItem);
     return this;
   }
 
-  /** Patterns to exclude from query suggestions. */
+  /** Get exclude */
   @javax.annotation.Nullable
   public List<String> getExclude() {
     return exclude;
@@ -134,8 +103,8 @@ public class QuerySuggestionsConfigurationResponse {
     return this;
   }
 
-  /** Turn on personalized query suggestions. */
-  @javax.annotation.Nullable
+  /** Whether to turn on personalized query suggestions. */
+  @javax.annotation.Nonnull
   public Boolean getEnablePersonalization() {
     return enablePersonalization;
   }
@@ -145,8 +114,8 @@ public class QuerySuggestionsConfigurationResponse {
     return this;
   }
 
-  /** Allow suggestions with special characters. */
-  @javax.annotation.Nullable
+  /** Whether to include suggestions with special characters. */
+  @javax.annotation.Nonnull
   public Boolean getAllowSpecialCharacters() {
     return allowSpecialCharacters;
   }
@@ -161,9 +130,7 @@ public class QuerySuggestionsConfigurationResponse {
     }
     QuerySuggestionsConfigurationResponse querySuggestionsConfigurationResponse = (QuerySuggestionsConfigurationResponse) o;
     return (
-      Objects.equals(this.sourceIndicesAPIKey, querySuggestionsConfigurationResponse.sourceIndicesAPIKey) &&
-      Objects.equals(this.suggestionsIndicesAPIKey, querySuggestionsConfigurationResponse.suggestionsIndicesAPIKey) &&
-      Objects.equals(this.externalIndicesAPIKey, querySuggestionsConfigurationResponse.externalIndicesAPIKey) &&
+      Objects.equals(this.appID, querySuggestionsConfigurationResponse.appID) &&
       Objects.equals(this.indexName, querySuggestionsConfigurationResponse.indexName) &&
       Objects.equals(this.sourceIndices, querySuggestionsConfigurationResponse.sourceIndices) &&
       Objects.equals(this.languages, querySuggestionsConfigurationResponse.languages) &&
@@ -175,26 +142,14 @@ public class QuerySuggestionsConfigurationResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(
-      sourceIndicesAPIKey,
-      suggestionsIndicesAPIKey,
-      externalIndicesAPIKey,
-      indexName,
-      sourceIndices,
-      languages,
-      exclude,
-      enablePersonalization,
-      allowSpecialCharacters
-    );
+    return Objects.hash(appID, indexName, sourceIndices, languages, exclude, enablePersonalization, allowSpecialCharacters);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class QuerySuggestionsConfigurationResponse {\n");
-    sb.append("    sourceIndicesAPIKey: ").append(toIndentedString(sourceIndicesAPIKey)).append("\n");
-    sb.append("    suggestionsIndicesAPIKey: ").append(toIndentedString(suggestionsIndicesAPIKey)).append("\n");
-    sb.append("    externalIndicesAPIKey: ").append(toIndentedString(externalIndicesAPIKey)).append("\n");
+    sb.append("    appID: ").append(toIndentedString(appID)).append("\n");
     sb.append("    indexName: ").append(toIndentedString(indexName)).append("\n");
     sb.append("    sourceIndices: ").append(toIndentedString(sourceIndices)).append("\n");
     sb.append("    languages: ").append(toIndentedString(languages)).append("\n");

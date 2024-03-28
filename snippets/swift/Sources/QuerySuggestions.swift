@@ -15,14 +15,14 @@ final class QuerySuggestionsClientSnippet {
         // Call the API
         _ = try await client
             .createConfig(querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex(
-                indexName: "theIndexName",
                 sourceIndices: [SourceIndex(
                     indexName: "testIndex",
                     facets: [Facet(attribute: "test")],
                     generate: [["facetA", "facetB"], ["facetC"]]
                 )],
                 languages: QuerySuggestionsLanguages.arrayOfString(["french"]),
-                exclude: ["test"]
+                exclude: ["test"],
+                indexName: "theIndexName"
             ))
         // SEPARATOR<
     }

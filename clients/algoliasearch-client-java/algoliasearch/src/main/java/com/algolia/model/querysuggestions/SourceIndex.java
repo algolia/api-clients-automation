@@ -53,8 +53,8 @@ public class SourceIndex {
   }
 
   /**
-   * If true, Query Suggestions uses all replicas of the primary index to find popular searches. If
-   * false, only the primary index is used.
+   * If true, Query Suggestions uses all replica indices to find popular searches. If false, only
+   * the primary index is used.
    */
   @javax.annotation.Nullable
   public Boolean getReplicas() {
@@ -74,10 +74,7 @@ public class SourceIndex {
     return this;
   }
 
-  /**
-   * [Analytics tags](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) for
-   * filtering the popular searches.
-   */
+  /** Get analyticsTags */
   @javax.annotation.Nullable
   public List<String> getAnalyticsTags() {
     return analyticsTags;
@@ -96,10 +93,7 @@ public class SourceIndex {
     return this;
   }
 
-  /**
-   * Facets to use as top categories with your suggestions. If provided, Query Suggestions adds the
-   * top facet values to each suggestion.
-   */
+  /** Get facets */
   @javax.annotation.Nullable
   public List<Facet> getFacets() {
     return facets;
@@ -112,7 +106,7 @@ public class SourceIndex {
 
   /**
    * Minimum number of hits required to be included as a suggestion. A search query must at least
-   * generate `minHits` hits to be included in the Query Suggestions index. minimum: 0
+   * generate `minHits` search results to be included in the Query Suggestions index. minimum: 0
    */
   @javax.annotation.Nullable
   public Integer getMinHits() {
@@ -165,14 +159,7 @@ public class SourceIndex {
     return this;
   }
 
-  /**
-   * Algolia indices with popular searches to use as query suggestions. Records of these indices
-   * must have these attributes: - `query`: search query which will be added as a suggestion -
-   * `count`: measure of popularity of that search query For example, you can export popular
-   * searches from an external analytics tool, such as Google Analytics or Adobe Analytics, and feed
-   * this data into an external Algolia index. You can use this external index to generate query
-   * suggestions until your Algolia analytics has collected enough data.
-   */
+  /** Get external */
   @javax.annotation.Nullable
   public List<String> getExternal() {
     return external;

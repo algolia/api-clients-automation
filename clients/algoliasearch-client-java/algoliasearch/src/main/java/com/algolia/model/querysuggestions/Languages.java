@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * Set the language for deduplicating singular and plural suggestions. If specified, only the more
- * popular form is included.
+ * Languages for deduplicating singular and plural suggestions. If specified, only the more popular
+ * form is included.
  */
 @JsonDeserialize(using = Languages.Deserializer.class)
 public interface Languages {

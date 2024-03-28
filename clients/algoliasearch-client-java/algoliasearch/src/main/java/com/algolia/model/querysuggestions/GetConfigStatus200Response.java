@@ -30,7 +30,7 @@ public class GetConfigStatus200Response {
     return this;
   }
 
-  /** Query Suggestions index name. */
+  /** Name of the Query Suggestions index. */
   @javax.annotation.Nullable
   public String getIndexName() {
     return indexName;
@@ -41,7 +41,7 @@ public class GetConfigStatus200Response {
     return this;
   }
 
-  /** Indicates whether the creation or update of the Query Suggestions is in progress. */
+  /** Whether the creation or update of the Query Suggestions index is in progress. */
   @javax.annotation.Nullable
   public Boolean getIsRunning() {
     return isRunning;

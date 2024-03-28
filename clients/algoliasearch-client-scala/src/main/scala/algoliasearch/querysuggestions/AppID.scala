@@ -23,27 +23,11 @@
   */
 package algoliasearch.querysuggestions
 
-/** Configuration of an Algolia index for Query Suggestions.
+/** AppID
   *
-  * @param indexName
-  *   Name of the Algolia index to use as source for query suggestions.
-  * @param replicas
-  *   If true, Query Suggestions uses all replica indices to find popular searches. If false, only the primary index is
-  *   used.
-  * @param minHits
-  *   Minimum number of hits required to be included as a suggestion. A search query must at least generate `minHits`
-  *   search results to be included in the Query Suggestions index.
-  * @param minLetters
-  *   Minimum letters required to be included as a suggestion. A search query must be at least `minLetters` long to be
-  *   included in the Query Suggestions index.
+  * @param appID
+  *   Algolia application ID to which this Query Suggestions configuration belongs.
   */
-case class SourceIndex(
-    indexName: String,
-    replicas: Option[Boolean] = scala.None,
-    analyticsTags: Option[Seq[String]] = scala.None,
-    facets: Option[Seq[Facet]] = scala.None,
-    minHits: Option[Int] = scala.None,
-    minLetters: Option[Int] = scala.None,
-    generate: Option[Seq[Seq[String]]] = scala.None,
-    external: Option[Seq[String]] = scala.None
+case class AppID(
+    appID: Option[String] = scala.None
 )

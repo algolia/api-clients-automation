@@ -67,7 +67,7 @@ public class QuerySuggestionsConfiguration {
     return this;
   }
 
-  /** Patterns to exclude from query suggestions. */
+  /** Get exclude */
   @javax.annotation.Nullable
   public List<String> getExclude() {
     return exclude;
@@ -78,7 +78,7 @@ public class QuerySuggestionsConfiguration {
     return this;
   }
 
-  /** Turn on personalized query suggestions. */
+  /** Whether to turn on personalized query suggestions. */
   @javax.annotation.Nullable
   public Boolean getEnablePersonalization() {
     return enablePersonalization;
@@ -89,7 +89,7 @@ public class QuerySuggestionsConfiguration {
     return this;
   }
 
-  /** Allow suggestions with special characters. */
+  /** Whether to include suggestions with special characters. */
   @javax.annotation.Nullable
   public Boolean getAllowSpecialCharacters() {
     return allowSpecialCharacters;

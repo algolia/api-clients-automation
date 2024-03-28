@@ -441,6 +441,7 @@ describe('getConfig', () => {
     });
 
     const expectedBody = {
+      appID: 'T8JK9S7I7X',
       allowSpecialCharacters: true,
       enablePersonalization: false,
       exclude: ['^cocaines$'],
