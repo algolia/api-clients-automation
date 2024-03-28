@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Action to perform on the Algolia index.
-public enum ActionType: String, Codable, CaseIterable {
+public enum ActionType: String, Codable, CaseIterable, Hashable {
     case replace
     case save
     case partial

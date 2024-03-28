@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum Metric: String, Codable, CaseIterable {
+public enum Metric: String, Codable, CaseIterable, Hashable {
     case avgBuildTime = "avg_build_time"
     case ssdUsage = "ssd_usage"
     case ramSearchUsage = "ram_search_usage"

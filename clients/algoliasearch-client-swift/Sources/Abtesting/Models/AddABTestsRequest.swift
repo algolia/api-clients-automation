@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct AddABTestsRequest: Codable, JSONEncodable {
+public struct AddABTestsRequest: Codable, JSONEncodable, Hashable {
     /// A/B test name.
     public var name: String
     /// A/B test variants.
@@ -33,5 +33,17 @@ public struct AddABTestsRequest: Codable, JSONEncodable {
         try container.encode(self.name, forKey: .name)
         try container.encode(self.variants, forKey: .variants)
         try container.encode(self.endAt, forKey: .endAt)
+    }
+
+    public static func ==(lhs: AddABTestsRequest, rhs: AddABTestsRequest) -> Bool {
+        lhs.name == rhs.name &&
+            lhs.variants == rhs.variants &&
+            lhs.endAt == rhs.endAt
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.name.hashValue)
+        hasher.combine(self.variants.hashValue)
+        hasher.combine(self.endAt.hashValue)
     }
 }

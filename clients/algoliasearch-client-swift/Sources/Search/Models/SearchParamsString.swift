@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SearchParamsString: Codable, JSONEncodable {
+public struct SearchParamsString: Codable, JSONEncodable, Hashable {
     /// Search parameters as a URL-encoded query string.
     public var params: String?
 
@@ -23,5 +23,13 @@ public struct SearchParamsString: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.params, forKey: .params)
+    }
+
+    public static func ==(lhs: SearchParamsString, rhs: SearchParamsString) -> Bool {
+        lhs.params == rhs.params
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.params?.hashValue)
     }
 }

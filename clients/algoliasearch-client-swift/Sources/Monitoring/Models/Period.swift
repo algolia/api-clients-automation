@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum Period: String, Codable, CaseIterable {
+public enum Period: String, Codable, CaseIterable, Hashable {
     case minute
     case hour
     case day

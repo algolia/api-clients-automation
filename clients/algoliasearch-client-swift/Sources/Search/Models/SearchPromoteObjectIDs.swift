@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Records to promote.
-public struct SearchPromoteObjectIDs: Codable, JSONEncodable {
+public struct SearchPromoteObjectIDs: Codable, JSONEncodable, Hashable {
     /// Object IDs of the records you want to promote.  The records are placed as a group at the `position`. For
     /// example, if you want to promote four records to position `0`, they will be the first four search results.
     public var objectIDs: [String]
@@ -30,5 +30,15 @@ public struct SearchPromoteObjectIDs: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.objectIDs, forKey: .objectIDs)
         try container.encode(self.position, forKey: .position)
+    }
+
+    public static func ==(lhs: SearchPromoteObjectIDs, rhs: SearchPromoteObjectIDs) -> Bool {
+        lhs.objectIDs == rhs.objectIDs &&
+            lhs.position == rhs.position
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.objectIDs.hashValue)
+        hasher.combine(self.position.hashValue)
     }
 }

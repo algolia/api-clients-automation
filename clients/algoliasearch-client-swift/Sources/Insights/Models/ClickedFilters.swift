@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Use this event to track when users click facet filters in your user interface.
-public struct ClickedFilters: Codable, JSONEncodable {
+public struct ClickedFilters: Codable, JSONEncodable, Hashable {
     /// Event name, up to 64 ASCII characters.  Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
     /// framework.
     public var eventName: String
@@ -69,5 +69,25 @@ public struct ClickedFilters: Codable, JSONEncodable {
         try container.encode(self.userToken, forKey: .userToken)
         try container.encodeIfPresent(self.authenticatedUserToken, forKey: .authenticatedUserToken)
         try container.encodeIfPresent(self.timestamp, forKey: .timestamp)
+    }
+
+    public static func ==(lhs: ClickedFilters, rhs: ClickedFilters) -> Bool {
+        lhs.eventName == rhs.eventName &&
+            lhs.eventType == rhs.eventType &&
+            lhs.index == rhs.index &&
+            lhs.filters == rhs.filters &&
+            lhs.userToken == rhs.userToken &&
+            lhs.authenticatedUserToken == rhs.authenticatedUserToken &&
+            lhs.timestamp == rhs.timestamp
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.eventName.hashValue)
+        hasher.combine(self.eventType.hashValue)
+        hasher.combine(self.index.hashValue)
+        hasher.combine(self.filters.hashValue)
+        hasher.combine(self.userToken.hashValue)
+        hasher.combine(self.authenticatedUserToken?.hashValue)
+        hasher.combine(self.timestamp?.hashValue)
     }
 }

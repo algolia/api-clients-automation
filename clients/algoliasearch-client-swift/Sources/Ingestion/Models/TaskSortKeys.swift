@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Property by which to sort the list of tasks.
-public enum TaskSortKeys: String, Codable, CaseIterable {
+public enum TaskSortKeys: String, Codable, CaseIterable, Hashable {
     case enabled
     case triggerType
     case action

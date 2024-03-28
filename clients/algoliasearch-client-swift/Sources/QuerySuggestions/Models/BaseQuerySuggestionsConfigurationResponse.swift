@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct BaseQuerySuggestionsConfigurationResponse: Codable, JSONEncodable {
+public struct BaseQuerySuggestionsConfigurationResponse: Codable, JSONEncodable, Hashable {
     /// API key used to read from your source index.
     public var sourceIndicesAPIKey: String?
     /// API key used to write and configure your Query Suggestions index.
@@ -37,5 +37,20 @@ public struct BaseQuerySuggestionsConfigurationResponse: Codable, JSONEncodable 
         try container.encodeIfPresent(self.sourceIndicesAPIKey, forKey: .sourceIndicesAPIKey)
         try container.encodeIfPresent(self.suggestionsIndicesAPIKey, forKey: .suggestionsIndicesAPIKey)
         try container.encodeIfPresent(self.externalIndicesAPIKey, forKey: .externalIndicesAPIKey)
+    }
+
+    public static func ==(
+        lhs: BaseQuerySuggestionsConfigurationResponse,
+        rhs: BaseQuerySuggestionsConfigurationResponse
+    ) -> Bool {
+        lhs.sourceIndicesAPIKey == rhs.sourceIndicesAPIKey &&
+            lhs.suggestionsIndicesAPIKey == rhs.suggestionsIndicesAPIKey &&
+            lhs.externalIndicesAPIKey == rhs.externalIndicesAPIKey
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.sourceIndicesAPIKey?.hashValue)
+        hasher.combine(self.suggestionsIndicesAPIKey?.hashValue)
+        hasher.combine(self.externalIndicesAPIKey?.hashValue)
     }
 }

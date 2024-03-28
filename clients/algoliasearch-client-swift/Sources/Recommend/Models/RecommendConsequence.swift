@@ -8,7 +8,7 @@ import Foundation
 
 /// Effect of the rule.  For more information, see
 /// [Consequences](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#consequences).
-public struct RecommendConsequence: Codable, JSONEncodable {
+public struct RecommendConsequence: Codable, JSONEncodable, Hashable {
     public var params: RecommendConsequenceParams?
     /// Records you want to pin to a specific position in the search results.  You can promote up to 300 records, either
     /// individually, or as groups of up to 100 records each.
@@ -54,5 +54,21 @@ public struct RecommendConsequence: Codable, JSONEncodable {
         try container.encodeIfPresent(self.filterPromotes, forKey: .filterPromotes)
         try container.encodeIfPresent(self.hide, forKey: .hide)
         try container.encodeIfPresent(self.userData, forKey: .userData)
+    }
+
+    public static func ==(lhs: RecommendConsequence, rhs: RecommendConsequence) -> Bool {
+        lhs.params == rhs.params &&
+            lhs.promote == rhs.promote &&
+            lhs.filterPromotes == rhs.filterPromotes &&
+            lhs.hide == rhs.hide &&
+            lhs.userData == rhs.userData
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.params?.hashValue)
+        hasher.combine(self.promote?.hashValue)
+        hasher.combine(self.filterPromotes?.hashValue)
+        hasher.combine(self.hide?.hashValue)
+        hasher.combine(self.userData?.hashValue)
     }
 }

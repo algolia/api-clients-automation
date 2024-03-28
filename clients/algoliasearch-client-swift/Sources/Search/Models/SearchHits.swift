@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SearchHits<T: Codable>: Codable, JSONEncodable {
+public struct SearchHits<T: Codable & Hashable>: Codable, JSONEncodable, Hashable {
     /// Search results (hits).  Hits are records from your index that match the search criteria, augmented with
     /// additional attributes, such as, for highlighting.
     public var hits: [T]
@@ -93,5 +93,19 @@ public struct SearchHits<T: Codable>: Codable, JSONEncodable {
             AnyCodable.self,
             excludedKeys: nonAdditionalPropertyKeys
         )
+    }
+
+    public static func ==(lhs: SearchHits, rhs: SearchHits) -> Bool {
+        lhs.hits == rhs.hits &&
+            lhs.query == rhs.query &&
+            lhs.params == rhs.params
+            && lhs.additionalProperties == rhs.additionalProperties
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.hits.hashValue)
+        hasher.combine(self.query.hashValue)
+        hasher.combine(self.params.hashValue)
+        hasher.combine(self.additionalProperties.hashValue)
     }
 }

@@ -7,6 +7,6 @@ import Foundation
 #endif
 
 /// Authentication resource not tied to any ecommerce platform, used for filtering.
-public enum PlatformNone: String, Codable, CaseIterable {
+public enum PlatformNone: String, Codable, CaseIterable, Hashable {
     case `none`
 }

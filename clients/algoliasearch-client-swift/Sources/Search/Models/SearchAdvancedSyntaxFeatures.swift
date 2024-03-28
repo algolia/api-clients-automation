@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum SearchAdvancedSyntaxFeatures: String, Codable, CaseIterable {
+public enum SearchAdvancedSyntaxFeatures: String, Codable, CaseIterable, Hashable {
     case exactPhrase
     case excludeWords
 }

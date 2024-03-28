@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Record type for ecommerce sources.
-public enum RecordType: String, Codable, CaseIterable {
+public enum RecordType: String, Codable, CaseIterable, Hashable {
     case product
     case variant
 }

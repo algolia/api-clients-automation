@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum SearchPromote: Codable, JSONEncodable, AbstractEncodable {
+public enum SearchPromote: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case searchPromoteObjectIDs(SearchPromoteObjectIDs)
     case searchPromoteObjectID(SearchPromoteObjectID)
 

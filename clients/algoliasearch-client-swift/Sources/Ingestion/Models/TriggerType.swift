@@ -13,7 +13,7 @@ import Foundation
 /// after an event is received, such as, a webhook.  &lt;/dd&gt; 
 /// &lt;dt&gt;&lt;code&gt;streaming&lt;/code&gt;&lt;/dt&gt;  &lt;dd&gt;  Run the task continuously.  &lt;/dd&gt;
 /// &lt;/dl&gt;.
-public enum TriggerType: String, Codable, CaseIterable {
+public enum TriggerType: String, Codable, CaseIterable, Hashable {
     case onDemand
     case schedule
     case subscription

@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum RecommendAlternativesAsExact: String, Codable, CaseIterable {
+public enum RecommendAlternativesAsExact: String, Codable, CaseIterable, Hashable {
     case ignorePlurals
     case singleWordSynonym
     case multiWordsSynonym

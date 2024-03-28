@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Response, taskID, unique object identifier, and an update timestamp.
-public struct UpdatedAtWithObjectIdResponse: Codable, JSONEncodable {
+public struct UpdatedAtWithObjectIdResponse: Codable, JSONEncodable, Hashable {
     /// Unique identifier of a task.  A successful API response means that a task was added to a queue. It might not run
     /// immediately. You can check the task's progress with the [`task` operation](#tag/Indices/operation/getTask) and
     /// this `taskID`.
@@ -36,5 +36,17 @@ public struct UpdatedAtWithObjectIdResponse: Codable, JSONEncodable {
         try container.encodeIfPresent(self.taskID, forKey: .taskID)
         try container.encodeIfPresent(self.updatedAt, forKey: .updatedAt)
         try container.encodeIfPresent(self.objectID, forKey: .objectID)
+    }
+
+    public static func ==(lhs: UpdatedAtWithObjectIdResponse, rhs: UpdatedAtWithObjectIdResponse) -> Bool {
+        lhs.taskID == rhs.taskID &&
+            lhs.updatedAt == rhs.updatedAt &&
+            lhs.objectID == rhs.objectID
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.taskID?.hashValue)
+        hasher.combine(self.updatedAt?.hashValue)
+        hasher.combine(self.objectID?.hashValue)
     }
 }

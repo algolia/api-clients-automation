@@ -8,7 +8,7 @@ import Foundation
 
 /// Precision of a coordinate-based search in meters to group results with similar distances.  The Geo ranking criterion
 /// considers all matches within the same range of distances to be equal.
-public enum RecommendAroundPrecision: Codable, JSONEncodable, AbstractEncodable {
+public enum RecommendAroundPrecision: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case int(Int)
     case arrayOfRecommendAroundPrecisionFromValueInner([RecommendAroundPrecisionFromValueInner])
 

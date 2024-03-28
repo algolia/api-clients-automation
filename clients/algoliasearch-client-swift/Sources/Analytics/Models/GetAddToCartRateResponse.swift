@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct GetAddToCartRateResponse: Codable, JSONEncodable {
+public struct GetAddToCartRateResponse: Codable, JSONEncodable, Hashable {
     /// Add-to-cart rate, calculated as number of tracked searches with at least one add-to-cart event divided by the
     /// number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to
     /// true.
@@ -40,5 +40,19 @@ public struct GetAddToCartRateResponse: Codable, JSONEncodable {
         try container.encode(self.trackedSearchCount, forKey: .trackedSearchCount)
         try container.encode(self.addToCartCount, forKey: .addToCartCount)
         try container.encode(self.dates, forKey: .dates)
+    }
+
+    public static func ==(lhs: GetAddToCartRateResponse, rhs: GetAddToCartRateResponse) -> Bool {
+        lhs.rate == rhs.rate &&
+            lhs.trackedSearchCount == rhs.trackedSearchCount &&
+            lhs.addToCartCount == rhs.addToCartCount &&
+            lhs.dates == rhs.dates
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.rate.hashValue)
+        hasher.combine(self.trackedSearchCount.hashValue)
+        hasher.combine(self.addToCartCount.hashValue)
+        hasher.combine(self.dates.hashValue)
     }
 }

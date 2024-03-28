@@ -8,7 +8,7 @@ import Foundation
 
 /// Attribute by which to order the response items.  If the &#x60;clickAnalytics&#x60; parameter is false, only
 /// &#x60;searchCount&#x60; is available.
-public enum OrderBy: String, Codable, CaseIterable {
+public enum OrderBy: String, Codable, CaseIterable, Hashable {
     case searchCount
     case clickThroughRate
     case conversionRate

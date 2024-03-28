@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct BaseTrendingItemsQuery: Codable, JSONEncodable {
+public struct BaseTrendingItemsQuery: Codable, JSONEncodable, Hashable {
     /// Facet name for trending models.
     public var facetName: String?
     /// Facet value for trending models.
@@ -46,5 +46,21 @@ public struct BaseTrendingItemsQuery: Codable, JSONEncodable {
         try container.encodeIfPresent(self.model, forKey: .model)
         try container.encodeIfPresent(self.queryParameters, forKey: .queryParameters)
         try container.encodeIfPresent(self.fallbackParameters, forKey: .fallbackParameters)
+    }
+
+    public static func ==(lhs: BaseTrendingItemsQuery, rhs: BaseTrendingItemsQuery) -> Bool {
+        lhs.facetName == rhs.facetName &&
+            lhs.facetValue == rhs.facetValue &&
+            lhs.model == rhs.model &&
+            lhs.queryParameters == rhs.queryParameters &&
+            lhs.fallbackParameters == rhs.fallbackParameters
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.facetName?.hashValue)
+        hasher.combine(self.facetValue?.hashValue)
+        hasher.combine(self.model?.hashValue)
+        hasher.combine(self.queryParameters?.hashValue)
+        hasher.combine(self.fallbackParameters?.hashValue)
     }
 }

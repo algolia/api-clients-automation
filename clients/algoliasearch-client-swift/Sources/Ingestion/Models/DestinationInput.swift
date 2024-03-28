@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum DestinationInput: Codable, JSONEncodable, AbstractEncodable {
+public enum DestinationInput: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case destinationIndexPrefix(DestinationIndexPrefix)
     case destinationIndexName(DestinationIndexName)
 

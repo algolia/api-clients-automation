@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum MappingTypeCSV: String, Codable, CaseIterable {
+public enum MappingTypeCSV: String, Codable, CaseIterable, Hashable {
     case string
     case integer
     case float

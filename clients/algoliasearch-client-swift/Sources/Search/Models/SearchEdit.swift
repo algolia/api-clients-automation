@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SearchEdit: Codable, JSONEncodable {
+public struct SearchEdit: Codable, JSONEncodable, Hashable {
     public var type: SearchEditType?
     /// Text or patterns to remove from the query string.
     public var delete: String?
@@ -32,5 +32,17 @@ public struct SearchEdit: Codable, JSONEncodable {
         try container.encodeIfPresent(self.type, forKey: .type)
         try container.encodeIfPresent(self.delete, forKey: .delete)
         try container.encodeIfPresent(self.insert, forKey: .insert)
+    }
+
+    public static func ==(lhs: SearchEdit, rhs: SearchEdit) -> Bool {
+        lhs.type == rhs.type &&
+            lhs.delete == rhs.delete &&
+            lhs.insert == rhs.insert
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.type?.hashValue)
+        hasher.combine(self.delete?.hashValue)
+        hasher.combine(self.insert?.hashValue)
     }
 }

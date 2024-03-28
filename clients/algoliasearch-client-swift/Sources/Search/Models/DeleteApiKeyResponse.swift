@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct DeleteApiKeyResponse: Codable, JSONEncodable {
+public struct DeleteApiKeyResponse: Codable, JSONEncodable, Hashable {
     /// Timestamp of deletion in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
     public var deletedAt: String
 
@@ -23,5 +23,13 @@ public struct DeleteApiKeyResponse: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.deletedAt, forKey: .deletedAt)
+    }
+
+    public static func ==(lhs: DeleteApiKeyResponse, rhs: DeleteApiKeyResponse) -> Bool {
+        lhs.deletedAt == rhs.deletedAt
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.deletedAt.hashValue)
     }
 }

@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Assign userID parameters.
-public struct AssignUserIdParams: Codable, JSONEncodable {
+public struct AssignUserIdParams: Codable, JSONEncodable, Hashable {
     /// Cluster name.
     public var cluster: String
 
@@ -24,5 +24,13 @@ public struct AssignUserIdParams: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.cluster, forKey: .cluster)
+    }
+
+    public static func ==(lhs: AssignUserIdParams, rhs: AssignUserIdParams) -> Bool {
+        lhs.cluster == rhs.cluster
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.cluster.hashValue)
     }
 }

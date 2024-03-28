@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct DeleteByParams: Codable, JSONEncodable {
+public struct DeleteByParams: Codable, JSONEncodable, Hashable {
     public var facetFilters: SearchFacetFilters?
     /// Filter the search so that only records with matching values are included in the results.  These filters are
     /// supported:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`,
@@ -83,5 +83,27 @@ public struct DeleteByParams: Codable, JSONEncodable {
         try container.encodeIfPresent(self.aroundRadius, forKey: .aroundRadius)
         try container.encodeIfPresent(self.insideBoundingBox, forKey: .insideBoundingBox)
         try container.encodeIfPresent(self.insidePolygon, forKey: .insidePolygon)
+    }
+
+    public static func ==(lhs: DeleteByParams, rhs: DeleteByParams) -> Bool {
+        lhs.facetFilters == rhs.facetFilters &&
+            lhs.filters == rhs.filters &&
+            lhs.numericFilters == rhs.numericFilters &&
+            lhs.tagFilters == rhs.tagFilters &&
+            lhs.aroundLatLng == rhs.aroundLatLng &&
+            lhs.aroundRadius == rhs.aroundRadius &&
+            lhs.insideBoundingBox == rhs.insideBoundingBox &&
+            lhs.insidePolygon == rhs.insidePolygon
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.facetFilters?.hashValue)
+        hasher.combine(self.filters?.hashValue)
+        hasher.combine(self.numericFilters?.hashValue)
+        hasher.combine(self.tagFilters?.hashValue)
+        hasher.combine(self.aroundLatLng?.hashValue)
+        hasher.combine(self.aroundRadius?.hashValue)
+        hasher.combine(self.insideBoundingBox?.hashValue)
+        hasher.combine(self.insidePolygon?.hashValue)
     }
 }

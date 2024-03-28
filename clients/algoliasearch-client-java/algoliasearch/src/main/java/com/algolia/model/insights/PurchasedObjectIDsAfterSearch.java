@@ -41,7 +41,7 @@ public class PurchasedObjectIDsAfterSearch implements EventsItems {
   private String currency;
 
   @JsonProperty("objectData")
-  private List<ObjectDataAfterSearch> objectData;
+  private List<ObjectDataAfterSearch> objectData = new ArrayList<>();
 
   @JsonProperty("timestamp")
   private Long timestamp;
@@ -163,9 +163,6 @@ public class PurchasedObjectIDsAfterSearch implements EventsItems {
   }
 
   public PurchasedObjectIDsAfterSearch addObjectData(ObjectDataAfterSearch objectDataItem) {
-    if (this.objectData == null) {
-      this.objectData = new ArrayList<>();
-    }
     this.objectData.add(objectDataItem);
     return this;
   }
@@ -174,7 +171,7 @@ public class PurchasedObjectIDsAfterSearch implements EventsItems {
    * Extra information about the records involved in a purchase or add-to-cart events. If provided,
    * it must be the same length as `objectIDs`.
    */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public List<ObjectDataAfterSearch> getObjectData() {
     return objectData;
   }

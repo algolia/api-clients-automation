@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Transformations to apply to the source, serialized as a JSON string.
-public struct MappingInput: Codable, JSONEncodable {
+public struct MappingInput: Codable, JSONEncodable, Hashable {
     public var format: MappingFormatSchema
     public var actions: [MappingKitAction]
 
@@ -27,5 +27,15 @@ public struct MappingInput: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.format, forKey: .format)
         try container.encode(self.actions, forKey: .actions)
+    }
+
+    public static func ==(lhs: MappingInput, rhs: MappingInput) -> Bool {
+        lhs.format == rhs.format &&
+            lhs.actions == rhs.actions
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.format.hashValue)
+        hasher.combine(self.actions.hashValue)
     }
 }

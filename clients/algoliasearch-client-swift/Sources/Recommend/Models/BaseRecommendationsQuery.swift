@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct BaseRecommendationsQuery: Codable, JSONEncodable {
+public struct BaseRecommendationsQuery: Codable, JSONEncodable, Hashable {
     public var model: RecommendationModels
     /// Unique record identifier.
     public var objectID: String
@@ -40,5 +40,19 @@ public struct BaseRecommendationsQuery: Codable, JSONEncodable {
         try container.encode(self.objectID, forKey: .objectID)
         try container.encodeIfPresent(self.queryParameters, forKey: .queryParameters)
         try container.encodeIfPresent(self.fallbackParameters, forKey: .fallbackParameters)
+    }
+
+    public static func ==(lhs: BaseRecommendationsQuery, rhs: BaseRecommendationsQuery) -> Bool {
+        lhs.model == rhs.model &&
+            lhs.objectID == rhs.objectID &&
+            lhs.queryParameters == rhs.queryParameters &&
+            lhs.fallbackParameters == rhs.fallbackParameters
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.model.hashValue)
+        hasher.combine(self.objectID.hashValue)
+        hasher.combine(self.queryParameters?.hashValue)
+        hasher.combine(self.fallbackParameters?.hashValue)
     }
 }

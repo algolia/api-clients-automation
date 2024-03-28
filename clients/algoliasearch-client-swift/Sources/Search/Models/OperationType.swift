@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Operation to perform on the index.
-public enum OperationType: String, Codable, CaseIterable {
+public enum OperationType: String, Codable, CaseIterable, Hashable {
     case move
     case copy
 }

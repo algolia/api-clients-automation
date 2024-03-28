@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Paginated API response.
-public struct Pagination: Codable, JSONEncodable {
+public struct Pagination: Codable, JSONEncodable, Hashable {
     /// Number of pages in the API response.
     public var nbPages: Int
     /// Page of the API response to retrieve.
@@ -39,5 +39,19 @@ public struct Pagination: Codable, JSONEncodable {
         try container.encode(self.page, forKey: .page)
         try container.encode(self.nbItems, forKey: .nbItems)
         try container.encode(self.itemsPerPage, forKey: .itemsPerPage)
+    }
+
+    public static func ==(lhs: Pagination, rhs: Pagination) -> Bool {
+        lhs.nbPages == rhs.nbPages &&
+            lhs.page == rhs.page &&
+            lhs.nbItems == rhs.nbItems &&
+            lhs.itemsPerPage == rhs.itemsPerPage
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.nbPages.hashValue)
+        hasher.combine(self.page.hashValue)
+        hasher.combine(self.nbItems.hashValue)
+        hasher.combine(self.itemsPerPage.hashValue)
     }
 }

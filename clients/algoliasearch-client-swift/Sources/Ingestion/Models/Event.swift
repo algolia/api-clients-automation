@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// An event describe a step of the task execution flow..
-public struct Event: Codable, JSONEncodable {
+public struct Event: Codable, JSONEncodable, Hashable {
     /// Universally unique identifier (UUID) of an event.
     public var eventID: String
     /// Universally unique identifier (UUID) of a task run.
@@ -65,5 +65,27 @@ public struct Event: Codable, JSONEncodable {
         try container.encode(self.batchSize, forKey: .batchSize)
         try container.encodeIfPresent(self.data, forKey: .data)
         try container.encode(self.publishedAt, forKey: .publishedAt)
+    }
+
+    public static func ==(lhs: Event, rhs: Event) -> Bool {
+        lhs.eventID == rhs.eventID &&
+            lhs.runID == rhs.runID &&
+            lhs.parentID == rhs.parentID &&
+            lhs.status == rhs.status &&
+            lhs.type == rhs.type &&
+            lhs.batchSize == rhs.batchSize &&
+            lhs.data == rhs.data &&
+            lhs.publishedAt == rhs.publishedAt
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.eventID.hashValue)
+        hasher.combine(self.runID.hashValue)
+        hasher.combine(self.parentID?.hashValue)
+        hasher.combine(self.status.hashValue)
+        hasher.combine(self.type.hashValue)
+        hasher.combine(self.batchSize.hashValue)
+        hasher.combine(self.data?.hashValue)
+        hasher.combine(self.publishedAt.hashValue)
     }
 }

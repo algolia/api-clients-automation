@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct GetNoResultsRateResponse: Codable, JSONEncodable {
+public struct GetNoResultsRateResponse: Codable, JSONEncodable, Hashable {
     /// No results rate, calculated as number of searches with zero results divided by the total number of searches.
     public var rate: Double
     /// Number of searches.
@@ -38,5 +38,19 @@ public struct GetNoResultsRateResponse: Codable, JSONEncodable {
         try container.encode(self.count, forKey: .count)
         try container.encode(self.noResultCount, forKey: .noResultCount)
         try container.encode(self.dates, forKey: .dates)
+    }
+
+    public static func ==(lhs: GetNoResultsRateResponse, rhs: GetNoResultsRateResponse) -> Bool {
+        lhs.rate == rhs.rate &&
+            lhs.count == rhs.count &&
+            lhs.noResultCount == rhs.noResultCount &&
+            lhs.dates == rhs.dates
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.rate.hashValue)
+        hasher.combine(self.count.hashValue)
+        hasher.combine(self.noResultCount.hashValue)
+        hasher.combine(self.dates.hashValue)
     }
 }

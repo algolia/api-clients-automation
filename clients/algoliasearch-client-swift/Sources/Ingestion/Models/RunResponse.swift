@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// API response for running a task.
-public struct RunResponse: Codable, JSONEncodable {
+public struct RunResponse: Codable, JSONEncodable, Hashable {
     /// Universally unique identifier (UUID) of a task run.
     public var runID: String
     /// Date of creation in RFC3339 format.
@@ -29,5 +29,15 @@ public struct RunResponse: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.runID, forKey: .runID)
         try container.encode(self.createdAt, forKey: .createdAt)
+    }
+
+    public static func ==(lhs: RunResponse, rhs: RunResponse) -> Bool {
+        lhs.runID == rhs.runID &&
+            lhs.createdAt == rhs.createdAt
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.runID.hashValue)
+        hasher.combine(self.createdAt.hashValue)
     }
 }

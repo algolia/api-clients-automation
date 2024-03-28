@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct DestinationIndexPrefix: Codable, JSONEncodable {
+public struct DestinationIndexPrefix: Codable, JSONEncodable, Hashable {
     /// String added to the beginning of all indices created by this destination.
     public var indexPrefix: String
 
@@ -23,5 +23,13 @@ public struct DestinationIndexPrefix: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.indexPrefix, forKey: .indexPrefix)
+    }
+
+    public static func ==(lhs: DestinationIndexPrefix, rhs: DestinationIndexPrefix) -> Bool {
+        lhs.indexPrefix == rhs.indexPrefix
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.indexPrefix.hashValue)
     }
 }

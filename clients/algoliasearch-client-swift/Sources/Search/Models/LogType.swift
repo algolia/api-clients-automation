@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum LogType: String, Codable, CaseIterable {
+public enum LogType: String, Codable, CaseIterable, Hashable {
     case all
     case query
     case build

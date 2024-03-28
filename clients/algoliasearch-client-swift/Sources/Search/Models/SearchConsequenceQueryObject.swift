@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SearchConsequenceQueryObject: Codable, JSONEncodable {
+public struct SearchConsequenceQueryObject: Codable, JSONEncodable, Hashable {
     /// Words to remove from the search query.
     public var remove: [String]?
     /// Changes to make to the search query.
@@ -28,5 +28,15 @@ public struct SearchConsequenceQueryObject: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.remove, forKey: .remove)
         try container.encodeIfPresent(self.edits, forKey: .edits)
+    }
+
+    public static func ==(lhs: SearchConsequenceQueryObject, rhs: SearchConsequenceQueryObject) -> Bool {
+        lhs.remove == rhs.remove &&
+            lhs.edits == rhs.edits
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.remove?.hashValue)
+        hasher.combine(self.edits?.hashValue)
     }
 }

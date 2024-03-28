@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum RecommendPromote: Codable, JSONEncodable, AbstractEncodable {
+public enum RecommendPromote: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case recommendPromoteObjectIDs(RecommendPromoteObjectIDs)
     case recommendPromoteObjectID(RecommendPromoteObjectID)
 

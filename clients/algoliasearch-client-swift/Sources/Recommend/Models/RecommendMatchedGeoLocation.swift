@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct RecommendMatchedGeoLocation: Codable, JSONEncodable {
+public struct RecommendMatchedGeoLocation: Codable, JSONEncodable, Hashable {
     /// Latitude of the matched location.
     public var lat: Double?
     /// Longitude of the matched location.
@@ -33,5 +33,17 @@ public struct RecommendMatchedGeoLocation: Codable, JSONEncodable {
         try container.encodeIfPresent(self.lat, forKey: .lat)
         try container.encodeIfPresent(self.lng, forKey: .lng)
         try container.encodeIfPresent(self.distance, forKey: .distance)
+    }
+
+    public static func ==(lhs: RecommendMatchedGeoLocation, rhs: RecommendMatchedGeoLocation) -> Bool {
+        lhs.lat == rhs.lat &&
+            lhs.lng == rhs.lng &&
+            lhs.distance == rhs.distance
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.lat?.hashValue)
+        hasher.combine(self.lng?.hashValue)
+        hasher.combine(self.distance?.hashValue)
     }
 }

@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SourceCSV: Codable, JSONEncodable {
+public struct SourceCSV: Codable, JSONEncodable, Hashable {
     /// URL of the file.
     public var url: String
     /// Name of a column that contains a unique ID which will be used as `objectID` in Algolia.
@@ -49,5 +49,21 @@ public struct SourceCSV: Codable, JSONEncodable {
         try container.encodeIfPresent(self.mapping, forKey: .mapping)
         try container.encodeIfPresent(self.method, forKey: .method)
         try container.encodeIfPresent(self.delimiter, forKey: .delimiter)
+    }
+
+    public static func ==(lhs: SourceCSV, rhs: SourceCSV) -> Bool {
+        lhs.url == rhs.url &&
+            lhs.uniqueIDColumn == rhs.uniqueIDColumn &&
+            lhs.mapping == rhs.mapping &&
+            lhs.method == rhs.method &&
+            lhs.delimiter == rhs.delimiter
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.url.hashValue)
+        hasher.combine(self.uniqueIDColumn?.hashValue)
+        hasher.combine(self.mapping?.hashValue)
+        hasher.combine(self.method?.hashValue)
+        hasher.combine(self.delimiter?.hashValue)
     }
 }

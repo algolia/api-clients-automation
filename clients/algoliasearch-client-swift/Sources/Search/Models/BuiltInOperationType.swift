@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// How to change the attribute.
-public enum BuiltInOperationType: String, Codable, CaseIterable {
+public enum BuiltInOperationType: String, Codable, CaseIterable, Hashable {
     case increment = "Increment"
     case decrement = "Decrement"
     case add = "Add"

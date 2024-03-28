@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct RunListResponse: Codable, JSONEncodable {
+public struct RunListResponse: Codable, JSONEncodable, Hashable {
     public var runs: [Run]
     public var pagination: Pagination
     public var window: Window
@@ -30,5 +30,17 @@ public struct RunListResponse: Codable, JSONEncodable {
         try container.encode(self.runs, forKey: .runs)
         try container.encode(self.pagination, forKey: .pagination)
         try container.encode(self.window, forKey: .window)
+    }
+
+    public static func ==(lhs: RunListResponse, rhs: RunListResponse) -> Bool {
+        lhs.runs == rhs.runs &&
+            lhs.pagination == rhs.pagination &&
+            lhs.window == rhs.window
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.runs.hashValue)
+        hasher.combine(self.pagination.hashValue)
+        hasher.combine(self.window.hashValue)
     }
 }

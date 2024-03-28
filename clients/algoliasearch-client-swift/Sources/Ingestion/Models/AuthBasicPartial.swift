@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Credentials for authenticating with user name and password.
-public struct AuthBasicPartial: Codable, JSONEncodable {
+public struct AuthBasicPartial: Codable, JSONEncodable, Hashable {
     /// Username.
     public var username: String?
     /// Password. This field is `null` in the API response.
@@ -29,5 +29,15 @@ public struct AuthBasicPartial: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.username, forKey: .username)
         try container.encodeIfPresent(self.password, forKey: .password)
+    }
+
+    public static func ==(lhs: AuthBasicPartial, rhs: AuthBasicPartial) -> Bool {
+        lhs.username == rhs.username &&
+            lhs.password == rhs.password
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.username?.hashValue)
+        hasher.combine(self.password?.hashValue)
     }
 }

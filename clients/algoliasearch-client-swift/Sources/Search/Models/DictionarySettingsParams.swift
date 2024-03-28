@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Turn on or off the built-in Algolia stop words for a specific language.
-public struct DictionarySettingsParams: Codable, JSONEncodable {
+public struct DictionarySettingsParams: Codable, JSONEncodable, Hashable {
     public var disableStandardEntries: StandardEntries
 
     public init(disableStandardEntries: StandardEntries) {
@@ -23,5 +23,13 @@ public struct DictionarySettingsParams: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.disableStandardEntries, forKey: .disableStandardEntries)
+    }
+
+    public static func ==(lhs: DictionarySettingsParams, rhs: DictionarySettingsParams) -> Bool {
+        lhs.disableStandardEntries == rhs.disableStandardEntries
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.disableStandardEntries.hashValue)
     }
 }

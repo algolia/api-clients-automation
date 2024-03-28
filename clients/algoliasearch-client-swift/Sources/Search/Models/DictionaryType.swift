@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum DictionaryType: String, Codable, CaseIterable {
+public enum DictionaryType: String, Codable, CaseIterable, Hashable {
     case plurals
     case stopwords
     case compounds

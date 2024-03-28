@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct BigCommerceChannel: Codable, JSONEncodable {
+public struct BigCommerceChannel: Codable, JSONEncodable, Hashable {
     /// ID of the BigCommerce channel.
     public var id: Int
     /// Currencies for the given channel.
@@ -28,5 +28,15 @@ public struct BigCommerceChannel: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.id, forKey: .id)
         try container.encodeIfPresent(self.currencies, forKey: .currencies)
+    }
+
+    public static func ==(lhs: BigCommerceChannel, rhs: BigCommerceChannel) -> Bool {
+        lhs.id == rhs.id &&
+            lhs.currencies == rhs.currencies
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.id.hashValue)
+        hasher.combine(self.currencies?.hashValue)
     }
 }

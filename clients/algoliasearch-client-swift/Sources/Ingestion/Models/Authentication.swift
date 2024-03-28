@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Resource representing the information required to authenticate with a source or a destination.
-public struct Authentication: Codable, JSONEncodable {
+public struct Authentication: Codable, JSONEncodable, Hashable {
     /// Universally unique identifier (UUID) of an authentication resource.
     public var authenticationID: String
     public var type: AuthenticationType
@@ -59,5 +59,25 @@ public struct Authentication: Codable, JSONEncodable {
         try container.encode(self.input, forKey: .input)
         try container.encode(self.createdAt, forKey: .createdAt)
         try container.encodeIfPresent(self.updatedAt, forKey: .updatedAt)
+    }
+
+    public static func ==(lhs: Authentication, rhs: Authentication) -> Bool {
+        lhs.authenticationID == rhs.authenticationID &&
+            lhs.type == rhs.type &&
+            lhs.name == rhs.name &&
+            lhs.platform == rhs.platform &&
+            lhs.input == rhs.input &&
+            lhs.createdAt == rhs.createdAt &&
+            lhs.updatedAt == rhs.updatedAt
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.authenticationID.hashValue)
+        hasher.combine(self.type.hashValue)
+        hasher.combine(self.name.hashValue)
+        hasher.combine(self.platform?.hashValue)
+        hasher.combine(self.input.hashValue)
+        hasher.combine(self.createdAt.hashValue)
+        hasher.combine(self.updatedAt?.hashValue)
     }
 }

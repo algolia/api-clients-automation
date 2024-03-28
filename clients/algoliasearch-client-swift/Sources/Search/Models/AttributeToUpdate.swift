@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum AttributeToUpdate: Codable, JSONEncodable, AbstractEncodable {
+public enum AttributeToUpdate: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case string(String)
     case builtInOperation(BuiltInOperation)
 

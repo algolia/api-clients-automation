@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct GetDictionarySettingsResponse: Codable, JSONEncodable {
+public struct GetDictionarySettingsResponse: Codable, JSONEncodable, Hashable {
     public var disableStandardEntries: StandardEntries
 
     public init(disableStandardEntries: StandardEntries) {
@@ -22,5 +22,13 @@ public struct GetDictionarySettingsResponse: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.disableStandardEntries, forKey: .disableStandardEntries)
+    }
+
+    public static func ==(lhs: GetDictionarySettingsResponse, rhs: GetDictionarySettingsResponse) -> Bool {
+        lhs.disableStandardEntries == rhs.disableStandardEntries
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.disableStandardEntries.hashValue)
     }
 }

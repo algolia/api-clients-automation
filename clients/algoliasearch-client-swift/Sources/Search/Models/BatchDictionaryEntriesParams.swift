@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Request body for updating dictionary entries.
-public struct BatchDictionaryEntriesParams: Codable, JSONEncodable {
+public struct BatchDictionaryEntriesParams: Codable, JSONEncodable, Hashable {
     /// Whether to replace all custom entries in the dictionary with the ones sent with this request.
     public var clearExistingDictionaryEntries: Bool?
     /// List of additions and deletions to your dictionaries.
@@ -29,5 +29,15 @@ public struct BatchDictionaryEntriesParams: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.clearExistingDictionaryEntries, forKey: .clearExistingDictionaryEntries)
         try container.encode(self.requests, forKey: .requests)
+    }
+
+    public static func ==(lhs: BatchDictionaryEntriesParams, rhs: BatchDictionaryEntriesParams) -> Bool {
+        lhs.clearExistingDictionaryEntries == rhs.clearExistingDictionaryEntries &&
+            lhs.requests == rhs.requests
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.clearExistingDictionaryEntries?.hashValue)
+        hasher.combine(self.requests.hashValue)
     }
 }

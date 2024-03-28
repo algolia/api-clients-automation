@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct GetAverageClickPositionResponse: Codable, JSONEncodable {
+public struct GetAverageClickPositionResponse: Codable, JSONEncodable, Hashable {
     /// Average position of a clicked search result in the list of search results. If null, Algolia didn't receive any
     /// search requests with `clickAnalytics` set to true.
     public var average: Double?
@@ -34,5 +34,17 @@ public struct GetAverageClickPositionResponse: Codable, JSONEncodable {
         try container.encode(self.average, forKey: .average)
         try container.encode(self.clickCount, forKey: .clickCount)
         try container.encode(self.dates, forKey: .dates)
+    }
+
+    public static func ==(lhs: GetAverageClickPositionResponse, rhs: GetAverageClickPositionResponse) -> Bool {
+        lhs.average == rhs.average &&
+            lhs.clickCount == rhs.clickCount &&
+            lhs.dates == rhs.dates
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.average.hashValue)
+        hasher.combine(self.clickCount.hashValue)
+        hasher.combine(self.dates.hashValue)
     }
 }

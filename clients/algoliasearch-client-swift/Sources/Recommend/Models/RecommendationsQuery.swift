@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct RecommendationsQuery: Codable, JSONEncodable {
+public struct RecommendationsQuery: Codable, JSONEncodable, Hashable {
     /// Index name.
     public var indexName: String
     /// Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each
@@ -60,5 +60,25 @@ public struct RecommendationsQuery: Codable, JSONEncodable {
         try container.encode(self.objectID, forKey: .objectID)
         try container.encodeIfPresent(self.queryParameters, forKey: .queryParameters)
         try container.encodeIfPresent(self.fallbackParameters, forKey: .fallbackParameters)
+    }
+
+    public static func ==(lhs: RecommendationsQuery, rhs: RecommendationsQuery) -> Bool {
+        lhs.indexName == rhs.indexName &&
+            lhs.threshold == rhs.threshold &&
+            lhs.maxRecommendations == rhs.maxRecommendations &&
+            lhs.model == rhs.model &&
+            lhs.objectID == rhs.objectID &&
+            lhs.queryParameters == rhs.queryParameters &&
+            lhs.fallbackParameters == rhs.fallbackParameters
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.indexName.hashValue)
+        hasher.combine(self.threshold?.hashValue)
+        hasher.combine(self.maxRecommendations?.hashValue)
+        hasher.combine(self.model.hashValue)
+        hasher.combine(self.objectID.hashValue)
+        hasher.combine(self.queryParameters?.hashValue)
+        hasher.combine(self.fallbackParameters?.hashValue)
     }
 }

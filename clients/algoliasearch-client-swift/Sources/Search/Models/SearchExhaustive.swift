@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Whether certain properties of the search response are calculated exhaustive (exact) or approximated.
-public struct SearchExhaustive: Codable, JSONEncodable {
+public struct SearchExhaustive: Codable, JSONEncodable, Hashable {
     /// Whether the facet count is exhaustive (`true`) or approximate (`false`). See the [related discussion](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
     public var facetsCount: Bool?
     /// The value is `false` if not all facet values are retrieved.
@@ -59,5 +59,21 @@ public struct SearchExhaustive: Codable, JSONEncodable {
         try container.encodeIfPresent(self.nbHits, forKey: .nbHits)
         try container.encodeIfPresent(self.rulesMatch, forKey: .rulesMatch)
         try container.encodeIfPresent(self.typo, forKey: .typo)
+    }
+
+    public static func ==(lhs: SearchExhaustive, rhs: SearchExhaustive) -> Bool {
+        lhs.facetsCount == rhs.facetsCount &&
+            lhs.facetValues == rhs.facetValues &&
+            lhs.nbHits == rhs.nbHits &&
+            lhs.rulesMatch == rhs.rulesMatch &&
+            lhs.typo == rhs.typo
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.facetsCount?.hashValue)
+        hasher.combine(self.facetValues?.hashValue)
+        hasher.combine(self.nbHits?.hashValue)
+        hasher.combine(self.rulesMatch?.hashValue)
+        hasher.combine(self.typo?.hashValue)
     }
 }

@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SearchForFacetValuesRequest: Codable, JSONEncodable {
+public struct SearchForFacetValuesRequest: Codable, JSONEncodable, Hashable {
     /// Search parameters as a URL-encoded query string.
     public var params: String?
     /// Text to search inside the facet's values.
@@ -34,5 +34,17 @@ public struct SearchForFacetValuesRequest: Codable, JSONEncodable {
         try container.encodeIfPresent(self.params, forKey: .params)
         try container.encodeIfPresent(self.facetQuery, forKey: .facetQuery)
         try container.encodeIfPresent(self.maxFacetHits, forKey: .maxFacetHits)
+    }
+
+    public static func ==(lhs: SearchForFacetValuesRequest, rhs: SearchForFacetValuesRequest) -> Bool {
+        lhs.params == rhs.params &&
+            lhs.facetQuery == rhs.facetQuery &&
+            lhs.maxFacetHits == rhs.maxFacetHits
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.params?.hashValue)
+        hasher.combine(self.facetQuery?.hashValue)
+        hasher.combine(self.maxFacetHits?.hashValue)
     }
 }

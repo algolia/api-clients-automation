@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Credentials for authenticating with an API key.
-public struct AuthAPIKeyPartial: Codable, JSONEncodable {
+public struct AuthAPIKeyPartial: Codable, JSONEncodable, Hashable {
     /// API key. This field is `null` in the API response.
     public var key: String?
 
@@ -24,5 +24,13 @@ public struct AuthAPIKeyPartial: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.key, forKey: .key)
+    }
+
+    public static func ==(lhs: AuthAPIKeyPartial, rhs: AuthAPIKeyPartial) -> Bool {
+        lhs.key == rhs.key
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.key?.hashValue)
     }
 }

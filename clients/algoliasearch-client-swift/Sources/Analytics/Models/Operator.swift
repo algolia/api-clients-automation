@@ -8,7 +8,7 @@ import Foundation
 
 /// Character that characterizes how the filter is applied.  For example, for a facet filter &#x60;facet:value&#x60;,
 /// &#x60;:&#x60; is the operator. For a numeric filter &#x60;count&gt;50&#x60;, &#x60;&gt;&#x60; is the operator.
-public enum Operator: String, Codable, CaseIterable {
+public enum Operator: String, Codable, CaseIterable, Hashable {
     case colon = ":"
     case lessThan = "<"
     case lessThanOrEqualTo = "<="

@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum SearchMixedSearchFilters: Codable, JSONEncodable, AbstractEncodable {
+public enum SearchMixedSearchFilters: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case arrayOfString([String])
     case string(String)
 

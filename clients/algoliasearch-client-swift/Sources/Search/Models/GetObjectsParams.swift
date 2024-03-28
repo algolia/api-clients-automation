@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Request parameters.
-public struct GetObjectsParams: Codable, JSONEncodable {
+public struct GetObjectsParams: Codable, JSONEncodable, Hashable {
     public var requests: [GetObjectsRequest]
 
     public init(requests: [GetObjectsRequest]) {
@@ -23,5 +23,13 @@ public struct GetObjectsParams: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.requests, forKey: .requests)
+    }
+
+    public static func ==(lhs: GetObjectsParams, rhs: GetObjectsParams) -> Bool {
+        lhs.requests == rhs.requests
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.requests.hashValue)
     }
 }

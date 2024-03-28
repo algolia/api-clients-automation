@@ -8,7 +8,7 @@ import Foundation
 
 /// Extra data that can be used in the search UI.  You can use this to control aspects of your search UI, such as, the
 /// order of facet names and values without changing your frontend code.
-public struct RecommendRenderingContent: Codable, JSONEncodable {
+public struct RecommendRenderingContent: Codable, JSONEncodable, Hashable {
     public var facetOrdering: RecommendFacetOrdering?
 
     public init(facetOrdering: RecommendFacetOrdering? = nil) {
@@ -24,5 +24,13 @@ public struct RecommendRenderingContent: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.facetOrdering, forKey: .facetOrdering)
+    }
+
+    public static func ==(lhs: RecommendRenderingContent, rhs: RecommendRenderingContent) -> Bool {
+        lhs.facetOrdering == rhs.facetOrdering
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.facetOrdering?.hashValue)
     }
 }

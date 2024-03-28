@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Total monetary value of this event in units of &#x60;currency&#x60;.
-public enum InsightsValue: Codable, JSONEncodable, AbstractEncodable {
+public enum InsightsValue: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case double(Double)
     case string(String)
 

@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Recommend hit.
-public struct RecommendHit: Codable, JSONEncodable {
+public struct RecommendHit: Codable, JSONEncodable, Hashable {
     /// Unique record identifier.
     public var objectID: String
     /// Surround words that match the query with HTML tags for highlighting.
@@ -129,5 +129,25 @@ public struct RecommendHit: Codable, JSONEncodable {
             AnyCodable.self,
             excludedKeys: nonAdditionalPropertyKeys
         )
+    }
+
+    public static func ==(lhs: RecommendHit, rhs: RecommendHit) -> Bool {
+        lhs.objectID == rhs.objectID &&
+            lhs.highlightResult == rhs.highlightResult &&
+            lhs.snippetResult == rhs.snippetResult &&
+            lhs.rankingInfo == rhs.rankingInfo &&
+            lhs.distinctSeqID == rhs.distinctSeqID &&
+            lhs.score == rhs.score
+            && lhs.additionalProperties == rhs.additionalProperties
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.objectID.hashValue)
+        hasher.combine(self.highlightResult?.hashValue)
+        hasher.combine(self.snippetResult?.hashValue)
+        hasher.combine(self.rankingInfo?.hashValue)
+        hasher.combine(self.distinctSeqID?.hashValue)
+        hasher.combine(self.score.hashValue)
+        hasher.combine(self.additionalProperties.hashValue)
     }
 }

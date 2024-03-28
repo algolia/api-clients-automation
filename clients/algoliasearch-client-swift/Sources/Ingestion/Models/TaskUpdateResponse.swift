@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// API response for updating a task.
-public struct TaskUpdateResponse: Codable, JSONEncodable {
+public struct TaskUpdateResponse: Codable, JSONEncodable, Hashable {
     /// Universally unique identifier (UUID) of a task.
     public var taskID: String
     /// Date of last update in RFC3339 format.
@@ -29,5 +29,15 @@ public struct TaskUpdateResponse: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.taskID, forKey: .taskID)
         try container.encode(self.updatedAt, forKey: .updatedAt)
+    }
+
+    public static func ==(lhs: TaskUpdateResponse, rhs: TaskUpdateResponse) -> Bool {
+        lhs.taskID == rhs.taskID &&
+            lhs.updatedAt == rhs.updatedAt
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.taskID.hashValue)
+        hasher.combine(self.updatedAt.hashValue)
     }
 }

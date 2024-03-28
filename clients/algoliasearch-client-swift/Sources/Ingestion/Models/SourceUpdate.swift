@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SourceUpdate: Codable, JSONEncodable {
+public struct SourceUpdate: Codable, JSONEncodable, Hashable {
     /// Descriptive name of the source.
     public var name: String?
     public var input: SourceUpdateInput?
@@ -32,5 +32,17 @@ public struct SourceUpdate: Codable, JSONEncodable {
         try container.encodeIfPresent(self.name, forKey: .name)
         try container.encodeIfPresent(self.input, forKey: .input)
         try container.encodeIfPresent(self.authenticationID, forKey: .authenticationID)
+    }
+
+    public static func ==(lhs: SourceUpdate, rhs: SourceUpdate) -> Bool {
+        lhs.name == rhs.name &&
+            lhs.input == rhs.input &&
+            lhs.authenticationID == rhs.authenticationID
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.name?.hashValue)
+        hasher.combine(self.input?.hashValue)
+        hasher.combine(self.authenticationID?.hashValue)
     }
 }

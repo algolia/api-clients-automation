@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Credentials for authenticating with Algolia.
-public struct AuthAlgolia: Codable, JSONEncodable {
+public struct AuthAlgolia: Codable, JSONEncodable, Hashable {
     /// Algolia application ID.
     public var appID: String
     /// Algolia API key with the ACL: `addObject`, `deleteObject`, `settings`, `editSettings`, `listIndexes`,
@@ -30,5 +30,15 @@ public struct AuthAlgolia: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.appID, forKey: .appID)
         try container.encode(self.apiKey, forKey: .apiKey)
+    }
+
+    public static func ==(lhs: AuthAlgolia, rhs: AuthAlgolia) -> Bool {
+        lhs.appID == rhs.appID &&
+            lhs.apiKey == rhs.apiKey
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.appID.hashValue)
+        hasher.combine(self.apiKey.hashValue)
     }
 }

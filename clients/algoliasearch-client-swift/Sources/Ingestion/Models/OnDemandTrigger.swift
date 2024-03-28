@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Trigger information for manually-triggered tasks.
-public struct OnDemandTrigger: Codable, JSONEncodable {
+public struct OnDemandTrigger: Codable, JSONEncodable, Hashable {
     public var type: OnDemandTriggerType
     /// The last time the scheduled task ran in RFC3339 format.
     public var lastRun: String?
@@ -28,5 +28,15 @@ public struct OnDemandTrigger: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.type, forKey: .type)
         try container.encodeIfPresent(self.lastRun, forKey: .lastRun)
+    }
+
+    public static func ==(lhs: OnDemandTrigger, rhs: OnDemandTrigger) -> Bool {
+        lhs.type == rhs.type &&
+            lhs.lastRun == rhs.lastRun
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.type.hashValue)
+        hasher.combine(self.lastRun?.hashValue)
     }
 }

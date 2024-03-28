@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct ListApiKeysResponse: Codable, JSONEncodable {
+public struct ListApiKeysResponse: Codable, JSONEncodable, Hashable {
     /// API keys.
     public var keys: [GetApiKeyResponse]
 
@@ -23,5 +23,13 @@ public struct ListApiKeysResponse: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.keys, forKey: .keys)
+    }
+
+    public static func ==(lhs: ListApiKeysResponse, rhs: ListApiKeysResponse) -> Bool {
+        lhs.keys == rhs.keys
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.keys.hashValue)
     }
 }

@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct BaseResponse: Codable, JSONEncodable {
+public struct BaseResponse: Codable, JSONEncodable, Hashable {
     /// HTTP status code.
     public var status: Int?
     /// Details about the response, such as error messages.
@@ -28,5 +28,15 @@ public struct BaseResponse: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.status, forKey: .status)
         try container.encodeIfPresent(self.message, forKey: .message)
+    }
+
+    public static func ==(lhs: BaseResponse, rhs: BaseResponse) -> Bool {
+        lhs.status == rhs.status &&
+            lhs.message == rhs.message
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.status?.hashValue)
+        hasher.combine(self.message?.hashValue)
     }
 }

@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct PersonalizationStrategyParams: Codable, JSONEncodable {
+public struct PersonalizationStrategyParams: Codable, JSONEncodable, Hashable {
     /// Scores associated with the events.
     public var eventScoring: [EventScoring]
     /// Scores associated with the facets.
@@ -34,5 +34,17 @@ public struct PersonalizationStrategyParams: Codable, JSONEncodable {
         try container.encode(self.eventScoring, forKey: .eventScoring)
         try container.encode(self.facetScoring, forKey: .facetScoring)
         try container.encode(self.personalizationImpact, forKey: .personalizationImpact)
+    }
+
+    public static func ==(lhs: PersonalizationStrategyParams, rhs: PersonalizationStrategyParams) -> Bool {
+        lhs.eventScoring == rhs.eventScoring &&
+            lhs.facetScoring == rhs.facetScoring &&
+            lhs.personalizationImpact == rhs.personalizationImpact
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.eventScoring.hashValue)
+        hasher.combine(self.facetScoring.hashValue)
+        hasher.combine(self.personalizationImpact.hashValue)
     }
 }

@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct IncidentsInner: Codable, JSONEncodable {
+public struct IncidentsInner: Codable, JSONEncodable, Hashable {
     /// Timestamp in [Unix epoch time](https://wikipedia.org/wiki/Unix_time) in milliseconds.
     public var t: Int64?
     public var v: Incident?
@@ -27,5 +27,15 @@ public struct IncidentsInner: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.t, forKey: .t)
         try container.encodeIfPresent(self.v, forKey: .v)
+    }
+
+    public static func ==(lhs: IncidentsInner, rhs: IncidentsInner) -> Bool {
+        lhs.t == rhs.t &&
+            lhs.v == rhs.v
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.t?.hashValue)
+        hasher.combine(self.v?.hashValue)
     }
 }

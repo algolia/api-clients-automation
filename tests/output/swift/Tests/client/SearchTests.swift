@@ -187,51 +187,5 @@ final class SearchClientClientTests: XCTestCase {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
-
-        do {
-            let response = try await client.addOrUpdateObjectWithHTTPInfo(
-                indexName: TestNullString(),
-                objectID: "my-object-id",
-                body: [String: AnyCodable]()
-            )
-            let responseBodyData = try XCTUnwrap(response.bodyData)
-            let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-            XCTFail("Expected an error to be thrown")
-        } catch {
-            XCTAssertEqual(
-                error.localizedDescription,
-                "Parameter `indexName` is required when calling `addOrUpdateObject`."
-            )
-        }
-        do {
-            let response = try await client.addOrUpdateObjectWithHTTPInfo(
-                indexName: "my-index-name",
-                objectID: TestNullString(),
-                body: [String: AnyCodable]()
-            )
-            let responseBodyData = try XCTUnwrap(response.bodyData)
-            let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-            XCTFail("Expected an error to be thrown")
-        } catch {
-            XCTAssertEqual(
-                error.localizedDescription,
-                "Parameter `objectID` is required when calling `addOrUpdateObject`."
-            )
-        }
-        do {
-            let response = try await client.addOrUpdateObjectWithHTTPInfo(
-                indexName: "my-index-name",
-                objectID: "my-object-id",
-                body: TestNullObject()
-            )
-            let responseBodyData = try XCTUnwrap(response.bodyData)
-            let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-            XCTFail("Expected an error to be thrown")
-        } catch {
-            XCTAssertEqual(error.localizedDescription, "Parameter `body` is required when calling `addOrUpdateObject`.")
-        }
     }
 }

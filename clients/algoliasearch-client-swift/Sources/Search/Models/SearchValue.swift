@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SearchValue: Codable, JSONEncodable {
+public struct SearchValue: Codable, JSONEncodable, Hashable {
     /// Explicit order of facets or facet values.  This setting lets you always show specific facets or facet values at
     /// the top of the list.
     public var order: [String]?
@@ -28,5 +28,15 @@ public struct SearchValue: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.order, forKey: .order)
         try container.encodeIfPresent(self.sortRemainingBy, forKey: .sortRemainingBy)
+    }
+
+    public static func ==(lhs: SearchValue, rhs: SearchValue) -> Bool {
+        lhs.order == rhs.order &&
+            lhs.sortRemainingBy == rhs.sortRemainingBy
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.order?.hashValue)
+        hasher.combine(self.sortRemainingBy?.hashValue)
     }
 }

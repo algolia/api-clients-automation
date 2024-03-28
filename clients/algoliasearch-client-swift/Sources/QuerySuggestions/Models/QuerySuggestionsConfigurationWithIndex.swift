@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Query Suggestions configuration.
-public struct QuerySuggestionsConfigurationWithIndex: Codable, JSONEncodable {
+public struct QuerySuggestionsConfigurationWithIndex: Codable, JSONEncodable, Hashable {
     /// Query Suggestions index name.
     public var indexName: String
     /// Algolia indices from which to get the popular searches for query suggestions.
@@ -55,5 +55,26 @@ public struct QuerySuggestionsConfigurationWithIndex: Codable, JSONEncodable {
         try container.encodeIfPresent(self.exclude, forKey: .exclude)
         try container.encodeIfPresent(self.enablePersonalization, forKey: .enablePersonalization)
         try container.encodeIfPresent(self.allowSpecialCharacters, forKey: .allowSpecialCharacters)
+    }
+
+    public static func ==(
+        lhs: QuerySuggestionsConfigurationWithIndex,
+        rhs: QuerySuggestionsConfigurationWithIndex
+    ) -> Bool {
+        lhs.indexName == rhs.indexName &&
+            lhs.sourceIndices == rhs.sourceIndices &&
+            lhs.languages == rhs.languages &&
+            lhs.exclude == rhs.exclude &&
+            lhs.enablePersonalization == rhs.enablePersonalization &&
+            lhs.allowSpecialCharacters == rhs.allowSpecialCharacters
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.indexName.hashValue)
+        hasher.combine(self.sourceIndices.hashValue)
+        hasher.combine(self.languages?.hashValue)
+        hasher.combine(self.exclude?.hashValue)
+        hasher.combine(self.enablePersonalization?.hashValue)
+        hasher.combine(self.allowSpecialCharacters?.hashValue)
     }
 }

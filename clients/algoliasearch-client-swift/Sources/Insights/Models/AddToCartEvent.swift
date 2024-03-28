@@ -6,6 +6,6 @@ import Foundation
     import Core
 #endif
 
-public enum AddToCartEvent: String, Codable, CaseIterable {
+public enum AddToCartEvent: String, Codable, CaseIterable, Hashable {
     case addToCart
 }

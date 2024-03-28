@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct BaseGetApiKeyResponse: Codable, JSONEncodable {
+public struct BaseGetApiKeyResponse: Codable, JSONEncodable, Hashable {
     /// API key.
     public var value: String?
     /// Timestamp of creation in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
@@ -28,5 +28,15 @@ public struct BaseGetApiKeyResponse: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.value, forKey: .value)
         try container.encode(self.createdAt, forKey: .createdAt)
+    }
+
+    public static func ==(lhs: BaseGetApiKeyResponse, rhs: BaseGetApiKeyResponse) -> Bool {
+        lhs.value == rhs.value &&
+            lhs.createdAt == rhs.createdAt
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.value?.hashValue)
+        hasher.combine(self.createdAt.hashValue)
     }
 }

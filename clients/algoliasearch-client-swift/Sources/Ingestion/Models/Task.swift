@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct Task: Codable, JSONEncodable {
+public struct Task: Codable, JSONEncodable, Hashable {
     /// Universally unique identifier (UUID) of a task.
     public var taskID: String
     /// Universally uniqud identifier (UUID) of a source.
@@ -76,5 +76,31 @@ public struct Task: Codable, JSONEncodable {
         try container.encode(self.action, forKey: .action)
         try container.encode(self.createdAt, forKey: .createdAt)
         try container.encodeIfPresent(self.updatedAt, forKey: .updatedAt)
+    }
+
+    public static func ==(lhs: Task, rhs: Task) -> Bool {
+        lhs.taskID == rhs.taskID &&
+            lhs.sourceID == rhs.sourceID &&
+            lhs.destinationID == rhs.destinationID &&
+            lhs.trigger == rhs.trigger &&
+            lhs.input == rhs.input &&
+            lhs.enabled == rhs.enabled &&
+            lhs.failureThreshold == rhs.failureThreshold &&
+            lhs.action == rhs.action &&
+            lhs.createdAt == rhs.createdAt &&
+            lhs.updatedAt == rhs.updatedAt
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.taskID.hashValue)
+        hasher.combine(self.sourceID.hashValue)
+        hasher.combine(self.destinationID.hashValue)
+        hasher.combine(self.trigger.hashValue)
+        hasher.combine(self.input?.hashValue)
+        hasher.combine(self.enabled.hashValue)
+        hasher.combine(self.failureThreshold?.hashValue)
+        hasher.combine(self.action.hashValue)
+        hasher.combine(self.createdAt.hashValue)
+        hasher.combine(self.updatedAt?.hashValue)
     }
 }

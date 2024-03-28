@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Task status, &#x60;published&#x60; if the task is completed, &#x60;notPublished&#x60; otherwise.
-public enum RecommendTaskStatus: String, Codable, CaseIterable {
+public enum RecommendTaskStatus: String, Codable, CaseIterable, Hashable {
     case published
     case notPublished
 }

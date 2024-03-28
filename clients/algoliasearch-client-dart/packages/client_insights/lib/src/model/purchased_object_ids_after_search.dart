@@ -20,7 +20,7 @@ final class PurchasedObjectIDsAfterSearch {
     required this.userToken,
     this.authenticatedUserToken,
     this.currency,
-    this.objectData,
+    required this.objectData,
     this.timestamp,
     this.value,
   });
@@ -57,7 +57,7 @@ final class PurchasedObjectIDsAfterSearch {
 
   /// Extra information about the records involved in a purchase or add-to-cart events.  If provided, it must be the same length as `objectIDs`.
   @JsonKey(name: r'objectData')
-  final List<ObjectDataAfterSearch>? objectData;
+  final List<ObjectDataAfterSearch> objectData;
 
   /// Timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
   @JsonKey(name: r'timestamp')

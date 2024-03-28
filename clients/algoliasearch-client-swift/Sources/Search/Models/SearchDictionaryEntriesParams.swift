@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Search parameter.
-public struct SearchDictionaryEntriesParams: Codable, JSONEncodable {
+public struct SearchDictionaryEntriesParams: Codable, JSONEncodable, Hashable {
     /// Search query.
     public var query: String
     /// Page of search results to retrieve.
@@ -38,5 +38,19 @@ public struct SearchDictionaryEntriesParams: Codable, JSONEncodable {
         try container.encodeIfPresent(self.page, forKey: .page)
         try container.encodeIfPresent(self.hitsPerPage, forKey: .hitsPerPage)
         try container.encodeIfPresent(self.language, forKey: .language)
+    }
+
+    public static func ==(lhs: SearchDictionaryEntriesParams, rhs: SearchDictionaryEntriesParams) -> Bool {
+        lhs.query == rhs.query &&
+            lhs.page == rhs.page &&
+            lhs.hitsPerPage == rhs.hitsPerPage &&
+            lhs.language == rhs.language
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.query.hashValue)
+        hasher.combine(self.page?.hashValue)
+        hasher.combine(self.hitsPerPage?.hashValue)
+        hasher.combine(self.language?.hashValue)
     }
 }

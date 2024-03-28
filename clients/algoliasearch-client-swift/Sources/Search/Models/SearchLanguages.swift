@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Dictionary language.
-public struct SearchLanguages: Codable, JSONEncodable {
+public struct SearchLanguages: Codable, JSONEncodable, Hashable {
     public var plurals: DictionaryLanguage?
     public var stopwords: DictionaryLanguage?
     public var compounds: DictionaryLanguage?
@@ -31,5 +31,17 @@ public struct SearchLanguages: Codable, JSONEncodable {
         try container.encode(self.plurals, forKey: .plurals)
         try container.encode(self.stopwords, forKey: .stopwords)
         try container.encode(self.compounds, forKey: .compounds)
+    }
+
+    public static func ==(lhs: SearchLanguages, rhs: SearchLanguages) -> Bool {
+        lhs.plurals == rhs.plurals &&
+            lhs.stopwords == rhs.stopwords &&
+            lhs.compounds == rhs.compounds
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.plurals.hashValue)
+        hasher.combine(self.stopwords.hashValue)
+        hasher.combine(self.compounds.hashValue)
     }
 }

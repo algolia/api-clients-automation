@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Request body for searching for authentication resources.
-public struct AuthenticationSearch: Codable, JSONEncodable {
+public struct AuthenticationSearch: Codable, JSONEncodable, Hashable {
     public var authenticationIDs: [String]
 
     public init(authenticationIDs: [String]) {
@@ -23,5 +23,13 @@ public struct AuthenticationSearch: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.authenticationIDs, forKey: .authenticationIDs)
+    }
+
+    public static func ==(lhs: AuthenticationSearch, rhs: AuthenticationSearch) -> Bool {
+        lhs.authenticationIDs == rhs.authenticationIDs
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.authenticationIDs.hashValue)
     }
 }

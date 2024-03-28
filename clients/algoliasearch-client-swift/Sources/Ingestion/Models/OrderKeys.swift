@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Ascending or descending sort order.
-public enum OrderKeys: String, Codable, CaseIterable {
+public enum OrderKeys: String, Codable, CaseIterable, Hashable {
     case asc
     case desc
 }

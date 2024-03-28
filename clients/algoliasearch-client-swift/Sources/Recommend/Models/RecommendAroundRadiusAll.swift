@@ -7,6 +7,6 @@ import Foundation
 #endif
 
 /// Return all records with a valid &#x60;_geoloc&#x60; attribute. Don&#39;t filter by distance.
-public enum RecommendAroundRadiusAll: String, Codable, CaseIterable {
+public enum RecommendAroundRadiusAll: String, Codable, CaseIterable, Hashable {
     case all
 }

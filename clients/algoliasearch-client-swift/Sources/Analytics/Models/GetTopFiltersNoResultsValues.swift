@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct GetTopFiltersNoResultsValues: Codable, JSONEncodable {
+public struct GetTopFiltersNoResultsValues: Codable, JSONEncodable, Hashable {
     /// Number of occurrences.
     public var count: Int
     /// Filters with no results.
@@ -28,5 +28,15 @@ public struct GetTopFiltersNoResultsValues: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.count, forKey: .count)
         try container.encode(self.values, forKey: .values)
+    }
+
+    public static func ==(lhs: GetTopFiltersNoResultsValues, rhs: GetTopFiltersNoResultsValues) -> Bool {
+        lhs.count == rhs.count &&
+            lhs.values == rhs.values
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.count.hashValue)
+        hasher.combine(self.values.hashValue)
     }
 }

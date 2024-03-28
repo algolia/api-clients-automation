@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Property by which to sort the destinations.
-public enum DestinationSortKeys: String, Codable, CaseIterable {
+public enum DestinationSortKeys: String, Codable, CaseIterable, Hashable {
     case name
     case type
     case updatedAt

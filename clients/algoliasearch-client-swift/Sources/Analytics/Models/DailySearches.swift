@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct DailySearches: Codable, JSONEncodable {
+public struct DailySearches: Codable, JSONEncodable, Hashable {
     /// Date in the format YYYY-MM-DD.
     public var date: String
     /// Number of occurrences.
@@ -28,5 +28,15 @@ public struct DailySearches: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.date, forKey: .date)
         try container.encode(self.count, forKey: .count)
+    }
+
+    public static func ==(lhs: DailySearches, rhs: DailySearches) -> Bool {
+        lhs.date == rhs.date &&
+            lhs.count == rhs.count
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.date.hashValue)
+        hasher.combine(self.count.hashValue)
     }
 }

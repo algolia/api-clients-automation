@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct TopHit: Codable, JSONEncodable {
+public struct TopHit: Codable, JSONEncodable, Hashable {
     /// Object ID of a record that's returned as a search result.
     public var hit: String
     /// Number of occurrences.
@@ -28,5 +28,15 @@ public struct TopHit: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.hit, forKey: .hit)
         try container.encode(self.count, forKey: .count)
+    }
+
+    public static func ==(lhs: TopHit, rhs: TopHit) -> Bool {
+        lhs.hit == rhs.hit &&
+            lhs.count == rhs.count
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.hit.hashValue)
+        hasher.combine(self.count.hashValue)
     }
 }

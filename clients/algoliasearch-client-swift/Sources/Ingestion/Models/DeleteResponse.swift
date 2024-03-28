@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct DeleteResponse: Codable, JSONEncodable {
+public struct DeleteResponse: Codable, JSONEncodable, Hashable {
     /// Date of deletion in RFC3339 format.
     public var deletedAt: String
 
@@ -23,5 +23,13 @@ public struct DeleteResponse: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.deletedAt, forKey: .deletedAt)
+    }
+
+    public static func ==(lhs: DeleteResponse, rhs: DeleteResponse) -> Bool {
+        lhs.deletedAt == rhs.deletedAt
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.deletedAt.hashValue)
     }
 }

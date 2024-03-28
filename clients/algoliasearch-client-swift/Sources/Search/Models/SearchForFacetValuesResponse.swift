@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SearchForFacetValuesResponse: Codable, JSONEncodable {
+public struct SearchForFacetValuesResponse: Codable, JSONEncodable, Hashable {
     /// Matching facet values.
     public var facetHits: [FacetHits]
     /// See the `facetsCount` field of the `exhaustive` object in the response.
@@ -34,5 +34,17 @@ public struct SearchForFacetValuesResponse: Codable, JSONEncodable {
         try container.encode(self.facetHits, forKey: .facetHits)
         try container.encode(self.exhaustiveFacetsCount, forKey: .exhaustiveFacetsCount)
         try container.encodeIfPresent(self.processingTimeMS, forKey: .processingTimeMS)
+    }
+
+    public static func ==(lhs: SearchForFacetValuesResponse, rhs: SearchForFacetValuesResponse) -> Bool {
+        lhs.facetHits == rhs.facetHits &&
+            lhs.exhaustiveFacetsCount == rhs.exhaustiveFacetsCount &&
+            lhs.processingTimeMS == rhs.processingTimeMS
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.facetHits.hashValue)
+        hasher.combine(self.exhaustiveFacetsCount.hashValue)
+        hasher.combine(self.processingTimeMS?.hashValue)
     }
 }

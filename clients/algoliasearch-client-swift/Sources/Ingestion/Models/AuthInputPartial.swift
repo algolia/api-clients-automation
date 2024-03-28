@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum AuthInputPartial: Codable, JSONEncodable, AbstractEncodable {
+public enum AuthInputPartial: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case authGoogleServiceAccountPartial(AuthGoogleServiceAccountPartial)
     case authBasicPartial(AuthBasicPartial)
     case authAPIKeyPartial(AuthAPIKeyPartial)

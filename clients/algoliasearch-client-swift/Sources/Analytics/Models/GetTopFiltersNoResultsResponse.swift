@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct GetTopFiltersNoResultsResponse: Codable, JSONEncodable {
+public struct GetTopFiltersNoResultsResponse: Codable, JSONEncodable, Hashable {
     /// Filters for searches without any results. If null, the search term specified with the `search` parameter is not
     /// a search without results, or the `search` parameter is absent from the request.
     public var values: [GetTopFiltersNoResultsValues]?
@@ -24,5 +24,13 @@ public struct GetTopFiltersNoResultsResponse: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.values, forKey: .values)
+    }
+
+    public static func ==(lhs: GetTopFiltersNoResultsResponse, rhs: GetTopFiltersNoResultsResponse) -> Bool {
+        lhs.values == rhs.values
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.values.hashValue)
     }
 }

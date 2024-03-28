@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct GetConversionRateResponse: Codable, JSONEncodable {
+public struct GetConversionRateResponse: Codable, JSONEncodable, Hashable {
     /// Conversion rate, calculated as number of tracked searches with at least one conversion event divided by the
     /// number of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to
     /// true.
@@ -40,5 +40,19 @@ public struct GetConversionRateResponse: Codable, JSONEncodable {
         try container.encode(self.trackedSearchCount, forKey: .trackedSearchCount)
         try container.encode(self.conversionCount, forKey: .conversionCount)
         try container.encode(self.dates, forKey: .dates)
+    }
+
+    public static func ==(lhs: GetConversionRateResponse, rhs: GetConversionRateResponse) -> Bool {
+        lhs.rate == rhs.rate &&
+            lhs.trackedSearchCount == rhs.trackedSearchCount &&
+            lhs.conversionCount == rhs.conversionCount &&
+            lhs.dates == rhs.dates
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.rate.hashValue)
+        hasher.combine(self.trackedSearchCount.hashValue)
+        hasher.combine(self.conversionCount.hashValue)
+        hasher.combine(self.dates.hashValue)
     }
 }

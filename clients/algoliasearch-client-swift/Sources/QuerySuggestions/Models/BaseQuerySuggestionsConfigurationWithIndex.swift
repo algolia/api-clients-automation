@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct BaseQuerySuggestionsConfigurationWithIndex: Codable, JSONEncodable {
+public struct BaseQuerySuggestionsConfigurationWithIndex: Codable, JSONEncodable, Hashable {
     /// Query Suggestions index name.
     public var indexName: String
 
@@ -23,5 +23,16 @@ public struct BaseQuerySuggestionsConfigurationWithIndex: Codable, JSONEncodable
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.indexName, forKey: .indexName)
+    }
+
+    public static func ==(
+        lhs: BaseQuerySuggestionsConfigurationWithIndex,
+        rhs: BaseQuerySuggestionsConfigurationWithIndex
+    ) -> Bool {
+        lhs.indexName == rhs.indexName
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.indexName.hashValue)
     }
 }

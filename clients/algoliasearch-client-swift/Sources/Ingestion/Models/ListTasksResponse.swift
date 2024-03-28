@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Configured tasks and pagination information.
-public struct ListTasksResponse: Codable, JSONEncodable {
+public struct ListTasksResponse: Codable, JSONEncodable, Hashable {
     public var tasks: [Task]
     public var pagination: Pagination
 
@@ -27,5 +27,15 @@ public struct ListTasksResponse: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.tasks, forKey: .tasks)
         try container.encode(self.pagination, forKey: .pagination)
+    }
+
+    public static func ==(lhs: ListTasksResponse, rhs: ListTasksResponse) -> Bool {
+        lhs.tasks == rhs.tasks &&
+            lhs.pagination == rhs.pagination
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.tasks.hashValue)
+        hasher.combine(self.pagination.hashValue)
     }
 }

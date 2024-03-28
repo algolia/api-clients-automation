@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct LatencyResponseMetrics: Codable, JSONEncodable {
+public struct LatencyResponseMetrics: Codable, JSONEncodable, Hashable {
     public var latency: [String: [TimeInner]]?
 
     public init(latency: [String: [TimeInner]]? = nil) {
@@ -22,5 +22,13 @@ public struct LatencyResponseMetrics: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.latency, forKey: .latency)
+    }
+
+    public static func ==(lhs: LatencyResponseMetrics, rhs: LatencyResponseMetrics) -> Bool {
+        lhs.latency == rhs.latency
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.latency?.hashValue)
     }
 }

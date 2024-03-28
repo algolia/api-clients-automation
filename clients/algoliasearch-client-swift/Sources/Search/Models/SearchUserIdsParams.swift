@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// OK
-public struct SearchUserIdsParams: Codable, JSONEncodable {
+public struct SearchUserIdsParams: Codable, JSONEncodable, Hashable {
     /// Query to search. The search is a prefix search with [typo
     /// tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/) enabled.
     /// An empty query will retrieve all users.
@@ -41,5 +41,19 @@ public struct SearchUserIdsParams: Codable, JSONEncodable {
         try container.encodeIfPresent(self.clusterName, forKey: .clusterName)
         try container.encodeIfPresent(self.page, forKey: .page)
         try container.encodeIfPresent(self.hitsPerPage, forKey: .hitsPerPage)
+    }
+
+    public static func ==(lhs: SearchUserIdsParams, rhs: SearchUserIdsParams) -> Bool {
+        lhs.query == rhs.query &&
+            lhs.clusterName == rhs.clusterName &&
+            lhs.page == rhs.page &&
+            lhs.hitsPerPage == rhs.hitsPerPage
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.query.hashValue)
+        hasher.combine(self.clusterName?.hashValue)
+        hasher.combine(self.page?.hashValue)
+        hasher.combine(self.hitsPerPage?.hashValue)
     }
 }

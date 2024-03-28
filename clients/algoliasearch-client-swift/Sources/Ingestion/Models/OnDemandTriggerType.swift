@@ -7,6 +7,6 @@ import Foundation
 #endif
 
 /// Task is run manually, with the &#x60;/run&#x60; endpoint.
-public enum OnDemandTriggerType: String, Codable, CaseIterable {
+public enum OnDemandTriggerType: String, Codable, CaseIterable, Hashable {
     case onDemand
 }

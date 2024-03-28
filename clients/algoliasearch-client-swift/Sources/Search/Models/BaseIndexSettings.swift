@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct BaseIndexSettings: Codable, JSONEncodable {
+public struct BaseIndexSettings: Codable, JSONEncodable, Hashable {
     /// Attributes used for [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/). 
     /// Facets are ways to categorize search results based on attributes. Facets can be used to let user filter search
     /// results. By default, no attribute is used for faceting.  **Modifiers**  <dl>
@@ -180,5 +180,45 @@ public struct BaseIndexSettings: Codable, JSONEncodable {
         try container.encodeIfPresent(self.userData, forKey: .userData)
         try container.encodeIfPresent(self.customNormalization, forKey: .customNormalization)
         try container.encodeIfPresent(self.attributeForDistinct, forKey: .attributeForDistinct)
+    }
+
+    public static func ==(lhs: BaseIndexSettings, rhs: BaseIndexSettings) -> Bool {
+        lhs.attributesForFaceting == rhs.attributesForFaceting &&
+            lhs.replicas == rhs.replicas &&
+            lhs.paginationLimitedTo == rhs.paginationLimitedTo &&
+            lhs.unretrievableAttributes == rhs.unretrievableAttributes &&
+            lhs.disableTypoToleranceOnWords == rhs.disableTypoToleranceOnWords &&
+            lhs.attributesToTransliterate == rhs.attributesToTransliterate &&
+            lhs.camelCaseAttributes == rhs.camelCaseAttributes &&
+            lhs.decompoundedAttributes == rhs.decompoundedAttributes &&
+            lhs.indexLanguages == rhs.indexLanguages &&
+            lhs.disablePrefixOnAttributes == rhs.disablePrefixOnAttributes &&
+            lhs.allowCompressionOfIntegerArray == rhs.allowCompressionOfIntegerArray &&
+            lhs.numericAttributesForFiltering == rhs.numericAttributesForFiltering &&
+            lhs.separatorsToIndex == rhs.separatorsToIndex &&
+            lhs.searchableAttributes == rhs.searchableAttributes &&
+            lhs.userData == rhs.userData &&
+            lhs.customNormalization == rhs.customNormalization &&
+            lhs.attributeForDistinct == rhs.attributeForDistinct
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.attributesForFaceting?.hashValue)
+        hasher.combine(self.replicas?.hashValue)
+        hasher.combine(self.paginationLimitedTo?.hashValue)
+        hasher.combine(self.unretrievableAttributes?.hashValue)
+        hasher.combine(self.disableTypoToleranceOnWords?.hashValue)
+        hasher.combine(self.attributesToTransliterate?.hashValue)
+        hasher.combine(self.camelCaseAttributes?.hashValue)
+        hasher.combine(self.decompoundedAttributes?.hashValue)
+        hasher.combine(self.indexLanguages?.hashValue)
+        hasher.combine(self.disablePrefixOnAttributes?.hashValue)
+        hasher.combine(self.allowCompressionOfIntegerArray?.hashValue)
+        hasher.combine(self.numericAttributesForFiltering?.hashValue)
+        hasher.combine(self.separatorsToIndex?.hashValue)
+        hasher.combine(self.searchableAttributes?.hashValue)
+        hasher.combine(self.userData?.hashValue)
+        hasher.combine(self.customNormalization?.hashValue)
+        hasher.combine(self.attributeForDistinct?.hashValue)
     }
 }

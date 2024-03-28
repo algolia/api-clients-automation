@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct GetStatusResponse: Codable, JSONEncodable {
+public struct GetStatusResponse: Codable, JSONEncodable, Hashable {
     /// Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format. If null, no update was
     /// performed yet.
     public var updatedAt: String?
@@ -24,5 +24,13 @@ public struct GetStatusResponse: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.updatedAt, forKey: .updatedAt)
+    }
+
+    public static func ==(lhs: GetStatusResponse, rhs: GetStatusResponse) -> Bool {
+        lhs.updatedAt == rhs.updatedAt
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.updatedAt.hashValue)
     }
 }

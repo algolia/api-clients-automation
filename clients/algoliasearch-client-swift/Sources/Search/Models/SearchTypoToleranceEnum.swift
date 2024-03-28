@@ -10,7 +10,7 @@ import Foundation
 /// only include those.   But if there are no matches without typos (with 1 typo), include matches with 1 typo (2
 /// typos). - &#x60;strict&#x60;. Return matches with the two lowest numbers of typos.   With &#x60;strict&#x60;, the
 /// Typo ranking criterion is applied first in the &#x60;ranking&#x60; setting.
-public enum SearchTypoToleranceEnum: String, Codable, CaseIterable {
+public enum SearchTypoToleranceEnum: String, Codable, CaseIterable, Hashable {
     case min
     case strict
 }

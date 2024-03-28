@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum RecommendSnippetResult: Codable, JSONEncodable, AbstractEncodable {
+public enum RecommendSnippetResult: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case recommendSnippetResultOption(RecommendSnippetResultOption)
     case dictionaryOfStringToRecommendSnippetResultOption([String: RecommendSnippetResultOption])
     case arrayOfRecommendSnippetResultOption([RecommendSnippetResultOption])

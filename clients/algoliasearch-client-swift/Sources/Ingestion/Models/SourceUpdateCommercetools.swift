@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SourceUpdateCommercetools: Codable, JSONEncodable {
+public struct SourceUpdateCommercetools: Codable, JSONEncodable, Hashable {
     public var storeKeys: [String]?
     /// Locales for your commercetools stores.
     public var locales: [String]?
@@ -46,5 +46,21 @@ public struct SourceUpdateCommercetools: Codable, JSONEncodable {
         try container.encodeIfPresent(self.url, forKey: .url)
         try container.encodeIfPresent(self.fallbackIsInStockValue, forKey: .fallbackIsInStockValue)
         try container.encodeIfPresent(self.customFields, forKey: .customFields)
+    }
+
+    public static func ==(lhs: SourceUpdateCommercetools, rhs: SourceUpdateCommercetools) -> Bool {
+        lhs.storeKeys == rhs.storeKeys &&
+            lhs.locales == rhs.locales &&
+            lhs.url == rhs.url &&
+            lhs.fallbackIsInStockValue == rhs.fallbackIsInStockValue &&
+            lhs.customFields == rhs.customFields
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.storeKeys?.hashValue)
+        hasher.combine(self.locales?.hashValue)
+        hasher.combine(self.url?.hashValue)
+        hasher.combine(self.fallbackIsInStockValue?.hashValue)
+        hasher.combine(self.customFields?.hashValue)
     }
 }

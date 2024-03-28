@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct RecommendationsHits: Codable, JSONEncodable {
+public struct RecommendationsHits: Codable, JSONEncodable, Hashable {
     public var hits: [RecommendationsHit]
     /// Search query.
     public var query: String?
@@ -32,5 +32,17 @@ public struct RecommendationsHits: Codable, JSONEncodable {
         try container.encode(self.hits, forKey: .hits)
         try container.encodeIfPresent(self.query, forKey: .query)
         try container.encodeIfPresent(self.params, forKey: .params)
+    }
+
+    public static func ==(lhs: RecommendationsHits, rhs: RecommendationsHits) -> Bool {
+        lhs.hits == rhs.hits &&
+            lhs.query == rhs.query &&
+            lhs.params == rhs.params
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.hits.hashValue)
+        hasher.combine(self.query?.hashValue)
+        hasher.combine(self.params?.hashValue)
     }
 }

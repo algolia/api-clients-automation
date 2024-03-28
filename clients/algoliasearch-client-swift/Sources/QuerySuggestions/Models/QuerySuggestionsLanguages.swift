@@ -8,7 +8,7 @@ import Foundation
 
 /// Set the language for deduplicating singular and plural suggestions. If specified, only the more popular form is
 /// included.
-public enum QuerySuggestionsLanguages: Codable, JSONEncodable, AbstractEncodable {
+public enum QuerySuggestionsLanguages: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case arrayOfString([String])
     case bool(Bool)
 

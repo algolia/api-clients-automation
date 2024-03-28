@@ -7,6 +7,6 @@ import Foundation
 #endif
 
 /// Task runs after receiving subscribed event.
-public enum SubscriptionTriggerType: String, Codable, CaseIterable {
+public enum SubscriptionTriggerType: String, Codable, CaseIterable, Hashable {
     case subscription
 }

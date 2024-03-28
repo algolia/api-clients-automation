@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct GetTopFilterAttribute: Codable, JSONEncodable {
+public struct GetTopFilterAttribute: Codable, JSONEncodable, Hashable {
     /// Attribute name.
     public var attribute: String
     /// Number of occurrences.
@@ -28,5 +28,15 @@ public struct GetTopFilterAttribute: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.attribute, forKey: .attribute)
         try container.encode(self.count, forKey: .count)
+    }
+
+    public static func ==(lhs: GetTopFilterAttribute, rhs: GetTopFilterAttribute) -> Bool {
+        lhs.attribute == rhs.attribute &&
+            lhs.count == rhs.count
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.attribute.hashValue)
+        hasher.combine(self.count.hashValue)
     }
 }

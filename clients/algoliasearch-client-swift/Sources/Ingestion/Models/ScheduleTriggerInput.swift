@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Trigger input for scheduled tasks.
-public struct ScheduleTriggerInput: Codable, JSONEncodable {
+public struct ScheduleTriggerInput: Codable, JSONEncodable, Hashable {
     public var type: ScheduleTriggerType
     /// Cron expression for the task's schedule.
     public var cron: String
@@ -28,5 +28,15 @@ public struct ScheduleTriggerInput: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.type, forKey: .type)
         try container.encode(self.cron, forKey: .cron)
+    }
+
+    public static func ==(lhs: ScheduleTriggerInput, rhs: ScheduleTriggerInput) -> Bool {
+        lhs.type == rhs.type &&
+            lhs.cron == rhs.cron
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.type.hashValue)
+        hasher.combine(self.cron.hashValue)
     }
 }

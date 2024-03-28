@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct Cursor: Codable, JSONEncodable {
+public struct Cursor: Codable, JSONEncodable, Hashable {
     /// Cursor to get the next page of the response.  The parameter must match the value returned in the response of a
     /// previous request. The last page of the response does not return a `cursor` attribute.
     public var cursor: String?
@@ -24,5 +24,13 @@ public struct Cursor: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.cursor, forKey: .cursor)
+    }
+
+    public static func ==(lhs: Cursor, rhs: Cursor) -> Bool {
+        lhs.cursor == rhs.cursor
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.cursor?.hashValue)
     }
 }

@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct TopCountry: Codable, JSONEncodable {
+public struct TopCountry: Codable, JSONEncodable, Hashable {
     /// Country code.
     public var country: String
     /// Number of occurrences.
@@ -28,5 +28,15 @@ public struct TopCountry: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.country, forKey: .country)
         try container.encode(self.count, forKey: .count)
+    }
+
+    public static func ==(lhs: TopCountry, rhs: TopCountry) -> Bool {
+        lhs.country == rhs.country &&
+            lhs.count == rhs.count
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.country.hashValue)
+        hasher.combine(self.count.hashValue)
     }
 }

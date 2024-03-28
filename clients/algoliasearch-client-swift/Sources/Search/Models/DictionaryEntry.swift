@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Dictionary entry.
-public struct DictionaryEntry: Codable, JSONEncodable {
+public struct DictionaryEntry: Codable, JSONEncodable, Hashable {
     /// Unique identifier for the dictionary entry.
     public var objectID: String
     public var language: SearchSupportedLanguage
@@ -123,5 +123,25 @@ public struct DictionaryEntry: Codable, JSONEncodable {
             AnyCodable.self,
             excludedKeys: nonAdditionalPropertyKeys
         )
+    }
+
+    public static func ==(lhs: DictionaryEntry, rhs: DictionaryEntry) -> Bool {
+        lhs.objectID == rhs.objectID &&
+            lhs.language == rhs.language &&
+            lhs.word == rhs.word &&
+            lhs.words == rhs.words &&
+            lhs.decomposition == rhs.decomposition &&
+            lhs.state == rhs.state
+            && lhs.additionalProperties == rhs.additionalProperties
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.objectID.hashValue)
+        hasher.combine(self.language.hashValue)
+        hasher.combine(self.word?.hashValue)
+        hasher.combine(self.words?.hashValue)
+        hasher.combine(self.decomposition?.hashValue)
+        hasher.combine(self.state?.hashValue)
+        hasher.combine(self.additionalProperties.hashValue)
     }
 }

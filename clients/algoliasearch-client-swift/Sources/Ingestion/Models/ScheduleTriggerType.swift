@@ -7,6 +7,6 @@ import Foundation
 #endif
 
 /// Task runs on a schedule.
-public enum ScheduleTriggerType: String, Codable, CaseIterable {
+public enum ScheduleTriggerType: String, Codable, CaseIterable, Hashable {
     case schedule
 }

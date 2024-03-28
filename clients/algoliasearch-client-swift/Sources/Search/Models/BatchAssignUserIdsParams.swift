@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Assign userID parameters.
-public struct BatchAssignUserIdsParams: Codable, JSONEncodable {
+public struct BatchAssignUserIdsParams: Codable, JSONEncodable, Hashable {
     /// Cluster name.
     public var cluster: String
     /// User IDs to assign.
@@ -29,5 +29,15 @@ public struct BatchAssignUserIdsParams: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.cluster, forKey: .cluster)
         try container.encode(self.users, forKey: .users)
+    }
+
+    public static func ==(lhs: BatchAssignUserIdsParams, rhs: BatchAssignUserIdsParams) -> Bool {
+        lhs.cluster == rhs.cluster &&
+            lhs.users == rhs.users
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.cluster.hashValue)
+        hasher.combine(self.users.hashValue)
     }
 }

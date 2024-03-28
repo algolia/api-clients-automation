@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// API response for updating a destination.
-public struct DestinationUpdateResponse: Codable, JSONEncodable {
+public struct DestinationUpdateResponse: Codable, JSONEncodable, Hashable {
     /// Universally unique identifier (UUID) of a destination resource.
     public var destinationID: String
     /// Descriptive name for the resource.
@@ -34,5 +34,17 @@ public struct DestinationUpdateResponse: Codable, JSONEncodable {
         try container.encode(self.destinationID, forKey: .destinationID)
         try container.encode(self.name, forKey: .name)
         try container.encode(self.updatedAt, forKey: .updatedAt)
+    }
+
+    public static func ==(lhs: DestinationUpdateResponse, rhs: DestinationUpdateResponse) -> Bool {
+        lhs.destinationID == rhs.destinationID &&
+            lhs.name == rhs.name &&
+            lhs.updatedAt == rhs.updatedAt
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.destinationID.hashValue)
+        hasher.combine(self.name.hashValue)
+        hasher.combine(self.updatedAt.hashValue)
     }
 }

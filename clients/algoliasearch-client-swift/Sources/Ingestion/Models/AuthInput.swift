@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum AuthInput: Codable, JSONEncodable, AbstractEncodable {
+public enum AuthInput: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case authGoogleServiceAccount(AuthGoogleServiceAccount)
     case authBasic(AuthBasic)
     case authAPIKey(AuthAPIKey)

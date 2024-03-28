@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct IndexingTimeResponseMetrics: Codable, JSONEncodable {
+public struct IndexingTimeResponseMetrics: Codable, JSONEncodable, Hashable {
     public var indexing: [String: [TimeInner]]?
 
     public init(indexing: [String: [TimeInner]]? = nil) {
@@ -22,5 +22,13 @@ public struct IndexingTimeResponseMetrics: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.indexing, forKey: .indexing)
+    }
+
+    public static func ==(lhs: IndexingTimeResponseMetrics, rhs: IndexingTimeResponseMetrics) -> Bool {
+        lhs.indexing == rhs.indexing
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.indexing?.hashValue)
     }
 }

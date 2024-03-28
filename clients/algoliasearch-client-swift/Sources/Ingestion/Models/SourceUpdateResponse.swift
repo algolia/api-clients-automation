@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SourceUpdateResponse: Codable, JSONEncodable {
+public struct SourceUpdateResponse: Codable, JSONEncodable, Hashable {
     /// Universally uniqud identifier (UUID) of a source.
     public var sourceID: String
     /// Descriptive name of the source.
@@ -33,5 +33,17 @@ public struct SourceUpdateResponse: Codable, JSONEncodable {
         try container.encode(self.sourceID, forKey: .sourceID)
         try container.encode(self.name, forKey: .name)
         try container.encode(self.updatedAt, forKey: .updatedAt)
+    }
+
+    public static func ==(lhs: SourceUpdateResponse, rhs: SourceUpdateResponse) -> Bool {
+        lhs.sourceID == rhs.sourceID &&
+            lhs.name == rhs.name &&
+            lhs.updatedAt == rhs.updatedAt
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.sourceID.hashValue)
+        hasher.combine(self.name.hashValue)
+        hasher.combine(self.updatedAt.hashValue)
     }
 }

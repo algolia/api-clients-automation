@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// ISO code for a supported language.
-public enum SearchSupportedLanguage: String, Codable, CaseIterable {
+public enum SearchSupportedLanguage: String, Codable, CaseIterable, Hashable {
     case af
     case ar
     case az

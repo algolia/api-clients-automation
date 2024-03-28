@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Whether a dictionary entry is active.
-public enum DictionaryEntryState: String, Codable, CaseIterable {
+public enum DictionaryEntryState: String, Codable, CaseIterable, Hashable {
     case enabled
     case disabled
 }

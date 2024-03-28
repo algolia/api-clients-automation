@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct DailyNoClickRates: Codable, JSONEncodable {
+public struct DailyNoClickRates: Codable, JSONEncodable, Hashable {
     /// No click rate, calculated as number of tracked searches without any click divided by the number of tracked
     /// searches.
     public var rate: Double
@@ -39,5 +39,19 @@ public struct DailyNoClickRates: Codable, JSONEncodable {
         try container.encode(self.count, forKey: .count)
         try container.encode(self.noClickCount, forKey: .noClickCount)
         try container.encode(self.date, forKey: .date)
+    }
+
+    public static func ==(lhs: DailyNoClickRates, rhs: DailyNoClickRates) -> Bool {
+        lhs.rate == rhs.rate &&
+            lhs.count == rhs.count &&
+            lhs.noClickCount == rhs.noClickCount &&
+            lhs.date == rhs.date
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.rate.hashValue)
+        hasher.combine(self.count.hashValue)
+        hasher.combine(self.noClickCount.hashValue)
+        hasher.combine(self.date.hashValue)
     }
 }

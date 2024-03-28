@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SourceBigQuery: Codable, JSONEncodable {
+public struct SourceBigQuery: Codable, JSONEncodable, Hashable {
     /// Project ID of the BigQuery source.
     public var projectID: String
     /// Dataset ID of the BigQuery source.
@@ -60,5 +60,25 @@ public struct SourceBigQuery: Codable, JSONEncodable {
         try container.encodeIfPresent(self.tablePrefix, forKey: .tablePrefix)
         try container.encodeIfPresent(self.customSQLRequest, forKey: .customSQLRequest)
         try container.encodeIfPresent(self.uniqueIDColumn, forKey: .uniqueIDColumn)
+    }
+
+    public static func ==(lhs: SourceBigQuery, rhs: SourceBigQuery) -> Bool {
+        lhs.projectID == rhs.projectID &&
+            lhs.datasetID == rhs.datasetID &&
+            lhs.dataType == rhs.dataType &&
+            lhs.table == rhs.table &&
+            lhs.tablePrefix == rhs.tablePrefix &&
+            lhs.customSQLRequest == rhs.customSQLRequest &&
+            lhs.uniqueIDColumn == rhs.uniqueIDColumn
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.projectID.hashValue)
+        hasher.combine(self.datasetID.hashValue)
+        hasher.combine(self.dataType?.hashValue)
+        hasher.combine(self.table?.hashValue)
+        hasher.combine(self.tablePrefix?.hashValue)
+        hasher.combine(self.customSQLRequest?.hashValue)
+        hasher.combine(self.uniqueIDColumn?.hashValue)
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 /// Use this event to track when users add items to their shopping cart unrelated to a previous Algolia request. For
 /// example, if you don&#39;t use Algolia to build your category pages, use this event.  To track add-to-cart events
 /// related to Algolia requests, use the \&quot;Added to cart object IDs after search\&quot; event.
-public struct AddedToCartObjectIDs: Codable, JSONEncodable {
+public struct AddedToCartObjectIDs: Codable, JSONEncodable, Hashable {
     /// Event name, up to 64 ASCII characters.  Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
     /// framework.
     public var eventName: String
@@ -93,5 +93,33 @@ public struct AddedToCartObjectIDs: Codable, JSONEncodable {
         try container.encodeIfPresent(self.objectData, forKey: .objectData)
         try container.encodeIfPresent(self.timestamp, forKey: .timestamp)
         try container.encodeIfPresent(self.value, forKey: .value)
+    }
+
+    public static func ==(lhs: AddedToCartObjectIDs, rhs: AddedToCartObjectIDs) -> Bool {
+        lhs.eventName == rhs.eventName &&
+            lhs.eventType == rhs.eventType &&
+            lhs.eventSubtype == rhs.eventSubtype &&
+            lhs.index == rhs.index &&
+            lhs.objectIDs == rhs.objectIDs &&
+            lhs.userToken == rhs.userToken &&
+            lhs.authenticatedUserToken == rhs.authenticatedUserToken &&
+            lhs.currency == rhs.currency &&
+            lhs.objectData == rhs.objectData &&
+            lhs.timestamp == rhs.timestamp &&
+            lhs.value == rhs.value
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.eventName.hashValue)
+        hasher.combine(self.eventType.hashValue)
+        hasher.combine(self.eventSubtype.hashValue)
+        hasher.combine(self.index.hashValue)
+        hasher.combine(self.objectIDs.hashValue)
+        hasher.combine(self.userToken.hashValue)
+        hasher.combine(self.authenticatedUserToken?.hashValue)
+        hasher.combine(self.currency?.hashValue)
+        hasher.combine(self.objectData?.hashValue)
+        hasher.combine(self.timestamp?.hashValue)
+        hasher.combine(self.value?.hashValue)
     }
 }

@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Rule object.
-public struct RuleResponse: Codable, JSONEncodable {
+public struct RuleResponse: Codable, JSONEncodable, Hashable {
     public var metadata: RuleResponseMetadata?
     /// Unique identifier for a rule object.
     public var objectID: String
@@ -55,5 +55,23 @@ public struct RuleResponse: Codable, JSONEncodable {
         try container.encodeIfPresent(self.consequence, forKey: .consequence)
         try container.encodeIfPresent(self.description, forKey: .description)
         try container.encodeIfPresent(self.enabled, forKey: .enabled)
+    }
+
+    public static func ==(lhs: RuleResponse, rhs: RuleResponse) -> Bool {
+        lhs.metadata == rhs.metadata &&
+            lhs.objectID == rhs.objectID &&
+            lhs.conditions == rhs.conditions &&
+            lhs.consequence == rhs.consequence &&
+            lhs.description == rhs.description &&
+            lhs.enabled == rhs.enabled
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.metadata?.hashValue)
+        hasher.combine(self.objectID.hashValue)
+        hasher.combine(self.conditions?.hashValue)
+        hasher.combine(self.consequence?.hashValue)
+        hasher.combine(self.description?.hashValue)
+        hasher.combine(self.enabled?.hashValue)
     }
 }

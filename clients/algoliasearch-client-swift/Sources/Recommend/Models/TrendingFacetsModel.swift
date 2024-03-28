@@ -7,6 +7,6 @@ import Foundation
 #endif
 
 /// Trending facets model.
-public enum TrendingFacetsModel: String, Codable, CaseIterable {
+public enum TrendingFacetsModel: String, Codable, CaseIterable, Hashable {
     case trendingFacets = "trending-facets"
 }

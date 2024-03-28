@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Actions to perform.
-public enum DictionaryAction: String, Codable, CaseIterable {
+public enum DictionaryAction: String, Codable, CaseIterable, Hashable {
     case addEntry
     case deleteEntry
 }

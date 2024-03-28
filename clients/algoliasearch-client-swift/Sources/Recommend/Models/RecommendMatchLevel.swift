@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Whether the whole query string matches or only a part.
-public enum RecommendMatchLevel: String, Codable, CaseIterable {
+public enum RecommendMatchLevel: String, Codable, CaseIterable, Hashable {
     case `none`
     case partial
     case full

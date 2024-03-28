@@ -14,7 +14,7 @@ import Foundation
 /// the first (then second, then third) word as optional, until there are results or at most 5 words have been
 /// removed.&lt;/dd&gt; &lt;dt&gt;&lt;code&gt;allOptional&lt;/code&gt;&lt;/dt&gt; &lt;dd&gt;Treat all words as
 /// optional.&lt;/dd&gt; &lt;/dl&gt;  For more information, see [Remove words to improve results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results/).
-public enum SearchRemoveWordsIfNoResults: String, Codable, CaseIterable {
+public enum SearchRemoveWordsIfNoResults: String, Codable, CaseIterable, Hashable {
     case `none`
     case lastWords
     case firstWords

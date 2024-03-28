@@ -7,6 +7,6 @@ import Foundation
 #endif
 
 /// Task runs continuously.
-public enum StreamingTriggerType: String, Codable, CaseIterable {
+public enum StreamingTriggerType: String, Codable, CaseIterable, Hashable {
     case streaming
 }

@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Object with detailed information about the record&#39;s ranking.
-public struct SearchRankingInfo: Codable, JSONEncodable {
+public struct SearchRankingInfo: Codable, JSONEncodable, Hashable {
     /// Whether a filter matched the query.
     public var filters: Int
     /// Position of the first matched word in the best matching attribute of the record.
@@ -97,5 +97,37 @@ public struct SearchRankingInfo: Codable, JSONEncodable {
         try container.encode(self.userScore, forKey: .userScore)
         try container.encode(self.words, forKey: .words)
         try container.encodeIfPresent(self.promotedByReRanking, forKey: .promotedByReRanking)
+    }
+
+    public static func ==(lhs: SearchRankingInfo, rhs: SearchRankingInfo) -> Bool {
+        lhs.filters == rhs.filters &&
+            lhs.firstMatchedWord == rhs.firstMatchedWord &&
+            lhs.geoDistance == rhs.geoDistance &&
+            lhs.geoPrecision == rhs.geoPrecision &&
+            lhs.matchedGeoLocation == rhs.matchedGeoLocation &&
+            lhs.personalization == rhs.personalization &&
+            lhs.nbExactWords == rhs.nbExactWords &&
+            lhs.nbTypos == rhs.nbTypos &&
+            lhs.promoted == rhs.promoted &&
+            lhs.proximityDistance == rhs.proximityDistance &&
+            lhs.userScore == rhs.userScore &&
+            lhs.words == rhs.words &&
+            lhs.promotedByReRanking == rhs.promotedByReRanking
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.filters.hashValue)
+        hasher.combine(self.firstMatchedWord.hashValue)
+        hasher.combine(self.geoDistance.hashValue)
+        hasher.combine(self.geoPrecision?.hashValue)
+        hasher.combine(self.matchedGeoLocation?.hashValue)
+        hasher.combine(self.personalization?.hashValue)
+        hasher.combine(self.nbExactWords.hashValue)
+        hasher.combine(self.nbTypos.hashValue)
+        hasher.combine(self.promoted.hashValue)
+        hasher.combine(self.proximityDistance?.hashValue)
+        hasher.combine(self.userScore.hashValue)
+        hasher.combine(self.words.hashValue)
+        hasher.combine(self.promotedByReRanking?.hashValue)
     }
 }

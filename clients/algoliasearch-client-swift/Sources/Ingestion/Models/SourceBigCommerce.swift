@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SourceBigCommerce: Codable, JSONEncodable {
+public struct SourceBigCommerce: Codable, JSONEncodable, Hashable {
     /// Store hash identifying your BigCommerce store.
     public var storeHash: String
     public var channel: BigCommerceChannel?
@@ -45,5 +45,21 @@ public struct SourceBigCommerce: Codable, JSONEncodable {
         try container.encodeIfPresent(self.customFields, forKey: .customFields)
         try container.encodeIfPresent(self.productMetafields, forKey: .productMetafields)
         try container.encodeIfPresent(self.variantMetafields, forKey: .variantMetafields)
+    }
+
+    public static func ==(lhs: SourceBigCommerce, rhs: SourceBigCommerce) -> Bool {
+        lhs.storeHash == rhs.storeHash &&
+            lhs.channel == rhs.channel &&
+            lhs.customFields == rhs.customFields &&
+            lhs.productMetafields == rhs.productMetafields &&
+            lhs.variantMetafields == rhs.variantMetafields
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.storeHash.hashValue)
+        hasher.combine(self.channel?.hashValue)
+        hasher.combine(self.customFields?.hashValue)
+        hasher.combine(self.productMetafields?.hashValue)
+        hasher.combine(self.variantMetafields?.hashValue)
     }
 }

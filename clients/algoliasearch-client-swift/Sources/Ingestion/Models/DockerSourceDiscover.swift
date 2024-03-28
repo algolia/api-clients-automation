@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct DockerSourceDiscover: Codable, JSONEncodable {
+public struct DockerSourceDiscover: Codable, JSONEncodable, Hashable {
     /// Universally unique identifier (UUID) of a task run.
     public var runID: String
     /// Date of creation in RFC3339 format.
@@ -28,5 +28,15 @@ public struct DockerSourceDiscover: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.runID, forKey: .runID)
         try container.encode(self.createdAt, forKey: .createdAt)
+    }
+
+    public static func ==(lhs: DockerSourceDiscover, rhs: DockerSourceDiscover) -> Bool {
+        lhs.runID == rhs.runID &&
+            lhs.createdAt == rhs.createdAt
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.runID.hashValue)
+        hasher.combine(self.createdAt.hashValue)
     }
 }

@@ -1092,6 +1092,7 @@ components:
         - index
         - objectIDs
         - userToken
+        - objectData
       x-discriminator-fields:
         - eventType
         - eventSubtype

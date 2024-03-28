@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Task run outcome.
-public enum RunOutcome: String, Codable, CaseIterable {
+public enum RunOutcome: String, Codable, CaseIterable, Hashable {
     case success
     case failure
     case processing

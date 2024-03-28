@@ -10,7 +10,7 @@ import Foundation
 /// parameter, which supports all filter types and combinations with boolean operators.**  Different from regular
 /// facets, &#x60;_tags&#x60; can only be used for filtering (including or excluding records). You won&#39;t get a facet
 /// count. The same combination and escaping rules apply as for &#x60;facetFilters&#x60;.
-public enum SearchTagFilters: Codable, JSONEncodable, AbstractEncodable {
+public enum SearchTagFilters: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case arrayOfSearchMixedSearchFilters([SearchMixedSearchFilters])
     case string(String)
 

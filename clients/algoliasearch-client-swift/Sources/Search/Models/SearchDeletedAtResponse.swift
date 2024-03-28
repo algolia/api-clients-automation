@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Response, taskID, and deletion timestamp.
-public struct SearchDeletedAtResponse: Codable, JSONEncodable {
+public struct SearchDeletedAtResponse: Codable, JSONEncodable, Hashable {
     /// Unique identifier of a task.  A successful API response means that a task was added to a queue. It might not run
     /// immediately. You can check the task's progress with the [`task` operation](#tag/Indices/operation/getTask) and
     /// this `taskID`.
@@ -31,5 +31,15 @@ public struct SearchDeletedAtResponse: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.taskID, forKey: .taskID)
         try container.encode(self.deletedAt, forKey: .deletedAt)
+    }
+
+    public static func ==(lhs: SearchDeletedAtResponse, rhs: SearchDeletedAtResponse) -> Bool {
+        lhs.taskID == rhs.taskID &&
+            lhs.deletedAt == rhs.deletedAt
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.taskID.hashValue)
+        hasher.combine(self.deletedAt.hashValue)
     }
 }

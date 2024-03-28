@@ -12,7 +12,7 @@ import Foundation
 /// Comparsions are precise up to 3 decimals. You can also provide ranges: &#x60;facet:&lt;lower&gt; TO
 /// &lt;upper&gt;&#x60;. The range includes the lower and upper boundaries. The same combination rules apply as for
 /// &#x60;facetFilters&#x60;.
-public enum SearchNumericFilters: Codable, JSONEncodable, AbstractEncodable {
+public enum SearchNumericFilters: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case arrayOfSearchMixedSearchFilters([SearchMixedSearchFilters])
     case string(String)
 

@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Dictionary type. If &#x60;null&#x60;, this dictionary type isn&#39;t supported for the language.
-public struct DictionaryLanguage: Codable, JSONEncodable {
+public struct DictionaryLanguage: Codable, JSONEncodable, Hashable {
     /// Number of custom dictionary entries.
     public var nbCustomEntries: Int?
 
@@ -24,5 +24,13 @@ public struct DictionaryLanguage: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.nbCustomEntries, forKey: .nbCustomEntries)
+    }
+
+    public static func ==(lhs: DictionaryLanguage, rhs: DictionaryLanguage) -> Bool {
+        lhs.nbCustomEntries == rhs.nbCustomEntries
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.nbCustomEntries?.hashValue)
     }
 }

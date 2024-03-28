@@ -8,7 +8,7 @@ import Foundation
 
 /// Key-value pairs of [supported language ISO codes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/)
 /// and boolean values.
-public struct StandardEntries: Codable, JSONEncodable {
+public struct StandardEntries: Codable, JSONEncodable, Hashable {
     /// Key-value pair of a language ISO code and a boolean value.
     public var plurals: [String: Bool]?
     /// Key-value pair of a language ISO code and a boolean value.
@@ -35,5 +35,17 @@ public struct StandardEntries: Codable, JSONEncodable {
         try container.encodeIfPresent(self.plurals, forKey: .plurals)
         try container.encodeIfPresent(self.stopwords, forKey: .stopwords)
         try container.encodeIfPresent(self.compounds, forKey: .compounds)
+    }
+
+    public static func ==(lhs: StandardEntries, rhs: StandardEntries) -> Bool {
+        lhs.plurals == rhs.plurals &&
+            lhs.stopwords == rhs.stopwords &&
+            lhs.compounds == rhs.compounds
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.plurals?.hashValue)
+        hasher.combine(self.stopwords?.hashValue)
+        hasher.combine(self.compounds?.hashValue)
     }
 }

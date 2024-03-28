@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Task run status.
-public enum RunStatus: String, Codable, CaseIterable {
+public enum RunStatus: String, Codable, CaseIterable, Hashable {
     case created
     case started
     case idled

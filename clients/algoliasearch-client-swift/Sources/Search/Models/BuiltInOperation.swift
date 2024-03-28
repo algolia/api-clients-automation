@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Update to perform on the attribute.
-public struct BuiltInOperation: Codable, JSONEncodable {
+public struct BuiltInOperation: Codable, JSONEncodable, Hashable {
     public var operation: BuiltInOperationType
     /// Value that corresponds to the operation, for example an `Increment` or `Decrement` step, or an `Add` or `Remove`
     /// value.
@@ -29,5 +29,15 @@ public struct BuiltInOperation: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.operation, forKey: .operation)
         try container.encode(self.value, forKey: .value)
+    }
+
+    public static func ==(lhs: BuiltInOperation, rhs: BuiltInOperation) -> Bool {
+        lhs.operation == rhs.operation &&
+            lhs.value == rhs.value
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.operation.hashValue)
+        hasher.combine(self.value.hashValue)
     }
 }

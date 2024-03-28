@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum PlatformWithNone: Codable, JSONEncodable, AbstractEncodable {
+public enum PlatformWithNone: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case platform(Platform)
     case platformNone(PlatformNone)
 

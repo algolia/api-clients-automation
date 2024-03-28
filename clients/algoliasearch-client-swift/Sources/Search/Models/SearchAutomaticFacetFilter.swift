@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Filter or optional filter to be applied to the search.
-public struct SearchAutomaticFacetFilter: Codable, JSONEncodable {
+public struct SearchAutomaticFacetFilter: Codable, JSONEncodable, Hashable {
     /// Facet name to be applied as filter. The name must match placeholders in the `pattern` parameter. For example,
     /// with `pattern: {facet:genre}`, `automaticFacetFilters` must be `genre`.
     public var facet: String
@@ -37,5 +37,17 @@ public struct SearchAutomaticFacetFilter: Codable, JSONEncodable {
         try container.encode(self.facet, forKey: .facet)
         try container.encodeIfPresent(self.score, forKey: .score)
         try container.encodeIfPresent(self.disjunctive, forKey: .disjunctive)
+    }
+
+    public static func ==(lhs: SearchAutomaticFacetFilter, rhs: SearchAutomaticFacetFilter) -> Bool {
+        lhs.facet == rhs.facet &&
+            lhs.score == rhs.score &&
+            lhs.disjunctive == rhs.disjunctive
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.facet.hashValue)
+        hasher.combine(self.score?.hashValue)
+        hasher.combine(self.disjunctive?.hashValue)
     }
 }

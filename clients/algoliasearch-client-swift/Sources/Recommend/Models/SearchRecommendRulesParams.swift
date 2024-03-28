@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Recommend rules search parameters.
-public struct SearchRecommendRulesParams: Codable, JSONEncodable {
+public struct SearchRecommendRulesParams: Codable, JSONEncodable, Hashable {
     /// Search query.
     public var query: String?
     /// Restricts responses to the specified [contextual rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
@@ -50,5 +50,21 @@ public struct SearchRecommendRulesParams: Codable, JSONEncodable {
         try container.encodeIfPresent(self.page, forKey: .page)
         try container.encodeIfPresent(self.hitsPerPage, forKey: .hitsPerPage)
         try container.encodeIfPresent(self.enabled, forKey: .enabled)
+    }
+
+    public static func ==(lhs: SearchRecommendRulesParams, rhs: SearchRecommendRulesParams) -> Bool {
+        lhs.query == rhs.query &&
+            lhs.context == rhs.context &&
+            lhs.page == rhs.page &&
+            lhs.hitsPerPage == rhs.hitsPerPage &&
+            lhs.enabled == rhs.enabled
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.query?.hashValue)
+        hasher.combine(self.context?.hashValue)
+        hasher.combine(self.page?.hashValue)
+        hasher.combine(self.hitsPerPage?.hashValue)
+        hasher.combine(self.enabled?.hashValue)
     }
 }

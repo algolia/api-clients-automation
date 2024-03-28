@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// The response of the Insights API.
-public struct EventsResponse: Codable, JSONEncodable {
+public struct EventsResponse: Codable, JSONEncodable, Hashable {
     /// Details about the response, such as error messages.
     public var message: String?
     /// The HTTP status code of the response.
@@ -29,5 +29,15 @@ public struct EventsResponse: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.message, forKey: .message)
         try container.encodeIfPresent(self.status, forKey: .status)
+    }
+
+    public static func ==(lhs: EventsResponse, rhs: EventsResponse) -> Bool {
+        lhs.message == rhs.message &&
+            lhs.status == rhs.status
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.message?.hashValue)
+        hasher.combine(self.status?.hashValue)
     }
 }

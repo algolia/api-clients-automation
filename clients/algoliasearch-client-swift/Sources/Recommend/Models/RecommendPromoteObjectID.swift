@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Record to promote.
-public struct RecommendPromoteObjectID: Codable, JSONEncodable {
+public struct RecommendPromoteObjectID: Codable, JSONEncodable, Hashable {
     /// Unique record identifier.
     public var objectID: String
     /// Position in the search results where you want to show the promoted records.
@@ -29,5 +29,15 @@ public struct RecommendPromoteObjectID: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.objectID, forKey: .objectID)
         try container.encode(self.position, forKey: .position)
+    }
+
+    public static func ==(lhs: RecommendPromoteObjectID, rhs: RecommendPromoteObjectID) -> Bool {
+        lhs.objectID == rhs.objectID &&
+            lhs.position == rhs.position
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.objectID.hashValue)
+        hasher.combine(self.position.hashValue)
     }
 }

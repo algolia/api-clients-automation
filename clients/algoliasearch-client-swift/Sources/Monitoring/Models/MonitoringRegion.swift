@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Region where the cluster is located.
-public enum MonitoringRegion: String, Codable, CaseIterable {
+public enum MonitoringRegion: String, Codable, CaseIterable, Hashable {
     case au
     case br
     case ca

@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct RunProgress: Codable, JSONEncodable {
+public struct RunProgress: Codable, JSONEncodable, Hashable {
     public var expectedNbOfEvents: Int?
     public var receivedNbOfEvents: Int?
 
@@ -26,5 +26,15 @@ public struct RunProgress: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.expectedNbOfEvents, forKey: .expectedNbOfEvents)
         try container.encodeIfPresent(self.receivedNbOfEvents, forKey: .receivedNbOfEvents)
+    }
+
+    public static func ==(lhs: RunProgress, rhs: RunProgress) -> Bool {
+        lhs.expectedNbOfEvents == rhs.expectedNbOfEvents &&
+            lhs.receivedNbOfEvents == rhs.receivedNbOfEvents
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.expectedNbOfEvents?.hashValue)
+        hasher.combine(self.receivedNbOfEvents?.hashValue)
     }
 }

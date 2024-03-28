@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Currency code.
-public struct CurrenciesValue: Codable, JSONEncodable {
+public struct CurrenciesValue: Codable, JSONEncodable, Hashable {
     /// Currency code.
     public var currency: String?
     /// Revenue associated with this search in this currency.
@@ -29,5 +29,15 @@ public struct CurrenciesValue: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.currency, forKey: .currency)
         try container.encodeIfPresent(self.revenue, forKey: .revenue)
+    }
+
+    public static func ==(lhs: CurrenciesValue, rhs: CurrenciesValue) -> Bool {
+        lhs.currency == rhs.currency &&
+            lhs.revenue == rhs.revenue
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.currency?.hashValue)
+        hasher.combine(self.revenue?.hashValue)
     }
 }

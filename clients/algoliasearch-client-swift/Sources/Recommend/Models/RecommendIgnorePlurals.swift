@@ -8,7 +8,7 @@ import Foundation
 
 /// Treat singular, plurals, and other forms of declensions as equivalent. You should only use this feature for the
 /// languages used in your index.
-public enum RecommendIgnorePlurals: Codable, JSONEncodable, AbstractEncodable {
+public enum RecommendIgnorePlurals: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case arrayOfRecommendSupportedLanguage([RecommendSupportedLanguage])
     case bool(Bool)
 

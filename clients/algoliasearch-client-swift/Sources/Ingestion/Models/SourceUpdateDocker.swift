@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SourceUpdateDocker: Codable, JSONEncodable {
+public struct SourceUpdateDocker: Codable, JSONEncodable, Hashable {
     public var registry: DockerRegistry?
     /// Docker image name.
     public var image: String?
@@ -42,5 +42,19 @@ public struct SourceUpdateDocker: Codable, JSONEncodable {
         try container.encodeIfPresent(self.image, forKey: .image)
         try container.encodeIfPresent(self.version, forKey: .version)
         try container.encode(self.configuration, forKey: .configuration)
+    }
+
+    public static func ==(lhs: SourceUpdateDocker, rhs: SourceUpdateDocker) -> Bool {
+        lhs.registry == rhs.registry &&
+            lhs.image == rhs.image &&
+            lhs.version == rhs.version &&
+            lhs.configuration == rhs.configuration
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.registry?.hashValue)
+        hasher.combine(self.image?.hashValue)
+        hasher.combine(self.version?.hashValue)
+        hasher.combine(self.configuration.hashValue)
     }
 }

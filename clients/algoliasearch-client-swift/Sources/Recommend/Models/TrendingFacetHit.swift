@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Trending facet hit.
-public struct TrendingFacetHit: Codable, JSONEncodable {
+public struct TrendingFacetHit: Codable, JSONEncodable, Hashable {
     /// Recommendation score.
     public var score: Double
     /// Facet name for trending models.
@@ -34,5 +34,17 @@ public struct TrendingFacetHit: Codable, JSONEncodable {
         try container.encode(self.score, forKey: .score)
         try container.encode(self.facetName, forKey: .facetName)
         try container.encode(self.facetValue, forKey: .facetValue)
+    }
+
+    public static func ==(lhs: TrendingFacetHit, rhs: TrendingFacetHit) -> Bool {
+        lhs.score == rhs.score &&
+            lhs.facetName == rhs.facetName &&
+            lhs.facetValue == rhs.facetValue
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.score.hashValue)
+        hasher.combine(self.facetName.hashValue)
+        hasher.combine(self.facetValue.hashValue)
     }
 }

@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Credentials for authenticating with OAuth 2.0.
-public struct AuthOAuthPartial: Codable, JSONEncodable {
+public struct AuthOAuthPartial: Codable, JSONEncodable, Hashable {
     /// URL for the OAuth endpoint.
     public var url: String?
     /// Client ID.
@@ -39,5 +39,19 @@ public struct AuthOAuthPartial: Codable, JSONEncodable {
         try container.encodeIfPresent(self.clientId, forKey: .clientId)
         try container.encodeIfPresent(self.clientSecret, forKey: .clientSecret)
         try container.encodeIfPresent(self.scope, forKey: .scope)
+    }
+
+    public static func ==(lhs: AuthOAuthPartial, rhs: AuthOAuthPartial) -> Bool {
+        lhs.url == rhs.url &&
+            lhs.clientId == rhs.clientId &&
+            lhs.clientSecret == rhs.clientSecret &&
+            lhs.scope == rhs.scope
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.url?.hashValue)
+        hasher.combine(self.clientId?.hashValue)
+        hasher.combine(self.clientSecret?.hashValue)
+        hasher.combine(self.scope?.hashValue)
     }
 }

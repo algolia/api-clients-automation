@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Credentials for authenticating with a Google service account, such as BigQuery.
-public struct AuthGoogleServiceAccount: Codable, JSONEncodable {
+public struct AuthGoogleServiceAccount: Codable, JSONEncodable, Hashable {
     /// Email address of the Google service account.
     public var clientEmail: String
     /// Private key of the Google service account. This field is `null` in the API response.
@@ -29,5 +29,15 @@ public struct AuthGoogleServiceAccount: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.clientEmail, forKey: .clientEmail)
         try container.encode(self.privateKey, forKey: .privateKey)
+    }
+
+    public static func ==(lhs: AuthGoogleServiceAccount, rhs: AuthGoogleServiceAccount) -> Bool {
+        lhs.clientEmail == rhs.clientEmail &&
+            lhs.privateKey == rhs.privateKey
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.clientEmail.hashValue)
+        hasher.combine(self.privateKey.hashValue)
     }
 }

@@ -6,6 +6,6 @@ import Foundation
     import Core
 #endif
 
-public enum ViewEvent: String, Codable, CaseIterable {
+public enum ViewEvent: String, Codable, CaseIterable, Hashable {
     case view
 }

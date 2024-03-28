@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Clusters.
-public struct ListClustersResponse: Codable, JSONEncodable {
+public struct ListClustersResponse: Codable, JSONEncodable, Hashable {
     /// Key-value pairs with cluster names as keys and lists of users with the highest number of records per cluster as
     /// values.
     public var topUsers: [String]
@@ -25,5 +25,13 @@ public struct ListClustersResponse: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.topUsers, forKey: .topUsers)
+    }
+
+    public static func ==(lhs: ListClustersResponse, rhs: ListClustersResponse) -> Bool {
+        lhs.topUsers == rhs.topUsers
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.topUsers.hashValue)
     }
 }

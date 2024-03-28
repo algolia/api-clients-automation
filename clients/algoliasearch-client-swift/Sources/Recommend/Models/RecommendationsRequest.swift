@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum RecommendationsRequest: Codable, JSONEncodable, AbstractEncodable {
+public enum RecommendationsRequest: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case trendingItemsQuery(TrendingItemsQuery)
     case trendingFacetsQuery(TrendingFacetsQuery)
     case recommendationsQuery(RecommendationsQuery)

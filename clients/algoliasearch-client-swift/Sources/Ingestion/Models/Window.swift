@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Time window by which to filter the observability data.
-public struct Window: Codable, JSONEncodable {
+public struct Window: Codable, JSONEncodable, Hashable {
     /// Date in RFC3339 format representing the oldest data in the time window.
     public var startDate: String
     /// Date in RFC3339 format representing the newest data in the time window.
@@ -29,5 +29,15 @@ public struct Window: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.startDate, forKey: .startDate)
         try container.encode(self.endDate, forKey: .endDate)
+    }
+
+    public static func ==(lhs: Window, rhs: Window) -> Bool {
+        lhs.startDate == rhs.startDate &&
+            lhs.endDate == rhs.endDate
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.startDate.hashValue)
+        hasher.combine(self.endDate.hashValue)
     }
 }

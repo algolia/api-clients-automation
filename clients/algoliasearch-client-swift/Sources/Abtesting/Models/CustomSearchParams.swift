@@ -9,7 +9,7 @@ import Foundation
 /// Applies search parameters from [a restricted set of
 /// options](https://www.algolia.com/doc/api-reference/api-methods/add-ab-test/#method-param-customsearchparameters).
 /// Only use this parameter if the two variants use the same index.
-public struct CustomSearchParams: Codable, JSONEncodable {
+public struct CustomSearchParams: Codable, JSONEncodable, Hashable {
     public var customSearchParameters: AnyCodable
 
     public init(customSearchParameters: AnyCodable) {
@@ -25,5 +25,13 @@ public struct CustomSearchParams: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.customSearchParameters, forKey: .customSearchParameters)
+    }
+
+    public static func ==(lhs: CustomSearchParams, rhs: CustomSearchParams) -> Bool {
+        lhs.customSearchParameters == rhs.customSearchParameters
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.customSearchParameters.hashValue)
     }
 }

@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SearchMethodParams: Codable, JSONEncodable {
+public struct SearchMethodParams: Codable, JSONEncodable, Hashable {
     public var requests: [SearchQuery]
     public var strategy: SearchStrategy?
 
@@ -26,5 +26,15 @@ public struct SearchMethodParams: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.requests, forKey: .requests)
         try container.encodeIfPresent(self.strategy, forKey: .strategy)
+    }
+
+    public static func ==(lhs: SearchMethodParams, rhs: SearchMethodParams) -> Bool {
+        lhs.requests == rhs.requests &&
+            lhs.strategy == rhs.strategy
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.requests.hashValue)
+        hasher.combine(self.strategy?.hashValue)
     }
 }

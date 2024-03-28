@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct HasPendingMappingsResponse: Codable, JSONEncodable {
+public struct HasPendingMappingsResponse: Codable, JSONEncodable, Hashable {
     /// Whether there are clusters undergoing migration, creation, or deletion.
     public var pending: Bool
     /// Cluster pending mapping state: migrating, creating, deleting.
@@ -28,5 +28,15 @@ public struct HasPendingMappingsResponse: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.pending, forKey: .pending)
         try container.encodeIfPresent(self.clusters, forKey: .clusters)
+    }
+
+    public static func ==(lhs: HasPendingMappingsResponse, rhs: HasPendingMappingsResponse) -> Bool {
+        lhs.pending == rhs.pending &&
+            lhs.clusters == rhs.clusters
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.pending.hashValue)
+        hasher.combine(self.clusters?.hashValue)
     }
 }

@@ -8,7 +8,7 @@ import Foundation
 
 /// Input for a manually-triggered task whose source is of type &#x60;bigquery&#x60; and for which extracted data spans
 /// a given time range.
-public struct OnDemandDateUtilsInput: Codable, JSONEncodable {
+public struct OnDemandDateUtilsInput: Codable, JSONEncodable, Hashable {
     /// Earliest date in RFC3339 format of the extracted data from Big Query.
     public var startDate: String
     /// Latest date in RFC3339 format of the extracted data from Big Query.
@@ -34,5 +34,17 @@ public struct OnDemandDateUtilsInput: Codable, JSONEncodable {
         try container.encode(self.startDate, forKey: .startDate)
         try container.encode(self.endDate, forKey: .endDate)
         try container.encodeIfPresent(self.mapping, forKey: .mapping)
+    }
+
+    public static func ==(lhs: OnDemandDateUtilsInput, rhs: OnDemandDateUtilsInput) -> Bool {
+        lhs.startDate == rhs.startDate &&
+            lhs.endDate == rhs.endDate &&
+            lhs.mapping == rhs.mapping
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.startDate.hashValue)
+        hasher.combine(self.endDate.hashValue)
+        hasher.combine(self.mapping?.hashValue)
     }
 }

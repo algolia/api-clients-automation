@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Synonym object.
-public struct SynonymHit: Codable, JSONEncodable {
+public struct SynonymHit: Codable, JSONEncodable, Hashable {
     /// Unique identifier of a synonym object.
     public var objectID: String
     public var type: SynonymType
@@ -68,5 +68,27 @@ public struct SynonymHit: Codable, JSONEncodable {
         try container.encodeIfPresent(self.corrections, forKey: .corrections)
         try container.encodeIfPresent(self.placeholder, forKey: .placeholder)
         try container.encodeIfPresent(self.replacements, forKey: .replacements)
+    }
+
+    public static func ==(lhs: SynonymHit, rhs: SynonymHit) -> Bool {
+        lhs.objectID == rhs.objectID &&
+            lhs.type == rhs.type &&
+            lhs.synonyms == rhs.synonyms &&
+            lhs.input == rhs.input &&
+            lhs.word == rhs.word &&
+            lhs.corrections == rhs.corrections &&
+            lhs.placeholder == rhs.placeholder &&
+            lhs.replacements == rhs.replacements
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.objectID.hashValue)
+        hasher.combine(self.type.hashValue)
+        hasher.combine(self.synonyms?.hashValue)
+        hasher.combine(self.input?.hashValue)
+        hasher.combine(self.word?.hashValue)
+        hasher.combine(self.corrections?.hashValue)
+        hasher.combine(self.placeholder?.hashValue)
+        hasher.combine(self.replacements?.hashValue)
     }
 }

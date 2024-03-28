@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// User ID data.
-public struct ListUserIdsResponse: Codable, JSONEncodable {
+public struct ListUserIdsResponse: Codable, JSONEncodable, Hashable {
     /// User IDs.
     public var userIDs: [UserId]
 
@@ -24,5 +24,13 @@ public struct ListUserIdsResponse: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.userIDs, forKey: .userIDs)
+    }
+
+    public static func ==(lhs: ListUserIdsResponse, rhs: ListUserIdsResponse) -> Bool {
+        lhs.userIDs == rhs.userIDs
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.userIDs.hashValue)
     }
 }

@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct MultipleBatchResponse: Codable, JSONEncodable {
+public struct MultipleBatchResponse: Codable, JSONEncodable, Hashable {
     /// Task IDs. One for each index.
     public var taskID: [String: Int64]
     /// Unique record identifiers.
@@ -28,5 +28,15 @@ public struct MultipleBatchResponse: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.taskID, forKey: .taskID)
         try container.encode(self.objectIDs, forKey: .objectIDs)
+    }
+
+    public static func ==(lhs: MultipleBatchResponse, rhs: MultipleBatchResponse) -> Bool {
+        lhs.taskID == rhs.taskID &&
+            lhs.objectIDs == rhs.objectIDs
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.taskID.hashValue)
+        hasher.combine(self.objectIDs.hashValue)
     }
 }

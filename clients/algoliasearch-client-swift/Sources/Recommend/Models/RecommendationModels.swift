@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Recommendation model.
-public enum RecommendationModels: String, Codable, CaseIterable {
+public enum RecommendationModels: String, Codable, CaseIterable, Hashable {
     case relatedProducts = "related-products"
     case boughtTogether = "bought-together"
 }

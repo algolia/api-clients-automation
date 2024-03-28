@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Request body for retrieving records.
-public struct GetObjectsRequest: Codable, JSONEncodable {
+public struct GetObjectsRequest: Codable, JSONEncodable, Hashable {
     /// Attributes to retrieve. If not specified, all retrievable attributes are returned.
     public var attributesToRetrieve: [String]?
     /// Object ID for the record to retrieve.
@@ -34,5 +34,17 @@ public struct GetObjectsRequest: Codable, JSONEncodable {
         try container.encodeIfPresent(self.attributesToRetrieve, forKey: .attributesToRetrieve)
         try container.encode(self.objectID, forKey: .objectID)
         try container.encode(self.indexName, forKey: .indexName)
+    }
+
+    public static func ==(lhs: GetObjectsRequest, rhs: GetObjectsRequest) -> Bool {
+        lhs.attributesToRetrieve == rhs.attributesToRetrieve &&
+            lhs.objectID == rhs.objectID &&
+            lhs.indexName == rhs.indexName
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.attributesToRetrieve?.hashValue)
+        hasher.combine(self.objectID.hashValue)
+        hasher.combine(self.indexName.hashValue)
     }
 }

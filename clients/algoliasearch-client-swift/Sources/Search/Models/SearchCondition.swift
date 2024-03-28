@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SearchCondition: Codable, JSONEncodable {
+public struct SearchCondition: Codable, JSONEncodable, Hashable {
     /// Query pattern that triggers the rule.  You can use either a literal string, or a special pattern
     /// `{facet:ATTRIBUTE}`, where `ATTRIBUTE` is a facet name. The rule is triggered if the query matches the literal
     /// string or a value of the specified facet. For example, with `pattern: {facet:genre}`, the rule is triggered when
@@ -55,5 +55,21 @@ public struct SearchCondition: Codable, JSONEncodable {
         try container.encodeIfPresent(self.alternatives, forKey: .alternatives)
         try container.encodeIfPresent(self.context, forKey: .context)
         try container.encodeIfPresent(self.filters, forKey: .filters)
+    }
+
+    public static func ==(lhs: SearchCondition, rhs: SearchCondition) -> Bool {
+        lhs.pattern == rhs.pattern &&
+            lhs.anchoring == rhs.anchoring &&
+            lhs.alternatives == rhs.alternatives &&
+            lhs.context == rhs.context &&
+            lhs.filters == rhs.filters
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.pattern?.hashValue)
+        hasher.combine(self.anchoring?.hashValue)
+        hasher.combine(self.alternatives?.hashValue)
+        hasher.combine(self.context?.hashValue)
+        hasher.combine(self.filters?.hashValue)
     }
 }

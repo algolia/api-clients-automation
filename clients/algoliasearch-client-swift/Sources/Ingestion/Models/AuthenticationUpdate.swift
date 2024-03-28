@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Request body for updating an authentication resource.
-public struct AuthenticationUpdate: Codable, JSONEncodable {
+public struct AuthenticationUpdate: Codable, JSONEncodable, Hashable {
     public var type: AuthenticationType?
     /// Descriptive name for the resource.
     public var name: String?
@@ -41,5 +41,19 @@ public struct AuthenticationUpdate: Codable, JSONEncodable {
         try container.encodeIfPresent(self.name, forKey: .name)
         try container.encodeIfPresent(self.platform, forKey: .platform)
         try container.encodeIfPresent(self.input, forKey: .input)
+    }
+
+    public static func ==(lhs: AuthenticationUpdate, rhs: AuthenticationUpdate) -> Bool {
+        lhs.type == rhs.type &&
+            lhs.name == rhs.name &&
+            lhs.platform == rhs.platform &&
+            lhs.input == rhs.input
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.type?.hashValue)
+        hasher.combine(self.name?.hashValue)
+        hasher.combine(self.platform?.hashValue)
+        hasher.combine(self.input?.hashValue)
     }
 }

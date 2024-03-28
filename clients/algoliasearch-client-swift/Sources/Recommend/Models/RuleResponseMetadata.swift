@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct RuleResponseMetadata: Codable, JSONEncodable {
+public struct RuleResponseMetadata: Codable, JSONEncodable, Hashable {
     /// Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
     public var lastUpdate: String?
 
@@ -23,5 +23,13 @@ public struct RuleResponseMetadata: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.lastUpdate, forKey: .lastUpdate)
+    }
+
+    public static func ==(lhs: RuleResponseMetadata, rhs: RuleResponseMetadata) -> Bool {
+        lhs.lastUpdate == rhs.lastUpdate
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.lastUpdate?.hashValue)
     }
 }

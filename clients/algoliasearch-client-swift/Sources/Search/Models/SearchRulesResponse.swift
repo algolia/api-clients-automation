@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SearchRulesResponse: Codable, JSONEncodable {
+public struct SearchRulesResponse: Codable, JSONEncodable, Hashable {
     /// Rules that matched the search criteria.
     public var hits: [Rule]
     /// Number of rules that matched the search criteria.
@@ -38,5 +38,19 @@ public struct SearchRulesResponse: Codable, JSONEncodable {
         try container.encode(self.nbHits, forKey: .nbHits)
         try container.encode(self.page, forKey: .page)
         try container.encode(self.nbPages, forKey: .nbPages)
+    }
+
+    public static func ==(lhs: SearchRulesResponse, rhs: SearchRulesResponse) -> Bool {
+        lhs.hits == rhs.hits &&
+            lhs.nbHits == rhs.nbHits &&
+            lhs.page == rhs.page &&
+            lhs.nbPages == rhs.nbPages
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.hits.hashValue)
+        hasher.combine(self.nbHits.hashValue)
+        hasher.combine(self.page.hashValue)
+        hasher.combine(self.nbPages.hashValue)
     }
 }

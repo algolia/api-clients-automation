@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Type of edit.
-public enum RecommendEditType: String, Codable, CaseIterable {
+public enum RecommendEditType: String, Codable, CaseIterable, Hashable {
     case remove
     case replace
 }

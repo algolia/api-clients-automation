@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Configuration of an Algolia index for Query Suggestions.
-public struct SourceIndex: Codable, JSONEncodable {
+public struct SourceIndex: Codable, JSONEncodable, Hashable {
     /// Name of the Algolia index to use as source for query suggestions.
     public var indexName: String
     /// If true, Query Suggestions uses all replicas of the primary index to find popular searches. If false, only the
@@ -76,5 +76,27 @@ public struct SourceIndex: Codable, JSONEncodable {
         try container.encodeIfPresent(self.minLetters, forKey: .minLetters)
         try container.encodeIfPresent(self.generate, forKey: .generate)
         try container.encodeIfPresent(self.external, forKey: .external)
+    }
+
+    public static func ==(lhs: SourceIndex, rhs: SourceIndex) -> Bool {
+        lhs.indexName == rhs.indexName &&
+            lhs.replicas == rhs.replicas &&
+            lhs.analyticsTags == rhs.analyticsTags &&
+            lhs.facets == rhs.facets &&
+            lhs.minHits == rhs.minHits &&
+            lhs.minLetters == rhs.minLetters &&
+            lhs.generate == rhs.generate &&
+            lhs.external == rhs.external
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.indexName.hashValue)
+        hasher.combine(self.replicas?.hashValue)
+        hasher.combine(self.analyticsTags?.hashValue)
+        hasher.combine(self.facets?.hashValue)
+        hasher.combine(self.minHits?.hashValue)
+        hasher.combine(self.minLetters?.hashValue)
+        hasher.combine(self.generate?.hashValue)
+        hasher.combine(self.external?.hashValue)
     }
 }

@@ -8,7 +8,7 @@ import Foundation
 
 /// Parameters to apply to this search.  You can use all search parameters, plus special
 /// &#x60;automaticFacetFilters&#x60;, &#x60;automaticOptionalFacetFilters&#x60;, and &#x60;query&#x60;.
-public struct RecommendParams: Codable, JSONEncodable {
+public struct RecommendParams: Codable, JSONEncodable, Hashable {
     public var query: RecommendConsequenceQuery?
     public var automaticFacetFilters: RecommendAutomaticFacetFilters?
     public var automaticOptionalFacetFilters: RecommendAutomaticFacetFilters?
@@ -41,5 +41,19 @@ public struct RecommendParams: Codable, JSONEncodable {
         try container.encodeIfPresent(self.automaticFacetFilters, forKey: .automaticFacetFilters)
         try container.encodeIfPresent(self.automaticOptionalFacetFilters, forKey: .automaticOptionalFacetFilters)
         try container.encodeIfPresent(self.renderingContent, forKey: .renderingContent)
+    }
+
+    public static func ==(lhs: RecommendParams, rhs: RecommendParams) -> Bool {
+        lhs.query == rhs.query &&
+            lhs.automaticFacetFilters == rhs.automaticFacetFilters &&
+            lhs.automaticOptionalFacetFilters == rhs.automaticOptionalFacetFilters &&
+            lhs.renderingContent == rhs.renderingContent
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.query?.hashValue)
+        hasher.combine(self.automaticFacetFilters?.hashValue)
+        hasher.combine(self.automaticOptionalFacetFilters?.hashValue)
+        hasher.combine(self.renderingContent?.hashValue)
     }
 }

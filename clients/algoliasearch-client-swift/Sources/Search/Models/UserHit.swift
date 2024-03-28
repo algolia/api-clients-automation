@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct UserHit: Codable, JSONEncodable {
+public struct UserHit: Codable, JSONEncodable, Hashable {
     /// User ID.
     public var userID: String
     /// Cluster name.
@@ -54,5 +54,23 @@ public struct UserHit: Codable, JSONEncodable {
         try container.encode(self.dataSize, forKey: .dataSize)
         try container.encode(self.objectID, forKey: .objectID)
         try container.encode(self.highlightResult, forKey: .highlightResult)
+    }
+
+    public static func ==(lhs: UserHit, rhs: UserHit) -> Bool {
+        lhs.userID == rhs.userID &&
+            lhs.clusterName == rhs.clusterName &&
+            lhs.nbRecords == rhs.nbRecords &&
+            lhs.dataSize == rhs.dataSize &&
+            lhs.objectID == rhs.objectID &&
+            lhs.highlightResult == rhs.highlightResult
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.userID.hashValue)
+        hasher.combine(self.clusterName.hashValue)
+        hasher.combine(self.nbRecords.hashValue)
+        hasher.combine(self.dataSize.hashValue)
+        hasher.combine(self.objectID.hashValue)
+        hasher.combine(self.highlightResult.hashValue)
     }
 }

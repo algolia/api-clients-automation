@@ -8,7 +8,7 @@ import Foundation
 
 /// Restrict [Dynamic Re-ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) to records that match these
 /// filters.
-public enum SearchReRankingApplyFilter: Codable, JSONEncodable, AbstractEncodable {
+public enum SearchReRankingApplyFilter: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case arrayOfSearchMixedSearchFilters([SearchMixedSearchFilters])
     case string(String)
 

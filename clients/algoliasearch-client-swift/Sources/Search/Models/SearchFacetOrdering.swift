@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Order of facet names and facet values in your UI.
-public struct SearchFacetOrdering: Codable, JSONEncodable {
+public struct SearchFacetOrdering: Codable, JSONEncodable, Hashable {
     public var facets: SearchFacets?
     /// Order of facet values. One object for each facet.
     public var values: [String: SearchValue]?
@@ -28,5 +28,15 @@ public struct SearchFacetOrdering: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.facets, forKey: .facets)
         try container.encodeIfPresent(self.values, forKey: .values)
+    }
+
+    public static func ==(lhs: SearchFacetOrdering, rhs: SearchFacetOrdering) -> Bool {
+        lhs.facets == rhs.facets &&
+            lhs.values == rhs.values
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.facets?.hashValue)
+        hasher.combine(self.values?.hashValue)
     }
 }

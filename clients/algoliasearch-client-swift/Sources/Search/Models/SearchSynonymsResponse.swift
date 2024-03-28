@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SearchSynonymsResponse: Codable, JSONEncodable {
+public struct SearchSynonymsResponse: Codable, JSONEncodable, Hashable {
     /// Matching synonyms.
     public var hits: [SynonymHit]
     /// Number of results (hits).
@@ -81,5 +81,17 @@ public struct SearchSynonymsResponse: Codable, JSONEncodable {
             AnyCodable.self,
             excludedKeys: nonAdditionalPropertyKeys
         )
+    }
+
+    public static func ==(lhs: SearchSynonymsResponse, rhs: SearchSynonymsResponse) -> Bool {
+        lhs.hits == rhs.hits &&
+            lhs.nbHits == rhs.nbHits
+            && lhs.additionalProperties == rhs.additionalProperties
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.hits.hashValue)
+        hasher.combine(self.nbHits.hashValue)
+        hasher.combine(self.additionalProperties.hashValue)
     }
 }

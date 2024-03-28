@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct ObjectDataAfterSearch: Codable, JSONEncodable {
+public struct ObjectDataAfterSearch: Codable, JSONEncodable, Hashable {
     /// Unique identifier for a search query, used to track purchase events with multiple records that originate from
     /// different searches.
     public var queryID: String?
@@ -38,5 +38,19 @@ public struct ObjectDataAfterSearch: Codable, JSONEncodable {
         try container.encodeIfPresent(self.price, forKey: .price)
         try container.encodeIfPresent(self.quantity, forKey: .quantity)
         try container.encodeIfPresent(self.discount, forKey: .discount)
+    }
+
+    public static func ==(lhs: ObjectDataAfterSearch, rhs: ObjectDataAfterSearch) -> Bool {
+        lhs.queryID == rhs.queryID &&
+            lhs.price == rhs.price &&
+            lhs.quantity == rhs.quantity &&
+            lhs.discount == rhs.discount
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.queryID?.hashValue)
+        hasher.combine(self.price?.hashValue)
+        hasher.combine(self.quantity?.hashValue)
+        hasher.combine(self.discount?.hashValue)
     }
 }

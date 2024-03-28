@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Outliers removed from the A/B test as a result of configuration settings.
-public struct FilterEffectsOutliers: Codable, JSONEncodable {
+public struct FilterEffectsOutliers: Codable, JSONEncodable, Hashable {
     /// Number of users removed from the A/B test.
     public var usersCount: Int?
     /// Number of tracked searches removed from the A/B test.
@@ -29,5 +29,15 @@ public struct FilterEffectsOutliers: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.usersCount, forKey: .usersCount)
         try container.encodeIfPresent(self.trackedSearchesCount, forKey: .trackedSearchesCount)
+    }
+
+    public static func ==(lhs: FilterEffectsOutliers, rhs: FilterEffectsOutliers) -> Bool {
+        lhs.usersCount == rhs.usersCount &&
+            lhs.trackedSearchesCount == rhs.trackedSearchesCount
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.usersCount?.hashValue)
+        hasher.combine(self.trackedSearchesCount?.hashValue)
     }
 }

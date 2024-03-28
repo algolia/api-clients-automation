@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum SourceType: String, Codable, CaseIterable {
+public enum SourceType: String, Codable, CaseIterable, Hashable {
     case bigcommerce
     case bigquery
     case commercetools

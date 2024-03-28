@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum BigQueryDataType: String, Codable, CaseIterable {
+public enum BigQueryDataType: String, Codable, CaseIterable, Hashable {
     case ga4
     case ga360
 }

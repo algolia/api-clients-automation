@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Rule object.
-public struct Rule: Codable, JSONEncodable {
+public struct Rule: Codable, JSONEncodable, Hashable {
     /// Unique identifier of a rule object.
     public var objectID: String
     /// Conditions that trigger a rule.  Some consequences require specific conditions or don't require any condition.
@@ -57,5 +57,23 @@ public struct Rule: Codable, JSONEncodable {
         try container.encodeIfPresent(self.description, forKey: .description)
         try container.encodeIfPresent(self.enabled, forKey: .enabled)
         try container.encodeIfPresent(self.validity, forKey: .validity)
+    }
+
+    public static func ==(lhs: Rule, rhs: Rule) -> Bool {
+        lhs.objectID == rhs.objectID &&
+            lhs.conditions == rhs.conditions &&
+            lhs.consequence == rhs.consequence &&
+            lhs.description == rhs.description &&
+            lhs.enabled == rhs.enabled &&
+            lhs.validity == rhs.validity
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.objectID.hashValue)
+        hasher.combine(self.conditions?.hashValue)
+        hasher.combine(self.consequence?.hashValue)
+        hasher.combine(self.description?.hashValue)
+        hasher.combine(self.enabled?.hashValue)
+        hasher.combine(self.validity?.hashValue)
     }
 }

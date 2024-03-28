@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// API request body for searching destinations.
-public struct DestinationSearch: Codable, JSONEncodable {
+public struct DestinationSearch: Codable, JSONEncodable, Hashable {
     public var destinationIDs: [String]
 
     public init(destinationIDs: [String]) {
@@ -23,5 +23,13 @@ public struct DestinationSearch: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.destinationIDs, forKey: .destinationIDs)
+    }
+
+    public static func ==(lhs: DestinationSearch, rhs: DestinationSearch) -> Bool {
+        lhs.destinationIDs == rhs.destinationIDs
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.destinationIDs.hashValue)
     }
 }

@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Type of indexing operation.
-public enum Action: String, Codable, CaseIterable {
+public enum Action: String, Codable, CaseIterable, Hashable {
     case addObject
     case updateObject
     case partialUpdateObject

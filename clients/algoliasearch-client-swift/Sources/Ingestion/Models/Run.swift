@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct Run: Codable, JSONEncodable {
+public struct Run: Codable, JSONEncodable, Hashable {
     /// Universally unique identifier (UUID) of a task run.
     public var runID: String
     public var appID: String
@@ -91,5 +91,37 @@ public struct Run: Codable, JSONEncodable {
         try container.encode(self.createdAt, forKey: .createdAt)
         try container.encodeIfPresent(self.startedAt, forKey: .startedAt)
         try container.encodeIfPresent(self.finishedAt, forKey: .finishedAt)
+    }
+
+    public static func ==(lhs: Run, rhs: Run) -> Bool {
+        lhs.runID == rhs.runID &&
+            lhs.appID == rhs.appID &&
+            lhs.taskID == rhs.taskID &&
+            lhs.status == rhs.status &&
+            lhs.progress == rhs.progress &&
+            lhs.outcome == rhs.outcome &&
+            lhs.failureThreshold == rhs.failureThreshold &&
+            lhs.reason == rhs.reason &&
+            lhs.reasonCode == rhs.reasonCode &&
+            lhs.type == rhs.type &&
+            lhs.createdAt == rhs.createdAt &&
+            lhs.startedAt == rhs.startedAt &&
+            lhs.finishedAt == rhs.finishedAt
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.runID.hashValue)
+        hasher.combine(self.appID.hashValue)
+        hasher.combine(self.taskID.hashValue)
+        hasher.combine(self.status.hashValue)
+        hasher.combine(self.progress?.hashValue)
+        hasher.combine(self.outcome?.hashValue)
+        hasher.combine(self.failureThreshold?.hashValue)
+        hasher.combine(self.reason?.hashValue)
+        hasher.combine(self.reasonCode?.hashValue)
+        hasher.combine(self.type.hashValue)
+        hasher.combine(self.createdAt.hashValue)
+        hasher.combine(self.startedAt?.hashValue)
+        hasher.combine(self.finishedAt?.hashValue)
     }
 }

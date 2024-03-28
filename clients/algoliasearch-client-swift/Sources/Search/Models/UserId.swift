@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Unique user ID.
-public struct UserId: Codable, JSONEncodable {
+public struct UserId: Codable, JSONEncodable, Hashable {
     /// User ID.
     public var userID: String
     /// Cluster to which the user is assigned.
@@ -39,5 +39,19 @@ public struct UserId: Codable, JSONEncodable {
         try container.encode(self.clusterName, forKey: .clusterName)
         try container.encode(self.nbRecords, forKey: .nbRecords)
         try container.encode(self.dataSize, forKey: .dataSize)
+    }
+
+    public static func ==(lhs: UserId, rhs: UserId) -> Bool {
+        lhs.userID == rhs.userID &&
+            lhs.clusterName == rhs.clusterName &&
+            lhs.nbRecords == rhs.nbRecords &&
+            lhs.dataSize == rhs.dataSize
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.userID.hashValue)
+        hasher.combine(self.clusterName.hashValue)
+        hasher.combine(self.nbRecords.hashValue)
+        hasher.combine(self.dataSize.hashValue)
     }
 }

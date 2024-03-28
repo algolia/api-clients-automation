@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct DestinationIndexName: Codable, JSONEncodable {
+public struct DestinationIndexName: Codable, JSONEncodable, Hashable {
     /// Algolia index name.
     public var indexName: String
     public var recordType: RecordType?
@@ -38,5 +38,17 @@ public struct DestinationIndexName: Codable, JSONEncodable {
         try container.encode(self.indexName, forKey: .indexName)
         try container.encodeIfPresent(self.recordType, forKey: .recordType)
         try container.encodeIfPresent(self.attributesToExclude, forKey: .attributesToExclude)
+    }
+
+    public static func ==(lhs: DestinationIndexName, rhs: DestinationIndexName) -> Bool {
+        lhs.indexName == rhs.indexName &&
+            lhs.recordType == rhs.recordType &&
+            lhs.attributesToExclude == rhs.attributesToExclude
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.indexName.hashValue)
+        hasher.combine(self.recordType?.hashValue)
+        hasher.combine(self.attributesToExclude?.hashValue)
     }
 }

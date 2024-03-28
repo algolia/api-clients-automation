@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct GetTopFiltersNoResultsValue: Codable, JSONEncodable {
+public struct GetTopFiltersNoResultsValue: Codable, JSONEncodable, Hashable {
     /// Attribute name.
     public var attribute: String
     public var `operator`: Operator
@@ -32,5 +32,17 @@ public struct GetTopFiltersNoResultsValue: Codable, JSONEncodable {
         try container.encode(self.attribute, forKey: .attribute)
         try container.encode(self.`operator`, forKey: .`operator`)
         try container.encode(self.value, forKey: .value)
+    }
+
+    public static func ==(lhs: GetTopFiltersNoResultsValue, rhs: GetTopFiltersNoResultsValue) -> Bool {
+        lhs.attribute == rhs.attribute &&
+            lhs.`operator` == rhs.`operator` &&
+            lhs.value == rhs.value
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.attribute.hashValue)
+        hasher.combine(self.`operator`.hashValue)
+        hasher.combine(self.value.hashValue)
     }
 }

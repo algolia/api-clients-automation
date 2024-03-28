@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Synonym type.
-public enum SynonymType: String, Codable, CaseIterable {
+public enum SynonymType: String, Codable, CaseIterable, Hashable {
     case synonym
     case onewaysynonym
     case altcorrection1

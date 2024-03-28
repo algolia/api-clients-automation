@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct OperationIndexParams: Codable, JSONEncodable {
+public struct OperationIndexParams: Codable, JSONEncodable, Hashable {
     public var operation: OperationType
     /// Index name.
     public var destination: String
@@ -34,5 +34,17 @@ public struct OperationIndexParams: Codable, JSONEncodable {
         try container.encode(self.operation, forKey: .operation)
         try container.encode(self.destination, forKey: .destination)
         try container.encodeIfPresent(self.scope, forKey: .scope)
+    }
+
+    public static func ==(lhs: OperationIndexParams, rhs: OperationIndexParams) -> Bool {
+        lhs.operation == rhs.operation &&
+            lhs.destination == rhs.destination &&
+            lhs.scope == rhs.scope
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.operation.hashValue)
+        hasher.combine(self.destination.hashValue)
+        hasher.combine(self.scope?.hashValue)
     }
 }

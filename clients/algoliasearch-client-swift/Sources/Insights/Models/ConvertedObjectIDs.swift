@@ -9,7 +9,7 @@ import Foundation
 /// Use this event to track when users convert on items unrelated to a previous Algolia request. For example, if you
 /// don&#39;t use Algolia to build your category pages, use this event.  To track conversion events related to Algolia
 /// requests, use the \&quot;Converted object IDs after search\&quot; event.
-public struct ConvertedObjectIDs: Codable, JSONEncodable {
+public struct ConvertedObjectIDs: Codable, JSONEncodable, Hashable {
     /// Event name, up to 64 ASCII characters.  Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
     /// framework.
     public var eventName: String
@@ -70,5 +70,25 @@ public struct ConvertedObjectIDs: Codable, JSONEncodable {
         try container.encode(self.userToken, forKey: .userToken)
         try container.encodeIfPresent(self.authenticatedUserToken, forKey: .authenticatedUserToken)
         try container.encodeIfPresent(self.timestamp, forKey: .timestamp)
+    }
+
+    public static func ==(lhs: ConvertedObjectIDs, rhs: ConvertedObjectIDs) -> Bool {
+        lhs.eventName == rhs.eventName &&
+            lhs.eventType == rhs.eventType &&
+            lhs.index == rhs.index &&
+            lhs.objectIDs == rhs.objectIDs &&
+            lhs.userToken == rhs.userToken &&
+            lhs.authenticatedUserToken == rhs.authenticatedUserToken &&
+            lhs.timestamp == rhs.timestamp
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.eventName.hashValue)
+        hasher.combine(self.eventType.hashValue)
+        hasher.combine(self.index.hashValue)
+        hasher.combine(self.objectIDs.hashValue)
+        hasher.combine(self.userToken.hashValue)
+        hasher.combine(self.authenticatedUserToken?.hashValue)
+        hasher.combine(self.timestamp?.hashValue)
     }
 }

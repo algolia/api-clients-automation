@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Rules search parameters.
-public struct SearchRulesParams: Codable, JSONEncodable {
+public struct SearchRulesParams: Codable, JSONEncodable, Hashable {
     /// Search query for rules.
     public var query: String?
     public var anchoring: SearchAnchoring?
@@ -56,5 +56,23 @@ public struct SearchRulesParams: Codable, JSONEncodable {
         try container.encodeIfPresent(self.page, forKey: .page)
         try container.encodeIfPresent(self.hitsPerPage, forKey: .hitsPerPage)
         try container.encodeIfPresent(self.enabled, forKey: .enabled)
+    }
+
+    public static func ==(lhs: SearchRulesParams, rhs: SearchRulesParams) -> Bool {
+        lhs.query == rhs.query &&
+            lhs.anchoring == rhs.anchoring &&
+            lhs.context == rhs.context &&
+            lhs.page == rhs.page &&
+            lhs.hitsPerPage == rhs.hitsPerPage &&
+            lhs.enabled == rhs.enabled
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.query?.hashValue)
+        hasher.combine(self.anchoring?.hashValue)
+        hasher.combine(self.context?.hashValue)
+        hasher.combine(self.page?.hashValue)
+        hasher.combine(self.hitsPerPage?.hashValue)
+        hasher.combine(self.enabled?.hashValue)
     }
 }

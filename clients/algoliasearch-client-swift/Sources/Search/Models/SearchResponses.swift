@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SearchResponses<T: Codable>: Codable, JSONEncodable {
+public struct SearchResponses<T: Codable & Hashable>: Codable, JSONEncodable, Hashable {
     public var results: [SearchResult<T>]
 
     public init(results: [SearchResult<T>]) {
@@ -22,5 +22,13 @@ public struct SearchResponses<T: Codable>: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.results, forKey: .results)
+    }
+
+    public static func ==(lhs: SearchResponses, rhs: SearchResponses) -> Bool {
+        lhs.results == rhs.results
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.results.hashValue)
     }
 }

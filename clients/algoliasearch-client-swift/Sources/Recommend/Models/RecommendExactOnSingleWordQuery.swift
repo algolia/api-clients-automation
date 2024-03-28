@@ -16,7 +16,7 @@ import Foundation
 /// found in the attribute value. The query word must have at least 3 characters and must not be a stop word.
 /// &lt;/dd&gt; &lt;/dl&gt;  If &#x60;exactOnSingleWordQuery&#x60; is &#x60;word&#x60;, only exact matches will be
 /// highlighted, partial and prefix matches won&#39;t.
-public enum RecommendExactOnSingleWordQuery: String, Codable, CaseIterable {
+public enum RecommendExactOnSingleWordQuery: String, Codable, CaseIterable, Hashable {
     case attribute
     case `none`
     case word

@@ -9,7 +9,7 @@ import Foundation
 /// Destination type.  &lt;dl&gt; &lt;dt&gt;&lt;code&gt;search&lt;/code&gt;&lt;/dt&gt; &lt;dd&gt;Data is stored in an
 /// Algolia index.&lt;/dd&gt; &lt;dt&gt;&lt;code&gt;insights&lt;/code&gt;&lt;/dt&gt; &lt;dd&gt;Data is recorded as user
 /// events in the Insights API.&lt;/dd&gt; &lt;/dl&gt;.
-public enum DestinationType: String, Codable, CaseIterable {
+public enum DestinationType: String, Codable, CaseIterable, Hashable {
     case search
     case insights
 }

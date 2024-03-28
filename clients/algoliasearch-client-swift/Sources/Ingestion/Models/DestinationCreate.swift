@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// API request body for creating a new destination.
-public struct DestinationCreate: Codable, JSONEncodable {
+public struct DestinationCreate: Codable, JSONEncodable, Hashable {
     public var type: DestinationType
     /// Descriptive name for the resource.
     public var name: String
@@ -37,5 +37,19 @@ public struct DestinationCreate: Codable, JSONEncodable {
         try container.encode(self.name, forKey: .name)
         try container.encode(self.input, forKey: .input)
         try container.encodeIfPresent(self.authenticationID, forKey: .authenticationID)
+    }
+
+    public static func ==(lhs: DestinationCreate, rhs: DestinationCreate) -> Bool {
+        lhs.type == rhs.type &&
+            lhs.name == rhs.name &&
+            lhs.input == rhs.input &&
+            lhs.authenticationID == rhs.authenticationID
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.type.hashValue)
+        hasher.combine(self.name.hashValue)
+        hasher.combine(self.input.hashValue)
+        hasher.combine(self.authenticationID?.hashValue)
     }
 }

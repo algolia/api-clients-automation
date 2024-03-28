@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Property by which to sort the list of authentication resources.
-public enum AuthenticationSortKeys: String, Codable, CaseIterable {
+public enum AuthenticationSortKeys: String, Codable, CaseIterable, Hashable {
     case name
     case authType = "auth_type"
     case platform

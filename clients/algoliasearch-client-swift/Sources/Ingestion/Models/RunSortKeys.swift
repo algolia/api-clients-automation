@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Property by which to sort the list of task runs.
-public enum RunSortKeys: String, Codable, CaseIterable {
+public enum RunSortKeys: String, Codable, CaseIterable, Hashable {
     case status
     case updatedAt
     case createdAt

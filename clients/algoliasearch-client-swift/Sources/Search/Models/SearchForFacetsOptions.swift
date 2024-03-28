@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SearchForFacetsOptions: Codable, JSONEncodable {
+public struct SearchForFacetsOptions: Codable, JSONEncodable, Hashable {
     /// Facet name.
     public var facet: String
     /// Index name.
@@ -49,5 +49,21 @@ public struct SearchForFacetsOptions: Codable, JSONEncodable {
         try container.encodeIfPresent(self.facetQuery, forKey: .facetQuery)
         try container.encodeIfPresent(self.maxFacetHits, forKey: .maxFacetHits)
         try container.encode(self.type, forKey: .type)
+    }
+
+    public static func ==(lhs: SearchForFacetsOptions, rhs: SearchForFacetsOptions) -> Bool {
+        lhs.facet == rhs.facet &&
+            lhs.indexName == rhs.indexName &&
+            lhs.facetQuery == rhs.facetQuery &&
+            lhs.maxFacetHits == rhs.maxFacetHits &&
+            lhs.type == rhs.type
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.facet.hashValue)
+        hasher.combine(self.indexName.hashValue)
+        hasher.combine(self.facetQuery?.hashValue)
+        hasher.combine(self.maxFacetHits?.hashValue)
+        hasher.combine(self.type.hashValue)
     }
 }

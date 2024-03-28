@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct FacetHits: Codable, JSONEncodable {
+public struct FacetHits: Codable, JSONEncodable, Hashable {
     /// Facet value.
     public var value: String
     /// Highlighted attribute value, including HTML tags.
@@ -33,5 +33,17 @@ public struct FacetHits: Codable, JSONEncodable {
         try container.encode(self.value, forKey: .value)
         try container.encode(self.highlighted, forKey: .highlighted)
         try container.encode(self.count, forKey: .count)
+    }
+
+    public static func ==(lhs: FacetHits, rhs: FacetHits) -> Bool {
+        lhs.value == rhs.value &&
+            lhs.highlighted == rhs.highlighted &&
+            lhs.count == rhs.count
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.value.hashValue)
+        hasher.combine(self.highlighted.hashValue)
+        hasher.combine(self.count.hashValue)
     }
 }

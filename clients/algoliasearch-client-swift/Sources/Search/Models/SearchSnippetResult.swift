@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum SearchSnippetResult: Codable, JSONEncodable, AbstractEncodable {
+public enum SearchSnippetResult: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case searchSnippetResultOption(SearchSnippetResultOption)
     case dictionaryOfStringToSearchSnippetResultOption([String: SearchSnippetResultOption])
     case arrayOfSearchSnippetResultOption([SearchSnippetResultOption])

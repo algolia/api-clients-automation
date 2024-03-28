@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Whether the whole query string matches or only a part.
-public enum SearchMatchLevel: String, Codable, CaseIterable {
+public enum SearchMatchLevel: String, Codable, CaseIterable, Hashable {
     case `none`
     case partial
     case full

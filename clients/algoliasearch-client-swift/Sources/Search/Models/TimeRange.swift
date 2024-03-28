@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct TimeRange: Codable, JSONEncodable {
+public struct TimeRange: Codable, JSONEncodable, Hashable {
     /// When the rule should start to be active, in Unix epoch time.
     public var from: Int
     /// When the rule should stop to be active, in Unix epoch time.
@@ -28,5 +28,15 @@ public struct TimeRange: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.from, forKey: .from)
         try container.encode(self.until, forKey: .until)
+    }
+
+    public static func ==(lhs: TimeRange, rhs: TimeRange) -> Bool {
+        lhs.from == rhs.from &&
+            lhs.until == rhs.until
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.from.hashValue)
+        hasher.combine(self.until.hashValue)
     }
 }

@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Property by which to sort the list of task run events.
-public enum EventSortKeys: String, Codable, CaseIterable {
+public enum EventSortKeys: String, Codable, CaseIterable, Hashable {
     case status
     case type
     case publishedAt

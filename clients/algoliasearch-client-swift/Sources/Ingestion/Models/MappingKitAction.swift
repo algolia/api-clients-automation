@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Describes how a destination object should be resolved by means of applying a set of directives.
-public struct MappingKitAction: Codable, JSONEncodable {
+public struct MappingKitAction: Codable, JSONEncodable, Hashable {
     /// ID to uniquely identify this action.
     public var id: String?
     /// Whether this action has any effect.
@@ -39,5 +39,19 @@ public struct MappingKitAction: Codable, JSONEncodable {
         try container.encode(self.enabled, forKey: .enabled)
         try container.encode(self.trigger, forKey: .trigger)
         try container.encode(self.fieldDirectives, forKey: .fieldDirectives)
+    }
+
+    public static func ==(lhs: MappingKitAction, rhs: MappingKitAction) -> Bool {
+        lhs.id == rhs.id &&
+            lhs.enabled == rhs.enabled &&
+            lhs.trigger == rhs.trigger &&
+            lhs.fieldDirectives == rhs.fieldDirectives
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.id?.hashValue)
+        hasher.combine(self.enabled.hashValue)
+        hasher.combine(self.trigger.hashValue)
+        hasher.combine(self.fieldDirectives.hashValue)
     }
 }

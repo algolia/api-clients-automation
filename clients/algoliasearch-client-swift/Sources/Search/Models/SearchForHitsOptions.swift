@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SearchForHitsOptions: Codable, JSONEncodable {
+public struct SearchForHitsOptions: Codable, JSONEncodable, Hashable {
     /// Index name.
     public var indexName: String
     public var type: SearchTypeDefault?
@@ -27,5 +27,15 @@ public struct SearchForHitsOptions: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.indexName, forKey: .indexName)
         try container.encodeIfPresent(self.type, forKey: .type)
+    }
+
+    public static func ==(lhs: SearchForHitsOptions, rhs: SearchForHitsOptions) -> Bool {
+        lhs.indexName == rhs.indexName &&
+            lhs.type == rhs.type
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.indexName.hashValue)
+        hasher.combine(self.type?.hashValue)
     }
 }

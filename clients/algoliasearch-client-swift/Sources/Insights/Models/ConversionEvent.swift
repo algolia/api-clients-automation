@@ -6,6 +6,6 @@ import Foundation
     import Core
 #endif
 
-public enum ConversionEvent: String, Codable, CaseIterable {
+public enum ConversionEvent: String, Codable, CaseIterable, Hashable {
     case conversion
 }

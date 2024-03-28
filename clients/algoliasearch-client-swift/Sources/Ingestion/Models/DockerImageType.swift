@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Image type.
-public enum DockerImageType: String, Codable, CaseIterable {
+public enum DockerImageType: String, Codable, CaseIterable, Hashable {
     case singer
     case custom
     case airbyte

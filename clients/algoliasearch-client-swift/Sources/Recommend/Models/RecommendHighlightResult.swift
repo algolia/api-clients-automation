@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum RecommendHighlightResult: Codable, JSONEncodable, AbstractEncodable {
+public enum RecommendHighlightResult: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case recommendHighlightResultOption(RecommendHighlightResultOption)
     case dictionaryOfStringToRecommendHighlightResultOption([String: RecommendHighlightResultOption])
     case arrayOfRecommendHighlightResultOption([RecommendHighlightResultOption])

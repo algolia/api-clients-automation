@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum ApiKeyOperation: String, Codable, CaseIterable {
+public enum ApiKeyOperation: String, Codable, CaseIterable, Hashable {
     case add
     case delete
     case update

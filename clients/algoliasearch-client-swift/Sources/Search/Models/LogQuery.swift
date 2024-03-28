@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct LogQuery: Codable, JSONEncodable {
+public struct LogQuery: Codable, JSONEncodable, Hashable {
     /// Index targeted by the query.
     public var indexName: String?
     /// A user identifier.
@@ -33,5 +33,17 @@ public struct LogQuery: Codable, JSONEncodable {
         try container.encodeIfPresent(self.indexName, forKey: .indexName)
         try container.encodeIfPresent(self.userToken, forKey: .userToken)
         try container.encodeIfPresent(self.queryId, forKey: .queryId)
+    }
+
+    public static func ==(lhs: LogQuery, rhs: LogQuery) -> Bool {
+        lhs.indexName == rhs.indexName &&
+            lhs.userToken == rhs.userToken &&
+            lhs.queryId == rhs.queryId
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.indexName?.hashValue)
+        hasher.combine(self.userToken?.hashValue)
+        hasher.combine(self.queryId?.hashValue)
     }
 }

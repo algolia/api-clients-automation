@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct DeleteUserProfileResponse: Codable, JSONEncodable {
+public struct DeleteUserProfileResponse: Codable, JSONEncodable, Hashable {
     /// userToken representing the user for which to fetch the Personalization profile.
     public var userToken: String
     /// A date until which the data can safely be considered as deleted for the given user. Any data received after the
@@ -29,5 +29,15 @@ public struct DeleteUserProfileResponse: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.userToken, forKey: .userToken)
         try container.encode(self.deletedUntil, forKey: .deletedUntil)
+    }
+
+    public static func ==(lhs: DeleteUserProfileResponse, rhs: DeleteUserProfileResponse) -> Bool {
+        lhs.userToken == rhs.userToken &&
+            lhs.deletedUntil == rhs.deletedUntil
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.userToken.hashValue)
+        hasher.combine(self.deletedUntil.hashValue)
     }
 }

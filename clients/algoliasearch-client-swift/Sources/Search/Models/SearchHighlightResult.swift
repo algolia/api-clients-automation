@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum SearchHighlightResult: Codable, JSONEncodable, AbstractEncodable {
+public enum SearchHighlightResult: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case searchHighlightResultOption(SearchHighlightResultOption)
     case dictionaryOfStringToSearchHighlightResultOption([String: SearchHighlightResultOption])
     case arrayOfSearchHighlightResultOption([SearchHighlightResultOption])

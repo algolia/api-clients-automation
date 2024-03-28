@@ -8,7 +8,7 @@ import Foundation
 
 /// [Redirect results to a
 /// URL](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/redirects/).
-public struct RecommendRedirect: Codable, JSONEncodable {
+public struct RecommendRedirect: Codable, JSONEncodable, Hashable {
     public var index: [RecommendRedirectRuleIndexMetadata]?
 
     public init(index: [RecommendRedirectRuleIndexMetadata]? = nil) {
@@ -24,5 +24,13 @@ public struct RecommendRedirect: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.index, forKey: .index)
+    }
+
+    public static func ==(lhs: RecommendRedirect, rhs: RecommendRedirect) -> Bool {
+        lhs.index == rhs.index
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.index?.hashValue)
     }
 }

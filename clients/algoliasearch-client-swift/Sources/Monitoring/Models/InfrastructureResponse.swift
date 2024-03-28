@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct InfrastructureResponse: Codable, JSONEncodable {
+public struct InfrastructureResponse: Codable, JSONEncodable, Hashable {
     public var metrics: InfrastructureResponseMetrics?
 
     public init(metrics: InfrastructureResponseMetrics? = nil) {
@@ -22,5 +22,13 @@ public struct InfrastructureResponse: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.metrics, forKey: .metrics)
+    }
+
+    public static func ==(lhs: InfrastructureResponse, rhs: InfrastructureResponse) -> Bool {
+        lhs.metrics == rhs.metrics
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.metrics?.hashValue)
     }
 }

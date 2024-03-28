@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SaveObjectResponse: Codable, JSONEncodable {
+public struct SaveObjectResponse: Codable, JSONEncodable, Hashable {
     /// Timestamp when the record was added, in ISO 8601 format.
     public var createdAt: String
     /// Unique identifier of a task.  A successful API response means that a task was added to a queue. It might not run
@@ -35,5 +35,17 @@ public struct SaveObjectResponse: Codable, JSONEncodable {
         try container.encode(self.createdAt, forKey: .createdAt)
         try container.encode(self.taskID, forKey: .taskID)
         try container.encodeIfPresent(self.objectID, forKey: .objectID)
+    }
+
+    public static func ==(lhs: SaveObjectResponse, rhs: SaveObjectResponse) -> Bool {
+        lhs.createdAt == rhs.createdAt &&
+            lhs.taskID == rhs.taskID &&
+            lhs.objectID == rhs.objectID
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.createdAt.hashValue)
+        hasher.combine(self.taskID.hashValue)
+        hasher.combine(self.objectID?.hashValue)
     }
 }

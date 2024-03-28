@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct GetRevenue: Codable, JSONEncodable {
+public struct GetRevenue: Codable, JSONEncodable, Hashable {
     /// Revenue associated with this search, broken-down by currencies.
     public var currencies: [String: CurrenciesValue]
     /// Daily revenue.
@@ -28,5 +28,15 @@ public struct GetRevenue: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.currencies, forKey: .currencies)
         try container.encode(self.dates, forKey: .dates)
+    }
+
+    public static func ==(lhs: GetRevenue, rhs: GetRevenue) -> Bool {
+        lhs.currencies == rhs.currencies &&
+            lhs.dates == rhs.dates
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.currencies.hashValue)
+        hasher.combine(self.dates.hashValue)
     }
 }

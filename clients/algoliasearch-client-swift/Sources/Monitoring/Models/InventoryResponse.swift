@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct InventoryResponse: Codable, JSONEncodable {
+public struct InventoryResponse: Codable, JSONEncodable, Hashable {
     public var inventory: [Server]?
 
     public init(inventory: [Server]? = nil) {
@@ -22,5 +22,13 @@ public struct InventoryResponse: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.inventory, forKey: .inventory)
+    }
+
+    public static func ==(lhs: InventoryResponse, rhs: InventoryResponse) -> Bool {
+        lhs.inventory == rhs.inventory
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.inventory?.hashValue)
     }
 }

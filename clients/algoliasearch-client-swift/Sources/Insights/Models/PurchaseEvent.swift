@@ -6,6 +6,6 @@ import Foundation
     import Core
 #endif
 
-public enum PurchaseEvent: String, Codable, CaseIterable {
+public enum PurchaseEvent: String, Codable, CaseIterable, Hashable {
     case purchase
 }

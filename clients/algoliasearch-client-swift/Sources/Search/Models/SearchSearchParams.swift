@@ -6,13 +6,9 @@ import Foundation
     import Core
 #endif
 
-public enum SearchSearchParams: Codable, JSONEncodable, AbstractEncodable {
+public enum SearchSearchParams: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case searchParamsString(SearchParamsString)
     case searchSearchParamsObject(SearchSearchParamsObject)
-
-    enum SearchParamsStringDiscriminatorCodingKeys: String, CodingKey, CaseIterable {
-        case params
-    }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
@@ -25,16 +21,6 @@ public enum SearchSearchParams: Codable, JSONEncodable, AbstractEncodable {
     }
 
     public init(from decoder: Decoder) throws {
-        if let searchParamsStringDiscriminatorContainer = try? decoder
-            .container(keyedBy: SearchParamsStringDiscriminatorCodingKeys.self) {
-            if searchParamsStringDiscriminatorContainer.contains(.params) {
-                if let value = try? SearchSearchParams.searchParamsString(SearchParamsString(from: decoder)) {
-                    self = value
-                    return
-                }
-            }
-        }
-
         let container = try decoder.singleValueContainer()
         if let value = try? container.decode(SearchParamsString.self) {
             self = .searchParamsString(value)

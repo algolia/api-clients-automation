@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum Direction: String, Codable, CaseIterable {
+public enum Direction: String, Codable, CaseIterable, Hashable {
     case asc
     case desc
 }

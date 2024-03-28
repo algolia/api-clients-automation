@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct DockerSourceStreams: Codable, JSONEncodable {
+public struct DockerSourceStreams: Codable, JSONEncodable, Hashable {
     public var streams: [AnyCodable]
 
     public init(streams: [AnyCodable]) {
@@ -22,5 +22,13 @@ public struct DockerSourceStreams: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.streams, forKey: .streams)
+    }
+
+    public static func ==(lhs: DockerSourceStreams, rhs: DockerSourceStreams) -> Bool {
+        lhs.streams == rhs.streams
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.streams.hashValue)
     }
 }

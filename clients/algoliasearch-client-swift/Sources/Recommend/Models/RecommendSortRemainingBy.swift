@@ -12,7 +12,7 @@ import Foundation
 /// &lt;dt&gt;&lt;code&gt;alpha&lt;/code&gt;&lt;/dt&gt; &lt;dd&gt;Sort facet values alphabetically.&lt;/dd&gt;
 /// &lt;dt&gt;&lt;code&gt;hidden&lt;/code&gt;&lt;/dt&gt; &lt;dd&gt;Don&#39;t show facet values that aren&#39;t
 /// explicitly positioned.&lt;/dd&gt; &lt;/dl&gt;.
-public enum RecommendSortRemainingBy: String, Codable, CaseIterable {
+public enum RecommendSortRemainingBy: String, Codable, CaseIterable, Hashable {
     case count
     case alpha
     case hidden

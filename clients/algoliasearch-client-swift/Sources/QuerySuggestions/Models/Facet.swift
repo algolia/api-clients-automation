@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Facet to use as category.
-public struct Facet: Codable, JSONEncodable {
+public struct Facet: Codable, JSONEncodable, Hashable {
     /// Facet name.
     public var attribute: String?
     /// Number of suggestions.
@@ -29,5 +29,15 @@ public struct Facet: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.attribute, forKey: .attribute)
         try container.encodeIfPresent(self.amount, forKey: .amount)
+    }
+
+    public static func ==(lhs: Facet, rhs: Facet) -> Bool {
+        lhs.attribute == rhs.attribute &&
+            lhs.amount == rhs.amount
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.attribute?.hashValue)
+        hasher.combine(self.amount?.hashValue)
     }
 }

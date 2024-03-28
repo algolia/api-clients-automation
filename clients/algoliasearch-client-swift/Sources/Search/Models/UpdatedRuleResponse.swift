@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct UpdatedRuleResponse: Codable, JSONEncodable {
+public struct UpdatedRuleResponse: Codable, JSONEncodable, Hashable {
     /// Unique identifier of a rule object.
     public var objectID: String
     /// Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
@@ -35,5 +35,17 @@ public struct UpdatedRuleResponse: Codable, JSONEncodable {
         try container.encode(self.objectID, forKey: .objectID)
         try container.encode(self.updatedAt, forKey: .updatedAt)
         try container.encode(self.taskID, forKey: .taskID)
+    }
+
+    public static func ==(lhs: UpdatedRuleResponse, rhs: UpdatedRuleResponse) -> Bool {
+        lhs.objectID == rhs.objectID &&
+            lhs.updatedAt == rhs.updatedAt &&
+            lhs.taskID == rhs.taskID
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.objectID.hashValue)
+        hasher.combine(self.updatedAt.hashValue)
+        hasher.combine(self.taskID.hashValue)
     }
 }

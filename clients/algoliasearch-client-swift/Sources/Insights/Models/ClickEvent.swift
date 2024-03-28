@@ -6,6 +6,6 @@ import Foundation
     import Core
 #endif
 
-public enum ClickEvent: String, Codable, CaseIterable {
+public enum ClickEvent: String, Codable, CaseIterable, Hashable {
     case click
 }

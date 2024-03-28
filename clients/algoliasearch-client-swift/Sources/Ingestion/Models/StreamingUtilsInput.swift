@@ -8,7 +8,7 @@ import Foundation
 
 /// Input for a &#x60;streaming&#x60; task whose source is of type &#x60;ga4BigqueryExport&#x60; and for which extracted
 /// data is continuously streamed.
-public struct StreamingUtilsInput: Codable, JSONEncodable {
+public struct StreamingUtilsInput: Codable, JSONEncodable, Hashable {
     public var mapping: MappingInput
 
     public init(mapping: MappingInput) {
@@ -24,5 +24,13 @@ public struct StreamingUtilsInput: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.mapping, forKey: .mapping)
+    }
+
+    public static func ==(lhs: StreamingUtilsInput, rhs: StreamingUtilsInput) -> Bool {
+        lhs.mapping == rhs.mapping
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.mapping.hashValue)
     }
 }

@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// API key object.
-public struct ApiKey: Codable, JSONEncodable {
+public struct ApiKey: Codable, JSONEncodable, Hashable {
     /// Permissions that determine the type of API requests this key can make. The required ACL is listed in each
     /// endpoint's reference. For more information, see [access control
     /// list](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl).
@@ -83,5 +83,27 @@ public struct ApiKey: Codable, JSONEncodable {
         try container.encodeIfPresent(self.queryParameters, forKey: .queryParameters)
         try container.encodeIfPresent(self.referers, forKey: .referers)
         try container.encodeIfPresent(self.validity, forKey: .validity)
+    }
+
+    public static func ==(lhs: ApiKey, rhs: ApiKey) -> Bool {
+        lhs.acl == rhs.acl &&
+            lhs.description == rhs.description &&
+            lhs.indexes == rhs.indexes &&
+            lhs.maxHitsPerQuery == rhs.maxHitsPerQuery &&
+            lhs.maxQueriesPerIPPerHour == rhs.maxQueriesPerIPPerHour &&
+            lhs.queryParameters == rhs.queryParameters &&
+            lhs.referers == rhs.referers &&
+            lhs.validity == rhs.validity
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.acl.hashValue)
+        hasher.combine(self.description?.hashValue)
+        hasher.combine(self.indexes?.hashValue)
+        hasher.combine(self.maxHitsPerQuery?.hashValue)
+        hasher.combine(self.maxQueriesPerIPPerHour?.hashValue)
+        hasher.combine(self.queryParameters?.hashValue)
+        hasher.combine(self.referers?.hashValue)
+        hasher.combine(self.validity?.hashValue)
     }
 }

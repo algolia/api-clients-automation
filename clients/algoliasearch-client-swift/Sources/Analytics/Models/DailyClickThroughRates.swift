@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct DailyClickThroughRates: Codable, JSONEncodable {
+public struct DailyClickThroughRates: Codable, JSONEncodable, Hashable {
     /// Click-through rate, calculated as number of tracked searches with at least one click event divided by the number
     /// of tracked searches. If null, Algolia didn't receive any search requests with `clickAnalytics` set to true.
     public var rate: Double?
@@ -39,5 +39,19 @@ public struct DailyClickThroughRates: Codable, JSONEncodable {
         try container.encode(self.clickCount, forKey: .clickCount)
         try container.encode(self.trackedSearchCount, forKey: .trackedSearchCount)
         try container.encode(self.date, forKey: .date)
+    }
+
+    public static func ==(lhs: DailyClickThroughRates, rhs: DailyClickThroughRates) -> Bool {
+        lhs.rate == rhs.rate &&
+            lhs.clickCount == rhs.clickCount &&
+            lhs.trackedSearchCount == rhs.trackedSearchCount &&
+            lhs.date == rhs.date
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.rate.hashValue)
+        hasher.combine(self.clickCount.hashValue)
+        hasher.combine(self.trackedSearchCount.hashValue)
+        hasher.combine(self.date.hashValue)
     }
 }

@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct GetTopFilterForAttributeResponse: Codable, JSONEncodable {
+public struct GetTopFilterForAttributeResponse: Codable, JSONEncodable, Hashable {
     /// Filter values for an attribute.
     public var values: [GetTopFilterForAttribute]
 
@@ -23,5 +23,13 @@ public struct GetTopFilterForAttributeResponse: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.values, forKey: .values)
+    }
+
+    public static func ==(lhs: GetTopFilterForAttributeResponse, rhs: GetTopFilterForAttributeResponse) -> Bool {
+        lhs.values == rhs.values
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.values.hashValue)
     }
 }

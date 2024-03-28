@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Trigger for a task update.
-public struct TriggerUpdateInput: Codable, JSONEncodable {
+public struct TriggerUpdateInput: Codable, JSONEncodable, Hashable {
     /// Cron expression for the task's schedule.
     public var cron: String
 
@@ -24,5 +24,13 @@ public struct TriggerUpdateInput: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.cron, forKey: .cron)
+    }
+
+    public static func ==(lhs: TriggerUpdateInput, rhs: TriggerUpdateInput) -> Bool {
+        lhs.cron == rhs.cron
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.cron.hashValue)
     }
 }

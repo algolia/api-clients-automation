@@ -6,6 +6,6 @@ import Foundation
     import Core
 #endif
 
-public enum ServerStatus: String, Codable, CaseIterable {
+public enum ServerStatus: String, Codable, CaseIterable, Hashable {
     case production = "PRODUCTION"
 }

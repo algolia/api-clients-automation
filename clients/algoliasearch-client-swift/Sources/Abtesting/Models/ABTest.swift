@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct ABTest: Codable, JSONEncodable {
+public struct ABTest: Codable, JSONEncodable, Hashable {
     /// Unique A/B test ID.
     public var abTestID: Int
     /// [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
@@ -96,5 +96,35 @@ public struct ABTest: Codable, JSONEncodable {
         try container.encode(self.name, forKey: .name)
         try container.encode(self.status, forKey: .status)
         try container.encode(self.variants, forKey: .variants)
+    }
+
+    public static func ==(lhs: ABTest, rhs: ABTest) -> Bool {
+        lhs.abTestID == rhs.abTestID &&
+            lhs.clickSignificance == rhs.clickSignificance &&
+            lhs.conversionSignificance == rhs.conversionSignificance &&
+            lhs.addToCartSignificance == rhs.addToCartSignificance &&
+            lhs.purchaseSignificance == rhs.purchaseSignificance &&
+            lhs.revenueSignificance == rhs.revenueSignificance &&
+            lhs.updatedAt == rhs.updatedAt &&
+            lhs.createdAt == rhs.createdAt &&
+            lhs.endAt == rhs.endAt &&
+            lhs.name == rhs.name &&
+            lhs.status == rhs.status &&
+            lhs.variants == rhs.variants
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.abTestID.hashValue)
+        hasher.combine(self.clickSignificance.hashValue)
+        hasher.combine(self.conversionSignificance.hashValue)
+        hasher.combine(self.addToCartSignificance.hashValue)
+        hasher.combine(self.purchaseSignificance.hashValue)
+        hasher.combine(self.revenueSignificance.hashValue)
+        hasher.combine(self.updatedAt.hashValue)
+        hasher.combine(self.createdAt.hashValue)
+        hasher.combine(self.endAt.hashValue)
+        hasher.combine(self.name.hashValue)
+        hasher.combine(self.status.hashValue)
+        hasher.combine(self.variants.hashValue)
     }
 }

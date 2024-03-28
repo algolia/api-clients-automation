@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SearchDictionaryEntriesResponse: Codable, JSONEncodable {
+public struct SearchDictionaryEntriesResponse: Codable, JSONEncodable, Hashable {
     /// Dictionary entries matching the search criteria.
     public var hits: [DictionaryEntry]
     /// Requested page of the API response.
@@ -38,5 +38,19 @@ public struct SearchDictionaryEntriesResponse: Codable, JSONEncodable {
         try container.encode(self.page, forKey: .page)
         try container.encode(self.nbHits, forKey: .nbHits)
         try container.encode(self.nbPages, forKey: .nbPages)
+    }
+
+    public static func ==(lhs: SearchDictionaryEntriesResponse, rhs: SearchDictionaryEntriesResponse) -> Bool {
+        lhs.hits == rhs.hits &&
+            lhs.page == rhs.page &&
+            lhs.nbHits == rhs.nbHits &&
+            lhs.nbPages == rhs.nbPages
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.hits.hashValue)
+        hasher.combine(self.page.hashValue)
+        hasher.combine(self.nbHits.hashValue)
+        hasher.combine(self.nbPages.hashValue)
     }
 }

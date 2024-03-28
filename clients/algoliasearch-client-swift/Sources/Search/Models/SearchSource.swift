@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Source.
-public struct SearchSource: Codable, JSONEncodable {
+public struct SearchSource: Codable, JSONEncodable, Hashable {
     /// IP address range of the source.
     public var source: String
     /// Source description.
@@ -29,5 +29,15 @@ public struct SearchSource: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.source, forKey: .source)
         try container.encodeIfPresent(self.description, forKey: .description)
+    }
+
+    public static func ==(lhs: SearchSource, rhs: SearchSource) -> Bool {
+        lhs.source == rhs.source &&
+            lhs.description == rhs.description
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.source.hashValue)
+        hasher.combine(self.description?.hashValue)
     }
 }

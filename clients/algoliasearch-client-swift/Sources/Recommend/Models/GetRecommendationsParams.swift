@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Recommend parameters.
-public struct GetRecommendationsParams: Codable, JSONEncodable {
+public struct GetRecommendationsParams: Codable, JSONEncodable, Hashable {
     /// Request parameters depend on the model (recommendations or trending).
     public var requests: [RecommendationsRequest]
 
@@ -24,5 +24,13 @@ public struct GetRecommendationsParams: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.requests, forKey: .requests)
+    }
+
+    public static func ==(lhs: GetRecommendationsParams, rhs: GetRecommendationsParams) -> Bool {
+        lhs.requests == rhs.requests
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.requests.hashValue)
     }
 }

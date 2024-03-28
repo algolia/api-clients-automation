@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Error.
-public struct MonitoringErrorBase: Codable, JSONEncodable {
+public struct MonitoringErrorBase: Codable, JSONEncodable, Hashable {
     public var message: String?
 
     public init(message: String? = nil) {
@@ -68,5 +68,15 @@ public struct MonitoringErrorBase: Codable, JSONEncodable {
             AnyCodable.self,
             excludedKeys: nonAdditionalPropertyKeys
         )
+    }
+
+    public static func ==(lhs: MonitoringErrorBase, rhs: MonitoringErrorBase) -> Bool {
+        lhs.message == rhs.message
+            && lhs.additionalProperties == rhs.additionalProperties
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.message?.hashValue)
+        hasher.combine(self.additionalProperties.hashValue)
     }
 }

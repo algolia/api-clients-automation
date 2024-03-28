@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct TopSearchWithAnalytics: Codable, JSONEncodable {
+public struct TopSearchWithAnalytics: Codable, JSONEncodable, Hashable {
     /// Search query.
     public var search: String
     /// Number of searches.
@@ -83,5 +83,31 @@ public struct TopSearchWithAnalytics: Codable, JSONEncodable {
         try container.encode(self.clickCount, forKey: .clickCount)
         try container.encode(self.conversionCount, forKey: .conversionCount)
         try container.encode(self.nbHits, forKey: .nbHits)
+    }
+
+    public static func ==(lhs: TopSearchWithAnalytics, rhs: TopSearchWithAnalytics) -> Bool {
+        lhs.search == rhs.search &&
+            lhs.count == rhs.count &&
+            lhs.clickThroughRate == rhs.clickThroughRate &&
+            lhs.averageClickPosition == rhs.averageClickPosition &&
+            lhs.clickPositions == rhs.clickPositions &&
+            lhs.conversionRate == rhs.conversionRate &&
+            lhs.trackedSearchCount == rhs.trackedSearchCount &&
+            lhs.clickCount == rhs.clickCount &&
+            lhs.conversionCount == rhs.conversionCount &&
+            lhs.nbHits == rhs.nbHits
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.search.hashValue)
+        hasher.combine(self.count.hashValue)
+        hasher.combine(self.clickThroughRate.hashValue)
+        hasher.combine(self.averageClickPosition.hashValue)
+        hasher.combine(self.clickPositions.hashValue)
+        hasher.combine(self.conversionRate.hashValue)
+        hasher.combine(self.trackedSearchCount.hashValue)
+        hasher.combine(self.clickCount.hashValue)
+        hasher.combine(self.conversionCount.hashValue)
+        hasher.combine(self.nbHits.hashValue)
     }
 }

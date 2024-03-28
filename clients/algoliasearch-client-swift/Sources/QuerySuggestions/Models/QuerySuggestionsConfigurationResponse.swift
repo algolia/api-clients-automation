@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct QuerySuggestionsConfigurationResponse: Codable, JSONEncodable {
+public struct QuerySuggestionsConfigurationResponse: Codable, JSONEncodable, Hashable {
     /// API key used to read from your source index.
     public var sourceIndicesAPIKey: String?
     /// API key used to write and configure your Query Suggestions index.
@@ -72,5 +72,32 @@ public struct QuerySuggestionsConfigurationResponse: Codable, JSONEncodable {
         try container.encodeIfPresent(self.exclude, forKey: .exclude)
         try container.encodeIfPresent(self.enablePersonalization, forKey: .enablePersonalization)
         try container.encodeIfPresent(self.allowSpecialCharacters, forKey: .allowSpecialCharacters)
+    }
+
+    public static func ==(
+        lhs: QuerySuggestionsConfigurationResponse,
+        rhs: QuerySuggestionsConfigurationResponse
+    ) -> Bool {
+        lhs.sourceIndicesAPIKey == rhs.sourceIndicesAPIKey &&
+            lhs.suggestionsIndicesAPIKey == rhs.suggestionsIndicesAPIKey &&
+            lhs.externalIndicesAPIKey == rhs.externalIndicesAPIKey &&
+            lhs.indexName == rhs.indexName &&
+            lhs.sourceIndices == rhs.sourceIndices &&
+            lhs.languages == rhs.languages &&
+            lhs.exclude == rhs.exclude &&
+            lhs.enablePersonalization == rhs.enablePersonalization &&
+            lhs.allowSpecialCharacters == rhs.allowSpecialCharacters
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.sourceIndicesAPIKey?.hashValue)
+        hasher.combine(self.suggestionsIndicesAPIKey?.hashValue)
+        hasher.combine(self.externalIndicesAPIKey?.hashValue)
+        hasher.combine(self.indexName.hashValue)
+        hasher.combine(self.sourceIndices.hashValue)
+        hasher.combine(self.languages?.hashValue)
+        hasher.combine(self.exclude?.hashValue)
+        hasher.combine(self.enablePersonalization?.hashValue)
+        hasher.combine(self.allowSpecialCharacters?.hashValue)
     }
 }

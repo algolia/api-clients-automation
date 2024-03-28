@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum EventType: String, Codable, CaseIterable {
+public enum EventType: String, Codable, CaseIterable, Hashable {
     case fetch
     case record
     case log

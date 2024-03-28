@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Request body for creating a new authentication resource.
-public struct AuthenticationCreate: Codable, JSONEncodable {
+public struct AuthenticationCreate: Codable, JSONEncodable, Hashable {
     public var type: AuthenticationType
     /// Descriptive name for the resource.
     public var name: String
@@ -36,5 +36,19 @@ public struct AuthenticationCreate: Codable, JSONEncodable {
         try container.encode(self.name, forKey: .name)
         try container.encodeIfPresent(self.platform, forKey: .platform)
         try container.encode(self.input, forKey: .input)
+    }
+
+    public static func ==(lhs: AuthenticationCreate, rhs: AuthenticationCreate) -> Bool {
+        lhs.type == rhs.type &&
+            lhs.name == rhs.name &&
+            lhs.platform == rhs.platform &&
+            lhs.input == rhs.input
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.type.hashValue)
+        hasher.combine(self.name.hashValue)
+        hasher.combine(self.platform?.hashValue)
+        hasher.combine(self.input.hashValue)
     }
 }

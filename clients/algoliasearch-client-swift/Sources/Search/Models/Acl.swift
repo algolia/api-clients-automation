@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Access control list permissions.
-public enum Acl: String, Codable, CaseIterable {
+public enum Acl: String, Codable, CaseIterable, Hashable {
     case addObject
     case analytics
     case browse

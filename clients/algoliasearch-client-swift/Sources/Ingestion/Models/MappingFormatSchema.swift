@@ -7,6 +7,6 @@ import Foundation
 #endif
 
 /// Mapping format schema.
-public enum MappingFormatSchema: String, Codable, CaseIterable {
+public enum MappingFormatSchema: String, Codable, CaseIterable, Hashable {
     case mappingkitV1 = "mappingkit/v1"
 }

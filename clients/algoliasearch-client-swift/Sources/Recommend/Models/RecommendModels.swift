@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum RecommendModels: String, Codable, CaseIterable {
+public enum RecommendModels: String, Codable, CaseIterable, Hashable {
     case relatedProducts = "related-products"
     case boughtTogether = "bought-together"
     case trendingFacets = "trending-facets"

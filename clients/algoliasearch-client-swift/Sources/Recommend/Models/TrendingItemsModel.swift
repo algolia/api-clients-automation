@@ -7,6 +7,6 @@ import Foundation
 #endif
 
 /// Trending items model.
-public enum TrendingItemsModel: String, Codable, CaseIterable {
+public enum TrendingItemsModel: String, Codable, CaseIterable, Hashable {
     case trendingItems = "trending-items"
 }

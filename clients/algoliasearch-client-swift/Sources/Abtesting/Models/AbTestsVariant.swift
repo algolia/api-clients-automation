@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct AbTestsVariant: Codable, JSONEncodable {
+public struct AbTestsVariant: Codable, JSONEncodable, Hashable {
     /// A/B test index.
     public var index: String
     /// A/B test traffic percentage.
@@ -33,5 +33,17 @@ public struct AbTestsVariant: Codable, JSONEncodable {
         try container.encode(self.index, forKey: .index)
         try container.encode(self.trafficPercentage, forKey: .trafficPercentage)
         try container.encodeIfPresent(self.description, forKey: .description)
+    }
+
+    public static func ==(lhs: AbTestsVariant, rhs: AbTestsVariant) -> Bool {
+        lhs.index == rhs.index &&
+            lhs.trafficPercentage == rhs.trafficPercentage &&
+            lhs.description == rhs.description
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.index.hashValue)
+        hasher.combine(self.trafficPercentage.hashValue)
+        hasher.combine(self.description?.hashValue)
     }
 }

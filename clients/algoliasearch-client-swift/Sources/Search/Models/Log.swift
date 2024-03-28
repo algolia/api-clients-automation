@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct Log: Codable, JSONEncodable {
+public struct Log: Codable, JSONEncodable, Hashable {
     /// Timestamp of the API request in ISO 8601 format.
     public var timestamp: String
     /// HTTP method of the request.
@@ -109,5 +109,41 @@ public struct Log: Codable, JSONEncodable {
         try container.encodeIfPresent(self.queryParams, forKey: .queryParams)
         try container.encodeIfPresent(self.queryNbHits, forKey: .queryNbHits)
         try container.encodeIfPresent(self.innerQueries, forKey: .innerQueries)
+    }
+
+    public static func ==(lhs: Log, rhs: Log) -> Bool {
+        lhs.timestamp == rhs.timestamp &&
+            lhs.method == rhs.method &&
+            lhs.answerCode == rhs.answerCode &&
+            lhs.queryBody == rhs.queryBody &&
+            lhs.answer == rhs.answer &&
+            lhs.url == rhs.url &&
+            lhs.ip == rhs.ip &&
+            lhs.queryHeaders == rhs.queryHeaders &&
+            lhs.sha1 == rhs.sha1 &&
+            lhs.nbApiCalls == rhs.nbApiCalls &&
+            lhs.processingTimeMs == rhs.processingTimeMs &&
+            lhs.index == rhs.index &&
+            lhs.queryParams == rhs.queryParams &&
+            lhs.queryNbHits == rhs.queryNbHits &&
+            lhs.innerQueries == rhs.innerQueries
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.timestamp.hashValue)
+        hasher.combine(self.method.hashValue)
+        hasher.combine(self.answerCode.hashValue)
+        hasher.combine(self.queryBody.hashValue)
+        hasher.combine(self.answer.hashValue)
+        hasher.combine(self.url.hashValue)
+        hasher.combine(self.ip.hashValue)
+        hasher.combine(self.queryHeaders.hashValue)
+        hasher.combine(self.sha1.hashValue)
+        hasher.combine(self.nbApiCalls.hashValue)
+        hasher.combine(self.processingTimeMs.hashValue)
+        hasher.combine(self.index?.hashValue)
+        hasher.combine(self.queryParams?.hashValue)
+        hasher.combine(self.queryNbHits?.hashValue)
+        hasher.combine(self.innerQueries?.hashValue)
     }
 }

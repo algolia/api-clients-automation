@@ -8,7 +8,7 @@ import Foundation
 
 /// Input for scheduled tasks whose source is of type &#x60;bigquery&#x60; and for which extracted data spans a fixed
 /// number of days.
-public struct ScheduleDateUtilsInput: Codable, JSONEncodable {
+public struct ScheduleDateUtilsInput: Codable, JSONEncodable, Hashable {
     /// Number of days in the past until the current day for which to extract Big Query data.
     public var timeframe: Int
     public var mapping: MappingInput?
@@ -29,5 +29,15 @@ public struct ScheduleDateUtilsInput: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.timeframe, forKey: .timeframe)
         try container.encodeIfPresent(self.mapping, forKey: .mapping)
+    }
+
+    public static func ==(lhs: ScheduleDateUtilsInput, rhs: ScheduleDateUtilsInput) -> Bool {
+        lhs.timeframe == rhs.timeframe &&
+            lhs.mapping == rhs.mapping
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.timeframe.hashValue)
+        hasher.combine(self.mapping?.hashValue)
     }
 }

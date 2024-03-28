@@ -6,14 +6,9 @@ import Foundation
     import Core
 #endif
 
-public enum SearchQuery: Codable, JSONEncodable, AbstractEncodable {
+public enum SearchQuery: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case searchForFacets(SearchForFacets)
     case searchForHits(SearchForHits)
-
-    enum SearchForFacetsDiscriminatorCodingKeys: String, CodingKey, CaseIterable {
-        case facet
-        case type
-    }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
@@ -26,17 +21,6 @@ public enum SearchQuery: Codable, JSONEncodable, AbstractEncodable {
     }
 
     public init(from decoder: Decoder) throws {
-        if let searchForFacetsDiscriminatorContainer = try? decoder
-            .container(keyedBy: SearchForFacetsDiscriminatorCodingKeys.self) {
-            if searchForFacetsDiscriminatorContainer.contains(.facet),
-               searchForFacetsDiscriminatorContainer.contains(.type) {
-                if let value = try? SearchQuery.searchForFacets(SearchForFacets(from: decoder)) {
-                    self = value
-                    return
-                }
-            }
-        }
-
         let container = try decoder.singleValueContainer()
         if let value = try? container.decode(SearchForFacets.self) {
             self = .searchForFacets(value)

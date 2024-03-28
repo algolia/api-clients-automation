@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct GetConfigStatus200Response: Codable, JSONEncodable {
+public struct GetConfigStatus200Response: Codable, JSONEncodable, Hashable {
     /// Query Suggestions index name.
     public var indexName: String?
     /// Indicates whether the creation or update of the Query Suggestions is in progress.
@@ -51,5 +51,21 @@ public struct GetConfigStatus200Response: Codable, JSONEncodable {
         try container.encodeIfPresent(self.lastBuiltAt, forKey: .lastBuiltAt)
         try container.encodeIfPresent(self.lastSuccessfulBuiltAt, forKey: .lastSuccessfulBuiltAt)
         try container.encodeIfPresent(self.lastSuccessfulBuildDuration, forKey: .lastSuccessfulBuildDuration)
+    }
+
+    public static func ==(lhs: GetConfigStatus200Response, rhs: GetConfigStatus200Response) -> Bool {
+        lhs.indexName == rhs.indexName &&
+            lhs.isRunning == rhs.isRunning &&
+            lhs.lastBuiltAt == rhs.lastBuiltAt &&
+            lhs.lastSuccessfulBuiltAt == rhs.lastSuccessfulBuiltAt &&
+            lhs.lastSuccessfulBuildDuration == rhs.lastSuccessfulBuildDuration
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.indexName?.hashValue)
+        hasher.combine(self.isRunning?.hashValue)
+        hasher.combine(self.lastBuiltAt?.hashValue)
+        hasher.combine(self.lastSuccessfulBuiltAt?.hashValue)
+        hasher.combine(self.lastSuccessfulBuildDuration?.hashValue)
     }
 }

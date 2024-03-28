@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SourceGA4BigQueryExport: Codable, JSONEncodable {
+public struct SourceGA4BigQueryExport: Codable, JSONEncodable, Hashable {
     /// GCP project ID that the BigQuery export writes to.
     public var projectID: String
     /// BigQuery dataset ID that the BigQuery export writes to.
@@ -33,5 +33,17 @@ public struct SourceGA4BigQueryExport: Codable, JSONEncodable {
         try container.encode(self.projectID, forKey: .projectID)
         try container.encode(self.datasetID, forKey: .datasetID)
         try container.encode(self.tablePrefix, forKey: .tablePrefix)
+    }
+
+    public static func ==(lhs: SourceGA4BigQueryExport, rhs: SourceGA4BigQueryExport) -> Bool {
+        lhs.projectID == rhs.projectID &&
+            lhs.datasetID == rhs.datasetID &&
+            lhs.tablePrefix == rhs.tablePrefix
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.projectID.hashValue)
+        hasher.combine(self.datasetID.hashValue)
+        hasher.combine(self.tablePrefix.hashValue)
     }
 }

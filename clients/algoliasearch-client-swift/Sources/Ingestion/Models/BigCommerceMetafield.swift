@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct BigCommerceMetafield: Codable, JSONEncodable {
+public struct BigCommerceMetafield: Codable, JSONEncodable, Hashable {
     /// Namespace of the metafield.
     public var namespace: String
     /// Key identifier of the metafield.
@@ -28,5 +28,15 @@ public struct BigCommerceMetafield: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.namespace, forKey: .namespace)
         try container.encode(self.key, forKey: .key)
+    }
+
+    public static func ==(lhs: BigCommerceMetafield, rhs: BigCommerceMetafield) -> Bool {
+        lhs.namespace == rhs.namespace &&
+            lhs.key == rhs.key
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.namespace.hashValue)
+        hasher.combine(self.key.hashValue)
     }
 }

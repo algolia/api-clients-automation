@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct ListABTestsResponse: Codable, JSONEncodable {
+public struct ListABTestsResponse: Codable, JSONEncodable, Hashable {
     /// A/B tests.
     public var abtests: [ABTest]?
     /// Number of A/B tests implemented.
@@ -33,5 +33,17 @@ public struct ListABTestsResponse: Codable, JSONEncodable {
         try container.encode(self.abtests, forKey: .abtests)
         try container.encode(self.count, forKey: .count)
         try container.encode(self.total, forKey: .total)
+    }
+
+    public static func ==(lhs: ListABTestsResponse, rhs: ListABTestsResponse) -> Bool {
+        lhs.abtests == rhs.abtests &&
+            lhs.count == rhs.count &&
+            lhs.total == rhs.total
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.abtests.hashValue)
+        hasher.combine(self.count.hashValue)
+        hasher.combine(self.total.hashValue)
     }
 }

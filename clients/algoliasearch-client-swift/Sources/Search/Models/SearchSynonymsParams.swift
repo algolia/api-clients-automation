@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SearchSynonymsParams: Codable, JSONEncodable {
+public struct SearchSynonymsParams: Codable, JSONEncodable, Hashable {
     /// Search query.
     public var query: String?
     public var type: SynonymType?
@@ -37,5 +37,19 @@ public struct SearchSynonymsParams: Codable, JSONEncodable {
         try container.encodeIfPresent(self.type, forKey: .type)
         try container.encodeIfPresent(self.page, forKey: .page)
         try container.encodeIfPresent(self.hitsPerPage, forKey: .hitsPerPage)
+    }
+
+    public static func ==(lhs: SearchSynonymsParams, rhs: SearchSynonymsParams) -> Bool {
+        lhs.query == rhs.query &&
+            lhs.type == rhs.type &&
+            lhs.page == rhs.page &&
+            lhs.hitsPerPage == rhs.hitsPerPage
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.query?.hashValue)
+        hasher.combine(self.type?.hashValue)
+        hasher.combine(self.page?.hashValue)
+        hasher.combine(self.hitsPerPage?.hashValue)
     }
 }

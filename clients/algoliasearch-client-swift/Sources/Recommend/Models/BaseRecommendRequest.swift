@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct BaseRecommendRequest: Codable, JSONEncodable {
+public struct BaseRecommendRequest: Codable, JSONEncodable, Hashable {
     /// Index name.
     public var indexName: String
     /// Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each
@@ -35,5 +35,17 @@ public struct BaseRecommendRequest: Codable, JSONEncodable {
         try container.encode(self.indexName, forKey: .indexName)
         try container.encodeIfPresent(self.threshold, forKey: .threshold)
         try container.encodeIfPresent(self.maxRecommendations, forKey: .maxRecommendations)
+    }
+
+    public static func ==(lhs: BaseRecommendRequest, rhs: BaseRecommendRequest) -> Bool {
+        lhs.indexName == rhs.indexName &&
+            lhs.threshold == rhs.threshold &&
+            lhs.maxRecommendations == rhs.maxRecommendations
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.indexName.hashValue)
+        hasher.combine(self.threshold?.hashValue)
+        hasher.combine(self.maxRecommendations?.hashValue)
     }
 }

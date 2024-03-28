@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Trigger input for subscription tasks.
-public struct SubscriptionTrigger: Codable, JSONEncodable {
+public struct SubscriptionTrigger: Codable, JSONEncodable, Hashable {
     public var type: SubscriptionTriggerType
 
     public init(type: SubscriptionTriggerType) {
@@ -23,5 +23,13 @@ public struct SubscriptionTrigger: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.type, forKey: .type)
+    }
+
+    public static func ==(lhs: SubscriptionTrigger, rhs: SubscriptionTrigger) -> Bool {
+        lhs.type == rhs.type
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.type.hashValue)
     }
 }

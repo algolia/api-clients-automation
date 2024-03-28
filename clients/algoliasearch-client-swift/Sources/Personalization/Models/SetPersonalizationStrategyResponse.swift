@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SetPersonalizationStrategyResponse: Codable, JSONEncodable {
+public struct SetPersonalizationStrategyResponse: Codable, JSONEncodable, Hashable {
     /// A message confirming the strategy update.
     public var message: String
 
@@ -23,5 +23,13 @@ public struct SetPersonalizationStrategyResponse: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.message, forKey: .message)
+    }
+
+    public static func ==(lhs: SetPersonalizationStrategyResponse, rhs: SetPersonalizationStrategyResponse) -> Bool {
+        lhs.message == rhs.message
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.message.hashValue)
     }
 }

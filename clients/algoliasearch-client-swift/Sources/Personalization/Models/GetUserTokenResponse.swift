@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct GetUserTokenResponse: Codable, JSONEncodable {
+public struct GetUserTokenResponse: Codable, JSONEncodable, Hashable {
     /// userToken representing the user for which to fetch the Personalization profile.
     public var userToken: String
     /// Date of last event update. (ISO-8601 format).
@@ -33,5 +33,17 @@ public struct GetUserTokenResponse: Codable, JSONEncodable {
         try container.encode(self.userToken, forKey: .userToken)
         try container.encode(self.lastEventAt, forKey: .lastEventAt)
         try container.encode(self.scores, forKey: .scores)
+    }
+
+    public static func ==(lhs: GetUserTokenResponse, rhs: GetUserTokenResponse) -> Bool {
+        lhs.userToken == rhs.userToken &&
+            lhs.lastEventAt == rhs.lastEventAt &&
+            lhs.scores == rhs.scores
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.userToken.hashValue)
+        hasher.combine(self.lastEventAt.hashValue)
+        hasher.combine(self.scores.hashValue)
     }
 }

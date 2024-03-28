@@ -10,7 +10,7 @@ import Foundation
 /// prefix (&#x60;prefixLast&#x60;). To turn off prefix search, use &#x60;prefixNone&#x60;. Avoid &#x60;prefixAll&#x60;,
 /// which treats all query words as prefixes. This might lead to counterintuitive results and makes your search slower. 
 /// For more information, see [Prefix searching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching/).
-public enum RecommendQueryType: String, Codable, CaseIterable {
+public enum RecommendQueryType: String, Codable, CaseIterable, Hashable {
     case prefixLast
     case prefixAll
     case prefixNone

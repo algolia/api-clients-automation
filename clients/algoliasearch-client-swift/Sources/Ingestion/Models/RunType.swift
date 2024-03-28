@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Task run type.
-public enum RunType: String, Codable, CaseIterable {
+public enum RunType: String, Codable, CaseIterable, Hashable {
     case reindex
     case update
     case discover

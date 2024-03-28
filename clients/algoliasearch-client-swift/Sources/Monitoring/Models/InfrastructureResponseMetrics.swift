@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct InfrastructureResponseMetrics: Codable, JSONEncodable {
+public struct InfrastructureResponseMetrics: Codable, JSONEncodable, Hashable {
     /// CPU idleness in %.
     public var cpuUsage: [String: [ProbesMetric]]?
     /// RAM used for indexing in MB.
@@ -50,5 +50,21 @@ public struct InfrastructureResponseMetrics: Codable, JSONEncodable {
         try container.encodeIfPresent(self.ramSearchUsage, forKey: .ramSearchUsage)
         try container.encodeIfPresent(self.ssdUsage, forKey: .ssdUsage)
         try container.encodeIfPresent(self.avgBuildTime, forKey: .avgBuildTime)
+    }
+
+    public static func ==(lhs: InfrastructureResponseMetrics, rhs: InfrastructureResponseMetrics) -> Bool {
+        lhs.cpuUsage == rhs.cpuUsage &&
+            lhs.ramIndexingUsage == rhs.ramIndexingUsage &&
+            lhs.ramSearchUsage == rhs.ramSearchUsage &&
+            lhs.ssdUsage == rhs.ssdUsage &&
+            lhs.avgBuildTime == rhs.avgBuildTime
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.cpuUsage?.hashValue)
+        hasher.combine(self.ramIndexingUsage?.hashValue)
+        hasher.combine(self.ramSearchUsage?.hashValue)
+        hasher.combine(self.ssdUsage?.hashValue)
+        hasher.combine(self.avgBuildTime?.hashValue)
     }
 }

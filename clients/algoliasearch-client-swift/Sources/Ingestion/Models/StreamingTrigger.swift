@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Trigger input for continuously running tasks.
-public struct StreamingTrigger: Codable, JSONEncodable {
+public struct StreamingTrigger: Codable, JSONEncodable, Hashable {
     public var type: StreamingTriggerType
 
     public init(type: StreamingTriggerType) {
@@ -23,5 +23,13 @@ public struct StreamingTrigger: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.type, forKey: .type)
+    }
+
+    public static func ==(lhs: StreamingTrigger, rhs: StreamingTrigger) -> Bool {
+        lhs.type == rhs.type
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.type.hashValue)
     }
 }

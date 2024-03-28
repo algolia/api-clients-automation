@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Batch parameters.
-public struct BatchParams: Codable, JSONEncodable {
+public struct BatchParams: Codable, JSONEncodable, Hashable {
     public var requests: [MultipleBatchRequest]
 
     public init(requests: [MultipleBatchRequest]) {
@@ -23,5 +23,13 @@ public struct BatchParams: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.requests, forKey: .requests)
+    }
+
+    public static func ==(lhs: BatchParams, rhs: BatchParams) -> Bool {
+        lhs.requests == rhs.requests
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.requests.hashValue)
     }
 }

@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct BaseRecommendedForYouQueryParameters: Codable, JSONEncodable {
+public struct BaseRecommendedForYouQueryParameters: Codable, JSONEncodable, Hashable {
     /// Unique pseudonymous or anonymous user identifier.  This helps with analytics and click and conversion events.
     /// For more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
     public var userToken: String
@@ -24,5 +24,16 @@ public struct BaseRecommendedForYouQueryParameters: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.userToken, forKey: .userToken)
+    }
+
+    public static func ==(
+        lhs: BaseRecommendedForYouQueryParameters,
+        rhs: BaseRecommendedForYouQueryParameters
+    ) -> Bool {
+        lhs.userToken == rhs.userToken
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.userToken.hashValue)
     }
 }

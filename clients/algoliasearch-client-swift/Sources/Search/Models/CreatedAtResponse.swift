@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Response and creation timestamp.
-public struct CreatedAtResponse: Codable, JSONEncodable {
+public struct CreatedAtResponse: Codable, JSONEncodable, Hashable {
     /// Timestamp of creation in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
     public var createdAt: String
 
@@ -24,5 +24,13 @@ public struct CreatedAtResponse: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.createdAt, forKey: .createdAt)
+    }
+
+    public static func ==(lhs: CreatedAtResponse, rhs: CreatedAtResponse) -> Bool {
+        lhs.createdAt == rhs.createdAt
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.createdAt.hashValue)
     }
 }

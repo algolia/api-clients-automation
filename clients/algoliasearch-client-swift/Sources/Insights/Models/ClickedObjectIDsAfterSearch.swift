@@ -8,7 +8,7 @@ import Foundation
 
 /// Click event after an Algolia request.  Use this event to track when users click items in the search results. If
 /// you&#39;re building your category pages with Algolia, you&#39;ll also use this event.
-public struct ClickedObjectIDsAfterSearch: Codable, JSONEncodable {
+public struct ClickedObjectIDsAfterSearch: Codable, JSONEncodable, Hashable {
     /// Event name, up to 64 ASCII characters.  Consider naming events consistently—for example, by adopting Segment's [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
     /// framework.
     public var eventName: String
@@ -82,5 +82,29 @@ public struct ClickedObjectIDsAfterSearch: Codable, JSONEncodable {
         try container.encode(self.userToken, forKey: .userToken)
         try container.encodeIfPresent(self.authenticatedUserToken, forKey: .authenticatedUserToken)
         try container.encodeIfPresent(self.timestamp, forKey: .timestamp)
+    }
+
+    public static func ==(lhs: ClickedObjectIDsAfterSearch, rhs: ClickedObjectIDsAfterSearch) -> Bool {
+        lhs.eventName == rhs.eventName &&
+            lhs.eventType == rhs.eventType &&
+            lhs.index == rhs.index &&
+            lhs.objectIDs == rhs.objectIDs &&
+            lhs.positions == rhs.positions &&
+            lhs.queryID == rhs.queryID &&
+            lhs.userToken == rhs.userToken &&
+            lhs.authenticatedUserToken == rhs.authenticatedUserToken &&
+            lhs.timestamp == rhs.timestamp
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.eventName.hashValue)
+        hasher.combine(self.eventType.hashValue)
+        hasher.combine(self.index.hashValue)
+        hasher.combine(self.objectIDs.hashValue)
+        hasher.combine(self.positions.hashValue)
+        hasher.combine(self.queryID.hashValue)
+        hasher.combine(self.userToken.hashValue)
+        hasher.combine(self.authenticatedUserToken?.hashValue)
+        hasher.combine(self.timestamp?.hashValue)
     }
 }

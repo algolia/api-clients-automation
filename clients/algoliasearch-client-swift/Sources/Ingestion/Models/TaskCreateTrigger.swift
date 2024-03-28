@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum TaskCreateTrigger: Codable, JSONEncodable, AbstractEncodable {
+public enum TaskCreateTrigger: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case onDemandTriggerInput(OnDemandTriggerInput)
     case scheduleTriggerInput(ScheduleTriggerInput)
     case subscriptionTrigger(SubscriptionTrigger)

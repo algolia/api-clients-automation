@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct ObjectData: Codable, JSONEncodable {
+public struct ObjectData: Codable, JSONEncodable, Hashable {
     public var price: Price?
     /// Quantity of a product that has been purchased or added to the cart. The total purchase value is the sum of
     /// `quantity` multiplied with the `price` for each purchased item.
@@ -32,5 +32,17 @@ public struct ObjectData: Codable, JSONEncodable {
         try container.encodeIfPresent(self.price, forKey: .price)
         try container.encodeIfPresent(self.quantity, forKey: .quantity)
         try container.encodeIfPresent(self.discount, forKey: .discount)
+    }
+
+    public static func ==(lhs: ObjectData, rhs: ObjectData) -> Bool {
+        lhs.price == rhs.price &&
+            lhs.quantity == rhs.quantity &&
+            lhs.discount == rhs.discount
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.price?.hashValue)
+        hasher.combine(self.quantity?.hashValue)
+        hasher.combine(self.discount?.hashValue)
     }
 }

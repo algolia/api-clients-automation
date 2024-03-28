@@ -6,6 +6,6 @@ import Foundation
     import Core
 #endif
 
-public enum ModelType: String, Codable, CaseIterable {
+public enum ModelType: String, Codable, CaseIterable, Hashable {
     case cluster
 }

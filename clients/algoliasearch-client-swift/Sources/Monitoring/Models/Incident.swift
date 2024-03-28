@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Incident details.
-public struct Incident: Codable, JSONEncodable {
+public struct Incident: Codable, JSONEncodable, Hashable {
     /// Description of the incident.
     public var title: String?
     public var status: Status?
@@ -28,5 +28,15 @@ public struct Incident: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.title, forKey: .title)
         try container.encodeIfPresent(self.status, forKey: .status)
+    }
+
+    public static func ==(lhs: Incident, rhs: Incident) -> Bool {
+        lhs.title == rhs.title &&
+            lhs.status == rhs.status
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.title?.hashValue)
+        hasher.combine(self.status?.hashValue)
     }
 }

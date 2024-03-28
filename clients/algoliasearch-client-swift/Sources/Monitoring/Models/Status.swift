@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Status of the cluster.
-public enum Status: String, Codable, CaseIterable {
+public enum Status: String, Codable, CaseIterable, Hashable {
     case operational
     case degradedPerformance = "degraded_performance"
     case partialOutage = "partial_outage"

@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct GetRecommendTaskResponse: Codable, JSONEncodable {
+public struct GetRecommendTaskResponse: Codable, JSONEncodable, Hashable {
     public var status: RecommendTaskStatus
 
     public init(status: RecommendTaskStatus) {
@@ -22,5 +22,13 @@ public struct GetRecommendTaskResponse: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.status, forKey: .status)
+    }
+
+    public static func ==(lhs: GetRecommendTaskResponse, rhs: GetRecommendTaskResponse) -> Bool {
+        lhs.status == rhs.status
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.status.hashValue)
     }
 }

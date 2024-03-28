@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// A/B test filter effects resulting from configuration settings.
-public struct FilterEffects: Codable, JSONEncodable {
+public struct FilterEffects: Codable, JSONEncodable, Hashable {
     public var outliers: FilterEffectsOutliers?
     public var emptySearch: FilterEffectsEmptySearch?
 
@@ -27,5 +27,15 @@ public struct FilterEffects: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.outliers, forKey: .outliers)
         try container.encodeIfPresent(self.emptySearch, forKey: .emptySearch)
+    }
+
+    public static func ==(lhs: FilterEffects, rhs: FilterEffects) -> Bool {
+        lhs.outliers == rhs.outliers &&
+            lhs.emptySearch == rhs.emptySearch
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.outliers?.hashValue)
+        hasher.combine(self.emptySearch?.hashValue)
     }
 }

@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct MultipleBatchRequest: Codable, JSONEncodable {
+public struct MultipleBatchRequest: Codable, JSONEncodable, Hashable {
     public var action: Action
     /// Operation arguments (varies with specified `action`).
     public var body: AnyCodable
@@ -32,5 +32,17 @@ public struct MultipleBatchRequest: Codable, JSONEncodable {
         try container.encode(self.action, forKey: .action)
         try container.encode(self.body, forKey: .body)
         try container.encode(self.indexName, forKey: .indexName)
+    }
+
+    public static func ==(lhs: MultipleBatchRequest, rhs: MultipleBatchRequest) -> Bool {
+        lhs.action == rhs.action &&
+            lhs.body == rhs.body &&
+            lhs.indexName == rhs.indexName
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.action.hashValue)
+        hasher.combine(self.body.hashValue)
+        hasher.combine(self.indexName.hashValue)
     }
 }

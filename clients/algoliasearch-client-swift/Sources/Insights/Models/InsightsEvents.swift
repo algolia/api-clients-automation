@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct InsightsEvents: Codable, JSONEncodable {
+public struct InsightsEvents: Codable, JSONEncodable, Hashable {
     /// Click and conversion events.  **All** events must be valid, otherwise the API returns an error.
     public var events: [EventsItems]
 
@@ -23,5 +23,13 @@ public struct InsightsEvents: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.events, forKey: .events)
+    }
+
+    public static func ==(lhs: InsightsEvents, rhs: InsightsEvents) -> Bool {
+        lhs.events == rhs.events
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.events.hashValue)
     }
 }

@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SaveSynonymResponse: Codable, JSONEncodable {
+public struct SaveSynonymResponse: Codable, JSONEncodable, Hashable {
     /// Unique identifier of a task.  A successful API response means that a task was added to a queue. It might not run
     /// immediately. You can check the task's progress with the [`task` operation](#tag/Indices/operation/getTask) and
     /// this `taskID`.
@@ -35,5 +35,17 @@ public struct SaveSynonymResponse: Codable, JSONEncodable {
         try container.encode(self.taskID, forKey: .taskID)
         try container.encode(self.updatedAt, forKey: .updatedAt)
         try container.encode(self.id, forKey: .id)
+    }
+
+    public static func ==(lhs: SaveSynonymResponse, rhs: SaveSynonymResponse) -> Bool {
+        lhs.taskID == rhs.taskID &&
+            lhs.updatedAt == rhs.updatedAt &&
+            lhs.id == rhs.id
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.taskID.hashValue)
+        hasher.combine(self.updatedAt.hashValue)
+        hasher.combine(self.id.hashValue)
     }
 }

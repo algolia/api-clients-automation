@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct BatchDictionaryEntriesRequest: Codable, JSONEncodable {
+public struct BatchDictionaryEntriesRequest: Codable, JSONEncodable, Hashable {
     public var action: DictionaryAction
     public var body: DictionaryEntry
 
@@ -26,5 +26,15 @@ public struct BatchDictionaryEntriesRequest: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.action, forKey: .action)
         try container.encode(self.body, forKey: .body)
+    }
+
+    public static func ==(lhs: BatchDictionaryEntriesRequest, rhs: BatchDictionaryEntriesRequest) -> Bool {
+        lhs.action == rhs.action &&
+            lhs.body == rhs.body
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.action.hashValue)
+        hasher.combine(self.body.hashValue)
     }
 }

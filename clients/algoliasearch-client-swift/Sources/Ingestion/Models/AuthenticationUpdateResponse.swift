@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// API response for a successful update of an authentication resource.
-public struct AuthenticationUpdateResponse: Codable, JSONEncodable {
+public struct AuthenticationUpdateResponse: Codable, JSONEncodable, Hashable {
     /// Universally unique identifier (UUID) of an authentication resource.
     public var authenticationID: String
     /// Descriptive name for the resource.
@@ -34,5 +34,17 @@ public struct AuthenticationUpdateResponse: Codable, JSONEncodable {
         try container.encode(self.authenticationID, forKey: .authenticationID)
         try container.encode(self.name, forKey: .name)
         try container.encode(self.updatedAt, forKey: .updatedAt)
+    }
+
+    public static func ==(lhs: AuthenticationUpdateResponse, rhs: AuthenticationUpdateResponse) -> Bool {
+        lhs.authenticationID == rhs.authenticationID &&
+            lhs.name == rhs.name &&
+            lhs.updatedAt == rhs.updatedAt
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.authenticationID.hashValue)
+        hasher.combine(self.name.hashValue)
+        hasher.combine(self.updatedAt.hashValue)
     }
 }

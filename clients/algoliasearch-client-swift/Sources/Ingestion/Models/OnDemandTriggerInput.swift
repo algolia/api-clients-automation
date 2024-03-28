@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Trigger information for manually-triggered tasks.
-public struct OnDemandTriggerInput: Codable, JSONEncodable {
+public struct OnDemandTriggerInput: Codable, JSONEncodable, Hashable {
     public var type: OnDemandTriggerType
 
     public init(type: OnDemandTriggerType) {
@@ -23,5 +23,13 @@ public struct OnDemandTriggerInput: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.type, forKey: .type)
+    }
+
+    public static func ==(lhs: OnDemandTriggerInput, rhs: OnDemandTriggerInput) -> Bool {
+        lhs.type == rhs.type
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.type.hashValue)
     }
 }

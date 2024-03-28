@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct FacetScoring: Codable, JSONEncodable {
+public struct FacetScoring: Codable, JSONEncodable, Hashable {
     /// The score for the event.
     public var score: Int
     /// The name of the facet.
@@ -28,5 +28,15 @@ public struct FacetScoring: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.score, forKey: .score)
         try container.encode(self.facetName, forKey: .facetName)
+    }
+
+    public static func ==(lhs: FacetScoring, rhs: FacetScoring) -> Bool {
+        lhs.score == rhs.score &&
+            lhs.facetName == rhs.facetName
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.score.hashValue)
+        hasher.combine(self.facetName.hashValue)
     }
 }

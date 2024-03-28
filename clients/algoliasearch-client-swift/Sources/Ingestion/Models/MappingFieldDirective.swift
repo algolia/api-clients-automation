@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Describes how a field should be resolved by applying a set of directives.
-public struct MappingFieldDirective: Codable, JSONEncodable {
+public struct MappingFieldDirective: Codable, JSONEncodable, Hashable {
     /// Destination field key.
     public var fieldKey: String
     /// How the destination field should be resolved from the source.
@@ -29,5 +29,15 @@ public struct MappingFieldDirective: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.fieldKey, forKey: .fieldKey)
         try container.encode(self.value, forKey: .value)
+    }
+
+    public static func ==(lhs: MappingFieldDirective, rhs: MappingFieldDirective) -> Bool {
+        lhs.fieldKey == rhs.fieldKey &&
+            lhs.value == rhs.value
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.fieldKey.hashValue)
+        hasher.combine(self.value.hashValue)
     }
 }

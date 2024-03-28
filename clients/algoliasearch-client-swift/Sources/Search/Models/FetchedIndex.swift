@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct FetchedIndex: Codable, JSONEncodable {
+public struct FetchedIndex: Codable, JSONEncodable, Hashable {
     /// Index name.
     public var name: String
     /// Index creation date. An empty string means that the index has no records.
@@ -85,5 +85,33 @@ public struct FetchedIndex: Codable, JSONEncodable {
         try container.encode(self.pendingTask, forKey: .pendingTask)
         try container.encodeIfPresent(self.primary, forKey: .primary)
         try container.encodeIfPresent(self.replicas, forKey: .replicas)
+    }
+
+    public static func ==(lhs: FetchedIndex, rhs: FetchedIndex) -> Bool {
+        lhs.name == rhs.name &&
+            lhs.createdAt == rhs.createdAt &&
+            lhs.updatedAt == rhs.updatedAt &&
+            lhs.entries == rhs.entries &&
+            lhs.dataSize == rhs.dataSize &&
+            lhs.fileSize == rhs.fileSize &&
+            lhs.lastBuildTimeS == rhs.lastBuildTimeS &&
+            lhs.numberOfPendingTasks == rhs.numberOfPendingTasks &&
+            lhs.pendingTask == rhs.pendingTask &&
+            lhs.primary == rhs.primary &&
+            lhs.replicas == rhs.replicas
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.name.hashValue)
+        hasher.combine(self.createdAt.hashValue)
+        hasher.combine(self.updatedAt.hashValue)
+        hasher.combine(self.entries.hashValue)
+        hasher.combine(self.dataSize.hashValue)
+        hasher.combine(self.fileSize.hashValue)
+        hasher.combine(self.lastBuildTimeS.hashValue)
+        hasher.combine(self.numberOfPendingTasks.hashValue)
+        hasher.combine(self.pendingTask.hashValue)
+        hasher.combine(self.primary?.hashValue)
+        hasher.combine(self.replicas?.hashValue)
     }
 }

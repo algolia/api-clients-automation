@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct GetLogFile200Response: Codable, JSONEncodable {
+public struct GetLogFile200Response: Codable, JSONEncodable, Hashable {
     /// Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
     public var timestamp: String?
     public var level: ModelLogLevel?
@@ -43,5 +43,19 @@ public struct GetLogFile200Response: Codable, JSONEncodable {
         try container.encodeIfPresent(self.level, forKey: .level)
         try container.encodeIfPresent(self.message, forKey: .message)
         try container.encodeIfPresent(self.contextLevel, forKey: .contextLevel)
+    }
+
+    public static func ==(lhs: GetLogFile200Response, rhs: GetLogFile200Response) -> Bool {
+        lhs.timestamp == rhs.timestamp &&
+            lhs.level == rhs.level &&
+            lhs.message == rhs.message &&
+            lhs.contextLevel == rhs.contextLevel
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.timestamp?.hashValue)
+        hasher.combine(self.level?.hashValue)
+        hasher.combine(self.message?.hashValue)
+        hasher.combine(self.contextLevel?.hashValue)
     }
 }

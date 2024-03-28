@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct TopSearch: Codable, JSONEncodable {
+public struct TopSearch: Codable, JSONEncodable, Hashable {
     /// Search query.
     public var search: String
     /// Number of searches.
@@ -33,5 +33,17 @@ public struct TopSearch: Codable, JSONEncodable {
         try container.encode(self.search, forKey: .search)
         try container.encode(self.count, forKey: .count)
         try container.encode(self.nbHits, forKey: .nbHits)
+    }
+
+    public static func ==(lhs: TopSearch, rhs: TopSearch) -> Bool {
+        lhs.search == rhs.search &&
+            lhs.count == rhs.count &&
+            lhs.nbHits == rhs.nbHits
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.search.hashValue)
+        hasher.combine(self.count.hashValue)
+        hasher.combine(self.nbHits.hashValue)
     }
 }

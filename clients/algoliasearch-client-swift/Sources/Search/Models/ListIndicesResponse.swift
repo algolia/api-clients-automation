@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct ListIndicesResponse: Codable, JSONEncodable {
+public struct ListIndicesResponse: Codable, JSONEncodable, Hashable {
     /// All indices in your Algolia application.
     public var items: [FetchedIndex]
     /// Number of pages.
@@ -28,5 +28,15 @@ public struct ListIndicesResponse: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.items, forKey: .items)
         try container.encodeIfPresent(self.nbPages, forKey: .nbPages)
+    }
+
+    public static func ==(lhs: ListIndicesResponse, rhs: ListIndicesResponse) -> Bool {
+        lhs.items == rhs.items &&
+            lhs.nbPages == rhs.nbPages
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.items.hashValue)
+        hasher.combine(self.nbPages?.hashValue)
     }
 }

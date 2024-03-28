@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public enum ScopeType: String, Codable, CaseIterable {
+public enum ScopeType: String, Codable, CaseIterable, Hashable {
     case settings
     case synonyms
     case rules

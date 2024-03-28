@@ -8,7 +8,7 @@ import Foundation
 
 /// Custom fields from commercetools to add to the records.  For more information, see [Using Custom Types and Custom
 /// Fields](https://docs.commercetools.com/tutorials/custom-types).
-public struct CommercetoolsCustomFields: Codable, JSONEncodable {
+public struct CommercetoolsCustomFields: Codable, JSONEncodable, Hashable {
     /// Inventory custom fields.
     public var inventory: [String]?
     /// Price custom fields.
@@ -35,5 +35,17 @@ public struct CommercetoolsCustomFields: Codable, JSONEncodable {
         try container.encodeIfPresent(self.inventory, forKey: .inventory)
         try container.encodeIfPresent(self.price, forKey: .price)
         try container.encodeIfPresent(self.category, forKey: .category)
+    }
+
+    public static func ==(lhs: CommercetoolsCustomFields, rhs: CommercetoolsCustomFields) -> Bool {
+        lhs.inventory == rhs.inventory &&
+            lhs.price == rhs.price &&
+            lhs.category == rhs.category
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.inventory?.hashValue)
+        hasher.combine(self.price?.hashValue)
+        hasher.combine(self.category?.hashValue)
     }
 }

@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// API request body for updating a task.
-public struct TaskUpdate: Codable, JSONEncodable {
+public struct TaskUpdate: Codable, JSONEncodable, Hashable {
     /// Universally unique identifier (UUID) of a destination resource.
     public var destinationID: String?
     public var trigger: TriggerUpdateInput?
@@ -48,5 +48,21 @@ public struct TaskUpdate: Codable, JSONEncodable {
         try container.encodeIfPresent(self.input, forKey: .input)
         try container.encodeIfPresent(self.enabled, forKey: .enabled)
         try container.encodeIfPresent(self.failureThreshold, forKey: .failureThreshold)
+    }
+
+    public static func ==(lhs: TaskUpdate, rhs: TaskUpdate) -> Bool {
+        lhs.destinationID == rhs.destinationID &&
+            lhs.trigger == rhs.trigger &&
+            lhs.input == rhs.input &&
+            lhs.enabled == rhs.enabled &&
+            lhs.failureThreshold == rhs.failureThreshold
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.destinationID?.hashValue)
+        hasher.combine(self.trigger?.hashValue)
+        hasher.combine(self.input?.hashValue)
+        hasher.combine(self.enabled?.hashValue)
+        hasher.combine(self.failureThreshold?.hashValue)
     }
 }

@@ -11,7 +11,7 @@ import Foundation
 /// don&#39;t match. If you&#39;re using a negative filter &#x60;facet:-value&#x60;, matching records rank after records
 /// that don&#39;t match.  - Optional filters don&#39;t work on virtual replicas. - Optional filters are applied _after_
 /// sort-by attributes. - Optional filters don&#39;t work with numeric attributes.
-public enum RecommendOptionalFilters: Codable, JSONEncodable, AbstractEncodable {
+public enum RecommendOptionalFilters: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters])
     case string(String)
 

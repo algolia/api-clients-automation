@@ -12,7 +12,7 @@ import Foundation
 /// filter3]&#x60; is interpreted as &#x60;filter1 OR filter2 AND filter3&#x60;. - &#x60;facet:-value&#x60; is
 /// interpreted as &#x60;NOT facet:value&#x60;.  While it&#39;s best to avoid attributes that start with a
 /// &#x60;-&#x60;, you can still filter them by escaping with a backslash: &#x60;facet:\\-value&#x60;.
-public enum RecommendFacetFilters: Codable, JSONEncodable, AbstractEncodable {
+public enum RecommendFacetFilters: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters])
     case string(String)
 

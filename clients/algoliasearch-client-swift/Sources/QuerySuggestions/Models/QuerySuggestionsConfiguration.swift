@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Query Suggestions configuration.
-public struct QuerySuggestionsConfiguration: Codable, JSONEncodable {
+public struct QuerySuggestionsConfiguration: Codable, JSONEncodable, Hashable {
     /// Algolia indices from which to get the popular searches for query suggestions.
     public var sourceIndices: [SourceIndex]
     public var languages: QuerySuggestionsLanguages?
@@ -49,5 +49,21 @@ public struct QuerySuggestionsConfiguration: Codable, JSONEncodable {
         try container.encodeIfPresent(self.exclude, forKey: .exclude)
         try container.encodeIfPresent(self.enablePersonalization, forKey: .enablePersonalization)
         try container.encodeIfPresent(self.allowSpecialCharacters, forKey: .allowSpecialCharacters)
+    }
+
+    public static func ==(lhs: QuerySuggestionsConfiguration, rhs: QuerySuggestionsConfiguration) -> Bool {
+        lhs.sourceIndices == rhs.sourceIndices &&
+            lhs.languages == rhs.languages &&
+            lhs.exclude == rhs.exclude &&
+            lhs.enablePersonalization == rhs.enablePersonalization &&
+            lhs.allowSpecialCharacters == rhs.allowSpecialCharacters
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.sourceIndices.hashValue)
+        hasher.combine(self.languages?.hashValue)
+        hasher.combine(self.exclude?.hashValue)
+        hasher.combine(self.enablePersonalization?.hashValue)
+        hasher.combine(self.allowSpecialCharacters?.hashValue)
     }
 }

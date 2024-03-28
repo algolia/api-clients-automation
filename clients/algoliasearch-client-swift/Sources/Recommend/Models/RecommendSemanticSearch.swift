@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Settings for the semantic search part of NeuralSearch. Only used when &#x60;mode&#x60; is &#x60;neuralSearch&#x60;.
-public struct RecommendSemanticSearch: Codable, JSONEncodable {
+public struct RecommendSemanticSearch: Codable, JSONEncodable, Hashable {
     /// Indices from which to collect click and conversion events.  If null, the current index and all its replicas are
     /// used.
     public var eventSources: [String]?
@@ -25,5 +25,13 @@ public struct RecommendSemanticSearch: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(self.eventSources, forKey: .eventSources)
+    }
+
+    public static func ==(lhs: RecommendSemanticSearch, rhs: RecommendSemanticSearch) -> Bool {
+        lhs.eventSources == rhs.eventSources
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.eventSources?.hashValue)
     }
 }

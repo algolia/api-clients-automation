@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct BatchResponse: Codable, JSONEncodable {
+public struct BatchResponse: Codable, JSONEncodable, Hashable {
     /// Unique identifier of a task.  A successful API response means that a task was added to a queue. It might not run
     /// immediately. You can check the task's progress with the [`task` operation](#tag/Indices/operation/getTask) and
     /// this `taskID`.
@@ -30,5 +30,15 @@ public struct BatchResponse: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.taskID, forKey: .taskID)
         try container.encode(self.objectIDs, forKey: .objectIDs)
+    }
+
+    public static func ==(lhs: BatchResponse, rhs: BatchResponse) -> Bool {
+        lhs.taskID == rhs.taskID &&
+            lhs.objectIDs == rhs.objectIDs
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.taskID.hashValue)
+        hasher.combine(self.objectIDs.hashValue)
     }
 }

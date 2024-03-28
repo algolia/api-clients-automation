@@ -7,6 +7,6 @@ import Foundation
 #endif
 
 /// Recommended for you model.
-public enum RecommendedForYouModel: String, Codable, CaseIterable {
+public enum RecommendedForYouModel: String, Codable, CaseIterable, Hashable {
     case recommendedForYou = "recommended-for-you"
 }

@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Configuration of the task, depending on its type.
-public enum TaskInput: Codable, JSONEncodable, AbstractEncodable {
+public enum TaskInput: Codable, JSONEncodable, AbstractEncodable, Hashable {
     case onDemandDateUtilsInput(OnDemandDateUtilsInput)
     case scheduleDateUtilsInput(ScheduleDateUtilsInput)
     case streamingUtilsInput(StreamingUtilsInput)

@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Snippets that show the context around a matching search query.
-public struct RecommendSnippetResultOption: Codable, JSONEncodable {
+public struct RecommendSnippetResultOption: Codable, JSONEncodable, Hashable {
     /// Highlighted attribute value, including HTML tags.
     public var value: String
     public var matchLevel: RecommendMatchLevel
@@ -28,5 +28,15 @@ public struct RecommendSnippetResultOption: Codable, JSONEncodable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.value, forKey: .value)
         try container.encode(self.matchLevel, forKey: .matchLevel)
+    }
+
+    public static func ==(lhs: RecommendSnippetResultOption, rhs: RecommendSnippetResultOption) -> Bool {
+        lhs.value == rhs.value &&
+            lhs.matchLevel == rhs.matchLevel
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.value.hashValue)
+        hasher.combine(self.matchLevel.hashValue)
     }
 }

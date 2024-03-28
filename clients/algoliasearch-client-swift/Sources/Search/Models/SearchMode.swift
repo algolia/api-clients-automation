@@ -8,7 +8,7 @@ import Foundation
 
 /// Search mode the index will use to query for results.  This setting only applies to indices, for which Algolia
 /// enabled NeuralSearch for you.
-public enum SearchMode: String, Codable, CaseIterable {
+public enum SearchMode: String, Codable, CaseIterable, Hashable {
     case neuralSearch
     case keywordSearch
 }

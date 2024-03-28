@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct SourceJSON: Codable, JSONEncodable {
+public struct SourceJSON: Codable, JSONEncodable, Hashable {
     /// URL of the file.
     public var url: String
     /// Name of a column that contains a unique ID which will be used as `objectID` in Algolia.
@@ -32,5 +32,17 @@ public struct SourceJSON: Codable, JSONEncodable {
         try container.encode(self.url, forKey: .url)
         try container.encodeIfPresent(self.uniqueIDColumn, forKey: .uniqueIDColumn)
         try container.encodeIfPresent(self.method, forKey: .method)
+    }
+
+    public static func ==(lhs: SourceJSON, rhs: SourceJSON) -> Bool {
+        lhs.url == rhs.url &&
+            lhs.uniqueIDColumn == rhs.uniqueIDColumn &&
+            lhs.method == rhs.method
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.url.hashValue)
+        hasher.combine(self.uniqueIDColumn?.hashValue)
+        hasher.combine(self.method?.hashValue)
     }
 }

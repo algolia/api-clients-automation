@@ -6,7 +6,7 @@ import Foundation
     import Core
 #endif
 
-public struct TrendingItemsQuery: Codable, JSONEncodable {
+public struct TrendingItemsQuery: Codable, JSONEncodable, Hashable {
     /// Index name.
     public var indexName: String
     /// Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each
@@ -66,5 +66,27 @@ public struct TrendingItemsQuery: Codable, JSONEncodable {
         try container.encodeIfPresent(self.model, forKey: .model)
         try container.encodeIfPresent(self.queryParameters, forKey: .queryParameters)
         try container.encodeIfPresent(self.fallbackParameters, forKey: .fallbackParameters)
+    }
+
+    public static func ==(lhs: TrendingItemsQuery, rhs: TrendingItemsQuery) -> Bool {
+        lhs.indexName == rhs.indexName &&
+            lhs.threshold == rhs.threshold &&
+            lhs.maxRecommendations == rhs.maxRecommendations &&
+            lhs.facetName == rhs.facetName &&
+            lhs.facetValue == rhs.facetValue &&
+            lhs.model == rhs.model &&
+            lhs.queryParameters == rhs.queryParameters &&
+            lhs.fallbackParameters == rhs.fallbackParameters
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(self.indexName.hashValue)
+        hasher.combine(self.threshold?.hashValue)
+        hasher.combine(self.maxRecommendations?.hashValue)
+        hasher.combine(self.facetName?.hashValue)
+        hasher.combine(self.facetValue?.hashValue)
+        hasher.combine(self.model?.hashValue)
+        hasher.combine(self.queryParameters?.hashValue)
+        hasher.combine(self.fallbackParameters?.hashValue)
     }
 }

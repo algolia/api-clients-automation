@@ -7,7 +7,7 @@ import Foundation
 #endif
 
 /// Property by which to sort the list of sources.
-public enum SourceSortKeys: String, Codable, CaseIterable {
+public enum SourceSortKeys: String, Codable, CaseIterable, Hashable {
     case name
     case type
     case updatedAt
