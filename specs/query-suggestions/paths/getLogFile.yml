@@ -4,8 +4,8 @@ get:
   operationId: getLogFile
   x-acl:
     - settings
-  summary: Get logs.
-  description: Get the logs for a single Query Suggestions index.
+  summary: Retrieve logs.
+  description: Retrieves the logs for a single Query Suggestions index.
   parameters:
     - $ref: '../common/parameters.yml#/IndexName'
   responses:
@@ -30,7 +30,7 @@ get:
               contextLevel:
                 type: integer
                 description: |
-                  Level indicating the position of a suggestion in a hierarchy of records. 
+                  Level indicating the position of a suggestion in a hierarchy of records.
 
                   For example, a `contextLevel` of 1 indicates that this suggestion belongs to a previous suggestion with `contextLevel` 0.
                 example: 1

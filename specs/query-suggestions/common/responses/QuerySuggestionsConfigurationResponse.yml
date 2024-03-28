@@ -1,0 +1,20 @@
+QuerySuggestionsConfigurationResponse:
+  type: object
+  description: API response for retrieving Query Suggestions configurations.
+  allOf:
+    - $ref: '#/AppID'
+    - $ref: '../schemas/QuerySuggestionsConfiguration.yml#/QuerySuggestionsConfigurationWithIndex'
+  required:
+    - appID
+    - allowSpecialCharacters
+    - enablePersonalization
+    - exclude
+    - languages
+    - sourceIndices
+
+AppID:
+  type: object
+  properties:
+    appID:
+      type: string
+      description: Algolia application ID to which this Query Suggestions configuration belongs.
