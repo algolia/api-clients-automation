@@ -234,7 +234,7 @@
         ],
         "decompoundQuery": false,
         "decompoundedAttributes": {
-          "algolia": "aloglia"
+          "de": "aloglia"
         },
         "disableExactOnAttributes": [
           "algolia"
@@ -374,7 +374,7 @@
         ],
         "decompoundQuery": false,
         "decompoundedAttributes": {
-          "algolia": "aloglia"
+          "de": "aloglia"
         },
         "disableExactOnAttributes": [
           "algolia"
