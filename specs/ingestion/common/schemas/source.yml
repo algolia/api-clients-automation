@@ -155,19 +155,16 @@ CommercetoolsCustomFields:
     inventory:
       type: array
       description: Inventory custom fields.
-      nullable: true
       items:
         type: string
     price:
       type: array
       description: Price custom fields.
-      nullable: true
       items:
         type: string
     category:
       type: array
       description: Category custom fields.
-      nullable: true
       items:
         type: string
 

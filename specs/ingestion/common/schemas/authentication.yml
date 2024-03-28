@@ -106,9 +106,9 @@ AuthenticationType:
   enum: [googleServiceAccount, basic, apiKey, oauth, algolia]
 
 Platform:
+  default: null
   oneOf:
     - type: string
-      nullable: true
       description: |
         Name of an ecommerce platform with which to authenticate.
         This determines which authentication type you can select.
