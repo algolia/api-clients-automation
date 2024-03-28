@@ -7,21 +7,21 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** BaseQuerySuggestionsConfigurationWithIndex */
-public class BaseQuerySuggestionsConfigurationWithIndex {
+/** AppID */
+public class AppID {
 
-  @JsonProperty("indexName")
-  private String indexName;
+  @JsonProperty("appID")
+  private String appID;
 
-  public BaseQuerySuggestionsConfigurationWithIndex setIndexName(String indexName) {
-    this.indexName = indexName;
+  public AppID setAppID(String appID) {
+    this.appID = appID;
     return this;
   }
 
-  /** Query Suggestions index name. */
-  @javax.annotation.Nonnull
-  public String getIndexName() {
-    return indexName;
+  /** Algolia application ID to which this Query Suggestions configuration belongs. */
+  @javax.annotation.Nullable
+  public String getAppID() {
+    return appID;
   }
 
   @Override
@@ -32,20 +32,20 @@ public class BaseQuerySuggestionsConfigurationWithIndex {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BaseQuerySuggestionsConfigurationWithIndex baseQuerySuggestionsConfigurationWithIndex = (BaseQuerySuggestionsConfigurationWithIndex) o;
-    return Objects.equals(this.indexName, baseQuerySuggestionsConfigurationWithIndex.indexName);
+    AppID appID = (AppID) o;
+    return Objects.equals(this.appID, appID.appID);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(indexName);
+    return Objects.hash(appID);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BaseQuerySuggestionsConfigurationWithIndex {\n");
-    sb.append("    indexName: ").append(toIndentedString(indexName)).append("\n");
+    sb.append("class AppID {\n");
+    sb.append("    appID: ").append(toIndentedString(appID)).append("\n");
     sb.append("}");
     return sb.toString();
   }

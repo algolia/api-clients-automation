@@ -376,7 +376,7 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
 
     assert_equal(res.status, 200)
     res = @e2e_client.get_config("cts_e2e_browse_query_suggestions")
-    expected_body = JSON.parse('{"allowSpecialCharacters":true,"enablePersonalization":false,"exclude":["^cocaines$"],"indexName":"cts_e2e_browse_query_suggestions","languages":[],"sourceIndices":[{"facets":[{"amount":1,"attribute":"title"}],"generate":[["year"]],"indexName":"cts_e2e_browse","minHits":5,"minLetters":4,"replicas":false}]}')
+    expected_body = JSON.parse('{"appID":"T8JK9S7I7X","allowSpecialCharacters":true,"enablePersonalization":false,"exclude":["^cocaines$"],"indexName":"cts_e2e_browse_query_suggestions","languages":[],"sourceIndices":[{"facets":[{"amount":1,"attribute":"title"}],"generate":[["year"]],"indexName":"cts_e2e_browse","minHits":5,"minLetters":4,"replicas":false}]}')
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 

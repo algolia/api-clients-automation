@@ -12,9 +12,6 @@ import java.util.Objects;
 /** Query Suggestions configuration. */
 public class QuerySuggestionsConfigurationWithIndex {
 
-  @JsonProperty("indexName")
-  private String indexName;
-
   @JsonProperty("sourceIndices")
   private List<SourceIndex> sourceIndices = new ArrayList<>();
 
@@ -30,16 +27,8 @@ public class QuerySuggestionsConfigurationWithIndex {
   @JsonProperty("allowSpecialCharacters")
   private Boolean allowSpecialCharacters;
 
-  public QuerySuggestionsConfigurationWithIndex setIndexName(String indexName) {
-    this.indexName = indexName;
-    return this;
-  }
-
-  /** Query Suggestions index name. */
-  @javax.annotation.Nonnull
-  public String getIndexName() {
-    return indexName;
-  }
+  @JsonProperty("indexName")
+  private String indexName;
 
   public QuerySuggestionsConfigurationWithIndex setSourceIndices(List<SourceIndex> sourceIndices) {
     this.sourceIndices = sourceIndices;
@@ -81,7 +70,7 @@ public class QuerySuggestionsConfigurationWithIndex {
     return this;
   }
 
-  /** Patterns to exclude from query suggestions. */
+  /** Get exclude */
   @javax.annotation.Nullable
   public List<String> getExclude() {
     return exclude;
@@ -92,7 +81,7 @@ public class QuerySuggestionsConfigurationWithIndex {
     return this;
   }
 
-  /** Turn on personalized query suggestions. */
+  /** Whether to turn on personalized query suggestions. */
   @javax.annotation.Nullable
   public Boolean getEnablePersonalization() {
     return enablePersonalization;
@@ -103,10 +92,21 @@ public class QuerySuggestionsConfigurationWithIndex {
     return this;
   }
 
-  /** Allow suggestions with special characters. */
+  /** Whether to include suggestions with special characters. */
   @javax.annotation.Nullable
   public Boolean getAllowSpecialCharacters() {
     return allowSpecialCharacters;
+  }
+
+  public QuerySuggestionsConfigurationWithIndex setIndexName(String indexName) {
+    this.indexName = indexName;
+    return this;
+  }
+
+  /** Name of the Query Suggestions index. */
+  @javax.annotation.Nonnull
+  public String getIndexName() {
+    return indexName;
   }
 
   @Override
@@ -119,30 +119,30 @@ public class QuerySuggestionsConfigurationWithIndex {
     }
     QuerySuggestionsConfigurationWithIndex querySuggestionsConfigurationWithIndex = (QuerySuggestionsConfigurationWithIndex) o;
     return (
-      Objects.equals(this.indexName, querySuggestionsConfigurationWithIndex.indexName) &&
       Objects.equals(this.sourceIndices, querySuggestionsConfigurationWithIndex.sourceIndices) &&
       Objects.equals(this.languages, querySuggestionsConfigurationWithIndex.languages) &&
       Objects.equals(this.exclude, querySuggestionsConfigurationWithIndex.exclude) &&
       Objects.equals(this.enablePersonalization, querySuggestionsConfigurationWithIndex.enablePersonalization) &&
-      Objects.equals(this.allowSpecialCharacters, querySuggestionsConfigurationWithIndex.allowSpecialCharacters)
+      Objects.equals(this.allowSpecialCharacters, querySuggestionsConfigurationWithIndex.allowSpecialCharacters) &&
+      Objects.equals(this.indexName, querySuggestionsConfigurationWithIndex.indexName)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(indexName, sourceIndices, languages, exclude, enablePersonalization, allowSpecialCharacters);
+    return Objects.hash(sourceIndices, languages, exclude, enablePersonalization, allowSpecialCharacters, indexName);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class QuerySuggestionsConfigurationWithIndex {\n");
-    sb.append("    indexName: ").append(toIndentedString(indexName)).append("\n");
     sb.append("    sourceIndices: ").append(toIndentedString(sourceIndices)).append("\n");
     sb.append("    languages: ").append(toIndentedString(languages)).append("\n");
     sb.append("    exclude: ").append(toIndentedString(exclude)).append("\n");
     sb.append("    enablePersonalization: ").append(toIndentedString(enablePersonalization)).append("\n");
     sb.append("    allowSpecialCharacters: ").append(toIndentedString(allowSpecialCharacters)).append("\n");
+    sb.append("    indexName: ").append(toIndentedString(indexName)).append("\n");
     sb.append("}");
     return sb.toString();
   }

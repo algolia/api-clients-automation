@@ -70,7 +70,7 @@ class QuerySuggestionsClient(
       options = clientOptions
     ) {
 
-  /** Create a new Query Suggestions configuration. You can have up to 100 configurations per Algolia application.
+  /** Creates a new Query Suggestions configuration. You can have up to 100 configurations per Algolia application.
     *
     * Required API Key ACLs:
     *   - editSettings
@@ -193,8 +193,9 @@ class QuerySuggestionsClient(
     execute[T](request, requestOptions)
   }
 
-  /** Delete a Query Suggestions configuration. Deleting only removes the configuration and stops updates to the Query
-    * Suggestions index. The Query Suggestions index itself is not deleted.
+  /** Deletes a Query Suggestions configuration. Deleting only removes the configuration and stops updates to the Query
+    * Suggestions index. To delete the Query Suggestions index itself, use the Search API and the [Delete an
+    * index](/specs/search#tag/Indices/operation/deleteIndex) operation.
     *
     * Required API Key ACLs:
     *   - editSettings
@@ -215,7 +216,7 @@ class QuerySuggestionsClient(
     execute[BaseResponse](request, requestOptions)
   }
 
-  /** List all Query Suggestions configurations of your Algolia application.
+  /** Retrieves all Query Suggestions configurations of your Algolia application.
     *
     * Required API Key ACLs:
     *   - settings
@@ -232,7 +233,7 @@ class QuerySuggestionsClient(
     execute[Seq[QuerySuggestionsConfigurationResponse]](request, requestOptions)
   }
 
-  /** Get a single Query Suggestions configuration.
+  /** Retrieves a single Query Suggestions configuration by its index name.
     *
     * Required API Key ACLs:
     *   - settings
@@ -253,7 +254,7 @@ class QuerySuggestionsClient(
     execute[QuerySuggestionsConfigurationResponse](request, requestOptions)
   }
 
-  /** Report the status of a Query Suggestions index.
+  /** Reports the status of a Query Suggestions index.
     *
     * Required API Key ACLs:
     *   - settings
@@ -274,7 +275,7 @@ class QuerySuggestionsClient(
     execute[GetConfigStatus200Response](request, requestOptions)
   }
 
-  /** Get the logs for a single Query Suggestions index.
+  /** Retrieves the logs for a single Query Suggestions index.
     *
     * Required API Key ACLs:
     *   - settings
@@ -295,7 +296,7 @@ class QuerySuggestionsClient(
     execute[GetLogFile200Response](request, requestOptions)
   }
 
-  /** Update a QuerySuggestions configuration.
+  /** Updates a QuerySuggestions configuration.
     *
     * Required API Key ACLs:
     *   - editSettings

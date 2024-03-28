@@ -623,7 +623,7 @@ class QuerySuggestionsClientRequestsTests {
     var res = clientE2E.getConfig("cts_e2e_browse_query_suggestions");
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"allowSpecialCharacters\":true,\"enablePersonalization\":false,\"exclude\":[\"^cocaines$\"],\"indexName\":\"cts_e2e_browse_query_suggestions\",\"languages\":[],\"sourceIndices\":[{\"facets\":[{\"amount\":1,\"attribute\":\"title\"}],\"generate\":[[\"year\"]],\"indexName\":\"cts_e2e_browse\",\"minHits\":5,\"minLetters\":4,\"replicas\":false}]}",
+        "{\"appID\":\"T8JK9S7I7X\",\"allowSpecialCharacters\":true,\"enablePersonalization\":false,\"exclude\":[\"^cocaines$\"],\"indexName\":\"cts_e2e_browse_query_suggestions\",\"languages\":[],\"sourceIndices\":[{\"facets\":[{\"amount\":1,\"attribute\":\"title\"}],\"generate\":[[\"year\"]],\"indexName\":\"cts_e2e_browse\",\"minHits\":5,\"minLetters\":4,\"replicas\":false}]}",
         json.writeValueAsString(res),
         JSONCompareMode.LENIENT
       )

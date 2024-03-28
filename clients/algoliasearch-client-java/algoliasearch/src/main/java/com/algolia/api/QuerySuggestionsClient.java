@@ -53,8 +53,8 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * Create a new Query Suggestions configuration. You can have up to 100 configurations per Algolia
-   * application.
+   * Creates a new Query Suggestions configuration. You can have up to 100 configurations per
+   * Algolia application.
    *
    * @param querySuggestionsConfigurationWithIndex (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -69,8 +69,8 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * Create a new Query Suggestions configuration. You can have up to 100 configurations per Algolia
-   * application.
+   * Creates a new Query Suggestions configuration. You can have up to 100 configurations per
+   * Algolia application.
    *
    * @param querySuggestionsConfigurationWithIndex (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -81,7 +81,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create a new Query Suggestions configuration. You can have up to 100
+   * (asynchronously) Creates a new Query Suggestions configuration. You can have up to 100
    * configurations per Algolia application.
    *
    * @param querySuggestionsConfigurationWithIndex (required)
@@ -108,7 +108,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create a new Query Suggestions configuration. You can have up to 100
+   * (asynchronously) Creates a new Query Suggestions configuration. You can have up to 100
    * configurations per Algolia application.
    *
    * @param querySuggestionsConfigurationWithIndex (required)
@@ -539,8 +539,10 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * Delete a Query Suggestions configuration. Deleting only removes the configuration and stops
-   * updates to the Query Suggestions index. The Query Suggestions index itself is not deleted.
+   * Deletes a Query Suggestions configuration. Deleting only removes the configuration and stops
+   * updates to the Query Suggestions index. To delete the Query Suggestions index itself, use the
+   * Search API and the [Delete an index](/specs/search#tag/Indices/operation/deleteIndex)
+   * operation.
    *
    * @param indexName Query Suggestions index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -552,8 +554,10 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * Delete a Query Suggestions configuration. Deleting only removes the configuration and stops
-   * updates to the Query Suggestions index. The Query Suggestions index itself is not deleted.
+   * Deletes a Query Suggestions configuration. Deleting only removes the configuration and stops
+   * updates to the Query Suggestions index. To delete the Query Suggestions index itself, use the
+   * Search API and the [Delete an index](/specs/search#tag/Indices/operation/deleteIndex)
+   * operation.
    *
    * @param indexName Query Suggestions index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -563,9 +567,10 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a Query Suggestions configuration. Deleting only removes the
-   * configuration and stops updates to the Query Suggestions index. The Query Suggestions index
-   * itself is not deleted.
+   * (asynchronously) Deletes a Query Suggestions configuration. Deleting only removes the
+   * configuration and stops updates to the Query Suggestions index. To delete the Query Suggestions
+   * index itself, use the Search API and the [Delete an
+   * index](/specs/search#tag/Indices/operation/deleteIndex) operation.
    *
    * @param indexName Query Suggestions index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -581,9 +586,10 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a Query Suggestions configuration. Deleting only removes the
-   * configuration and stops updates to the Query Suggestions index. The Query Suggestions index
-   * itself is not deleted.
+   * (asynchronously) Deletes a Query Suggestions configuration. Deleting only removes the
+   * configuration and stops updates to the Query Suggestions index. To delete the Query Suggestions
+   * index itself, use the Search API and the [Delete an
+   * index](/specs/search#tag/Indices/operation/deleteIndex) operation.
    *
    * @param indexName Query Suggestions index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -593,7 +599,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * List all Query Suggestions configurations of your Algolia application.
+   * Retrieves all Query Suggestions configurations of your Algolia application.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -604,7 +610,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * List all Query Suggestions configurations of your Algolia application.
+   * Retrieves all Query Suggestions configurations of your Algolia application.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -613,7 +619,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List all Query Suggestions configurations of your Algolia application.
+   * (asynchronously) Retrieves all Query Suggestions configurations of your Algolia application.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -627,7 +633,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List all Query Suggestions configurations of your Algolia application.
+   * (asynchronously) Retrieves all Query Suggestions configurations of your Algolia application.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -636,7 +642,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * Get a single Query Suggestions configuration.
+   * Retrieves a single Query Suggestions configuration by its index name.
    *
    * @param indexName Query Suggestions index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -649,7 +655,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * Get a single Query Suggestions configuration.
+   * Retrieves a single Query Suggestions configuration by its index name.
    *
    * @param indexName Query Suggestions index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -659,7 +665,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a single Query Suggestions configuration.
+   * (asynchronously) Retrieves a single Query Suggestions configuration by its index name.
    *
    * @param indexName Query Suggestions index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -676,7 +682,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a single Query Suggestions configuration.
+   * (asynchronously) Retrieves a single Query Suggestions configuration by its index name.
    *
    * @param indexName Query Suggestions index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -686,7 +692,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * Report the status of a Query Suggestions index.
+   * Reports the status of a Query Suggestions index.
    *
    * @param indexName Query Suggestions index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -699,7 +705,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * Report the status of a Query Suggestions index.
+   * Reports the status of a Query Suggestions index.
    *
    * @param indexName Query Suggestions index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -709,7 +715,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Report the status of a Query Suggestions index.
+   * (asynchronously) Reports the status of a Query Suggestions index.
    *
    * @param indexName Query Suggestions index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -725,7 +731,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Report the status of a Query Suggestions index.
+   * (asynchronously) Reports the status of a Query Suggestions index.
    *
    * @param indexName Query Suggestions index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -735,7 +741,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * Get the logs for a single Query Suggestions index.
+   * Retrieves the logs for a single Query Suggestions index.
    *
    * @param indexName Query Suggestions index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -747,7 +753,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * Get the logs for a single Query Suggestions index.
+   * Retrieves the logs for a single Query Suggestions index.
    *
    * @param indexName Query Suggestions index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -757,7 +763,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get the logs for a single Query Suggestions index.
+   * (asynchronously) Retrieves the logs for a single Query Suggestions index.
    *
    * @param indexName Query Suggestions index name. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -774,7 +780,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get the logs for a single Query Suggestions index.
+   * (asynchronously) Retrieves the logs for a single Query Suggestions index.
    *
    * @param indexName Query Suggestions index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -784,7 +790,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * Update a QuerySuggestions configuration.
+   * Updates a QuerySuggestions configuration.
    *
    * @param indexName Query Suggestions index name. (required)
    * @param querySuggestionsConfiguration (required)
@@ -801,7 +807,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * Update a QuerySuggestions configuration.
+   * Updates a QuerySuggestions configuration.
    *
    * @param indexName Query Suggestions index name. (required)
    * @param querySuggestionsConfiguration (required)
@@ -813,7 +819,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Update a QuerySuggestions configuration.
+   * (asynchronously) Updates a QuerySuggestions configuration.
    *
    * @param indexName Query Suggestions index name. (required)
    * @param querySuggestionsConfiguration (required)
@@ -843,7 +849,7 @@ public class QuerySuggestionsClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Update a QuerySuggestions configuration.
+   * (asynchronously) Updates a QuerySuggestions configuration.
    *
    * @param indexName Query Suggestions index name. (required)
    * @param querySuggestionsConfiguration (required)

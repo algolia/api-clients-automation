@@ -514,7 +514,7 @@ class TestQuerySuggestionsClient:
             index_name="cts_e2e_browse_query_suggestions",
         )
         _expected_body = loads(
-            """{"allowSpecialCharacters":true,"enablePersonalization":false,"exclude":["^cocaines$"],"indexName":"cts_e2e_browse_query_suggestions","languages":[],"sourceIndices":[{"facets":[{"amount":1,"attribute":"title"}],"generate":[["year"]],"indexName":"cts_e2e_browse","minHits":5,"minLetters":4,"replicas":false}]}"""
+            """{"appID":"T8JK9S7I7X","allowSpecialCharacters":true,"enablePersonalization":false,"exclude":["^cocaines$"],"indexName":"cts_e2e_browse_query_suggestions","languages":[],"sourceIndices":[{"facets":[{"amount":1,"attribute":"title"}],"generate":[["year"]],"indexName":"cts_e2e_browse","minHits":5,"minLetters":4,"replicas":false}]}"""
         )
         assert self._helpers.union(_expected_body, resp) == _expected_body
 

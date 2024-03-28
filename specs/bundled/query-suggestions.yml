@@ -2,16 +2,92 @@ openapi: 3.0.2
 info:
   title: Query Suggestions API
   description: >
-    The Query Suggestions API lets you manage Algolia's Query Suggestions
+    The Query Suggestions API lets you manage your Query Suggestions
     configurations.
 
-    Query Suggestions add new indices with popular search queries, external
-    suggestions, or facet values to your Algolia application.
+    Query Suggestions add new indices to your Algolia application with popular
+    search queries, external suggestions, or facet values.
 
     In your user interface, you can query the Query Suggestions indices like
     regular indices and add [suggested
     searches](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/query-suggestions/js/)
     to guide users and speed up their search.
+
+
+    # Base URLs
+
+
+    The base URLs for making requests to the Query Suggestions API are:
+
+
+    - `https://query-suggestions.us.algolia.com`
+
+    - `https://query-suggestions.eu.algolia.com`
+
+
+    Use the URL that matches your [analytics
+    region](https://dashboard.algolia.com/account/infrastructure/analytics).
+
+
+    **All requests must use HTTPS.**
+
+
+    # Authentication
+
+
+    To authenticate your API requests, add these headers:
+
+
+    <dl>
+
+    <dt><code>x-algolia-application-id</code></dt>
+
+    <dd>Your Algolia application ID.</dd>
+
+    <dt><code>x-algolia-api-key</code></dt>
+
+    <dd>
+
+    An API key with the necessary permissions to make the request.
+
+    The required access control list (ACL) to make a request is listed in each
+    endpoint's reference.
+
+    </dd>
+
+    </dl>
+
+
+    You can find your application ID and API key in the [Algolia
+    dashboard](https://dashboard.algolia.com/account).
+
+
+    # Request format
+
+
+    Request bodies must be JSON objects.
+
+
+    # Response status and errors
+
+
+    Response bodies are JSON objects.
+
+    Deleting a user token returns an empty response body with rate-limiting
+    information as headers.
+
+
+    Successful responses return a `2xx` status. Client errors return a `4xx`
+    status. Server errors are indicated by a `5xx` status.
+
+    Error responses have a `message` property with more information.
+
+
+    # Version
+
+
+    The current version of the Query Suggestions API is version 1, as indicated
+    by the `/1/` in each endpoint's URL.
   version: 1.0.0
 servers:
   - url: https://query-suggestions.{region}.algolia.com
@@ -155,7 +231,9 @@ paths:
       x-acl:
         - settings
       summary: List configurations.
-      description: List all Query Suggestions configurations of your Algolia application.
+      description: >-
+        Retrieves all Query Suggestions configurations of your Algolia
+        application.
       responses:
         '200':
           description: OK
@@ -175,7 +253,7 @@ paths:
         - editSettings
       summary: Create a configuration.
       description: |
-        Create a new Query Suggestions configuration.
+        Creates a new Query Suggestions configuration.
 
         You can have up to 100 configurations per Algolia application.
       requestBody:
@@ -214,8 +292,8 @@ paths:
       operationId: getConfig
       x-acl:
         - settings
-      summary: Get a configuration.
-      description: Get a single Query Suggestions configuration.
+      summary: Retrieve a configuration.
+      description: Retrieves a single Query Suggestions configuration by its index name.
       parameters:
         - $ref: '#/components/parameters/IndexName'
       responses:
@@ -238,7 +316,7 @@ paths:
       x-acl:
         - editSettings
       summary: Update a configuration.
-      description: Update a QuerySuggestions configuration.
+      description: Updates a QuerySuggestions configuration.
       parameters:
         - $ref: '#/components/parameters/IndexName'
       requestBody:
@@ -274,13 +352,15 @@ paths:
         - editSettings
       summary: Delete a configuration.
       description: >
-        Delete a Query Suggestions configuration.
+        Deletes a Query Suggestions configuration.
 
 
         Deleting only removes the configuration and stops updates to the Query
         Suggestions index.
 
-        The Query Suggestions index itself is not deleted.
+        To delete the Query Suggestions index itself, use the Search API and the
+        [Delete an index](/specs/search#tag/Indices/operation/deleteIndex)
+        operation.
       parameters:
         - $ref: '#/components/parameters/IndexName'
       responses:
@@ -307,8 +387,8 @@ paths:
       operationId: getConfigStatus
       x-acl:
         - settings
-      summary: Get configuration status.
-      description: Report the status of a Query Suggestions index.
+      summary: Retrieve configuration status.
+      description: Reports the status of a Query Suggestions index.
       parameters:
         - $ref: '#/components/parameters/IndexName'
       responses:
@@ -325,8 +405,8 @@ paths:
                   isRunning:
                     type: boolean
                     description: >-
-                      Indicates whether the creation or update of the Query
-                      Suggestions is in progress.
+                      Whether the creation or update of the Query Suggestions
+                      index is in progress.
                     example: false
                   lastBuiltAt:
                     type: string
@@ -358,8 +438,8 @@ paths:
       operationId: getLogFile
       x-acl:
         - settings
-      summary: Get logs.
-      description: Get the logs for a single Query Suggestions index.
+      summary: Retrieve logs.
+      description: Retrieves the logs for a single Query Suggestions index.
       parameters:
         - $ref: '#/components/parameters/IndexName'
       responses:
@@ -389,7 +469,7 @@ paths:
                     type: integer
                     description: >
                       Level indicating the position of a suggestion in a
-                      hierarchy of records. 
+                      hierarchy of records.
 
 
                       For example, a `contextLevel` of 1 indicates that this
@@ -442,38 +522,35 @@ components:
         message:
           type: string
           example: Invalid Application-Id or API-Key
-    baseQuerySuggestionsConfigurationResponse:
+    AppID:
       type: object
-      additionalProperties: false
       properties:
-        sourceIndicesAPIKey:
+        appID:
           type: string
-          description: API key used to read from your source index.
-        suggestionsIndicesAPIKey:
-          type: string
-          description: API key used to write and configure your Query Suggestions index.
-        externalIndicesAPIKey:
-          type: string
-          default: ''
-          description: API key used to read from external Algolia indices.
+          description: >-
+            Algolia application ID to which this Query Suggestions configuration
+            belongs.
     QuerySuggestionsIndexName:
       title: indexName
       type: string
-      description: Query Suggestions index name.
+      description: Name of the Query Suggestions index.
       example: products_query_suggestions
-    baseQuerySuggestionsConfigurationWithIndex:
-      type: object
-      additionalProperties: false
-      required:
-        - indexName
-      properties:
-        indexName:
-          $ref: '#/components/schemas/QuerySuggestionsIndexName'
+    AnalyticsTags:
+      title: analyticsTags
+      description: >
+        Analytics tags for filtering the popular searches.
+
+        For more information, see [Segment your analytics
+        data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+      default: null
+      oneOf:
+        - type: array
+          items:
+            type: string
+        - type: 'null'
     Facet:
-      title: facet
-      description: Facet to use as category.
       type: object
-      additionalProperties: false
+      description: Facet to use as category.
       properties:
         attribute:
           type: string
@@ -481,11 +558,79 @@ components:
         amount:
           type: integer
           description: Number of suggestions.
+    Facets:
+      title: facets
+      description: >
+        Facets to use as top categories with your suggestions.
+
+
+        If provided, Query Suggestions adds the top facet values to each
+        suggestion.
+      default: null
+      oneOf:
+        - type: array
+          items:
+            $ref: '#/components/schemas/Facet'
+        - type: 'null'
+      example:
+        - attribute: category
+          amount: 3
+        - attribute: brand
+          amount: 2
+    Generate:
+      title: generate
+      description: >
+        Facets used for generating query suggestions from facet values.
+
+
+        For example, if you set `generate: ["color", "brand"]`, combinations
+        from the facet values are added as query suggestions,
+
+        such as "blue adidas", "red adidas", "blue nike", "red nike", etc.
+
+
+        You can include nested lists.
+      default: null
+      oneOf:
+        - type: array
+          items:
+            type: array
+            items:
+              type: string
+        - type: 'null'
+      example:
+        -
+          - color
+          - brand
+    External:
+      description: >
+        Algolia indices with popular searches to use as query suggestions.
+
+
+        Records of these indices must have these attributes:
+
+
+        - `query`: search query which will be added as a suggestion
+
+        - `count`: measure of popularity of that search query
+
+
+        For example, you can export popular searches from an external analytics
+        provider, such as Google Analytics or Adobe Analytics,
+
+        and feed this data into an Algolia index.
+
+        You can use this index to generate query suggestions until your Algolia
+        Analytics has collected enough data.
+      default: null
+      oneOf:
+        - type: array
+          items:
+            type: string
+        - type: 'null'
     SourceIndex:
-      title: sourceIndex
       type: object
       description: Configuration of an Algolia index for Query Suggestions.
-      additionalProperties: false
       required:
         - indexName
       properties:
@@ -497,38 +642,15 @@ components:
           type: boolean
           default: false
           description: >
-            If true, Query Suggestions uses all replicas of the primary index to
-            find popular searches.
+            If true, Query Suggestions uses all replica indices to find popular
+            searches.
 
             If false, only the primary index is used.
           example: false
         analyticsTags:
-          oneOf:
-            - type: array
-              description: >
-                [Analytics
-                tags](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/)
-                for filtering the popular searches.
-              items:
-                type: string
-            - type: 'null'
+          $ref: '#/components/schemas/AnalyticsTags'
         facets:
-          oneOf:
-            - type: array
-              items:
-                $ref: '#/components/schemas/Facet'
-              description: >
-                Facets to use as top categories with your suggestions.
-
-
-                If provided, Query Suggestions adds the top facet values to each
-                suggestion.
-              example:
-                - attribute: category
-                  amount: 3
-                - attribute: brand
-                  amount: 2
-            - type: 'null'
+          $ref: '#/components/schemas/Facets'
         minHits:
           type: integer
           minimum: 0
@@ -537,8 +659,8 @@ components:
             Minimum number of hits required to be included as a suggestion.
 
 
-            A search query must at least generate `minHits` hits to be included
-            in the Query Suggestions index.
+            A search query must at least generate `minHits` search results to be
+            included in the Query Suggestions index.
         minLetters:
           type: integer
           minimum: 0
@@ -550,94 +672,58 @@ components:
             A search query must be at least `minLetters` long to be included in
             the Query Suggestions index.
         generate:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-            description: >
-              Facets used for generating query suggestions from facet values.
-
-
-              For example, if you set `generate: ["color", "brand"]`,
-              combinations from the facet values are added as query suggestions,
-
-              such as "blue adidas", "red adidas", "blue nike", "red nike", etc.
-
-
-              You can include nested lists.
-            example:
-              - color
-              - brand
+          $ref: '#/components/schemas/Generate'
         external:
-          oneOf:
-            - type: array
-              items:
-                type: string
-              description: >
-                Algolia indices with popular searches to use as query
-                suggestions.
-
-
-                Records of these indices must have these attributes:
-
-                  - `query`: search query which will be added as a suggestion
-                  - `count`: measure of popularity of that search query
-
-                For example, you can export popular searches from an external
-                analytics tool, such as Google Analytics or Adobe Analytics,
-
-                and feed this data into an external Algolia index.
-
-                You can use this external index to generate query suggestions
-                until your Algolia analytics has collected enough data.
-            - type: 'null'
-    SourceIndices:
-      title: sourceIndices
-      type: array
-      description: >-
-        Algolia indices from which to get the popular searches for query
-        suggestions.
-      minItems: 1
-      items:
-        $ref: '#/components/schemas/SourceIndex'
+          $ref: '#/components/schemas/External'
     Languages:
       title: languages
       description: |
-        Set the language for deduplicating singular and plural suggestions.
+        Languages for deduplicating singular and plural suggestions.
         If specified, only the more popular form is included.
+      default: false
+      oneOf:
+        - type: array
+          description: Languages for which to deduplicate singular and plural forms.
+          items:
+            type: string
+            description: Two-letter country code.
+        - type: boolean
+          description: If true, deduplication is enabled for all languages.
+    Exclude:
+      title: exclude
+      description: Words or regular expressions to exclude from the suggestions.
+      default: null
       oneOf:
         - type: array
           items:
             type: string
-        - type: boolean
-          default: false
+        - type: 'null'
     QuerySuggestionsConfiguration:
       type: object
       description: Query Suggestions configuration.
-      additionalProperties: false
       required:
         - sourceIndices
       properties:
         sourceIndices:
-          $ref: '#/components/schemas/SourceIndices'
+          type: array
+          description: >-
+            Algolia indices from which to get the popular searches for query
+            suggestions.
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/SourceIndex'
         languages:
           $ref: '#/components/schemas/Languages'
         exclude:
-          oneOf:
-            - type: array
-              description: Patterns to exclude from query suggestions.
-              items:
-                type: string
-            - type: 'null'
+          $ref: '#/components/schemas/Exclude'
         enablePersonalization:
           type: boolean
           default: false
-          description: Turn on personalized query suggestions.
+          description: Whether to turn on personalized query suggestions.
         allowSpecialCharacters:
           type: boolean
           default: false
-          description: Allow suggestions with special characters.
+          description: Whether to include suggestions with special characters.
     QuerySuggestionsConfigurationWithIndex:
       type: object
       description: Query Suggestions configuration.
@@ -645,16 +731,26 @@ components:
         - indexName
         - sourceIndices
       allOf:
-        - $ref: '#/components/schemas/baseQuerySuggestionsConfigurationWithIndex'
+        - type: object
+          properties:
+            indexName:
+              $ref: '#/components/schemas/QuerySuggestionsIndexName'
         - $ref: '#/components/schemas/QuerySuggestionsConfiguration'
     QuerySuggestionsConfigurationResponse:
       type: object
+      description: API response for retrieving Query Suggestions configurations.
       allOf:
-        - $ref: '#/components/schemas/baseQuerySuggestionsConfigurationResponse'
+        - $ref: '#/components/schemas/AppID'
         - $ref: '#/components/schemas/QuerySuggestionsConfigurationWithIndex'
+      required:
+        - appID
+        - allowSpecialCharacters
+        - enablePersonalization
+        - exclude
+        - languages
+        - sourceIndices
     BaseResponse:
       type: object
-      additionalProperties: false
       properties:
         status:
           type: integer
@@ -666,7 +762,7 @@ components:
       title: level
       type: string
       description: >
-        The type of log entry. 
+        Type of log entry.
 
 
         - `SKIP`. A query is skipped because it doesn't match the conditions for
@@ -716,14 +812,14 @@ components:
               summary: Wrong region.
               description: >
                 Make sure to make your request to the server corresponding to
-                your region.  
+                your region.
 
 
                 You can check the region for your application in the [Algolia
                 dashboard](https://dashboard.algolia.com/account/infrastructure/analytics).
               value:
                 status: 401
-                message: The log processing region does not match
+                message: The log processing region does not match.
             InvalidCredentials:
               summary: Invalid credentials.
               description: Your application ID or API key is wrong.
@@ -735,7 +831,7 @@ components:
               description: Your API key is missing the required ACL for this operation.
               value:
                 status: 401
-                message: The provided API key is missing the \"editSettings\" ACL
+                message: The provided API key is missing the \"editSettings\" ACL.
     BadRequest-2:
       description: Bad Request.
       content:
@@ -747,7 +843,7 @@ components:
               summary: Index name required.
               value:
                 status: 400
-                message: IndexName cannot be empty
+                message: IndexName cannot be empty.
             SourceIndicesRequired:
               summary: Source indices required.
               value:

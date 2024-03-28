@@ -61,14 +61,14 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
         let response = try await client
             .createConfigWithHTTPInfo(querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex(
-                indexName: "theIndexName",
                 sourceIndices: [SourceIndex(
                     indexName: "testIndex",
                     facets: [Facet(attribute: "test")],
                     generate: [["facetA", "facetB"], ["facetC"]]
                 )],
                 languages: QuerySuggestionsLanguages.arrayOfString(["french"]),
-                exclude: ["test"]
+                exclude: ["test"],
+                indexName: "theIndexName"
             ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -874,7 +874,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
 
         let e2eExpectedBodyData =
             try XCTUnwrap(
-                "{\"allowSpecialCharacters\":true,\"enablePersonalization\":false,\"exclude\":[\"^cocaines$\"],\"indexName\":\"cts_e2e_browse_query_suggestions\",\"languages\":[],\"sourceIndices\":[{\"facets\":[{\"amount\":1,\"attribute\":\"title\"}],\"generate\":[[\"year\"]],\"indexName\":\"cts_e2e_browse\",\"minHits\":5,\"minLetters\":4,\"replicas\":false}]}"
+                "{\"appID\":\"T8JK9S7I7X\",\"allowSpecialCharacters\":true,\"enablePersonalization\":false,\"exclude\":[\"^cocaines$\"],\"indexName\":\"cts_e2e_browse_query_suggestions\",\"languages\":[],\"sourceIndices\":[{\"facets\":[{\"amount\":1,\"attribute\":\"title\"}],\"generate\":[[\"year\"]],\"indexName\":\"cts_e2e_browse\",\"minHits\":5,\"minLetters\":4,\"replicas\":false}]}"
                     .data(using: .utf8)
             )
 

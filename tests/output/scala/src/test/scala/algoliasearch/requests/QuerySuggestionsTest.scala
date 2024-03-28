@@ -621,7 +621,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
 
     val response = Await.result(e2eFuture, Duration.Inf)
     compareJSON(
-      """{"allowSpecialCharacters":true,"enablePersonalization":false,"exclude":["^cocaines$"],"indexName":"cts_e2e_browse_query_suggestions","languages":[],"sourceIndices":[{"facets":[{"amount":1,"attribute":"title"}],"generate":[["year"]],"indexName":"cts_e2e_browse","minHits":5,"minLetters":4,"replicas":false}]}""",
+      """{"appID":"T8JK9S7I7X","allowSpecialCharacters":true,"enablePersonalization":false,"exclude":["^cocaines$"],"indexName":"cts_e2e_browse_query_suggestions","languages":[],"sourceIndices":[{"facets":[{"amount":1,"attribute":"title"}],"generate":[["year"]],"indexName":"cts_e2e_browse","minHits":5,"minLetters":4,"replicas":false}]}""",
       write(response),
       JSONCompareMode.LENIENT
     )
