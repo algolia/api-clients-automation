@@ -35,9 +35,8 @@ public class EchoInterceptor implements Interceptor {
       echo.queryParameters = buildQueryParameters(request);
       echo.headers = buildHeaders(request.headers());
       echo.connectTimeout = chain.connectTimeoutMillis();
-      echo.responseTimeout = (useReadTransporter != null || request.method().equals("GET"))
-        ? chain.readTimeoutMillis()
-        : chain.writeTimeoutMillis();
+      echo.responseTimeout =
+        (useReadTransporter != null || request.method().equals("GET")) ? chain.readTimeoutMillis() : chain.writeTimeoutMillis();
 
       lastResponse = echo;
     } catch (Exception e) {
