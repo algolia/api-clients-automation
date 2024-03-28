@@ -135,7 +135,7 @@ baseSearchParamsWithoutQuery:
     naturalLanguages:
       type: array
       items:
-        type: string
+        $ref: './IndexSettings.yml#/supportedLanguage'
       description: |
         ISO language codes that adjust settings that are useful for processing natural language queries (as opposed to keyword searches):
 
