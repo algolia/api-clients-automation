@@ -1,8 +1,8 @@
 post:
   tags:
     - destinations
-  summary: Search among destinations.
-  description: Search among destinations with a defined set of parameters.
+  summary: Search for destinations.
+  description: Searches for destinations.
   operationId: searchDestinations
   x-acl:
     - addObject

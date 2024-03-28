@@ -1,7 +1,7 @@
 RunResponse:
   type: object
   additionalProperties: false
-  description: The response from the run task API, containing an Observability Run ID and the time it was created at.
+  description: API response for running a task.
   properties:
     runID:
       $ref: './common.yml#/runID'
@@ -54,7 +54,7 @@ Run:
       $ref: './task.yml#/failureThreshold'
     reason:
       type: string
-      description: 'Explains the result of outcome.'
+      description: More information about the task run's outcome.
     reasonCode:
       $ref: '#/RunReasonCode'
     type:
@@ -75,18 +75,21 @@ Run:
 
 RunStatus:
   type: string
-  enum: ['created', 'started', 'idled', 'finished', 'skipped']
+  description: Task run status.
+  enum: [created, started, idled, finished, skipped]
 
 RunOutcome:
   type: string
-  enum: ['success', 'failure', 'processing']
+  description: Task run outcome.
+  enum: [success, failure, processing]
 
 RunType:
   type: string
-  enum: ['reindex', 'update', 'discover']
+  description: Task run type.
+  enum: [reindex, update, discover]
 
 RunReasonCode:
   type: string
-  description: 'An identifier that pairs with the outcome reason.'
+  description: A code for the task run's outcome. A readable description of the code is included in the `reason` response property.
   enum:
-    ['internal', 'critical', 'no_events', 'too_many_errors', 'ok', 'discarded', 'blocking']
+    [internal, critical, no_events, too_many_errors, ok, discarded, blocking]

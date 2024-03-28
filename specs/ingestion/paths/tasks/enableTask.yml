@@ -2,7 +2,7 @@ put:
   tags:
     - tasks
   summary: Enable a task.
-  description: Enable the task of the given taskID.
+  description: Enables a task.
   operationId: enableTask
   x-acl:
     - addObject
