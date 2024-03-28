@@ -74,6 +74,10 @@ table tbody tr td h3,
 table tbody tr td h2 {
   margin-top: 16px;
 }
+/* left align table headers */
+table th {
+  text-align: left;
+}
 
 html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);

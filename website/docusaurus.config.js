@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable import/no-commonjs */
+const remarkSmartypants = require('remark-smartypants');
 
 const fs = require('fs');
 const path = require('path');
@@ -81,6 +82,7 @@ function getLabel(str) {
               'https://github.com/algolia/api-clients-automation/edit/main/website/',
             showLastUpdateAuthor: true,
             showLastUpdateTime: true,
+            remarkPlugins: [[remarkSmartypants, { dashes: 'oldschool' }]],
           },
           blog: false,
           theme: {
