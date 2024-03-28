@@ -2,7 +2,7 @@ pathAuthenticationID:
   name: authenticationID
   in: path
   required: true
-  description: The authentication UUID.
+  description: Unique identifier of an authentication resource.
   schema:
     $ref: './schemas/common.yml#/authenticationID'
 
@@ -10,7 +10,7 @@ pathDestinationID:
   name: destinationID
   in: path
   required: true
-  description: The destination UUID.
+  description: Unique identifier of a destination.
   schema:
     $ref: './schemas/common.yml#/destinationID'
 
@@ -18,7 +18,7 @@ pathSourceID:
   name: sourceID
   in: path
   required: true
-  description: The source UUID.
+  description: Unique identifier of a source.
   schema:
     $ref: './schemas/common.yml#/sourceID'
 
@@ -26,7 +26,7 @@ pathTaskID:
   name: taskID
   in: path
   required: true
-  description: The task UUID.
+  description: Unique identifier of a task.
   schema:
     $ref: './schemas/common.yml#/taskID'
 
@@ -34,7 +34,7 @@ pathRunID:
   name: runID
   in: path
   required: true
-  description: The run UUID.
+  description: Unique identifier of a task run.
   schema:
     $ref: './schemas/common.yml#/runID'
 
@@ -42,35 +42,36 @@ pathEventID:
   name: eventID
   in: path
   required: true
-  description: The event UUID.
+  description: Unique identifier of an event.
   schema:
     $ref: './schemas/common.yml#/eventID'
 
 itemsPerPage:
   name: itemsPerPage
   in: query
-  description: The number of items per page to return.
+  description: Number of items per page.
   required: false
   schema:
-    type: integer
+    $ref: './schemas/pagination.yml#/itemsPerPage'
 
 page:
   name: page
   in: query
-  description: The page number to fetch, starting at 1.
+  description: Page number of the paginated API response.
   required: false
   schema:
-    type: integer
+    $ref: './schemas/pagination.yml#/page'
 
 order:
   name: order
   in: query
-  description: The order of the returned list.
+  description: Sort order of the response, ascending or descending.
   required: false
   schema:
     $ref: '#/orderKeys'
 
 orderKeys:
   type: string
-  description: Used to order a sorted request.
+  description: Ascending or descending sort order.
+  default: desc
   enum: [asc, desc]

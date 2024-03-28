@@ -6,7 +6,7 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** The registry where the image is stored. */
+/** Container registry name from where to pull the image. */
 public enum DockerRegistry {
   DOCKERHUB("dockerhub"),
 

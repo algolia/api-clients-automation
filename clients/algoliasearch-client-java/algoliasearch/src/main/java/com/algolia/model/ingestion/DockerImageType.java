@@ -6,7 +6,7 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** The type of the image. */
+/** Image type. */
 public enum DockerImageType {
   SINGER("singer"),
 

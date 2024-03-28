@@ -121,6 +121,8 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
         return "GREATER_THAN";
       case ">=":
         return "GREATER_EQUALS";
+      case "mappingkit/v1":
+        return "MAPPINGKIT_V1";
     }
 
     if (!value.matches("[A-Z0-9_]+")) {

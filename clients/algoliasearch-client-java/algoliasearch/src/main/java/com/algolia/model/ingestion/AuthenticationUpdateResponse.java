@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** Response from the API when the Authentication is successfully updated. */
+/** API response for a successful update of an authentication resource. */
 public class AuthenticationUpdateResponse {
 
   @JsonProperty("authenticationID")
@@ -24,7 +24,7 @@ public class AuthenticationUpdateResponse {
     return this;
   }
 
-  /** The authentication UUID. */
+  /** Universally unique identifier (UUID) of an authentication resource. */
   @javax.annotation.Nonnull
   public String getAuthenticationID() {
     return authenticationID;
@@ -35,7 +35,7 @@ public class AuthenticationUpdateResponse {
     return this;
   }
 
-  /** An human readable name describing the object. */
+  /** Descriptive name for the resource. */
   @javax.annotation.Nonnull
   public String getName() {
     return name;
@@ -46,7 +46,7 @@ public class AuthenticationUpdateResponse {
     return this;
   }
 
-  /** Date of last update (RFC3339 format). */
+  /** Date of last update in RFC3339 format. */
   @javax.annotation.Nonnull
   public String getUpdatedAt() {
     return updatedAt;

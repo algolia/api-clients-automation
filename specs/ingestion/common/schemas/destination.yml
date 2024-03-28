@@ -1,6 +1,6 @@
 Destination:
   type: object
-  description: A destination describe how the data is indexed on the Algolia side.
+  description: Destinations are Algolia resources like indices or event streams.
   additionalProperties: false
   properties:
     destinationID:
@@ -27,7 +27,7 @@ Destination:
 DestinationCreate:
   type: object
   additionalProperties: false
-  description: The payload when creating a destination.
+  description: API request body for creating a new destination.
   properties:
     type:
       $ref: '#/DestinationType'
@@ -45,7 +45,7 @@ DestinationCreate:
 DestinationCreateResponse:
   type: object
   additionalProperties: false
-  description: Response from the API when the Destination is successfully created.
+  description: API response for creating a new destination.
   properties:
     destinationID:
       $ref: './common.yml#/destinationID'
@@ -61,7 +61,7 @@ DestinationCreateResponse:
 DestinationUpdate:
   type: object
   additionalProperties: false
-  description: Payload to partially update a Destination.
+  description: API request body for updating a destination.
   properties:
     type:
       $ref: '#/DestinationType'
@@ -75,7 +75,7 @@ DestinationUpdate:
 DestinationUpdateResponse:
   type: object
   additionalProperties: false
-  description: Response from the API when the Destination is successfully updated.
+  description: API response for updating a destination.
   properties:
     destinationID:
       $ref: './common.yml#/destinationID'
@@ -91,7 +91,7 @@ DestinationUpdateResponse:
 DestinationSearch:
   type: object
   additionalProperties: false
-  description: Payload to search for multiple destinations, based on the given `destinationIDs`.
+  description: API request body for searching destinations.
   properties:
     destinationIDs:
       type: array
@@ -102,8 +102,16 @@ DestinationSearch:
 
 DestinationType:
   type: string
-  description: Type of the Destination, defines in which Algolia product the data will be stored.
-  enum: ['search', 'insights', 'flow']
+  description: |
+    Destination type.
+
+    <dl>
+    <dt><code>search</code></dt>
+    <dd>Data is stored in an Algolia index.</dd>
+    <dt><code>insights</code></dt>
+    <dd>Data is recorded as user events in the Insights API.</dd>
+    </dl>.
+  enum: [search, insights]
 
 DestinationIndexPrefix:
   type: object
@@ -111,7 +119,7 @@ DestinationIndexPrefix:
   properties:
     indexPrefix:
       type: string
-      description: The prefix of the final index name.
+      description: String added to the beginning of all indices created by this destination.
   required:
     - indexPrefix
 
@@ -121,7 +129,7 @@ DestinationIndexName:
   properties:
     indexName:
       type: string
-      description: The index name to store data in.
+      description: Algolia index name.
     recordType:
       $ref: '#/RecordType'
     attributesToExclude:
@@ -131,19 +139,21 @@ DestinationIndexName:
 
 RecordType:
   type: string
-  description: Determines the indexing strategy to use for a given e-commerce source.
-  enum: ['product', 'variant']
+  description: Record type for ecommerce sources.
+  enum: [product, variant]
 
 AttributesToExclude:
   type: array
-  description: >
-    Determines the attributes to exclude from an Algolia record.
+  description: |
+    Attributes from your source to exclude from Algolia records.
 
-    To remove nested element, you can separate the path to the element with dots (`.`):
-      - "foo.bar": will remove `bar` from `foo`.
-    To remove elements from an array, you can use the following:
-      - "foo.[0].bar": will only remove `bar` from the first element of `foo`.
-      - "foo.[*].bar": will remove `bar` from every elements of `foo`.
+    Not all your data attributes will be useful for searching.
+    Keeping your Algolia records small increases indexing and search performance.
+
+    - Exclude nested attributes with `.` notation. For example, `foo.bar` indexes the `foo` attribute and all its children **except** the `bar` attribute.
+    - Exclude attributes from arrays with `[i]`, where `i` is the index of the array element.
+      For example, `foo.[0].bar` only excludes the `bar` attribute from the first element of the `foo` array, but indexes the complete `foo` attribute for all other elements.
+      Use `*` as wildcard: `foo.[*].bar` excludes `bar` from all elements of the `foo` array.
   items:
     type: string
 

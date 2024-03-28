@@ -24,7 +24,7 @@ public class SourceCreateResponse {
     return this;
   }
 
-  /** The source UUID. */
+  /** Universally uniqud identifier (UUID) of a source. */
   @javax.annotation.Nonnull
   public String getSourceID() {
     return sourceID;
@@ -35,7 +35,7 @@ public class SourceCreateResponse {
     return this;
   }
 
-  /** Get name */
+  /** Descriptive name of the source. */
   @javax.annotation.Nonnull
   public String getName() {
     return name;
@@ -46,7 +46,7 @@ public class SourceCreateResponse {
     return this;
   }
 
-  /** Date of creation (RFC3339 format). */
+  /** Date of creation in RFC3339 format. */
   @javax.annotation.Nonnull
   public String getCreatedAt() {
     return createdAt;

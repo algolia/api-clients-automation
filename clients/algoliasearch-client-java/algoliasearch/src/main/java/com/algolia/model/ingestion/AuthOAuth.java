@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** Authentication input for OAuth login. */
+/** Credentials for authenticating with OAuth 2.0. */
 @JsonDeserialize(as = AuthOAuth.class)
 public class AuthOAuth implements AuthInput {
 
@@ -20,12 +20,15 @@ public class AuthOAuth implements AuthInput {
   @JsonProperty("client_secret")
   private String clientSecret;
 
+  @JsonProperty("scope")
+  private String scope;
+
   public AuthOAuth setUrl(String url) {
     this.url = url;
     return this;
   }
 
-  /** The OAuth endpoint URL. */
+  /** URL for the OAuth endpoint. */
   @javax.annotation.Nonnull
   public String getUrl() {
     return url;
@@ -36,7 +39,7 @@ public class AuthOAuth implements AuthInput {
     return this;
   }
 
-  /** The clientID. */
+  /** Client ID. */
   @javax.annotation.Nonnull
   public String getClientId() {
     return clientId;
@@ -47,10 +50,21 @@ public class AuthOAuth implements AuthInput {
     return this;
   }
 
-  /** The secret. */
+  /** Client secret. This field is `null` in the API response. */
   @javax.annotation.Nonnull
   public String getClientSecret() {
     return clientSecret;
+  }
+
+  public AuthOAuth setScope(String scope) {
+    this.scope = scope;
+    return this;
+  }
+
+  /** OAuth scope. */
+  @javax.annotation.Nullable
+  public String getScope() {
+    return scope;
   }
 
   @Override
@@ -65,13 +79,14 @@ public class AuthOAuth implements AuthInput {
     return (
       Objects.equals(this.url, authOAuth.url) &&
       Objects.equals(this.clientId, authOAuth.clientId) &&
-      Objects.equals(this.clientSecret, authOAuth.clientSecret)
+      Objects.equals(this.clientSecret, authOAuth.clientSecret) &&
+      Objects.equals(this.scope, authOAuth.scope)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(url, clientId, clientSecret);
+    return Objects.hash(url, clientId, clientSecret, scope);
   }
 
   @Override
@@ -81,6 +96,7 @@ public class AuthOAuth implements AuthInput {
     sb.append("    url: ").append(toIndentedString(url)).append("\n");
     sb.append("    clientId: ").append(toIndentedString(clientId)).append("\n");
     sb.append("    clientSecret: ").append(toIndentedString(clientSecret)).append("\n");
+    sb.append("    scope: ").append(toIndentedString(scope)).append("\n");
     sb.append("}");
     return sb.toString();
   }

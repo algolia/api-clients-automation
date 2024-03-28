@@ -6,7 +6,7 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Gets or Sets RunOutcome */
+/** Task run outcome. */
 public enum RunOutcome {
   SUCCESS("success"),
 

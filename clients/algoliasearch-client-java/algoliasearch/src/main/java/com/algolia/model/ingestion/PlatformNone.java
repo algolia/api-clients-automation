@@ -6,7 +6,7 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Used to filter Authentication without platform property. */
+/** Authentication resource not tied to any ecommerce platform, used for filtering. */
 @JsonDeserialize(as = PlatformNone.class)
 public enum PlatformNone implements PlatformWithNone {
   NONE("none");

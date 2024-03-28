@@ -33,7 +33,7 @@ public class SourceCSV implements SourceInput, SourceUpdateInput {
     return this;
   }
 
-  /** The URL of the file. */
+  /** URL of the file. */
   @javax.annotation.Nonnull
   public String getUrl() {
     return url;
@@ -44,7 +44,7 @@ public class SourceCSV implements SourceInput, SourceUpdateInput {
     return this;
   }
 
-  /** The name of the column that contains the unique ID, used as `objectID` in Algolia. */
+  /** Name of a column that contains a unique ID which will be used as `objectID` in Algolia. */
   @javax.annotation.Nullable
   public String getUniqueIDColumn() {
     return uniqueIDColumn;
@@ -63,10 +63,7 @@ public class SourceCSV implements SourceInput, SourceUpdateInput {
     return this;
   }
 
-  /**
-   * Mapping of type for every column. For example {\"myColumn\": \"boolean\", \"myOtherColumn\":
-   * \"json\"}.
-   */
+  /** Key-value pairs of column names and their expected types. */
   @javax.annotation.Nullable
   public Map<String, MappingTypeCSV> getMapping() {
     return mapping;

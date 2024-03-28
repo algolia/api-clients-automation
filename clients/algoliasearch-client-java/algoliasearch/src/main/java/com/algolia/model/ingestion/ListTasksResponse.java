@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** A list of tasks with pagination details. */
+/** Configured tasks and pagination information. */
 public class ListTasksResponse {
 
   @JsonProperty("tasks")

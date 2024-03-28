@@ -2,7 +2,7 @@ post:
   tags:
     - tasks
   summary: Run a task.
-  description: Run the task of the given taskID.
+  description: Runs a task. You can check the status of task runs with the observability endpoints.
   operationId: runTask
   x-acl:
     - addObject

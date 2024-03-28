@@ -1,7 +1,7 @@
 type:
   name: type
   in: query
-  description: The type of the sources to retrieve.
+  description: Source type. Some sources require authentication.
   required: false
   style: form
   explode: false
@@ -14,9 +14,9 @@ type:
 authenticationID:
   name: authenticationID
   in: query
-  description: >
-    The authenticationIDs of the sources to retrieve.
-    'none' returns sources that doesn't have an authentication.
+  description: |
+    Authentication IDs of the sources to retrieve.
+    'none' returns sources that doesn't have an authentication resource.
   required: false
   style: form
   explode: false
@@ -29,12 +29,13 @@ authenticationID:
 sort:
   name: sort
   in: query
-  description: The key by which the list should be sorted.
+  description: Property by which to sort the list of sources.
   required: false
   schema:
     $ref: '#/sourceSortKeys'
 
 sourceSortKeys:
   type: string
-  description: Used to sort the Source list endpoint.
+  description: Property by which to sort the list of sources.
+  default: createdAt
   enum: [name, type, updatedAt, createdAt]

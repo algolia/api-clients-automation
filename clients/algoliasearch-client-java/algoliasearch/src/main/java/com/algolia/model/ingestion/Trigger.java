@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-/** Trigger */
+/** Trigger that runs the task. */
 @JsonDeserialize(using = Trigger.Deserializer.class)
 public interface Trigger {
   class Deserializer extends JsonDeserializer<Trigger> {

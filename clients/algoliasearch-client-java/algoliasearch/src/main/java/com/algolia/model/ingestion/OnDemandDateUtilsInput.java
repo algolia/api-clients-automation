@@ -8,8 +8,8 @@ import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /**
- * The input for an `onDemand` task whose source is of type `bigquery` and for which extracted data
- * spans a given time range.
+ * Input for a manually-triggered task whose source is of type `bigquery` and for which extracted
+ * data spans a given time range.
  */
 @JsonDeserialize(as = OnDemandDateUtilsInput.class)
 public class OnDemandDateUtilsInput implements TaskInput {
@@ -28,7 +28,7 @@ public class OnDemandDateUtilsInput implements TaskInput {
     return this;
   }
 
-  /** The start date of the extraction (RFC3339 format). */
+  /** Earliest date in RFC3339 format of the extracted data from Big Query. */
   @javax.annotation.Nonnull
   public String getStartDate() {
     return startDate;
@@ -39,7 +39,7 @@ public class OnDemandDateUtilsInput implements TaskInput {
     return this;
   }
 
-  /** The end date of the extraction (RFC3339 format). */
+  /** Latest date in RFC3339 format of the extracted data from Big Query. */
   @javax.annotation.Nonnull
   public String getEndDate() {
     return endDate;

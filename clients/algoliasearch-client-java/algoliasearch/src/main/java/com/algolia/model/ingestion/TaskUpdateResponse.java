@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** The response from the API after a task update. */
+/** API response for updating a task. */
 public class TaskUpdateResponse {
 
   @JsonProperty("taskID")
@@ -21,7 +21,7 @@ public class TaskUpdateResponse {
     return this;
   }
 
-  /** The task UUID. */
+  /** Universally unique identifier (UUID) of a task. */
   @javax.annotation.Nonnull
   public String getTaskID() {
     return taskID;
@@ -32,7 +32,7 @@ public class TaskUpdateResponse {
     return this;
   }
 
-  /** Date of last update (RFC3339 format). */
+  /** Date of last update in RFC3339 format. */
   @javax.annotation.Nonnull
   public String getUpdatedAt() {
     return updatedAt;

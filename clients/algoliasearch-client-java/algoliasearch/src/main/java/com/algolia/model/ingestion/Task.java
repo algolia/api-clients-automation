@@ -45,7 +45,7 @@ public class Task {
     return this;
   }
 
-  /** The task UUID. */
+  /** Universally unique identifier (UUID) of a task. */
   @javax.annotation.Nonnull
   public String getTaskID() {
     return taskID;
@@ -56,7 +56,7 @@ public class Task {
     return this;
   }
 
-  /** The source UUID. */
+  /** Universally uniqud identifier (UUID) of a source. */
   @javax.annotation.Nonnull
   public String getSourceID() {
     return sourceID;
@@ -67,7 +67,7 @@ public class Task {
     return this;
   }
 
-  /** The destination UUID. */
+  /** Universally unique identifier (UUID) of a destination resource. */
   @javax.annotation.Nonnull
   public String getDestinationID() {
     return destinationID;
@@ -100,7 +100,7 @@ public class Task {
     return this;
   }
 
-  /** Whether the task is enabled or not. */
+  /** Whether the task is enabled. */
   @javax.annotation.Nonnull
   public Boolean getEnabled() {
     return enabled;
@@ -112,8 +112,8 @@ public class Task {
   }
 
   /**
-   * A percentage representing the accepted failure threshold to determine if a `run` succeeded or
-   * not. minimum: 0 maximum: 100
+   * Maximum accepted percentage of failures for a task run to finish successfully. minimum: 0
+   * maximum: 100
    */
   @javax.annotation.Nullable
   public Integer getFailureThreshold() {
@@ -136,7 +136,7 @@ public class Task {
     return this;
   }
 
-  /** Date of creation (RFC3339 format). */
+  /** Date of creation in RFC3339 format. */
   @javax.annotation.Nonnull
   public String getCreatedAt() {
     return createdAt;
@@ -147,7 +147,7 @@ public class Task {
     return this;
   }
 
-  /** Date of last update (RFC3339 format). */
+  /** Date of last update in RFC3339 format. */
   @javax.annotation.Nullable
   public String getUpdatedAt() {
     return updatedAt;

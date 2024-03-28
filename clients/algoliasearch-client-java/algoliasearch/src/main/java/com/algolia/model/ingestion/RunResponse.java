@@ -7,10 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/**
- * The response from the run task API, containing an Observability Run ID and the time it was
- * created at.
- */
+/** API response for running a task. */
 public class RunResponse {
 
   @JsonProperty("runID")
@@ -24,7 +21,7 @@ public class RunResponse {
     return this;
   }
 
-  /** The run UUID. */
+  /** Universally unique identifier (UUID) of a task run. */
   @javax.annotation.Nonnull
   public String getRunID() {
     return runID;
@@ -35,7 +32,7 @@ public class RunResponse {
     return this;
   }
 
-  /** Date of creation (RFC3339 format). */
+  /** Date of creation in RFC3339 format. */
   @javax.annotation.Nonnull
   public String getCreatedAt() {
     return createdAt;

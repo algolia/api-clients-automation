@@ -6,12 +6,17 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Describe which platform the Authentication is used for. */
+/**
+ * Name of an ecommerce platform with which to authenticate. This determines which authentication
+ * type you can select.
+ */
 @JsonDeserialize(as = Platform.class)
 public enum Platform implements PlatformWithNone {
   BIGCOMMERCE("bigcommerce"),
 
-  COMMERCETOOLS("commercetools");
+  COMMERCETOOLS("commercetools"),
+
+  SHOPIFY("shopify");
 
   private final String value;
 

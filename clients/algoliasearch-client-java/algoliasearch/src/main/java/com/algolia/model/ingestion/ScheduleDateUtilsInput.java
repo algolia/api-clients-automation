@@ -8,8 +8,8 @@ import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /**
- * The input for a `schedule` task whose source is of type `bigquery` and for which extracted data
- * spans a fixed number of days.
+ * Input for scheduled tasks whose source is of type `bigquery` and for which extracted data spans a
+ * fixed number of days.
  */
 @JsonDeserialize(as = ScheduleDateUtilsInput.class)
 public class ScheduleDateUtilsInput implements TaskInput {
@@ -25,7 +25,10 @@ public class ScheduleDateUtilsInput implements TaskInput {
     return this;
   }
 
-  /** The timeframe of the extraction, in number of days from today. minimum: 1 maximum: 30 */
+  /**
+   * Number of days in the past until the current day for which to extract Big Query data. minimum:
+   * 1 maximum: 30
+   */
   @javax.annotation.Nonnull
   public Integer getTimeframe() {
     return timeframe;

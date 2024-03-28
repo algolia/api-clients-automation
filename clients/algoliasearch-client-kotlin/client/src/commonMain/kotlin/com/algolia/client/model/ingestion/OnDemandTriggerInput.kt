@@ -5,7 +5,7 @@ import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 
 /**
- * The trigger information of a task of type `onDemand`.
+ * Trigger information for manually-triggered tasks.
  *
  * @param type
  */

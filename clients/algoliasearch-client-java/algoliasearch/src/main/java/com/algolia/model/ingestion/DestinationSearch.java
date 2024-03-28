@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** Payload to search for multiple destinations, based on the given `destinationIDs`. */
+/** API request body for searching destinations. */
 public class DestinationSearch {
 
   @JsonProperty("destinationIDs")
