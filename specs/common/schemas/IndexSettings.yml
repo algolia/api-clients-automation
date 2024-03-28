@@ -370,6 +370,7 @@ indexSettingsAsSearchParams:
         The tie-breaking algorithm sequentially applies each criterion in the order they're specified.
         If you configure a replica index for [sorting by an attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute/),
         you put the sorting attribute at the top of the list.
+        Attribute names are case-sensitive.
 
         **Modifiers**
 
