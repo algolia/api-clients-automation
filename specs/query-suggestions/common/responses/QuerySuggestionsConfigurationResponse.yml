@@ -5,7 +5,7 @@ QuerySuggestionsConfigurationResponse:
     - $ref: '#/AppID'
     - $ref: '../schemas/QuerySuggestionsConfiguration.yml#/QuerySuggestionsConfigurationWithIndex'
   required:
-    - appId
+    - appID
     - allowSpecialCharacters
     - enablePersonalization
     - exclude
