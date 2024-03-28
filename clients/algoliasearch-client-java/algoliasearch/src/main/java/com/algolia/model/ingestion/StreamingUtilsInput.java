@@ -8,8 +8,8 @@ import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /**
- * The input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which
- * extracted data is continuously streamed.
+ * Input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which extracted
+ * data is continuously streamed.
  */
 @JsonDeserialize(as = StreamingUtilsInput.class)
 public class StreamingUtilsInput implements TaskInput {

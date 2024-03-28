@@ -9,23 +9,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** Transformations to apply to source, serialized as a JSON string. */
+/** Transformations to apply to the source, serialized as a JSON string. */
 public class MappingInput {
 
   @JsonProperty("format")
-  private String format;
+  private MappingFormatSchema format;
 
   @JsonProperty("actions")
   private List<MappingKitAction> actions = new ArrayList<>();
 
-  public MappingInput setFormat(String format) {
+  public MappingInput setFormat(MappingFormatSchema format) {
     this.format = format;
     return this;
   }
 
-  /** Name of the mapping format schema, `mappingkit/v1` is currently the only supported format. */
+  /** Get format */
   @javax.annotation.Nonnull
-  public String getFormat() {
+  public MappingFormatSchema getFormat() {
     return format;
   }
 

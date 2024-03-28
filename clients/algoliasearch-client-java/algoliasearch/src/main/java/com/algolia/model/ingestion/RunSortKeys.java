@@ -6,7 +6,7 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Used to sort the Run list endpoint. */
+/** Property by which to sort the list of task runs. */
 public enum RunSortKeys {
   STATUS("status"),
 

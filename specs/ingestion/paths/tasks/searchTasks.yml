@@ -1,8 +1,8 @@
 post:
   tags:
     - tasks
-  summary: Search among tasks.
-  description: Search among tasks with a defined set of parameters.
+  summary: Search for tasks.
+  description: Searches for tasks.
   operationId: searchTasks
   x-acl:
     - addObject

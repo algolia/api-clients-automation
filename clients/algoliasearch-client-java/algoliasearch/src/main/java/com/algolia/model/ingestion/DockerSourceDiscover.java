@@ -21,7 +21,7 @@ public class DockerSourceDiscover {
     return this;
   }
 
-  /** The run UUID. */
+  /** Universally unique identifier (UUID) of a task run. */
   @javax.annotation.Nonnull
   public String getRunID() {
     return runID;
@@ -32,7 +32,7 @@ public class DockerSourceDiscover {
     return this;
   }
 
-  /** Date of creation (RFC3339 format). */
+  /** Date of creation in RFC3339 format. */
   @javax.annotation.Nonnull
   public String getCreatedAt() {
     return createdAt;

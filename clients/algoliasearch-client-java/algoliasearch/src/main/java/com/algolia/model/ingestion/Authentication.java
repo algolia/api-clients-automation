@@ -7,7 +7,9 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** An authentication is used to login into a Source or a Destination, with obfuscated input. */
+/**
+ * Resource representing the information required to authenticate with a source or a destination.
+ */
 public class Authentication {
 
   @JsonProperty("authenticationID")
@@ -36,7 +38,7 @@ public class Authentication {
     return this;
   }
 
-  /** The authentication UUID. */
+  /** Universally unique identifier (UUID) of an authentication resource. */
   @javax.annotation.Nonnull
   public String getAuthenticationID() {
     return authenticationID;
@@ -58,7 +60,7 @@ public class Authentication {
     return this;
   }
 
-  /** An human readable name describing the object. */
+  /** Descriptive name for the resource. */
   @javax.annotation.Nonnull
   public String getName() {
     return name;
@@ -91,7 +93,7 @@ public class Authentication {
     return this;
   }
 
-  /** Date of creation (RFC3339 format). */
+  /** Date of creation in RFC3339 format. */
   @javax.annotation.Nonnull
   public String getCreatedAt() {
     return createdAt;
@@ -102,7 +104,7 @@ public class Authentication {
     return this;
   }
 
-  /** Date of last update (RFC3339 format). */
+  /** Date of last update in RFC3339 format. */
   @javax.annotation.Nullable
   public String getUpdatedAt() {
     return updatedAt;

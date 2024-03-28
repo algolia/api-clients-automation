@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** Pagination */
+/** Paginated API response. */
 public class Pagination {
 
   @JsonProperty("nbPages")
@@ -27,7 +27,7 @@ public class Pagination {
     return this;
   }
 
-  /** Get nbPages */
+  /** Number of pages in the API response. minimum: 1 */
   @javax.annotation.Nonnull
   public Integer getNbPages() {
     return nbPages;
@@ -38,7 +38,7 @@ public class Pagination {
     return this;
   }
 
-  /** Get page */
+  /** Page of the API response to retrieve. minimum: 1 */
   @javax.annotation.Nonnull
   public Integer getPage() {
     return page;
@@ -49,7 +49,7 @@ public class Pagination {
     return this;
   }
 
-  /** Get nbItems */
+  /** Number of items in the API response. minimum: 0 */
   @javax.annotation.Nonnull
   public Integer getNbItems() {
     return nbItems;
@@ -60,7 +60,7 @@ public class Pagination {
     return this;
   }
 
-  /** Get itemsPerPage */
+  /** Number of items per page. minimum: 1 maximum: 100 */
   @javax.annotation.Nonnull
   public Integer getItemsPerPage() {
     return itemsPerPage;

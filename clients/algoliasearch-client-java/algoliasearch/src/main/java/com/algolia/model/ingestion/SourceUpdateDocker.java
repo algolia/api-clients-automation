@@ -39,7 +39,7 @@ public class SourceUpdateDocker implements SourceUpdateInput {
     return this;
   }
 
-  /** The name of the image to pull. */
+  /** Docker image name. */
   @javax.annotation.Nullable
   public String getImage() {
     return image;
@@ -50,7 +50,7 @@ public class SourceUpdateDocker implements SourceUpdateInput {
     return this;
   }
 
-  /** The version of the image, defaults to `latest`. */
+  /** Docker image version. */
   @javax.annotation.Nullable
   public String getVersion() {
     return version;
@@ -61,7 +61,7 @@ public class SourceUpdateDocker implements SourceUpdateInput {
     return this;
   }
 
-  /** The configuration of the spec. */
+  /** Configuration of the spec. */
   @javax.annotation.Nonnull
   public Object getConfiguration() {
     return _configuration;

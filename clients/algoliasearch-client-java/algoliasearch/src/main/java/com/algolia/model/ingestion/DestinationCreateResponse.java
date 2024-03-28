@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** Response from the API when the Destination is successfully created. */
+/** API response for creating a new destination. */
 public class DestinationCreateResponse {
 
   @JsonProperty("destinationID")
@@ -24,7 +24,7 @@ public class DestinationCreateResponse {
     return this;
   }
 
-  /** The destination UUID. */
+  /** Universally unique identifier (UUID) of a destination resource. */
   @javax.annotation.Nonnull
   public String getDestinationID() {
     return destinationID;
@@ -35,7 +35,7 @@ public class DestinationCreateResponse {
     return this;
   }
 
-  /** An human readable name describing the object. */
+  /** Descriptive name for the resource. */
   @javax.annotation.Nonnull
   public String getName() {
     return name;
@@ -46,7 +46,7 @@ public class DestinationCreateResponse {
     return this;
   }
 
-  /** Date of creation (RFC3339 format). */
+  /** Date of creation in RFC3339 format. */
   @javax.annotation.Nonnull
   public String getCreatedAt() {
     return createdAt;

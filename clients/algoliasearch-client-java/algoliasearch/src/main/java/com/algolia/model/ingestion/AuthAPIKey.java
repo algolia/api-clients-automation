@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** Authentication input used for token credentials. */
+/** Credentials for authenticating with an API key. */
 @JsonDeserialize(as = AuthAPIKey.class)
 public class AuthAPIKey implements AuthInput {
 
@@ -19,7 +19,7 @@ public class AuthAPIKey implements AuthInput {
     return this;
   }
 
-  /** Get key */
+  /** API key. This field is `null` in the API response. */
   @javax.annotation.Nonnull
   public String getKey() {
     return key;

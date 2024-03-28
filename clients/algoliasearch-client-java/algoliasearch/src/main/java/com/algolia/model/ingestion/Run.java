@@ -54,7 +54,7 @@ public class Run {
     return this;
   }
 
-  /** The run UUID. */
+  /** Universally unique identifier (UUID) of a task run. */
   @javax.annotation.Nonnull
   public String getRunID() {
     return runID;
@@ -76,7 +76,7 @@ public class Run {
     return this;
   }
 
-  /** The task UUID. */
+  /** Universally unique identifier (UUID) of a task. */
   @javax.annotation.Nonnull
   public String getTaskID() {
     return taskID;
@@ -121,8 +121,8 @@ public class Run {
   }
 
   /**
-   * A percentage representing the accepted failure threshold to determine if a `run` succeeded or
-   * not. minimum: 0 maximum: 100
+   * Maximum accepted percentage of failures for a task run to finish successfully. minimum: 0
+   * maximum: 100
    */
   @javax.annotation.Nullable
   public Integer getFailureThreshold() {
@@ -134,7 +134,7 @@ public class Run {
     return this;
   }
 
-  /** Explains the result of outcome. */
+  /** More information about the task run's outcome. */
   @javax.annotation.Nullable
   public String getReason() {
     return reason;
@@ -167,7 +167,7 @@ public class Run {
     return this;
   }
 
-  /** Date of creation (RFC3339 format). */
+  /** Date of creation in RFC3339 format. */
   @javax.annotation.Nonnull
   public String getCreatedAt() {
     return createdAt;
@@ -178,7 +178,7 @@ public class Run {
     return this;
   }
 
-  /** Date of start (RFC3339 format). */
+  /** Date of start in RFC3339 format. */
   @javax.annotation.Nullable
   public String getStartedAt() {
     return startedAt;
@@ -189,7 +189,7 @@ public class Run {
     return this;
   }
 
-  /** Date of finish (RFC3339 format). */
+  /** Date of finish in RFC3339 format. */
   @javax.annotation.Nullable
   public String getFinishedAt() {
     return finishedAt;

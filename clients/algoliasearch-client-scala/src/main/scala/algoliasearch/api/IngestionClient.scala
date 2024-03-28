@@ -116,7 +116,7 @@ class IngestionClient(
       options = clientOptions
     ) {
 
-  /** Create a authentication.
+  /** Creates a new authentication resource.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -142,7 +142,7 @@ class IngestionClient(
     execute[AuthenticationCreateResponse](request, requestOptions)
   }
 
-  /** Create a destination.
+  /** Creates a new destination.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -165,7 +165,7 @@ class IngestionClient(
     execute[DestinationCreateResponse](request, requestOptions)
   }
 
-  /** Create a source.
+  /** Creates a new source.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -188,9 +188,10 @@ class IngestionClient(
     execute[SourceCreateResponse](request, requestOptions)
   }
 
-  /** Create a task.
+  /** Creates a new task.
     *
     * @param taskCreate
+    *   Request body for creating a task.
     */
   def createTask(taskCreate: TaskCreate, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -306,7 +307,8 @@ class IngestionClient(
     execute[T](request, requestOptions)
   }
 
-  /** Soft delete the authentication of the given authenticationID.
+  /** Deletes an authentication resource. You can't delete authentication resources that are used by a source or a
+    * destination.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -314,7 +316,7 @@ class IngestionClient(
     *   - editSettings
     *
     * @param authenticationID
-    *   The authentication UUID.
+    *   Unique identifier of an authentication resource.
     */
   def deleteAuthentication(authenticationID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -329,7 +331,7 @@ class IngestionClient(
     execute[DeleteResponse](request, requestOptions)
   }
 
-  /** Soft delete the destination of the given destinationID.
+  /** Deletes a destination by its ID. You can't delete destinations that are referenced in tasks.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -337,7 +339,7 @@ class IngestionClient(
     *   - editSettings
     *
     * @param destinationID
-    *   The destination UUID.
+    *   Unique identifier of a destination.
     */
   def deleteDestination(destinationID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -352,7 +354,7 @@ class IngestionClient(
     execute[DeleteResponse](request, requestOptions)
   }
 
-  /** Soft delete the source of the given sourceID.
+  /** Deletes a source by its ID. You can't delete sources that are referenced in tasks.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -360,7 +362,7 @@ class IngestionClient(
     *   - editSettings
     *
     * @param sourceID
-    *   The source UUID.
+    *   Unique identifier of a source.
     */
   def deleteSource(sourceID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -375,10 +377,10 @@ class IngestionClient(
     execute[DeleteResponse](request, requestOptions)
   }
 
-  /** Soft delete the task of the given taskID.
+  /** Deletes a task by its ID.
     *
     * @param taskID
-    *   The task UUID.
+    *   Unique identifier of a task.
     */
   def deleteTask(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -393,7 +395,7 @@ class IngestionClient(
     execute[DeleteResponse](request, requestOptions)
   }
 
-  /** Disable the task of the given taskID.
+  /** Disables a task.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -401,7 +403,7 @@ class IngestionClient(
     *   - editSettings
     *
     * @param taskID
-    *   The task UUID.
+    *   Unique identifier of a task.
     */
   def disableTask(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -416,7 +418,7 @@ class IngestionClient(
     execute[TaskUpdateResponse](request, requestOptions)
   }
 
-  /** Enable the task of the given taskID.
+  /** Enables a task.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -424,7 +426,7 @@ class IngestionClient(
     *   - editSettings
     *
     * @param taskID
-    *   The task UUID.
+    *   Unique identifier of a task.
     */
   def enableTask(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -439,7 +441,7 @@ class IngestionClient(
     execute[TaskUpdateResponse](request, requestOptions)
   }
 
-  /** Get the authentication of the given authenticationID.
+  /** Retrieves an authentication resource by its ID.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -447,7 +449,7 @@ class IngestionClient(
     *   - editSettings
     *
     * @param authenticationID
-    *   The authentication UUID.
+    *   Unique identifier of an authentication resource.
     */
   def getAuthentication(authenticationID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -462,7 +464,7 @@ class IngestionClient(
     execute[Authentication](request, requestOptions)
   }
 
-  /** Get a list of authentications for the given query parameters, with pagination details.
+  /** Retrieves a list of all authentication resources.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -470,17 +472,17 @@ class IngestionClient(
     *   - editSettings
     *
     * @param itemsPerPage
-    *   The number of items per page to return.
+    *   Number of items per page.
     * @param page
-    *   The page number to fetch, starting at 1.
+    *   Page number of the paginated API response.
     * @param `type`
-    *   The type of the authentications to retrieve.
+    *   Type of authentication resource to retrieve.
     * @param platform
-    *   The platform of the authentications to retrieve.
+    *   Ecommerce platform for which to retrieve authentication resources.
     * @param sort
-    *   The key by which the list should be sorted.
+    *   Property by which to sort the list of authentication resources.
     * @param order
-    *   The order of the returned list.
+    *   Sort order of the response, ascending or descending.
     */
   def getAuthentications(
       itemsPerPage: Option[Int] = None,
@@ -506,7 +508,7 @@ class IngestionClient(
     execute[ListAuthenticationsResponse](request, requestOptions)
   }
 
-  /** Get the destination of the given destinationID.
+  /** Retrieves a destination by its ID.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -514,7 +516,7 @@ class IngestionClient(
     *   - editSettings
     *
     * @param destinationID
-    *   The destination UUID.
+    *   Unique identifier of a destination.
     */
   def getDestination(destinationID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -529,7 +531,7 @@ class IngestionClient(
     execute[Destination](request, requestOptions)
   }
 
-  /** Get a list of destinations for the given query parameters, with pagination details.
+  /** Retrieves a list of destinations.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -537,17 +539,17 @@ class IngestionClient(
     *   - editSettings
     *
     * @param itemsPerPage
-    *   The number of items per page to return.
+    *   Number of items per page.
     * @param page
-    *   The page number to fetch, starting at 1.
+    *   Page number of the paginated API response.
     * @param `type`
-    *   The type of the destinations to retrive.
+    *   Destination type.
     * @param authenticationID
-    *   The authenticationIDs of the destinations to retrive.
+    *   Authentication ID used by destinations.
     * @param sort
-    *   The key by which the list should be sorted.
+    *   Property by which to sort the destinations.
     * @param order
-    *   The order of the returned list.
+    *   Sort order of the response, ascending or descending.
     */
   def getDestinations(
       itemsPerPage: Option[Int] = None,
@@ -573,7 +575,8 @@ class IngestionClient(
     execute[ListDestinationsResponse](request, requestOptions)
   }
 
-  /** Retrieve a stream listing for a given Singer specification compatible docker type source ID.
+  /** Retrieves a stream listing for a source. Listing streams only works with sources with `type: docker` and
+    * `imageType: singer`.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -581,7 +584,7 @@ class IngestionClient(
     *   - editSettings
     *
     * @param sourceID
-    *   The source UUID.
+    *   Unique identifier of a source.
     */
   def getDockerSourceStreams(sourceID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -596,7 +599,7 @@ class IngestionClient(
     execute[DockerSourceStreams](request, requestOptions)
   }
 
-  /** Get a single event for a specific runID.
+  /** Retrieves a single task run event by its ID.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -604,9 +607,9 @@ class IngestionClient(
     *   - editSettings
     *
     * @param runID
-    *   The run UUID.
+    *   Unique identifier of a task run.
     * @param eventID
-    *   The event UUID.
+    *   Unique identifier of an event.
     */
   def getEvent(runID: String, eventID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -622,7 +625,7 @@ class IngestionClient(
     execute[Event](request, requestOptions)
   }
 
-  /** Get a list of events associated to the given runID, for the given query parameters.
+  /** Retrieves a list of events for a task run, identified by it's ID.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -630,23 +633,24 @@ class IngestionClient(
     *   - editSettings
     *
     * @param runID
-    *   The run UUID.
+    *   Unique identifier of a task run.
     * @param itemsPerPage
-    *   The number of items per page to return.
+    *   Number of items per page.
     * @param page
-    *   The page number to fetch, starting at 1.
+    *   Page number of the paginated API response.
     * @param status
-    *   Filter the status of the events.
+    *   Event status for filtering the list of task runs.
     * @param `type`
-    *   Filter the type of the events.
+    *   Event type for filtering the list of task runs.
     * @param sort
-    *   The key by which the list should be sorted.
+    *   Property by which to sort the list of task run events.
     * @param order
-    *   The order of the returned list.
+    *   Sort order of the response, ascending or descending.
     * @param startDate
-    *   The start date (in RFC3339 format) of the events fetching window. Defaults to 'now'-3 hours if omitted.
+    *   Date and time in RFC3339 format for the earliest events to retrieve. By default, the current time minus three
+    *   hours is used.
     * @param endDate
-    *   The end date (in RFC3339 format) of the events fetching window. Defaults to 'now' days if omitted.
+    *   Date and time in RFC3339 format for the latest events to retrieve. By default, the current time is used.
     */
   def getEvents(
       runID: String,
@@ -678,7 +682,7 @@ class IngestionClient(
     execute[ListEventsResponse](request, requestOptions)
   }
 
-  /** Get a single run for the given ID.
+  /** Retrieve a single task run by its ID.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -686,7 +690,7 @@ class IngestionClient(
     *   - editSettings
     *
     * @param runID
-    *   The run UUID.
+    *   Unique identifier of a task run.
     */
   def getRun(runID: String, requestOptions: Option[RequestOptions] = None)(implicit ec: ExecutionContext): Future[Run] =
     Future {
@@ -700,7 +704,7 @@ class IngestionClient(
       execute[Run](request, requestOptions)
     }
 
-  /** Get a list of runs for the given query parameters, with pagination details.
+  /** Retrieve a list of task runs.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -708,21 +712,21 @@ class IngestionClient(
     *   - editSettings
     *
     * @param itemsPerPage
-    *   The number of items per page to return.
+    *   Number of items per page.
     * @param page
-    *   The page number to fetch, starting at 1.
+    *   Page number of the paginated API response.
     * @param status
-    *   Filter the status of the runs.
+    *   Run status for filtering the list of task runs.
     * @param taskID
-    *   Filter by taskID.
+    *   Task ID for filtering the list of task runs.
     * @param sort
-    *   The key by which the list should be sorted.
+    *   Property by which to sort the list of task runs.
     * @param order
-    *   The order of the returned list.
+    *   Sort order of the response, ascending or descending.
     * @param startDate
-    *   The start date (in RFC3339 format) of the runs fetching window. Defaults to 'now'-7 days if omitted.
+    *   Date in RFC3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
     * @param endDate
-    *   The end date (in RFC3339 format) of the runs fetching window. Defaults to 'now' days if omitted.
+    *   Date in RFC3339 format for the latest run to retrieve. By default, the current day is used.
     */
   def getRuns(
       itemsPerPage: Option[Int] = None,
@@ -752,7 +756,7 @@ class IngestionClient(
     execute[RunListResponse](request, requestOptions)
   }
 
-  /** Get the source of the given sourceID.
+  /** Retrieve a source by its ID.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -760,7 +764,7 @@ class IngestionClient(
     *   - editSettings
     *
     * @param sourceID
-    *   The source UUID.
+    *   Unique identifier of a source.
     */
   def getSource(sourceID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -775,7 +779,7 @@ class IngestionClient(
     execute[Source](request, requestOptions)
   }
 
-  /** Get a list of sources for the given query parameters, with pagination details.
+  /** Retrieves a list of sources.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -783,17 +787,18 @@ class IngestionClient(
     *   - editSettings
     *
     * @param itemsPerPage
-    *   The number of items per page to return.
+    *   Number of items per page.
     * @param page
-    *   The page number to fetch, starting at 1.
+    *   Page number of the paginated API response.
     * @param `type`
-    *   The type of the sources to retrieve.
+    *   Source type. Some sources require authentication.
     * @param authenticationID
-    *   The authenticationIDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication.
+    *   Authentication IDs of the sources to retrieve. 'none' returns sources that doesn't have an authentication
+    *   resource.
     * @param sort
-    *   The key by which the list should be sorted.
+    *   Property by which to sort the list of sources.
     * @param order
-    *   The order of the returned list.
+    *   Sort order of the response, ascending or descending.
     */
   def getSources(
       itemsPerPage: Option[Int] = None,
@@ -819,7 +824,7 @@ class IngestionClient(
     execute[ListSourcesResponse](request, requestOptions)
   }
 
-  /** Get the task of the given taskID.
+  /** Retrieves a task by its ID.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -827,7 +832,7 @@ class IngestionClient(
     *   - editSettings
     *
     * @param taskID
-    *   The task UUID.
+    *   Unique identifier of a task.
     */
   def getTask(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -842,7 +847,7 @@ class IngestionClient(
     execute[Task](request, requestOptions)
   }
 
-  /** Get a list of tasks for the given query parameters, with pagination details.
+  /** Retrieves a list of tasks.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -850,23 +855,23 @@ class IngestionClient(
     *   - editSettings
     *
     * @param itemsPerPage
-    *   The number of items per page to return.
+    *   Number of items per page.
     * @param page
-    *   The page number to fetch, starting at 1.
+    *   Page number of the paginated API response.
     * @param action
-    *   The action of the tasks to retrieve.
+    *   Actions for filtering the list of tasks.
     * @param enabled
-    *   Whether the task is enabled or not.
+    *   Whether to filter the list of tasks by the `enabled` status.
     * @param sourceID
-    *   The sourceIDs of the tasks to retrieve.
+    *   Source IDs for filtering the list of tasks.
     * @param destinationID
-    *   The destinationIDs of the tasks to retrieve.
+    *   Destination IDs for filtering the list of tasks.
     * @param triggerType
-    *   The trigger type of the task.
+    *   Type of task trigger for filtering the list of tasks.
     * @param sort
-    *   The key by which the list should be sorted.
+    *   Property by which to sort the list of tasks.
     * @param order
-    *   The order of the returned list.
+    *   Sort order of the response, ascending or descending.
     */
   def getTasks(
       itemsPerPage: Option[Int] = None,
@@ -898,7 +903,7 @@ class IngestionClient(
     execute[ListTasksResponse](request, requestOptions)
   }
 
-  /** Run the task of the given taskID.
+  /** Runs a task. You can check the status of task runs with the observability endpoints.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -906,7 +911,7 @@ class IngestionClient(
     *   - editSettings
     *
     * @param taskID
-    *   The task UUID.
+    *   Unique identifier of a task.
     */
   def runTask(taskID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -921,7 +926,7 @@ class IngestionClient(
     execute[RunResponse](request, requestOptions)
   }
 
-  /** Search among authentications with a defined set of parameters.
+  /** Searches for authentication resources.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -945,7 +950,7 @@ class IngestionClient(
     execute[Seq[Authentication]](request, requestOptions)
   }
 
-  /** Search among destinations with a defined set of parameters.
+  /** Searches for destinations.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -966,7 +971,7 @@ class IngestionClient(
     execute[Seq[Destination]](request, requestOptions)
   }
 
-  /** Search among sources with a defined set of parameters.
+  /** Searches for sources.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -987,7 +992,7 @@ class IngestionClient(
     execute[Seq[Source]](request, requestOptions)
   }
 
-  /** Search among tasks with a defined set of parameters.
+  /** Searches for tasks.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -1008,7 +1013,8 @@ class IngestionClient(
     execute[Seq[Task]](request, requestOptions)
   }
 
-  /** Trigger a stream listing request for a Singer specification compatible docker type source.
+  /** Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with
+    * `type: docker` and `imageType: singer`.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -1016,7 +1022,7 @@ class IngestionClient(
     *   - editSettings
     *
     * @param sourceID
-    *   The source UUID.
+    *   Unique identifier of a source.
     */
   def triggerDockerSourceDiscover(sourceID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -1031,7 +1037,7 @@ class IngestionClient(
     execute[DockerSourceDiscover](request, requestOptions)
   }
 
-  /** Update the authentication of the given authenticationID.
+  /** Updates an authentication resource.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -1039,7 +1045,7 @@ class IngestionClient(
     *   - editSettings
     *
     * @param authenticationID
-    *   The authentication UUID.
+    *   Unique identifier of an authentication resource.
     */
   def updateAuthentication(
       authenticationID: String,
@@ -1061,7 +1067,7 @@ class IngestionClient(
     execute[AuthenticationUpdateResponse](request, requestOptions)
   }
 
-  /** Update the destination of the given destinationID.
+  /** Updates the destination by its ID.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -1069,7 +1075,7 @@ class IngestionClient(
     *   - editSettings
     *
     * @param destinationID
-    *   The destination UUID.
+    *   Unique identifier of a destination.
     */
   def updateDestination(
       destinationID: String,
@@ -1088,7 +1094,7 @@ class IngestionClient(
     execute[DestinationUpdateResponse](request, requestOptions)
   }
 
-  /** Update the source of the given sourceID.
+  /** Updates a source by its ID.
     *
     * Required API Key ACLs:
     *   - addObject
@@ -1096,7 +1102,7 @@ class IngestionClient(
     *   - editSettings
     *
     * @param sourceID
-    *   The source UUID.
+    *   Unique identifier of a source.
     */
   def updateSource(sourceID: String, sourceUpdate: SourceUpdate, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -1113,10 +1119,10 @@ class IngestionClient(
     execute[SourceUpdateResponse](request, requestOptions)
   }
 
-  /** Update the task of the given taskID.
+  /** Updates a task by its ID.
     *
     * @param taskID
-    *   The task UUID.
+    *   Unique identifier of a task.
     */
   def updateTask(taskID: String, taskUpdate: TaskUpdate, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext

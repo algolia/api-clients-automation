@@ -598,6 +598,9 @@ public class ParametersWithDataType {
       case "String":
         output.put("isString", true);
         break;
+      case "UUID":
+        output.put("isString", true);
+        break;
       case "Integer":
         output.put("isInteger", true);
         output.put("isNumber", true);

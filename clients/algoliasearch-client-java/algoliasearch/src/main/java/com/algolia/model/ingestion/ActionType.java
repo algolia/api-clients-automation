@@ -6,7 +6,7 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** The action to perform on the Algolia index. */
+/** Action to perform on the Algolia index. */
 public enum ActionType {
   REPLACE("replace"),
 

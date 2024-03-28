@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** The trigger information of a task of type `onDemand`. */
+/** Trigger information for manually-triggered tasks. */
 @JsonDeserialize(as = OnDemandTrigger.class)
 public class OnDemandTrigger implements Trigger {
 
@@ -33,7 +33,7 @@ public class OnDemandTrigger implements Trigger {
     return this;
   }
 
-  /** The last time the scheduled task ran (RFC3339 format). */
+  /** The last time the scheduled task ran in RFC3339 format. */
   @javax.annotation.Nullable
   public String getLastRun() {
     return lastRun;

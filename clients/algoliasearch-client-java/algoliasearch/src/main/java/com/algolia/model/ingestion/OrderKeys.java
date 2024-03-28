@@ -6,7 +6,7 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Used to order a sorted request. */
+/** Ascending or descending sort order. */
 public enum OrderKeys {
   ASC("asc"),
 

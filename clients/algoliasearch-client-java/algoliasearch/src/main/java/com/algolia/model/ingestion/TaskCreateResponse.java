@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** The response from the API after a task creation. */
+/** API response for creating a task. */
 public class TaskCreateResponse {
 
   @JsonProperty("taskID")
@@ -21,7 +21,7 @@ public class TaskCreateResponse {
     return this;
   }
 
-  /** The task UUID. */
+  /** Universally unique identifier (UUID) of a task. */
   @javax.annotation.Nonnull
   public String getTaskID() {
     return taskID;
@@ -32,7 +32,7 @@ public class TaskCreateResponse {
     return this;
   }
 
-  /** Date of creation (RFC3339 format). */
+  /** Date of creation in RFC3339 format. */
   @javax.annotation.Nonnull
   public String getCreatedAt() {
     return createdAt;

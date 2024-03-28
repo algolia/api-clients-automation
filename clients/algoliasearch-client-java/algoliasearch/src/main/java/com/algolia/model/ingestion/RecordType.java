@@ -6,7 +6,7 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Determines the indexing strategy to use for a given e-commerce source. */
+/** Record type for ecommerce sources. */
 public enum RecordType {
   PRODUCT("product"),
 

@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.*;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-/** TaskInput */
+/** Configuration of the task, depending on its type. */
 @JsonDeserialize(using = TaskInput.Deserializer.class)
 public interface TaskInput {
   class Deserializer extends JsonDeserializer<TaskInput> {

@@ -12,7 +12,7 @@ from typing import Self
 
 class DockerRegistry(str, Enum):
     """
-    The registry where the image is stored.
+    Container registry name from where to pull the image.
     """
 
     """

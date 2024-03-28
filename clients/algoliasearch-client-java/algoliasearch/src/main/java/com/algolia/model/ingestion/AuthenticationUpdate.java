@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** Payload to partially update an Authentication. */
+/** Request body for updating an authentication resource. */
 public class AuthenticationUpdate {
 
   @JsonProperty("type")
@@ -38,7 +38,7 @@ public class AuthenticationUpdate {
     return this;
   }
 
-  /** An human readable name describing the object. */
+  /** Descriptive name for the resource. */
   @javax.annotation.Nullable
   public String getName() {
     return name;

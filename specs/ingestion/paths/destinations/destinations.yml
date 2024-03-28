@@ -1,8 +1,8 @@
 get:
   tags:
     - destinations
-  summary: Get a list of destinations.
-  description: Get a list of destinations for the given query parameters, with pagination details.
+  summary: List destinations.
+  description: Retrieves a list of destinations.
   operationId: getDestinations
   x-acl:
     - addObject
@@ -41,7 +41,7 @@ post:
   tags:
     - destinations
   summary: Create a destination.
-  description: Create a destination.
+  description: Creates a new destination.
   operationId: createDestination
   x-acl:
     - addObject

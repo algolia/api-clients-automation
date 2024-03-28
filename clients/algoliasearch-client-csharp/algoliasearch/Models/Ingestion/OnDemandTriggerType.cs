@@ -12,9 +12,9 @@ using System.Text.Json;
 namespace Algolia.Search.Models.Ingestion;
 
 /// <summary>
-/// A task which is manually executed via the run task endpoint.
+/// Task is run manually, with the `/run` endpoint.
 /// </summary>
-/// <value>A task which is manually executed via the run task endpoint.</value>
+/// <value>Task is run manually, with the `/run` endpoint.</value>
 public enum OnDemandTriggerType
 {
   /// <summary>

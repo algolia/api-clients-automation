@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** Payload to partially update a Destination. */
+/** API request body for updating a destination. */
 public class DestinationUpdate {
 
   @JsonProperty("type")
@@ -38,7 +38,7 @@ public class DestinationUpdate {
     return this;
   }
 
-  /** An human readable name describing the object. */
+  /** Descriptive name for the resource. */
   @javax.annotation.Nullable
   public String getName() {
     return name;
@@ -60,7 +60,7 @@ public class DestinationUpdate {
     return this;
   }
 
-  /** The authentication UUID. */
+  /** Universally unique identifier (UUID) of an authentication resource. */
   @javax.annotation.Nullable
   public String getAuthenticationID() {
     return authenticationID;

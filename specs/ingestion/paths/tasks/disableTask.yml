@@ -2,7 +2,7 @@ put:
   tags:
     - tasks
   summary: Disable a task.
-  description: Disable the task of the given taskID.
+  description: Disables a task.
   operationId: disableTask
   x-acl:
     - addObject

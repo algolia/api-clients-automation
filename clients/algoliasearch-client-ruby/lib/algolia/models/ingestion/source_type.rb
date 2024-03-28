@@ -7,15 +7,17 @@ module Algolia
   module Ingestion
     class SourceType
       BIGCOMMERCE = "bigcommerce".freeze
-      COMMERCETOOLS = "commercetools".freeze
-      JSON = "json".freeze
-      CSV = "csv".freeze
       BIGQUERY = "bigquery".freeze
+      COMMERCETOOLS = "commercetools".freeze
+      CSV = "csv".freeze
       DOCKER = "docker".freeze
       GA4_BIGQUERY_EXPORT = "ga4BigqueryExport".freeze
+      JSON = "json".freeze
+      SHOPIFY = "shopify".freeze
+      SFCC = "sfcc".freeze
 
       def self.all_vars
-        @all_vars ||= [BIGCOMMERCE, COMMERCETOOLS, JSON, CSV, BIGQUERY, DOCKER, GA4_BIGQUERY_EXPORT].freeze
+        @all_vars ||= [BIGCOMMERCE, BIGQUERY, COMMERCETOOLS, CSV, DOCKER, GA4_BIGQUERY_EXPORT, JSON, SHOPIFY, SFCC].freeze
       end
 
       # Builds the enum from string

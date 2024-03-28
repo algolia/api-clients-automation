@@ -19,7 +19,7 @@ public class DestinationIndexPrefix implements DestinationInput {
     return this;
   }
 
-  /** The prefix of the final index name. */
+  /** String added to the beginning of all indices created by this destination. */
   @javax.annotation.Nonnull
   public String getIndexPrefix() {
     return indexPrefix;

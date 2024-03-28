@@ -53,7 +53,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Create a authentication.
+   * Creates a new authentication resource.
    *
    * @param authenticationCreate (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -68,7 +68,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Create a authentication.
+   * Creates a new authentication resource.
    *
    * @param authenticationCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -79,7 +79,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create a authentication.
+   * (asynchronously) Creates a new authentication resource.
    *
    * @param authenticationCreate (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -97,7 +97,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create a authentication.
+   * (asynchronously) Creates a new authentication resource.
    *
    * @param authenticationCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -108,7 +108,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Create a destination.
+   * Creates a new destination.
    *
    * @param destinationCreate (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -121,7 +121,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Create a destination.
+   * Creates a new destination.
    *
    * @param destinationCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -131,7 +131,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create a destination.
+   * (asynchronously) Creates a new destination.
    *
    * @param destinationCreate (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -149,7 +149,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create a destination.
+   * (asynchronously) Creates a new destination.
    *
    * @param destinationCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -160,7 +160,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Create a source.
+   * Creates a new source.
    *
    * @param sourceCreate (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -173,7 +173,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Create a source.
+   * Creates a new source.
    *
    * @param sourceCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -183,7 +183,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create a source.
+   * (asynchronously) Creates a new source.
    *
    * @param sourceCreate (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -200,7 +200,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create a source.
+   * (asynchronously) Creates a new source.
    *
    * @param sourceCreate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -210,9 +210,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Create a task.
+   * Creates a new task.
    *
-   * @param taskCreate (required)
+   * @param taskCreate Request body for creating a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -222,9 +222,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Create a task.
+   * Creates a new task.
    *
-   * @param taskCreate (required)
+   * @param taskCreate Request body for creating a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public TaskCreateResponse createTask(@Nonnull TaskCreate taskCreate) throws AlgoliaRuntimeException {
@@ -232,9 +232,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create a task.
+   * (asynchronously) Creates a new task.
    *
-   * @param taskCreate (required)
+   * @param taskCreate Request body for creating a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -249,9 +249,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Create a task.
+   * (asynchronously) Creates a new task.
    *
-   * @param taskCreate (required)
+   * @param taskCreate Request body for creating a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<TaskCreateResponse> createTaskAsync(@Nonnull TaskCreate taskCreate) throws AlgoliaRuntimeException {
@@ -677,9 +677,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Soft delete the authentication of the given authenticationID.
+   * Deletes an authentication resource. You can't delete authentication resources that are used by
+   * a source or a destination.
    *
-   * @param authenticationID The authentication UUID. (required)
+   * @param authenticationID Unique identifier of an authentication resource. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -690,9 +691,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Soft delete the authentication of the given authenticationID.
+   * Deletes an authentication resource. You can't delete authentication resources that are used by
+   * a source or a destination.
    *
-   * @param authenticationID The authentication UUID. (required)
+   * @param authenticationID Unique identifier of an authentication resource. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public DeleteResponse deleteAuthentication(@Nonnull String authenticationID) throws AlgoliaRuntimeException {
@@ -700,9 +702,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Soft delete the authentication of the given authenticationID.
+   * (asynchronously) Deletes an authentication resource. You can't delete authentication resources
+   * that are used by a source or a destination.
    *
-   * @param authenticationID The authentication UUID. (required)
+   * @param authenticationID Unique identifier of an authentication resource. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -720,9 +723,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Soft delete the authentication of the given authenticationID.
+   * (asynchronously) Deletes an authentication resource. You can't delete authentication resources
+   * that are used by a source or a destination.
    *
-   * @param authenticationID The authentication UUID. (required)
+   * @param authenticationID Unique identifier of an authentication resource. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<DeleteResponse> deleteAuthenticationAsync(@Nonnull String authenticationID) throws AlgoliaRuntimeException {
@@ -730,9 +734,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Soft delete the destination of the given destinationID.
+   * Deletes a destination by its ID. You can't delete destinations that are referenced in tasks.
    *
-   * @param destinationID The destination UUID. (required)
+   * @param destinationID Unique identifier of a destination. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -742,9 +746,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Soft delete the destination of the given destinationID.
+   * Deletes a destination by its ID. You can't delete destinations that are referenced in tasks.
    *
-   * @param destinationID The destination UUID. (required)
+   * @param destinationID Unique identifier of a destination. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public DeleteResponse deleteDestination(@Nonnull String destinationID) throws AlgoliaRuntimeException {
@@ -752,9 +756,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Soft delete the destination of the given destinationID.
+   * (asynchronously) Deletes a destination by its ID. You can't delete destinations that are
+   * referenced in tasks.
    *
-   * @param destinationID The destination UUID. (required)
+   * @param destinationID Unique identifier of a destination. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -768,9 +773,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Soft delete the destination of the given destinationID.
+   * (asynchronously) Deletes a destination by its ID. You can't delete destinations that are
+   * referenced in tasks.
    *
-   * @param destinationID The destination UUID. (required)
+   * @param destinationID Unique identifier of a destination. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<DeleteResponse> deleteDestinationAsync(@Nonnull String destinationID) throws AlgoliaRuntimeException {
@@ -778,9 +784,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Soft delete the source of the given sourceID.
+   * Deletes a source by its ID. You can't delete sources that are referenced in tasks.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -790,9 +796,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Soft delete the source of the given sourceID.
+   * Deletes a source by its ID. You can't delete sources that are referenced in tasks.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public DeleteResponse deleteSource(@Nonnull String sourceID) throws AlgoliaRuntimeException {
@@ -800,9 +806,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Soft delete the source of the given sourceID.
+   * (asynchronously) Deletes a source by its ID. You can't delete sources that are referenced in
+   * tasks.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -816,9 +823,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Soft delete the source of the given sourceID.
+   * (asynchronously) Deletes a source by its ID. You can't delete sources that are referenced in
+   * tasks.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<DeleteResponse> deleteSourceAsync(@Nonnull String sourceID) throws AlgoliaRuntimeException {
@@ -826,9 +834,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Soft delete the task of the given taskID.
+   * Deletes a task by its ID.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -838,9 +846,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Soft delete the task of the given taskID.
+   * Deletes a task by its ID.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public DeleteResponse deleteTask(@Nonnull String taskID) throws AlgoliaRuntimeException {
@@ -848,9 +856,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Soft delete the task of the given taskID.
+   * (asynchronously) Deletes a task by its ID.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -865,9 +873,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Soft delete the task of the given taskID.
+   * (asynchronously) Deletes a task by its ID.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<DeleteResponse> deleteTaskAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
@@ -875,9 +883,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Disable the task of the given taskID.
+   * Disables a task.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -887,9 +895,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Disable the task of the given taskID.
+   * Disables a task.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public TaskUpdateResponse disableTask(@Nonnull String taskID) throws AlgoliaRuntimeException {
@@ -897,9 +905,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Disable the task of the given taskID.
+   * (asynchronously) Disables a task.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -914,9 +922,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Disable the task of the given taskID.
+   * (asynchronously) Disables a task.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<TaskUpdateResponse> disableTaskAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
@@ -924,9 +932,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Enable the task of the given taskID.
+   * Enables a task.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -936,9 +944,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Enable the task of the given taskID.
+   * Enables a task.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public TaskUpdateResponse enableTask(@Nonnull String taskID) throws AlgoliaRuntimeException {
@@ -946,9 +954,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Enable the task of the given taskID.
+   * (asynchronously) Enables a task.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -963,9 +971,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Enable the task of the given taskID.
+   * (asynchronously) Enables a task.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<TaskUpdateResponse> enableTaskAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
@@ -973,9 +981,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get the authentication of the given authenticationID.
+   * Retrieves an authentication resource by its ID.
    *
-   * @param authenticationID The authentication UUID. (required)
+   * @param authenticationID Unique identifier of an authentication resource. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -985,9 +993,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get the authentication of the given authenticationID.
+   * Retrieves an authentication resource by its ID.
    *
-   * @param authenticationID The authentication UUID. (required)
+   * @param authenticationID Unique identifier of an authentication resource. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Authentication getAuthentication(@Nonnull String authenticationID) throws AlgoliaRuntimeException {
@@ -995,9 +1003,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get the authentication of the given authenticationID.
+   * (asynchronously) Retrieves an authentication resource by its ID.
    *
-   * @param authenticationID The authentication UUID. (required)
+   * @param authenticationID Unique identifier of an authentication resource. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1011,9 +1019,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get the authentication of the given authenticationID.
+   * (asynchronously) Retrieves an authentication resource by its ID.
    *
-   * @param authenticationID The authentication UUID. (required)
+   * @param authenticationID Unique identifier of an authentication resource. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Authentication> getAuthenticationAsync(@Nonnull String authenticationID) throws AlgoliaRuntimeException {
@@ -1021,14 +1029,15 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of authentications for the given query parameters, with pagination details.
+   * Retrieves a list of all authentication resources.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param type The type of the authentications to retrieve. (optional)
-   * @param platform The platform of the authentications to retrieve. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Type of authentication resource to retrieve. (optional)
+   * @param platform Ecommerce platform for which to retrieve authentication resources. (optional)
+   * @param sort Property by which to sort the list of authentication resources. (optional, default
+   *     to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1046,14 +1055,15 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of authentications for the given query parameters, with pagination details.
+   * Retrieves a list of all authentication resources.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param type The type of the authentications to retrieve. (optional)
-   * @param platform The platform of the authentications to retrieve. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Type of authentication resource to retrieve. (optional)
+   * @param platform Ecommerce platform for which to retrieve authentication resources. (optional)
+   * @param sort Property by which to sort the list of authentication resources. (optional, default
+   *     to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListAuthenticationsResponse getAuthentications(
@@ -1068,7 +1078,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of authentications for the given query parameters, with pagination details.
+   * Retrieves a list of all authentication resources.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1079,7 +1089,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of authentications for the given query parameters, with pagination details.
+   * Retrieves a list of all authentication resources.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1088,15 +1098,15 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of authentications for the given query parameters, with pagination
-   * details.
+   * (asynchronously) Retrieves a list of all authentication resources.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param type The type of the authentications to retrieve. (optional)
-   * @param platform The platform of the authentications to retrieve. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Type of authentication resource to retrieve. (optional)
+   * @param platform Ecommerce platform for which to retrieve authentication resources. (optional)
+   * @param sort Property by which to sort the list of authentication resources. (optional, default
+   *     to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1125,15 +1135,15 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of authentications for the given query parameters, with pagination
-   * details.
+   * (asynchronously) Retrieves a list of all authentication resources.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param type The type of the authentications to retrieve. (optional)
-   * @param platform The platform of the authentications to retrieve. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Type of authentication resource to retrieve. (optional)
+   * @param platform Ecommerce platform for which to retrieve authentication resources. (optional)
+   * @param sort Property by which to sort the list of authentication resources. (optional, default
+   *     to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListAuthenticationsResponse> getAuthenticationsAsync(
@@ -1148,8 +1158,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of authentications for the given query parameters, with pagination
-   * details.
+   * (asynchronously) Retrieves a list of all authentication resources.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1161,8 +1170,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of authentications for the given query parameters, with pagination
-   * details.
+   * (asynchronously) Retrieves a list of all authentication resources.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1171,9 +1179,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get the destination of the given destinationID.
+   * Retrieves a destination by its ID.
    *
-   * @param destinationID The destination UUID. (required)
+   * @param destinationID Unique identifier of a destination. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1183,9 +1191,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get the destination of the given destinationID.
+   * Retrieves a destination by its ID.
    *
-   * @param destinationID The destination UUID. (required)
+   * @param destinationID Unique identifier of a destination. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Destination getDestination(@Nonnull String destinationID) throws AlgoliaRuntimeException {
@@ -1193,9 +1201,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get the destination of the given destinationID.
+   * (asynchronously) Retrieves a destination by its ID.
    *
-   * @param destinationID The destination UUID. (required)
+   * @param destinationID Unique identifier of a destination. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1209,9 +1217,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get the destination of the given destinationID.
+   * (asynchronously) Retrieves a destination by its ID.
    *
-   * @param destinationID The destination UUID. (required)
+   * @param destinationID Unique identifier of a destination. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Destination> getDestinationAsync(@Nonnull String destinationID) throws AlgoliaRuntimeException {
@@ -1219,14 +1227,14 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of destinations for the given query parameters, with pagination details.
+   * Retrieves a list of destinations.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param type The type of the destinations to retrive. (optional)
-   * @param authenticationID The authenticationIDs of the destinations to retrive. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Destination type. (optional)
+   * @param authenticationID Authentication ID used by destinations. (optional)
+   * @param sort Property by which to sort the destinations. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1244,14 +1252,14 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of destinations for the given query parameters, with pagination details.
+   * Retrieves a list of destinations.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param type The type of the destinations to retrive. (optional)
-   * @param authenticationID The authenticationIDs of the destinations to retrive. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Destination type. (optional)
+   * @param authenticationID Authentication ID used by destinations. (optional)
+   * @param sort Property by which to sort the destinations. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListDestinationsResponse getDestinations(
@@ -1266,7 +1274,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of destinations for the given query parameters, with pagination details.
+   * Retrieves a list of destinations.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1277,7 +1285,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of destinations for the given query parameters, with pagination details.
+   * Retrieves a list of destinations.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1286,15 +1294,14 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of destinations for the given query parameters, with pagination
-   * details.
+   * (asynchronously) Retrieves a list of destinations.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param type The type of the destinations to retrive. (optional)
-   * @param authenticationID The authenticationIDs of the destinations to retrive. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Destination type. (optional)
+   * @param authenticationID Authentication ID used by destinations. (optional)
+   * @param sort Property by which to sort the destinations. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1323,15 +1330,14 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of destinations for the given query parameters, with pagination
-   * details.
+   * (asynchronously) Retrieves a list of destinations.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param type The type of the destinations to retrive. (optional)
-   * @param authenticationID The authenticationIDs of the destinations to retrive. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Destination type. (optional)
+   * @param authenticationID Authentication ID used by destinations. (optional)
+   * @param sort Property by which to sort the destinations. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListDestinationsResponse> getDestinationsAsync(
@@ -1346,8 +1352,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of destinations for the given query parameters, with pagination
-   * details.
+   * (asynchronously) Retrieves a list of destinations.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1358,8 +1363,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of destinations for the given query parameters, with pagination
-   * details.
+   * (asynchronously) Retrieves a list of destinations.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1368,9 +1372,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieve a stream listing for a given Singer specification compatible docker type source ID.
+   * Retrieves a stream listing for a source. Listing streams only works with sources with `type:
+   * docker` and `imageType: singer`.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1381,9 +1386,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieve a stream listing for a given Singer specification compatible docker type source ID.
+   * Retrieves a stream listing for a source. Listing streams only works with sources with `type:
+   * docker` and `imageType: singer`.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public DockerSourceStreams getDockerSourceStreams(@Nonnull String sourceID) throws AlgoliaRuntimeException {
@@ -1391,10 +1397,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieve a stream listing for a given Singer specification compatible docker
-   * type source ID.
+   * (asynchronously) Retrieves a stream listing for a source. Listing streams only works with
+   * sources with `type: docker` and `imageType: singer`.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1408,10 +1414,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Retrieve a stream listing for a given Singer specification compatible docker
-   * type source ID.
+   * (asynchronously) Retrieves a stream listing for a source. Listing streams only works with
+   * sources with `type: docker` and `imageType: singer`.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<DockerSourceStreams> getDockerSourceStreamsAsync(@Nonnull String sourceID) throws AlgoliaRuntimeException {
@@ -1419,10 +1425,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a single event for a specific runID.
+   * Retrieves a single task run event by its ID.
    *
-   * @param runID The run UUID. (required)
-   * @param eventID The event UUID. (required)
+   * @param runID Unique identifier of a task run. (required)
+   * @param eventID Unique identifier of an event. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1432,10 +1438,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a single event for a specific runID.
+   * Retrieves a single task run event by its ID.
    *
-   * @param runID The run UUID. (required)
-   * @param eventID The event UUID. (required)
+   * @param runID Unique identifier of a task run. (required)
+   * @param eventID Unique identifier of an event. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Event getEvent(@Nonnull String runID, @Nonnull String eventID) throws AlgoliaRuntimeException {
@@ -1443,10 +1449,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a single event for a specific runID.
+   * (asynchronously) Retrieves a single task run event by its ID.
    *
-   * @param runID The run UUID. (required)
-   * @param eventID The event UUID. (required)
+   * @param runID Unique identifier of a task run. (required)
+   * @param eventID Unique identifier of an event. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1462,10 +1468,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a single event for a specific runID.
+   * (asynchronously) Retrieves a single task run event by its ID.
    *
-   * @param runID The run UUID. (required)
-   * @param eventID The event UUID. (required)
+   * @param runID Unique identifier of a task run. (required)
+   * @param eventID Unique identifier of an event. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Event> getEventAsync(@Nonnull String runID, @Nonnull String eventID) throws AlgoliaRuntimeException {
@@ -1473,19 +1479,19 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of events associated to the given runID, for the given query parameters.
+   * Retrieves a list of events for a task run, identified by it's ID.
    *
-   * @param runID The run UUID. (required)
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param status Filter the status of the events. (optional)
-   * @param type Filter the type of the events. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
-   * @param startDate The start date (in RFC3339 format) of the events fetching window. Defaults to
-   *     'now'-3 hours if omitted. (optional)
-   * @param endDate The end date (in RFC3339 format) of the events fetching window. Defaults to
-   *     'now' days if omitted. (optional)
+   * @param runID Unique identifier of a task run. (required)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Event status for filtering the list of task runs. (optional)
+   * @param type Event type for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task run events. (optional)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date and time in RFC3339 format for the earliest events to retrieve. By
+   *     default, the current time minus three hours is used. (optional)
+   * @param endDate Date and time in RFC3339 format for the latest events to retrieve. By default,
+   *     the current time is used. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1506,19 +1512,19 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of events associated to the given runID, for the given query parameters.
+   * Retrieves a list of events for a task run, identified by it's ID.
    *
-   * @param runID The run UUID. (required)
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param status Filter the status of the events. (optional)
-   * @param type Filter the type of the events. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
-   * @param startDate The start date (in RFC3339 format) of the events fetching window. Defaults to
-   *     'now'-3 hours if omitted. (optional)
-   * @param endDate The end date (in RFC3339 format) of the events fetching window. Defaults to
-   *     'now' days if omitted. (optional)
+   * @param runID Unique identifier of a task run. (required)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Event status for filtering the list of task runs. (optional)
+   * @param type Event type for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task run events. (optional)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date and time in RFC3339 format for the earliest events to retrieve. By
+   *     default, the current time minus three hours is used. (optional)
+   * @param endDate Date and time in RFC3339 format for the latest events to retrieve. By default,
+   *     the current time is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListEventsResponse getEvents(
@@ -1536,9 +1542,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of events associated to the given runID, for the given query parameters.
+   * Retrieves a list of events for a task run, identified by it's ID.
    *
-   * @param runID The run UUID. (required)
+   * @param runID Unique identifier of a task run. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1548,9 +1554,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of events associated to the given runID, for the given query parameters.
+   * Retrieves a list of events for a task run, identified by it's ID.
    *
-   * @param runID The run UUID. (required)
+   * @param runID Unique identifier of a task run. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListEventsResponse getEvents(@Nonnull String runID) throws AlgoliaRuntimeException {
@@ -1558,20 +1564,19 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of events associated to the given runID, for the given query
-   * parameters.
+   * (asynchronously) Retrieves a list of events for a task run, identified by it's ID.
    *
-   * @param runID The run UUID. (required)
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param status Filter the status of the events. (optional)
-   * @param type Filter the type of the events. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
-   * @param startDate The start date (in RFC3339 format) of the events fetching window. Defaults to
-   *     'now'-3 hours if omitted. (optional)
-   * @param endDate The end date (in RFC3339 format) of the events fetching window. Defaults to
-   *     'now' days if omitted. (optional)
+   * @param runID Unique identifier of a task run. (required)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Event status for filtering the list of task runs. (optional)
+   * @param type Event type for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task run events. (optional)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date and time in RFC3339 format for the earliest events to retrieve. By
+   *     default, the current time minus three hours is used. (optional)
+   * @param endDate Date and time in RFC3339 format for the latest events to retrieve. By default,
+   *     the current time is used. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1607,20 +1612,19 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of events associated to the given runID, for the given query
-   * parameters.
+   * (asynchronously) Retrieves a list of events for a task run, identified by it's ID.
    *
-   * @param runID The run UUID. (required)
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param status Filter the status of the events. (optional)
-   * @param type Filter the type of the events. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
-   * @param startDate The start date (in RFC3339 format) of the events fetching window. Defaults to
-   *     'now'-3 hours if omitted. (optional)
-   * @param endDate The end date (in RFC3339 format) of the events fetching window. Defaults to
-   *     'now' days if omitted. (optional)
+   * @param runID Unique identifier of a task run. (required)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Event status for filtering the list of task runs. (optional)
+   * @param type Event type for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task run events. (optional)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date and time in RFC3339 format for the earliest events to retrieve. By
+   *     default, the current time minus three hours is used. (optional)
+   * @param endDate Date and time in RFC3339 format for the latest events to retrieve. By default,
+   *     the current time is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListEventsResponse> getEventsAsync(
@@ -1638,10 +1642,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of events associated to the given runID, for the given query
-   * parameters.
+   * (asynchronously) Retrieves a list of events for a task run, identified by it's ID.
    *
-   * @param runID The run UUID. (required)
+   * @param runID Unique identifier of a task run. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1652,10 +1655,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of events associated to the given runID, for the given query
-   * parameters.
+   * (asynchronously) Retrieves a list of events for a task run, identified by it's ID.
    *
-   * @param runID The run UUID. (required)
+   * @param runID Unique identifier of a task run. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListEventsResponse> getEventsAsync(@Nonnull String runID) throws AlgoliaRuntimeException {
@@ -1663,9 +1665,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a single run for the given ID.
+   * Retrieve a single task run by its ID.
    *
-   * @param runID The run UUID. (required)
+   * @param runID Unique identifier of a task run. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1675,9 +1677,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a single run for the given ID.
+   * Retrieve a single task run by its ID.
    *
-   * @param runID The run UUID. (required)
+   * @param runID Unique identifier of a task run. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Run getRun(@Nonnull String runID) throws AlgoliaRuntimeException {
@@ -1685,9 +1687,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a single run for the given ID.
+   * (asynchronously) Retrieve a single task run by its ID.
    *
-   * @param runID The run UUID. (required)
+   * @param runID Unique identifier of a task run. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1701,9 +1703,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a single run for the given ID.
+   * (asynchronously) Retrieve a single task run by its ID.
    *
-   * @param runID The run UUID. (required)
+   * @param runID Unique identifier of a task run. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Run> getRunAsync(@Nonnull String runID) throws AlgoliaRuntimeException {
@@ -1711,18 +1713,18 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of runs for the given query parameters, with pagination details.
+   * Retrieve a list of task runs.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param status Filter the status of the runs. (optional)
-   * @param taskID Filter by taskID. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
-   * @param startDate The start date (in RFC3339 format) of the runs fetching window. Defaults to
-   *     'now'-7 days if omitted. (optional)
-   * @param endDate The end date (in RFC3339 format) of the runs fetching window. Defaults to 'now'
-   *     days if omitted. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Run status for filtering the list of task runs. (optional)
+   * @param taskID Task ID for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date in RFC3339 format for the earliest run to retrieve. By default, the
+   *     current day minus seven days is used. (optional)
+   * @param endDate Date in RFC3339 format for the latest run to retrieve. By default, the current
+   *     day is used. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1742,18 +1744,18 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of runs for the given query parameters, with pagination details.
+   * Retrieve a list of task runs.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param status Filter the status of the runs. (optional)
-   * @param taskID Filter by taskID. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
-   * @param startDate The start date (in RFC3339 format) of the runs fetching window. Defaults to
-   *     'now'-7 days if omitted. (optional)
-   * @param endDate The end date (in RFC3339 format) of the runs fetching window. Defaults to 'now'
-   *     days if omitted. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Run status for filtering the list of task runs. (optional)
+   * @param taskID Task ID for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date in RFC3339 format for the earliest run to retrieve. By default, the
+   *     current day minus seven days is used. (optional)
+   * @param endDate Date in RFC3339 format for the latest run to retrieve. By default, the current
+   *     day is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RunListResponse getRuns(
@@ -1770,7 +1772,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of runs for the given query parameters, with pagination details.
+   * Retrieve a list of task runs.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1781,7 +1783,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of runs for the given query parameters, with pagination details.
+   * Retrieve a list of task runs.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1790,18 +1792,18 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of runs for the given query parameters, with pagination details.
+   * (asynchronously) Retrieve a list of task runs.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param status Filter the status of the runs. (optional)
-   * @param taskID Filter by taskID. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
-   * @param startDate The start date (in RFC3339 format) of the runs fetching window. Defaults to
-   *     'now'-7 days if omitted. (optional)
-   * @param endDate The end date (in RFC3339 format) of the runs fetching window. Defaults to 'now'
-   *     days if omitted. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Run status for filtering the list of task runs. (optional)
+   * @param taskID Task ID for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date in RFC3339 format for the earliest run to retrieve. By default, the
+   *     current day minus seven days is used. (optional)
+   * @param endDate Date in RFC3339 format for the latest run to retrieve. By default, the current
+   *     day is used. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1834,18 +1836,18 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of runs for the given query parameters, with pagination details.
+   * (asynchronously) Retrieve a list of task runs.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param status Filter the status of the runs. (optional)
-   * @param taskID Filter by taskID. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
-   * @param startDate The start date (in RFC3339 format) of the runs fetching window. Defaults to
-   *     'now'-7 days if omitted. (optional)
-   * @param endDate The end date (in RFC3339 format) of the runs fetching window. Defaults to 'now'
-   *     days if omitted. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param status Run status for filtering the list of task runs. (optional)
+   * @param taskID Task ID for filtering the list of task runs. (optional)
+   * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
+   * @param startDate Date in RFC3339 format for the earliest run to retrieve. By default, the
+   *     current day minus seven days is used. (optional)
+   * @param endDate Date in RFC3339 format for the latest run to retrieve. By default, the current
+   *     day is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RunListResponse> getRunsAsync(
@@ -1862,7 +1864,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of runs for the given query parameters, with pagination details.
+   * (asynchronously) Retrieve a list of task runs.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1873,7 +1875,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of runs for the given query parameters, with pagination details.
+   * (asynchronously) Retrieve a list of task runs.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1882,9 +1884,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get the source of the given sourceID.
+   * Retrieve a source by its ID.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1894,9 +1896,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get the source of the given sourceID.
+   * Retrieve a source by its ID.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Source getSource(@Nonnull String sourceID) throws AlgoliaRuntimeException {
@@ -1904,9 +1906,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get the source of the given sourceID.
+   * (asynchronously) Retrieve a source by its ID.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1920,9 +1922,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get the source of the given sourceID.
+   * (asynchronously) Retrieve a source by its ID.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Source> getSourceAsync(@Nonnull String sourceID) throws AlgoliaRuntimeException {
@@ -1930,15 +1932,15 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of sources for the given query parameters, with pagination details.
+   * Retrieves a list of sources.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param type The type of the sources to retrieve. (optional)
-   * @param authenticationID The authenticationIDs of the sources to retrieve. 'none' returns
-   *     sources that doesn't have an authentication. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Source type. Some sources require authentication. (optional)
+   * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
+   *     that doesn't have an authentication resource. (optional)
+   * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1956,15 +1958,15 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of sources for the given query parameters, with pagination details.
+   * Retrieves a list of sources.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param type The type of the sources to retrieve. (optional)
-   * @param authenticationID The authenticationIDs of the sources to retrieve. 'none' returns
-   *     sources that doesn't have an authentication. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Source type. Some sources require authentication. (optional)
+   * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
+   *     that doesn't have an authentication resource. (optional)
+   * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListSourcesResponse getSources(
@@ -1979,7 +1981,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of sources for the given query parameters, with pagination details.
+   * Retrieves a list of sources.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1990,7 +1992,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of sources for the given query parameters, with pagination details.
+   * Retrieves a list of sources.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1999,15 +2001,15 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of sources for the given query parameters, with pagination details.
+   * (asynchronously) Retrieves a list of sources.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param type The type of the sources to retrieve. (optional)
-   * @param authenticationID The authenticationIDs of the sources to retrieve. 'none' returns
-   *     sources that doesn't have an authentication. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Source type. Some sources require authentication. (optional)
+   * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
+   *     that doesn't have an authentication resource. (optional)
+   * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2036,15 +2038,15 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of sources for the given query parameters, with pagination details.
+   * (asynchronously) Retrieves a list of sources.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param type The type of the sources to retrieve. (optional)
-   * @param authenticationID The authenticationIDs of the sources to retrieve. 'none' returns
-   *     sources that doesn't have an authentication. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param type Source type. Some sources require authentication. (optional)
+   * @param authenticationID Authentication IDs of the sources to retrieve. 'none' returns sources
+   *     that doesn't have an authentication resource. (optional)
+   * @param sort Property by which to sort the list of sources. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListSourcesResponse> getSourcesAsync(
@@ -2059,7 +2061,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of sources for the given query parameters, with pagination details.
+   * (asynchronously) Retrieves a list of sources.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2070,7 +2072,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of sources for the given query parameters, with pagination details.
+   * (asynchronously) Retrieves a list of sources.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2079,9 +2081,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get the task of the given taskID.
+   * Retrieves a task by its ID.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2091,9 +2093,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get the task of the given taskID.
+   * Retrieves a task by its ID.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public Task getTask(@Nonnull String taskID) throws AlgoliaRuntimeException {
@@ -2101,9 +2103,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get the task of the given taskID.
+   * (asynchronously) Retrieves a task by its ID.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2117,9 +2119,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get the task of the given taskID.
+   * (asynchronously) Retrieves a task by its ID.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<Task> getTaskAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
@@ -2127,17 +2129,17 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of tasks for the given query parameters, with pagination details.
+   * Retrieves a list of tasks.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param action The action of the tasks to retrieve. (optional)
-   * @param enabled Whether the task is enabled or not. (optional)
-   * @param sourceID The sourceIDs of the tasks to retrieve. (optional)
-   * @param destinationID The destinationIDs of the tasks to retrieve. (optional)
-   * @param triggerType The trigger type of the task. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2160,17 +2162,17 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of tasks for the given query parameters, with pagination details.
+   * Retrieves a list of tasks.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param action The action of the tasks to retrieve. (optional)
-   * @param enabled Whether the task is enabled or not. (optional)
-   * @param sourceID The sourceIDs of the tasks to retrieve. (optional)
-   * @param destinationID The destinationIDs of the tasks to retrieve. (optional)
-   * @param triggerType The trigger type of the task. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListTasksResponse getTasks(
@@ -2188,7 +2190,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of tasks for the given query parameters, with pagination details.
+   * Retrieves a list of tasks.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2199,7 +2201,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Get a list of tasks for the given query parameters, with pagination details.
+   * Retrieves a list of tasks.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2208,17 +2210,17 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of tasks for the given query parameters, with pagination details.
+   * (asynchronously) Retrieves a list of tasks.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param action The action of the tasks to retrieve. (optional)
-   * @param enabled Whether the task is enabled or not. (optional)
-   * @param sourceID The sourceIDs of the tasks to retrieve. (optional)
-   * @param destinationID The destinationIDs of the tasks to retrieve. (optional)
-   * @param triggerType The trigger type of the task. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2253,17 +2255,17 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of tasks for the given query parameters, with pagination details.
+   * (asynchronously) Retrieves a list of tasks.
    *
-   * @param itemsPerPage The number of items per page to return. (optional)
-   * @param page The page number to fetch, starting at 1. (optional)
-   * @param action The action of the tasks to retrieve. (optional)
-   * @param enabled Whether the task is enabled or not. (optional)
-   * @param sourceID The sourceIDs of the tasks to retrieve. (optional)
-   * @param destinationID The destinationIDs of the tasks to retrieve. (optional)
-   * @param triggerType The trigger type of the task. (optional)
-   * @param sort The key by which the list should be sorted. (optional)
-   * @param order The order of the returned list. (optional)
+   * @param itemsPerPage Number of items per page. (optional, default to 10)
+   * @param page Page number of the paginated API response. (optional)
+   * @param action Actions for filtering the list of tasks. (optional)
+   * @param enabled Whether to filter the list of tasks by the `enabled` status. (optional)
+   * @param sourceID Source IDs for filtering the list of tasks. (optional)
+   * @param destinationID Destination IDs for filtering the list of tasks. (optional)
+   * @param triggerType Type of task trigger for filtering the list of tasks. (optional)
+   * @param sort Property by which to sort the list of tasks. (optional, default to createdAt)
+   * @param order Sort order of the response, ascending or descending. (optional, default to desc)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListTasksResponse> getTasksAsync(
@@ -2281,7 +2283,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of tasks for the given query parameters, with pagination details.
+   * (asynchronously) Retrieves a list of tasks.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2292,7 +2294,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get a list of tasks for the given query parameters, with pagination details.
+   * (asynchronously) Retrieves a list of tasks.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2301,9 +2303,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Run the task of the given taskID.
+   * Runs a task. You can check the status of task runs with the observability endpoints.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2313,9 +2315,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Run the task of the given taskID.
+   * Runs a task. You can check the status of task runs with the observability endpoints.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RunResponse runTask(@Nonnull String taskID) throws AlgoliaRuntimeException {
@@ -2323,9 +2325,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Run the task of the given taskID.
+   * (asynchronously) Runs a task. You can check the status of task runs with the observability
+   * endpoints.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2339,9 +2342,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Run the task of the given taskID.
+   * (asynchronously) Runs a task. You can check the status of task runs with the observability
+   * endpoints.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RunResponse> runTaskAsync(@Nonnull String taskID) throws AlgoliaRuntimeException {
@@ -2349,7 +2353,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Search among authentications with a defined set of parameters.
+   * Searches for authentication resources.
    *
    * @param authenticationSearch (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2362,7 +2366,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Search among authentications with a defined set of parameters.
+   * Searches for authentication resources.
    *
    * @param authenticationSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2372,7 +2376,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Search among authentications with a defined set of parameters.
+   * (asynchronously) Searches for authentication resources.
    *
    * @param authenticationSearch (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2395,7 +2399,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Search among authentications with a defined set of parameters.
+   * (asynchronously) Searches for authentication resources.
    *
    * @param authenticationSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2406,7 +2410,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Search among destinations with a defined set of parameters.
+   * Searches for destinations.
    *
    * @param destinationSearch (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2419,7 +2423,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Search among destinations with a defined set of parameters.
+   * Searches for destinations.
    *
    * @param destinationSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2429,7 +2433,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Search among destinations with a defined set of parameters.
+   * (asynchronously) Searches for destinations.
    *
    * @param destinationSearch (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2447,7 +2451,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Search among destinations with a defined set of parameters.
+   * (asynchronously) Searches for destinations.
    *
    * @param destinationSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2458,7 +2462,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Search among sources with a defined set of parameters.
+   * Searches for sources.
    *
    * @param sourceSearch (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2470,7 +2474,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Search among sources with a defined set of parameters.
+   * Searches for sources.
    *
    * @param sourceSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2480,7 +2484,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Search among sources with a defined set of parameters.
+   * (asynchronously) Searches for sources.
    *
    * @param sourceSearch (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2496,7 +2500,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Search among sources with a defined set of parameters.
+   * (asynchronously) Searches for sources.
    *
    * @param sourceSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2506,7 +2510,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Search among tasks with a defined set of parameters.
+   * Searches for tasks.
    *
    * @param taskSearch (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2518,7 +2522,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Search among tasks with a defined set of parameters.
+   * Searches for tasks.
    *
    * @param taskSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2528,7 +2532,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Search among tasks with a defined set of parameters.
+   * (asynchronously) Searches for tasks.
    *
    * @param taskSearch (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2544,7 +2548,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Search among tasks with a defined set of parameters.
+   * (asynchronously) Searches for tasks.
    *
    * @param taskSearch (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2554,9 +2558,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Trigger a stream listing request for a Singer specification compatible docker type source.
+   * Triggers a stream-listing request for a source. Triggering stream-listing requests only works
+   * with sources with `type: docker` and `imageType: singer`.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2567,9 +2572,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Trigger a stream listing request for a Singer specification compatible docker type source.
+   * Triggers a stream-listing request for a source. Triggering stream-listing requests only works
+   * with sources with `type: docker` and `imageType: singer`.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public DockerSourceDiscover triggerDockerSourceDiscover(@Nonnull String sourceID) throws AlgoliaRuntimeException {
@@ -2577,10 +2583,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Trigger a stream listing request for a Singer specification compatible docker
-   * type source.
+   * (asynchronously) Triggers a stream-listing request for a source. Triggering stream-listing
+   * requests only works with sources with `type: docker` and `imageType: singer`.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2594,10 +2600,10 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Trigger a stream listing request for a Singer specification compatible docker
-   * type source.
+   * (asynchronously) Triggers a stream-listing request for a source. Triggering stream-listing
+   * requests only works with sources with `type: docker` and `imageType: singer`.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<DockerSourceDiscover> triggerDockerSourceDiscoverAsync(@Nonnull String sourceID) throws AlgoliaRuntimeException {
@@ -2605,9 +2611,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Update the authentication of the given authenticationID.
+   * Updates an authentication resource.
    *
-   * @param authenticationID The authentication UUID. (required)
+   * @param authenticationID Unique identifier of an authentication resource. (required)
    * @param authenticationUpdate (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2622,9 +2628,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Update the authentication of the given authenticationID.
+   * Updates an authentication resource.
    *
-   * @param authenticationID The authentication UUID. (required)
+   * @param authenticationID Unique identifier of an authentication resource. (required)
    * @param authenticationUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2636,9 +2642,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Update the authentication of the given authenticationID.
+   * (asynchronously) Updates an authentication resource.
    *
-   * @param authenticationID The authentication UUID. (required)
+   * @param authenticationID Unique identifier of an authentication resource. (required)
    * @param authenticationUpdate (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2663,9 +2669,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Update the authentication of the given authenticationID.
+   * (asynchronously) Updates an authentication resource.
    *
-   * @param authenticationID The authentication UUID. (required)
+   * @param authenticationID Unique identifier of an authentication resource. (required)
    * @param authenticationUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2677,9 +2683,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Update the destination of the given destinationID.
+   * Updates the destination by its ID.
    *
-   * @param destinationID The destination UUID. (required)
+   * @param destinationID Unique identifier of a destination. (required)
    * @param destinationUpdate (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2694,9 +2700,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Update the destination of the given destinationID.
+   * Updates the destination by its ID.
    *
-   * @param destinationID The destination UUID. (required)
+   * @param destinationID Unique identifier of a destination. (required)
    * @param destinationUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2706,9 +2712,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Update the destination of the given destinationID.
+   * (asynchronously) Updates the destination by its ID.
    *
-   * @param destinationID The destination UUID. (required)
+   * @param destinationID Unique identifier of a destination. (required)
    * @param destinationUpdate (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2733,9 +2739,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Update the destination of the given destinationID.
+   * (asynchronously) Updates the destination by its ID.
    *
-   * @param destinationID The destination UUID. (required)
+   * @param destinationID Unique identifier of a destination. (required)
    * @param destinationUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2747,9 +2753,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Update the source of the given sourceID.
+   * Updates a source by its ID.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @param sourceUpdate (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2761,9 +2767,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Update the source of the given sourceID.
+   * Updates a source by its ID.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @param sourceUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2772,9 +2778,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Update the source of the given sourceID.
+   * (asynchronously) Updates a source by its ID.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @param sourceUpdate (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2794,9 +2800,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Update the source of the given sourceID.
+   * (asynchronously) Updates a source by its ID.
    *
-   * @param sourceID The source UUID. (required)
+   * @param sourceID Unique identifier of a source. (required)
    * @param sourceUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2806,9 +2812,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Update the task of the given taskID.
+   * Updates a task by its ID.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2820,9 +2826,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Update the task of the given taskID.
+   * Updates a task by its ID.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2831,9 +2837,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Update the task of the given taskID.
+   * (asynchronously) Updates a task by its ID.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -2853,9 +2859,9 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Update the task of the given taskID.
+   * (asynchronously) Updates a task by its ID.
    *
-   * @param taskID The task UUID. (required)
+   * @param taskID Unique identifier of a task. (required)
    * @param taskUpdate (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */

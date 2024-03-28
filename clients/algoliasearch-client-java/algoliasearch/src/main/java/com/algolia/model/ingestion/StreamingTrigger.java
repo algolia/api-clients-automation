@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** The trigger input for a task of type 'streaming'. */
+/** Trigger input for continuously running tasks. */
 @JsonDeserialize(as = StreamingTrigger.class)
 public class StreamingTrigger implements Trigger, TaskCreateTrigger {
 

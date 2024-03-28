@@ -6,13 +6,22 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Type of the Destination, defines in which Algolia product the data will be stored. */
+/**
+ * Destination type.
+ *
+ * <dl>
+ *   <dt><code>search</code>
+ *   <dd>Data is stored in an Algolia index.
+ *   <dt><code>insights</code>
+ *   <dd>Data is recorded as user events in the Insights API.
+ * </dl>
+ *
+ * .
+ */
 public enum DestinationType {
   SEARCH("search"),
 
-  INSIGHTS("insights"),
-
-  FLOW("flow");
+  INSIGHTS("insights");
 
   private final String value;
 

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** The trigger input for a task of type 'subscription'. */
+/** Trigger input for subscription tasks. */
 @JsonDeserialize(as = SubscriptionTrigger.class)
 public class SubscriptionTrigger implements Trigger, TaskCreateTrigger {
 

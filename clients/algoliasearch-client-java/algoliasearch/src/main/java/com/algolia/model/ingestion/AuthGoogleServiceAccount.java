@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** Authentication input to connect to a Google service (e.g. BigQuery). */
+/** Credentials for authenticating with a Google service account, such as BigQuery. */
 @JsonDeserialize(as = AuthGoogleServiceAccount.class)
 public class AuthGoogleServiceAccount implements AuthInput {
 
@@ -22,7 +22,7 @@ public class AuthGoogleServiceAccount implements AuthInput {
     return this;
   }
 
-  /** Email address of the Service Account. */
+  /** Email address of the Google service account. */
   @javax.annotation.Nonnull
   public String getClientEmail() {
     return clientEmail;
@@ -33,7 +33,7 @@ public class AuthGoogleServiceAccount implements AuthInput {
     return this;
   }
 
-  /** Private key of the Service Account. */
+  /** Private key of the Google service account. This field is `null` in the API response. */
   @javax.annotation.Nonnull
   public String getPrivateKey() {
     return privateKey;

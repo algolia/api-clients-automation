@@ -1,8 +1,8 @@
 get:
   tags:
     - sources
-  summary: Get a list of sources.
-  description: Get a list of sources for the given query parameters, with pagination details.
+  summary: List sources.
+  description: Retrieves a list of sources.
   operationId: getSources
   x-acl:
     - addObject
@@ -41,7 +41,7 @@ post:
   tags:
     - sources
   summary: Create a source.
-  description: Create a source.
+  description: Creates a new source.
   operationId: createSource
   x-acl:
     - addObject

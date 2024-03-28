@@ -6,7 +6,7 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** A task which is manually executed via the run task endpoint. */
+/** Task is run manually, with the `/run` endpoint. */
 public enum OnDemandTriggerType {
   ON_DEMAND("onDemand");
 

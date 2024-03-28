@@ -1,8 +1,8 @@
 get:
   tags:
     - tasks
-  summary: Get a task.
-  description: Get the task of the given taskID.
+  summary: Retrieve a task.
+  description: Retrieves a task by its ID.
   operationId: getTask
   x-acl:
     - addObject
@@ -24,7 +24,7 @@ patch:
   tags:
     - tasks
   summary: Update a task.
-  description: Update the task of the given taskID.
+  description: Updates a task by its ID.
   operationId: updateTask
   parameters:
     - $ref: '../../common/parameters.yml#/pathTaskID'
@@ -48,7 +48,7 @@ delete:
   tags:
     - tasks
   summary: Delete a task.
-  description: Soft delete the task of the given taskID.
+  description: Deletes a task by its ID.
   operationId: deleteTask
   parameters:
     - $ref: '../../common/parameters.yml#/pathTaskID'

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** The trigger input for a task of type 'schedule'. */
+/** Trigger input for scheduled tasks. */
 @JsonDeserialize(as = ScheduleTriggerInput.class)
 public class ScheduleTriggerInput implements TaskCreateTrigger {
 
@@ -33,7 +33,7 @@ public class ScheduleTriggerInput implements TaskCreateTrigger {
     return this;
   }
 
-  /** A cron expression that represent at which regularity the task should run. */
+  /** Cron expression for the task's schedule. */
   @javax.annotation.Nonnull
   public String getCron() {
     return cron;

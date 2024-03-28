@@ -6,7 +6,7 @@ package com.algolia.model.ingestion;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Gets or Sets MethodType */
+/** HTTP method to be used for retrieving your data. */
 public enum MethodType {
   GET("GET"),
 

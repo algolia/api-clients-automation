@@ -36,8 +36,8 @@ Event:
 
 EventStatus:
   type: string
-  enum: ['created', 'started', 'retried', 'failed', 'succeeded', 'critical']
+  enum: [created, started, retried, failed, succeeded, critical]
 
 EventType:
   type: string
-  enum: ['fetch', 'record', 'log', 'transform']
+  enum: [fetch, record, log, transform]

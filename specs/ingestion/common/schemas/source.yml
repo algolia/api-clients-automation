@@ -31,6 +31,7 @@ SourceCreate:
       $ref: '#/SourceType'
     name:
       type: string
+      description: Descriptive name of the source.
     input:
       $ref: '#/SourceInput'
     authenticationID:
@@ -48,6 +49,7 @@ SourceCreateResponse:
       $ref: './common.yml#/sourceID'
     name:
       type: string
+      description: Descriptive name of the source.
     createdAt:
       $ref: './common.yml#/createdAt'
   required:
@@ -61,6 +63,7 @@ SourceUpdate:
   properties:
     name:
       type: string
+      description: Descriptive name of the source.
     input:
       $ref: '#/SourceUpdateInput'
     authenticationID:
@@ -74,6 +77,7 @@ SourceUpdateResponse:
       $ref: './common.yml#/sourceID'
     name:
       type: string
+      description: Descriptive name of the source.
     updatedAt:
       $ref: './common.yml#/updatedAt'
   required:
@@ -95,29 +99,34 @@ SourceSearch:
 SourceType:
   type: string
   enum:
-    - 'bigcommerce'
-    - 'commercetools'
-    - 'json'
-    - 'csv'
-    - 'bigquery'
-    - 'docker'
-    - 'ga4BigqueryExport'
-    
+    - bigcommerce
+    - bigquery
+    - commercetools
+    - csv
+    - docker
+    - ga4BigqueryExport
+    - json
+    - shopify
+    - sfcc
+
 SourceCommercetools:
+  title: Commercetools
   type: object
   additionalProperties: false
   properties:
     storeKeys:
       type: array
       items:
-        description: Unique and immutable key of the referenced Store.
+        description: Unique and immutable key of the referenced store.
         type: string
     locales:
       type: array
-      description: >
-        Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example ["fr-FR", "en"].
+      description: Locales for your commercetools stores.
       items:
         type: string
+        pattern: '^[a-z]{2}(-[A-Z]{2})?$'
+        description: Locale specfied as combination of a two-letter language code and an optional two-letter country code.
+        example: 'fr-FR'
     url:
       type: string
     projectKey:
@@ -125,8 +134,8 @@ SourceCommercetools:
     fallbackIsInStockValue:
       type: boolean
       default: true
-      description: >
-        Determines the value that will be stored in the Algolia record if there's no inventory information on the product.
+      description: |
+        Whether a fallback value is stored in the Algolia record if there's no inventory information about the product.
     customFields:
       $ref: '#/CommercetoolsCustomFields'
   required:
@@ -138,37 +147,41 @@ SourceCommercetools:
 CommercetoolsCustomFields:
   type: object
   additionalProperties: false
-  description: Custom fields from Commercetools to index in the records (see https://docs.commercetools.com/tutorials/custom-types).
+  description: |
+    Custom fields from commercetools to add to the records.
+
+    For more information, see [Using Custom Types and Custom Fields](https://docs.commercetools.com/tutorials/custom-types).
   properties:
     inventory:
       oneOf:
         - type: array
+          description: Inventory custom fields.
           items:
             type: string
-          description: Inventory custom fields.
         - type: 'null'
     price:
       oneOf:
         - type: array
+          description: Price custom fields.
           items:
             type: string
-          description: Price custom fields.
         - type: 'null'
     category:
       oneOf:
         - type: array
+          description: Category custom fields.
           items:
             type: string
-          description: Category custom fields.
         - type: 'null'
 
 SourceBigCommerce:
+  title: BigCommerce
   type: object
   additionalProperties: false
   properties:
     storeHash:
       type: string
-      description: The store hash identifying the store the shopper is signing in to.
+      description: Store hash identifying your BigCommerce store.
     channel:
       $ref: '#/BigCommerceChannel'
     customFields:
@@ -194,10 +207,10 @@ BigCommerceMetafield:
   properties:
     namespace:
       type: string
-      description: The namespace of the metafield.
+      description: Namespace of the metafield.
     key:
       type: string
-      description: The key identifier of the metafield.
+      description: Key identifier of the metafield.
   required:
     - namespace
     - key
@@ -208,32 +221,35 @@ BigCommerceChannel:
   properties:
     id:
       type: integer
-      description: The ID of the bigcommerce channel.
+      description: ID of the BigCommerce channel.
     currencies:
       type: array
-      description: An array of currencies for the given channel `ID`, a currency is a trigram string that represents the currency code.
-      example: ['usd', 'eur']
+      description: Currencies for the given channel.
+      example: [usd, eur]
       items:
         type: string
-        example: 'usd'
+        description: Three-letter code for the currency.
+        example: usd
   required:
     - id
 
 MethodType:
   type: string
-  enum: ['GET', 'POST']
+  description: HTTP method to be used for retrieving your data.
+  enum: [GET, POST]
 
 UniqueIDColumn:
   type: string
-  description: The name of the column that contains the unique ID, used as `objectID` in Algolia.
+  description: Name of a column that contains a unique ID which will be used as `objectID` in Algolia.
 
 SourceJSON:
+  title: JSON
   type: object
   additionalProperties: false
   properties:
     url:
       type: string
-      description: The URL of the file.
+      description: URL of the file.
     uniqueIDColumn:
       $ref: '#/UniqueIDColumn'
     method:
@@ -243,21 +259,23 @@ SourceJSON:
 
 MappingTypeCSV:
   type: string
-  enum: ['string', 'integer', 'float', 'boolean', 'json']
+  enum: [string, integer, float, boolean, json]
 
 SourceCSV:
+  title: CSV
   type: object
   additionalProperties: false
   properties:
     url:
       type: string
-      description: The URL of the file.
+      description: URL of the file.
     uniqueIDColumn:
       $ref: '#/UniqueIDColumn'
     mapping:
       type: object
-      description: >
-        Mapping of type for every column. For example {"myColumn": "boolean", "myOtherColumn": "json"}.
+      description: |
+        Key-value pairs of column names and their expected types.
+      x-additionalPropertyName: column name
       additionalProperties:
         $ref: '#/MappingTypeCSV'
     method:
@@ -272,18 +290,20 @@ SourceCSV:
     - url
 
 SourceGA4BigQueryExport:
+  title: GA4 BigQuery export
   type: object
   additionalProperties: false
   properties:
     projectID:
       type: string
-      description: GCP project ID that the BigQuery Export writes to.
+      description: GCP project ID that the BigQuery export writes to.
     datasetID:
       type: string
-      description: BigQuery dataset ID that the BigQuery Export writes to.
+      description: BigQuery dataset ID that the BigQuery export writes to.
     tablePrefix:
       type: string
-      description: Prefix of the tables that the BigQuery Export writes to (i.e. events_intraday_ for streaming, events_ for daily).
+      description: Prefix of the tables that the BigQuery Export writes to.
+      example: events_intraday_
   required:
     - projectID
     - datasetID
@@ -294,23 +314,24 @@ SourceGA4BigQueryExport:
     - tablePrefix
 
 SourceBigQuery:
+  title: BigQuery
   type: object
   additionalProperties: false
   properties:
     projectID:
       type: string
-      description: Project ID of the BigQuery Source.
+      description: Project ID of the BigQuery source.
     datasetID:
       type: string
-      description: Dataset ID of the BigQuery Source.
+      description: Dataset ID of the BigQuery source.
     dataType:
       $ref: '#/BigQueryDataType'
     table:
       type: string
-      description: Table name (for default BQ).
+      description: Table name for the BigQuery export.
     tablePrefix:
       type: string
-      description: Table prefix (for Google Analytics).
+      description: Table prefix for a Google Analytics 4 data export to BigQuery.
     customSQLRequest:
       type: string
       description: Custom SQL request to extract data from the BigQuery table.
@@ -324,9 +345,10 @@ SourceBigQuery:
 
 BigQueryDataType:
   type: string
-  enum: ['ga4', 'ga360']
+  enum: [ga4, ga360]
 
 SourceDocker:
+  title: Docker
   type: object
   additionalProperties: false
   properties:
@@ -336,15 +358,16 @@ SourceDocker:
       $ref: '#/DockerRegistry'
     image:
       type: string
-      description: The name of the image to pull.
+      description: Docker image name.
       example: algolia/zendesk
     version:
       type: string
-      description: The version of the image, defaults to `latest`.
+      description: Docker image version.
+      default: latest
       example: v2.1.0
     configuration:
       type: object
-      description: The configuration of the spec.
+      description: Configuration of the spec.
   required:
     - registry
     - image
@@ -359,27 +382,28 @@ SourceUpdateDocker:
       $ref: '#/DockerRegistry'
     image:
       type: string
-      description: The name of the image to pull.
+      description: Docker image name.
       example: algolia/zendesk
     version:
       type: string
-      description: The version of the image, defaults to `latest`.
+      description: Docker image version.
+      default: latest
       example: v2.1.0
     configuration:
       type: object
-      description: The configuration of the spec.
+      description: Configuration of the spec.
   required:
     - configuration
 
 DockerRegistry:
   type: string
-  enum: ['dockerhub', 'ghcr']
-  description: The registry where the image is stored.
+  description: Container registry name from where to pull the image.
+  enum: [dockerhub, ghcr]
 
 DockerImageType:
   type: string
-  enum: ['singer', 'custom', 'airbyte']
-  description: The type of the image.
+  enum: [singer, custom, airbyte]
+  description: Image type.
 
 SourceInput:
   oneOf:
@@ -397,21 +421,23 @@ SourceUpdateCommercetools:
   properties:
     storeKeys:
       type: array
-      description: Unique and immutable key of the referenced Store.
       items:
+        description: Unique and immutable key of the referenced store.
         type: string
     locales:
       type: array
-      description: >
-        Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example ["fr-FR", "en"].
+      description: Locales for your commercetools stores.
       items:
         type: string
+        pattern: '^[a-z]{2}(-[A-Z]{2})?$'
+        description: Locale specfied as combination of a two-letter language code and an optional two-letter country code.
+        example: 'fr-FR'
     url:
       type: string
     fallbackIsInStockValue:
       type: boolean
-      description: >
-        Determines the value that will be stored in the Algolia record if there's no inventory information on the product.
+      description: |
+        Whether a fallback value is stored in the Algolia record if there's no inventory information about the product.
     customFields:
       $ref: '#/CommercetoolsCustomFields'
 
@@ -426,4 +452,4 @@ SourceUpdateInput:
 
 DockerSourceStream:
   type: object
-  description: A stream definition (see the Singer specification for details).
+  description: Stream definition (see the Singer specification for details).

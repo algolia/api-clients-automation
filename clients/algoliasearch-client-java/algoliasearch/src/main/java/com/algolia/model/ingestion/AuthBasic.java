@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** Authentication input for Basic login with username and password. */
+/** Credentials for authenticating with user name and password. */
 @JsonDeserialize(as = AuthBasic.class)
 public class AuthBasic implements AuthInput {
 
@@ -22,7 +22,7 @@ public class AuthBasic implements AuthInput {
     return this;
   }
 
-  /** Get username */
+  /** Username. */
   @javax.annotation.Nonnull
   public String getUsername() {
     return username;
@@ -33,7 +33,7 @@ public class AuthBasic implements AuthInput {
     return this;
   }
 
-  /** Get password */
+  /** Password. This field is `null` in the API response. */
   @javax.annotation.Nonnull
   public String getPassword() {
     return password;

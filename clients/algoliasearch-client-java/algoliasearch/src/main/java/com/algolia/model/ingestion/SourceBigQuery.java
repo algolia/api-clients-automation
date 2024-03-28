@@ -37,7 +37,7 @@ public class SourceBigQuery implements SourceInput, SourceUpdateInput {
     return this;
   }
 
-  /** Project ID of the BigQuery Source. */
+  /** Project ID of the BigQuery source. */
   @javax.annotation.Nonnull
   public String getProjectID() {
     return projectID;
@@ -48,7 +48,7 @@ public class SourceBigQuery implements SourceInput, SourceUpdateInput {
     return this;
   }
 
-  /** Dataset ID of the BigQuery Source. */
+  /** Dataset ID of the BigQuery source. */
   @javax.annotation.Nonnull
   public String getDatasetID() {
     return datasetID;
@@ -70,7 +70,7 @@ public class SourceBigQuery implements SourceInput, SourceUpdateInput {
     return this;
   }
 
-  /** Table name (for default BQ). */
+  /** Table name for the BigQuery export. */
   @javax.annotation.Nullable
   public String getTable() {
     return table;
@@ -81,7 +81,7 @@ public class SourceBigQuery implements SourceInput, SourceUpdateInput {
     return this;
   }
 
-  /** Table prefix (for Google Analytics). */
+  /** Table prefix for a Google Analytics 4 data export to BigQuery. */
   @javax.annotation.Nullable
   public String getTablePrefix() {
     return tablePrefix;
@@ -103,7 +103,7 @@ public class SourceBigQuery implements SourceInput, SourceUpdateInput {
     return this;
   }
 
-  /** The name of the column that contains the unique ID, used as `objectID` in Algolia. */
+  /** Name of a column that contains a unique ID which will be used as `objectID` in Algolia. */
   @javax.annotation.Nullable
   public String getUniqueIDColumn() {
     return uniqueIDColumn;

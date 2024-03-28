@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** The trigger information of a task of type `onDemand`. */
+/** Trigger information for manually-triggered tasks. */
 @JsonDeserialize(as = OnDemandTriggerInput.class)
 public class OnDemandTriggerInput implements TaskCreateTrigger {
 

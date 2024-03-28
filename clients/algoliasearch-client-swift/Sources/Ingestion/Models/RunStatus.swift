@@ -6,6 +6,7 @@ import Foundation
     import Core
 #endif
 
+/// Task run status.
 public enum RunStatus: String, Codable, CaseIterable {
     case created
     case started
