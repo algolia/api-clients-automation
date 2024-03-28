@@ -153,20 +153,26 @@ CommercetoolsCustomFields:
     For more information, see [Using Custom Types and Custom Fields](https://docs.commercetools.com/tutorials/custom-types).
   properties:
     inventory:
-      type: array
-      description: Inventory custom fields.
-      items:
-        type: string
+      oneOf:
+        - type: array
+          description: Inventory custom fields.
+          items:
+            type: string
+        - type: 'null'
     price:
-      type: array
-      description: Price custom fields.
-      items:
-        type: string
+      oneOf:
+        - type: array
+          description: Price custom fields.
+          items:
+            type: string
+        - type: 'null'
     category:
-      type: array
-      description: Category custom fields.
-      items:
-        type: string
+      oneOf:
+        - type: array
+          description: Category custom fields.
+          items:
+            type: string
+        - type: 'null'
 
 SourceBigCommerce:
   title: BigCommerce
