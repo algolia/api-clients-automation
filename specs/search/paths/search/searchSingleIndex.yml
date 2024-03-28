@@ -12,6 +12,8 @@ post:
 
     This method lets you retrieve up to 1,000 hits.
     If you need more, use the [`browse` operation](#tag/Search/operation/browse) or increase the `paginatedLimitedTo` index setting.
+
+    Search parameters, including the `query`, must not be larger than 512 bytes.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:

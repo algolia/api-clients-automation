@@ -16,6 +16,8 @@ post:
     - Records are ranked by attributes and custom ranking.
     - Deduplication (`distinct`) is turned off.
     - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.
+
+    Parameters, including the `query` must not be larger than 512 bytes.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:

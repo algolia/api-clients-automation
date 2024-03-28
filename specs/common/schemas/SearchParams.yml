@@ -5,6 +5,7 @@ searchParams:
 
 searchParamsObject:
   title: Search parameters as object
+  description: Each parameter value, including `query` must not be larger than 512 bytes.
   allOf:
     - $ref: '#/baseSearchParams'
     - $ref: '../../common/schemas/IndexSettings.yml#/indexSettingsAsSearchParams'
@@ -69,7 +70,9 @@ baseSearchParamsWithoutQuery:
       items:
         type: string
       example: [title, author]
-      description: Restricts a search to a subset of your searchable attributes.
+      description: |
+        Subset of your searchable attributes to which to restrict the search.
+        Attribute names are case-sensitive.
       default: []
       x-categories:
         - Filtering
