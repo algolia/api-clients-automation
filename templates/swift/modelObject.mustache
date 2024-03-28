@@ -1,4 +1,4 @@
-{{^objcCompatible}}{{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} {{#useClasses}}final class{{/useClasses}}{{^useClasses}}struct{{/useClasses}} {{{classname}}}{{#vendorExtensions.x-has-child-generic}}<T: Codable>{{/vendorExtensions.x-has-child-generic}}{{^vendorExtensions.x-has-child-generic}}{{#vendorExtensions.x-propagated-generic}}<T: Codable>{{/vendorExtensions.x-propagated-generic}}{{/vendorExtensions.x-has-child-generic}}: Codable{{#useJsonEncodable}}, JSONEncodable{{/useJsonEncodable}}{{#vendorExtensions.x-swift-hashable}}, Hashable{{/vendorExtensions.x-swift-hashable}} {
+{{^objcCompatible}}{{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} {{#useClasses}}final class{{/useClasses}}{{^useClasses}}struct{{/useClasses}} {{{classname}}}{{#vendorExtensions.x-has-child-generic}}<T: Codable{{#vendorExtensions.x-swift-hashable}} & Hashable{{/vendorExtensions.x-swift-hashable}}>{{/vendorExtensions.x-has-child-generic}}{{^vendorExtensions.x-has-child-generic}}{{#vendorExtensions.x-propagated-generic}}<T: Codable>{{/vendorExtensions.x-propagated-generic}}{{/vendorExtensions.x-has-child-generic}}: Codable{{#useJsonEncodable}}, JSONEncodable{{/useJsonEncodable}}{{#vendorExtensions.x-swift-hashable}}, Hashable{{/vendorExtensions.x-swift-hashable}} {
 {{/objcCompatible}}{{#objcCompatible}}@objcMembers {{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} class {{classname}}: NSObject, Codable{{#useJsonEncodable}}, JSONEncodable{{/useJsonEncodable}} {
 {{/objcCompatible}}
 
@@ -130,7 +130,7 @@
         {{/vars}}
         let additionalPropertiesContainer = try decoder.container(keyedBy: String.self)
         additionalProperties = try additionalPropertiesContainer.decodeMap({{{additionalPropertiesType}}}.self, excludedKeys: nonAdditionalPropertyKeys)
-    }{{/additionalPropertiesType}}{{/generateModelAdditionalProperties}}{{^objcCompatible}}{{#useClasses}}{{#vendorExtensions.x-swift-hashable}}
+    }{{/additionalPropertiesType}}{{/generateModelAdditionalProperties}}{{^objcCompatible}}{{#vendorExtensions.x-swift-hashable}}
 
     {{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} static func == (lhs: {{classname}}, rhs: {{classname}}) -> Bool {
         {{#vars}}
@@ -144,5 +144,5 @@
         hasher.combine({{{name}}}{{^vendorExtensions.x-null-encodable}}{{^required}}?{{/required}}{{/vendorExtensions.x-null-encodable}}.hashValue)
         {{/vars}}
         {{#generateModelAdditionalProperties}}{{#additionalPropertiesType}}hasher.combine(additionalProperties.hashValue){{/additionalPropertiesType}}{{/generateModelAdditionalProperties}}
-    }{{/vendorExtensions.x-swift-hashable}}{{/useClasses}}{{/objcCompatible}}
+    }{{/vendorExtensions.x-swift-hashable}}{{/objcCompatible}}
 }
