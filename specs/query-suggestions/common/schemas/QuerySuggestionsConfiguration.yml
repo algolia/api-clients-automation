@@ -1,25 +1,184 @@
-type: object
-description: Query Suggestions configuration.
-additionalProperties: false
-required:
-  - sourceIndices
-properties:
-  sourceIndices:
-    $ref: './SourceIndices.yml'
-  languages:
-    $ref: './Languages.yml'
-  exclude:
-    oneOf:
-      - type: array
-        description: Patterns to exclude from query suggestions.
+QuerySuggestionsConfigurationWithIndex:
+  type: object
+  description: Query Suggestions configuration.
+  required:
+    - indexName
+    - sourceIndices
+  allOf:
+    - type: object
+      properties:
+        indexName:
+          $ref: './QuerySuggestionsIndexName.yml'
+    - $ref: '#/QuerySuggestionsConfiguration'
+
+QuerySuggestionsConfiguration:
+  type: object
+  description: Query Suggestions configuration.
+  required:
+    - sourceIndices
+  properties:
+    sourceIndices:
+      type: array
+      description: Algolia indices from which to get the popular searches for query suggestions.
+      minItems: 1
+      items:
+        $ref: '#/SourceIndex'
+    languages:
+      $ref: '#/Languages'
+    exclude:
+      $ref: '#/Exclude'
+    enablePersonalization:
+      type: boolean
+      default: false
+      description: Whether to turn on personalized query suggestions.
+    allowSpecialCharacters:
+      type: boolean
+      default: false
+      description: Whether to include suggestions with special characters.
+
+Exclude:
+  title: exclude
+  description: Words or regular expressions to exclude from the suggestions.
+  default: null
+  oneOf:
+    - type: array
+      items:
+        type: string
+    - type: 'null'
+
+Languages:
+  title: languages
+  description: |
+    Languages for deduplicating singular and plural suggestions.
+    If specified, only the more popular form is included.
+  default: false
+  oneOf:
+    - type: array
+      description: Languages for which to deduplicate singular and plural forms.
+      items:
+        type: string
+        description: Two-letter country code.
+    - type: boolean
+      description: If true, deduplication is enabled for all languages.
+
+SourceIndex:
+  type: object
+  description: Configuration of an Algolia index for Query Suggestions.
+  required:
+    - indexName
+  properties:
+    indexName:
+      type: string
+      description: Name of the Algolia index to use as source for query suggestions.
+      example: products
+    replicas:
+      type: boolean
+      default: false
+      description: |
+        If true, Query Suggestions uses all replica indices to find popular searches.
+        If false, only the primary index is used.
+      example: false
+    analyticsTags:
+      $ref: '#/AnalyticsTags'
+    facets:
+      $ref: '#/Facets'
+    minHits:
+      type: integer
+      minimum: 0
+      default: 5
+      description: |
+        Minimum number of hits required to be included as a suggestion.
+
+        A search query must at least generate `minHits` search results to be included in the Query Suggestions index.
+    minLetters:
+      type: integer
+      minimum: 0
+      default: 4
+      description: |
+        Minimum letters required to be included as a suggestion.
+
+        A search query must be at least `minLetters` long to be included in the Query Suggestions index.
+    generate:
+      $ref: '#/Generate'
+    external:
+      $ref: '#/External'
+
+AnalyticsTags:
+  title: analyticsTags
+  description: |
+    Analytics tags for filtering the popular searches.
+    For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+  default: null
+  oneOf:
+    - type: array
+      items:
+        type: string
+    - type: 'null'
+
+Facets:
+  title: facets
+  description: |
+    Facets to use as top categories with your suggestions.
+
+    If provided, Query Suggestions adds the top facet values to each suggestion.
+  default: null
+  oneOf:
+    - type: array
+      items:
+        $ref: '#/Facet'
+    - type: 'null'
+  example:
+    - attribute: category
+      amount: 3
+    - attribute: brand
+      amount: 2
+
+Facet:
+  type: object
+  description: Facet to use as category.
+  properties:
+    attribute:
+      type: string
+      description: Facet name.
+    amount:
+      type: integer
+      description: Number of suggestions.
+
+Generate:
+  title: generate
+  description: |
+    Facets used for generating query suggestions from facet values.
+
+    For example, if you set `generate: ["color", "brand"]`, combinations from the facet values are added as query suggestions,
+    such as "blue adidas", "red adidas", "blue nike", "red nike", etc.
+
+    You can include nested lists.
+  default: null
+  oneOf:
+    - type: array
+      items:
+        type: array
         items:
           type: string
-      - type: 'null'
-  enablePersonalization:
-    type: boolean
-    default: false
-    description: Turn on personalized query suggestions.
-  allowSpecialCharacters:
-    type: boolean
-    default: false
-    description: Allow suggestions with special characters.
+    - type: 'null'
+  example:
+    - [color, brand]
+
+External:
+  description: |
+    Algolia indices with popular searches to use as query suggestions.
+
+    Records of these indices must have these attributes:
+
+    - `query`: search query which will be added as a suggestion
+    - `count`: measure of popularity of that search query
+
+    For example, you can export popular searches from an external analytics provider, such as Google Analytics or Adobe Analytics,
+    and feed this data into an Algolia index.
+    You can use this index to generate query suggestions until your Algolia Analytics has collected enough data.
+  default: null
+  oneOf:
+    - type: array
+      items:
+        type: string
+    - type: 'null'
