@@ -21,7 +21,7 @@ guard applicationID != "" && apiKey != "" else {
     fatalError("AppID and APIKey must be filled in your Info.plist file")
 }
 
-struct Contact: Codable, Hashable {
+struct Contact: Codable {
     let firstname: String
     let lastname: String
     let followers: Int
