@@ -1,4 +1,4 @@
-{{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} enum {{classname}}{{#vendorExtensions.x-has-child-generic}}<T: Codable{{#vendorExtensions.x-swift-hashable}} & Hashable{{/vendorExtensions.x-swift-hashable}}>{{/vendorExtensions.x-has-child-generic}}: Codable, JSONEncodable, AbstractEncodable{{#vendorExtensions.x-swift-hashable}}, Hashable{{/vendorExtensions.x-swift-hashable}} {
+{{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} enum {{classname}}{{#vendorExtensions.x-has-child-generic}}<T: Codable>{{/vendorExtensions.x-has-child-generic}}: Codable, JSONEncodable, AbstractEncodable {
     {{#composedSchemas.oneOf}}
     case {{#lambda.camelcase}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/lambda.camelcase}}({{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}})
     {{/composedSchemas.oneOf}}
@@ -38,3 +38,8 @@
         }
     }
 }
+
+{{#vendorExtensions.x-swift-hashable}}
+    extension {{classname}}: Equatable{{#vendorExtensions.x-has-child-generic}} where T: Equatable{{/vendorExtensions.x-has-child-generic}} {}
+    extension {{classname}}: Hashable{{#vendorExtensions.x-has-child-generic}} where T: Hashable{{/vendorExtensions.x-has-child-generic}} {}
+{{/vendorExtensions.x-swift-hashable}}

@@ -1,7 +1,9 @@
-{{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} enum {{classname}}: {{dataType}}, Codable{{^isString}}{{^isInteger}}{{^isFloat}}{{^isDouble}}, JSONEncodable{{/isDouble}}{{/isFloat}}{{/isInteger}}{{/isString}}, CaseIterable{{#enumUnknownDefaultCase}}{{#isInteger}}, CaseIterableDefaultsLast{{/isInteger}}{{#isFloat}}, CaseIterableDefaultsLast{{/isFloat}}{{#isDouble}}, CaseIterableDefaultsLast{{/isDouble}}{{#isString}}, CaseIterableDefaultsLast{{/isString}}{{/enumUnknownDefaultCase}}{{#vendorExtensions.x-swift-hashable}}, Hashable{{/vendorExtensions.x-swift-hashable}} {
+{{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} enum {{classname}}: {{dataType}}, Codable{{^isString}}{{^isInteger}}{{^isFloat}}{{^isDouble}}, JSONEncodable{{/isDouble}}{{/isFloat}}{{/isInteger}}{{/isString}}, CaseIterable{{#enumUnknownDefaultCase}}{{#isInteger}}, CaseIterableDefaultsLast{{/isInteger}}{{#isFloat}}, CaseIterableDefaultsLast{{/isFloat}}{{#isDouble}}, CaseIterableDefaultsLast{{/isDouble}}{{#isString}}, CaseIterableDefaultsLast{{/isString}}{{/enumUnknownDefaultCase}} {
 {{#allowableValues}}
 {{#enumVars}}
     case {{{name}}} = {{{value}}}
 {{/enumVars}}
 {{/allowableValues}}
 }
+
+{{#vendorExtensions.x-swift-hashable}}extension {{classname}}: Hashable {}{{/vendorExtensions.x-swift-hashable}}
