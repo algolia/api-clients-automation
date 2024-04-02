@@ -1,3 +1,9 @@
+## [9.0.0-alpha.2](https://github.com/algolia/algoliasearch-client-swift/compare/9.0.0-alpha.1...9.0.0-alpha.2)
+
+- [10e08c9e7](https://github.com/algolia/api-clients-automation/commit/10e08c9e7) fix(specs): query suggestions api ([#2924](https://github.com/algolia/api-clients-automation/pull/2924)) by [@kai687](https://github.com/kai687/)
+- [b153b397e](https://github.com/algolia/api-clients-automation/commit/b153b397e) fix(specs): ingestion api reference ([#2918](https://github.com/algolia/api-clients-automation/pull/2918)) by [@kai687](https://github.com/kai687/)
+- [413466b84](https://github.com/algolia/api-clients-automation/commit/413466b84) fix(swift): try fixing swift cts specific ci ([#2917](https://github.com/algolia/api-clients-automation/pull/2917)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [9.0.0-alpha.1](https://github.com/algolia/algoliasearch-client-swift/compare/9.0.0-alpha.0...9.0.0-alpha.1)
 
 - [cdac5ffe8](https://github.com/algolia/api-clients-automation/commit/cdac5ffe8) fix(swift): have a codable body for improved ux ([#2902](https://github.com/algolia/api-clients-automation/pull/2902)) by [@Fluf22](https://github.com/Fluf22/)

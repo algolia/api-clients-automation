@@ -1,3 +1,9 @@
+## [2.0.0-alpha.15](https://github.com/algolia/algoliasearch-client-scala/compare/2.0.0-alpha.14...2.0.0-alpha.15)
+
+- [10e08c9e7](https://github.com/algolia/api-clients-automation/commit/10e08c9e7) fix(specs): query suggestions api ([#2924](https://github.com/algolia/api-clients-automation/pull/2924)) by [@kai687](https://github.com/kai687/)
+- [b153b397e](https://github.com/algolia/api-clients-automation/commit/b153b397e) fix(specs): ingestion api reference ([#2918](https://github.com/algolia/api-clients-automation/pull/2918)) by [@kai687](https://github.com/kai687/)
+- [911e4a3d7](https://github.com/algolia/api-clients-automation/commit/911e4a3d7) chore(scala): publish artifacts once ([#2925](https://github.com/algolia/api-clients-automation/pull/2925)) by [@aallam](https://github.com/aallam/)
+
 ## [2.0.0-alpha.14](https://github.com/algolia/algoliasearch-client-scala/compare/2.0.0-alpha.13...2.0.0-alpha.14)
 
 - [10c9339c8](https://github.com/algolia/api-clients-automation/commit/10c9339c8) fix(specs): more flexible custom methods ([#2889](https://github.com/algolia/api-clients-automation/pull/2889)) by [@damcou](https://github.com/damcou/)
