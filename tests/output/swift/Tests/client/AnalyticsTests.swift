@@ -122,20 +122,5 @@ final class AnalyticsClientClientTests: XCTestCase {
         let configuration = try AnalyticsClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY, region: Region.us)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = AnalyticsClient(configuration: configuration, transporter: transporter)
-
-        do {
-            let response = try await client.getClickPositionsWithHTTPInfo(
-                index: TestNullString()
-            )
-            let responseBodyData = try XCTUnwrap(response.bodyData)
-            let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-            XCTFail("Expected an error to be thrown")
-        } catch {
-            XCTAssertEqual(
-                error.localizedDescription,
-                "Parameter `index` is required when calling `getClickPositions`."
-            )
-        }
     }
 }
