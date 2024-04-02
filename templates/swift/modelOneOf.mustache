@@ -1,13 +1,7 @@
-{{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} enum {{classname}}{{#vendorExtensions.x-has-child-generic}}<T: Codable>{{/vendorExtensions.x-has-child-generic}}: Codable, JSONEncodable, AbstractEncodable{{#vendorExtensions.x-swift-hashable}}, Hashable{{/vendorExtensions.x-swift-hashable}} {
+{{#nonPublicApi}}internal{{/nonPublicApi}}{{^nonPublicApi}}public{{/nonPublicApi}} enum {{classname}}{{#vendorExtensions.x-has-child-generic}}<T: Codable>{{/vendorExtensions.x-has-child-generic}}: Codable, JSONEncodable, AbstractEncodable {
     {{#composedSchemas.oneOf}}
     case {{#lambda.camelcase}}{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}{{/lambda.camelcase}}({{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}})
     {{/composedSchemas.oneOf}}
-
-    {{#composedSchemas.oneOf}}{{#vendorExtensions.x-discriminator-fields}}{{#-first}}
-        enum {{{datatypeWithEnum}}}DiscriminatorCodingKeys: String, CodingKey, CaseIterable { {{/-first}}
-            case {{{.}}} {{#-last}}
-        }
-      {{/-last}}{{/vendorExtensions.x-discriminator-fields}}{{/composedSchemas.oneOf}}
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
@@ -20,17 +14,6 @@
     }
 
     public init(from decoder: Decoder) throws {
-        {{#composedSchemas.oneOf}}{{#vendorExtensions.x-discriminator-fields}}{{#-first}}
-          if let {{#lambda.camelcase}}{{{datatypeWithEnum}}}{{/lambda.camelcase}}DiscriminatorContainer = try? decoder.container(keyedBy: {{{datatypeWithEnum}}}DiscriminatorCodingKeys.self) {
-            if{{/-first}}{{^-first}} &&{{/-first}} {{#lambda.camelcase}}{{{datatypeWithEnum}}}{{/lambda.camelcase}}DiscriminatorContainer.contains(.{{{.}}}) {{#-last}}{
-              if let value = try? {{classname}}.{{#lambda.camelcase}}{{{datatypeWithEnum}}}{{/lambda.camelcase}}({{{datatypeWithEnum}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}}(from: decoder)) {
-                self = value
-                return
-              }
-          }
-        }
-        {{/-last}}{{/vendorExtensions.x-discriminator-fields}}{{/composedSchemas.oneOf}}
-
         let container = try decoder.singleValueContainer()
         {{#composedSchemas.oneOf}}
         {{#-first}}
@@ -55,3 +38,8 @@
         }
     }
 }
+
+{{#vendorExtensions.x-swift-hashable}}
+    extension {{classname}}: Equatable{{#vendorExtensions.x-has-child-generic}} where T: Equatable{{/vendorExtensions.x-has-child-generic}} {}
+    extension {{classname}}: Hashable{{#vendorExtensions.x-has-child-generic}} where T: Hashable{{/vendorExtensions.x-has-child-generic}} {}
+{{/vendorExtensions.x-swift-hashable}}
