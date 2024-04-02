@@ -106,11 +106,7 @@ import Foundation
           throw AlgoliaError.invalidArgument("{{{paramName}}}", "{{{operationId}}}")
         }
 
-        {{/required}}{{/isString}}{{/queryParams}}{{#bodyParam}}{{#isFreeFormObject}}{{#required}}guard {{{paramName}}} != nil, let {{{paramName}}}Dictionary = {{{paramName}}} as? [String: Codable], !{{{paramName}}}Dictionary.isEmpty else {
-          throw AlgoliaError.invalidArgument("{{{paramName}}}", "{{{operationId}}}")
-        }
-
-        {{/required}}{{/isFreeFormObject}}{{/bodyParam}}
+        {{/required}}{{/isString}}{{/queryParams}}
         {{^pathParams}}let{{/pathParams}}{{#pathParams}}{{#-first}}var{{/-first}}{{/pathParams}} resourcePath = "{{{path}}}"{{#pathParams}}
         let {{paramName}}PreEscape = "\({{#isEnum}}{{paramName}}{{#isContainer}}{{{dataType}}}{{/isContainer}}{{^isContainer}}.rawValue{{/isContainer}}{{/isEnum}}{{^isEnum}}APIHelper.mapValueToPathItem({{paramName}}){{/isEnum}})"{{^x-is-custom-request}}
         let {{paramName}}PostEscape = {{paramName}}PreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""{{/x-is-custom-request}}

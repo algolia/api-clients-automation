@@ -34,17 +34,17 @@ Task {
           .init(firstname: "Jimmie", lastname: "Barninger", followers: 93, company: "California Paint"),
           .init(firstname: "Warren", lastname: "Speach", followers: 42, company: "Norwalk Crmc")
         ]
+        let indexName = "contacts"
 
         let client = try SearchClient(appID: applicationID, apiKey: apiKey)
 
+        var taskIDs: [Int64] = []
         for contact in contacts {
-            let saveObjRes = try await client.saveObject(indexName: "contacts", body: contacts)
-            while true {
-                let taskResponse = try await client.getTask(indexName: "contacts", taskID: saveObjRes.taskID)
-                if taskResponse.status == SearchTaskStatus.published {
-                    break
-                }
-            }
+            let saveObjRes = try await client.saveObject(indexName: indexName, body: contact)
+            taskIDs.append(saveObjRes.taskID)
+        }
+        for taskID in taskIDs {
+            try await client.waitForTask(with: taskID, in: indexName)
         }
 
         let searchParams = SearchSearchParamsObject(query: "Jimmy")
