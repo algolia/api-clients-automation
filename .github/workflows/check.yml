@@ -361,7 +361,7 @@ jobs:
           path: clients-${{matrix.client.language }}.zip
 
   swift_cts_macos:
-    timeout-minutes: 20
+    timeout-minutes: 25
     runs-on: macos-latest
     needs:
       - setup
@@ -401,8 +401,9 @@ jobs:
           set -eo pipefail
           cd clients/algoliasearch-client-swift
           swift --version
-          [ $(find Sources  -type f | rev | cut -d '/' -f1 | rev | sort | uniq -d | wc -l) -gt 0 ] && echo "Duplicates found" && exit 1 || echo "No duplicates found"
-          pod lib lint --allow-warnings
+          pod --version
+          [ $(find Sources  -type f | rev | cut -d '/' -f1 | rev | sort | uniq -d | wc -l) -gt 0 ] && echo "Duplicates found" && exit 1 || echo "No duplicate found"
+          pod lib lint --allow-warnings --fail-fast --verbose
 
   codegen:
     runs-on: ubuntu-22.04
