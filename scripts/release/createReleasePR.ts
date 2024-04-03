@@ -474,7 +474,7 @@ async function createReleasePR(): Promise<void> {
   });
 
   console.log(`Release PR #${data.number} is ready for review.`);
-  console.log(`  > ${data.url}`);
+  console.log(`  > ${data.html_url}`);
 }
 
 if (import.meta.url.endsWith(process.argv[1])) {
