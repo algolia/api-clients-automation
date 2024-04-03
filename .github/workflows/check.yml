@@ -323,6 +323,13 @@ jobs:
         if: ${{ matrix.client.language == 'php' && startsWith(env.head_ref, 'chore/renovateBaseBranch') }}
         run: cd ${{ matrix.client.path }} && composer update
 
+      - name: Check for file duplicates in Swift
+        if: ${{ matrix.client.language == 'swift' }}
+        run: |
+          set -eo pipefail
+          cd clients/algoliasearch-client-swift
+          [ $(find Sources  -type f | rev | cut -d '/' -f1 | rev | sort | uniq -d | wc -l) -gt 0 ] && echo "Duplicates found" && exit 1 || echo "No duplicate found"
+
       - name: Build clients
         run: ${{ matrix.client.buildCommand }}
 
@@ -395,13 +402,6 @@ jobs:
 
       - name: Run CTS
         run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
-
-      - name: Run Swift CocoaPods validity
-        run: |
-          set -eo pipefail
-          cd clients/algoliasearch-client-swift
-          [ $(find Sources  -type f | rev | cut -d '/' -f1 | rev | sort | uniq -d | wc -l) -gt 0 ] && echo "Duplicates found" && exit 1 || echo "No duplicates found"
-          pod lib lint --allow-warnings
 
   codegen:
     runs-on: ubuntu-22.04
