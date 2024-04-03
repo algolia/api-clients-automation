@@ -1,6 +1,6 @@
 get:
   operationId: listCrawlers
-  summary: List crawlers
+  summary: List crawlers.
   description: Lists all your crawlers.
   tags:
     - crawlers
@@ -26,7 +26,7 @@ get:
       description: The call does not have results for this combinaison of query params.
 post:
   operationId: createCrawler
-  summary: Create a crawler
+  summary: Create a crawler.
   description: Creates a new crawler with the provided configuration.
   tags:
     - crawlers

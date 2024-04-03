@@ -1,6 +1,6 @@
 post:
   operationId: testUrl
-  summary: Test crawling a URL
+  summary: Test crawling a URL.
   description: |
     Tests a URL with the crawler's configuration and shows the extracted records.
 

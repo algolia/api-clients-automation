@@ -1,6 +1,6 @@
 post:
   operationId: startReindex
-  summary: Start a crawl
+  summary: Start a crawl.
   description: Starts or resumes a crawl.
   tags:
     - actions

@@ -1,6 +1,6 @@
 post:
   operationId: crawlUrls
-  summary: Crawl URLs
+  summary: Crawl URLs.
   description: |
     Crawls the specified URLs, extracts records from them, and adds them to the index.
     If a crawl is currently running (the crawler's `reindexing` property is true),

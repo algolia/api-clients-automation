@@ -1,6 +1,6 @@
 get:
   operationId: getCrawler
-  summary: Retrieve crawler details
+  summary: Retrieve crawler details.
   description: |
     Retrieves details about the specified crawler, optionally with its configuration.
   tags:
@@ -27,7 +27,7 @@ get:
       $ref: '../common/schemas/responses.yml#/NoRightsOnCrawler'
 patch:
   operationId: patchCrawler
-  summary: Update crawler
+  summary: Update crawler.
   description: |
     Updates the crawler, either its name or its configuration.
 
@@ -61,30 +61,30 @@ patch:
       $ref: '../common/schemas/responses.yml#/MissingAuthorization'
     '403':
       $ref: '../common/schemas/responses.yml#/NoRightsOnCrawler'
-
-delete:
-  summary: Delete a crawler
-  description: Deletes a crawler.
-  operationId: deleteCrawler
-  tags:
-    - crawlers
-  parameters:
-    - $ref: '../common/parameters.yml#/CrawlerIdParameter'
-  responses:
-    '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              success:
-                type: boolean
-                description: Whether the deletion was successful.
-              data:
-                type: object
-                properties:
-                  taskId:
-                    $ref: '../common/parameters.yml#/TaskId'
-    '403':
-      description: Forbidden
+# This operation is currently only supported for users with an `@algolia.com` email address.
+# delete:
+#   summary: Delete a crawler.
+#   description: Deletes a crawler.
+#   operationId: deleteCrawler
+#   tags:
+#     - crawlers
+#   parameters:
+#     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
+#   responses:
+#     '200':
+#       description: OK
+#       content:
+#         application/json:
+#           schema:
+#             type: object
+#             properties:
+#               success:
+#                 type: boolean
+#                 description: Whether the deletion was successful.
+#               data:
+#                 type: object
+#                 properties:
+#                   taskId:
+#                     $ref: '../common/parameters.yml#/TaskId'
+#     '403':
+#       description: Forbidden

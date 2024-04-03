@@ -1,6 +1,6 @@
 post:
   operationId: pauseCrawler
-  summary: Pause a crawler
+  summary: Pause a crawler.
   description: Pauses the specified crawler.
   tags:
     - actions
