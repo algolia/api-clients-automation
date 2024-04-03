@@ -27,8 +27,8 @@ PurchasedObjectIDsAfterSearch _$PurchasedObjectIDsAfterSearchFromJson(
           currency: $checkedConvert('currency', (v) => v as String?),
           objectData: $checkedConvert(
               'objectData',
-              (v) => (v as List<dynamic>?)
-                  ?.map((e) =>
+              (v) => (v as List<dynamic>)
+                  .map((e) =>
                       ObjectDataAfterSearch.fromJson(e as Map<String, dynamic>))
                   .toList()),
           timestamp: $checkedConvert('timestamp', (v) => v as int?),
@@ -57,8 +57,7 @@ Map<String, dynamic> _$PurchasedObjectIDsAfterSearchToJson(
 
   writeNotNull('authenticatedUserToken', instance.authenticatedUserToken);
   writeNotNull('currency', instance.currency);
-  writeNotNull(
-      'objectData', instance.objectData?.map((e) => e.toJson()).toList());
+  val['objectData'] = instance.objectData.map((e) => e.toJson()).toList();
   writeNotNull('timestamp', instance.timestamp);
   writeNotNull('value', instance.value);
   return val;

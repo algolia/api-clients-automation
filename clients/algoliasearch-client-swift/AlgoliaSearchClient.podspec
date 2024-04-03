@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
   s.name = 'AlgoliaSearchClient'
   s.module_name  = 'AlgoliaSearchClient'
-  s.version = '9.0.0-alpha.1'
-  s.source = { :git => 'https://github.com/algolia/algoliasearch-client-swift.git', :tag => '9.0.0-alpha.1' }
+  s.version = '9.0.0-alpha.2'
+  s.source = { :git => 'https://github.com/algolia/algoliasearch-client-swift.git', :tag => '9.0.0-alpha.2' }
   s.authors = { 'Algolia' => 'contact@algolia.com' }
   s.license = { :type => 'MIT', :file => 'LICENSE' }
   s.homepage = 'https://github.com/algolia/algoliasearch-client-swift/tree/next'
@@ -13,6 +13,7 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = '7.0'
   s.tvos.deployment_target = '14.0'
   s.swift_version = '5.9'
+  s.resource_bundles = { 'AlgoliaSearchClient' => ['PrivacyInfo.xcprivacy']}
 
   s.subspec 'Core' do |subs|
     subs.source_files = 'Sources/Core/**/*.swift'
