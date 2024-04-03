@@ -4,7 +4,7 @@ CrawlerIdParameter:
   description: Crawler ID.
   required: true
   schema:
-    $ref: '#/CrawlerId'
+    $ref: '#/CrawlerID'
 
 TaskIdParameter:
   name: taskID
@@ -12,7 +12,7 @@ TaskIdParameter:
   description: Task ID.
   required: true
   schema:
-    $ref: '#/TaskId'
+    $ref: '#/TaskID'
 
 CrawlerVersionParameter:
   name: version
