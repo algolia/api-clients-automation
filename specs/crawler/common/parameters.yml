@@ -56,12 +56,12 @@ applicationID:
     Algolia application ID where the crawler creates and updates indices.
     The Crawler add-on must be enabled for this application.
 
-CrawlerId:
+CrawlerID:
   type: string
   description: Universally unique identifier (UUID) of the crawler.
   example: e0f6db8a-24f5-4092-83a4-1b2c6cb6d809
 
-TaskId:
+TaskID:
   type: string
   description: Universally unique identifier (UUID) of the task.
   example: 98458796-b7bb-4703-8b1b-785c1080b110

@@ -29,7 +29,7 @@ BaseResponse:
       description: |
         Whether this crawler is currently blocked.
 
-        If true, you need to manually unblock this crawler in the [Crawler dashboard](https://crawler.algolia.com/admin/).
+        If true, you need to unblock this crawler in the [Crawler dashboard](https://crawler.algolia.com/admin/) or by [cancelling the blocking task](#tag/tasks/operation/cancelBlockingAction).
     blockingError:
       type: string
       description: Reason why the crawler is blocked.

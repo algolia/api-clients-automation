@@ -52,7 +52,7 @@ post:
             type: object
             properties:
               id:
-                $ref: '../common/parameters.yml#/CrawlerId'
+                $ref: '../common/parameters.yml#/CrawlerID'
             required:
               - id
     '400':

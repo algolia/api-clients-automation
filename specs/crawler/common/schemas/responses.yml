@@ -6,7 +6,7 @@ ActionAcknowledged:
         type: object
         properties:
           taskId:
-            $ref: '../parameters.yml#/TaskId'
+            $ref: '../parameters.yml#/TaskID'
         required:
           - taskId
 

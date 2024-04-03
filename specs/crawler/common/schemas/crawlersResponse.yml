@@ -9,6 +9,6 @@ allOf:
           type: object
           properties:
             id:
-              $ref: '../parameters.yml#/CrawlerId'
+              $ref: '../parameters.yml#/CrawlerID'
             name:
               $ref: '../parameters.yml#/CrawlerName'
