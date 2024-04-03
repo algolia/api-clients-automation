@@ -1,39 +1,17 @@
 get:
   operationId: listCrawlers
-  summary: List available Crawlers.
-  description: List available Crawlers.
+  summary: List crawlers
+  description: Lists all your crawlers.
+  tags:
+    - crawlers
   parameters:
-    - in: query
-      name: itemsPerPage
-      schema:
-        type: integer
-        minimum: 1
-        default: 20
-        maximum: 100
-      description: Change the number of items per page.
-    - in: query
-      name: page
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-        maximum: 100
-      description: Change the page number.
-    - in: query
-      name: name
-      schema:
-        type: string
-        example: 'MyCrawlerName'
-      description: Filter by crawler name.
-    - in: query
-      name: appId
-      schema:
-        type: string
-        example: 'XXXXXXX123'
-      description: Filter by Application ID.
+    - $ref: '../common/parameters.yml#/ItemsPerPage'
+    - $ref: '../common/parameters.yml#/Page'
+    - $ref: '../common/parameters.yml#/Name'
+    - $ref: '../common/parameters.yml#/AppID'
   responses:
     '200':
-      description: A list of Crawlers and pagination information.
+      description: OK
       content:
         application/json:
           schema:
@@ -48,8 +26,10 @@ get:
       description: The call does not have results for this combinaison of query params.
 post:
   operationId: createCrawler
-  summary: Create a new Crawler with the given config.
-  description: Create a new Crawler with the given config.
+  summary: Create a crawler
+  description: Creates a new crawler with the provided configuration.
+  tags:
+    - crawlers
   requestBody:
     content:
       application/json:
@@ -59,21 +39,20 @@ post:
             name:
               $ref: '../common/parameters.yml#/CrawlerName'
             config:
-              $ref: '../common/parameters.yml#/Configuration'
+              $ref: '../common/schemas/configuration.yml#/Configuration'
           required:
             - name
             - config
   responses:
     '200':
-      description: A new Crawler has been created with the given configuration.
+      description: OK
       content:
         application/json:
           schema:
             type: object
             properties:
               id:
-                type: string
-                description: The id of the Crawler created.
+                $ref: '../common/parameters.yml#/CrawlerId'
             required:
               - id
     '400':

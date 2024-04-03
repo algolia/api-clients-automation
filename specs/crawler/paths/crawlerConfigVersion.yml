@@ -1,28 +1,35 @@
 get:
   operationId: getConfigVersion
-  summary: Get a specific version of the configuration of a crawler.
-  description: Get a specific version of the configuration of a crawler.
+  summary: Retrieve a configuration version.
+  description: |
+    Retrieves the specified version of the crawler configuration.
+
+    You can use this to restore a previous version of the configuration.
+  tags:
+    - config
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
     - $ref: '../common/parameters.yml#/CrawlerVersionParameter'
   responses:
     '200':
-      description: A specific revision of the crawler.
+      description: OK
       content:
         application/json:
           schema:
             type: object
             properties:
               version:
-                type: integer
-                minimum: 1
+                $ref: '../common/parameters.yml#/version'
               config:
-                $ref: '../common/parameters.yml#/Configuration'
+                $ref: '../common/schemas/configuration.yml#/Configuration'
               createdAt:
-                type: string
+                $ref: '../common/parameters.yml#/createdAt'
               authorId:
-                type: string
+                $ref: '../common/parameters.yml#/authorId'
             required:
               - version
               - config
               - createdAt
+              - authorId
+    '404':
+      description: Not found.

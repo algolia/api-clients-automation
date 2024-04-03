@@ -1,7 +1,38 @@
 openapi: 3.0.2
 info:
   title: Crawler API
-  description: API to configure and manage the Algolia Crawler.
+  description: |
+    The Crawler API lets you manage and run your crawlers.
+
+    # Availability
+
+    Acess to this API is available with the [Crawler add-on](https://www.algolia.com/pricing/).
+
+    # Base URL
+
+    The base URL for making requests to the Crawler API is:
+
+    - `https://crawler.algolia.com/api`
+
+    **All requests must use HTTPS.**
+
+    # Authentication
+
+    To authenticate your API requests, use the **basic authentication** header:
+
+    - `Authorization: Basic <credentials>`
+
+    where `<credentials>` is a base64-encoded string `<user-id>:<api-key>`.
+
+    - `<user-id>`. The Crawler user ID.
+    - `<api-key>`. The Crawler API key.
+
+    You can find both in the [Crawler dashboard](https://crawler.algolia.com/admin/settings/).
+    The Crawler dashboard and API key are different from the regular Algolia dashboard and API keys.
+
+    # Version
+
+    The current version of the Crawler API is version 1, as indicated by the `/1/` in each endpoint's URL.
   version: 1.0.0
 components:
   securitySchemes:
@@ -9,37 +40,58 @@ components:
       type: http
       scheme: basic
 servers:
-  - url: https://crawler.algolia.com/api/1
-  - url: https://crawler-dev.algolia.com/api/1
-  - url: http://localhost:8000/api/1
+  - url: https://crawler.algolia.com/api
 security:
   - BasicAuth: []
+tags:
+  - name: actions
+    x-displayName: Actions
+    description: |
+      Actions change the state of crawlers, such as pausing and unpausing crawl schedules or testing the crawler with specific URLs.
+  - name: config
+    x-displayName: Configuration
+    description: |
+      In the Crawler configuration, you specify which URLs to crawl, when to crawl, how to extract records from the crawl, and where to index the extracted records.
+      The configuration is versioned, so you can always restore a previous version.
+      It's easiest to make configuration changes in the [Crawler dashboard](https://crawler.algolia.com/admin/).
+      The editor has autocomplete and builtin validation so you can try your configuration changes before comitting them.
+  - name: crawlers
+    x-displayName: Crawler
+    description: |
+      A crawler is an object with a name and a [configuration](#tag/config).
+      Use these endpoints to create, rename, and delete crawlers.
+  - name: domains
+    x-displayName: Domains
+    description: List registered domains.
+  - name: tasks
+    x-displayName: Tasks
+    description: Tasks
 paths:
-  /crawlers:
+  /1/crawlers:
     $ref: 'paths/crawlers.yml'
-  /crawlers/{id}:
+  /1/crawlers/{id}:
     $ref: 'paths/crawler.yml'
-  /crawlers/{id}/config:
-    $ref: 'paths/crawlerConfig.yml'
-  /crawlers/{id}/run:
+  /1/crawlers/{id}/run:
     $ref: 'paths/crawlerRun.yml'
-  /crawlers/{id}/pause:
+  /1/crawlers/{id}/pause:
     $ref: 'paths/crawlerPause.yml'
-  /crawlers/{id}/reindex:
+  /1/crawlers/{id}/reindex:
     $ref: 'paths/crawlerReindex.yml'
-  /crawlers/{id}/stats/urls:
-    $ref: 'paths/crawlerStats.yml'
-  /crawlers/{id}/test:
+  /1/crawlers/{id}/test:
     $ref: 'paths/crawlerTest.yml'
-  /crawlers/{id}/tasks/{tid}:
-    $ref: 'paths/crawlerTask.yml'
-  /crawlers/{id}/tasks/{tid}/cancel:
-    $ref: 'paths/crawlerTaskCancel.yml'
-  /crawlers/{id}/config/versions:
-    $ref: 'paths/crawlerConfigVersions.yml'
-  /crawlers/{id}/config/versions/{version}:
-    $ref: 'paths/crawlerConfigVersion.yml'
-  /crawlers/{id}/urls/crawl:
+  /1/crawlers/{id}/urls/crawl:
     $ref: 'paths/crawlerCrawl.yml'
-  /domains:
+  /1/crawlers/{id}/stats/urls:
+    $ref: 'paths/crawlerStats.yml'
+  /1/crawlers/{id}/config:
+    $ref: 'paths/crawlerConfig.yml'
+  /1/crawlers/{id}/config/versions:
+    $ref: 'paths/crawlerConfigVersions.yml'
+  /1/crawlers/{id}/config/versions/{version}:
+    $ref: 'paths/crawlerConfigVersion.yml'
+  /1/crawlers/{id}/tasks/{taskID}:
+    $ref: 'paths/crawlerTask.yml'
+  /1/crawlers/{id}/tasks/{taskID}/cancel:
+    $ref: 'paths/crawlerTaskCancel.yml'
+  /1/domains:
     $ref: 'paths/domains.yml'

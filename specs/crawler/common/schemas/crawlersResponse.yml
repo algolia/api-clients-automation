@@ -4,6 +4,7 @@ allOf:
     properties:
       items:
         type: array
+        description: Crawlers.
         items:
           type: object
           properties:

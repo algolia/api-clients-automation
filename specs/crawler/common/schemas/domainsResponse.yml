@@ -8,11 +8,11 @@ allOf:
           type: object
           properties:
             appId:
-              type: string
-              description: The app for which the domain is registered.
+              $ref: '../parameters.yml#/applicationID'
             domain:
               type: string
-              description: The registered domain name.
+              description: Domain name which crawlers can access.
+              example: wwww.algolia.com
             validated:
               type: boolean
-              description: Indicates whether the domain is validated or not.
+              description: Whether the domain is validated.

@@ -1,7 +1,9 @@
 post:
   operationId: pauseCrawler
-  summary: Request the specified Crawler to pause itself.
-  description: Request the specified Crawler to pause itself.
+  summary: Pause a crawler
+  description: Pauses the specified crawler.
+  tags:
+    - actions
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
   responses:

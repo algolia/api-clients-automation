@@ -1,18 +1,18 @@
 CrawlerIdParameter:
   name: id
   in: path
-  description: The Id of the targeted Crawler.
+  description: Crawler ID.
   required: true
   schema:
-    type: string
+    $ref: '#/CrawlerId'
 
 TaskIdParameter:
-  name: tid
+  name: taskID
   in: path
-  description: The Id of the targeted Task.
+  description: Task ID.
   required: true
   schema:
-    type: string
+    $ref: '#/TaskId'
 
 CrawlerVersionParameter:
   name: version
@@ -22,105 +22,83 @@ CrawlerVersionParameter:
   schema:
     type: integer
 
+ItemsPerPage:
+  name: itemsPerPage
+  in: query
+  description: Number of items per page to retrieve.
+  schema:
+    $ref: '#/itemsPerPage'
+
+Page:
+  name: page
+  in: query
+  description: Page to retrieve.
+  schema:
+    $ref: '#/page'
+
+Name:
+  name: name
+  in: query
+  description: Name of the crawler for filtering the API response.
+  schema:
+    $ref: '#/CrawlerName'
+
+AppID:
+  name: appID
+  in: query
+  description: Algolia application ID for filtering the API response.
+  schema:
+    $ref: '#/applicationID'
+
+applicationID:
+  type: string
+  description: |
+    Algolia application ID where the crawler creates and updates indices.
+    The Crawler add-on must be enabled for this application.
+
 CrawlerId:
   type: string
-  description: The unique id of the Crawler.
-  example: 'e0f6db8a-24f5-4092-83a4-1b2c6cb6d809'
+  description: Universally unique identifier (UUID) of the crawler.
+  example: e0f6db8a-24f5-4092-83a4-1b2c6cb6d809
+
+TaskId:
+  type: string
+  description: Universally unique identifier (UUID) of the task.
+  example: 98458796-b7bb-4703-8b1b-785c1080b110
 
 CrawlerName:
   type: string
   maxLength: 64
-  description: The name of the Crawler.
-  example: 'My Crawler'
-
-Configuration:
-  type: object
-  description: A Crawler configuration object. See the Crawler documentation to have more details about it.
-  properties:
-    appId:
-      type: string
-      example: ABC9DEFGHI
-    apiKey:
-      type: string
-      example: c69564c68bad256f8d11399bf2048f82
-    indexPrefix:
-      type: string
-      example: crawler_
-    rateLimit:
-      type: number
-      example: 8
-    startUrls:
-      type: array
-      items:
-        type: string
-        example: https://www.algolia.com
-    actions:
-      type: array
-      items:
-        type: object
-        properties:
-          indexName:
-            type: string
-            example: algolia_website
-          pathsToMatch:
-            type: array
-            items:
-              type: string
-              example: https://www.algolia.com/**
-          selectorsToMatch:
-            type: array
-            items:
-              type: string
-            example: ['.products', '!.featured']
-          fileTypesToMatch:
-            type: array
-            items:
-              type: string
-            example: ['html', 'pdf']
-          recordExtractor:
-            type: object
-            properties:
-              __type:
-                $ref: '#/configurationRecordExtractorType'
-              source:
-                type: string
-                example: '() => {}'
-        required:
-          - indexName
-          - recordExtractor
-
-configurationRecordExtractorType:
-  type: string
-  enum:
-    - function
+  description: Name of the crawler.
+  example: test-crawler
 
 UrlsCrawledGroup:
   type: object
-  description: Represent a group of URLs that have been crawled and have the same final state.
+  description: Processed URLs and their status.
   properties:
     status:
       $ref: '#/urlsCrawledGroupStatus'
     reason:
       type: string
-      description: The code of the reason why when ended up in this status.
+      description: Reason for this status.
     category:
       $ref: '#/urlsCrawledGroupCategory'
     count:
       type: integer
-      description: Number of URLs belonging to this group.
+      description: Number of URLs with this status.
     readable:
       type: string
-      description: Human redeable version of the error.
+      description: Readable representation of the reason for the status message.
   example:
     status: SKIPPED
     reason: forbidden_by_robotstxt
     category: fetch
-    nbUrls: 3
+    count: 3
     readable: Forbidden by robots.txt
 
 urlsCrawledGroupStatus:
   type: string
-  description: A string corresponding to the status of the group.
+  description: Status of crawling these URLs.
   enum:
     - DONE
     - SKIPPED
@@ -128,32 +106,54 @@ urlsCrawledGroupStatus:
 
 urlsCrawledGroupCategory:
   type: string
-  description: In case of error, will be set to the step where the error occurred, otherwise will be set to 'success'.
-  enum: 
+  description: Step where the status information was generated.
+  enum:
     - fetch
     - extraction
     - indexing
     - success
 
+itemsPerPage:
+  type: integer
+  description: Number of items per page of the paginated API response.
+  minimum: 1
+  maximum: 100
+  default: 20
+
+page:
+  type: integer
+  description: Current page of the paginated API response.
+  minimum: 1
+  maximum: 100
+  default: 1
+
+total:
+  type: integer
+  description: Total number of retrievable items.
+  example: 100
+
 Pagination:
   type: object
-  description: Represent a group of items and pagination information.
+  description: Pagination information.
   properties:
-    items:
-      type: array
-      items:
-        type: object
     itemsPerPage:
-      type: integer
-      description: The maximum number of items returned by this request.
-      default: 20
-      example: 20
+      $ref: '#/itemsPerPage'
     page:
-      type: integer
-      description: The current page browsed by this request.
-      default: 1
-      example: 1
+      $ref: '#/page'
     total:
-      type: integer
-      description: The total number of items.
-      example: 100
+      $ref: '#/total'
+
+version:
+  type: integer
+  description: Version of the configuration. Version 1 is the initial configuration you used when creating the crawler.
+  minimum: 1
+
+createdAt:
+  type: string
+  description: Timestamp in ISO 8601 format when this version of the configuration was created.
+  example: 2024-04-02T17:04:30Z
+
+authorId:
+  type: string
+  description: Universally unique identifier (UUID) of the user who created this version of the configuration.
+  example: 7d79f0dd-2dab-4296-8098-957a1fdc0637
