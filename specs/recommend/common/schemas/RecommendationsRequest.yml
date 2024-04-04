@@ -1,9 +1,10 @@
 recommendationsRequest:
   oneOf:
+    - $ref: './FrequentlyBoughtTogetherQuery.yml#/boughtTogetherQuery'
+    - $ref: './RelatedQuery.yml#/relatedQuery'
     - $ref: './TrendingItemsQuery.yml#/trendingItemsQuery'
     - $ref: './TrendingFacetsQuery.yml#/trendingFacetsQuery'
-    - $ref: './RecommendationsQuery.yml#/recommendationsQuery'
-    - $ref: './RecommendedForYouQuery.yml#/recommendedForYouQuery'
+    - $ref: './LookingSimilarQuery.yml#/lookingSimilarQuery'
 
 baseRecommendRequest:
   type: object
@@ -12,16 +13,35 @@ baseRecommendRequest:
     indexName:
       $ref: '../../../common/parameters.yml#/indexName'
     threshold:
-      type: integer
+      type: number
+      format: double
       minimum: 0
       maximum: 100
-      description: >
-        Recommendations with a confidence score lower than `threshold` won't appear in results.
-
-        > **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the recommendations are.
+      description: Minimum score a recommendation must have to be included in the response.
     maxRecommendations:
       type: integer
       default: 0
-      description: Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
+      description: |
+        Maximum number of recommendations to retrieve.
+        By default, all recommendations are returned and no fallback request is made.
+        Depending on the available recommendations and the other request parameters,
+        the actual number of recommendations may be lower than this value.
+    queryParameters:
+      $ref: '#/searchParams'
   required:
     - indexName
+    - threshold
+
+searchParams:
+  title: queryParameters
+  allOf:
+    - $ref: '../../../common/schemas/SearchParams.yml#/searchParamsObject'
+    - type: object
+      description: Search parameters for filtering the recommendations.
+
+fallbackParams:
+  title: fallbackParameters
+  allOf:
+    - $ref: '../../../common/schemas/SearchParams.yml#/searchParamsObject'
+    - type: object
+      description: Search parameters to use for a fallback request if there aren't enough recommendations.

@@ -1,13 +1,16 @@
 post:
   tags:
-    - recommendations
+    - rules
   operationId: searchRecommendRules
   x-use-read-transporter: true
   x-cacheable: true
   x-acl:
     - settings
-  summary: List Recommend rules.
-  description: List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+  summary: Search for rules.
+  description: |
+    Searches for Recommend rules.
+
+    Use an empty query to list all rules for this recommendation scenario.
   parameters:
     - $ref: '../../common/parameters.yml#/IndexName'
     - $ref: '../common/parameters.yml#/Models'
@@ -17,25 +20,24 @@ post:
         schema:
           type: object
           title: searchRecommendRulesParams
-          description: Recommend rules search parameters.
+          description: Recommend rules parameters.
           additionalProperties: false
           properties:
             query:
               $ref: '../../common/parameters.yml#/query'
             context:
               type: string
-              description: Restricts responses to the specified [contextual rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
+              description: Only search for rules with matching context.
               example: 'mobile'
             page:
               $ref: '../../common/parameters.yml#/page'
             hitsPerPage:
               $ref: '../../common/parameters.yml#/hitsPerPage'
             enabled:
-              oneOf:
-                - type: boolean
-                  default: null
-                  description: Restricts responses to enabled rules. When absent (default), _all_ rules are retrieved.
-                - type: 'null'
+              type: boolean
+              description: |
+                Whether to only show rules where the value of their `enabled` property matches this parameter.
+                If absent, show all rules, regardless of their `enabled` property.
   responses:
     '200':
       description: OK
@@ -53,9 +55,9 @@ post:
             properties:
               hits:
                 type: array
-                description: Fetched rules.
+                description: Recommend rules that match the search criteria.
                 items:
-                  $ref: '../common/schemas/RuleResponse.yml'
+                  $ref: '../common/schemas/RecommendRule.yml#/RecommendRule'
               nbHits:
                 $ref: '../../search/common/schemas/SearchResponse.yml#/nbHits'
               page:

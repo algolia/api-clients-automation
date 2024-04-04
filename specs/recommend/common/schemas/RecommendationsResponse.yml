@@ -12,11 +12,11 @@ recommendationsHits:
       items:
         $ref: '#/recommendationsHit'
     query:
-      $ref: '../../../common/schemas/SearchParams.yml#/query'    
+      $ref: '../../../common/schemas/SearchParams.yml#/query'
     params:
       type: string
       description: URL-encoded string of all search parameters.
-      example: query=a&hitsPerPage=20     
+      example: query=a&hitsPerPage=20
   required:
     - hits
 

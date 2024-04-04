@@ -2,11 +2,12 @@ Models:
   in: path
   name: model
   required: true
-  description: >
-    [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+  description: |
+    [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
   schema:
     $ref: '#/recommendModels'
 
+# This list excludes `looking-similar` as that can't be used with rules.
 recommendModels:
   type: string
   enum: [related-products, bought-together, trending-facets, trending-items]
@@ -15,14 +16,19 @@ ObjectID:
   in: path
   name: objectID
   required: true
-  type: string
-  description: Unique Recommend rule identifier.
+  description: Unique identifier of a Recommend rule object.
   example: 'a-recommend-rule-id'
+  schema:
+    $ref: '../../common/parameters.yml#/ruleID'
 
 facetName:
   type: string
-  description: Facet name for trending models.
+  description: |
+    Facet attribute. To be used in combination with `facetValue`.
+    If specified, only recommendations matching the facet filter will be returned.
 
 facetValue:
   type: string
-  description: Facet value for trending models.
+  description: |
+    Facet value. To be used in combination with `facetName`.
+    If specified, only recommendations matching the facet filter will be returned.
