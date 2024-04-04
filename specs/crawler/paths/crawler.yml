@@ -2,7 +2,7 @@ get:
   operationId: getCrawler
   summary: Retrieve crawler details.
   description: |
-    Retrieves details about the specified crawler, optionally with its configuration.
+    Retrieves iiidetails about the specified crawler, optionally with its configuration.
   tags:
     - crawlers
   parameters:
