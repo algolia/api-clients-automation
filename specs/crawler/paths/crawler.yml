@@ -1,72 +1,24 @@
 get:
   operationId: getCrawler
-  summary: Get information about the specified Crawler and its configuration.
-  description: Get information about the specified Crawler and its configuration.
+  summary: Retrieve crawler details.
+  description: |
+    Retrieves details about the specified crawler, optionally with its configuration.
+  tags:
+    - crawlers
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
     - in: query
       name: withConfig
       schema:
         type: boolean
-      description: Whether or not the configuration should be returned in the response (in the 'config' field).
+      description: Whether the response should include the crawler's configuration.
   responses:
     '200':
-      description: Several field with information about the specified Crawler.
+      description: OK
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              name:
-                $ref: '../common/parameters.yml#/CrawlerName'
-              createdAt:
-                type: string
-                description: The creation date of this Crawler.
-                example: '2019-05-10T07:58:41.146Z'
-              updatedAt:
-                type: string
-                description: The date this Crawler was last updated.
-                example: '2019-05-10T08:16:47.920Z'
-              running:
-                type: boolean
-                description: Indicate if this Crawler is running, i.e. will crawl regularly based on its configuration.
-              reindexing:
-                type: boolean
-                description: Indicate if this Crawler is currently doing a complete reindex.
-              blocked:
-                type: boolean
-                description: Indicate if this Crawler is currently blocked and need a manual intervention in the Console.
-                example: false
-              blockingError:
-                type: string
-                description: The reason for which the Crawler has been blocked.
-                example: "Error: Failed to fetch external data for source 'testCSV': 404"
-              blockingTaskId:
-                type: string
-                description: The ID of the task that is currently blocking the Crawler.
-              lastReindexStartedAt:
-                oneOf:
-                  - type: string
-                    description: The date when the last complete reindex was started. Will be null if no reindex was ever done.
-                    example: '2019-05-10T08:16:47.920Z'
-                  - type: 'null'
-              lastReindexEndedAt:
-                oneOf:
-                  - type: string
-                    description: The date when the last complete reindex finished. Can be null if the reindex is still running.
-                    example: null
-                  - type: 'null'
-              config:
-                $ref: '../common/parameters.yml#/Configuration'
-            required:
-              - name
-              - createdAt
-              - updatedAt
-              - running
-              - reindexing
-              - blocked
-              - lastReindexStartedAt
-              - lastReindexEndedAt
+            $ref: '../common/schemas/getCrawlerResponse.yml#/GetCrawlerResponse'
     '400':
       $ref: '../../common/responses/InvalidRequest.yml'
     '401':
@@ -75,8 +27,19 @@ get:
       $ref: '../common/schemas/responses.yml#/NoRightsOnCrawler'
 patch:
   operationId: patchCrawler
-  summary: Update parts of the Crawler, either its name, its config, or both.
-  description: Update parts of the Crawler, either its name, its config, or both.
+  summary: Update crawler.
+  description: |
+    Updates the crawler, either its name or its configuration.
+
+    Use this endpoint to update the crawler's name.
+    While you can use this endpoint to completely replace the crawler's configuration,
+    you should [update the crawler configuration](#tag/config/operation/patchConfig) instead.
+
+    If you replace the configuration, you must provide the full configuration,
+    including the settings you want to keep.
+    Configuration changes from this endpoint aren't [versioned](#tag/config/operation/listConfigVersions).
+  tags:
+    - crawlers
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
   requestBody:
@@ -88,7 +51,7 @@ patch:
             name:
               $ref: '../common/parameters.yml#/CrawlerName'
             config:
-              $ref: '../common/parameters.yml#/Configuration'
+              $ref: '../common/schemas/configuration.yml#/Configuration'
   responses:
     '200':
       $ref: '../common/schemas/responses.yml#/ActionAcknowledged'

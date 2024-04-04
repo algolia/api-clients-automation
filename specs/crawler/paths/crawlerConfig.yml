@@ -1,21 +1,19 @@
 patch:
   operationId: patchConfig
-  summary: Update parts of the Crawler configuration.
-  description: Update parts of the Crawler configuration.
+  summary: Update crawler configuration.
+  description: |
+    Updates the configuration of the specified crawler.
+    Every time you update the configuration, a new version is created.
+  tags:
+    - config
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
   requestBody:
     content:
       application/json:
         schema:
-          type: object
-          description: A partial config object that will be injected into the current one.
-          example:
-            rateLimit: 10
-            startUrls:
-              - 'https://www.algolia.com/doc'
-              - 'https://www.algolia.com/blog'
-              
+          $ref: '../common/schemas/configuration.yml#/PartialConfig'
+
   responses:
     '200':
       $ref: '../common/schemas/responses.yml#/ActionAcknowledged'

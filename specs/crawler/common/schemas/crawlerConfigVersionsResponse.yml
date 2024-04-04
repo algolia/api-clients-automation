@@ -4,16 +4,17 @@ allOf:
     properties:
       items:
         type: array
+        description: Configuration changes.
         items:
           type: object
           properties:
             version:
-              type: integer
-              minimum: 1
+              $ref: '../parameters.yml#/version'
             createdAt:
-              type: string
+              $ref: '../parameters.yml#/createdAt'
             authorId:
-              type: string
+              $ref: '../parameters.yml#/authorId'
           required:
             - version
             - createdAt
+            - authorId

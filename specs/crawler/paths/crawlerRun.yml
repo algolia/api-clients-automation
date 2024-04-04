@@ -1,7 +1,12 @@
 post:
   operationId: runCrawler
-  summary: Request the specified Crawler to run.
-  description: Request the specified Crawler to run.
+  summary: Unpause a crawler.
+  description: |
+    Unpauses the specified crawler.
+    Previously ongoing crawls will be resumed.
+    Otherwise, the crawler waits for its next scheduled run.
+  tags:
+    - actions
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
   responses:

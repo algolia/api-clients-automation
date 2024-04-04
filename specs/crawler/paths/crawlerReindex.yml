@@ -1,7 +1,9 @@
 post:
   operationId: startReindex
-  summary: Request the specified Crawler to start a reindex.
-  description: Request the specified Crawler to start a reindex.
+  summary: Start a crawl.
+  description: Starts or resumes a crawl.
+  tags:
+    - actions
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
   responses:

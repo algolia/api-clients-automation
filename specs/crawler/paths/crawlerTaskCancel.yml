@@ -1,13 +1,19 @@
 post:
   operationId: cancelBlockingAction
-  summary: Cancel a blocking action on your Crawler.
-  description: Cancel a blocking action on your Crawler.
+  summary: Cancel a blocking task.
+  description: |
+    Cancels a blocking task.
+
+    Tasks that ran into an error block the futher schedule of your Crawler.
+    To unblock the crawler, you can cancel the blocking task.
+  tags:
+    - tasks
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
     - $ref: '../common/parameters.yml#/TaskIdParameter'
   responses:
     '200':
-      description: Your request was processed correctly.
+      description: OK
     '400':
       $ref: '../../common/responses/InvalidRequest.yml'
     '401':

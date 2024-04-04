@@ -1,12 +1,14 @@
 get:
   operationId: getStats
-  summary: Get a summary of the current status of crawled URLs for the specified Crawler.
-  description: Get a summary of the current status of crawled URLs for the specified Crawler.
+  summary: Retrieve crawler stats.
+  description: Retrieves information about the number of crawled, skipped, and failed URLs.
+  tags:
+    - crawlers
   parameters:
     - $ref: '../common/parameters.yml#/CrawlerIdParameter'
   responses:
     '200':
-      description: Several metrics to know what the Crawler did during since the last reindex.
+      description: OK
       content:
         application/json:
           schema:
@@ -14,9 +16,11 @@ get:
             properties:
               count:
                 type: integer
-                description: The total number of crawled URLs.
+                minimum: 0
+                description: Total number of crawled URLs.
               data:
                 type: array
+                default: []
                 items:
                   $ref: '../common/parameters.yml#/UrlsCrawledGroup'
             required:

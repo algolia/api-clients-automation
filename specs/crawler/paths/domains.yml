@@ -1,33 +1,19 @@
 get:
   operationId: listDomains
-  summary: List registered Domains.
-  description: List registered Domains.
+  summary: List registered domains.
+  description: |
+    Lists registered domains.
+
+    Crawlers will only run if the URLs match any of the registered domains.
+  tags:
+    - domains
   parameters:
-    - in: query
-      name: itemsPerPage
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 20
-      description: Change the number of items per page.
-    - in: query
-      name: page
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 1
-      description: Change the page number.
-    - in: query
-      name: appId
-      schema:
-        type: string
-        example: 'XXXXXXX123'
-      description: Filter by Application ID.
+    - $ref: '../common/parameters.yml#/ItemsPerPage'
+    - $ref: '../common/parameters.yml#/Page'
+    - $ref: '../common/parameters.yml#/AppID'
   responses:
     '200':
-      description: A list of Domains and pagination information.
+      description: Domains
       content:
         application/json:
           schema:

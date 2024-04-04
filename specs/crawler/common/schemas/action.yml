@@ -1,0 +1,189 @@
+Action:
+  type: object
+  description: Instructions about how to process crawled URLs.
+  properties:
+    autoGenerateObjectIDs:
+      type: boolean
+      description: |
+        Whether to generate `objectID` properties for each extracted record.
+
+        If false, you must manually add `objectID` properties to the extracted records.
+      default: true
+    cache:
+      $ref: '#/cache'
+    discoveryPatterns:
+      type: array
+      description: |
+        Patterns for additional pages to visit to find links without extracting records.
+
+        The crawler looks for matching pages and crawls them for links, but doesn't extract records from the (intermediate) pages themselves.
+      items:
+        $ref: '#/urlPattern'
+    fileTypesToMatch:
+      type: array
+      description: |
+        File types for crawling non-HTML documents.
+
+        Non-HTML documents are first converted to HTML by an [Apache Tika](https://tika.apache.org/) server.
+
+        Crawling non-HTML documents has the following limitations:
+
+        - It's slower than crawling HTML documents.
+        - PDFs must include the used fonts.
+        - The produced HTML pages might not be semantic. This makes achieving good relevance more difficult.
+        - Natural language detection isn't supported.
+        - Extracted metadata might vary between files produced by different programs and versions.
+      maxItems: 100
+      items:
+        $ref: '#/fileTypes'
+      default:
+        - html
+      example:
+        - html
+        - pdf
+    hostnameAliases:
+      $ref: '#/hostnameAliases'
+    indexName:
+      type: string
+      maxLength: 256
+      description: |
+        Index name where to store the extracted records from this action.
+        The name is combined with the prefix you specified in the `indexPrefix` option.
+      example: algolia_website
+    name:
+      type: string
+      description: Unique identifier for the action. This option is required if `schedule` is set.
+    pathAliases:
+      $ref: '#/pathAliases'
+    pathsToMatch:
+      type: array
+      description: Patterns for URLs to which this action should apply.
+      minItems: 1
+      maxItems: 100
+      items:
+        $ref: '#/urlPattern'
+    recordExtractor:
+      type: object
+      description: Function for extracting information from a crawled page and transforming it into Algolia records for indexing.
+      properties:
+        __type:
+          $ref: '#/configurationRecordExtractorType'
+        source:
+          type: string
+          description: |
+            JavaScript function (as a string) for extracting information from a crawled page and transforming it into Algolia records for indexing.
+            The [Crawler dashboard](https://crawler.algolia.com/admin) has an editor with autocomplete and validation,
+            which makes editing the `recordExtractor` property easier.
+    selectorsToMatch:
+      type: array
+      description: |
+        DOM selectors for nodes that must be present on the page to be processed.
+        If the page doesn't match any of the selectors, it's ignored.
+      maxItems: 100
+      items:
+        type: string
+        description: DOM selector. Negation is supported. This lets you ignore pages that match the selector.
+      example:
+        - .products
+        - '!.featured'
+  required:
+    - indexName
+    - recordExtractor
+
+configurationRecordExtractorType:
+  type: string
+  enum:
+    - function
+
+ActionSchedule:
+  description: |
+    Schedule for running a crawl with this action.
+    For more information, see the `schedule` parameter of the parent crawler configuration object.
+  allOf:
+    - $ref: './configuration.yml#/Configuration'
+
+fileTypes:
+  type: string
+  description: |
+    Supported file type for indexing non-HTML documents.
+    A single type can match multiple file formats:
+
+    - `doc`: `.doc`, `.docx`
+    - `ppt`: `.ppt`, `.pptx`
+    - `xls`: `.xls`, `.xlsx`
+
+    The `email` type supports crawling Microsoft Outlook mail message (`.msg`) documents.
+  enum:
+    - doc
+    - email
+    - html
+    - odp
+    - ods
+    - odt
+    - pdf
+    - ppt
+    - xls
+
+urlPattern:
+  type: string
+  description: |
+    Pattern for matching URLs.
+    Wildcards and negations are supported via the [micromatch](https://github.com/micromatch/micromatch) library.
+  example: https://www.algolia.com/**
+
+hostnameAliases:
+  type: object
+  example:
+    'dev.example.com': 'example.com'
+  description: |
+    Key-value pairs to replace matching hostnames found in a sitemap, on a page, in canonical links, or redirects.
+
+    The crawler continues from the _transformed_ URLs.
+    The mapping doesn't transform URLs listed in the `startUrls`, `siteMaps`, `pathsToMatch`, and other settings.
+    The mapping also doesn't replace hostnames found in extracted text.
+  additionalProperties:
+    type: string
+    description: Hostname that should be added in the records.
+    x-additionalPropertiesName: hostname
+
+pathAliases:
+  type: object
+  example:
+    'example.com':
+      '/foo': '/bar'
+  description: |
+    Key-value pairs to replace matching paths with new values.
+
+    The crawl continues from the _transformed_ URLs.
+    The mapping doesn't transform URLs listed in the `startUrls`, `siteMaps`, `pathsToMatch`, and other settings.
+    The mapping also doesn't replace paths found in extracted text.
+  additionalProperties:
+    type: object
+    description: Hostname for which matching paths should be replaced.
+    x-additionalPropertiesName: hostname
+    additionalProperties:
+      type: string
+      description: Key-value pair of a path that should be replaced.
+      x-additionalPropertiesName: path
+
+cache:
+  type: object
+  description: |
+    Whether the crawler should cache crawled pages.
+
+    With caching, the crawler only crawls changed pages.
+    To detect changed pages, the crawler makes [HTTP conditional requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests) to your pages.
+    The crawler uses the `ETag` and `Last-Modified` response headers returned by your web server during the previous crawl.
+    The crawler sends this information in the `If-None-Match` and `If-Modified-Since` request headers.
+
+    If your web server responds with `304 Not Modified` to the conditional request, the crawler reuses the records from the previous crawl.
+
+    Caching is ignored in these cases:
+
+    - If your crawler configuration changed between two crawls.
+    - If `externalData` changed between two crawls.
+  properties:
+    enabled:
+      type: boolean
+      default: true
+      description: Whether the crawler cache is active.
