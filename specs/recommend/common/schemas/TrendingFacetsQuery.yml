@@ -8,7 +8,7 @@ trendingFacets:
   type: object
   properties:
     facetName:
-      $ref: '#/facetNameTrendingFacetValues'
+      description: Facet attribute for which to retrieve trending facet values.
     model:
       $ref: '#/trendingFacetsModel'
     fallbackParameters:
@@ -17,17 +17,10 @@ trendingFacets:
     - facetName
     - model
 
-facetNameTrendingFacetValues:
-  title: facetName
-  allOf:
-    - $ref: '../parameters.yml#/facetName'
-    - type: object
-      description: Facet attribute for which to retrieve trending facet values.
-
 trendingFacetsModel:
+  type: string
   description: |
     Trending facet values model.
 
     This model recommends trending facet values for the specified facet attribute.
-  type: string
   enum: [trending-facets]
