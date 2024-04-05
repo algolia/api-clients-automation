@@ -87,14 +87,12 @@ export async function removeExistingCodegen({
   }
 
   // Delete client model folder/file
-  await run(`rm -rf ${path.join(baseModelFolder, clientModel)}`, {
-    cwd: folder,
+  await run(`rm -rf ${path.join(folder, baseModelFolder, clientModel)}`, {
     language,
   });
 
   // Delete client api folder/file
-  await run(`rm -rf ${path.join(baseApiFolder, clientApi)}`, {
-    cwd: folder,
+  await run(`rm -rf ${path.join(folder, baseApiFolder, clientApi)}`, {
     language,
   });
 }
