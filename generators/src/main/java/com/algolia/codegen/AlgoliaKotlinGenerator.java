@@ -195,6 +195,15 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
   @Override
   public String toEnumVarName(String value, String datatype) {
     if (!"String".equals(datatype)) return super.toEnumVarName(value, datatype);
+    // In some cases, the API might accept characters instead of the textual notation, we will
+    // replace it internally so that it doesn't output the character itself.
+    switch (value) {
+      case "90p_processing_time":
+        return "NinetypProcessingTime";
+      case "99p_processing_time":
+        return "NinetyNinepProcessingTime";
+    }
+
     String enumVarName = value.replace("-", "_");
     return super.toEnumVarName(enumVarName, datatype);
   }
