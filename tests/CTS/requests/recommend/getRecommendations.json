@@ -171,13 +171,13 @@
           "indexName": "indexName1",
           "objectID": "objectID1",
           "model": "related-products",
-          "threshold": 21
+          "threshold": 21.7
         },
         {
           "indexName": "indexName2",
           "objectID": "objectID2",
           "model": "related-products",
-          "threshold": 21
+          "threshold": 21.7
         }
       ]
     },
@@ -190,13 +190,13 @@
             "indexName": "indexName1",
             "objectID": "objectID1",
             "model": "related-products",
-            "threshold": 21
+            "threshold": 21.7
           },
           {
             "indexName": "indexName2",
             "objectID": "objectID2",
             "model": "related-products",
-            "threshold": 21
+            "threshold": 21.7
           }
         ]
       }
@@ -210,7 +210,7 @@
           "indexName": "indexName1",
           "objectID": "objectID1",
           "model": "related-products",
-          "threshold": 21,
+          "threshold": 21.7,
           "maxRecommendations": 10,
           "queryParameters": {
             "query": "myQuery",
@@ -229,7 +229,7 @@
           "indexName": "indexName2",
           "objectID": "objectID2",
           "model": "related-products",
-          "threshold": 21,
+          "threshold": 21.7,
           "maxRecommendations": 10,
           "queryParameters": {
             "query": "myQuery",
@@ -255,7 +255,7 @@
             "indexName": "indexName1",
             "objectID": "objectID1",
             "model": "related-products",
-            "threshold": 21,
+            "threshold": 21.7,
             "maxRecommendations": 10,
             "queryParameters": {
               "query": "myQuery",
@@ -274,7 +274,7 @@
             "indexName": "indexName2",
             "objectID": "objectID2",
             "model": "related-products",
-            "threshold": 21,
+            "threshold": 21.7,
             "maxRecommendations": 10,
             "queryParameters": {
               "query": "myQuery",
@@ -301,7 +301,7 @@
           "indexName": "indexName1",
           "objectID": "objectID1",
           "model": "bought-together",
-          "threshold": 42
+          "threshold": 42.7
         }
       ]
     },
@@ -314,7 +314,7 @@
             "indexName": "indexName1",
             "objectID": "objectID1",
             "model": "bought-together",
-            "threshold": 42
+            "threshold": 42.7
           }
         ]
       }
