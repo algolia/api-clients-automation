@@ -103,7 +103,7 @@ AuthenticationSearch:
 AuthenticationType:
   type: string
   description: Type of authentication. This determines the type of credentials required in the `input` object.
-  enum: [googleServiceAccount, basic, apiKey, oauth, algolia]
+  enum: [googleServiceAccount, basic, apiKey, oauth, algolia, algoliaInsights]
 
 Platform:
   default: null
@@ -185,6 +185,21 @@ AuthAlgoliaPartial:
       type: string
       description: |
         Algolia API key with the ACL: `addObject`, `deleteObject`, `settings`, `editSettings`, `listIndexes`, `deleteIndex`.
+        This field is `null` in the API response.
+
+AuthAlgoliaInsightsPartial:
+  title: Algolia Insights
+  type: object
+  additionalProperties: false
+  description: Credentials for authenticating with the Algolia Insights API.
+  properties:
+    appID:
+      type: string
+      description: Algolia application ID.
+    apiKey:
+      type: string
+      description: |
+        Algolia API key with the ACL: `search`.
         This field is `null` in the API response.
 
 AuthGoogleServiceAccount:
@@ -274,6 +289,24 @@ AuthAlgolia:
     - appID
     - apiKey
 
+AuthAlgoliaInsights:
+  title: Algolia Insights
+  type: object
+  additionalProperties: false
+  description: Credentials for authenticating with the Algolia Insights API.
+  properties:
+    appID:
+      type: string
+      description: Algolia application ID.
+    apiKey:
+      type: string
+      description: |
+        Algolia API key with the ACL: `search`.
+        This field is `null` in the API response.
+  required:
+    - appID
+    - apiKey
+
 AuthInput:
   oneOf:
     - $ref: '#/AuthGoogleServiceAccount'
@@ -281,6 +314,7 @@ AuthInput:
     - $ref: '#/AuthAPIKey'
     - $ref: '#/AuthOAuth'
     - $ref: '#/AuthAlgolia'
+    - $ref: '#/AuthAlgoliaInsights'
 
 AuthInputPartial:
   oneOf:
@@ -289,3 +323,4 @@ AuthInputPartial:
     - $ref: '#/AuthAPIKeyPartial'
     - $ref: '#/AuthOAuthPartial'
     - $ref: '#/AuthAlgoliaPartial'
+    - $ref: '#/AuthAlgoliaInsightsPartial'
