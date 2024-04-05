@@ -86,7 +86,9 @@
         {
           "indexName": "indexName",
           "model": "trending-items",
-          "threshold": 42
+          "threshold": 42,
+          "facetName": "facet",
+          "facetValue": "value"
         }
       ]
     },
@@ -98,7 +100,9 @@
           {
             "indexName": "indexName",
             "model": "trending-items",
-            "threshold": 42
+            "threshold": 42,
+            "facetName": "facet",
+            "facetValue": "value"
           }
         ]
       }
