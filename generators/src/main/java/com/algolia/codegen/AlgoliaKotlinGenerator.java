@@ -199,9 +199,9 @@ public class AlgoliaKotlinGenerator extends KotlinClientCodegen {
     // replace it internally so that it doesn't output the character itself.
     switch (value) {
       case "90p_processing_time":
-        return "NinetypProcessingTime";
+        return "NinetyPProcessingTime";
       case "99p_processing_time":
-        return "NinetyNinepProcessingTime";
+        return "NinetyNinePProcessingTime";
     }
 
     String enumVarName = value.replace("-", "_");
