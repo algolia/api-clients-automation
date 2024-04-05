@@ -1510,6 +1510,7 @@ components:
         - apiKey
         - oauth
         - algolia
+        - algoliaInsights
     Platform:
       default: null
       oneOf:
@@ -1630,6 +1631,20 @@ components:
             `settings`, `editSettings`, `listIndexes`, `deleteIndex`.
 
             This field is `null` in the API response.
+    AuthAlgoliaInsightsPartial:
+      title: Algolia Insights
+      type: object
+      additionalProperties: false
+      description: Credentials for authenticating with the Algolia Insights API.
+      properties:
+        appID:
+          type: string
+          description: Algolia application ID.
+        apiKey:
+          type: string
+          description: |
+            Algolia API key with the ACL: `search`.
+            This field is `null` in the API response.
     AuthInputPartial:
       oneOf:
         - $ref: '#/components/schemas/AuthGoogleServiceAccountPartial'
@@ -1637,6 +1652,7 @@ components:
         - $ref: '#/components/schemas/AuthAPIKeyPartial'
         - $ref: '#/components/schemas/AuthOAuthPartial'
         - $ref: '#/components/schemas/AuthAlgoliaPartial'
+        - $ref: '#/components/schemas/AuthAlgoliaInsightsPartial'
     createdAt:
       type: string
       description: Date of creation in RFC3339 format.
@@ -1780,6 +1796,23 @@ components:
       required:
         - appID
         - apiKey
+    AuthAlgoliaInsights:
+      title: Algolia Insights
+      type: object
+      additionalProperties: false
+      description: Credentials for authenticating with the Algolia Insights API.
+      properties:
+        appID:
+          type: string
+          description: Algolia application ID.
+        apiKey:
+          type: string
+          description: |
+            Algolia API key with the ACL: `search`.
+            This field is `null` in the API response.
+      required:
+        - appID
+        - apiKey
     AuthInput:
       oneOf:
         - $ref: '#/components/schemas/AuthGoogleServiceAccount'
@@ -1787,6 +1820,7 @@ components:
         - $ref: '#/components/schemas/AuthAPIKey'
         - $ref: '#/components/schemas/AuthOAuth'
         - $ref: '#/components/schemas/AuthAlgolia'
+        - $ref: '#/components/schemas/AuthAlgoliaInsights'
     AuthenticationCreate:
       type: object
       description: Request body for creating a new authentication resource.

@@ -70,6 +70,17 @@ public interface AuthInputPartial {
           LOGGER.finest("Failed to deserialize oneOf AuthAlgoliaPartial (error: " + e.getMessage() + ") (type: AuthAlgoliaPartial)");
         }
       }
+      // deserialize AuthAlgoliaInsightsPartial
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(AuthAlgoliaInsightsPartial.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest(
+            "Failed to deserialize oneOf AuthAlgoliaInsightsPartial (error: " + e.getMessage() + ") (type: AuthAlgoliaInsightsPartial)"
+          );
+        }
+      }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
     }
 

@@ -44,6 +44,7 @@ object AuthInputPartialSerializer extends Serializer[AuthInputPartial] {
         case value: JObject => Extraction.extract[AuthAPIKeyPartial](value)
         case value: JObject => Extraction.extract[AuthOAuthPartial](value)
         case value: JObject => Extraction.extract[AuthAlgoliaPartial](value)
+        case value: JObject => Extraction.extract[AuthAlgoliaInsightsPartial](value)
         case _              => throw new MappingException("Can't convert " + json + " to AuthInputPartial")
       }
   }
@@ -55,6 +56,7 @@ object AuthInputPartialSerializer extends Serializer[AuthInputPartial] {
       case value: AuthAPIKeyPartial               => Extraction.decompose(value)(format - this)
       case value: AuthOAuthPartial                => Extraction.decompose(value)(format - this)
       case value: AuthAlgoliaPartial              => Extraction.decompose(value)(format - this)
+      case value: AuthAlgoliaInsightsPartial      => Extraction.decompose(value)(format - this)
     }
   }
 }
