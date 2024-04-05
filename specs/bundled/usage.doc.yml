@@ -77,6 +77,1339 @@ tags:
     x-displayName: Usage statistics
     description: Get various metrics related to the usage of your Algolia applications.
 paths:
+  /{path}:
+    get:
+      operationId: customGet
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new UsageClient(new UsageConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.CustomGetAsync("test/minimal");
+        - lang: go
+          label: Go
+          source: |
+            // Initialize the client
+            client, err := usage.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.CustomGet(client.NewApiCustomGetRequest(
+              "test/minimal",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: java
+          label: Java
+          source: |
+            // Initialize the client
+            UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+            // Call the API
+            client.customGet("test/minimal");
+        - lang: javascript
+          label: JavaScript
+          source: |
+            // Initialize the client
+            const client = usageClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.customGet({ path: 'test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.customGet(
+              path = "test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->customGet(
+                'test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: |
+            # Initialize the client
+            _client = UsageClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.custom_get(
+                path="test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: ruby
+          label: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::UsageClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+            # Call the API
+            resp = client.custom_get("test/minimal")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.customGet[JObject](
+              path = "test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try UsageClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.customGet(path: "test/minimal")
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new UsageClient(new UsageConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.CustomGetAsync("test/minimal");
+        - lang: go
+          label: Go
+          source: |
+            // Initialize the client
+            client, err := usage.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.CustomGet(client.NewApiCustomGetRequest(
+              "test/minimal",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: java
+          label: Java
+          source: |
+            // Initialize the client
+            UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+            // Call the API
+            client.customGet("test/minimal");
+        - lang: javascript
+          label: JavaScript
+          source: |
+            // Initialize the client
+            const client = usageClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.customGet({ path: 'test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.customGet(
+              path = "test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->customGet(
+                'test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: |
+            # Initialize the client
+            _client = UsageClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.custom_get(
+                path="test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: ruby
+          label: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::UsageClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+            # Call the API
+            resp = client.custom_get("test/minimal")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.customGet[JObject](
+              path = "test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try UsageClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.customGet(path: "test/minimal")
+    post:
+      operationId: customPost
+      requestBody:
+        description: Parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new UsageClient(new UsageConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.CustomPostAsync("test/minimal");
+        - lang: go
+          label: Go
+          source: |
+            // Initialize the client
+            client, err := usage.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.CustomPost(client.NewApiCustomPostRequest(
+              "test/minimal",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: java
+          label: Java
+          source: |
+            // Initialize the client
+            UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+            // Call the API
+            client.customPost("test/minimal");
+        - lang: javascript
+          label: JavaScript
+          source: |
+            // Initialize the client
+            const client = usageClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.customPost({ path: 'test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.customPost(
+              path = "test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->customPost(
+                'test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: |
+            # Initialize the client
+            _client = UsageClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.custom_post(
+                path="test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: ruby
+          label: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::UsageClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+            # Call the API
+            resp = client.custom_post("test/minimal")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.customPost[JObject](
+              path = "test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try UsageClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.customPost(path: "test/minimal")
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new UsageClient(new UsageConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.CustomPostAsync("test/minimal");
+        - lang: go
+          label: Go
+          source: |
+            // Initialize the client
+            client, err := usage.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.CustomPost(client.NewApiCustomPostRequest(
+              "test/minimal",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: java
+          label: Java
+          source: |
+            // Initialize the client
+            UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+            // Call the API
+            client.customPost("test/minimal");
+        - lang: javascript
+          label: JavaScript
+          source: |
+            // Initialize the client
+            const client = usageClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.customPost({ path: 'test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.customPost(
+              path = "test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->customPost(
+                'test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: |
+            # Initialize the client
+            _client = UsageClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.custom_post(
+                path="test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: ruby
+          label: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::UsageClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+            # Call the API
+            resp = client.custom_post("test/minimal")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.customPost[JObject](
+              path = "test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try UsageClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.customPost(path: "test/minimal")
+    put:
+      operationId: customPut
+      requestBody:
+        description: Parameters to send with the custom request.
+        content:
+          application/json:
+            schema:
+              type: object
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new UsageClient(new UsageConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.CustomPutAsync("test/minimal");
+        - lang: go
+          label: Go
+          source: |
+            // Initialize the client
+            client, err := usage.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.CustomPut(client.NewApiCustomPutRequest(
+              "test/minimal",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: java
+          label: Java
+          source: |
+            // Initialize the client
+            UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+            // Call the API
+            client.customPut("test/minimal");
+        - lang: javascript
+          label: JavaScript
+          source: |
+            // Initialize the client
+            const client = usageClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.customPut({ path: 'test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.customPut(
+              path = "test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->customPut(
+                'test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: |
+            # Initialize the client
+            _client = UsageClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.custom_put(
+                path="test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: ruby
+          label: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::UsageClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+            # Call the API
+            resp = client.custom_put("test/minimal")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.customPut[JObject](
+              path = "test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try UsageClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.customPut(path: "test/minimal")
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new UsageClient(new UsageConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.CustomPutAsync("test/minimal");
+        - lang: go
+          label: Go
+          source: |
+            // Initialize the client
+            client, err := usage.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.CustomPut(client.NewApiCustomPutRequest(
+              "test/minimal",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: java
+          label: Java
+          source: |
+            // Initialize the client
+            UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+            // Call the API
+            client.customPut("test/minimal");
+        - lang: javascript
+          label: JavaScript
+          source: |
+            // Initialize the client
+            const client = usageClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.customPut({ path: 'test/minimal' });
+
+            // use typed response
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.customPut(
+              path = "test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->customPut(
+                'test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: |
+            # Initialize the client
+            _client = UsageClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.custom_put(
+                path="test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: ruby
+          label: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::UsageClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+            # Call the API
+            resp = client.custom_put("test/minimal")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.customPut[JObject](
+              path = "test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try UsageClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.customPut(path: "test/minimal")
+    delete:
+      operationId: customDelete
+      summary: Send requests to the Algolia REST API.
+      description: This method allow you to send requests to the Algolia REST API.
+      parameters:
+        - $ref: '#/components/parameters/PathInPath'
+        - $ref: '#/components/parameters/Parameters'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '404':
+          $ref: '#/components/responses/IndexNotFound'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new UsageClient(new UsageConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.CustomDeleteAsync("test/minimal");
+        - lang: go
+          label: Go
+          source: |
+            // Initialize the client
+            client, err := usage.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+              "test/minimal",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: java
+          label: Java
+          source: |
+            // Initialize the client
+            UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+            // Call the API
+            client.customDelete("test/minimal");
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = usageClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.customDelete({ path: 'test/minimal'
+            });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.customDelete(
+              path = "test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->customDelete(
+                'test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: |
+            # Initialize the client
+            _client = UsageClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.custom_delete(
+                path="test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: ruby
+          label: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::UsageClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+            # Call the API
+            resp = client.custom_delete("test/minimal")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.customDelete[JObject](
+              path = "test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try UsageClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.customDelete(path: "test/minimal")
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new UsageClient(new UsageConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.CustomDeleteAsync("test/minimal");
+        - lang: go
+          label: Go
+          source: |
+            // Initialize the client
+            client, err := usage.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+              "test/minimal",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: java
+          label: Java
+          source: |
+            // Initialize the client
+            UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+            // Call the API
+            client.customDelete("test/minimal");
+        - lang: javascript
+          label: JavaScript
+          source: >
+            // Initialize the client
+
+            const client = usageClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+
+            // Call the API
+
+            const response = await client.customDelete({ path: 'test/minimal'
+            });
+
+
+            // use typed response
+
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.customDelete(
+              path = "test/minimal",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->customDelete(
+                'test/minimal',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: |
+            # Initialize the client
+            _client = UsageClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.custom_delete(
+                path="test/minimal",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: ruby
+          label: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::UsageClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+            # Call the API
+            resp = client.custom_delete("test/minimal")
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.customDelete[JObject](
+              path = "test/minimal"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try UsageClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.customDelete(path: "test/minimal")
   /1/usage/{statistic}:
     get:
       operationId: getUsage
@@ -101,6 +1434,375 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new UsageClient(new UsageConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.GetUsageAsync(
+              Enum.Parse<Statistic>("QueriesOperations"),
+              "2024-04-03T12:46:43Z",
+              "2024-04-05T12:46:43Z"
+            );
+        - lang: go
+          label: Go
+          source: |
+            // Initialize the client
+            client, err := usage.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.GetUsage(client.NewApiGetUsageRequest(
+              usage.Statistic("queries_operations"), "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.getUsage(Statistic.fromValue("queries_operations"),
+            "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+        - lang: javascript
+          label: JavaScript
+          source: |
+            // Initialize the client
+            const client = usageClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.getUsage({
+              statistic: 'queries_operations',
+              startDate: '2024-04-03T12:46:43Z',
+              endDate: '2024-04-05T12:46:43Z',
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.getUsage(
+              statistic = Statistic.entries.first { it.value == "queries_operations" },
+              startDate = "2024-04-03T12:46:43Z",
+              endDate = "2024-04-05T12:46:43Z",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->getUsage(
+                'queries_operations',
+                '2024-04-03T12:46:43Z',
+                '2024-04-05T12:46:43Z',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: |
+            # Initialize the client
+            _client = UsageClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.get_usage(
+                statistic="queries_operations",
+                start_date="2024-04-03T12:46:43Z",
+                end_date="2024-04-05T12:46:43Z",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::UsageClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.get_usage('queries_operations',
+            "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.getUsage(
+              statistic = Statistic.withName("queries_operations"),
+              startDate = "2024-04-03T12:46:43Z",
+              endDate = "2024-04-05T12:46:43Z"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try UsageClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.getUsage(
+                statistic: Statistic.queriesOperations,
+                startDate: "2024-04-03T12:46:43Z",
+                endDate: "2024-04-05T12:46:43Z"
+            )
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new UsageClient(new UsageConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.GetUsageAsync(
+              Enum.Parse<Statistic>("QueriesOperations"),
+              "2024-04-03T12:46:43Z",
+              "2024-04-05T12:46:43Z"
+            );
+        - lang: go
+          label: Go
+          source: |
+            // Initialize the client
+            client, err := usage.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.GetUsage(client.NewApiGetUsageRequest(
+              usage.Statistic("queries_operations"), "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.getUsage(Statistic.fromValue("queries_operations"),
+            "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+        - lang: javascript
+          label: JavaScript
+          source: |
+            // Initialize the client
+            const client = usageClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.getUsage({
+              statistic: 'queries_operations',
+              startDate: '2024-04-03T12:46:43Z',
+              endDate: '2024-04-05T12:46:43Z',
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.getUsage(
+              statistic = Statistic.entries.first { it.value == "queries_operations" },
+              startDate = "2024-04-03T12:46:43Z",
+              endDate = "2024-04-05T12:46:43Z",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->getUsage(
+                'queries_operations',
+                '2024-04-03T12:46:43Z',
+                '2024-04-05T12:46:43Z',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: |
+            # Initialize the client
+            _client = UsageClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.get_usage(
+                statistic="queries_operations",
+                start_date="2024-04-03T12:46:43Z",
+                end_date="2024-04-05T12:46:43Z",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::UsageClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+
+            # Call the API
+
+            resp = client.get_usage('queries_operations',
+            "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z")
+
+
+            # use the class directly
+
+            puts resp
+
+
+            # print the JSON response
+
+            puts resp.to_json
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.getUsage(
+              statistic = Statistic.withName("queries_operations"),
+              startDate = "2024-04-03T12:46:43Z",
+              endDate = "2024-04-05T12:46:43Z"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try UsageClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.getUsage(
+                statistic: Statistic.queriesOperations,
+                startDate: "2024-04-03T12:46:43Z",
+                endDate: "2024-04-05T12:46:43Z"
+            )
   /1/usage/{statistic}/{indexName}:
     get:
       operationId: getIndexUsage
@@ -126,6 +1828,383 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new UsageClient(new UsageConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.GetIndexUsageAsync(
+              Enum.Parse<Statistic>("QueriesOperations"),
+              "myIndexName",
+              "2024-04-03T12:46:43Z",
+              "2024-04-05T12:46:43Z"
+            );
+        - lang: go
+          label: Go
+          source: |
+            // Initialize the client
+            client, err := usage.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.GetIndexUsage(client.NewApiGetIndexUsageRequest(
+              usage.Statistic("queries_operations"), "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.getIndexUsage(Statistic.fromValue("queries_operations"),
+            "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+        - lang: javascript
+          label: JavaScript
+          source: |
+            // Initialize the client
+            const client = usageClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.getIndexUsage({
+              statistic: 'queries_operations',
+              indexName: 'myIndexName',
+              startDate: '2024-04-03T12:46:43Z',
+              endDate: '2024-04-05T12:46:43Z',
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.getIndexUsage(
+              statistic = Statistic.entries.first { it.value == "queries_operations" },
+              indexName = "myIndexName",
+              startDate = "2024-04-03T12:46:43Z",
+              endDate = "2024-04-05T12:46:43Z",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->getIndexUsage(
+                'queries_operations',
+                'myIndexName',
+                '2024-04-03T12:46:43Z',
+                '2024-04-05T12:46:43Z',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: |
+            # Initialize the client
+            _client = UsageClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.get_index_usage(
+                statistic="queries_operations",
+                index_name="myIndexName",
+                start_date="2024-04-03T12:46:43Z",
+                end_date="2024-04-05T12:46:43Z",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: ruby
+          label: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::UsageClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+            # Call the API
+            resp = client.get_index_usage(
+              'queries_operations',
+              "myIndexName",
+              "2024-04-03T12:46:43Z",
+              "2024-04-05T12:46:43Z"
+            )
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.getIndexUsage(
+              statistic = Statistic.withName("queries_operations"),
+              indexName = "myIndexName",
+              startDate = "2024-04-03T12:46:43Z",
+              endDate = "2024-04-05T12:46:43Z"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try UsageClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.getIndexUsage(
+                statistic: Statistic.queriesOperations,
+                indexName: "myIndexName",
+                startDate: "2024-04-03T12:46:43Z",
+                endDate: "2024-04-05T12:46:43Z"
+            )
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new UsageClient(new UsageConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.GetIndexUsageAsync(
+              Enum.Parse<Statistic>("QueriesOperations"),
+              "myIndexName",
+              "2024-04-03T12:46:43Z",
+              "2024-04-05T12:46:43Z"
+            );
+        - lang: go
+          label: Go
+          source: |
+            // Initialize the client
+            client, err := usage.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            resp, err := client.GetIndexUsage(client.NewApiGetIndexUsageRequest(
+              usage.Statistic("queries_operations"), "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z",
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(resp)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.getIndexUsage(Statistic.fromValue("queries_operations"),
+            "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+        - lang: javascript
+          label: JavaScript
+          source: |
+            // Initialize the client
+            const client = usageClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.getIndexUsage({
+              statistic: 'queries_operations',
+              indexName: 'myIndexName',
+              startDate: '2024-04-03T12:46:43Z',
+              endDate: '2024-04-05T12:46:43Z',
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.getIndexUsage(
+              statistic = Statistic.entries.first { it.value == "queries_operations" },
+              indexName = "myIndexName",
+              startDate = "2024-04-03T12:46:43Z",
+              endDate = "2024-04-05T12:46:43Z",
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client =
+            Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>',
+            '<YOUR_API_KEY>');
+
+
+            // Call the API
+
+            $response = $client->getIndexUsage(
+                'queries_operations',
+                'myIndexName',
+                '2024-04-03T12:46:43Z',
+                '2024-04-05T12:46:43Z',
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: |
+            # Initialize the client
+            _client = UsageClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            resp = await _client.get_index_usage(
+                statistic="queries_operations",
+                index_name="myIndexName",
+                start_date="2024-04-03T12:46:43Z",
+                end_date="2024-04-05T12:46:43Z",
+            )
+
+            # use the class directly
+            print(resp)
+
+            # print the JSON response
+            print(resp.to_json())
+        - lang: ruby
+          label: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::UsageClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+            # Call the API
+            resp = client.get_index_usage(
+              'queries_operations',
+              "myIndexName",
+              "2024-04-03T12:46:43Z",
+              "2024-04-05T12:46:43Z"
+            )
+
+            # use the class directly
+            puts resp
+
+            # print the JSON response
+            puts resp.to_json
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = UsageClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val res = client.getIndexUsage(
+              statistic = Statistic.withName("queries_operations"),
+              indexName = "myIndexName",
+              startDate = "2024-04-03T12:46:43Z",
+              endDate = "2024-04-05T12:46:43Z"
+            )
+
+
+            // Use the response
+
+            val value = Await.result(res, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try UsageClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            _ = try await client.getIndexUsage(
+                statistic: Statistic.queriesOperations,
+                indexName: "myIndexName",
+                startDate: "2024-04-03T12:46:43Z",
+                endDate: "2024-04-05T12:46:43Z"
+            )
 components:
   securitySchemes:
     appId:
@@ -136,117 +2215,22 @@ components:
       type: apiKey
       in: header
       name: X-Algolia-API-Key
-  schemas:
-    Statistic:
-      type: string
-      enum:
-        - '*'
-        - search_operations
-        - total_search_operations
-        - total_search_requests
-        - queries_operations
-        - multi_queries_operations
-        - acl_operations
-        - total_acl_operations
-        - get_api_keys_operations
-        - get_api_key_operations
-        - add_api_key_operations
-        - update_api_key_operations
-        - delete_api_key_operations
-        - list_api_key_operations
-        - indexing_operations
-        - total_indexing_operations
-        - browse_operations
-        - clear_index_operations
-        - copy_move_operations
-        - delete_index_operations
-        - get_log_operations
-        - get_settings_operations
-        - set_settings_operations
-        - list_indices_operations
-        - wait_task_operations
-        - record_operations
-        - total_records_operations
-        - add_record_operations
-        - batch_operations
-        - delete_by_query_operations
-        - delete_record_operations
-        - get_record_operations
-        - partial_update_record_operations
-        - update_record_operations
-        - synonym_operations
-        - total_synonym_operations
-        - batch_synonym_operations
-        - clear_synonym_operations
-        - delete_synonym_operations
-        - get_synonym_operations
-        - query_synonym_operations
-        - update_synonym_operations
-        - rule_operations
-        - total_rules_operations
-        - batch_rules_operations
-        - clear_rules_operations
-        - delete_rules_operations
-        - get_rules_operations
-        - save_rules_operations
-        - search_rules_operations
-        - total_recommend_requests
-        - total_write_operations
-        - total_read_operations
-        - total_operations
-        - querysuggestions_total_search_operations
-        - querysuggestions_total_search_requests
-        - querysuggestions_total_acl_operations
-        - querysuggestions_total_indexing_operations
-        - querysuggestions_total_records_operations
-        - querysuggestions_total_synonym_operations
-        - querysuggestions_total_rules_operations
-        - querysuggestions_total_write_operations
-        - querysuggestions_total_read_operations
-        - querysuggestions_total_operations
-        - avg_processing_time
-        - 90p_processing_time
-        - 99p_processing_time
-        - queries_above_last_ms_processing_time
-        - records
-        - data_size
-        - file_size
-        - max_qps
-        - region_max_qps
-        - total_max_qps
-        - used_search_capacity
-        - avg_used_search_capacity
-        - region_used_search_capacity
-        - region_avg_used_search_capacity
-        - total_used_search_capacity
-        - total_avg_used_search_capacity
-        - degraded_queries_ssd_used_queries_impacted
-        - degraded_queries_ssd_used_seconds_impacted
-        - degraded_queries_max_capacity_queries_impacted
-        - degraded_queries_max_capacity_seconds_impacted
-    granularity:
-      type: string
-      enum:
-        - hourly
-        - daily
-      default: daily
-    statisticValue:
-      oneOf:
-        - type: integer
-          description: Value of the metric.
-        - type: object
-          additionalProperties:
-            type: integer
-            description: Value per server or region of the metric.
-    ErrorBase:
-      description: Error.
-      type: object
-      additionalProperties: true
-      properties:
-        message:
-          type: string
-          example: Invalid Application-Id or API-Key
   parameters:
+    PathInPath:
+      name: path
+      in: path
+      description: Path of the endpoint, anything after "/1" must be specified.
+      required: true
+      schema:
+        type: string
+        example: /keys
+    Parameters:
+      name: parameters
+      in: query
+      description: Query parameters to apply to the current query.
+      schema:
+        type: object
+        additionalProperties: true
     statisticParameter:
       name: statistic
       in: path
@@ -589,7 +2573,141 @@ components:
       schema:
         type: string
         example: YourIndexName
+  schemas:
+    ErrorBase:
+      description: Error.
+      type: object
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
+    Statistic:
+      type: string
+      enum:
+        - '*'
+        - search_operations
+        - total_search_operations
+        - total_search_requests
+        - queries_operations
+        - multi_queries_operations
+        - acl_operations
+        - total_acl_operations
+        - get_api_keys_operations
+        - get_api_key_operations
+        - add_api_key_operations
+        - update_api_key_operations
+        - delete_api_key_operations
+        - list_api_key_operations
+        - indexing_operations
+        - total_indexing_operations
+        - browse_operations
+        - clear_index_operations
+        - copy_move_operations
+        - delete_index_operations
+        - get_log_operations
+        - get_settings_operations
+        - set_settings_operations
+        - list_indices_operations
+        - wait_task_operations
+        - record_operations
+        - total_records_operations
+        - add_record_operations
+        - batch_operations
+        - delete_by_query_operations
+        - delete_record_operations
+        - get_record_operations
+        - partial_update_record_operations
+        - update_record_operations
+        - synonym_operations
+        - total_synonym_operations
+        - batch_synonym_operations
+        - clear_synonym_operations
+        - delete_synonym_operations
+        - get_synonym_operations
+        - query_synonym_operations
+        - update_synonym_operations
+        - rule_operations
+        - total_rules_operations
+        - batch_rules_operations
+        - clear_rules_operations
+        - delete_rules_operations
+        - get_rules_operations
+        - save_rules_operations
+        - search_rules_operations
+        - total_recommend_requests
+        - total_write_operations
+        - total_read_operations
+        - total_operations
+        - querysuggestions_total_search_operations
+        - querysuggestions_total_search_requests
+        - querysuggestions_total_acl_operations
+        - querysuggestions_total_indexing_operations
+        - querysuggestions_total_records_operations
+        - querysuggestions_total_synonym_operations
+        - querysuggestions_total_rules_operations
+        - querysuggestions_total_write_operations
+        - querysuggestions_total_read_operations
+        - querysuggestions_total_operations
+        - avg_processing_time
+        - 90p_processing_time
+        - 99p_processing_time
+        - queries_above_last_ms_processing_time
+        - records
+        - data_size
+        - file_size
+        - max_qps
+        - region_max_qps
+        - total_max_qps
+        - used_search_capacity
+        - avg_used_search_capacity
+        - region_used_search_capacity
+        - region_avg_used_search_capacity
+        - total_used_search_capacity
+        - total_avg_used_search_capacity
+        - degraded_queries_ssd_used_queries_impacted
+        - degraded_queries_ssd_used_seconds_impacted
+        - degraded_queries_max_capacity_queries_impacted
+        - degraded_queries_max_capacity_seconds_impacted
+    granularity:
+      type: string
+      enum:
+        - hourly
+        - daily
+      default: daily
+    statisticValue:
+      oneOf:
+        - type: integer
+          description: Value of the metric.
+        - type: object
+          additionalProperties:
+            type: integer
+            description: Value per server or region of the metric.
   responses:
+    BadRequest:
+      description: Bad request or request arguments.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    FeatureNotEnabled:
+      description: This feature is not enabled on your Algolia account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    MethodNotAllowed:
+      description: Method not allowed with this API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    IndexNotFound:
+      description: Index not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
     Success:
       description: OK
       content:
@@ -687,12 +2805,6 @@ components:
                   code: malformed_id
             required:
               - error
-    IndexNotFound:
-      description: Index not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
     UnprocessableEntity:
       description: Unprocessable Entity.
       content:
