@@ -15,6 +15,7 @@ trendingFacets:
       $ref: './RecommendationsRequest.yml#/fallbackParams'
   required:
     - facetName
+    - model
 
 facetNameTrendingFacetValues:
   title: facetName

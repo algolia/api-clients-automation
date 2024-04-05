@@ -38,6 +38,23 @@ post:
               description: |
                 Whether to only show rules where the value of their `enabled` property matches this parameter.
                 If absent, show all rules, regardless of their `enabled` property.
+            filters:
+              type: string
+              description: Filter expression. This only searches for rules matching the filter expression.
+              example: 'objectID:rr-123456'
+            facets:
+              type: array
+              description: Include facets and facet values in the response. Use `['*']` to include all facets.
+              example: ['*']
+              items:
+                type: string
+                description: Facet name for rule objects or `*` as wildcard character.
+                example: condition.context
+            maxValuesPerFacet:
+              type: integer
+              description: Maximum number of values to return for each facet.
+              minimum: 1
+              maximum: 1000
   responses:
     '200':
       description: OK
