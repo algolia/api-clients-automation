@@ -46,7 +46,7 @@
   "devDependencies": {
     "@types/node": "20.11.30",
     "rollup": "4.13.2",
-    "typescript": "5.4.3"
+    "typescript": "5.4.4"
   },
   "engines": {
     "node": ">= 14.0.0"
