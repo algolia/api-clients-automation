@@ -10,7 +10,7 @@ HitsPerPage:
 
 # headers
 UserIDInHeader:
-  name: x-algolia-user-id
+  name: X-Algolia-User-ID
   description: Unique identifier of the user who makes the search request.
   in: header
   required: true
