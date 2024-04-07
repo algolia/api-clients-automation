@@ -1,5 +1,6 @@
 ---
 title: API documentation
+description: Guidelines for writing API documentation for Algolia's APIs.
 ---
 
 To be a reliable and useful source of truth,
@@ -56,21 +57,85 @@ In the first sentence, describe what the API does or what it can be used for.
 After the introductory sentence, include the following sections.
 Use `h2` headings.
 
-For an example, see the [Search API](/specs/search).
+For consistent documentation of each API,
+use the same wording as the listed example API.
 
-- **Client libraries.** For APIs with clients that implement the retry strategy and are covered by the SLA.
-- **Availability.** For APIs that are not available for "regular" Algolia plans.
-- **Base URLs.** List the URLs how users can access the APIs.
-- **Retry strategy.** For APIs with clients that implement the retry strategy.
-- **Authentication.** Explain how to authenticate requests and where to find the credentials.
-- **Request format.** Explain what the expected format for request bodies is.
-- **Parameters.** Explain query and request body parameters, depending on the endpoints of this API.
-- **Response status and errors.** Explain the format of responses and what type of errors are returned.
-- **Version.** Explain the current version of the API.
+### Client libraries
+
+For APIs with clients that implement the retry strategy,
+the documentation must mention that to be covered by Algolia's SLA,
+users must use the API clients.
+
+**Example:** [Search API](/specs/search#section/Client-libraries)
+
+### Base URLs
+
+All APIs must list the base URLs for making requests.
+If there are multiple base URLs, help users choose by providing guidance and explanations.
+
+**Example:** [Search API](/specs/search#section/Base-URLs)
+
+### Retry strategy
+
+For APIs with clients that implement the retry strategy,
+the documentation must explain the retry strategy.
+
+**Example:** [Search API](/specs/search#section/Base-URLs)
+
+### Availability and authentication
+
+For APIs that require a specific pricing plan (usually a Premium plan),
+or an add-on to the regular Algolia subscription,
+include an _Availability and authentication_ section.
+
+For APIs that are available to every Algolia subscription, see [Authentication](#authentication).
+
+**Example:** [Analytics API](/specs/analytics#section/Availability-and-authentication)
+
+### Authentication
+
+For APIs with requests that require authentication,
+describe the authentication method and where to find the credentials.
+
+For APIs that require a specific Algolia plan, see [Avalavailability-and-authentication](#availability-and-authentication).
+
+**Example:** [Search API](/specs/search#section/Authentication)
+
+### Rate limits
+
+For APIs with rate limits per request,
+describe what the rate limits are and how to check the current rate limits,
+usually with response headers.
+
+**Example:** [Analytics API](/specs/analytics#section/Rate-limits)
+
+### Request format
+
+If the API has `POST`, `PUT`, or `PATCH` requests that require request bodies,
+explain what the expected format is.
+Omit this section if the API only has `GET` or `DELETE` requests.
+
+**Example:** [Search API](/specs/search#section/Request-format)
+
+### Parameters
+
+If the API accepts query or path parameters,
+explain what their expected format is.
+Omit this section if the API doesn't use query or path parameters.
+
+**Example:** [Search API](/specs/search#section/Parameters)
+
+### Response status and errors
+
+Explain the response format, status codes, and error messages.
+
+### Version
+
+State the current version of the API and how to determine it.
 
 ## Operation summaries
 
-Operations are endpoints with an HTTP verb.
+Operations are endpoints combined with an HTTP verb.
 Each operation must have a `summary` property.
 Start with an imperative verb and describe what the operation does in 2 to 3 words.
 
