@@ -5,7 +5,7 @@ info:
     The Ingestion API lets you connect third-party services and platforms with Algolia and schedule tasks to ingest your data.
     The Ingestion API powers the no-code [data connectors](https://dashboard.algolia.com/connectors).
 
-    # Base URLs
+    ## Base URLs
 
     The base URLs for requests to the Ingestion API are:
 
@@ -16,7 +16,7 @@ info:
 
     **All requests must use HTTPS.**
 
-    # Authentication
+    ## Authentication
 
     To authenticate your API requests, add these headers:
 
@@ -26,11 +26,11 @@ info:
 
     You can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account).
 
-    # Request format
+    ## Request format
 
     Request bodies must be JSON objects.
 
-    # Response status and errors
+    ## Response status and errors
 
     Response bodies are JSON objects.
     Deleting a user token returns an empty response body with rate-limiting information as headers.
@@ -43,7 +43,7 @@ info:
     Check the [Events](https://dashboard.algolia.com/events/health) health section,
     whether your events can be used for Algolia features such as Analytics, or Dynamic Re-Ranking.
 
-    # Version
+    ## Version
 
     The current version of the Insights API is version 1, as indicated by the `/1/` in each endpoint's URL.
 
