@@ -16,12 +16,8 @@ info:
 
     To authenticate your API requests, add these headers:
 
-    <dl>
-    <dt><code>x-algolia-application-id</code></dt>
-    <dd>Your Algolia application ID.</dd>
-    <dt><code>x-algolia-api-key</code></dt>
-    <dd>The Usage API key.</dd>
-    </dl>
+    - `x-algolia-application-id`. Your Algolia application ID.
+    - `x-algolia-api-key`. The Usage API key.
 
     You can find your application ID and Usage API key in the [Algolia dashboard](https://dashboard.algolia.com/account).
 

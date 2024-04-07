@@ -12,7 +12,7 @@ Success:
               properties:
                 t:
                   type: integer
-                  description: Timestamp in milliseconds in Unix epoch time.
+                  description: Timestamp, measured in milliseconds since the Unix epoch.
                   example: 1455451200000
                 v:
                   description: Value of the statistics.

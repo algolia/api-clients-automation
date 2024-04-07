@@ -30,7 +30,16 @@ Index:
 StartDate:
   in: query
   name: startDate
-  description: Start date (`YYYY-MM-DD`) of the period to analyze.
+  description: Start date of the period to analyze, in `YYYY-MM-DD` format.
+  schema:
+    type: string
+    example: 2022-09-19
+
+StartDateRequired:
+  in: query
+  name: startDate
+  description: Start date of the period to analyze, in `YYYY-MM-DD` format.
+  required: true
   schema:
     type: string
     example: 2022-09-19
@@ -38,7 +47,16 @@ StartDate:
 EndDate:
   in: query
   name: endDate
-  description: End date (`YYYY-MM-DD`) of the period to analyze.
+  description: End date of the period to analyze, in `YYYY-MM-DD` format.
+  schema:
+    type: string
+    example: 2023-01-21
+
+EndDateRequired:
+  in: query
+  name: endDate
+  description: End date of the period to analyze, in `YYYY-MM-DD` format.
+  required: true
   schema:
     type: string
     example: 2023-01-21

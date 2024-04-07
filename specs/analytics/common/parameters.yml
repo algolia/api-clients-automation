@@ -316,7 +316,7 @@ x-ratelimit-remaining:
     type: integer
 
 x-ratelimit-reset:
-  description: Timestamp in Unix epoch time when the rate limit will reset.
+  description: Timstamp when the rate limit will reset, measured in seconds since the Unix epoch.
   example: 1710682486
   schema:
     type: integer
