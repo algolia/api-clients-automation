@@ -70,7 +70,7 @@ For an example, see the [Search API](/specs/search).
 
 ## Operation summaries
 
-Operations are endpoints with a HTTP verb.
+Operations are endpoints with an HTTP verb.
 Each operation must have a `summary` property.
 Start with an imperative verb and describe what the operation does in 2 to 3 words.
 
