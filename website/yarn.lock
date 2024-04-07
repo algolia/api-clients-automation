@@ -10871,7 +10871,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remark-smartypants@npm:^2.1.0":
+"remark-smartypants@npm:2.1.0":
   version: 2.1.0
   resolution: "remark-smartypants@npm:2.1.0"
   dependencies:
@@ -12814,7 +12814,7 @@ __metadata:
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
     redocusaurus: "npm:2.0.2"
-    remark-smartypants: "npm:^2.1.0"
+    remark-smartypants: "npm:2.1.0"
   languageName: unknown
   linkType: soft
 
