@@ -5,6 +5,7 @@ recommendationsRequest:
     - $ref: './TrendingItemsQuery.yml#/trendingItemsQuery'
     - $ref: './TrendingFacetsQuery.yml#/trendingFacetsQuery'
     - $ref: './LookingSimilarQuery.yml#/lookingSimilarQuery'
+    - $ref: './RecommendedForYouQuery.yml#/recommendedForYouQuery'
 
 baseRecommendRequest:
   type: object
