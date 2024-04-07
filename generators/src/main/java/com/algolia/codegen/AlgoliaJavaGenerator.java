@@ -121,6 +121,10 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
         return "GREATER_THAN";
       case ">=":
         return "GREATER_EQUALS";
+      case "90p_processing_time":
+        return "NINETY_P_PROCESSING_TIME";
+      case "99p_processing_time":
+        return "NINETY_NINE_P_PROCESSING_TIME";
       case "mappingkit/v1":
         return "MAPPINGKIT_V1";
     }

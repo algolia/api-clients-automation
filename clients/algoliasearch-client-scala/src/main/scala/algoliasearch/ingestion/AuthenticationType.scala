@@ -46,7 +46,10 @@ object AuthenticationType {
   case object Algolia extends AuthenticationType {
     override def toString = "algolia"
   }
-  val values: Seq[AuthenticationType] = Seq(GoogleServiceAccount, Basic, ApiKey, Oauth, Algolia)
+  case object AlgoliaInsights extends AuthenticationType {
+    override def toString = "algoliaInsights"
+  }
+  val values: Seq[AuthenticationType] = Seq(GoogleServiceAccount, Basic, ApiKey, Oauth, Algolia, AlgoliaInsights)
 
   def withName(name: String): AuthenticationType = AuthenticationType.values
     .find(_.toString == name)

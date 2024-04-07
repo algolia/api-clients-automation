@@ -1,14 +1,11 @@
 get:
   operationId: getIndexUsage
-  summary: Get usage for an index.
+  summary: Retrieve usage information for one index.
   description: |
-    Returns index usage statistics over a specified period.
-
-    The specified period must be within the last 90 days.
-    However, the period of [data retention can be extended](https://support.algolia.com/hc/en-us/articles/4406975230993-Can-I-extend-the-retention-period-of-the-analytics-data-) to a maximum of 365 days.
+    Retrieves the selected usage statistics for one index.
   parameters:
     - $ref: '../common/parameters.yml#/statisticParameter'
-    - $ref: '../common/parameters.yml#/indexParameter'
+    - $ref: '../../common/parameters.yml#/IndexName'
     - $ref: '../common/parameters.yml#/startDateParameter'
     - $ref: '../common/parameters.yml#/endDateParameter'
     - $ref: '../common/parameters.yml#/granularityParameter'
@@ -18,10 +15,10 @@ get:
     '400':
       $ref: '../../common/responses/InvalidRequest.yml'
     '401':
-      $ref: '../common/schemas/responses.yml#/MissingAuthorization'
+      $ref: '../../common/responses/Unauthorized.yml'
     '403':
       $ref: '../../common/responses/Forbidden.yml'
     '404':
-      $ref: '../common/schemas/responses.yml#/IndexNotFound'
+      $ref: '../../common/responses/IndexNotFound.yml'
     '422':
-      $ref: '../common/schemas/responses.yml#/StatisticNotFound'
+      $ref: '../../common/responses/UnprocessableEntity.yml'

@@ -68,6 +68,15 @@ public interface AuthInput {
           LOGGER.finest("Failed to deserialize oneOf AuthAlgolia (error: " + e.getMessage() + ") (type: AuthAlgolia)");
         }
       }
+      // deserialize AuthAlgoliaInsights
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(AuthAlgoliaInsights.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf AuthAlgoliaInsights (error: " + e.getMessage() + ") (type: AuthAlgoliaInsights)");
+        }
+      }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
     }
 

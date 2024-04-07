@@ -44,6 +44,7 @@ object AuthInputSerializer extends Serializer[AuthInput] {
         case value: JObject => Extraction.extract[AuthAPIKey](value)
         case value: JObject => Extraction.extract[AuthOAuth](value)
         case value: JObject => Extraction.extract[AuthAlgolia](value)
+        case value: JObject => Extraction.extract[AuthAlgoliaInsights](value)
         case _              => throw new MappingException("Can't convert " + json + " to AuthInput")
       }
   }
@@ -55,6 +56,7 @@ object AuthInputSerializer extends Serializer[AuthInput] {
       case value: AuthAPIKey               => Extraction.decompose(value)(format - this)
       case value: AuthOAuth                => Extraction.decompose(value)(format - this)
       case value: AuthAlgolia              => Extraction.decompose(value)(format - this)
+      case value: AuthAlgoliaInsights      => Extraction.decompose(value)(format - this)
     }
   }
 }

@@ -18,7 +18,9 @@ public enum AuthenticationType {
 
   OAUTH("oauth"),
 
-  ALGOLIA("algolia");
+  ALGOLIA("algolia"),
+
+  ALGOLIA_INSIGHTS("algoliaInsights");
 
   private final String value;
 
