@@ -27,6 +27,25 @@ To make using the specs in these contexts easier, follow these guidelines:
 - Use inline Markdown links judiciously.
   Don't link to readily searchable information, such as internet RFCs or Wikipedia.
 
+## Capitalization
+
+In general, follow the capitalization of the API.
+For example, keys in JSON objects are case-sensitive.
+
+Pay special attention to abbreviations like `taskID` vs `taskId`,
+because the Algolia APIs capitalize them inconsistently.
+
+For case-insensitive properties, follow these conventions.
+
+### Headers
+
+When describing headers, such as the authentication headers `x-algolia-application-id`, prefer lowercase letters.
+
+### Path and query parameters
+
+Use _camelCase_ for parameters, such as `indexName`.
+Use uppercase abbreviations for parameters like `objectID` or `taskID`.
+
 ## API descriptions
 
 Each API spec must include a `description` property in its `info` object.
@@ -67,7 +86,6 @@ For common operations, use these verbs consistently:
 - **Update**. For operations that update parts of an object without completely replacing it.
 - **Replace**. For operations that replace entire objects.
 
-
 ## Operation descriptions
 
 Each operation must have a `description` property.
@@ -94,7 +112,7 @@ description: |
   Multi-paragraph even.
 ```
 
-## Properties and parameters
+## Properties and parameter descriptions
 
 Use a noun phrase to describe what the parameter represents, without articles.
 
