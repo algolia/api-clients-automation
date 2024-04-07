@@ -3,7 +3,9 @@ title: API documentation
 ---
 
 To be a reliable and useful source of truth,
-API documentation must be correct, clear, complete, consistent, and concise.
+API documentation must be correct, clear, complete, and consistent.
+To be as easy to understand as possible,
+API documentation _should_ be concise, while maintaining clarity.
 
 Use short sentences and write in the present tense.
 
@@ -22,7 +24,7 @@ To make using the specs in these contexts easier, follow these guidelines:
 
 - Don't use HTML.
 - Don't use tables.
-- Don't use headings, except for [API descriptions](#api-descriptions).
+- Don't use headings, except in [API descriptions](#api-descriptions).
 - Prefer using `externalDocs` objects over inline Markdown links.
 - Use inline Markdown links judiciously.
   Don't link to readily searchable information, such as internet RFCs or Wikipedia.
@@ -52,6 +54,8 @@ Each API spec must include a `description` property in its `info` object.
 In the first sentence, describe what the API does or what it can be used for.
 
 After the introductory sentence, include the following sections.
+Use `h2` headings.
+
 For an example, see the [Search API](/specs/search).
 
 - **Client libraries.** For APIs with clients that implement the retry strategy and are covered by the SLA.
@@ -63,8 +67,6 @@ For an example, see the [Search API](/specs/search).
 - **Parameters.** Explain query and request body parameters, depending on the endpoints of this API.
 - **Response status and errors.** Explain the format of responses and what type of errors are returned.
 - **Version.** Explain the current version of the API.
-
-Use `h1` headings for each section heading to make the section show in the sidebar.
 
 ## Operation summaries
 
