@@ -6,8 +6,8 @@ get:
   parameters:
     - $ref: '../common/parameters.yml#/statisticParameter'
     - $ref: '../../common/parameters.yml#/IndexName'
-    - $ref: '../common/parameters.yml#/startDateParameter'
-    - $ref: '../common/parameters.yml#/endDateParameter'
+    - $ref: '../../common/parameters.yml#/StartDateRequired'
+    - $ref: '../../common/parameters.yml#/EndDateRequired'
     - $ref: '../common/parameters.yml#/granularityParameter'
   responses:
     '200':

@@ -25,11 +25,11 @@ get:
                 example: false
               lastBuiltAt:
                 type: string
-                description: Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format when the Query Suggestions index was last built.
+                description: Date and time when the Query Suggestions index was last built, in RFC 3339 format.
                 example: 2023-07-05T08:03:53Z
               lastSuccessfulBuiltAt:
                 type: string
-                description: Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format when the Query Suggestions index was last updated successfully.
+                description: Date and time when the Query Suggestions index was last updated successfully.
                 example: 2023-07-05T08:03:53Z
               lastSuccessfulBuildDuration:
                 type: string

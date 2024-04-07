@@ -10,27 +10,25 @@ HitsPerPage:
 
 # headers
 UserIDInHeader:
-  name: X-Algolia-User-ID
-  description: User ID to assign.
+  name: x-algolia-user-id
+  description: Unique identifier of the user who makes the search request.
   in: header
   required: true
   schema:
-    type: string
-    pattern: '^[a-zA-Z0-9 \-*.]+$'
+    $ref: '#/userID'
 
 # path
 UserIDInPath:
   name: userID
-  description: User ID to assign.
+  description: Unique identifier of the user who makes the search request.
   in: path
   required: true
   schema:
-    type: string
-    pattern: '^[a-zA-Z0-9 \-*.]+$'
+    $ref: '#/userID'
 
 # misc
 userID:
   type: string
   pattern: '^[a-zA-Z0-9 \-*.]+$'
-  description: User ID.
+  description: Unique identifier of the user who makes the search request.
   example: user1

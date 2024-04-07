@@ -10,7 +10,7 @@ statisticParameter:
 
     Use `*` to retrieve all usage metrics, otherwise add one or more of the following metrics, separated by a comma.
 
-    ### Search operations
+    **Search operations**
 
     - `search_operations`. All search operations.
     - `total_search_operations`: Sum of all search operations.
@@ -19,7 +19,7 @@ statisticParameter:
     - `queries_operations`. Number of [single index search](/specs/search#tag/Search/operation/searchSingleIndex) operations.
     - `multi_queries_operations`. Number of [multi-index search](/specs/search#tag/Search/operation/search) operations.
 
-    ### ACL operations
+    **ACL operations**
 
     - `acl_operations`. All ACL operations.
     - `total_acl_operations`. Sum of all ACL operations.
@@ -30,7 +30,7 @@ statisticParameter:
     - `delete_api_key_operations`. Number of [delete API key](/specs/search#tag/Api-Keys/operation/deleteApiKey) operations.
     - `list_api_key_operations`. Number of list index API keys operations.
 
-    ### Indexing operations
+    **Indexing operations**
 
     - `indexing_operations`. All indexing operations.
     - `total_indexing_operations`. Sum of all indexing operations.
@@ -44,7 +44,7 @@ statisticParameter:
     - `list_indices_operations`. Number of [list indices](/specs/search#tag/Indices/operation/listIndices) operations.
     - `wait_task_operations`. Number of [wait](/specs/search#tag/Indices/operation/getTask) operations.
 
-    ### Record operations
+    **Record operations**
 
     - `record_operations`. All record operations.
     - `total_records_operations`. Sum of all record operations.
@@ -56,7 +56,7 @@ statisticParameter:
     - `partial_update_record_operations`. Number of [partially update records](/specs/search#tag/Records/operation/partialUpdateObject) operations.
     - `update_record_operations`. Number of [add or replace record by objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations.
 
-    ### Synonym operations
+    **Synonym operations**
 
     - `synonym_operations`. All synonym operations.
     - `total_synonym_operations`. Sum of all synonym operations.
@@ -67,7 +67,7 @@ statisticParameter:
     - `query_synonym_operations`. Number of [search synonyms](/specs/search#tag/Synonyms/operation/searchSynonyms) operations.
     - `update_synonym_operations`. Number of [save a synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations.
 
-    ### Rule operations
+    **Rule operations**
 
     - `rule_operations`. All rule operations.
     - `total_rules_operations`. Sum of all rule operations.
@@ -78,14 +78,14 @@ statisticParameter:
     - `save_rules_operations`. Number of [save rule](/specs/search#operation/getIndexUsage) operations.
     - `search_rules_operations`. Number of [search rules](/specs/search#tag/Rules/operation/searchRules) operations.
 
-    ### Total operations
+    **Total operations**
 
     - `total_recommend_requests`. Number of [Recommend requests](https://www.algolia.com/doc/guides/algolia-ai/recommend/)
     - `total_write_operations`. Number of Write operations
     - `total_read_operations`. Number of read operations
     - `total_operations`. Sum of all operations
 
-    ### Total Query Suggestions operations
+    **Total Query Suggestions operations**
 
     Query Suggestions operations are a subset of `total_search_operations`.
 
@@ -100,26 +100,26 @@ statisticParameter:
     - `querysuggestions_total_read_operations`. Number of Query Suggestions Read operations.
     - `querysuggestions_total_operations`. Sum of all Query Suggestions operations.
 
-    ### Processing time
+    **Processing time**
 
     - `avg_processing_time`. Average processing time (in milliseconds).
     - `90p_processing_time`. 90th percentile of processing time (in milliseconds).
     - `99p_processing_time`. 99th percentile of processing time (in milliseconds).
     - `queries_above_last_ms_processing_time`. Number of queries that take one or more seconds to process.
 
-    ### Indices
+    **Indices**
 
     - `records`. Number of records.
     - `data_size`. The size of the records (in bytes).
     - `file_size`. The size of the records _and_ index metadata (in bytes).
 
-    ### Maximum queries per second
+    **Maximum queries per second**
 
     - `max_qps`. [Maximum queries per second](https://support.algolia.com/hc/en-us/articles/4406975224721) per server.
     - `region_max_qps`. Maximum queries per second per region.
     - `total_max_qps`. Maximum queries per second across all servers.
 
-    ### Used search capacity
+    **Used search capacity**
 
     The following capacities are reported in percent:
 
@@ -130,7 +130,7 @@ statisticParameter:
     - `total_used_search_capacity`. Maximum search capacity used for all servers.
     - `total_avg_used_search_capacity`. Average used search capacity for all servers.
 
-    ### Degraded queries
+    **Degraded queries**
 
     Check the impact of [degraded queries](https://support.algolia.com/hc/en-us/articles/4406981934481).
 
@@ -138,23 +138,6 @@ statisticParameter:
     - `degraded_queries_ssd_used_seconds_impacted`. Percentage of seconds affected by `ssd_used` degraded queries.
     - `degraded_queries_max_capacity_queries_impacted`. Percentage of degraded queries due to all search threads being used.
     - `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by `max_capacity` degraded queries.
-startDateParameter:
-  name: startDate
-  in: query
-  description: Start date in ISO 8601 format of the time period to analyze.
-  required: true
-  schema:
-    type: string
-    example: 2024-01-01
-
-endDateParameter:
-  name: endDate
-  in: query
-  description: End date in ISO 8601 format of the time period to analyze.
-  required: true
-  schema:
-    type: string
-    example: 2024-04-04
 
 granularityParameter:
   name: granularity

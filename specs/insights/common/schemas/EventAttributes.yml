@@ -46,7 +46,7 @@ timestamp:
   type: integer
   format: int64
   description: |
-    Timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
+    Timestamp of the event, measured in milliseconds since the Unix epoch.
     By default, the Insights API uses the time it receives an event as its timestamp.
   example: 1687193127
 

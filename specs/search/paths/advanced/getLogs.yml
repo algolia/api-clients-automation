@@ -62,7 +62,7 @@ get:
                   properties:
                     timestamp:
                       type: string
-                      description: Timestamp of the API request in ISO 8601 format.
+                      description: Date and time of the API request, in RFC 3339 format.
                       example: 2023-03-08T12:34:56Z
                     method:
                       type: string

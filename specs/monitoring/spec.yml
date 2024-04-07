@@ -6,7 +6,7 @@ info:
 
     # Base URLs
 
-    The base URL for making requests to the Monitoring API is:
+    The base URL for requests to the Monitoring API is:
 
     - `https://status.algolia.com`
 
@@ -19,12 +19,8 @@ info:
 
     To authenticate requests to the Infrastructure endpoints, add these headers:
 
-    <dl>
-    <dt><code>x-algolia-application-id</code></dt>
-    <dd>Your Algolia application ID.</dd>
-    <dt><code>x-algolia-api-key</code></dt>
-    <dd>Your Monitoring API key.</dd>
-    </dl>
+    - `x-algolia-application-id`. Your Algolia application ID.
+    - `x-algolia-api-key`. Your Monitoring API key.
 
     You can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account).
 
