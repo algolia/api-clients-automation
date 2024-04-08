@@ -6,7 +6,7 @@ method:
     operationId: generateSecuredApiKey
     summary: Create secured API keys.
     description: |
-      Generates a secured API key without any calls to Algolia's servers.
+      Generates a secured API key without any requests to Algolia's servers.
 
       Secured API keys are API keys that you generate on your server without any API request to Algolia.
       Secured API keys help in environments where you can't easily update the client-side code, such as mobile apps,
@@ -58,7 +58,7 @@ securedAPIKeyRestrictions:
     validUntil:
       type: integer
       format: int64
-      description: Timestamp in [Unix epoch time](https://en.wikipedia.org/wiki/Unix_time) when the API key should expire.
+      description: Timestamp when the secured API key expires, measured in seconds since the Unix epoch.
     restrictIndices:
       type: array
       items:

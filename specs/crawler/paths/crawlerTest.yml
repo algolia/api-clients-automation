@@ -33,11 +33,11 @@ post:
             properties:
               startDate:
                 type: string
-                description: Timestamp in ISO 8601 format when the test crawl started.
+                description: Date and time when the test crawl started, in RFC 3339 format.
                 example: 2024-04-02T15:34:29Z
               endDate:
                 type: string
-                description: Timestamp in ISO 8601 format when the test crawl ended.
+                description: Date and time when the test crawl finished, in RFC 3339 format.
                 example: 2024-04-02T15:34:29Z
               logs:
                 type: array

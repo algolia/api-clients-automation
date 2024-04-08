@@ -35,9 +35,7 @@ post:
             additionalProperties: false
             properties:
               createdAt:
-                type: string
-                description: Timestamp when the record was added, in ISO 8601 format.
-                example: 2023-06-29T15:15:40.747Z
+                $ref: '../../../common/responses/common.yml#/createdAt'
               taskID:
                 $ref: '../../../common/responses/common.yml#/taskID'
               objectID:

@@ -171,36 +171,17 @@ TriggerType:
   description: |
     Task trigger, describing when a task should run.
 
-    <dl>
-    <dt><code>onDemand</code></dt>
-    <dd>
+    - `onDemand`.
+      Manually trigger the task with the `/run` endpoint.
 
-    Manually trigger the task with the `/run` endpoint.
+    - `schedule`.
+      Regularly trigger the task on a `cron` schedule.
 
-    </dd>
-    <dt><code>schedule</code></dt>
-    <dd>
+    - `subscription`.
+      Trigger the task after an event is received, such as, a webhook.
 
-    Regularly trigger the task on a `cron` schedule.
-
-    </dd>
-
-    <dt><code>subscription</code></dt>
-
-    <dd>
-
-    Trigger the task after an event is received, such as, a webhook.
-
-    </dd>
-
-    <dt><code>streaming</code></dt>
-
-    <dd>
-
-    Run the task continuously.
-
-    </dd>
-    </dl>.
+    - `streaming`.
+      Run the task continuously.
   enum: [onDemand, schedule, subscription, streaming]
 
 # schedule trigger

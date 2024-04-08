@@ -19,7 +19,7 @@ get:
             properties:
               timestamp:
                 type: string
-                description: Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
+                description: Date and time of the log entry, in RFC 3339 format.
                 example: 2023-07-05T08:03:33.898076171Z
               level:
                 $ref: '../common/enums.yml#/LogLevel'
