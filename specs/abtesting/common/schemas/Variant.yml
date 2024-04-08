@@ -1,6 +1,10 @@
 variants:
   type: array
-  description: A/B test variants.
+  description: |
+    A/B test variants.
+
+    The first variant is your _control_ index, typically your production index.
+    The second variant is an index with changed settings that you want to test against the control.
   items:
     $ref: '#/variant'
 
@@ -16,13 +20,15 @@ variant:
       oneOf:
         - type: number
           format: double
-          description: Variant's [add-to-cart rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#add-to-cart-rate).
+          description: |
+            [Add-to-cart rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#add-to-cart-rate) for this variant.
           example: 0.0
         - type: 'null'
     averageClickPosition:
       oneOf:
         - type: integer
-          description: Variant's [average click position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position).
+          description: |
+            [Average click position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position) for this variant.
           example: 0
         - type: 'null'
     clickCount:
@@ -33,7 +39,8 @@ variant:
       oneOf:
         - type: number
           format: double
-          description: Variant's [click-through rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+          description: |
+            [Click-through rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate) for this variant.
           example: 0.22219857724813036
         - type: 'null'
     conversionCount:
@@ -44,7 +51,8 @@ variant:
       oneOf:
         - type: number
           format: double
-          description: Variant's [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+          description: |
+            [Conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate) for this variant.
           example: 0.14546725846658964
         - type: 'null'
     currencies:
@@ -53,7 +61,10 @@ variant:
       $ref: '../parameters.yml#/description'
     estimatedSampleSize:
       type: integer
-      description: The estimated number of searches that will need to be run to achieve the desired confidence level and statistical power. A `minimumDetectableEffect` must be set in the `configuration` object for this to be used.
+      description: |
+        Estimated number of searches required to achieve the desired statistical significance.
+
+        The A/B test configuration must include a `mininmumDetectableEffect` setting for this number to be included in the response.
       example: 0
     filterEffects:
       $ref: '../parameters.yml#/filterEffects'
@@ -62,7 +73,7 @@ variant:
     noResultCount:
       oneOf:
         - type: integer
-          description: Number of [searches without results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results) for that variant.
+          description: Number of [searches without results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results) for this variant.
           example: 0
         - type: 'null'
     purchaseCount:
@@ -73,13 +84,14 @@ variant:
       oneOf:
         - type: number
           format: double
-          description: Variant's [purchase rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#purchase-rate).
+          description: |
+            [Purchase rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#purchase-rate) for this variant.
           example: 0.0
         - type: 'null'
     searchCount:
       oneOf:
         - type: integer
-          description: Number of searches carried out during the A/B test.
+          description: Number of searches for this variant.
           example: 86269
         - type: 'null'
     trackedSearchCount:
@@ -89,13 +101,13 @@ variant:
     userCount:
       oneOf:
         - type: integer
-          description: Number of users during the A/B test.
+          description: Number of users that made searches to this variant.
           example: 55501
         - type: 'null'
     trackedUserCount:
       oneOf:
         - type: integer
-          description: Number of users that performed a tracked search during the A/B test.
+          description: Number of users that made tracked searches to this variant.
           example: 55501
         - type: 'null'
   required:

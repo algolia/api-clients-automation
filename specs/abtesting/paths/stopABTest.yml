@@ -5,18 +5,22 @@ post:
   x-acl:
     - editSettings
   summary: Stop an A/B test.
-  description: >
-    If stopped, the test is over and can't be restarted.
-    There is now only one index, receiving 100% of all search requests.
+  description: |
+    Stops an A/B test by its ID.
 
-    The data gathered for stopped A/B tests is retained.
-
-    To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
+    You can't restart stopped A/B tests.
   parameters:
     - $ref: '../common/parameters.yml#/ID'
   responses:
     '200':
       description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../analytics/common/parameters.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../analytics/common/parameters.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../analytics/common/parameters.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:
