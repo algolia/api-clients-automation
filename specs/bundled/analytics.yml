@@ -6,17 +6,10 @@ info:
     experience.
 
 
-    # Availability
+    ## Base URLs
 
 
-    Access to this API is available as part of the [Premium or Elevate
-    plans](https://www.algolia.com/pricing).
-
-
-    # Base URLs
-
-
-    The base URLs for making requests to the Analytics API are:
+    The base URLs for requests to the Analytics API are:
 
 
     - `https://analytics.us.algolia.com` (alias:
@@ -32,37 +25,27 @@ info:
     **All requests must use HTTPS.**
 
 
-    # Authentication
+    ## Availability and authentication
+
+
+    Access to the Analytics API is available as part of the [Premium or Elevate
+    plans](https://www.algolia.com/pricing).
 
 
     To authenticate your API requests, add these headers:
 
 
-    <dl>
+    - `x-algolia-application-id`. Your Algolia application ID.
 
-    <dt><code>x-algolia-application-id</code></dt>
-
-    <dd>Your Algolia application ID.</dd>
-
-    <dt><code>x-algolia-api-key</code></dt>
-
-    <dd>
-
-    An API key with the necessary permissions to make the request.
-
-    The required access control list (ACL) to make a request is listed in each
-    endpoint's reference.
-
-    </dd>
-
-    </dl>
-
+    - `x-algolia-api-key`. An API key with the necessary permissions to make the
+    request.
+      The required access control list (ACL) to make a request is listed in each endpoint's reference.
 
     You can find your application ID and API key in the [Algolia
     dashboard](https://dashboard.algolia.com/account).
 
 
-    # Rate limits
+    ## Rate limits
 
 
     You can make up to **100 requests per minute per app** to the Analytics API.
@@ -70,7 +53,7 @@ info:
     The response includes headers with information about the limits.
 
 
-    # Parameters
+    ## Parameters
 
 
     Query parameters must be
@@ -81,7 +64,7 @@ info:
     Plus characters (`+`) are interpreted as spaces.
 
 
-    # Response status and errors
+    ## Response status and errors
 
 
     The Analytics API returns JSON responses.
@@ -96,7 +79,7 @@ info:
     Error responses have a `message` property with more information.
 
 
-    # Version
+    ## Version
 
 
     The current version of the Analytics API is version 2, as indicated by the
@@ -1546,14 +1529,14 @@ components:
     StartDate:
       in: query
       name: startDate
-      description: Start date (`YYYY-MM-DD`) of the period to analyze.
+      description: Start date of the period to analyze, in `YYYY-MM-DD` format.
       schema:
         type: string
         example: '2022-09-19'
     EndDate:
       in: query
       name: endDate
-      description: End date (`YYYY-MM-DD`) of the period to analyze.
+      description: End date of the period to analyze, in `YYYY-MM-DD` format.
       schema:
         type: string
         example: '2023-01-21'
@@ -2237,14 +2220,14 @@ components:
           items:
             $ref: '#/components/schemas/getTopFiltersNoResultsValues'
     updatedAtNullable:
-      type: string
-      example: '2023-07-04T12:49:15Z'
-      nullable: true
-      description: >
-        Timestamp of the last update in [ISO
-        8601](https://wikipedia.org/wiki/ISO_8601) format.
-
-        If null, no update was performed yet.
+      default: null
+      oneOf:
+        - type: string
+          example: '2023-07-04T12:49:15Z'
+          description: |
+            Date and time when the object was updated, in RFC 3339 format.
+        - type: 'null'
+          description: If null, this object wasn't updated yet.
   responses:
     BadRequest:
       description: Bad request or request arguments.
@@ -2282,7 +2265,9 @@ components:
       schema:
         type: integer
     x-ratelimit-reset:
-      description: Timestamp in Unix epoch time when the rate limit will reset.
+      description: >-
+        Timstamp when the rate limit will reset, measured in seconds since the
+        Unix epoch.
       example: 1710682486
       schema:
         type: integer

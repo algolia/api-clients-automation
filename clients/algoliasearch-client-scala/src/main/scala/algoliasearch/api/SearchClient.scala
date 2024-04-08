@@ -205,7 +205,7 @@ class SearchClient(
     *   - admin
     *
     * @param xAlgoliaUserID
-    *   User ID to assign.
+    *   Unique identifier of the user who makes the search request.
     */
   def assignUserId(
       xAlgoliaUserID: String,
@@ -253,7 +253,7 @@ class SearchClient(
     *   - admin
     *
     * @param xAlgoliaUserID
-    *   User ID to assign.
+    *   Unique identifier of the user who makes the search request.
     */
   def batchAssignUserIds(
       xAlgoliaUserID: String,
@@ -973,7 +973,7 @@ class SearchClient(
     *   - admin
     *
     * @param userID
-    *   User ID to assign.
+    *   Unique identifier of the user who makes the search request.
     */
   def getUserId(userID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -1198,7 +1198,7 @@ class SearchClient(
     *   - admin
     *
     * @param userID
-    *   User ID to assign.
+    *   Unique identifier of the user who makes the search request.
     */
   def removeUserId(userID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext

@@ -5,10 +5,10 @@ info:
     The Monitoring API lets you check the status of your Algolia infrastructure.
 
 
-    # Base URLs
+    ## Base URLs
 
 
-    The base URL for making requests to the Monitoring API is:
+    The base URL for requests to the Monitoring API is:
 
 
     - `https://status.algolia.com`
@@ -17,7 +17,7 @@ info:
     **All requests must use HTTPS.**
 
 
-    # Availability and authentication
+    ## Availability and authentication
 
 
     Access to the [Infrastructure](#tag/infrastructure) endpoints
@@ -29,17 +29,9 @@ info:
     To authenticate requests to the Infrastructure endpoints, add these headers:
 
 
-    <dl>
+    - `x-algolia-application-id`. Your Algolia application ID.
 
-    <dt><code>x-algolia-application-id</code></dt>
-
-    <dd>Your Algolia application ID.</dd>
-
-    <dt><code>x-algolia-api-key</code></dt>
-
-    <dd>Your Monitoring API key.</dd>
-
-    </dl>
+    - `x-algolia-api-key`. Your Monitoring API key.
 
 
     You can find your application ID and API key in the [Algolia
@@ -49,7 +41,7 @@ info:
     Other endpoints don't require authentication.
 
 
-    # Response status and errors
+    ## Response status and errors
 
 
     The Monitoring API returns JSON responses.
@@ -64,7 +56,7 @@ info:
     Error responses have a `message` property with more information.
 
 
-    # Version
+    ## Version
 
 
     The current version of the Monitoring API is version 1, as indicated by the
@@ -437,9 +429,7 @@ components:
     Timestamp:
       type: integer
       format: int64
-      description: >-
-        Timestamp in [Unix epoch time](https://wikipedia.org/wiki/Unix_time) in
-        milliseconds.
+      description: Timestamp, measured in milliseconds since the Unix epoch.
     Incident:
       title: incident
       description: Incident details.

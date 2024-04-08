@@ -484,8 +484,8 @@ public class AnalyticsClient extends ApiClient {
    * including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -509,8 +509,8 @@ public class AnalyticsClient extends ApiClient {
    * including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -553,8 +553,8 @@ public class AnalyticsClient extends ApiClient {
    * last eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -589,8 +589,8 @@ public class AnalyticsClient extends ApiClient {
    * last eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -639,8 +639,8 @@ public class AnalyticsClient extends ApiClient {
    * default, the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -665,8 +665,8 @@ public class AnalyticsClient extends ApiClient {
    * default, the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -714,8 +714,8 @@ public class AnalyticsClient extends ApiClient {
    * current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -752,8 +752,8 @@ public class AnalyticsClient extends ApiClient {
    * current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -807,8 +807,8 @@ public class AnalyticsClient extends ApiClient {
    * you check how many clicks the first, second, or tenth search results receive.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -831,8 +831,8 @@ public class AnalyticsClient extends ApiClient {
    * you check how many clicks the first, second, or tenth search results receive.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -872,8 +872,8 @@ public class AnalyticsClient extends ApiClient {
    * clicks. This lets you check how many clicks the first, second, or tenth search results receive.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -907,8 +907,8 @@ public class AnalyticsClient extends ApiClient {
    * clicks. This lets you check how many clicks the first, second, or tenth search results receive.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -954,8 +954,8 @@ public class AnalyticsClient extends ApiClient {
    * including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -979,8 +979,8 @@ public class AnalyticsClient extends ApiClient {
    * including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1024,8 +1024,8 @@ public class AnalyticsClient extends ApiClient {
    * eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1060,8 +1060,8 @@ public class AnalyticsClient extends ApiClient {
    * eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1109,8 +1109,8 @@ public class AnalyticsClient extends ApiClient {
    * including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1134,8 +1134,8 @@ public class AnalyticsClient extends ApiClient {
    * including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1178,8 +1178,8 @@ public class AnalyticsClient extends ApiClient {
    * last eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1214,8 +1214,8 @@ public class AnalyticsClient extends ApiClient {
    * last eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1263,8 +1263,8 @@ public class AnalyticsClient extends ApiClient {
    * current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1288,8 +1288,8 @@ public class AnalyticsClient extends ApiClient {
    * current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1332,8 +1332,8 @@ public class AnalyticsClient extends ApiClient {
    * days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1368,8 +1368,8 @@ public class AnalyticsClient extends ApiClient {
    * days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1417,8 +1417,8 @@ public class AnalyticsClient extends ApiClient {
    * including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1442,8 +1442,8 @@ public class AnalyticsClient extends ApiClient {
    * including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1486,8 +1486,8 @@ public class AnalyticsClient extends ApiClient {
    * eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1522,8 +1522,8 @@ public class AnalyticsClient extends ApiClient {
    * eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1571,8 +1571,8 @@ public class AnalyticsClient extends ApiClient {
    * including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1596,8 +1596,8 @@ public class AnalyticsClient extends ApiClient {
    * including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1640,8 +1640,8 @@ public class AnalyticsClient extends ApiClient {
    * eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1676,8 +1676,8 @@ public class AnalyticsClient extends ApiClient {
    * eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1725,8 +1725,8 @@ public class AnalyticsClient extends ApiClient {
    * includes the last eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1745,8 +1745,8 @@ public class AnalyticsClient extends ApiClient {
    * includes the last eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1788,8 +1788,8 @@ public class AnalyticsClient extends ApiClient {
    * analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1824,8 +1824,8 @@ public class AnalyticsClient extends ApiClient {
    * analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1868,8 +1868,8 @@ public class AnalyticsClient extends ApiClient {
    * the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1892,8 +1892,8 @@ public class AnalyticsClient extends ApiClient {
    * the analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1934,8 +1934,8 @@ public class AnalyticsClient extends ApiClient {
    * day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -1970,8 +1970,8 @@ public class AnalyticsClient extends ApiClient {
    * day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -2018,8 +2018,8 @@ public class AnalyticsClient extends ApiClient {
    * frequent searches.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2046,8 +2046,8 @@ public class AnalyticsClient extends ApiClient {
    * frequent searches.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2096,8 +2096,8 @@ public class AnalyticsClient extends ApiClient {
    * 1,000 most frequent searches.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2137,8 +2137,8 @@ public class AnalyticsClient extends ApiClient {
    * 1,000 most frequent searches.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2186,8 +2186,8 @@ public class AnalyticsClient extends ApiClient {
    * Retrieves the most popular searches that didn't return any results.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2213,8 +2213,8 @@ public class AnalyticsClient extends ApiClient {
    * Retrieves the most popular searches that didn't return any results.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2260,8 +2260,8 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Retrieves the most popular searches that didn't return any results.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2300,8 +2300,8 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Retrieves the most popular searches that didn't return any results.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2399,8 +2399,8 @@ public class AnalyticsClient extends ApiClient {
    * Retrieves the countries with the most searches to your index.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2426,8 +2426,8 @@ public class AnalyticsClient extends ApiClient {
    * Retrieves the countries with the most searches to your index.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2472,8 +2472,8 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Retrieves the countries with the most searches to your index.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2512,8 +2512,8 @@ public class AnalyticsClient extends ApiClient {
    * (asynchronously) Retrieves the countries with the most searches to your index.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2561,8 +2561,8 @@ public class AnalyticsClient extends ApiClient {
    *
    * @param index Index name. (required)
    * @param search Search query. (optional)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2591,8 +2591,8 @@ public class AnalyticsClient extends ApiClient {
    *
    * @param index Index name. (required)
    * @param search Search query. (optional)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2643,8 +2643,8 @@ public class AnalyticsClient extends ApiClient {
    *
    * @param index Index name. (required)
    * @param search Search query. (optional)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2687,8 +2687,8 @@ public class AnalyticsClient extends ApiClient {
    *
    * @param index Index name. (required)
    * @param search Search query. (optional)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2743,8 +2743,8 @@ public class AnalyticsClient extends ApiClient {
    * @param attribute Attribute name. (required)
    * @param index Index name. (required)
    * @param search Search query. (optional)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2777,8 +2777,8 @@ public class AnalyticsClient extends ApiClient {
    * @param attribute Attribute name. (required)
    * @param index Index name. (required)
    * @param search Search query. (optional)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2837,8 +2837,8 @@ public class AnalyticsClient extends ApiClient {
    * @param attribute Attribute name. (required)
    * @param index Index name. (required)
    * @param search Search query. (optional)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2885,8 +2885,8 @@ public class AnalyticsClient extends ApiClient {
    * @param attribute Attribute name. (required)
    * @param index Index name. (required)
    * @param search Search query. (optional)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2947,8 +2947,8 @@ public class AnalyticsClient extends ApiClient {
    *
    * @param index Index name. (required)
    * @param search Search query. (optional)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -2978,8 +2978,8 @@ public class AnalyticsClient extends ApiClient {
    *
    * @param index Index name. (required)
    * @param search Search query. (optional)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -3033,8 +3033,8 @@ public class AnalyticsClient extends ApiClient {
    *
    * @param index Index name. (required)
    * @param search Search query. (optional)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -3078,8 +3078,8 @@ public class AnalyticsClient extends ApiClient {
    *
    * @param index Index name. (required)
    * @param search Search query. (optional)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -3139,8 +3139,8 @@ public class AnalyticsClient extends ApiClient {
    * @param revenueAnalytics Whether to include revenue-related metrics in the response. If true,
    *     metrics related to click and conversion events are also included in the response.
    *     (optional, default to false)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -3177,8 +3177,8 @@ public class AnalyticsClient extends ApiClient {
    * @param revenueAnalytics Whether to include revenue-related metrics in the response. If true,
    *     metrics related to click and conversion events are also included in the response.
    *     (optional, default to false)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -3232,8 +3232,8 @@ public class AnalyticsClient extends ApiClient {
    * @param revenueAnalytics Whether to include revenue-related metrics in the response. If true,
    *     metrics related to click and conversion events are also included in the response.
    *     (optional, default to false)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -3284,8 +3284,8 @@ public class AnalyticsClient extends ApiClient {
    * @param revenueAnalytics Whether to include revenue-related metrics in the response. If true,
    *     metrics related to click and conversion events are also included in the response.
    *     (optional, default to false)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param limit Number of items to return. (optional, default to 10)
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
@@ -3339,8 +3339,8 @@ public class AnalyticsClient extends ApiClient {
    * @param revenueAnalytics Whether to include revenue-related metrics in the response. If true,
    *     metrics related to click and conversion events are also included in the response.
    *     (optional, default to false)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param orderBy Attribute by which to order the response items. If the `clickAnalytics`
    *     parameter is false, only `searchCount` is available. (optional, default to searchCount)
    * @param direction Sorting direction of the results: ascending or descending. (optional, default
@@ -3393,8 +3393,8 @@ public class AnalyticsClient extends ApiClient {
    * @param revenueAnalytics Whether to include revenue-related metrics in the response. If true,
    *     metrics related to click and conversion events are also included in the response.
    *     (optional, default to false)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param orderBy Attribute by which to order the response items. If the `clickAnalytics`
    *     parameter is false, only `searchCount` is available. (optional, default to searchCount)
    * @param direction Sorting direction of the results: ascending or descending. (optional, default
@@ -3452,8 +3452,8 @@ public class AnalyticsClient extends ApiClient {
    * @param revenueAnalytics Whether to include revenue-related metrics in the response. If true,
    *     metrics related to click and conversion events are also included in the response.
    *     (optional, default to false)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param orderBy Attribute by which to order the response items. If the `clickAnalytics`
    *     parameter is false, only `searchCount` is available. (optional, default to searchCount)
    * @param direction Sorting direction of the results: ascending or descending. (optional, default
@@ -3509,8 +3509,8 @@ public class AnalyticsClient extends ApiClient {
    * @param revenueAnalytics Whether to include revenue-related metrics in the response. If true,
    *     metrics related to click and conversion events are also included in the response.
    *     (optional, default to false)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param orderBy Attribute by which to order the response items. If the `clickAnalytics`
    *     parameter is false, only `searchCount` is available. (optional, default to searchCount)
    * @param direction Sorting direction of the results: ascending or descending. (optional, default
@@ -3581,8 +3581,8 @@ public class AnalyticsClient extends ApiClient {
    * period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -3609,8 +3609,8 @@ public class AnalyticsClient extends ApiClient {
    * period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -3662,8 +3662,8 @@ public class AnalyticsClient extends ApiClient {
    * analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)
@@ -3701,8 +3701,8 @@ public class AnalyticsClient extends ApiClient {
    * analyzed period includes the last eight days including the current day.
    *
    * @param index Index name. (required)
-   * @param startDate Start date (`YYYY-MM-DD`) of the period to analyze. (optional)
-   * @param endDate End date (`YYYY-MM-DD`) of the period to analyze. (optional)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (optional)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (optional)
    * @param tags Tags by which to segment the analytics. You can combine multiple tags with `OR` and
    *     `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics
    *     data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/). (optional)

@@ -245,7 +245,7 @@ public class SearchClient extends ApiClient {
    * Assigns or moves a user ID to a cluster. The time it takes to move a user is proportional to
    * the amount of data linked to the user ID.
    *
-   * @param xAlgoliaUserID User ID to assign. (required)
+   * @param xAlgoliaUserID Unique identifier of the user who makes the search request. (required)
    * @param assignUserIdParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -263,7 +263,7 @@ public class SearchClient extends ApiClient {
    * Assigns or moves a user ID to a cluster. The time it takes to move a user is proportional to
    * the amount of data linked to the user ID.
    *
-   * @param xAlgoliaUserID User ID to assign. (required)
+   * @param xAlgoliaUserID Unique identifier of the user who makes the search request. (required)
    * @param assignUserIdParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -276,7 +276,7 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Assigns or moves a user ID to a cluster. The time it takes to move a user is
    * proportional to the amount of data linked to the user ID.
    *
-   * @param xAlgoliaUserID User ID to assign. (required)
+   * @param xAlgoliaUserID Unique identifier of the user who makes the search request. (required)
    * @param assignUserIdParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -305,7 +305,7 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Assigns or moves a user ID to a cluster. The time it takes to move a user is
    * proportional to the amount of data linked to the user ID.
    *
-   * @param xAlgoliaUserID User ID to assign. (required)
+   * @param xAlgoliaUserID Unique identifier of the user who makes the search request. (required)
    * @param assignUserIdParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -393,7 +393,7 @@ public class SearchClient extends ApiClient {
   /**
    * Assigns multiple user IDs to a cluster. **You can't move users with this operation**.
    *
-   * @param xAlgoliaUserID User ID to assign. (required)
+   * @param xAlgoliaUserID Unique identifier of the user who makes the search request. (required)
    * @param batchAssignUserIdsParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -410,7 +410,7 @@ public class SearchClient extends ApiClient {
   /**
    * Assigns multiple user IDs to a cluster. **You can't move users with this operation**.
    *
-   * @param xAlgoliaUserID User ID to assign. (required)
+   * @param xAlgoliaUserID Unique identifier of the user who makes the search request. (required)
    * @param batchAssignUserIdsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -423,7 +423,7 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Assigns multiple user IDs to a cluster. **You can't move users with this
    * operation**.
    *
-   * @param xAlgoliaUserID User ID to assign. (required)
+   * @param xAlgoliaUserID Unique identifier of the user who makes the search request. (required)
    * @param batchAssignUserIdsParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -455,7 +455,7 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Assigns multiple user IDs to a cluster. **You can't move users with this
    * operation**.
    *
-   * @param xAlgoliaUserID User ID to assign. (required)
+   * @param xAlgoliaUserID Unique identifier of the user who makes the search request. (required)
    * @param batchAssignUserIdsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -2840,7 +2840,7 @@ public class SearchClient extends ApiClient {
    * Returns the user ID data stored in the mapping. Since it can take a few seconds to get the data
    * from the different clusters, the response isn't real-time.
    *
-   * @param userID User ID to assign. (required)
+   * @param userID Unique identifier of the user who makes the search request. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2853,7 +2853,7 @@ public class SearchClient extends ApiClient {
    * Returns the user ID data stored in the mapping. Since it can take a few seconds to get the data
    * from the different clusters, the response isn't real-time.
    *
-   * @param userID User ID to assign. (required)
+   * @param userID Unique identifier of the user who makes the search request. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public UserId getUserId(@Nonnull String userID) throws AlgoliaRuntimeException {
@@ -2864,7 +2864,7 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Returns the user ID data stored in the mapping. Since it can take a few
    * seconds to get the data from the different clusters, the response isn't real-time.
    *
-   * @param userID User ID to assign. (required)
+   * @param userID Unique identifier of the user who makes the search request. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2880,7 +2880,7 @@ public class SearchClient extends ApiClient {
    * (asynchronously) Returns the user ID data stored in the mapping. Since it can take a few
    * seconds to get the data from the different clusters, the response isn't real-time.
    *
-   * @param userID User ID to assign. (required)
+   * @param userID Unique identifier of the user who makes the search request. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<UserId> getUserIdAsync(@Nonnull String userID) throws AlgoliaRuntimeException {
@@ -3690,7 +3690,7 @@ public class SearchClient extends ApiClient {
   /**
    * Deletes a user ID and its associated data from the clusters.
    *
-   * @param userID User ID to assign. (required)
+   * @param userID Unique identifier of the user who makes the search request. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3702,7 +3702,7 @@ public class SearchClient extends ApiClient {
   /**
    * Deletes a user ID and its associated data from the clusters.
    *
-   * @param userID User ID to assign. (required)
+   * @param userID Unique identifier of the user who makes the search request. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public RemoveUserIdResponse removeUserId(@Nonnull String userID) throws AlgoliaRuntimeException {
@@ -3712,7 +3712,7 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Deletes a user ID and its associated data from the clusters.
    *
-   * @param userID User ID to assign. (required)
+   * @param userID Unique identifier of the user who makes the search request. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -3728,7 +3728,7 @@ public class SearchClient extends ApiClient {
   /**
    * (asynchronously) Deletes a user ID and its associated data from the clusters.
    *
-   * @param userID User ID to assign. (required)
+   * @param userID Unique identifier of the user who makes the search request. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<RemoveUserIdResponse> removeUserIdAsync(@Nonnull String userID) throws AlgoliaRuntimeException {

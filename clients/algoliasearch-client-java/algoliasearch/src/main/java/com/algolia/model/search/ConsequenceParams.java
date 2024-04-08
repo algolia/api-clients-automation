@@ -772,17 +772,11 @@ public class ConsequenceParams {
    * The tie-breaking algorithm sequentially applies each criterion in the order they're specified.
    * If you configure a replica index for [sorting by an
    * attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute/),
-   * you put the sorting attribute at the top of the list. **Modifiers**
-   *
-   * <dl>
-   *   <dt><code>asc(\"ATTRIBUTE\")</code>
-   *   <dd>Sort the index by the values of an attribute, in ascending order.
-   *   <dt><code>desc(\"ATTRIBUTE\")</code>
-   *   <dd>Sort the index by the values of an attribute, in descending order.
-   * </dl>
-   *
-   * Before you modify the default setting, you should test your changes in the dashboard, and by
-   * [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/).
+   * you put the sorting attribute at the top of the list. **Modifiers** - `asc(\"ATTRIBUTE\")`.
+   * Sort the index by the values of an attribute, in ascending order. - `desc(\"ATTRIBUTE\")`. Sort
+   * the index by the values of an attribute, in descending order. Before you modify the default
+   * setting, you should test your changes in the dashboard, and by [A/B
+   * testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/).
    */
   @javax.annotation.Nullable
   public List<String> getRanking() {
@@ -807,16 +801,10 @@ public class ConsequenceParams {
    * ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/). The
    * custom ranking attributes decide which items are shown first if the other ranking criteria are
    * equal. Records with missing values for your selected custom ranking attributes are always
-   * sorted last. Boolean attributes are sorted based on their alphabetical order. **Modifiers**
-   *
-   * <dl>
-   *   <dt><code>asc(\"ATTRIBUTE\")</code>
-   *   <dd>Sort the index by the values of an attribute, in ascending order.
-   *   <dt><code>desc(\"ATTRIBUTE\")</code>
-   *   <dd>Sort the index by the values of an attribute, in descending order.
-   * </dl>
-   *
-   * If you use two or more custom ranking attributes, [reduce the
+   * sorted last. Boolean attributes are sorted based on their alphabetical order. **Modifiers** -
+   * `asc(\"ATTRIBUTE\")`. Sort the index by the values of an attribute, in ascending order. -
+   * `desc(\"ATTRIBUTE\")`. Sort the index by the values of an attribute, in descending order. If
+   * you use two or more custom ranking attributes, [reduce the
    * precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/)
    * of your first attributes, or the other attributes will never be applied.
    */
@@ -1284,19 +1272,10 @@ public class ConsequenceParams {
 
   /**
    * Alternatives of query words that should be considered as exact matches by the Exact ranking
-   * criterion.
-   *
-   * <dl>
-   *   <dt><code>ignorePlurals</code>
-   *   <dd>Plurals and similar declensions added by the `ignorePlurals` setting are considered exact
-   *       matches.
-   *   <dt><code>singleWordSynonym</code>
-   *   <dd>Single-word synonyms, such as \"NY/NYC\" are considered exact matches.
-   *   <dt><code>multiWordsSynonym</code>
-   *   <dd>Multi-word synonyms, such as \"NY/New York\" are considered exact matches.
-   * </dl>
-   *
-   * .
+   * criterion. - `ignorePlurals`. Plurals and similar declensions added by the `ignorePlurals`
+   * setting are considered exact matches. - `singleWordSynonym`. Single-word synonyms, such as
+   * \"NY/NYC\" are considered exact matches. - `multiWordsSynonym`. Multi-word synonyms, such as
+   * \"NY/New York\" are considered exact matches.
    */
   @javax.annotation.Nullable
   public List<AlternativesAsExact> getAlternativesAsExact() {
@@ -1317,18 +1296,11 @@ public class ConsequenceParams {
   }
 
   /**
-   * Advanced search syntax features you want to support.
-   *
-   * <dl>
-   *   <dt><code>exactPhrase</code>
-   *   <dd>Phrases in quotes must match exactly. For example, `sparkly blue \"iPhone case\"` only
-   *       returns records with the exact string \"iPhone case\".
-   *   <dt><code>excludeWords</code>
-   *   <dd>Query words prefixed with a `-` must not occur in a record. For example, `search -engine`
-   *       matches records that contain \"search\" but not \"engine\".
-   * </dl>
-   *
-   * This setting only has an effect if `advancedSyntax` is true.
+   * Advanced search syntax features you want to support. - `exactPhrase`. Phrases in quotes must
+   * match exactly. For example, `sparkly blue \"iPhone case\"` only returns records with the exact
+   * string \"iPhone case\". - `excludeWords`. Query words prefixed with a `-` must not occur in a
+   * record. For example, `search -engine` matches records that contain \"search\" but not
+   * \"engine\". This setting only has an effect if `advancedSyntax` is true.
    */
   @javax.annotation.Nullable
   public List<AdvancedSyntaxFeatures> getAdvancedSyntaxFeatures() {
@@ -1438,18 +1410,10 @@ public class ConsequenceParams {
   }
 
   /**
-   * Order in which to retrieve facet values.
-   *
-   * <dl>
-   *   <dt><code>count</code>
-   *   <dd>Facet values are retrieved by decreasing count. The count is the number of matching
-   *       records containing this facet value.
-   *   <dt><code>alpha</code>
-   *   <dd>Retrieve facet values alphabetically.
-   * </dl>
-   *
-   * This setting doesn't influence how facet values are displayed in your UI (see
-   * `renderingContent`). For more information, see [facet value
+   * Order in which to retrieve facet values. - `count`. Facet values are retrieved by decreasing
+   * count. The count is the number of matching records containing this facet value. - `alpha`.
+   * Retrieve facet values alphabetically. This setting doesn't influence how facet values are
+   * displayed in your UI (see `renderingContent`). For more information, see [facet value
    * display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js/).
    */
   @javax.annotation.Nullable
