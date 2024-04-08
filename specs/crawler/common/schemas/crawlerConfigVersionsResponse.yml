@@ -11,7 +11,7 @@ allOf:
             version:
               $ref: '../parameters.yml#/version'
             createdAt:
-              $ref: '../parameters.yml#/createdAt'
+              $ref: '../../../common/responses/common.yml#/createdAt'
             authorId:
               $ref: '../parameters.yml#/authorId'
           required:

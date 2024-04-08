@@ -218,7 +218,7 @@ final class SearchClient implements ApiClient {
   ///   - admin
   ///
   /// Parameters:
-  /// * [xAlgoliaUserID] User ID to assign.
+  /// * [xAlgoliaUserID] Unique identifier of the user who makes the search request.
   /// * [assignUserIdParams]
   /// * [requestOptions] additional request configuration.
   Future<CreatedAtResponse> assignUserId({
@@ -287,7 +287,7 @@ final class SearchClient implements ApiClient {
   ///   - admin
   ///
   /// Parameters:
-  /// * [xAlgoliaUserID] User ID to assign.
+  /// * [xAlgoliaUserID] Unique identifier of the user who makes the search request.
   /// * [batchAssignUserIdsParams]
   /// * [requestOptions] additional request configuration.
   Future<CreatedAtResponse> batchAssignUserIds({
@@ -1295,7 +1295,7 @@ final class SearchClient implements ApiClient {
   ///   - admin
   ///
   /// Parameters:
-  /// * [userID] User ID to assign.
+  /// * [userID] Unique identifier of the user who makes the search request.
   /// * [requestOptions] additional request configuration.
   Future<UserId> getUserId({
     required String userID,
@@ -1583,7 +1583,7 @@ final class SearchClient implements ApiClient {
   ///   - admin
   ///
   /// Parameters:
-  /// * [userID] User ID to assign.
+  /// * [userID] Unique identifier of the user who makes the search request.
   /// * [requestOptions] additional request configuration.
   Future<RemoveUserIdResponse> removeUserId({
     required String userID,

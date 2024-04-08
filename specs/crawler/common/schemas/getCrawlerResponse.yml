@@ -11,13 +11,9 @@ BaseResponse:
     name:
       $ref: '../parameters.yml#/CrawlerName'
     createdAt:
-      type: string
-      description: Timestamp in ISO 8601 format when the crawler was created.
-      example: 2024-04-02T12:17:22Z
+      $ref: '../../../common/responses/common.yml#/createdAt'
     updatedAt:
-      type: string
-      description: Timestamp in ISO 8601 format when the crawler was last updated.
-      example: 2024-04-02T12:17:22Z
+      $ref: '../../../common/responses/common.yml#/updatedAt'
     running:
       type: boolean
       description: Whether this crawler is active.
@@ -42,14 +38,17 @@ BaseResponse:
       default: null
       oneOf:
         - type: string
-          description: Timestamp in ISO 8601 format when the last complete reindexing started.
+          description: Date and time when the last crawl started, in RFC 3339 format.
+          example: 2024-04-07T09:16:04Z
         - type: 'null'
+          description: If null, this crawler hasn't indexed anything yet.
     lastReindexEndedAt:
       default: null
       oneOf:
         - type: string
-          description: Timestamp in ISO 8601 format when the last complete reindexing completed.
+          description: Date and time when the last crawl finished, in RFC 3339 format.
         - type: 'null'
+          description: If null, this crawler hasn't indexed anything yet.
   required:
     - name
     - createdAt

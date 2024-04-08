@@ -52,10 +52,7 @@ public class GetConfigStatus200Response {
     return this;
   }
 
-  /**
-   * Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format when the Query Suggestions
-   * index was last built.
-   */
+  /** Date and time when the Query Suggestions index was last built, in RFC 3339 format. */
   @javax.annotation.Nullable
   public String getLastBuiltAt() {
     return lastBuiltAt;
@@ -66,10 +63,7 @@ public class GetConfigStatus200Response {
     return this;
   }
 
-  /**
-   * Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format when the Query Suggestions
-   * index was last updated successfully.
-   */
+  /** Date and time when the Query Suggestions index was last updated successfully. */
   @javax.annotation.Nullable
   public String getLastSuccessfulBuiltAt() {
     return lastSuccessfulBuiltAt;

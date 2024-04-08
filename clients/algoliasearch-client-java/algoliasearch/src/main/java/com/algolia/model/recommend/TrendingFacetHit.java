@@ -36,7 +36,10 @@ public class TrendingFacetHit implements RecommendationsHit {
     return this;
   }
 
-  /** Facet name for trending models. */
+  /**
+   * Facet attribute. To be used in combination with `facetValue`. If specified, only
+   * recommendations matching the facet filter will be returned.
+   */
   @javax.annotation.Nonnull
   public String getFacetName() {
     return facetName;
@@ -47,7 +50,10 @@ public class TrendingFacetHit implements RecommendationsHit {
     return this;
   }
 
-  /** Facet value for trending models. */
+  /**
+   * Facet value. To be used in combination with `facetName`. If specified, only recommendations
+   * matching the facet filter will be returned.
+   */
   @javax.annotation.Nonnull
   public String getFacetValue() {
     return facetValue;

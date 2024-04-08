@@ -23,7 +23,7 @@ get:
               config:
                 $ref: '../common/schemas/configuration.yml#/Configuration'
               createdAt:
-                $ref: '../common/parameters.yml#/createdAt'
+                $ref: '../../common/responses/common.yml#/createdAt'
               authorId:
                 $ref: '../common/parameters.yml#/authorId'
             required:

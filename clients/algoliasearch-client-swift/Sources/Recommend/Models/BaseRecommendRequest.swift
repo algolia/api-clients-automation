@@ -9,23 +9,31 @@ import Foundation
 public struct BaseRecommendRequest: Codable, JSONEncodable {
     /// Index name.
     public var indexName: String
-    /// Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each
-    /// recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the
-    /// recommendations are.
-    public var threshold: Int?
-    /// Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
+    /// Minimum score a recommendation must have to be included in the response.
+    public var threshold: Double
+    /// Maximum number of recommendations to retrieve. By default, all recommendations are returned and no fallback
+    /// request is made. Depending on the available recommendations and the other request parameters, the actual number
+    /// of recommendations may be lower than this value.
     public var maxRecommendations: Int?
+    public var queryParameters: RecommendSearchParams?
 
-    public init(indexName: String, threshold: Int? = nil, maxRecommendations: Int? = nil) {
+    public init(
+        indexName: String,
+        threshold: Double,
+        maxRecommendations: Int? = nil,
+        queryParameters: RecommendSearchParams? = nil
+    ) {
         self.indexName = indexName
         self.threshold = threshold
         self.maxRecommendations = maxRecommendations
+        self.queryParameters = queryParameters
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case indexName
         case threshold
         case maxRecommendations
+        case queryParameters
     }
 
     // Encodable protocol methods
@@ -33,8 +41,9 @@ public struct BaseRecommendRequest: Codable, JSONEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.indexName, forKey: .indexName)
-        try container.encodeIfPresent(self.threshold, forKey: .threshold)
+        try container.encode(self.threshold, forKey: .threshold)
         try container.encodeIfPresent(self.maxRecommendations, forKey: .maxRecommendations)
+        try container.encodeIfPresent(self.queryParameters, forKey: .queryParameters)
     }
 }
 
@@ -42,14 +51,16 @@ extension BaseRecommendRequest: Equatable {
     public static func ==(lhs: BaseRecommendRequest, rhs: BaseRecommendRequest) -> Bool {
         lhs.indexName == rhs.indexName &&
             lhs.threshold == rhs.threshold &&
-            lhs.maxRecommendations == rhs.maxRecommendations
+            lhs.maxRecommendations == rhs.maxRecommendations &&
+            lhs.queryParameters == rhs.queryParameters
     }
 }
 
 extension BaseRecommendRequest: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.indexName.hashValue)
-        hasher.combine(self.threshold?.hashValue)
+        hasher.combine(self.threshold.hashValue)
         hasher.combine(self.maxRecommendations?.hashValue)
+        hasher.combine(self.queryParameters?.hashValue)
     }
 }

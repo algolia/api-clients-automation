@@ -1,0 +1,119 @@
+RecommendRule:
+  type: object
+  description: Recommend rule.
+  additionalProperties: false
+  properties:
+    _metadata:
+      type: object
+      description: Rule metadata.
+      properties:
+        lastUpdate:
+          $ref: '../../../common/responses/common.yml#/updatedAt'
+    objectID:
+      $ref: '../../../common/parameters.yml#/ruleID'
+    condition:
+      $ref: '#/Condition'
+    consequence:
+      $ref: '#/Consequence'
+    description:
+      type: string
+      description: Description of the rule's purpose. This can be helpful for display in the Algolia dashboard.
+      example: 'Display a promotional banner'
+    enabled:
+      type: boolean
+      default: true
+      description: Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time.
+
+Condition:
+  type: object
+  description: |
+    Condition that triggers the rule.
+    If not specified, the rule is triggered for all recommendations.
+  properties:
+    filters:
+      $ref: '../../../common/schemas/SearchParams.yml#/filters'
+    context:
+      $ref: '../../../search/paths/rules/common/schemas.yml#/context'
+
+Consequence:
+  type: object
+  description: Effect of the rule.
+  properties:
+    hide:
+      $ref: '#/HideConsequence'
+    promote:
+      $ref: '#/PromoteConsequence'
+    params:
+      $ref: '#/ParamsConsequence'
+
+HideConsequence:
+  type: array
+  description: Exclude items from recommendations.
+  minItems: 1
+  items:
+    $ref: '#/HideConsequenceObject'
+
+HideConsequenceObject:
+  type: object
+  description: Object ID of the recommendation you want to exclude.
+  properties:
+    objectID:
+      $ref: '../../../common/parameters.yml#/objectID'
+
+PromoteConsequence:
+  type: array
+  description: Place items at specific positions in the list of recommendations.
+  minItems: 1
+  items:
+    $ref: '#/PromoteConsequenceObject'
+
+PromoteConsequenceObject:
+  type: object
+  description: Object ID and position of the recommendation you want to pin.
+  properties:
+    objectID:
+      $ref: '../../../common/parameters.yml#/objectID'
+    position:
+      type: integer
+      description: Index in the list of recommendations where to place this item.
+      minimum: 0
+
+ParamsConsequence:
+  type: object
+  description: Filter or boost recommendations matching a facet filter.
+  properties:
+    automaticFacetFilters:
+      type: array
+      description: Filter recommendations that match or don't match the same `facet:facet_value` combination as the viewed item.
+      items:
+        $ref: '#/AutoFacetFilter'
+    filters:
+      $ref: '../../../common/schemas/SearchParams.yml#/filters'
+    optionalFilters:
+      type: array
+      description: |
+        Filters to promote or demote records in the search results.
+
+        Optional filters work like facet filters, but they don't exclude records from the search results.
+        Records that match the optional filter rank before records that don't match.
+        Matches with higher weights (`<score=N>`) rank before matches with lower weights.
+        If you're using a negative filter `facet:-value`, matching records rank after records that don't match.
+      items:
+        type: string
+      example:
+        - 'category:books<score=1>'
+        - 'category:-movies<score=1>'
+
+AutoFacetFilter:
+  type: object
+  description: Facet attribute. Only recommendations with the same value (or only recommendations with a different value) as the original viewed item are included.
+  properties:
+    facet:
+      type: string
+      description: Facet attribute.
+    negative:
+      type: boolean
+      description: |
+        Whether the filter is negative.
+        If true, recommendations must not have the same value for the `facet` attribute.
+        If false, recommendations must have the same value for the `facet` attribute.

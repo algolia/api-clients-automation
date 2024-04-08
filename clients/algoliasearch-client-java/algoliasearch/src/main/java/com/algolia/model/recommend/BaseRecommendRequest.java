@@ -14,10 +14,13 @@ public class BaseRecommendRequest {
   private String indexName;
 
   @JsonProperty("threshold")
-  private Integer threshold;
+  private Double threshold;
 
   @JsonProperty("maxRecommendations")
   private Integer maxRecommendations;
+
+  @JsonProperty("queryParameters")
+  private SearchParams queryParameters;
 
   public BaseRecommendRequest setIndexName(String indexName) {
     this.indexName = indexName;
@@ -30,18 +33,17 @@ public class BaseRecommendRequest {
     return indexName;
   }
 
-  public BaseRecommendRequest setThreshold(Integer threshold) {
+  public BaseRecommendRequest setThreshold(Double threshold) {
     this.threshold = threshold;
     return this;
   }
 
   /**
-   * Recommendations with a confidence score lower than `threshold` won't appear in results. >
-   * **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to
-   * 100, the more relevant the recommendations are. minimum: 0 maximum: 100
+   * Minimum score a recommendation must have to be included in the response. minimum: 0 maximum:
+   * 100
    */
-  @javax.annotation.Nullable
-  public Integer getThreshold() {
+  @javax.annotation.Nonnull
+  public Double getThreshold() {
     return threshold;
   }
 
@@ -50,10 +52,26 @@ public class BaseRecommendRequest {
     return this;
   }
 
-  /** Maximum number of recommendations to retrieve. If 0, all recommendations will be returned. */
+  /**
+   * Maximum number of recommendations to retrieve. By default, all recommendations are returned and
+   * no fallback request is made. Depending on the available recommendations and the other request
+   * parameters, the actual number of recommendations may be lower than this value. minimum: 1
+   * maximum: 1000
+   */
   @javax.annotation.Nullable
   public Integer getMaxRecommendations() {
     return maxRecommendations;
+  }
+
+  public BaseRecommendRequest setQueryParameters(SearchParams queryParameters) {
+    this.queryParameters = queryParameters;
+    return this;
+  }
+
+  /** Get queryParameters */
+  @javax.annotation.Nullable
+  public SearchParams getQueryParameters() {
+    return queryParameters;
   }
 
   @Override
@@ -68,13 +86,14 @@ public class BaseRecommendRequest {
     return (
       Objects.equals(this.indexName, baseRecommendRequest.indexName) &&
       Objects.equals(this.threshold, baseRecommendRequest.threshold) &&
-      Objects.equals(this.maxRecommendations, baseRecommendRequest.maxRecommendations)
+      Objects.equals(this.maxRecommendations, baseRecommendRequest.maxRecommendations) &&
+      Objects.equals(this.queryParameters, baseRecommendRequest.queryParameters)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(indexName, threshold, maxRecommendations);
+    return Objects.hash(indexName, threshold, maxRecommendations, queryParameters);
   }
 
   @Override
@@ -84,6 +103,7 @@ public class BaseRecommendRequest {
     sb.append("    indexName: ").append(toIndentedString(indexName)).append("\n");
     sb.append("    threshold: ").append(toIndentedString(threshold)).append("\n");
     sb.append("    maxRecommendations: ").append(toIndentedString(maxRecommendations)).append("\n");
+    sb.append("    queryParameters: ").append(toIndentedString(queryParameters)).append("\n");
     sb.append("}");
     return sb.toString();
   }

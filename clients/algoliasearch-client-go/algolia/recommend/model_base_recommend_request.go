@@ -10,19 +10,14 @@ import (
 type BaseRecommendRequest struct {
 	// Index name.
 	IndexName string `json:"indexName"`
-	// Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the recommendations are.
-	Threshold *int32 `json:"threshold,omitempty"`
-	// Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
-	MaxRecommendations *int32 `json:"maxRecommendations,omitempty"`
+	// Minimum score a recommendation must have to be included in the response.
+	Threshold float64 `json:"threshold"`
+	// Maximum number of recommendations to retrieve. By default, all recommendations are returned and no fallback request is made. Depending on the available recommendations and the other request parameters, the actual number of recommendations may be lower than this value.
+	MaxRecommendations *int32        `json:"maxRecommendations,omitempty"`
+	QueryParameters    *SearchParams `json:"queryParameters,omitempty"`
 }
 
 type BaseRecommendRequestOption func(f *BaseRecommendRequest)
-
-func WithBaseRecommendRequestThreshold(val int32) BaseRecommendRequestOption {
-	return func(f *BaseRecommendRequest) {
-		f.Threshold = &val
-	}
-}
 
 func WithBaseRecommendRequestMaxRecommendations(val int32) BaseRecommendRequestOption {
 	return func(f *BaseRecommendRequest) {
@@ -30,13 +25,20 @@ func WithBaseRecommendRequestMaxRecommendations(val int32) BaseRecommendRequestO
 	}
 }
 
+func WithBaseRecommendRequestQueryParameters(val SearchParams) BaseRecommendRequestOption {
+	return func(f *BaseRecommendRequest) {
+		f.QueryParameters = &val
+	}
+}
+
 // NewBaseRecommendRequest instantiates a new BaseRecommendRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed.
-func NewBaseRecommendRequest(indexName string, opts ...BaseRecommendRequestOption) *BaseRecommendRequest {
+func NewBaseRecommendRequest(indexName string, threshold float64, opts ...BaseRecommendRequestOption) *BaseRecommendRequest {
 	this := &BaseRecommendRequest{}
 	this.IndexName = indexName
+	this.Threshold = threshold
 	for _, opt := range opts {
 		opt(this)
 	}
@@ -73,36 +75,28 @@ func (o *BaseRecommendRequest) SetIndexName(v string) *BaseRecommendRequest {
 	return o
 }
 
-// GetThreshold returns the Threshold field value if set, zero value otherwise.
-func (o *BaseRecommendRequest) GetThreshold() int32 {
-	if o == nil || o.Threshold == nil {
-		var ret int32
+// GetThreshold returns the Threshold field value.
+func (o *BaseRecommendRequest) GetThreshold() float64 {
+	if o == nil {
+		var ret float64
 		return ret
 	}
-	return *o.Threshold
+
+	return o.Threshold
 }
 
-// GetThresholdOk returns a tuple with the Threshold field value if set, nil otherwise
+// GetThresholdOk returns a tuple with the Threshold field value
 // and a boolean to check if the value has been set.
-func (o *BaseRecommendRequest) GetThresholdOk() (*int32, bool) {
-	if o == nil || o.Threshold == nil {
+func (o *BaseRecommendRequest) GetThresholdOk() (*float64, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Threshold, true
+	return &o.Threshold, true
 }
 
-// HasThreshold returns a boolean if a field has been set.
-func (o *BaseRecommendRequest) HasThreshold() bool {
-	if o != nil && o.Threshold != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetThreshold gets a reference to the given int32 and assigns it to the Threshold field.
-func (o *BaseRecommendRequest) SetThreshold(v int32) *BaseRecommendRequest {
-	o.Threshold = &v
+// SetThreshold sets field value.
+func (o *BaseRecommendRequest) SetThreshold(v float64) *BaseRecommendRequest {
+	o.Threshold = v
 	return o
 }
 
@@ -139,16 +133,52 @@ func (o *BaseRecommendRequest) SetMaxRecommendations(v int32) *BaseRecommendRequ
 	return o
 }
 
+// GetQueryParameters returns the QueryParameters field value if set, zero value otherwise.
+func (o *BaseRecommendRequest) GetQueryParameters() SearchParams {
+	if o == nil || o.QueryParameters == nil {
+		var ret SearchParams
+		return ret
+	}
+	return *o.QueryParameters
+}
+
+// GetQueryParametersOk returns a tuple with the QueryParameters field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BaseRecommendRequest) GetQueryParametersOk() (*SearchParams, bool) {
+	if o == nil || o.QueryParameters == nil {
+		return nil, false
+	}
+	return o.QueryParameters, true
+}
+
+// HasQueryParameters returns a boolean if a field has been set.
+func (o *BaseRecommendRequest) HasQueryParameters() bool {
+	if o != nil && o.QueryParameters != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetQueryParameters gets a reference to the given SearchParams and assigns it to the QueryParameters field.
+func (o *BaseRecommendRequest) SetQueryParameters(v *SearchParams) *BaseRecommendRequest {
+	o.QueryParameters = v
+	return o
+}
+
 func (o BaseRecommendRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]any{}
 	if true {
 		toSerialize["indexName"] = o.IndexName
 	}
-	if o.Threshold != nil {
+	if true {
 		toSerialize["threshold"] = o.Threshold
 	}
 	if o.MaxRecommendations != nil {
 		toSerialize["maxRecommendations"] = o.MaxRecommendations
+	}
+	if o.QueryParameters != nil {
+		toSerialize["queryParameters"] = o.QueryParameters
 	}
 	serialized, err := json.Marshal(toSerialize)
 	if err != nil {
@@ -163,6 +193,7 @@ func (o BaseRecommendRequest) String() string {
 	out += fmt.Sprintf("  indexName=%v\n", o.IndexName)
 	out += fmt.Sprintf("  threshold=%v\n", o.Threshold)
 	out += fmt.Sprintf("  maxRecommendations=%v\n", o.MaxRecommendations)
+	out += fmt.Sprintf("  queryParameters=%v\n", o.QueryParameters)
 	return fmt.Sprintf("BaseRecommendRequest {\n%s}", out)
 }
 

@@ -4,7 +4,7 @@ info:
   description: |
     The Usage API gives you access to statistics about all requests made to your Algolia applications.
 
-    # Base URL
+    ## Base URL
 
     The base URL for requests to the Usage API is:
 
@@ -12,20 +12,16 @@ info:
 
     **All requests must use HTTPS.**
 
-    # Authentication
+    ## Authentication
 
     To authenticate your API requests, add these headers:
 
-    <dl>
-    <dt><code>x-algolia-application-id</code></dt>
-    <dd>Your Algolia application ID.</dd>
-    <dt><code>x-algolia-api-key</code></dt>
-    <dd>The Usage API key.</dd>
-    </dl>
+    - `x-algolia-application-id`. Your Algolia application ID.
+    - `x-algolia-api-key`. The Usage API key.
 
     You can find your application ID and Usage API key in the [Algolia dashboard](https://dashboard.algolia.com/account).
 
-    # Response status and errors
+    ## Response status and errors
 
     The Usage API returns JSON responses.
     Since JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.
@@ -33,7 +29,7 @@ info:
     Successful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status.
     Error responses have a `message` property with more information.
 
-    # Version
+    ## Version
 
     The current version of the Usage API is version 1, as indicated by the `/1/` in each endpoint's URL.
   version: 1.0.0
@@ -56,6 +52,15 @@ tags:
     x-displayName: Usage statistics
     description: Get various metrics related to the usage of your Algolia applications.
 paths:
+  # ######################
+  # ### Custom request ###
+  # ######################
+  /{path}:
+    $ref: '../common/paths/customRequest.yml'
+
+  # ##################################
+  # ######## Usage  Endpoints ########
+  # ##################################
   /1/usage/{statistic}:
     $ref: 'paths/statistic.yml'
   /1/usage/{statistic}/{indexName}:

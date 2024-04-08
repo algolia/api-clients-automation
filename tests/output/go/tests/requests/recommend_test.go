@@ -448,8 +448,8 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
 
 			recommend.NewEmptyGetRecommendationsParams().SetRequests(
-				[]recommend.RecommendationsRequest{*recommend.RecommendationsQueryAsRecommendationsRequest(
-					recommend.NewEmptyRecommendationsQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RecommendationModels("related-products")).SetThreshold(42))}),
+				[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
+					recommend.NewEmptyRelatedQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))}),
 		))
 		require.NoError(t, err)
 
@@ -457,17 +457,17 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1}]}`)
 	})
 	t.Run("get recommendations for recommend model with all parameters", func(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
 
 			recommend.NewEmptyGetRecommendationsParams().SetRequests(
-				[]recommend.RecommendationsRequest{*recommend.RecommendationsQueryAsRecommendationsRequest(
-					recommend.NewEmptyRecommendationsQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RecommendationModels("related-products")).SetThreshold(42).SetMaxRecommendations(10).SetQueryParameters(
-						recommend.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfMixedSearchFiltersAsFacetFilters(
+				[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
+					recommend.NewEmptyRelatedQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1).SetMaxRecommendations(10).SetQueryParameters(
+						recommend.NewEmptySearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfMixedSearchFiltersAsFacetFilters(
 							[]recommend.MixedSearchFilters{*recommend.StringAsMixedSearchFilters("query")}))).SetFallbackParameters(
-						recommend.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfMixedSearchFiltersAsFacetFilters(
+						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfMixedSearchFiltersAsFacetFilters(
 							[]recommend.MixedSearchFilters{*recommend.StringAsMixedSearchFilters("fallback")}))))}),
 		))
 		require.NoError(t, err)
@@ -476,14 +476,14 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}`)
 	})
 	t.Run("get recommendations for trending model with minimal parameters", func(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
 
 			recommend.NewEmptyGetRecommendationsParams().SetRequests(
 				[]recommend.RecommendationsRequest{*recommend.TrendingItemsQueryAsRecommendationsRequest(
-					recommend.NewEmptyTrendingItemsQuery().SetIndexName("indexName").SetModel(recommend.TrendingItemsModel("trending-items")).SetThreshold(42))}),
+					recommend.NewEmptyTrendingItemsQuery().SetIndexName("indexName").SetModel(recommend.TrendingItemsModel("trending-items")).SetThreshold(42.1).SetFacetName("facet").SetFacetValue("value"))}),
 		))
 		require.NoError(t, err)
 
@@ -491,15 +491,15 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"facetName":"facet","facetValue":"value"}]}`)
 	})
 	t.Run("get recommendations for trending model with all parameters", func(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
 
 			recommend.NewEmptyGetRecommendationsParams().SetRequests(
 				[]recommend.RecommendationsRequest{*recommend.TrendingItemsQueryAsRecommendationsRequest(
-					recommend.NewEmptyTrendingItemsQuery().SetIndexName("indexName").SetModel(recommend.TrendingItemsModel("trending-items")).SetThreshold(42).SetMaxRecommendations(10).SetFacetName("myFacetName").SetFacetValue("myFacetValue").SetQueryParameters(
-						recommend.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfMixedSearchFiltersAsFacetFilters(
+					recommend.NewEmptyTrendingItemsQuery().SetIndexName("indexName").SetModel(recommend.TrendingItemsModel("trending-items")).SetThreshold(42.1).SetMaxRecommendations(10).SetFacetName("myFacetName").SetFacetValue("myFacetValue").SetQueryParameters(
+						recommend.NewEmptySearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfMixedSearchFiltersAsFacetFilters(
 							[]recommend.MixedSearchFilters{*recommend.StringAsMixedSearchFilters("query")}))).SetFallbackParameters(
 						recommend.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfMixedSearchFiltersAsFacetFilters(
 							[]recommend.MixedSearchFilters{*recommend.StringAsMixedSearchFilters("fallback")}))))}),
@@ -510,15 +510,15 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}`)
 	})
 	t.Run("get multiple recommendations with minimal parameters", func(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
 
 			recommend.NewEmptyGetRecommendationsParams().SetRequests(
-				[]recommend.RecommendationsRequest{*recommend.RecommendationsQueryAsRecommendationsRequest(
-					recommend.NewEmptyRecommendationsQuery().SetIndexName("indexName1").SetObjectID("objectID1").SetModel(recommend.RecommendationModels("related-products")).SetThreshold(21)), *recommend.RecommendationsQueryAsRecommendationsRequest(
-					recommend.NewEmptyRecommendationsQuery().SetIndexName("indexName2").SetObjectID("objectID2").SetModel(recommend.RecommendationModels("related-products")).SetThreshold(21))}),
+				[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
+					recommend.NewEmptyRelatedQuery().SetIndexName("indexName1").SetObjectID("objectID1").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7)), *recommend.RelatedQueryAsRecommendationsRequest(
+					recommend.NewEmptyRelatedQuery().SetIndexName("indexName2").SetObjectID("objectID2").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7))}),
 		))
 		require.NoError(t, err)
 
@@ -526,22 +526,22 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7}]}`)
 	})
 	t.Run("get multiple recommendations with all parameters", func(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
 
 			recommend.NewEmptyGetRecommendationsParams().SetRequests(
-				[]recommend.RecommendationsRequest{*recommend.RecommendationsQueryAsRecommendationsRequest(
-					recommend.NewEmptyRecommendationsQuery().SetIndexName("indexName1").SetObjectID("objectID1").SetModel(recommend.RecommendationModels("related-products")).SetThreshold(21).SetMaxRecommendations(10).SetQueryParameters(
-						recommend.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfMixedSearchFiltersAsFacetFilters(
+				[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
+					recommend.NewEmptyRelatedQuery().SetIndexName("indexName1").SetObjectID("objectID1").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7).SetMaxRecommendations(10).SetQueryParameters(
+						recommend.NewEmptySearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfMixedSearchFiltersAsFacetFilters(
 							[]recommend.MixedSearchFilters{*recommend.StringAsMixedSearchFilters("query1")}))).SetFallbackParameters(
-						recommend.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfMixedSearchFiltersAsFacetFilters(
-							[]recommend.MixedSearchFilters{*recommend.StringAsMixedSearchFilters("fallback1")})))), *recommend.RecommendationsQueryAsRecommendationsRequest(
-					recommend.NewEmptyRecommendationsQuery().SetIndexName("indexName2").SetObjectID("objectID2").SetModel(recommend.RecommendationModels("related-products")).SetThreshold(21).SetMaxRecommendations(10).SetQueryParameters(
-						recommend.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfMixedSearchFiltersAsFacetFilters(
+						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfMixedSearchFiltersAsFacetFilters(
+							[]recommend.MixedSearchFilters{*recommend.StringAsMixedSearchFilters("fallback1")})))), *recommend.RelatedQueryAsRecommendationsRequest(
+					recommend.NewEmptyRelatedQuery().SetIndexName("indexName2").SetObjectID("objectID2").SetModel(recommend.RelatedModel("related-products")).SetThreshold(21.7).SetMaxRecommendations(10).SetQueryParameters(
+						recommend.NewEmptySearchParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfMixedSearchFiltersAsFacetFilters(
 							[]recommend.MixedSearchFilters{*recommend.StringAsMixedSearchFilters("query2")}))).SetFallbackParameters(
-						recommend.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfMixedSearchFiltersAsFacetFilters(
+						recommend.NewEmptyFallbackParams().SetQuery("myQuery").SetFacetFilters(recommend.ArrayOfMixedSearchFiltersAsFacetFilters(
 							[]recommend.MixedSearchFilters{*recommend.StringAsMixedSearchFilters("fallback2")}))))}),
 		))
 		require.NoError(t, err)
@@ -550,14 +550,14 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}`)
 	})
 	t.Run("get frequently bought together recommendations", func(t *testing.T) {
 		_, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
 
 			recommend.NewEmptyGetRecommendationsParams().SetRequests(
-				[]recommend.RecommendationsRequest{*recommend.RecommendationsQueryAsRecommendationsRequest(
-					recommend.NewEmptyRecommendationsQuery().SetIndexName("indexName1").SetObjectID("objectID1").SetModel(recommend.RecommendationModels("bought-together")).SetThreshold(42))}),
+				[]recommend.RecommendationsRequest{*recommend.BoughtTogetherQueryAsRecommendationsRequest(
+					recommend.NewEmptyBoughtTogetherQuery().SetIndexName("indexName1").SetObjectID("objectID1").SetModel(recommend.FbtModel("bought-together")).SetThreshold(42.7))}),
 		))
 		require.NoError(t, err)
 
@@ -565,7 +565,7 @@ func TestRecommend_GetRecommendations(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42.7}]}`)
 	})
 }
 

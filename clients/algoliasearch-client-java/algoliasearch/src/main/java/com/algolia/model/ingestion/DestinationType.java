@@ -7,16 +7,8 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
 /**
- * Destination type.
- *
- * <dl>
- *   <dt><code>search</code>
- *   <dd>Data is stored in an Algolia index.
- *   <dt><code>insights</code>
- *   <dd>Data is recorded as user events in the Insights API.
- * </dl>
- *
- * .
+ * Destination type. - `search`. Data is stored in an Algolia index. - `insights`. Data is recorded
+ * as user events in the Insights API.
  */
 public enum DestinationType {
   SEARCH("search"),

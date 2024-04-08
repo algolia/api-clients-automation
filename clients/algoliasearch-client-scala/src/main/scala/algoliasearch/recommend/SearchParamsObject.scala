@@ -1,8 +1,26 @@
-/** Recommend API The Recommend API lets you generate recommendations with several AI models. > **Note**: You should use
-  * Algolia's [libraries and
-  * tools](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) to interact with
-  * the Recommend API. Using the HTTP endpoints directly is not covered by the
-  * [SLA](https://www.algolia.com/policies/sla/).
+/** Recommend API The Recommend API lets you retrieve recommendations from one of Algolia's AI recommendation models
+  * that you previously trained on your data. ## Client libraries Use Algolia's API clients and libraries to reliably
+  * integrate Algolia's APIs with your apps. The official API clients are covered by Algolia's [Service Level
+  * Agreement](https://www.algolia.com/policies/sla/). See: [Algolia's
+  * ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ## Base URLs
+  * The base URLs for requests to the Recommend API are: - `https://{APPLICATION_ID}.algolia.net` -
+  * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
+  * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
+  * URLs provide high availability by distributing requests with load balancing. **All requests must use HTTPS.** ##
+  * Retry strategy To guarantee a high availability, implement a retry strategy for all API requests using the URLs of
+  * your servers as fallbacks: - `https://{APPLICATION_ID}-1.algolianet.com` -
+  * `https://{APPLICATION_ID}-2.algolianet.com` - `https://{APPLICATION_ID}-3.algolianet.com` These URLs use a different
+  * DNS provider than the primary URLs. You should randomize this list to ensure an even load across the three servers.
+  * All Algolia API clients implement this retry strategy. ## Authentication To authenticate your API requests, add
+  * these headers: - `x-algolia-application-id`. Your Algolia application ID. - `x-algolia-api-key`. An API key with the
+  * necessary permissions to make the request. The required access control list (ACL) to make a request is listed in
+  * each endpoint's reference. You can find your application ID and API key in the [Algolia
+  * dashboard](https://dashboard.algolia.com/account). ## Request format Request bodies must be JSON objects. ##
+  * Response status and errors The Recommend API returns JSON responses. Since JSON doesn't guarantee any specific
+  * ordering, don't rely on the order of attributes in the API response. Successful responses return a `2xx` status.
+  * Client errors return a `4xx` status. Server errors are indicated by a `5xx` status. Error responses have a `message`
+  * property with more information. ## Version The current version of the Recommend API is version 1, as indicated by
+  * the `/1/` in each endpoint's URL.
   *
   * The version of the OpenAPI document: 1.0.0
   *
@@ -30,18 +48,18 @@ import algoliasearch.recommend.SupportedLanguage._
   *   `similarQuery` is supposed to do a broad search, they usually return many results. Combine it with `filters` to
   *   narrow down the list of results.
   * @param filters
-  *   Filter the search so that only records with matching values are included in the results. These filters are
-  *   supported: - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`.
-  *   \- **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the
-  *   range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive)
-  *   and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean
-  *   filters.** `<facet>: true | false`. You can combine filters with `AND`, `OR`, and `NOT` operators with the
-  *   following restrictions: - You can only combine filters of the same type with `OR`. **Not supported:** `facet:value
-  *   OR num > 3`. - You can't use `NOT` with combinations of filters. **Not supported:** `NOT(facet:value OR
-  *   facet:value)` - You can't combine conjunctions (`AND`) with `OR`. **Not supported:** `facet:value OR (facet:value
-  *   AND facet:value)` Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords
-  *   (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one
-  *   element of the array. For more information, see
+  *   Filter expression to only include items that match the filter criteria in the response. You can use these filter
+  *   expressions: - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`,
+  *   `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of
+  *   the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute
+  *   (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>`
+  *   (case-sensitive). - **Boolean filters.** `<facet>: true | false`. You can combine filters with `AND`, `OR`, and
+  *   `NOT` operators with the following restrictions: - You can only combine filters of the same type with `OR`. **Not
+  *   supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters. **Not supported:**
+  *   `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`. **Not supported:**
+  *   `facet:value OR (facet:value AND facet:value)` Use quotes around your filters, if the facet attribute name or
+  *   facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter
+  *   matches if it matches at least one element of the array. For more information, see
   *   [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
   * @param sumOrFiltersScores
   *   Whether to sum all filter scores. If true, all filter scores are summed. Otherwise, the maximum filter score is
@@ -128,20 +146,18 @@ import algoliasearch.recommend.SupportedLanguage._
   *   tie-breaking algorithm sequentially applies each criterion in the order they're specified. If you configure a
   *   replica index for [sorting by an
   *   attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute/),
-  *   you put the sorting attribute at the top of the list. **Modifiers** <dl> <dt><code>asc(\"ATTRIBUTE\")</code></dt>
-  *   <dd>Sort the index by the values of an attribute, in ascending order.</dd>
-  *   <dt><code>desc(\"ATTRIBUTE\")</code></dt> <dd>Sort the index by the values of an attribute, in descending
-  *   order.</dd> </dl> Before you modify the default setting, you should test your changes in the dashboard, and by
+  *   you put the sorting attribute at the top of the list. **Modifiers** - `asc(\"ATTRIBUTE\")`. Sort the index by the
+  *   values of an attribute, in ascending order. - `desc(\"ATTRIBUTE\")`. Sort the index by the values of an attribute,
+  *   in descending order. Before you modify the default setting, you should test your changes in the dashboard, and by
   *   [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/).
   * @param customRanking
   *   Attributes to use as [custom
   *   ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/). The custom ranking
   *   attributes decide which items are shown first if the other ranking criteria are equal. Records with missing values
   *   for your selected custom ranking attributes are always sorted last. Boolean attributes are sorted based on their
-  *   alphabetical order. **Modifiers** <dl> <dt><code>asc(\"ATTRIBUTE\")</code></dt> <dd>Sort the index by the values
-  *   of an attribute, in ascending order.</dd> <dt><code>desc(\"ATTRIBUTE\")</code></dt> <dd>Sort the index by the
-  *   values of an attribute, in descending order.</dd> </dl> If you use two or more custom ranking attributes, [reduce
-  *   the
+  *   alphabetical order. **Modifiers** - `asc(\"ATTRIBUTE\")`. Sort the index by the values of an attribute, in
+  *   ascending order. - `desc(\"ATTRIBUTE\")`. Sort the index by the values of an attribute, in descending order. If
+  *   you use two or more custom ranking attributes, [reduce the
   *   precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/)
   *   of your first attributes, or the other attributes will never be applied.
   * @param relevancyStrictness
@@ -234,17 +250,15 @@ import algoliasearch.recommend.SupportedLanguage._
   *   product descriptions. Turning off the Exact ranking criterion for these attributes favors exact matching on other
   *   attributes. This reduces the impact of individual attributes with a lot of content on ranking.
   * @param alternativesAsExact
-  *   Alternatives of query words that should be considered as exact matches by the Exact ranking criterion. <dl>
-  *   <dt><code>ignorePlurals</code></dt> <dd> Plurals and similar declensions added by the `ignorePlurals` setting are
-  *   considered exact matches. </dd> <dt><code>singleWordSynonym</code></dt> <dd> Single-word synonyms, such as
-  *   \"NY/NYC\" are considered exact matches. </dd> <dt><code>multiWordsSynonym</code></dt> <dd> Multi-word synonyms,
-  *   such as \"NY/New York\" are considered exact matches. </dd> </dl>.
+  *   Alternatives of query words that should be considered as exact matches by the Exact ranking criterion. -
+  *   `ignorePlurals`. Plurals and similar declensions added by the `ignorePlurals` setting are considered exact
+  *   matches. - `singleWordSynonym`. Single-word synonyms, such as \"NY/NYC\" are considered exact matches. -
+  *   `multiWordsSynonym`. Multi-word synonyms, such as \"NY/New York\" are considered exact matches.
   * @param advancedSyntaxFeatures
-  *   Advanced search syntax features you want to support. <dl> <dt><code>exactPhrase</code></dt> <dd> Phrases in quotes
-  *   must match exactly. For example, `sparkly blue \"iPhone case\"` only returns records with the exact string
-  *   \"iPhone case\". </dd> <dt><code>excludeWords</code></dt> <dd> Query words prefixed with a `-` must not occur in a
-  *   record. For example, `search -engine` matches records that contain \"search\" but not \"engine\". </dd> </dl> This
-  *   setting only has an effect if `advancedSyntax` is true.
+  *   Advanced search syntax features you want to support. - `exactPhrase`. Phrases in quotes must match exactly. For
+  *   example, `sparkly blue \"iPhone case\"` only returns records with the exact string \"iPhone case\". -
+  *   `excludeWords`. Query words prefixed with a `-` must not occur in a record. For example, `search -engine` matches
+  *   records that contain \"search\" but not \"engine\". This setting only has an effect if `advancedSyntax` is true.
   * @param replaceSynonymsInHighlight
   *   Whether to replace a highlighted word with the matched synonym. By default, the original words are highlighted
   *   even if a synonym matches. For example, with `home` as a synonym for `house` and a search for `home`, records
@@ -268,10 +282,10 @@ import algoliasearch.recommend.SupportedLanguage._
   * @param maxValuesPerFacet
   *   Maximum number of facet values to return for each facet.
   * @param sortFacetValuesBy
-  *   Order in which to retrieve facet values. <dl> <dt><code>count</code></dt> <dd> Facet values are retrieved by
-  *   decreasing count. The count is the number of matching records containing this facet value. </dd>
-  *   <dt><code>alpha</code></dt> <dd>Retrieve facet values alphabetically.</dd> </dl> This setting doesn't influence
-  *   how facet values are displayed in your UI (see `renderingContent`). For more information, see [facet value
+  *   Order in which to retrieve facet values. - `count`. Facet values are retrieved by decreasing count. The count is
+  *   the number of matching records containing this facet value. - `alpha`. Retrieve facet values alphabetically. This
+  *   setting doesn't influence how facet values are displayed in your UI (see `renderingContent`). For more
+  *   information, see [facet value
   *   display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js/).
   * @param attributeCriteriaComputedByMinProximity
   *   Whether the best matching attribute should be determined by minimum proximity. This setting only affects ranking

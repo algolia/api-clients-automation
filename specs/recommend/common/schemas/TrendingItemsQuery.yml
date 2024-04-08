@@ -1,11 +1,11 @@
 trendingItemsQuery:
+  title: Trending items
   allOf:
     - $ref: './RecommendationsRequest.yml#/baseRecommendRequest'
-    - $ref: '#/baseTrendingItemsQuery'
+    - $ref: '#/trendingItems'
 
-baseTrendingItemsQuery:
+trendingItems:
   type: object
-  additionalProperties: false
   properties:
     facetName:
       $ref: '../parameters.yml#/facetName'
@@ -13,12 +13,17 @@ baseTrendingItemsQuery:
       $ref: '../parameters.yml#/facetValue'
     model:
       $ref: '#/trendingItemsModel'
-    queryParameters:
-      $ref: '../../../common/schemas/SearchParams.yml#/searchParamsObject'
     fallbackParameters:
       $ref: '../../../common/schemas/SearchParams.yml#/searchParamsObject'
+  required:
+    - facetName
+    - facetValue
+    - model
 
 trendingItemsModel:
-  description: Trending items model.
+  description: |
+    Trending items model.
+
+    Trending items are determined from the number of conversion events collected on them.
   type: string
   enum: [trending-items]

@@ -2,7 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:json_annotation/json_annotation.dart';
 
-/// Order of facet values that aren't explicitly positioned with the `order` setting.  <dl> <dt><code>count</code></dt> <dd> Order remaining facet values by decreasing count. The count is the number of matching records containing this facet value. </dd> <dt><code>alpha</code></dt> <dd>Sort facet values alphabetically.</dd> <dt><code>hidden</code></dt> <dd>Don't show facet values that aren't explicitly positioned.</dd> </dl>.
+/// Order of facet values that aren't explicitly positioned with the `order` setting.  - `count`.   Order remaining facet values by decreasing count.   The count is the number of matching records containing this facet value.  - `alpha`.   Sort facet values alphabetically.  - `hidden`.   Don't show facet values that aren't explicitly positioned.
 @JsonEnum(valueField: 'raw')
 enum SortRemainingBy {
   count(r'count'),

@@ -82,20 +82,12 @@ public class BaseIndexSettings {
    * Attributes used for
    * [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/).
    * Facets are ways to categorize search results based on attributes. Facets can be used to let
-   * user filter search results. By default, no attribute is used for faceting. **Modifiers**
-   *
-   * <dl>
-   *   <dt><code>filterOnly(\"ATTRIBUTE\")</code>
-   *   <dd>Allows using this attribute as a filter, but doesn't evalue the facet values.
-   *   <dt><code>searchable(\"ATTRIBUTE\")</code>
-   *   <dd>Allows searching for facet values.
-   *   <dt><code>afterDistinct(\"ATTRIBUTE\")</code>
-   *   <dd>Evaluates the facet count _after_ deduplication with `distinct`. This ensures accurate
-   *       facet counts. You can apply this modifier to searchable facets:
-   *       `afterDistinct(searchable(ATTRIBUTE))`.
-   * </dl>
-   *
-   * Without modifiers, the attribute is used as a regular facet.
+   * user filter search results. By default, no attribute is used for faceting. **Modifiers** -
+   * `filterOnly(\"ATTRIBUTE\")`. Allows using this attribute as a filter, but doesn't evalue the
+   * facet values. - `searchable(\"ATTRIBUTE\")`. Allows searching for facet values. -
+   * `afterDistinct(\"ATTRIBUTE\")`. Evaluates the facet count _after_ deduplication with
+   * `distinct`. This ensures accurate facet counts. You can apply this modifier to searchable
+   * facets: `afterDistinct(searchable(ATTRIBUTE))`.
    */
   @javax.annotation.Nullable
   public List<String> getAttributesForFaceting() {
@@ -123,18 +115,10 @@ public class BaseIndexSettings {
    * use replica indices. All index operations on a primary index are automatically forwarded to its
    * replicas. To add a replica index, you must provide the complete set of replicas to this
    * parameter. If you omit a replica from this list, the replica turns into a regular, standalone
-   * index that will no longer by synced with the primary index. **Modifier**
-   *
-   * <dl>
-   *   <dt><code>virtual(\"REPLICA\")</code>
-   *   <dd>Create a virtual replica, Virtual replicas don't increase the number of records and are
-   *       optimized for [Relevant
-   *       sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).
-   * </dl>
-   *
-   * Without modifier, a standard replica is created, which duplicates your record count and is used
-   * for strict, or [exhaustive
-   * sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/exhaustive-sort/).
+   * index that will no longer by synced with the primary index. **Modifier** -
+   * `virtual(\"REPLICA\")`. Create a virtual replica, Virtual replicas don't increase the number of
+   * records and are optimized for [Relevant
+   * sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).
    */
   @javax.annotation.Nullable
   public List<String> getReplicas() {
@@ -349,14 +333,8 @@ public class BaseIndexSettings {
    * By default, all numeric attributes are available as numerical filters. For faster indexing,
    * reduce the number of numeric attributes. If you want to turn off filtering for all numeric
    * attributes, specifiy an attribute that doesn't exist in your index, such as
-   * `NO_NUMERIC_FILTERING`. **Modifier**
-   *
-   * <dl>
-   *   <dt><code>equalOnly(\"ATTRIBUTE\")</code>
-   *   <dd>Support only filtering based on equality comparisons `=` and `!=`.
-   * </dl>
-   *
-   * Without modifier, all numeric comparisons are supported.
+   * `NO_NUMERIC_FILTERING`. **Modifier** - `equalOnly(\"ATTRIBUTE\")`. Support only filtering based
+   * on equality comparisons `=` and `!=`.
    */
   @javax.annotation.Nullable
   public List<String> getNumericAttributesForFiltering() {
@@ -402,13 +380,7 @@ public class BaseIndexSettings {
    * `\"title,alternate_title\"`. Attributes with the same priority are always unordered. For more
    * information, see [Searchable
    * attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes/).
-   * **Modifier**
-   *
-   * <dl>
-   *   <dt><code>unordered(\"ATTRIBUTE\")</code>
-   *   <dd>Ignore the position of a match within the attribute.
-   * </dl>
-   *
+   * **Modifier** - `unordered(\"ATTRIBUTE\")`. Ignore the position of a match within the attribute.
    * Without modifier, matches at the beginning of an attribute rank higer than matches at the end.
    */
   @javax.annotation.Nullable

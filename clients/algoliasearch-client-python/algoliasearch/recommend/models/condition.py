@@ -9,32 +9,21 @@ from json import loads
 from re import match
 from typing import Annotated, Any, Dict, Optional, Self
 
-from pydantic import BaseModel, Field, StrictBool, StrictStr, field_validator
-
-from algoliasearch.recommend.models.anchoring import Anchoring
+from pydantic import BaseModel, Field, StrictStr, field_validator
 
 
 class Condition(BaseModel):
     """
-    Condition
+    Condition that triggers the rule. If not specified, the rule is triggered for all recommendations.
     """
 
-    pattern: Optional[StrictStr] = Field(
+    filters: Optional[StrictStr] = Field(
         default=None,
-        description='Query pattern that triggers the rule.  You can use either a literal string, or a special pattern `{facet:ATTRIBUTE}`, where `ATTRIBUTE` is a facet name. The rule is triggered if the query matches the literal string or a value of the specified facet. For example, with `pattern: {facet:genre}`, the rule is triggered when users search for a genre, such as "comedy". ',
-    )
-    anchoring: Optional[Anchoring] = None
-    alternatives: Optional[StrictBool] = Field(
-        default=False,
-        description="Whether the pattern should match plurals, synonyms, and typos.",
+        description="Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/). ",
     )
     context: Optional[Annotated[str, Field(strict=True)]] = Field(
         default=None,
         description="An additional restriction that only triggers the rule, when the search has the same value as `ruleContexts` parameter. For example, if `context: mobile`, the rule is only triggered when the search request has a matching `ruleContexts: mobile`. A rule context must only contain alphanumeric characters. ",
-    )
-    filters: Optional[StrictStr] = Field(
-        default=None,
-        description="Filters that trigger the rule.  You can add add filters using the syntax `facet:value` so that the rule is triggered, when the specific filter is selected. You can use `filters` on its own or combine it with the `pattern` parameter. ",
     )
 
     @field_validator("context")
@@ -84,12 +73,6 @@ class Condition(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {
-                "pattern": obj.get("pattern"),
-                "anchoring": obj.get("anchoring"),
-                "alternatives": obj.get("alternatives"),
-                "context": obj.get("context"),
-                "filters": obj.get("filters"),
-            }
+            {"filters": obj.get("filters"), "context": obj.get("context")}
         )
         return _obj

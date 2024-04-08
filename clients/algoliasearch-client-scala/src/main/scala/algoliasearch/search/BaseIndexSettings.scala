@@ -1,30 +1,29 @@
-/** Search API The Algolia Search API lets you search, configure, and mange your indices and records. # Client libraries
-  * Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps. The official API
-  * clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/). See: [Algolia's
-  * ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) # Base URLs The
-  * base URLs for making requests to the Search API are: - `https://{APPLICATION_ID}.algolia.net` -
+/** Search API The Algolia Search API lets you search, configure, and mange your indices and records. ## Client
+  * libraries Use Algolia's API clients and libraries to reliably integrate Algolia's APIs with your apps. The official
+  * API clients are covered by Algolia's [Service Level Agreement](https://www.algolia.com/policies/sla/). See:
+  * [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ##
+  * Base URLs The base URLs for requests to the Search API are: - `https://{APPLICATION_ID}.algolia.net` -
   * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
   * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
-  * URLs provide high availability by distributing requests with load balancing. **All requests must use HTTPS.** #
+  * URLs provide high availability by distributing requests with load balancing. **All requests must use HTTPS.** ##
   * Retry strategy To guarantee a high availability, implement a retry strategy for all API requests using the URLs of
   * your servers as fallbacks: - `https://{APPLICATION_ID}-1.algolianet.com` -
   * `https://{APPLICATION_ID}-2.algolianet.com` - `https://{APPLICATION_ID}-3.algolianet.com` These URLs use a different
   * DNS provider than the primary URLs. You should randomize this list to ensure an even load across the three servers.
-  * All Algolia API clients implement this retry strategy. # Authentication To authenticate your API requests, add these
-  * headers: <dl> <dt><code>x-algolia-application-id</code></dt> <dd>Your Algolia application ID.</dd>
-  * <dt><code>x-algolia-api-key</code></dt> <dd> An API key with the necessary permissions to make the request. The
-  * required access control list (ACL) to make a request is listed in each endpoint's reference. </dd> </dl> You can
-  * find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account). # Request
-  * format Depending on the endpoint, request bodies are either JSON objects or arrays of JSON objects, # Parameters
-  * Parameters are passed as query parameters for GET and DELETE requests, and in the request body for POST and PUT
-  * requests. Query parameters must be
+  * All Algolia API clients implement this retry strategy. ## Authentication To authenticate your API requests, add
+  * these headers: - `x-algolia-application-id`. Your Algolia application ID. - `x-algolia-api-key`. An API key with the
+  * necessary permissions to make the request. The required access control list (ACL) to make a request is listed in
+  * each endpoint's reference. You can find your application ID and API key in the [Algolia
+  * dashboard](https://dashboard.algolia.com/account). ## Request format Depending on the endpoint, request bodies are
+  * either JSON objects or arrays of JSON objects, ## Parameters Parameters are passed as query parameters for GET and
+  * DELETE requests, and in the request body for POST and PUT requests. Query parameters must be
   * [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding). Non-ASCII characters must be
   * UTF-8 encoded. Plus characters (`+`) are interpreted as spaces. Arrays as query parameters must be one of: - A
   * comma-separated string: `attributesToRetrieve=title,description` - A URL-encoded JSON array:
-  * `attributesToRetrieve=%5B%22title%22,%22description%22%D` # Response status and errors The Search API returns JSON
+  * `attributesToRetrieve=%5B%22title%22,%22description%22%D` ## Response status and errors The Search API returns JSON
   * responses. Since JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API
   * response. Successful responses return a `2xx` status. Client errors return a `4xx` status. Server errors are
-  * indicated by a `5xx` status. Error responses have a `message` property with more information. # Version The current
+  * indicated by a `5xx` status. Error responses have a `message` property with more information. ## Version The current
   * version of the Search API is version 1, as indicated by the `/1/` in each endpoint's URL.
   *
   * The version of the OpenAPI document: 1.0.0
@@ -41,12 +40,11 @@ import algoliasearch.search.SupportedLanguage._
   * @param attributesForFaceting
   *   Attributes used for [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/).
   *   Facets are ways to categorize search results based on attributes. Facets can be used to let user filter search
-  *   results. By default, no attribute is used for faceting. **Modifiers** <dl>
-  *   <dt><code>filterOnly(\"ATTRIBUTE\")</code></dt> <dd>Allows using this attribute as a filter, but doesn't evalue
-  *   the facet values.</dd> <dt><code>searchable(\"ATTRIBUTE\")</code></dt> <dd>Allows searching for facet values.</dd>
-  *   <dt><code>afterDistinct(\"ATTRIBUTE\")</code></dt> <dd> Evaluates the facet count _after_ deduplication with
+  *   results. By default, no attribute is used for faceting. **Modifiers** - `filterOnly(\"ATTRIBUTE\")`. Allows using
+  *   this attribute as a filter, but doesn't evalue the facet values. - `searchable(\"ATTRIBUTE\")`. Allows searching
+  *   for facet values. - `afterDistinct(\"ATTRIBUTE\")`. Evaluates the facet count _after_ deduplication with
   *   `distinct`. This ensures accurate facet counts. You can apply this modifier to searchable facets:
-  *   `afterDistinct(searchable(ATTRIBUTE))`. </dd> </dl> Without modifiers, the attribute is used as a regular facet.
+  *   `afterDistinct(searchable(ATTRIBUTE))`.
   * @param replicas
   *   Creates [replica
   *   indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/). Replicas
@@ -54,13 +52,9 @@ import algoliasearch.search.SupportedLanguage._
   *   offer a different ranking or sorting of your search results, you'll use replica indices. All index operations on a
   *   primary index are automatically forwarded to its replicas. To add a replica index, you must provide the complete
   *   set of replicas to this parameter. If you omit a replica from this list, the replica turns into a regular,
-  *   standalone index that will no longer by synced with the primary index. **Modifier** <dl>
-  *   <dt><code>virtual(\"REPLICA\")</code></dt> <dd> Create a virtual replica, Virtual replicas don't increase the
-  *   number of records and are optimized for [Relevant
+  *   standalone index that will no longer by synced with the primary index. **Modifier** - `virtual(\"REPLICA\")`.
+  *   Create a virtual replica, Virtual replicas don't increase the number of records and are optimized for [Relevant
   *   sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).
-  *   </dd> </dl> Without modifier, a standard replica is created, which duplicates your record count and is used for
-  *   strict, or [exhaustive
-  *   sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/exhaustive-sort/).
   * @param paginationLimitedTo
   *   Maximum number of search results that can be obtained through pagination. Higher pagination limits might slow down
   *   your search. For pagination limits above 1,000, the sorting of results beyond the 1,000th hit can't be guaranteed.
@@ -108,9 +102,8 @@ import algoliasearch.search.SupportedLanguage._
   *   filters](https://www.algolia.com/doc/guides/managing-results/rules/detecting-intent/how-to/applying-a-custom-filter-for-a-specific-query/#numerical-filters).
   *   By default, all numeric attributes are available as numerical filters. For faster indexing, reduce the number of
   *   numeric attributes. If you want to turn off filtering for all numeric attributes, specifiy an attribute that
-  *   doesn't exist in your index, such as `NO_NUMERIC_FILTERING`. **Modifier** <dl>
-  *   <dt><code>equalOnly(\"ATTRIBUTE\")</code></dt> <dd> Support only filtering based on equality comparisons `=` and
-  *   `!=`. </dd> </dl> Without modifier, all numeric comparisons are supported.
+  *   doesn't exist in your index, such as `NO_NUMERIC_FILTERING`. **Modifier** - `equalOnly(\"ATTRIBUTE\")`. Support
+  *   only filtering based on equality comparisons `=` and `!=`.
   * @param separatorsToIndex
   *   Controls which separators are indexed. Separators are all non-letter characters except spaces and currency
   *   characters, such as $€£¥. By default, separator characters aren't indexed. With `separatorsToIndex`, Algolia
@@ -124,9 +117,8 @@ import algoliasearch.search.SupportedLanguage._
   *   comma-separated string, such as `\"title,alternate_title\"`. Attributes with the same priority are always
   *   unordered. For more information, see [Searchable
   *   attributes](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/setting-searchable-attributes/).
-  *   **Modifier** <dl> <dt><code>unordered(\"ATTRIBUTE\")</code></dt> <dd> Ignore the position of a match within the
-  *   attribute. </dd> </dl> Without modifier, matches at the beginning of an attribute rank higer than matches at the
-  *   end.
+  *   **Modifier** - `unordered(\"ATTRIBUTE\")`. Ignore the position of a match within the attribute. Without modifier,
+  *   matches at the beginning of an attribute rank higer than matches at the end.
   * @param userData
   *   An object with custom data. You can store up to 32&nbsp;kB as custom data.
   * @param customNormalization

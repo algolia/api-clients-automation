@@ -7,20 +7,10 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
 /**
- * Task trigger, describing when a task should run.
- *
- * <dl>
- *   <dt><code>onDemand</code>
- *   <dd>Manually trigger the task with the `/run` endpoint.
- *   <dt><code>schedule</code>
- *   <dd>Regularly trigger the task on a `cron` schedule.
- *   <dt><code>subscription</code>
- *   <dd>Trigger the task after an event is received, such as, a webhook.
- *   <dt><code>streaming</code>
- *   <dd>Run the task continuously.
- * </dl>
- *
- * .
+ * Task trigger, describing when a task should run. - `onDemand`. Manually trigger the task with the
+ * `/run` endpoint. - `schedule`. Regularly trigger the task on a `cron` schedule. - `subscription`.
+ * Trigger the task after an event is received, such as, a webhook. - `streaming`. Run the task
+ * continuously.
  */
 public enum TriggerType {
   ON_DEMAND("onDemand"),

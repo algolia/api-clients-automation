@@ -7,60 +7,43 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/** Condition */
+/**
+ * Condition that triggers the rule. If not specified, the rule is triggered for all
+ * recommendations.
+ */
 public class Condition {
-
-  @JsonProperty("pattern")
-  private String pattern;
-
-  @JsonProperty("anchoring")
-  private Anchoring anchoring;
-
-  @JsonProperty("alternatives")
-  private Boolean alternatives;
-
-  @JsonProperty("context")
-  private String context;
 
   @JsonProperty("filters")
   private String filters;
 
-  public Condition setPattern(String pattern) {
-    this.pattern = pattern;
+  @JsonProperty("context")
+  private String context;
+
+  public Condition setFilters(String filters) {
+    this.filters = filters;
     return this;
   }
 
   /**
-   * Query pattern that triggers the rule. You can use either a literal string, or a special pattern
-   * `{facet:ATTRIBUTE}`, where `ATTRIBUTE` is a facet name. The rule is triggered if the query
-   * matches the literal string or a value of the specified facet. For example, with `pattern:
-   * {facet:genre}`, the rule is triggered when users search for a genre, such as \"comedy\".
+   * Filter expression to only include items that match the filter criteria in the response. You can
+   * use these filter expressions: - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is
+   * one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where
+   * `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet
+   * filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and
+   * `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive).
+   * - **Boolean filters.** `<facet>: true | false`. You can combine filters with `AND`, `OR`, and
+   * `NOT` operators with the following restrictions: - You can only combine filters of the same
+   * type with `OR`. **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with
+   * combinations of filters. **Not supported:** `NOT(facet:value OR facet:value)` - You can't
+   * combine conjunctions (`AND`) with `OR`. **Not supported:** `facet:value OR (facet:value AND
+   * facet:value)` Use quotes around your filters, if the facet attribute name or facet value has
+   * spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter
+   * matches if it matches at least one element of the array. For more information, see
+   * [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
    */
   @javax.annotation.Nullable
-  public String getPattern() {
-    return pattern;
-  }
-
-  public Condition setAnchoring(Anchoring anchoring) {
-    this.anchoring = anchoring;
-    return this;
-  }
-
-  /** Get anchoring */
-  @javax.annotation.Nullable
-  public Anchoring getAnchoring() {
-    return anchoring;
-  }
-
-  public Condition setAlternatives(Boolean alternatives) {
-    this.alternatives = alternatives;
-    return this;
-  }
-
-  /** Whether the pattern should match plurals, synonyms, and typos. */
-  @javax.annotation.Nullable
-  public Boolean getAlternatives() {
-    return alternatives;
+  public String getFilters() {
+    return filters;
   }
 
   public Condition setContext(String context) {
@@ -79,21 +62,6 @@ public class Condition {
     return context;
   }
 
-  public Condition setFilters(String filters) {
-    this.filters = filters;
-    return this;
-  }
-
-  /**
-   * Filters that trigger the rule. You can add add filters using the syntax `facet:value` so that
-   * the rule is triggered, when the specific filter is selected. You can use `filters` on its own
-   * or combine it with the `pattern` parameter.
-   */
-  @javax.annotation.Nullable
-  public String getFilters() {
-    return filters;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -103,29 +71,20 @@ public class Condition {
       return false;
     }
     Condition condition = (Condition) o;
-    return (
-      Objects.equals(this.pattern, condition.pattern) &&
-      Objects.equals(this.anchoring, condition.anchoring) &&
-      Objects.equals(this.alternatives, condition.alternatives) &&
-      Objects.equals(this.context, condition.context) &&
-      Objects.equals(this.filters, condition.filters)
-    );
+    return Objects.equals(this.filters, condition.filters) && Objects.equals(this.context, condition.context);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(pattern, anchoring, alternatives, context, filters);
+    return Objects.hash(filters, context);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Condition {\n");
-    sb.append("    pattern: ").append(toIndentedString(pattern)).append("\n");
-    sb.append("    anchoring: ").append(toIndentedString(anchoring)).append("\n");
-    sb.append("    alternatives: ").append(toIndentedString(alternatives)).append("\n");
-    sb.append("    context: ").append(toIndentedString(context)).append("\n");
     sb.append("    filters: ").append(toIndentedString(filters)).append("\n");
+    sb.append("    context: ").append(toIndentedString(context)).append("\n");
     sb.append("}");
     return sb.toString();
   }

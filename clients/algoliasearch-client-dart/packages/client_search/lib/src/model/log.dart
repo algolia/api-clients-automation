@@ -27,7 +27,7 @@ final class Log {
     this.innerQueries,
   });
 
-  /// Timestamp of the API request in ISO 8601 format.
+  /// Date and time of the API request, in RFC 3339 format.
   @JsonKey(name: r'timestamp')
   final String timestamp;
 

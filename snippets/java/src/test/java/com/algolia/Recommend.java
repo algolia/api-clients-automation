@@ -109,11 +109,11 @@ class SnippetRecommendClient {
       new GetRecommendationsParams()
         .setRequests(
           List.of(
-            new RecommendationsQuery()
+            new RelatedQuery()
               .setIndexName("indexName")
               .setObjectID("objectID")
-              .setModel(RecommendationModels.fromValue("related-products"))
-              .setThreshold(42)
+              .setModel(RelatedModel.fromValue("related-products"))
+              .setThreshold(42.1)
           )
         )
     );

@@ -194,9 +194,9 @@ class AnalyticsClient(
     * @param index
     *   Index name.
     * @param startDate
-    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
     * @param endDate
-    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
@@ -234,9 +234,9 @@ class AnalyticsClient(
     * @param index
     *   Index name.
     * @param startDate
-    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
     * @param endDate
-    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
@@ -272,9 +272,9 @@ class AnalyticsClient(
     * @param index
     *   Index name.
     * @param startDate
-    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
     * @param endDate
-    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
@@ -310,9 +310,9 @@ class AnalyticsClient(
     * @param index
     *   Index name.
     * @param startDate
-    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
     * @param endDate
-    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
@@ -348,9 +348,9 @@ class AnalyticsClient(
     * @param index
     *   Index name.
     * @param startDate
-    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
     * @param endDate
-    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
@@ -386,9 +386,9 @@ class AnalyticsClient(
     * @param index
     *   Index name.
     * @param startDate
-    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
     * @param endDate
-    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
@@ -424,9 +424,9 @@ class AnalyticsClient(
     * @param index
     *   Index name.
     * @param startDate
-    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
     * @param endDate
-    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
@@ -462,9 +462,9 @@ class AnalyticsClient(
     * @param index
     *   Index name.
     * @param startDate
-    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
     * @param endDate
-    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
@@ -501,9 +501,9 @@ class AnalyticsClient(
     * @param index
     *   Index name.
     * @param startDate
-    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
     * @param endDate
-    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
@@ -539,9 +539,9 @@ class AnalyticsClient(
     * @param index
     *   Index name.
     * @param startDate
-    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
     * @param endDate
-    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics
@@ -576,9 +576,9 @@ class AnalyticsClient(
     * @param index
     *   Index name.
     * @param startDate
-    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
     * @param endDate
-    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param limit
     *   Number of items to return.
     * @param offset
@@ -621,9 +621,9 @@ class AnalyticsClient(
     * @param index
     *   Index name.
     * @param startDate
-    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
     * @param endDate
-    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param limit
     *   Number of items to return.
     * @param offset
@@ -689,9 +689,9 @@ class AnalyticsClient(
     * @param index
     *   Index name.
     * @param startDate
-    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
     * @param endDate
-    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param limit
     *   Number of items to return.
     * @param offset
@@ -737,9 +737,9 @@ class AnalyticsClient(
     * @param search
     *   Search query.
     * @param startDate
-    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
     * @param endDate
-    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param limit
     *   Number of items to return.
     * @param offset
@@ -789,9 +789,9 @@ class AnalyticsClient(
     * @param search
     *   Search query.
     * @param startDate
-    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
     * @param endDate
-    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param limit
     *   Number of items to return.
     * @param offset
@@ -842,9 +842,9 @@ class AnalyticsClient(
     * @param search
     *   Search query.
     * @param startDate
-    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
     * @param endDate
-    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param limit
     *   Number of items to return.
     * @param offset
@@ -896,9 +896,9 @@ class AnalyticsClient(
     *   Whether to include revenue-related metrics in the response. If true, metrics related to click and conversion
     *   events are also included in the response.
     * @param startDate
-    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
     * @param endDate
-    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param limit
     *   Number of items to return.
     * @param offset
@@ -952,9 +952,9 @@ class AnalyticsClient(
     *   Whether to include revenue-related metrics in the response. If true, metrics related to click and conversion
     *   events are also included in the response.
     * @param startDate
-    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
     * @param endDate
-    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param orderBy
     *   Attribute by which to order the response items. If the `clickAnalytics` parameter is false, only `searchCount`
     *   is available.
@@ -1014,9 +1014,9 @@ class AnalyticsClient(
     * @param index
     *   Index name.
     * @param startDate
-    *   Start date (`YYYY-MM-DD`) of the period to analyze.
+    *   Start date of the period to analyze, in `YYYY-MM-DD` format.
     * @param endDate
-    *   End date (`YYYY-MM-DD`) of the period to analyze.
+    *   End date of the period to analyze, in `YYYY-MM-DD` format.
     * @param tags
     *   Tags by which to segment the analytics. You can combine multiple tags with `OR` and `AND`. Tags must be
     *   URL-encoded. For more information, see [Segment your analytics

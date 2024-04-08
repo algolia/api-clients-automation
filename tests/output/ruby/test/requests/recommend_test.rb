@@ -354,8 +354,8 @@ class TestRecommendClient < Test::Unit::TestCase
   def test_get_recommendations0
     req = @client.get_recommendations_with_http_info(
       GetRecommendationsParams.new(
-        requests: [RecommendationsQuery.new(
-          index_name: "indexName", object_id: "objectID", model: 'related-products', threshold: 42
+        requests: [RelatedQuery.new(
+          index_name: "indexName", object_id: "objectID", model: 'related-products', threshold: 42.1
         )]
       )
     )
@@ -365,7 +365,7 @@ class TestRecommendClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42}]}'), JSON.parse(req.body)
+      JSON.parse('{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1}]}'), JSON.parse(req.body)
     )
   end
 
@@ -373,16 +373,16 @@ class TestRecommendClient < Test::Unit::TestCase
   def test_get_recommendations1
     req = @client.get_recommendations_with_http_info(
       GetRecommendationsParams.new(
-        requests: [RecommendationsQuery.new(
+        requests: [RelatedQuery.new(
           index_name: "indexName",
           object_id: "objectID",
           model: 'related-products',
-          threshold: 42,
+          threshold: 42.1,
           max_recommendations: 10,
-          query_parameters: SearchParamsObject.new(
+          query_parameters: SearchParams.new(
             query: "myQuery", facet_filters: ["query"]
           ),
-          fallback_parameters: SearchParamsObject.new(
+          fallback_parameters: FallbackParams.new(
             query: "myQuery",
             facet_filters: ["fallback"]
           )
@@ -395,7 +395,7 @@ class TestRecommendClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}'), JSON.parse(req.body)
+      JSON.parse('{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}'), JSON.parse(req.body)
     )
   end
 
@@ -404,7 +404,7 @@ class TestRecommendClient < Test::Unit::TestCase
     req = @client.get_recommendations_with_http_info(
       GetRecommendationsParams.new(
         requests: [TrendingItemsQuery.new(
-          index_name: "indexName", model: 'trending-items', threshold: 42
+          index_name: "indexName", model: 'trending-items', threshold: 42.1, facet_name: "facet", facet_value: "value"
         )]
       )
     )
@@ -414,7 +414,7 @@ class TestRecommendClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42}]}'), JSON.parse(req.body)
+      JSON.parse('{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"facetName":"facet","facetValue":"value"}]}'), JSON.parse(req.body)
     )
   end
 
@@ -425,11 +425,11 @@ class TestRecommendClient < Test::Unit::TestCase
         requests: [TrendingItemsQuery.new(
           index_name: "indexName",
           model: 'trending-items',
-          threshold: 42,
+          threshold: 42.1,
           max_recommendations: 10,
           facet_name: "myFacetName",
           facet_value: "myFacetValue",
-          query_parameters: SearchParamsObject.new(
+          query_parameters: SearchParams.new(
             query: "myQuery", facet_filters: ["query"]
           ),
           fallback_parameters: SearchParamsObject.new(
@@ -445,7 +445,7 @@ class TestRecommendClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}'), JSON.parse(req.body)
+      JSON.parse('{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}'), JSON.parse(req.body)
     )
   end
 
@@ -454,17 +454,17 @@ class TestRecommendClient < Test::Unit::TestCase
     req = @client.get_recommendations_with_http_info(
       GetRecommendationsParams.new(
         requests: [
-          RecommendationsQuery.new(
+          RelatedQuery.new(
             index_name: "indexName1",
             object_id: "objectID1",
             model: 'related-products',
-            threshold: 21
+            threshold: 21.7
           ),
-          RecommendationsQuery.new(
+          RelatedQuery.new(
             index_name: "indexName2",
             object_id: "objectID2",
             model: 'related-products',
-            threshold: 21
+            threshold: 21.7
           )
         ]
       )
@@ -475,7 +475,7 @@ class TestRecommendClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21}]}'), JSON.parse(req.body)
+      JSON.parse('{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7}]}'), JSON.parse(req.body)
     )
   end
 
@@ -484,29 +484,26 @@ class TestRecommendClient < Test::Unit::TestCase
     req = @client.get_recommendations_with_http_info(
       GetRecommendationsParams.new(
         requests: [
-          RecommendationsQuery.new(
+          RelatedQuery.new(
             index_name: "indexName1",
             object_id: "objectID1",
             model: 'related-products',
-            threshold: 21,
+            threshold: 21.7,
             max_recommendations: 10,
-            query_parameters: SearchParamsObject.new(query: "myQuery", facet_filters: ["query1"]),
-            fallback_parameters: SearchParamsObject.new(
-              query: "myQuery",
-              facet_filters: ["fallback1"]
-            )
+            query_parameters: SearchParams.new(query: "myQuery", facet_filters: ["query1"]),
+            fallback_parameters: FallbackParams.new(query: "myQuery", facet_filters: ["fallback1"])
           ),
-          RecommendationsQuery.new(
+          RelatedQuery.new(
             index_name: "indexName2",
             object_id: "objectID2",
             model: 'related-products',
-            threshold: 21,
+            threshold: 21.7,
             max_recommendations: 10,
-            query_parameters: SearchParamsObject.new(
+            query_parameters: SearchParams.new(
               query: "myQuery",
               facet_filters: ["query2"]
             ),
-            fallback_parameters: SearchParamsObject.new(
+            fallback_parameters: FallbackParams.new(
               query: "myQuery",
               facet_filters: ["fallback2"]
             )
@@ -520,7 +517,7 @@ class TestRecommendClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}'), JSON.parse(req.body)
+      JSON.parse('{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}'), JSON.parse(req.body)
     )
   end
 
@@ -528,8 +525,8 @@ class TestRecommendClient < Test::Unit::TestCase
   def test_get_recommendations6
     req = @client.get_recommendations_with_http_info(
       GetRecommendationsParams.new(
-        requests: [RecommendationsQuery.new(
-          index_name: "indexName1", object_id: "objectID1", model: 'bought-together', threshold: 42
+        requests: [BoughtTogetherQuery.new(
+          index_name: "indexName1", object_id: "objectID1", model: 'bought-together', threshold: 42.7
         )]
       )
     )
@@ -539,7 +536,7 @@ class TestRecommendClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42}]}'), JSON.parse(req.body)
+      JSON.parse('{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42.7}]}'), JSON.parse(req.body)
     )
   end
 

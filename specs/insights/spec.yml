@@ -7,12 +7,12 @@ info:
     They unlock powerful features, such as recommendations, personalization, smarter search results,
     and analytics that help you optimize your user experience.
 
-    # Client libraries
+    ## Client libraries
 
     Use Algolia's API clients, libraries, and integrations to collect events from your UI and send them to the Insights API.
     See: [Algolia's ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/)
 
-    # Base URLs
+    ## Base URLs
 
     The base URLs for making requests to the Insights API are:
 
@@ -21,27 +21,21 @@ info:
 
     **All requests must use HTTPS.**
 
-    # Authentication
+    ## Authentication
 
     To authenticate your API requests, add these headers:
 
-    <dl>
-    <dt><code>x-algolia-application-id</code></dt>
-    <dd>Your Algolia application ID.</dd>
-    <dt><code>x-algolia-api-key</code></dt>
-    <dd>
-    An API key with the necessary permissions to make the request.
-    The required access control list (ACL) to make a request is listed in each endpoint's reference.
-    </dd>
-    </dl>
+    - `x-algolia-application-id`. Your Algolia application ID.
+    - `x-algolia-api-key`. An API key with the necessary permissions to make the request.
+      The required access control list (ACL) to make a request is listed in each endpoint's reference.
 
     You can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account).
 
-    # Request format
+    ## Request format
 
     Request bodies must be JSON objects.
 
-    # Response status and errors
+    ## Response status and errors
 
     Response bodies are JSON objects.
     Deleting a user token returns an empty response body with rate-limiting information as headers.
@@ -54,7 +48,7 @@ info:
     Check the [Events](https://dashboard.algolia.com/events/health) health section,
     whether your events can be used for Algolia features such as Analytics, or Dynamic Re-Ranking.
 
-    # Version
+    ## Version
 
     The current version of the Insights API is version 1, as indicated by the `/1/` in each endpoint's URL.
   version: 1.0.0

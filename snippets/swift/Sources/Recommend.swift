@@ -119,10 +119,10 @@ final class RecommendClientSnippet {
         _ = try await client
             .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [
                 RecommendationsRequest
-                    .recommendationsQuery(RecommendationsQuery(
+                    .relatedQuery(RelatedQuery(
                         indexName: "indexName",
-                        threshold: 42,
-                        model: RecommendationModels.relatedProducts,
+                        threshold: 42.1,
+                        model: RelatedModel.relatedProducts,
                         objectID: "objectID"
                     )),
             ]))

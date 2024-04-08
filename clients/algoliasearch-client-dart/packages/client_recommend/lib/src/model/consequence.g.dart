@@ -11,20 +11,23 @@ Consequence _$ConsequenceFromJson(Map<String, dynamic> json) => $checkedCreate(
       json,
       ($checkedConvert) {
         final val = Consequence(
-          params: $checkedConvert(
-              'params',
-              (v) => v == null
-                  ? null
-                  : ConsequenceParams.fromJson(v as Map<String, dynamic>)),
-          promote: $checkedConvert('promote', (v) => v as List<dynamic>?),
-          filterPromotes: $checkedConvert('filterPromotes', (v) => v as bool?),
           hide: $checkedConvert(
               'hide',
               (v) => (v as List<dynamic>?)
                   ?.map((e) =>
-                      ConsequenceHide.fromJson(e as Map<String, dynamic>))
+                      HideConsequenceObject.fromJson(e as Map<String, dynamic>))
                   .toList()),
-          userData: $checkedConvert('userData', (v) => v),
+          promote: $checkedConvert(
+              'promote',
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => PromoteConsequenceObject.fromJson(
+                      e as Map<String, dynamic>))
+                  .toList()),
+          params: $checkedConvert(
+              'params',
+              (v) => v == null
+                  ? null
+                  : ParamsConsequence.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -39,10 +42,8 @@ Map<String, dynamic> _$ConsequenceToJson(Consequence instance) {
     }
   }
 
-  writeNotNull('params', instance.params?.toJson());
-  writeNotNull('promote', instance.promote?.toList());
-  writeNotNull('filterPromotes', instance.filterPromotes);
   writeNotNull('hide', instance.hide?.map((e) => e.toJson()).toList());
-  writeNotNull('userData', instance.userData);
+  writeNotNull('promote', instance.promote?.map((e) => e.toJson()).toList());
+  writeNotNull('params', instance.params?.toJson());
   return val;
 }

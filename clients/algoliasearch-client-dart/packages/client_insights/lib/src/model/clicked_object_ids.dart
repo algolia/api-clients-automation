@@ -42,7 +42,7 @@ final class ClickedObjectIDs {
   @JsonKey(name: r'authenticatedUserToken')
   final String? authenticatedUserToken;
 
-  /// Timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
+  /// Timestamp of the event, measured in milliseconds since the Unix epoch. By default, the Insights API uses the time it receives an event as its timestamp.
   @JsonKey(name: r'timestamp')
   final int? timestamp;
 

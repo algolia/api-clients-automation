@@ -176,7 +176,7 @@ class SnippetRecommendClient
                 ['indexName' => 'indexName',
                     'objectID' => 'objectID',
                     'model' => 'related-products',
-                    'threshold' => 42,
+                    'threshold' => 42.1,
                 ],
             ],
             ],
