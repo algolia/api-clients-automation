@@ -8,19 +8,30 @@ personalizationStrategyParams:
   properties:
     eventScoring:
       type: array
-      description: Scores associated with the events.
+      description: |
+        Scores associated with each event.
+
+        The higher the scores, the higher the impact of those events on the personalization of search results.
       items:
         $ref: 'eventScoring.yml#/eventScoring'
     facetScoring:
       type: array
-      description: Scores associated with the facets.
+      description: |
+        Scores associated with each facet.
+
+        The higher the scores, the higher the impact of those events on the personalization of search results.
       items:
         $ref: 'facetScoring.yml#/facetScoring'
     personalizationImpact:
       type: integer
-      description: 'The impact that personalization has on search results: a number between 0 (personalization disabled) and 100 (personalization fully enabled).'
+      minimum: 0
+      maximum: 100
+      description: |
+        Impact of personalization on the search results.
+
+        If set to 0, personalization has no impact on the search results.
 
 # misc
 score:
   type: integer
-  description: The score for the event.
+  description: Event score.

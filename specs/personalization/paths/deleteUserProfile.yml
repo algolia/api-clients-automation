@@ -6,11 +6,9 @@ delete:
     - recommendation
   summary: Delete a user profile.
   description: |
-    Delete the user profile and all its associated data.
+    Deletes a user profile.
 
-    Returns, as part of the response, a date until which the data can safely be considered as deleted for the given user. This means if you send events for the given user before this date, they will be ignored. Any data received after the deletedUntil date will start building a new user profile.
-
-    It might take a couple hours for the deletion request to be fully processed.
+    The response includes a date and time when the user profile can safely be considered deleted.
   parameters:
     - $ref: '../common/parameters.yml#/UserToken'
   responses:
@@ -27,10 +25,12 @@ delete:
               - deletedUntil
             properties:
               userToken:
-                $ref: '../common/parameters.yml#/userToken'
+                $ref: '../../common/schemas/SearchParams.yml#/userToken'
               deletedUntil:
                 type: string
-                description: A date until which the data can safely be considered as deleted for the given user. Any data received after the `deletedUntil` date will start building a new user profile.
+                description: |
+                  Date and time when the user profile can be safely considered to be deleted.
+                  Any events received after the `deletedUntil` date start a new user profile.
     '400':
       $ref: '../../common/responses/BadRequest.yml'
     '402':

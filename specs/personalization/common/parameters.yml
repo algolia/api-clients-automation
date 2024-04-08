@@ -3,11 +3,6 @@ UserToken:
   name: userToken
   in: path
   required: true
-  description: userToken representing the user for which to fetch the Personalization profile.
+  description: Unique identifier representing a user for which to fetch the personalization profile.
   schema:
-    type: string
-
-# misc
-userToken:
-  type: string
-  description: userToken representing the user for which to fetch the Personalization profile.
+    $ref: '../../common/schemas/SearchParams.yml#/userToken'
