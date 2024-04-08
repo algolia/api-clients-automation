@@ -1,5 +1,6 @@
 recommendationsResults:
   allOf:
+    # TODO: this isn't correct. Not all elements of the Search response are included for Recommend.
     - $ref: '../../../search/common/schemas/SearchResponse.yml#/baseSearchResponse'
     - $ref: '#/recommendationsHits'
 
@@ -11,12 +12,6 @@ recommendationsHits:
       type: array
       items:
         $ref: '#/recommendationsHit'
-    query:
-      $ref: '../../../common/schemas/SearchParams.yml#/query'    
-    params:
-      type: string
-      description: URL-encoded string of all search parameters.
-      example: query=a&hitsPerPage=20     
   required:
     - hits
 

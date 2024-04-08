@@ -590,11 +590,11 @@ class RecommendClientRequestsTests {
         new GetRecommendationsParams()
           .setRequests(
             List.of(
-              new RecommendationsQuery()
+              new RelatedQuery()
                 .setIndexName("indexName")
                 .setObjectID("objectID")
-                .setModel(RecommendationModels.fromValue("related-products"))
-                .setThreshold(42)
+                .setModel(RelatedModel.fromValue("related-products"))
+                .setThreshold(42.1)
             )
           )
       );
@@ -604,7 +604,7 @@ class RecommendClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42}]}",
+        "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -619,17 +619,17 @@ class RecommendClientRequestsTests {
         new GetRecommendationsParams()
           .setRequests(
             List.of(
-              new RecommendationsQuery()
+              new RelatedQuery()
                 .setIndexName("indexName")
                 .setObjectID("objectID")
-                .setModel(RecommendationModels.fromValue("related-products"))
-                .setThreshold(42)
+                .setModel(RelatedModel.fromValue("related-products"))
+                .setThreshold(42.1)
                 .setMaxRecommendations(10)
                 .setQueryParameters(
-                  new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("query"))))
+                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("query"))))
                 )
                 .setFallbackParameters(
-                  new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("fallback"))))
+                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("fallback"))))
                 )
             )
           )
@@ -640,7 +640,7 @@ class RecommendClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}",
+        "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -655,7 +655,12 @@ class RecommendClientRequestsTests {
         new GetRecommendationsParams()
           .setRequests(
             List.of(
-              new TrendingItemsQuery().setIndexName("indexName").setModel(TrendingItemsModel.fromValue("trending-items")).setThreshold(42)
+              new TrendingItemsQuery()
+                .setIndexName("indexName")
+                .setModel(TrendingItemsModel.fromValue("trending-items"))
+                .setThreshold(42.1)
+                .setFacetName("facet")
+                .setFacetValue("value")
             )
           )
       );
@@ -665,7 +670,7 @@ class RecommendClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42}]}",
+        "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42.1,\"facetName\":\"facet\",\"facetValue\":\"value\"}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -683,12 +688,12 @@ class RecommendClientRequestsTests {
               new TrendingItemsQuery()
                 .setIndexName("indexName")
                 .setModel(TrendingItemsModel.fromValue("trending-items"))
-                .setThreshold(42)
+                .setThreshold(42.1)
                 .setMaxRecommendations(10)
                 .setFacetName("myFacetName")
                 .setFacetValue("myFacetValue")
                 .setQueryParameters(
-                  new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("query"))))
+                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("query"))))
                 )
                 .setFallbackParameters(
                   new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("fallback"))))
@@ -702,7 +707,7 @@ class RecommendClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42,\"maxRecommendations\":10,\"facetName\":\"myFacetName\",\"facetValue\":\"myFacetValue\",\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}",
+        "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42.1,\"maxRecommendations\":10,\"facetName\":\"myFacetName\",\"facetValue\":\"myFacetValue\",\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -717,16 +722,16 @@ class RecommendClientRequestsTests {
         new GetRecommendationsParams()
           .setRequests(
             List.of(
-              new RecommendationsQuery()
+              new RelatedQuery()
                 .setIndexName("indexName1")
                 .setObjectID("objectID1")
-                .setModel(RecommendationModels.fromValue("related-products"))
-                .setThreshold(21),
-              new RecommendationsQuery()
+                .setModel(RelatedModel.fromValue("related-products"))
+                .setThreshold(21.7),
+              new RelatedQuery()
                 .setIndexName("indexName2")
                 .setObjectID("objectID2")
-                .setModel(RecommendationModels.fromValue("related-products"))
-                .setThreshold(21)
+                .setModel(RelatedModel.fromValue("related-products"))
+                .setThreshold(21.7)
             )
           )
       );
@@ -736,7 +741,7 @@ class RecommendClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21}]}",
+        "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21.7},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21.7}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -751,29 +756,29 @@ class RecommendClientRequestsTests {
         new GetRecommendationsParams()
           .setRequests(
             List.of(
-              new RecommendationsQuery()
+              new RelatedQuery()
                 .setIndexName("indexName1")
                 .setObjectID("objectID1")
-                .setModel(RecommendationModels.fromValue("related-products"))
-                .setThreshold(21)
+                .setModel(RelatedModel.fromValue("related-products"))
+                .setThreshold(21.7)
                 .setMaxRecommendations(10)
                 .setQueryParameters(
-                  new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("query1"))))
+                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("query1"))))
                 )
                 .setFallbackParameters(
-                  new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("fallback1"))))
+                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("fallback1"))))
                 ),
-              new RecommendationsQuery()
+              new RelatedQuery()
                 .setIndexName("indexName2")
                 .setObjectID("objectID2")
-                .setModel(RecommendationModels.fromValue("related-products"))
-                .setThreshold(21)
+                .setModel(RelatedModel.fromValue("related-products"))
+                .setThreshold(21.7)
                 .setMaxRecommendations(10)
                 .setQueryParameters(
-                  new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("query2"))))
+                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("query2"))))
                 )
                 .setFallbackParameters(
-                  new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("fallback2"))))
+                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("fallback2"))))
                 )
             )
           )
@@ -784,7 +789,7 @@ class RecommendClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query1\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback1\"]}},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query2\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback2\"]}}]}",
+        "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21.7,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query1\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback1\"]}},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21.7,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query2\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback2\"]}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -799,11 +804,11 @@ class RecommendClientRequestsTests {
         new GetRecommendationsParams()
           .setRequests(
             List.of(
-              new RecommendationsQuery()
+              new BoughtTogetherQuery()
                 .setIndexName("indexName1")
                 .setObjectID("objectID1")
-                .setModel(RecommendationModels.fromValue("bought-together"))
-                .setThreshold(42)
+                .setModel(FbtModel.fromValue("bought-together"))
+                .setThreshold(42.7)
             )
           )
       );
@@ -813,7 +818,7 @@ class RecommendClientRequestsTests {
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"bought-together\",\"threshold\":42}]}",
+        "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"bought-together\",\"threshold\":42.7}]}",
         req.body,
         JSONCompareMode.STRICT
       )

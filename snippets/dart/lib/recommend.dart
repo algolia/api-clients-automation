@@ -124,11 +124,11 @@ void snippetForgetRecommendations() async {
   final response = await client.getRecommendations(
     getRecommendationsParams: GetRecommendationsParams(
       requests: [
-        RecommendationsQuery(
+        RelatedQuery(
           indexName: "indexName",
           objectID: "objectID",
-          model: RecommendationModels.fromJson("related-products"),
-          threshold: 42,
+          model: RelatedModel.fromJson("related-products"),
+          threshold: 42.1,
         ),
       ],
     ),

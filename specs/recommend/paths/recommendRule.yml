@@ -1,11 +1,11 @@
 get:
   tags:
-    - recommendations
+    - rules
   operationId: getRecommendRule
   x-acl:
     - settings
-  summary: Get a Recommend rule.
-  description: Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+  summary: Retrieve a rule.
+  description: Retrieves a Recommend rule that you previously created in the Algolia dashboard.
   parameters:
     - $ref: '../../common/parameters.yml#/IndexName'
     - $ref: '../common/parameters.yml#/Models'
@@ -16,7 +16,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../common/schemas/RuleResponse.yml'
+            $ref: '../common/schemas/RecommendRule.yml#/RecommendRule'
     '400':
       $ref: '../../common/responses/BadRequest.yml'
     '402':
@@ -28,12 +28,12 @@ get:
 
 delete:
   tags:
-    - recommendations
+    - rules
   operationId: deleteRecommendRule
   x-acl:
     - editSettings
-  summary: Delete a Recommend rule.
-  description: Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+  summary: Delete a rule.
+  description: Deletes a Recommend rule from a recommendation scenario.
   parameters:
     - $ref: '../../common/parameters.yml#/IndexName'
     - $ref: '../common/parameters.yml#/Models'

@@ -10,22 +10,18 @@ import (
 type TrendingFacetsQuery struct {
 	// Index name.
 	IndexName string `json:"indexName"`
-	// Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the recommendations are.
-	Threshold *int32 `json:"threshold,omitempty"`
-	// Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
-	MaxRecommendations *int32 `json:"maxRecommendations,omitempty"`
-	// Facet name for trending models.
-	FacetName string               `json:"facetName"`
-	Model     *TrendingFacetsModel `json:"model,omitempty"`
+	// Minimum score a recommendation must have to be included in the response.
+	Threshold float64 `json:"threshold"`
+	// Maximum number of recommendations to retrieve. By default, all recommendations are returned and no fallback request is made. Depending on the available recommendations and the other request parameters, the actual number of recommendations may be lower than this value.
+	MaxRecommendations *int32        `json:"maxRecommendations,omitempty"`
+	QueryParameters    *SearchParams `json:"queryParameters,omitempty"`
+	// Facet attribute for which to retrieve trending facet values.
+	FacetName          map[string]interface{} `json:"facetName"`
+	Model              TrendingFacetsModel    `json:"model"`
+	FallbackParameters *FallbackParams        `json:"fallbackParameters,omitempty"`
 }
 
 type TrendingFacetsQueryOption func(f *TrendingFacetsQuery)
-
-func WithTrendingFacetsQueryThreshold(val int32) TrendingFacetsQueryOption {
-	return func(f *TrendingFacetsQuery) {
-		f.Threshold = &val
-	}
-}
 
 func WithTrendingFacetsQueryMaxRecommendations(val int32) TrendingFacetsQueryOption {
 	return func(f *TrendingFacetsQuery) {
@@ -33,9 +29,15 @@ func WithTrendingFacetsQueryMaxRecommendations(val int32) TrendingFacetsQueryOpt
 	}
 }
 
-func WithTrendingFacetsQueryModel(val TrendingFacetsModel) TrendingFacetsQueryOption {
+func WithTrendingFacetsQueryQueryParameters(val SearchParams) TrendingFacetsQueryOption {
 	return func(f *TrendingFacetsQuery) {
-		f.Model = &val
+		f.QueryParameters = &val
+	}
+}
+
+func WithTrendingFacetsQueryFallbackParameters(val FallbackParams) TrendingFacetsQueryOption {
+	return func(f *TrendingFacetsQuery) {
+		f.FallbackParameters = &val
 	}
 }
 
@@ -43,10 +45,12 @@ func WithTrendingFacetsQueryModel(val TrendingFacetsModel) TrendingFacetsQueryOp
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed.
-func NewTrendingFacetsQuery(indexName string, facetName string, opts ...TrendingFacetsQueryOption) *TrendingFacetsQuery {
+func NewTrendingFacetsQuery(indexName string, threshold float64, facetName map[string]interface{}, model TrendingFacetsModel, opts ...TrendingFacetsQueryOption) *TrendingFacetsQuery {
 	this := &TrendingFacetsQuery{}
 	this.IndexName = indexName
+	this.Threshold = threshold
 	this.FacetName = facetName
+	this.Model = model
 	for _, opt := range opts {
 		opt(this)
 	}
@@ -83,36 +87,28 @@ func (o *TrendingFacetsQuery) SetIndexName(v string) *TrendingFacetsQuery {
 	return o
 }
 
-// GetThreshold returns the Threshold field value if set, zero value otherwise.
-func (o *TrendingFacetsQuery) GetThreshold() int32 {
-	if o == nil || o.Threshold == nil {
-		var ret int32
+// GetThreshold returns the Threshold field value.
+func (o *TrendingFacetsQuery) GetThreshold() float64 {
+	if o == nil {
+		var ret float64
 		return ret
 	}
-	return *o.Threshold
+
+	return o.Threshold
 }
 
-// GetThresholdOk returns a tuple with the Threshold field value if set, nil otherwise
+// GetThresholdOk returns a tuple with the Threshold field value
 // and a boolean to check if the value has been set.
-func (o *TrendingFacetsQuery) GetThresholdOk() (*int32, bool) {
-	if o == nil || o.Threshold == nil {
+func (o *TrendingFacetsQuery) GetThresholdOk() (*float64, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Threshold, true
+	return &o.Threshold, true
 }
 
-// HasThreshold returns a boolean if a field has been set.
-func (o *TrendingFacetsQuery) HasThreshold() bool {
-	if o != nil && o.Threshold != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetThreshold gets a reference to the given int32 and assigns it to the Threshold field.
-func (o *TrendingFacetsQuery) SetThreshold(v int32) *TrendingFacetsQuery {
-	o.Threshold = &v
+// SetThreshold sets field value.
+func (o *TrendingFacetsQuery) SetThreshold(v float64) *TrendingFacetsQuery {
+	o.Threshold = v
 	return o
 }
 
@@ -149,10 +145,43 @@ func (o *TrendingFacetsQuery) SetMaxRecommendations(v int32) *TrendingFacetsQuer
 	return o
 }
 
+// GetQueryParameters returns the QueryParameters field value if set, zero value otherwise.
+func (o *TrendingFacetsQuery) GetQueryParameters() SearchParams {
+	if o == nil || o.QueryParameters == nil {
+		var ret SearchParams
+		return ret
+	}
+	return *o.QueryParameters
+}
+
+// GetQueryParametersOk returns a tuple with the QueryParameters field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TrendingFacetsQuery) GetQueryParametersOk() (*SearchParams, bool) {
+	if o == nil || o.QueryParameters == nil {
+		return nil, false
+	}
+	return o.QueryParameters, true
+}
+
+// HasQueryParameters returns a boolean if a field has been set.
+func (o *TrendingFacetsQuery) HasQueryParameters() bool {
+	if o != nil && o.QueryParameters != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetQueryParameters gets a reference to the given SearchParams and assigns it to the QueryParameters field.
+func (o *TrendingFacetsQuery) SetQueryParameters(v *SearchParams) *TrendingFacetsQuery {
+	o.QueryParameters = v
+	return o
+}
+
 // GetFacetName returns the FacetName field value.
-func (o *TrendingFacetsQuery) GetFacetName() string {
+func (o *TrendingFacetsQuery) GetFacetName() map[string]interface{} {
 	if o == nil {
-		var ret string
+		var ret map[string]interface{}
 		return ret
 	}
 
@@ -161,49 +190,74 @@ func (o *TrendingFacetsQuery) GetFacetName() string {
 
 // GetFacetNameOk returns a tuple with the FacetName field value
 // and a boolean to check if the value has been set.
-func (o *TrendingFacetsQuery) GetFacetNameOk() (*string, bool) {
+func (o *TrendingFacetsQuery) GetFacetNameOk() (map[string]interface{}, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.FacetName, true
+	return o.FacetName, true
 }
 
 // SetFacetName sets field value.
-func (o *TrendingFacetsQuery) SetFacetName(v string) *TrendingFacetsQuery {
+func (o *TrendingFacetsQuery) SetFacetName(v map[string]interface{}) *TrendingFacetsQuery {
 	o.FacetName = v
 	return o
 }
 
-// GetModel returns the Model field value if set, zero value otherwise.
+// GetModel returns the Model field value.
 func (o *TrendingFacetsQuery) GetModel() TrendingFacetsModel {
-	if o == nil || o.Model == nil {
+	if o == nil {
 		var ret TrendingFacetsModel
 		return ret
 	}
-	return *o.Model
+
+	return o.Model
 }
 
-// GetModelOk returns a tuple with the Model field value if set, nil otherwise
+// GetModelOk returns a tuple with the Model field value
 // and a boolean to check if the value has been set.
 func (o *TrendingFacetsQuery) GetModelOk() (*TrendingFacetsModel, bool) {
-	if o == nil || o.Model == nil {
+	if o == nil {
 		return nil, false
 	}
-	return o.Model, true
+	return &o.Model, true
 }
 
-// HasModel returns a boolean if a field has been set.
-func (o *TrendingFacetsQuery) HasModel() bool {
-	if o != nil && o.Model != nil {
+// SetModel sets field value.
+func (o *TrendingFacetsQuery) SetModel(v TrendingFacetsModel) *TrendingFacetsQuery {
+	o.Model = v
+	return o
+}
+
+// GetFallbackParameters returns the FallbackParameters field value if set, zero value otherwise.
+func (o *TrendingFacetsQuery) GetFallbackParameters() FallbackParams {
+	if o == nil || o.FallbackParameters == nil {
+		var ret FallbackParams
+		return ret
+	}
+	return *o.FallbackParameters
+}
+
+// GetFallbackParametersOk returns a tuple with the FallbackParameters field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TrendingFacetsQuery) GetFallbackParametersOk() (*FallbackParams, bool) {
+	if o == nil || o.FallbackParameters == nil {
+		return nil, false
+	}
+	return o.FallbackParameters, true
+}
+
+// HasFallbackParameters returns a boolean if a field has been set.
+func (o *TrendingFacetsQuery) HasFallbackParameters() bool {
+	if o != nil && o.FallbackParameters != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetModel gets a reference to the given TrendingFacetsModel and assigns it to the Model field.
-func (o *TrendingFacetsQuery) SetModel(v TrendingFacetsModel) *TrendingFacetsQuery {
-	o.Model = &v
+// SetFallbackParameters gets a reference to the given FallbackParams and assigns it to the FallbackParameters field.
+func (o *TrendingFacetsQuery) SetFallbackParameters(v *FallbackParams) *TrendingFacetsQuery {
+	o.FallbackParameters = v
 	return o
 }
 
@@ -212,17 +266,23 @@ func (o TrendingFacetsQuery) MarshalJSON() ([]byte, error) {
 	if true {
 		toSerialize["indexName"] = o.IndexName
 	}
-	if o.Threshold != nil {
+	if true {
 		toSerialize["threshold"] = o.Threshold
 	}
 	if o.MaxRecommendations != nil {
 		toSerialize["maxRecommendations"] = o.MaxRecommendations
 	}
+	if o.QueryParameters != nil {
+		toSerialize["queryParameters"] = o.QueryParameters
+	}
 	if true {
 		toSerialize["facetName"] = o.FacetName
 	}
-	if o.Model != nil {
+	if true {
 		toSerialize["model"] = o.Model
+	}
+	if o.FallbackParameters != nil {
+		toSerialize["fallbackParameters"] = o.FallbackParameters
 	}
 	serialized, err := json.Marshal(toSerialize)
 	if err != nil {
@@ -237,8 +297,10 @@ func (o TrendingFacetsQuery) String() string {
 	out += fmt.Sprintf("  indexName=%v\n", o.IndexName)
 	out += fmt.Sprintf("  threshold=%v\n", o.Threshold)
 	out += fmt.Sprintf("  maxRecommendations=%v\n", o.MaxRecommendations)
+	out += fmt.Sprintf("  queryParameters=%v\n", o.QueryParameters)
 	out += fmt.Sprintf("  facetName=%v\n", o.FacetName)
 	out += fmt.Sprintf("  model=%v\n", o.Model)
+	out += fmt.Sprintf("  fallbackParameters=%v\n", o.FallbackParameters)
 	return fmt.Sprintf("TrendingFacetsQuery {\n%s}", out)
 }
 

@@ -25,7 +25,7 @@ final class SecuredAPIKeyRestrictions {
   @JsonKey(name: r'filters')
   final String? filters;
 
-  /// Timestamp in [Unix epoch time](https://en.wikipedia.org/wiki/Unix_time) when the API key should expire.
+  /// Timestamp when the secured API key expires, measured in seconds since the Unix epoch.
   @JsonKey(name: r'validUntil')
   final int? validUntil;
 

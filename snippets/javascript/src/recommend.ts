@@ -142,7 +142,7 @@ export async function snippetForgetRecommendations(): Promise<void> {
         indexName: 'indexName',
         objectID: 'objectID',
         model: 'related-products',
-        threshold: 42,
+        threshold: 42.1,
       },
     ],
   });

@@ -18,6 +18,11 @@ SearchRecommendRulesParams _$SearchRecommendRulesParamsFromJson(
           page: $checkedConvert('page', (v) => v as int?),
           hitsPerPage: $checkedConvert('hitsPerPage', (v) => v as int?),
           enabled: $checkedConvert('enabled', (v) => v as bool?),
+          filters: $checkedConvert('filters', (v) => v as String?),
+          facets: $checkedConvert('facets',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          maxValuesPerFacet:
+              $checkedConvert('maxValuesPerFacet', (v) => v as int?),
         );
         return val;
       },
@@ -38,5 +43,8 @@ Map<String, dynamic> _$SearchRecommendRulesParamsToJson(
   writeNotNull('page', instance.page);
   writeNotNull('hitsPerPage', instance.hitsPerPage);
   writeNotNull('enabled', instance.enabled);
+  writeNotNull('filters', instance.filters);
+  writeNotNull('facets', instance.facets);
+  writeNotNull('maxValuesPerFacet', instance.maxValuesPerFacet);
   return val;
 }

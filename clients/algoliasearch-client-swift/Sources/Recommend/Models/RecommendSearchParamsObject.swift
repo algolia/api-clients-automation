@@ -15,11 +15,11 @@ public struct RecommendSearchParamsObject: Codable, JSONEncodable {
     /// `similarQuery` is supposed to do a broad search, they usually return many results. Combine it with `filters` to
     /// narrow down the list of results.
     public var similarQuery: String?
-    /// Filter the search so that only records with matching values are included in the results.  These filters are
-    /// supported:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`,
-    /// `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of
-    /// the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute
-    /// (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>`
+    /// Filter expression to only include items that match the filter criteria in the response.  You can use these
+    /// filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`,
+    /// `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and
+    /// upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet
+    /// attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>`
     /// (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and
     /// `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.  
     /// **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not
@@ -113,20 +113,18 @@ public struct RecommendSearchParamsObject: Codable, JSONEncodable {
     /// criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/).
     /// The tie-breaking algorithm sequentially applies each criterion in the order they're specified. If you configure
     /// a replica index for [sorting by an attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute/),
-    /// you put the sorting attribute at the top of the list.  **Modifiers**  <dl>
-    /// <dt><code>asc(\"ATTRIBUTE\")</code></dt> <dd>Sort the index by the values of an attribute, in ascending
-    /// order.</dd> <dt><code>desc(\"ATTRIBUTE\")</code></dt> <dd>Sort the index by the values of an attribute, in
-    /// descending order.</dd> </dl>  Before you modify the default setting, you should test your changes in the
+    /// you put the sorting attribute at the top of the list.  **Modifiers**  - `asc(\"ATTRIBUTE\")`.   Sort the index
+    /// by the values of an attribute, in ascending order. - `desc(\"ATTRIBUTE\")`.   Sort the index by the values of an
+    /// attribute, in descending order.  Before you modify the default setting, you should test your changes in the
     /// dashboard, and by [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/).
     public var ranking: [String]?
     /// Attributes to use as [custom
     /// ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/).  The custom ranking
     /// attributes decide which items are shown first if the other ranking criteria are equal.  Records with missing
     /// values for your selected custom ranking attributes are always sorted last. Boolean attributes are sorted based
-    /// on their alphabetical order.  **Modifiers**  <dl> <dt><code>asc(\"ATTRIBUTE\")</code></dt> <dd>Sort the index by
-    /// the values of an attribute, in ascending order.</dd> <dt><code>desc(\"ATTRIBUTE\")</code></dt> <dd>Sort the
-    /// index by the values of an attribute, in descending order.</dd> </dl>  If you use two or more custom ranking
-    /// attributes, [reduce the precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/)
+    /// on their alphabetical order.  **Modifiers**  - `asc(\"ATTRIBUTE\")`.   Sort the index by the values of an
+    /// attribute, in ascending order.  - `desc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in
+    /// descending order.  If you use two or more custom ranking attributes, [reduce the precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/)
     /// of your first attributes, or the other attributes will never be applied.
     public var customRanking: [String]?
     /// Relevancy threshold below which less relevant results aren't included in the results.  You can only set
@@ -216,17 +214,16 @@ public struct RecommendSearchParamsObject: Codable, JSONEncodable {
     /// other attributes. This reduces the impact of individual attributes with a lot of content on ranking.
     public var disableExactOnAttributes: [String]?
     public var exactOnSingleWordQuery: RecommendExactOnSingleWordQuery?
-    /// Alternatives of query words that should be considered as exact matches by the Exact ranking criterion.  <dl>
-    /// <dt><code>ignorePlurals</code></dt> <dd>  Plurals and similar declensions added by the `ignorePlurals` setting
-    /// are considered exact matches.  </dd> <dt><code>singleWordSynonym</code></dt> <dd> Single-word synonyms, such as
-    /// \"NY/NYC\" are considered exact matches. </dd> <dt><code>multiWordsSynonym</code></dt> <dd> Multi-word synonyms,
-    /// such as \"NY/New York\" are considered exact matches. </dd> </dl>.
+    /// Alternatives of query words that should be considered as exact matches by the Exact ranking criterion.  -
+    /// `ignorePlurals`.   Plurals and similar declensions added by the `ignorePlurals` setting are considered exact
+    /// matches.  - `singleWordSynonym`.   Single-word synonyms, such as \"NY/NYC\" are considered exact matches.  -
+    /// `multiWordsSynonym`.   Multi-word synonyms, such as \"NY/New York\" are considered exact matches.
     public var alternativesAsExact: [RecommendAlternativesAsExact]?
-    /// Advanced search syntax features you want to support.  <dl> <dt><code>exactPhrase</code></dt> <dd>  Phrases in
-    /// quotes must match exactly. For example, `sparkly blue \"iPhone case\"` only returns records with the exact
-    /// string \"iPhone case\".  </dd> <dt><code>excludeWords</code></dt> <dd>  Query words prefixed with a `-` must not
-    /// occur in a record. For example, `search -engine` matches records that contain \"search\" but not \"engine\". 
-    /// </dd> </dl>  This setting only has an effect if `advancedSyntax` is true.
+    /// Advanced search syntax features you want to support.  - `exactPhrase`.   Phrases in quotes must match exactly.  
+    /// For example, `sparkly blue \"iPhone case\"` only returns records with the exact string \"iPhone case\".  -
+    /// `excludeWords`.   Query words prefixed with a `-` must not occur in a record.   For example, `search -engine`
+    /// matches records that contain \"search\" but not \"engine\".  This setting only has an effect if `advancedSyntax`
+    /// is true.
     public var advancedSyntaxFeatures: [RecommendAdvancedSyntaxFeatures]?
     public var distinct: RecommendDistinct?
     /// Whether to replace a highlighted word with the matched synonym.  By default, the original words are highlighted
@@ -250,10 +247,10 @@ public struct RecommendSearchParamsObject: Codable, JSONEncodable {
     public var maxFacetHits: Int?
     /// Maximum number of facet values to return for each facet.
     public var maxValuesPerFacet: Int?
-    /// Order in which to retrieve facet values.  <dl> <dt><code>count</code></dt> <dd> Facet values are retrieved by
-    /// decreasing count. The count is the number of matching records containing this facet value. </dd>
-    /// <dt><code>alpha</code></dt> <dd>Retrieve facet values alphabetically.</dd> </dl>  This setting doesn't influence
-    /// how facet values are displayed in your UI (see `renderingContent`). For more information, see [facet value
+    /// Order in which to retrieve facet values.  - `count`.   Facet values are retrieved by decreasing count.   The
+    /// count is the number of matching records containing this facet value.  - `alpha`.   Retrieve facet values
+    /// alphabetically.  This setting doesn't influence how facet values are displayed in your UI (see
+    /// `renderingContent`). For more information, see [facet value
     /// display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js/).
     public var sortFacetValuesBy: String?
     /// Whether the best matching attribute should be determined by minimum proximity.  This setting only affects

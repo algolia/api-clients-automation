@@ -6,7 +6,10 @@ package com.algolia.model.recommend;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Trending items model. */
+/**
+ * Trending items model. Trending items are determined from the number of conversion events
+ * collected on them.
+ */
 public enum TrendingItemsModel {
   TRENDING_ITEMS("trending-items");
 

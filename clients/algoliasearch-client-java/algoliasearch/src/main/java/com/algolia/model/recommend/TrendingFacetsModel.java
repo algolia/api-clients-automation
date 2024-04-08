@@ -6,7 +6,10 @@ package com.algolia.model.recommend;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Trending facets model. */
+/**
+ * Trending facet values model. This model recommends trending facet values for the specified facet
+ * attribute.
+ */
 public enum TrendingFacetsModel {
   TRENDING_FACETS("trending-facets");
 

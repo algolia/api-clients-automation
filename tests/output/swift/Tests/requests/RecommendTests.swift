@@ -790,10 +790,10 @@ final class RecommendClientRequestsTests: XCTestCase {
             .getRecommendationsWithHTTPInfo(
                 getRecommendationsParams: GetRecommendationsParams(requests: [
                     RecommendationsRequest
-                        .recommendationsQuery(RecommendationsQuery(
+                        .relatedQuery(RelatedQuery(
                             indexName: "indexName",
-                            threshold: 42,
-                            model: RecommendationModels.relatedProducts,
+                            threshold: 42.1,
+                            model: RelatedModel.relatedProducts,
                             objectID: "objectID"
                         )),
                 ])
@@ -805,7 +805,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42}]}"
+            "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -830,18 +830,18 @@ final class RecommendClientRequestsTests: XCTestCase {
             .getRecommendationsWithHTTPInfo(
                 getRecommendationsParams: GetRecommendationsParams(requests: [
                     RecommendationsRequest
-                        .recommendationsQuery(RecommendationsQuery(
+                        .relatedQuery(RelatedQuery(
                             indexName: "indexName",
-                            threshold: 42,
+                            threshold: 42.1,
                             maxRecommendations: 10,
-                            model: RecommendationModels.relatedProducts,
-                            objectID: "objectID",
-                            queryParameters: RecommendSearchParamsObject(
+                            queryParameters: RecommendSearchParams(
                                 query: "myQuery",
                                 facetFilters: RecommendFacetFilters
                                     .arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters.string("query")])
                             ),
-                            fallbackParameters: RecommendSearchParamsObject(
+                            model: RelatedModel.relatedProducts,
+                            objectID: "objectID",
+                            fallbackParameters: FallbackParams(
                                 query: "myQuery",
                                 facetFilters: RecommendFacetFilters
                                     .arrayOfRecommendMixedSearchFilters([
@@ -859,7 +859,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}"
+            "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -886,7 +886,9 @@ final class RecommendClientRequestsTests: XCTestCase {
                     RecommendationsRequest
                         .trendingItemsQuery(TrendingItemsQuery(
                             indexName: "indexName",
-                            threshold: 42,
+                            threshold: 42.1,
+                            facetName: "facet",
+                            facetValue: "value",
                             model: TrendingItemsModel.trendingItems
                         )),
                 ])
@@ -898,7 +900,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42}]}"
+            "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42.1,\"facetName\":\"facet\",\"facetValue\":\"value\"}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -925,16 +927,16 @@ final class RecommendClientRequestsTests: XCTestCase {
                     RecommendationsRequest
                         .trendingItemsQuery(TrendingItemsQuery(
                             indexName: "indexName",
-                            threshold: 42,
+                            threshold: 42.1,
                             maxRecommendations: 10,
-                            facetName: "myFacetName",
-                            facetValue: "myFacetValue",
-                            model: TrendingItemsModel.trendingItems,
-                            queryParameters: RecommendSearchParamsObject(
+                            queryParameters: RecommendSearchParams(
                                 query: "myQuery",
                                 facetFilters: RecommendFacetFilters
                                     .arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters.string("query")])
                             ),
+                            facetName: "myFacetName",
+                            facetValue: "myFacetValue",
+                            model: TrendingItemsModel.trendingItems,
                             fallbackParameters: RecommendSearchParamsObject(
                                 query: "myQuery",
                                 facetFilters: RecommendFacetFilters
@@ -953,7 +955,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42,\"maxRecommendations\":10,\"facetName\":\"myFacetName\",\"facetValue\":\"myFacetValue\",\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}"
+            "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42.1,\"maxRecommendations\":10,\"facetName\":\"myFacetName\",\"facetValue\":\"myFacetValue\",\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -976,16 +978,16 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         let response = try await client
             .getRecommendationsWithHTTPInfo(getRecommendationsParams: GetRecommendationsParams(requests: [
-                RecommendationsRequest.recommendationsQuery(RecommendationsQuery(
+                RecommendationsRequest.relatedQuery(RelatedQuery(
                     indexName: "indexName1",
-                    threshold: 21,
-                    model: RecommendationModels.relatedProducts,
+                    threshold: 21.7,
+                    model: RelatedModel.relatedProducts,
                     objectID: "objectID1"
                 )),
-                RecommendationsRequest.recommendationsQuery(RecommendationsQuery(
+                RecommendationsRequest.relatedQuery(RelatedQuery(
                     indexName: "indexName2",
-                    threshold: 21,
-                    model: RecommendationModels.relatedProducts,
+                    threshold: 21.7,
+                    model: RelatedModel.relatedProducts,
                     objectID: "objectID2"
                 )),
             ]))
@@ -996,7 +998,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21}]}"
+            "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21.7},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21.7}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -1019,35 +1021,35 @@ final class RecommendClientRequestsTests: XCTestCase {
 
         let response = try await client
             .getRecommendationsWithHTTPInfo(getRecommendationsParams: GetRecommendationsParams(requests: [
-                RecommendationsRequest.recommendationsQuery(RecommendationsQuery(
+                RecommendationsRequest.relatedQuery(RelatedQuery(
                     indexName: "indexName1",
-                    threshold: 21,
+                    threshold: 21.7,
                     maxRecommendations: 10,
-                    model: RecommendationModels.relatedProducts,
-                    objectID: "objectID1",
-                    queryParameters: RecommendSearchParamsObject(
+                    queryParameters: RecommendSearchParams(
                         query: "myQuery",
                         facetFilters: RecommendFacetFilters
                             .arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters.string("query1")])
                     ),
-                    fallbackParameters: RecommendSearchParamsObject(
+                    model: RelatedModel.relatedProducts,
+                    objectID: "objectID1",
+                    fallbackParameters: FallbackParams(
                         query: "myQuery",
                         facetFilters: RecommendFacetFilters
                             .arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters.string("fallback1")])
                     )
                 )),
-                RecommendationsRequest.recommendationsQuery(RecommendationsQuery(
+                RecommendationsRequest.relatedQuery(RelatedQuery(
                     indexName: "indexName2",
-                    threshold: 21,
+                    threshold: 21.7,
                     maxRecommendations: 10,
-                    model: RecommendationModels.relatedProducts,
-                    objectID: "objectID2",
-                    queryParameters: RecommendSearchParamsObject(
+                    queryParameters: RecommendSearchParams(
                         query: "myQuery",
                         facetFilters: RecommendFacetFilters
                             .arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters.string("query2")])
                     ),
-                    fallbackParameters: RecommendSearchParamsObject(
+                    model: RelatedModel.relatedProducts,
+                    objectID: "objectID2",
+                    fallbackParameters: FallbackParams(
                         query: "myQuery",
                         facetFilters: RecommendFacetFilters
                             .arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters.string("fallback2")])
@@ -1061,7 +1063,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query1\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback1\"]}},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query2\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback2\"]}}]}"
+            "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21.7,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query1\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback1\"]}},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21.7,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query2\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback2\"]}}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -1086,10 +1088,10 @@ final class RecommendClientRequestsTests: XCTestCase {
             .getRecommendationsWithHTTPInfo(
                 getRecommendationsParams: GetRecommendationsParams(requests: [
                     RecommendationsRequest
-                        .recommendationsQuery(RecommendationsQuery(
+                        .boughtTogetherQuery(BoughtTogetherQuery(
                             indexName: "indexName1",
-                            threshold: 42,
-                            model: RecommendationModels.boughtTogether,
+                            threshold: 42.7,
+                            model: FbtModel.boughtTogether,
                             objectID: "objectID1"
                         )),
                 ])
@@ -1101,7 +1103,7 @@ final class RecommendClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"bought-together\",\"threshold\":42}]}"
+            "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"bought-together\",\"threshold\":42.7}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 

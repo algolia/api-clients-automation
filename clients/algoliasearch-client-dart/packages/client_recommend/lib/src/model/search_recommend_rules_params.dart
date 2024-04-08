@@ -14,13 +14,16 @@ final class SearchRecommendRulesParams {
     this.page,
     this.hitsPerPage,
     this.enabled,
+    this.filters,
+    this.facets,
+    this.maxValuesPerFacet,
   });
 
   /// Search query.
   @JsonKey(name: r'query')
   final String? query;
 
-  /// Restricts responses to the specified [contextual rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
+  /// Only search for rules with matching context.
   @JsonKey(name: r'context')
   final String? context;
 
@@ -35,9 +38,23 @@ final class SearchRecommendRulesParams {
   @JsonKey(name: r'hitsPerPage')
   final int? hitsPerPage;
 
-  /// Restricts responses to enabled rules. When absent (default), _all_ rules are retrieved.
+  /// Whether to only show rules where the value of their `enabled` property matches this parameter. If absent, show all rules, regardless of their `enabled` property.
   @JsonKey(name: r'enabled')
   final bool? enabled;
+
+  /// Filter expression. This only searches for rules matching the filter expression.
+  @JsonKey(name: r'filters')
+  final String? filters;
+
+  /// Include facets and facet values in the response. Use `['*']` to include all facets.
+  @JsonKey(name: r'facets')
+  final List<String>? facets;
+
+  /// Maximum number of values to return for each facet.
+  // minimum: 1
+  // maximum: 1000
+  @JsonKey(name: r'maxValuesPerFacet')
+  final int? maxValuesPerFacet;
 
   @override
   bool operator ==(Object other) =>
@@ -47,7 +64,10 @@ final class SearchRecommendRulesParams {
           other.context == context &&
           other.page == page &&
           other.hitsPerPage == hitsPerPage &&
-          other.enabled == enabled;
+          other.enabled == enabled &&
+          other.filters == filters &&
+          other.facets == facets &&
+          other.maxValuesPerFacet == maxValuesPerFacet;
 
   @override
   int get hashCode =>
@@ -55,7 +75,10 @@ final class SearchRecommendRulesParams {
       context.hashCode +
       page.hashCode +
       hitsPerPage.hashCode +
-      (enabled == null ? 0 : enabled.hashCode);
+      enabled.hashCode +
+      filters.hashCode +
+      facets.hashCode +
+      maxValuesPerFacet.hashCode;
 
   factory SearchRecommendRulesParams.fromJson(Map<String, dynamic> json) =>
       _$SearchRecommendRulesParamsFromJson(json);

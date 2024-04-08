@@ -145,8 +145,8 @@ def snippet_for_get_recommendations
   # Call the API
   resp = client.get_recommendations(
     GetRecommendationsParams.new(
-      requests: [RecommendationsQuery.new(
-        index_name: "indexName", object_id: "objectID", model: 'related-products', threshold: 42
+      requests: [RelatedQuery.new(
+        index_name: "indexName", object_id: "objectID", model: 'related-products', threshold: 42.1
       )]
     )
   )

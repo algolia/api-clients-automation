@@ -189,7 +189,7 @@ async def snippet_for_get_recommendations():
                     "indexName": "indexName",
                     "objectID": "objectID",
                     "model": "related-products",
-                    "threshold": 42,
+                    "threshold": 42.1,
                 },
             ],
         },

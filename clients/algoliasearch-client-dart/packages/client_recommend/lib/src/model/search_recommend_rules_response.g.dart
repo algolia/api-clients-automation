@@ -16,7 +16,7 @@ SearchRecommendRulesResponse _$SearchRecommendRulesResponseFromJson(
           hits: $checkedConvert(
               'hits',
               (v) => (v as List<dynamic>)
-                  .map((e) => RuleResponse.fromJson(e as Map<String, dynamic>))
+                  .map((e) => RecommendRule.fromJson(e as Map<String, dynamic>))
                   .toList()),
           nbHits: $checkedConvert('nbHits', (v) => v as int),
           page: $checkedConvert('page', (v) => v as int),

@@ -15,12 +15,6 @@ public class RecommendationsHits {
   @JsonProperty("hits")
   private List<RecommendationsHit> hits = new ArrayList<>();
 
-  @JsonProperty("query")
-  private String query;
-
-  @JsonProperty("params")
-  private String params;
-
   public RecommendationsHits setHits(List<RecommendationsHit> hits) {
     this.hits = hits;
     return this;
@@ -37,28 +31,6 @@ public class RecommendationsHits {
     return hits;
   }
 
-  public RecommendationsHits setQuery(String query) {
-    this.query = query;
-    return this;
-  }
-
-  /** Search query. */
-  @javax.annotation.Nullable
-  public String getQuery() {
-    return query;
-  }
-
-  public RecommendationsHits setParams(String params) {
-    this.params = params;
-    return this;
-  }
-
-  /** URL-encoded string of all search parameters. */
-  @javax.annotation.Nullable
-  public String getParams() {
-    return params;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -68,16 +40,12 @@ public class RecommendationsHits {
       return false;
     }
     RecommendationsHits recommendationsHits = (RecommendationsHits) o;
-    return (
-      Objects.equals(this.hits, recommendationsHits.hits) &&
-      Objects.equals(this.query, recommendationsHits.query) &&
-      Objects.equals(this.params, recommendationsHits.params)
-    );
+    return Objects.equals(this.hits, recommendationsHits.hits);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(hits, query, params);
+    return Objects.hash(hits);
   }
 
   @Override
@@ -85,8 +53,6 @@ public class RecommendationsHits {
     StringBuilder sb = new StringBuilder();
     sb.append("class RecommendationsHits {\n");
     sb.append("    hits: ").append(toIndentedString(hits)).append("\n");
-    sb.append("    query: ").append(toIndentedString(query)).append("\n");
-    sb.append("    params: ").append(toIndentedString(params)).append("\n");
     sb.append("}");
     return sb.toString();
   }

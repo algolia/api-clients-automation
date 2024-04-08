@@ -18,7 +18,7 @@ public class DeleteSourceResponse {
     return this;
   }
 
-  /** Timestamp of deletion in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format. */
+  /** Date and time when the object was deleted, in RFC 3339 format. */
   @javax.annotation.Nonnull
   public String getDeletedAt() {
     return deletedAt;

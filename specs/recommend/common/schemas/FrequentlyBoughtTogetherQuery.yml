@@ -1,0 +1,24 @@
+boughtTogetherQuery:
+  title: Frequently bought together
+  allOf:
+    - $ref: './RecommendationsRequest.yml#/baseRecommendRequest'
+    - $ref: '#/frequentlyBoughtTogether'
+
+frequentlyBoughtTogether:
+  type: object
+  properties:
+    model:
+      $ref: '#/fbtModel'
+    objectID:
+      $ref: '../../../common/parameters.yml#/objectID'
+  required:
+    - model
+    - objectID
+
+fbtModel:
+  type: string
+  description: |
+    Frequently bought together model.
+
+    This model recommends items that have been purchased within 1 day with the item with the ID `objectID`.
+  enum: [bought-together]

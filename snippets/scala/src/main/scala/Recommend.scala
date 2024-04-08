@@ -166,11 +166,11 @@ class SnippetRecommendClient {
     val res = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(
         requests = Seq(
-          RecommendationsQuery(
+          RelatedQuery(
             indexName = "indexName",
             objectID = "objectID",
-            model = RecommendationModels.withName("related-products"),
-            threshold = Some(42)
+            model = RelatedModel.withName("related-products"),
+            threshold = 42.1
           )
         )
       )

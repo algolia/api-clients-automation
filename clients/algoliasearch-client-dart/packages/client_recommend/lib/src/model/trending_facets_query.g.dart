@@ -13,12 +13,22 @@ TrendingFacetsQuery _$TrendingFacetsQueryFromJson(Map<String, dynamic> json) =>
       ($checkedConvert) {
         final val = TrendingFacetsQuery(
           indexName: $checkedConvert('indexName', (v) => v as String),
-          threshold: $checkedConvert('threshold', (v) => v as int?),
+          threshold: $checkedConvert('threshold', (v) => (v as num).toDouble()),
           maxRecommendations:
               $checkedConvert('maxRecommendations', (v) => v as int?),
-          facetName: $checkedConvert('facetName', (v) => v as String),
-          model: $checkedConvert('model',
-              (v) => $enumDecodeNullable(_$TrendingFacetsModelEnumMap, v)),
+          queryParameters: $checkedConvert(
+              'queryParameters',
+              (v) => v == null
+                  ? null
+                  : SearchParams.fromJson(v as Map<String, dynamic>)),
+          facetName: $checkedConvert('facetName', (v) => v as Object),
+          model: $checkedConvert(
+              'model', (v) => $enumDecode(_$TrendingFacetsModelEnumMap, v)),
+          fallbackParameters: $checkedConvert(
+              'fallbackParameters',
+              (v) => v == null
+                  ? null
+                  : FallbackParams.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -27,6 +37,7 @@ TrendingFacetsQuery _$TrendingFacetsQueryFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$TrendingFacetsQueryToJson(TrendingFacetsQuery instance) {
   final val = <String, dynamic>{
     'indexName': instance.indexName,
+    'threshold': instance.threshold,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -35,10 +46,11 @@ Map<String, dynamic> _$TrendingFacetsQueryToJson(TrendingFacetsQuery instance) {
     }
   }
 
-  writeNotNull('threshold', instance.threshold);
   writeNotNull('maxRecommendations', instance.maxRecommendations);
+  writeNotNull('queryParameters', instance.queryParameters?.toJson());
   val['facetName'] = instance.facetName;
-  writeNotNull('model', instance.model?.toJson());
+  val['model'] = instance.model.toJson();
+  writeNotNull('fallbackParameters', instance.fallbackParameters?.toJson());
   return val;
 }
 

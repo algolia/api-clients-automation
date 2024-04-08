@@ -402,7 +402,7 @@ describe('getRecommendations', () => {
           indexName: 'indexName',
           objectID: 'objectID',
           model: 'related-products',
-          threshold: 42,
+          threshold: 42.1,
         },
       ],
     })) as unknown as EchoResponse;
@@ -415,7 +415,7 @@ describe('getRecommendations', () => {
           indexName: 'indexName',
           objectID: 'objectID',
           model: 'related-products',
-          threshold: 42,
+          threshold: 42.1,
         },
       ],
     });
@@ -429,7 +429,7 @@ describe('getRecommendations', () => {
           indexName: 'indexName',
           objectID: 'objectID',
           model: 'related-products',
-          threshold: 42,
+          threshold: 42.1,
           maxRecommendations: 10,
           queryParameters: { query: 'myQuery', facetFilters: ['query'] },
           fallbackParameters: { query: 'myQuery', facetFilters: ['fallback'] },
@@ -445,7 +445,7 @@ describe('getRecommendations', () => {
           indexName: 'indexName',
           objectID: 'objectID',
           model: 'related-products',
-          threshold: 42,
+          threshold: 42.1,
           maxRecommendations: 10,
           queryParameters: { query: 'myQuery', facetFilters: ['query'] },
           fallbackParameters: { query: 'myQuery', facetFilters: ['fallback'] },
@@ -458,7 +458,13 @@ describe('getRecommendations', () => {
   test('get recommendations for trending model with minimal parameters', async () => {
     const req = (await client.getRecommendations({
       requests: [
-        { indexName: 'indexName', model: 'trending-items', threshold: 42 },
+        {
+          indexName: 'indexName',
+          model: 'trending-items',
+          threshold: 42.1,
+          facetName: 'facet',
+          facetValue: 'value',
+        },
       ],
     })) as unknown as EchoResponse;
 
@@ -466,7 +472,13 @@ describe('getRecommendations', () => {
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
       requests: [
-        { indexName: 'indexName', model: 'trending-items', threshold: 42 },
+        {
+          indexName: 'indexName',
+          model: 'trending-items',
+          threshold: 42.1,
+          facetName: 'facet',
+          facetValue: 'value',
+        },
       ],
     });
     expect(req.searchParams).toStrictEqual(undefined);
@@ -478,7 +490,7 @@ describe('getRecommendations', () => {
         {
           indexName: 'indexName',
           model: 'trending-items',
-          threshold: 42,
+          threshold: 42.1,
           maxRecommendations: 10,
           facetName: 'myFacetName',
           facetValue: 'myFacetValue',
@@ -495,7 +507,7 @@ describe('getRecommendations', () => {
         {
           indexName: 'indexName',
           model: 'trending-items',
-          threshold: 42,
+          threshold: 42.1,
           maxRecommendations: 10,
           facetName: 'myFacetName',
           facetValue: 'myFacetValue',
@@ -514,13 +526,13 @@ describe('getRecommendations', () => {
           indexName: 'indexName1',
           objectID: 'objectID1',
           model: 'related-products',
-          threshold: 21,
+          threshold: 21.7,
         },
         {
           indexName: 'indexName2',
           objectID: 'objectID2',
           model: 'related-products',
-          threshold: 21,
+          threshold: 21.7,
         },
       ],
     })) as unknown as EchoResponse;
@@ -533,13 +545,13 @@ describe('getRecommendations', () => {
           indexName: 'indexName1',
           objectID: 'objectID1',
           model: 'related-products',
-          threshold: 21,
+          threshold: 21.7,
         },
         {
           indexName: 'indexName2',
           objectID: 'objectID2',
           model: 'related-products',
-          threshold: 21,
+          threshold: 21.7,
         },
       ],
     });
@@ -553,7 +565,7 @@ describe('getRecommendations', () => {
           indexName: 'indexName1',
           objectID: 'objectID1',
           model: 'related-products',
-          threshold: 21,
+          threshold: 21.7,
           maxRecommendations: 10,
           queryParameters: { query: 'myQuery', facetFilters: ['query1'] },
           fallbackParameters: { query: 'myQuery', facetFilters: ['fallback1'] },
@@ -562,7 +574,7 @@ describe('getRecommendations', () => {
           indexName: 'indexName2',
           objectID: 'objectID2',
           model: 'related-products',
-          threshold: 21,
+          threshold: 21.7,
           maxRecommendations: 10,
           queryParameters: { query: 'myQuery', facetFilters: ['query2'] },
           fallbackParameters: { query: 'myQuery', facetFilters: ['fallback2'] },
@@ -578,7 +590,7 @@ describe('getRecommendations', () => {
           indexName: 'indexName1',
           objectID: 'objectID1',
           model: 'related-products',
-          threshold: 21,
+          threshold: 21.7,
           maxRecommendations: 10,
           queryParameters: { query: 'myQuery', facetFilters: ['query1'] },
           fallbackParameters: { query: 'myQuery', facetFilters: ['fallback1'] },
@@ -587,7 +599,7 @@ describe('getRecommendations', () => {
           indexName: 'indexName2',
           objectID: 'objectID2',
           model: 'related-products',
-          threshold: 21,
+          threshold: 21.7,
           maxRecommendations: 10,
           queryParameters: { query: 'myQuery', facetFilters: ['query2'] },
           fallbackParameters: { query: 'myQuery', facetFilters: ['fallback2'] },
@@ -604,7 +616,7 @@ describe('getRecommendations', () => {
           indexName: 'indexName1',
           objectID: 'objectID1',
           model: 'bought-together',
-          threshold: 42,
+          threshold: 42.7,
         },
       ],
     })) as unknown as EchoResponse;
@@ -617,7 +629,7 @@ describe('getRecommendations', () => {
           indexName: 'indexName1',
           objectID: 'objectID1',
           model: 'bought-together',
-          threshold: 42,
+          threshold: 42.7,
         },
       ],
     });

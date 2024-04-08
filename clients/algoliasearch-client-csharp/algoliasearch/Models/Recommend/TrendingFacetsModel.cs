@@ -12,9 +12,9 @@ using System.Text.Json;
 namespace Algolia.Search.Models.Recommend;
 
 /// <summary>
-/// Trending facets model.
+/// Trending facet values model.  This model recommends trending facet values for the specified facet attribute. 
 /// </summary>
-/// <value>Trending facets model.</value>
+/// <value>Trending facet values model.  This model recommends trending facet values for the specified facet attribute. </value>
 public enum TrendingFacetsModel
 {
   /// <summary>

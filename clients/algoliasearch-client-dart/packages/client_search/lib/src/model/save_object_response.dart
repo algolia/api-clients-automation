@@ -14,7 +14,7 @@ final class SaveObjectResponse {
     this.objectID,
   });
 
-  /// Timestamp when the record was added, in ISO 8601 format.
+  /// Date and time when the object was created, in RFC 3339 format.
   @JsonKey(name: r'createdAt')
   final String createdAt;
 

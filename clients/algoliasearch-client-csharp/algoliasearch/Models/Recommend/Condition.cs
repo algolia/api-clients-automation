@@ -12,16 +12,10 @@ using System.Text.Json;
 namespace Algolia.Search.Models.Recommend;
 
 /// <summary>
-/// Condition
+/// Condition that triggers the rule. If not specified, the rule is triggered for all recommendations. 
 /// </summary>
 public partial class Condition
 {
-
-  /// <summary>
-  /// Gets or Sets Anchoring
-  /// </summary>
-  [JsonPropertyName("anchoring")]
-  public Anchoring? Anchoring { get; set; }
   /// <summary>
   /// Initializes a new instance of the Condition class.
   /// </summary>
@@ -30,18 +24,11 @@ public partial class Condition
   }
 
   /// <summary>
-  /// Query pattern that triggers the rule.  You can use either a literal string, or a special pattern `{facet:ATTRIBUTE}`, where `ATTRIBUTE` is a facet name. The rule is triggered if the query matches the literal string or a value of the specified facet. For example, with `pattern: {facet:genre}`, the rule is triggered when users search for a genre, such as \"comedy\". 
+  /// Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/). 
   /// </summary>
-  /// <value>Query pattern that triggers the rule.  You can use either a literal string, or a special pattern `{facet:ATTRIBUTE}`, where `ATTRIBUTE` is a facet name. The rule is triggered if the query matches the literal string or a value of the specified facet. For example, with `pattern: {facet:genre}`, the rule is triggered when users search for a genre, such as \"comedy\". </value>
-  [JsonPropertyName("pattern")]
-  public string Pattern { get; set; }
-
-  /// <summary>
-  /// Whether the pattern should match plurals, synonyms, and typos.
-  /// </summary>
-  /// <value>Whether the pattern should match plurals, synonyms, and typos.</value>
-  [JsonPropertyName("alternatives")]
-  public bool? Alternatives { get; set; }
+  /// <value>Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/). </value>
+  [JsonPropertyName("filters")]
+  public string Filters { get; set; }
 
   /// <summary>
   /// An additional restriction that only triggers the rule, when the search has the same value as `ruleContexts` parameter. For example, if `context: mobile`, the rule is only triggered when the search request has a matching `ruleContexts: mobile`. A rule context must only contain alphanumeric characters. 
@@ -51,13 +38,6 @@ public partial class Condition
   public string Context { get; set; }
 
   /// <summary>
-  /// Filters that trigger the rule.  You can add add filters using the syntax `facet:value` so that the rule is triggered, when the specific filter is selected. You can use `filters` on its own or combine it with the `pattern` parameter. 
-  /// </summary>
-  /// <value>Filters that trigger the rule.  You can add add filters using the syntax `facet:value` so that the rule is triggered, when the specific filter is selected. You can use `filters` on its own or combine it with the `pattern` parameter. </value>
-  [JsonPropertyName("filters")]
-  public string Filters { get; set; }
-
-  /// <summary>
   /// Returns the string presentation of the object
   /// </summary>
   /// <returns>String presentation of the object</returns>
@@ -65,11 +45,8 @@ public partial class Condition
   {
     StringBuilder sb = new StringBuilder();
     sb.Append("class Condition {\n");
-    sb.Append("  Pattern: ").Append(Pattern).Append("\n");
-    sb.Append("  Anchoring: ").Append(Anchoring).Append("\n");
-    sb.Append("  Alternatives: ").Append(Alternatives).Append("\n");
-    sb.Append("  Context: ").Append(Context).Append("\n");
     sb.Append("  Filters: ").Append(Filters).Append("\n");
+    sb.Append("  Context: ").Append(Context).Append("\n");
     sb.Append("}\n");
     return sb.ToString();
   }
@@ -96,11 +73,8 @@ public partial class Condition
     }
 
     return
-        (Pattern == input.Pattern || (Pattern != null && Pattern.Equals(input.Pattern))) &&
-        (Anchoring == input.Anchoring || Anchoring.Equals(input.Anchoring)) &&
-        (Alternatives == input.Alternatives || Alternatives.Equals(input.Alternatives)) &&
-        (Context == input.Context || (Context != null && Context.Equals(input.Context))) &&
-        (Filters == input.Filters || (Filters != null && Filters.Equals(input.Filters)));
+        (Filters == input.Filters || (Filters != null && Filters.Equals(input.Filters))) &&
+        (Context == input.Context || (Context != null && Context.Equals(input.Context)));
   }
 
   /// <summary>
@@ -112,19 +86,13 @@ public partial class Condition
     unchecked // Overflow is fine, just wrap
     {
       int hashCode = 41;
-      if (Pattern != null)
-      {
-        hashCode = (hashCode * 59) + Pattern.GetHashCode();
-      }
-      hashCode = (hashCode * 59) + Anchoring.GetHashCode();
-      hashCode = (hashCode * 59) + Alternatives.GetHashCode();
-      if (Context != null)
-      {
-        hashCode = (hashCode * 59) + Context.GetHashCode();
-      }
       if (Filters != null)
       {
         hashCode = (hashCode * 59) + Filters.GetHashCode();
+      }
+      if (Context != null)
+      {
+        hashCode = (hashCode * 59) + Context.GetHashCode();
       }
       return hashCode;
     }
