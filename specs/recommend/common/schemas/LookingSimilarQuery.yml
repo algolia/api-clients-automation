@@ -1,0 +1,26 @@
+lookingSimilarQuery:
+  title: Looking similar
+  allOf:
+    - $ref: './RecommendationsRequest.yml#/baseRecommendRequest'
+    - $ref: '#/lookingSimilar'
+
+lookingSimilar:
+  type: object
+  properties:
+    model:
+      $ref: '#/lookingSimilarModel'
+    objectID:
+      $ref: '../../../common/parameters.yml#/objectID'
+    fallbackParameters:
+      $ref: './RecommendationsRequest.yml#/fallbackParams'
+  required:
+    - model
+    - objectID
+
+lookingSimilarModel:
+  type: string
+  description: |
+    Looking similar model.
+
+    This model recommends items that look similar to the item with the ID `objectID` based on image attributes in your index.
+  enum: [looking-similar]

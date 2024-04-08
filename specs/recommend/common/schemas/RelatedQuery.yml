@@ -1,0 +1,27 @@
+relatedQuery:
+  title: Related products
+  allOf:
+    - $ref: './RecommendationsRequest.yml#/baseRecommendRequest'
+    - $ref: '#/relatedProducts'
+
+relatedProducts:
+  type: object
+  properties:
+    model:
+      $ref: '#/relatedModel'
+    objectID:
+      $ref: '../../../common/parameters.yml#/objectID'
+    fallbackParameters:
+      $ref: './RecommendationsRequest.yml#/fallbackParams'
+  required:
+    - model
+    - objectID
+
+relatedModel:
+  type: string
+  description: |
+    Related products or similar content model.
+
+    This model recommends items that are similar to the item with the ID `objectID`.
+    Similarity is determined from the user interactions and attributes.
+  enum: [related-products]
