@@ -8,10 +8,12 @@ import kotlinx.serialization.json.*
  * TrendingFacetsQuery
  *
  * @param indexName Index name.
- * @param facetName Facet name for trending models.
- * @param threshold Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the recommendations are.
- * @param maxRecommendations Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
+ * @param threshold Minimum score a recommendation must have to be included in the response.
+ * @param facetName Facet attribute for which to retrieve trending facet values.
  * @param model
+ * @param maxRecommendations Maximum number of recommendations to retrieve. By default, all recommendations are returned and no fallback request is made. Depending on the available recommendations and the other request parameters, the actual number of recommendations may be lower than this value.
+ * @param queryParameters
+ * @param fallbackParameters
  */
 @Serializable
 public data class TrendingFacetsQuery(
@@ -19,14 +21,18 @@ public data class TrendingFacetsQuery(
   /** Index name. */
   @SerialName(value = "indexName") val indexName: String,
 
-  /** Facet name for trending models. */
-  @SerialName(value = "facetName") val facetName: String,
+  /** Minimum score a recommendation must have to be included in the response. */
+  @SerialName(value = "threshold") val threshold: Double,
 
-  /** Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the recommendations are.  */
-  @SerialName(value = "threshold") val threshold: Int? = null,
+  /** Facet attribute for which to retrieve trending facet values. */
+  @SerialName(value = "facetName") val facetName: JsonObject,
 
-  /** Maximum number of recommendations to retrieve. If 0, all recommendations will be returned. */
+  @SerialName(value = "model") val model: TrendingFacetsModel,
+
+  /** Maximum number of recommendations to retrieve. By default, all recommendations are returned and no fallback request is made. Depending on the available recommendations and the other request parameters, the actual number of recommendations may be lower than this value.  */
   @SerialName(value = "maxRecommendations") val maxRecommendations: Int? = null,
 
-  @SerialName(value = "model") val model: TrendingFacetsModel? = null,
+  @SerialName(value = "queryParameters") val queryParameters: SearchParams? = null,
+
+  @SerialName(value = "fallbackParameters") val fallbackParameters: FallbackParams? = null,
 ) : RecommendationsRequest

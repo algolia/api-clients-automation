@@ -101,12 +101,6 @@ public class RecommendationsResults {
   @JsonProperty("hits")
   private List<RecommendationsHit> hits = new ArrayList<>();
 
-  @JsonProperty("query")
-  private String query;
-
-  @JsonProperty("params")
-  private String params;
-
   public RecommendationsResults setAbTestID(Integer abTestID) {
     this.abTestID = abTestID;
     return this;
@@ -482,28 +476,6 @@ public class RecommendationsResults {
     return hits;
   }
 
-  public RecommendationsResults setQuery(String query) {
-    this.query = query;
-    return this;
-  }
-
-  /** Search query. */
-  @javax.annotation.Nullable
-  public String getQuery() {
-    return query;
-  }
-
-  public RecommendationsResults setParams(String params) {
-    this.params = params;
-    return this;
-  }
-
-  /** URL-encoded string of all search parameters. */
-  @javax.annotation.Nullable
-  public String getParams() {
-    return params;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -542,9 +514,7 @@ public class RecommendationsResults {
       Objects.equals(this.serverUsed, recommendationsResults.serverUsed) &&
       Objects.equals(this.userData, recommendationsResults.userData) &&
       Objects.equals(this.queryID, recommendationsResults.queryID) &&
-      Objects.equals(this.hits, recommendationsResults.hits) &&
-      Objects.equals(this.query, recommendationsResults.query) &&
-      Objects.equals(this.params, recommendationsResults.params)
+      Objects.equals(this.hits, recommendationsResults.hits)
     );
   }
 
@@ -579,9 +549,7 @@ public class RecommendationsResults {
       serverUsed,
       userData,
       queryID,
-      hits,
-      query,
-      params
+      hits
     );
   }
 
@@ -618,8 +586,6 @@ public class RecommendationsResults {
     sb.append("    userData: ").append(toIndentedString(userData)).append("\n");
     sb.append("    queryID: ").append(toIndentedString(queryID)).append("\n");
     sb.append("    hits: ").append(toIndentedString(hits)).append("\n");
-    sb.append("    query: ").append(toIndentedString(query)).append("\n");
-    sb.append("    params: ").append(toIndentedString(params)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -1476,11 +1476,20 @@ components:
     appId:
       type: apiKey
       in: header
-      name: X-Algolia-Application-Id
+      name: x-algolia-application-id
+      description: Your Algolia application ID.
     apiKey:
       type: apiKey
       in: header
-      name: X-Algolia-API-Key
+      name: x-algolia-api-key
+      description: >
+        Your Algolia API key with the necessary permissions to make the request.
+
+        Permissions are controlled through access control lists (ACL) and access
+        restrictions.
+
+        The required ACL to make a request is listed in each endpoint's
+        reference.
   parameters:
     PathInPath:
       name: path

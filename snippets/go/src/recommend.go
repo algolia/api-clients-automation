@@ -220,8 +220,8 @@ func SnippetForGetRecommendationsOfRecommend() {
 	resp, err := client.GetRecommendations(client.NewApiGetRecommendationsRequest(
 
 		recommend.NewEmptyGetRecommendationsParams().SetRequests(
-			[]recommend.RecommendationsRequest{*recommend.RecommendationsQueryAsRecommendationsRequest(
-				recommend.NewEmptyRecommendationsQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RecommendationModels("related-products")).SetThreshold(42))}),
+			[]recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
+				recommend.NewEmptyRelatedQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))}),
 	))
 	if err != nil {
 		// handle the eventual error

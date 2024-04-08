@@ -4,7 +4,7 @@ package com.algolia.client.model.recommend
 import kotlinx.serialization.*
 
 /**
- * Trending items model.
+ * Trending items model.  Trending items are determined from the number of conversion events collected on them.
  */
 @Serializable
 public enum class TrendingItemsModel(public val value: kotlin.String) {

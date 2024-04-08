@@ -10,8 +10,6 @@ final class RecommendationsHits {
   /// Returns a new [RecommendationsHits] instance.
   const RecommendationsHits({
     required this.hits,
-    this.query,
-    this.params,
   });
 
   /// One of types:
@@ -20,24 +18,13 @@ final class RecommendationsHits {
   @JsonKey(name: r'hits')
   final Iterable<dynamic> hits;
 
-  /// Search query.
-  @JsonKey(name: r'query')
-  final String? query;
-
-  /// URL-encoded string of all search parameters.
-  @JsonKey(name: r'params')
-  final String? params;
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is RecommendationsHits &&
-          other.hits == hits &&
-          other.query == query &&
-          other.params == params;
+      other is RecommendationsHits && other.hits == hits;
 
   @override
-  int get hashCode => hits.hashCode + query.hashCode + params.hashCode;
+  int get hashCode => hits.hashCode;
 
   factory RecommendationsHits.fromJson(Map<String, dynamic> json) =>
       _$RecommendationsHitsFromJson(json);

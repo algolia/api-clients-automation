@@ -2,7 +2,7 @@
 // ignore_for_file: unused_element
 import 'package:json_annotation/json_annotation.dart';
 
-/// Trending facets model.
+/// Trending facet values model.  This model recommends trending facet values for the specified facet attribute.
 @JsonEnum(valueField: 'raw')
 enum TrendingFacetsModel {
   trendingFacets(r'trending-facets');

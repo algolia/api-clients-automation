@@ -1,8 +1,26 @@
-/** Recommend API The Recommend API lets you generate recommendations with several AI models. > **Note**: You should use
-  * Algolia's [libraries and
-  * tools](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) to interact with
-  * the Recommend API. Using the HTTP endpoints directly is not covered by the
-  * [SLA](https://www.algolia.com/policies/sla/).
+/** Recommend API The Recommend API lets you retrieve recommendations from one of Algolia's AI recommendation models
+  * that you previously trained on your data. ## Client libraries Use Algolia's API clients and libraries to reliably
+  * integrate Algolia's APIs with your apps. The official API clients are covered by Algolia's [Service Level
+  * Agreement](https://www.algolia.com/policies/sla/). See: [Algolia's
+  * ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ## Base URLs
+  * The base URLs for requests to the Recommend API are: - `https://{APPLICATION_ID}.algolia.net` -
+  * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
+  * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
+  * URLs provide high availability by distributing requests with load balancing. **All requests must use HTTPS.** ##
+  * Retry strategy To guarantee a high availability, implement a retry strategy for all API requests using the URLs of
+  * your servers as fallbacks: - `https://{APPLICATION_ID}-1.algolianet.com` -
+  * `https://{APPLICATION_ID}-2.algolianet.com` - `https://{APPLICATION_ID}-3.algolianet.com` These URLs use a different
+  * DNS provider than the primary URLs. You should randomize this list to ensure an even load across the three servers.
+  * All Algolia API clients implement this retry strategy. ## Authentication To authenticate your API requests, add
+  * these headers: - `x-algolia-application-id`. Your Algolia application ID. - `x-algolia-api-key`. An API key with the
+  * necessary permissions to make the request. The required access control list (ACL) to make a request is listed in
+  * each endpoint's reference. You can find your application ID and API key in the [Algolia
+  * dashboard](https://dashboard.algolia.com/account). ## Request format Request bodies must be JSON objects. ##
+  * Response status and errors The Recommend API returns JSON responses. Since JSON doesn't guarantee any specific
+  * ordering, don't rely on the order of attributes in the API response. Successful responses return a `2xx` status.
+  * Client errors return a `4xx` status. Server errors are indicated by a `5xx` status. Error responses have a `message`
+  * property with more information. ## Version The current version of the Recommend API is version 1, as indicated by
+  * the `/1/` in each endpoint's URL.
   *
   * The version of the OpenAPI document: 1.0.0
   *
@@ -18,17 +36,17 @@ import algoliasearch.recommend.RecommendedForYouModel._
   * @param indexName
   *   Index name.
   * @param threshold
-  *   Recommendations with a confidence score lower than `threshold` won't appear in results. > **Note**: Each
-  *   recommendation has a confidence score of 0 to 100. The closer the score is to 100, the more relevant the
-  *   recommendations are.
+  *   Minimum score a recommendation must have to be included in the response.
   * @param maxRecommendations
-  *   Maximum number of recommendations to retrieve. If 0, all recommendations will be returned.
+  *   Maximum number of recommendations to retrieve. By default, all recommendations are returned and no fallback
+  *   request is made. Depending on the available recommendations and the other request parameters, the actual number of
+  *   recommendations may be lower than this value.
   */
 case class RecommendedForYouQuery(
     indexName: String,
-    threshold: Option[Int] = scala.None,
+    threshold: Double,
     maxRecommendations: Option[Int] = scala.None,
+    queryParameters: Option[SearchParams] = scala.None,
     model: RecommendedForYouModel,
-    queryParameters: Option[RecommendedForYouQueryParameters] = scala.None,
-    fallbackParameters: Option[RecommendedForYouQueryParameters] = scala.None
+    fallbackParameters: Option[FallbackParams] = scala.None
 ) extends RecommendationsRequestTrait

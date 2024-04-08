@@ -17,11 +17,11 @@ from algoliasearch.recommend.models.recommendations_request import (
 
 class GetRecommendationsParams(BaseModel):
     """
-    Recommend parameters.
+    Recommend request body.
     """
 
     requests: List[RecommendationsRequest] = Field(
-        description="Request parameters depend on the model (recommendations or trending)."
+        description="Recommendation request with parameters depending on the requested model."
     )
 
     model_config = {"populate_by_name": True, "validate_assignment": True}

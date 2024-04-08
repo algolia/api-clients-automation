@@ -21,6 +21,24 @@ public interface RecommendationsRequest {
     @Override
     public RecommendationsRequest deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
+      // deserialize BoughtTogetherQuery
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(BoughtTogetherQuery.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf BoughtTogetherQuery (error: " + e.getMessage() + ") (type: BoughtTogetherQuery)");
+        }
+      }
+      // deserialize RelatedQuery
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(RelatedQuery.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf RelatedQuery (error: " + e.getMessage() + ") (type: RelatedQuery)");
+        }
+      }
       // deserialize TrendingItemsQuery
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
@@ -39,13 +57,13 @@ public interface RecommendationsRequest {
           LOGGER.finest("Failed to deserialize oneOf TrendingFacetsQuery (error: " + e.getMessage() + ") (type: TrendingFacetsQuery)");
         }
       }
-      // deserialize RecommendationsQuery
+      // deserialize LookingSimilarQuery
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(RecommendationsQuery.class);
+          return parser.readValueAs(LookingSimilarQuery.class);
         } catch (Exception e) {
           // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf RecommendationsQuery (error: " + e.getMessage() + ") (type: RecommendationsQuery)");
+          LOGGER.finest("Failed to deserialize oneOf LookingSimilarQuery (error: " + e.getMessage() + ") (type: LookingSimilarQuery)");
         }
       }
       // deserialize RecommendedForYouQuery

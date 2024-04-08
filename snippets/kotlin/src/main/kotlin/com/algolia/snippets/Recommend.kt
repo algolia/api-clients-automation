@@ -141,11 +141,11 @@ class SnippetRecommendClient {
     var response = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(
         requests = listOf(
-          RecommendationsQuery(
+          RelatedQuery(
             indexName = "indexName",
             objectID = "objectID",
-            model = RecommendationModels.entries.first { it.value == "related-products" },
-            threshold = 42,
+            model = RelatedModel.entries.first { it.value == "related-products" },
+            threshold = 42.1,
           ),
         ),
       ),

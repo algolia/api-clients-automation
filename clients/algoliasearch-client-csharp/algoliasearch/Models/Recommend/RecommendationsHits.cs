@@ -37,20 +37,6 @@ public partial class RecommendationsHits
   public List<RecommendationsHit> Hits { get; set; }
 
   /// <summary>
-  /// Search query.
-  /// </summary>
-  /// <value>Search query.</value>
-  [JsonPropertyName("query")]
-  public string Query { get; set; }
-
-  /// <summary>
-  /// URL-encoded string of all search parameters.
-  /// </summary>
-  /// <value>URL-encoded string of all search parameters.</value>
-  [JsonPropertyName("params")]
-  public string VarParams { get; set; }
-
-  /// <summary>
   /// Returns the string presentation of the object
   /// </summary>
   /// <returns>String presentation of the object</returns>
@@ -59,8 +45,6 @@ public partial class RecommendationsHits
     StringBuilder sb = new StringBuilder();
     sb.Append("class RecommendationsHits {\n");
     sb.Append("  Hits: ").Append(Hits).Append("\n");
-    sb.Append("  Query: ").Append(Query).Append("\n");
-    sb.Append("  VarParams: ").Append(VarParams).Append("\n");
     sb.Append("}\n");
     return sb.ToString();
   }
@@ -87,9 +71,7 @@ public partial class RecommendationsHits
     }
 
     return
-        (Hits == input.Hits || Hits != null && input.Hits != null && Hits.SequenceEqual(input.Hits)) &&
-        (Query == input.Query || (Query != null && Query.Equals(input.Query))) &&
-        (VarParams == input.VarParams || (VarParams != null && VarParams.Equals(input.VarParams)));
+        (Hits == input.Hits || Hits != null && input.Hits != null && Hits.SequenceEqual(input.Hits));
   }
 
   /// <summary>
@@ -104,14 +86,6 @@ public partial class RecommendationsHits
       if (Hits != null)
       {
         hashCode = (hashCode * 59) + Hits.GetHashCode();
-      }
-      if (Query != null)
-      {
-        hashCode = (hashCode * 59) + Query.GetHashCode();
-      }
-      if (VarParams != null)
-      {
-        hashCode = (hashCode * 59) + VarParams.GetHashCode();
       }
       return hashCode;
     }

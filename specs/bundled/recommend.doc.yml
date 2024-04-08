@@ -1,14 +1,109 @@
 openapi: 3.0.2
 info:
   title: Recommend API
-  description: >-
-    The Recommend API lets you generate recommendations with several AI models.
+  description: >
+    The Recommend API lets you retrieve recommendations from one of Algolia's AI
+    recommendation models that you previously trained on your data.
 
 
-    > **Note**: You should use Algolia's [libraries and
-    tools](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/)
-    to interact with the Recommend API. Using the HTTP endpoints directly is not
-    covered by the [SLA](https://www.algolia.com/policies/sla/).
+    ## Client libraries
+
+
+    Use Algolia's API clients and libraries to reliably integrate Algolia's APIs
+    with your apps.
+
+    The official API clients are covered by Algolia's [Service Level
+    Agreement](https://www.algolia.com/policies/sla/).
+
+
+    See: [Algolia's
+    ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/)
+
+
+    ## Base URLs
+
+
+    The base URLs for requests to the Recommend API are:
+
+
+    - `https://{APPLICATION_ID}.algolia.net`
+
+    - `https://{APPLICATION_ID}-dsn.algolia.net`.
+      If your subscription includes a [Distributed Search Network](https://dashboard.algolia.com/infra),
+      this ensures that requests are sent to servers closest to users.
+
+    Both URLs provide high availability by distributing requests with load
+    balancing.
+
+
+    **All requests must use HTTPS.**
+
+
+    ## Retry strategy
+
+
+    To guarantee a high availability, implement a retry strategy for all API
+    requests using the URLs of your servers as fallbacks:
+
+
+    - `https://{APPLICATION_ID}-1.algolianet.com`
+
+    - `https://{APPLICATION_ID}-2.algolianet.com`
+
+    - `https://{APPLICATION_ID}-3.algolianet.com`
+
+
+    These URLs use a different DNS provider than the primary URLs.
+
+    You should randomize this list to ensure an even load across the three
+    servers.
+
+
+    All Algolia API clients implement this retry strategy.
+
+
+    ## Authentication
+
+
+    To authenticate your API requests, add these headers:
+
+
+    - `x-algolia-application-id`. Your Algolia application ID.
+
+    - `x-algolia-api-key`. An API key with the necessary permissions to make the
+    request.
+      The required access control list (ACL) to make a request is listed in each endpoint's reference.
+
+    You can find your application ID and API key in the [Algolia
+    dashboard](https://dashboard.algolia.com/account).
+
+
+    ## Request format
+
+
+    Request bodies must be JSON objects.
+
+
+    ## Response status and errors
+
+
+    The Recommend API returns JSON responses.
+
+    Since JSON doesn't guarantee any specific ordering, don't rely on the order
+    of attributes in the API response.
+
+
+    Successful responses return a `2xx` status. Client errors return a `4xx`
+    status. Server errors are indicated by a `5xx` status.
+
+    Error responses have a `message` property with more information.
+
+
+    ## Version
+
+
+    The current version of the Recommend API is version 1, as indicated by the
+    `/1/` in each endpoint's URL.
   version: 1.0.0
 servers:
   - url: https://{appId}.algolianet.com
@@ -36,8 +131,21 @@ security:
     apiKey: []
 tags:
   - name: recommendations
-    x-displayName: Recommend
-    description: Manage recommendations.
+    x-displayName: Recommendations
+    description: >-
+      Retrieve recommendations from a pre-trained AI model. You can train models
+      in the [Algolia dashboard](https://dashboard.algolia.com/recommend/).
+    externalDocs:
+      url: https://www.algolia.com/doc/guides/algolia-recommend/overview/
+      description: |
+        Related guide: Algolia Recommend.
+  - name: rules
+    x-displayName: Rules
+    description: Curate your recommendations with rules, which are _if_-_then_ statements.
+    externalDocs:
+      url: https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/
+      description: |
+        Related guide: Recommend Rules.
 paths:
   /{path}:
     get:
@@ -871,27 +979,24 @@ paths:
       x-cacheable: true
       x-acl:
         - search
-      summary: Get recommendations and trending items.
+      summary: Retrieve recommendations.
       description: |
-        Returns results from either recommendation or trending models:
-
-          - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models
-          - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
+        Retrieves recommendations from selected AI models.
       requestBody:
         required: true
         content:
           application/json:
             schema:
               title: getRecommendationsParams
-              description: Recommend parameters.
+              description: Recommend request body.
               type: object
               additionalProperties: false
               properties:
                 requests:
                   type: array
                   description: >-
-                    Request parameters depend on the model (recommendations or
-                    trending).
+                    Recommendation request with parameters depending on the
+                    requested model.
                   items:
                     $ref: '#/components/schemas/recommendationsRequest'
               required:
@@ -936,12 +1041,12 @@ paths:
                 Requests = new List<RecommendationsRequest>
                 {
                   new RecommendationsRequest(
-                    new RecommendationsQuery
+                    new RelatedQuery
                     {
                       IndexName = "indexName",
                       ObjectID = "objectID",
-                      Model = Enum.Parse<RecommendationModels>("RelatedProducts"),
-                      Threshold = 42,
+                      Model = Enum.Parse<RelatedModel>("RelatedProducts"),
+                      Threshold = 42.1,
                     }
                   )
                 },
@@ -961,11 +1066,11 @@ paths:
             final response = await client.getRecommendations(
               getRecommendationsParams: GetRecommendationsParams(
                 requests: [
-                  RecommendationsQuery(
+                  RelatedQuery(
                     indexName: "indexName",
                     objectID: "objectID",
-                    model: RecommendationModels.fromJson("related-products"),
-                    threshold: 42,
+                    model: RelatedModel.fromJson("related-products"),
+                    threshold: 42.1,
                   ),
                 ],
               ),
@@ -989,8 +1094,8 @@ paths:
             client.GetRecommendations(client.NewApiGetRecommendationsRequest(
 
               recommend.NewEmptyGetRecommendationsParams().SetRequests(
-                []recommend.RecommendationsRequest{*recommend.RecommendationsQueryAsRecommendationsRequest(
-                  recommend.NewEmptyRecommendationsQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RecommendationModels("related-products")).SetThreshold(42))}),
+                []recommend.RecommendationsRequest{*recommend.RelatedQueryAsRecommendationsRequest(
+                  recommend.NewEmptyRelatedQuery().SetIndexName("indexName").SetObjectID("objectID").SetModel(recommend.RelatedModel("related-products")).SetThreshold(42.1))}),
             ))
 
             if err != nil {
@@ -1017,11 +1122,11 @@ paths:
               new GetRecommendationsParams()
                 .setRequests(
                   List.of(
-                    new RecommendationsQuery()
+                    new RelatedQuery()
                       .setIndexName("indexName")
                       .setObjectID("objectID")
-                      .setModel(RecommendationModels.fromValue("related-products"))
-                      .setThreshold(42)
+                      .setModel(RelatedModel.fromValue("related-products"))
+                      .setThreshold(42.1)
                   )
                 )
             );
@@ -1038,7 +1143,7 @@ paths:
                   indexName: 'indexName',
                   objectID: 'objectID',
                   model: 'related-products',
-                  threshold: 42,
+                  threshold: 42.1,
                 },
               ],
             });
@@ -1059,11 +1164,11 @@ paths:
             var response = client.getRecommendations(
               getRecommendationsParams = GetRecommendationsParams(
                 requests = listOf(
-                  RecommendationsQuery(
+                  RelatedQuery(
                     indexName = "indexName",
                     objectID = "objectID",
-                    model = RecommendationModels.entries.first { it.value == "related-products" },
-                    threshold = 42,
+                    model = RelatedModel.entries.first { it.value == "related-products" },
+                    threshold = 42.1,
                   ),
                 ),
               ),
@@ -1090,7 +1195,7 @@ paths:
                     ['indexName' => 'indexName',
                         'objectID' => 'objectID',
                         'model' => 'related-products',
-                        'threshold' => 42,
+                        'threshold' => 42.1,
                     ],
                 ],
                 ],
@@ -1114,7 +1219,7 @@ paths:
                             "indexName": "indexName",
                             "objectID": "objectID",
                             "model": "related-products",
-                            "threshold": 42,
+                            "threshold": 42.1,
                         },
                     ],
                 },
@@ -1138,8 +1243,8 @@ paths:
 
             resp = client.get_recommendations(
               GetRecommendationsParams.new(
-                requests: [RecommendationsQuery.new(
-                  index_name: "indexName", object_id: "objectID", model: 'related-products', threshold: 42
+                requests: [RelatedQuery.new(
+                  index_name: "indexName", object_id: "objectID", model: 'related-products', threshold: 42.1
                 )]
               )
             )
@@ -1167,11 +1272,11 @@ paths:
             val res = client.getRecommendations(
               getRecommendationsParams = GetRecommendationsParams(
                 requests = Seq(
-                  RecommendationsQuery(
+                  RelatedQuery(
                     indexName = "indexName",
                     objectID = "objectID",
-                    model = RecommendationModels.withName("related-products"),
-                    threshold = Some(42)
+                    model = RelatedModel.withName("related-products"),
+                    threshold = 42.1
                   )
                 )
               )
@@ -1195,24 +1300,24 @@ paths:
             _ = try await client
                 .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [
                     RecommendationsRequest
-                        .recommendationsQuery(RecommendationsQuery(
+                        .relatedQuery(RelatedQuery(
                             indexName: "indexName",
-                            threshold: 42,
-                            model: RecommendationModels.relatedProducts,
+                            threshold: 42.1,
+                            model: RelatedModel.relatedProducts,
                             objectID: "objectID"
                         )),
                 ]))
   /1/indexes/{indexName}/{model}/recommend/rules/{objectID}:
     get:
       tags:
-        - recommendations
+        - rules
       operationId: getRecommendRule
       x-acl:
         - settings
-      summary: Get a Recommend rule.
+      summary: Retrieve a rule.
       description: >-
-        Return a [Recommend
-        rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+        Retrieves a Recommend rule that you previously created in the Algolia
+        dashboard.
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/Models'
@@ -1223,7 +1328,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RuleResponse'
+                $ref: '#/components/schemas/RecommendRule'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1445,14 +1550,12 @@ paths:
             )
     delete:
       tags:
-        - recommendations
+        - rules
       operationId: deleteRecommendRule
       x-acl:
         - editSettings
-      summary: Delete a Recommend rule.
-      description: >-
-        Delete a [Recommend
-        rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+      summary: Delete a rule.
+      description: Deletes a Recommend rule from a recommendation scenario.
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/Models'
@@ -1682,25 +1785,31 @@ paths:
   /1/indexes/{indexName}/{model}/task/{taskID}:
     get:
       tags:
-        - recommendations
+        - rules
       operationId: getRecommendStatus
       x-acl:
         - editSettings
-      summary: Get a Recommend task's status.
-      description: >-
-        Some operations, such as deleting a Recommend rule, will respond with a
-        `taskID` value. Use this value here to check the status of that task.
+      summary: Check task status.
+      description: >
+        Checks the status of a given task.
+
+
+        Deleting a Recommend rule is asynchronous.
+
+        When you delete a rule, a task is created on a queue and completed
+        depending on the load on the server.
+
+        The API response includes a task ID that you can use to check the
+        status.
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/Models'
         - name: taskID
           in: path
-          description: Unique identifier of a task. Numeric value (up to 64bits).
+          description: Unique task identifier.
           required: true
           schema:
-            type: integer
-            format: int64
-            example: 13235
+            $ref: '#/components/schemas/taskID'
       responses:
         '200':
           description: OK
@@ -1937,16 +2046,17 @@ paths:
   /1/indexes/{indexName}/{model}/recommend/rules/search:
     post:
       tags:
-        - recommendations
+        - rules
       operationId: searchRecommendRules
       x-use-read-transporter: true
       x-cacheable: true
       x-acl:
         - settings
-      summary: List Recommend rules.
-      description: >-
-        List [Recommend
-        rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+      summary: Search for rules.
+      description: |
+        Searches for Recommend rules.
+
+        Use an empty query to list all rules for this recommendation scenario.
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/Models'
@@ -1956,29 +2066,49 @@ paths:
             schema:
               type: object
               title: searchRecommendRulesParams
-              description: Recommend rules search parameters.
+              description: Recommend rules parameters.
               additionalProperties: false
               properties:
                 query:
                   $ref: '#/components/schemas/parameters_query'
                 context:
                   type: string
-                  description: >-
-                    Restricts responses to the specified [contextual
-                    rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
+                  description: Only search for rules with matching context.
                   example: mobile
                 page:
                   $ref: '#/components/schemas/parameters_page'
                 hitsPerPage:
                   $ref: '#/components/schemas/parameters_hitsPerPage'
                 enabled:
-                  oneOf:
-                    - type: boolean
-                      default: null
-                      description: >-
-                        Restricts responses to enabled rules. When absent
-                        (default), _all_ rules are retrieved.
-                    - type: 'null'
+                  type: boolean
+                  description: >
+                    Whether to only show rules where the value of their
+                    `enabled` property matches this parameter.
+
+                    If absent, show all rules, regardless of their `enabled`
+                    property.
+                filters:
+                  type: string
+                  description: >-
+                    Filter expression. This only searches for rules matching the
+                    filter expression.
+                  example: objectID:rr-123456
+                facets:
+                  type: array
+                  description: >-
+                    Include facets and facet values in the response. Use `['*']`
+                    to include all facets.
+                  example:
+                    - '*'
+                  items:
+                    type: string
+                    description: Facet name for rule objects or `*` as wildcard character.
+                    example: condition.context
+                maxValuesPerFacet:
+                  type: integer
+                  description: Maximum number of values to return for each facet.
+                  minimum: 1
+                  maximum: 1000
       responses:
         '200':
           description: OK
@@ -1996,9 +2126,9 @@ paths:
                 properties:
                   hits:
                     type: array
-                    description: Fetched rules.
+                    description: Recommend rules that match the search criteria.
                     items:
-                      $ref: '#/components/schemas/RuleResponse'
+                      $ref: '#/components/schemas/RecommendRule'
                   nbHits:
                     $ref: '#/components/schemas/nbHits'
                   page:
@@ -2219,11 +2349,20 @@ components:
     appId:
       type: apiKey
       in: header
-      name: X-Algolia-Application-Id
+      name: x-algolia-application-id
+      description: Your Algolia application ID.
     apiKey:
       type: apiKey
       in: header
-      name: X-Algolia-API-Key
+      name: x-algolia-api-key
+      description: >
+        Your Algolia API key with the necessary permissions to make the request.
+
+        Permissions are controlled through access control lists (ACL) and access
+        restrictions.
+
+        The required ACL to make a request is listed in each endpoint's
+        reference.
   parameters:
     PathInPath:
       name: path
@@ -2254,7 +2393,7 @@ components:
       required: true
       description: >
         [Recommend
-        models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+        model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
       schema:
         $ref: '#/components/schemas/recommendModels'
     ObjectID:
@@ -2263,8 +2402,7 @@ components:
       description: Unique record identifier.
       required: true
       schema:
-        type: string
-        example: '123'
+        $ref: '#/components/schemas/objectID'
   schemas:
     ErrorBase:
       description: Error.
@@ -2278,42 +2416,6 @@ components:
       type: string
       example: products
       description: Index name.
-    baseRecommendRequest:
-      type: object
-      additionalProperties: false
-      properties:
-        indexName:
-          $ref: '#/components/schemas/indexName'
-        threshold:
-          type: integer
-          minimum: 0
-          maximum: 100
-          description: >
-            Recommendations with a confidence score lower than `threshold` won't
-            appear in results.
-
-            > **Note**: Each recommendation has a confidence score of 0 to 100.
-            The closer the score is to 100, the more relevant the
-            recommendations are.
-        maxRecommendations:
-          type: integer
-          default: 0
-          description: >-
-            Maximum number of recommendations to retrieve. If 0, all
-            recommendations will be returned.
-      required:
-        - indexName
-    facetName:
-      type: string
-      description: Facet name for trending models.
-    facetValue:
-      type: string
-      description: Facet value for trending models.
-    trendingItemsModel:
-      description: Trending items model.
-      type: string
-      enum:
-        - trending-items
     query:
       type: string
       description: Search query.
@@ -2329,11 +2431,11 @@ components:
     filters:
       type: string
       description: >
-        Filter the search so that only records with matching values are included
-        in the results.
+        Filter expression to only include items that match the filter criteria
+        in the response.
 
 
-        These filters are supported:
+        You can use these filter expressions:
 
 
         - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of
@@ -2371,7 +2473,6 @@ components:
         For more information, see
         [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
       example: (category:Book OR category:Ebook) AND _tags:published
-      default: ''
       x-categories:
         - Filtering
     searchFiltersArrayString:
@@ -4018,9 +4119,138 @@ components:
       allOf:
         - $ref: '#/components/schemas/baseSearchParams'
         - $ref: '#/components/schemas/indexSettingsAsSearchParams'
-    baseTrendingItemsQuery:
+    searchParams:
+      title: queryParameters
+      allOf:
+        - $ref: '#/components/schemas/searchParamsObject'
+        - type: object
+          description: Search parameters for filtering the recommendations.
+    baseRecommendRequest:
       type: object
       additionalProperties: false
+      properties:
+        indexName:
+          $ref: '#/components/schemas/indexName'
+        threshold:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          description: >-
+            Minimum score a recommendation must have to be included in the
+            response.
+        maxRecommendations:
+          type: integer
+          minimum: 1
+          maximum: 1000
+          default: 30
+          description: >
+            Maximum number of recommendations to retrieve.
+
+            By default, all recommendations are returned and no fallback request
+            is made.
+
+            Depending on the available recommendations and the other request
+            parameters,
+
+            the actual number of recommendations may be lower than this value.
+        queryParameters:
+          $ref: '#/components/schemas/searchParams'
+      required:
+        - indexName
+        - threshold
+    fbtModel:
+      type: string
+      description: >
+        Frequently bought together model.
+
+
+        This model recommends items that have been purchased within 1 day with
+        the item with the ID `objectID`.
+      enum:
+        - bought-together
+    objectID:
+      type: string
+      description: Unique record identifier.
+      example: test-record-123
+    frequentlyBoughtTogether:
+      type: object
+      properties:
+        model:
+          $ref: '#/components/schemas/fbtModel'
+        objectID:
+          $ref: '#/components/schemas/objectID'
+      required:
+        - model
+        - objectID
+    boughtTogetherQuery:
+      title: Frequently bought together
+      allOf:
+        - $ref: '#/components/schemas/baseRecommendRequest'
+        - $ref: '#/components/schemas/frequentlyBoughtTogether'
+    relatedModel:
+      type: string
+      description: >
+        Related products or similar content model.
+
+
+        This model recommends items that are similar to the item with the ID
+        `objectID`.
+
+        Similarity is determined from the user interactions and attributes.
+      enum:
+        - related-products
+    fallbackParams:
+      title: fallbackParameters
+      allOf:
+        - $ref: '#/components/schemas/searchParamsObject'
+        - type: object
+          description: >-
+            Search parameters to use for a fallback request if there aren't
+            enough recommendations.
+    relatedProducts:
+      type: object
+      properties:
+        model:
+          $ref: '#/components/schemas/relatedModel'
+        objectID:
+          $ref: '#/components/schemas/objectID'
+        fallbackParameters:
+          $ref: '#/components/schemas/fallbackParams'
+      required:
+        - model
+        - objectID
+    relatedQuery:
+      title: Related products
+      allOf:
+        - $ref: '#/components/schemas/baseRecommendRequest'
+        - $ref: '#/components/schemas/relatedProducts'
+    facetName:
+      type: string
+      description: >
+        Facet attribute. To be used in combination with `facetValue`.
+
+        If specified, only recommendations matching the facet filter will be
+        returned.
+    facetValue:
+      type: string
+      description: >
+        Facet value. To be used in combination with `facetName`.
+
+        If specified, only recommendations matching the facet filter will be
+        returned.
+    trendingItemsModel:
+      description: >
+        Trending items model.
+
+
+        Trending items are determined from the number of conversion events
+        collected on them.
+      type: string
+      enum:
+        - trending-items
+    trendingItems:
+      type: object
       properties:
         facetName:
           $ref: '#/components/schemas/facetName'
@@ -4028,98 +4258,98 @@ components:
           $ref: '#/components/schemas/facetValue'
         model:
           $ref: '#/components/schemas/trendingItemsModel'
-        queryParameters:
-          $ref: '#/components/schemas/searchParamsObject'
         fallbackParameters:
           $ref: '#/components/schemas/searchParamsObject'
-    trendingItemsQuery:
-      allOf:
-        - $ref: '#/components/schemas/baseRecommendRequest'
-        - $ref: '#/components/schemas/baseTrendingItemsQuery'
-    trendingFacetsModel:
-      description: Trending facets model.
-      type: string
-      enum:
-        - trending-facets
-    baseTrendingFacetsQuery:
-      type: object
-      additionalProperties: false
-      properties:
-        facetName:
-          $ref: '#/components/schemas/facetName'
-        model:
-          $ref: '#/components/schemas/trendingFacetsModel'
       required:
         - facetName
-    trendingFacetsQuery:
+        - facetValue
+        - model
+    trendingItemsQuery:
+      title: Trending items
       allOf:
         - $ref: '#/components/schemas/baseRecommendRequest'
-        - $ref: '#/components/schemas/baseTrendingFacetsQuery'
-    recommendationModels:
-      description: Recommendation model.
+        - $ref: '#/components/schemas/trendingItems'
+    trendingFacetsModel:
       type: string
+      description: >
+        Trending facet values model.
+
+
+        This model recommends trending facet values for the specified facet
+        attribute.
       enum:
-        - related-products
-        - bought-together
-    objectID:
-      type: string
-      description: Unique record identifier.
-    baseRecommendationsQuery:
+        - trending-facets
+    trendingFacets:
       type: object
-      additionalProperties: false
+      properties:
+        facetName:
+          description: Facet attribute for which to retrieve trending facet values.
+        model:
+          $ref: '#/components/schemas/trendingFacetsModel'
+        fallbackParameters:
+          $ref: '#/components/schemas/fallbackParams'
+      required:
+        - facetName
+        - model
+    trendingFacetsQuery:
+      title: Trending facet values
+      allOf:
+        - $ref: '#/components/schemas/baseRecommendRequest'
+        - $ref: '#/components/schemas/trendingFacets'
+    lookingSimilarModel:
+      type: string
+      description: >
+        Looking similar model.
+
+
+        This model recommends items that look similar to the item with the ID
+        `objectID` based on image attributes in your index.
+      enum:
+        - looking-similar
+    lookingSimilar:
+      type: object
       properties:
         model:
-          $ref: '#/components/schemas/recommendationModels'
+          $ref: '#/components/schemas/lookingSimilarModel'
         objectID:
           $ref: '#/components/schemas/objectID'
-        queryParameters:
-          $ref: '#/components/schemas/searchParamsObject'
         fallbackParameters:
-          $ref: '#/components/schemas/searchParamsObject'
+          $ref: '#/components/schemas/fallbackParams'
       required:
         - model
         - objectID
-    recommendationsQuery:
+    lookingSimilarQuery:
+      title: Looking similar
       allOf:
         - $ref: '#/components/schemas/baseRecommendRequest'
-        - $ref: '#/components/schemas/baseRecommendationsQuery'
+        - $ref: '#/components/schemas/lookingSimilar'
     recommendedForYouModel:
-      description: Recommended for you model.
       type: string
+      description: |
+        "Recommened for you" model.
       enum:
         - recommended-for-you
-    baseRecommendedForYouQueryParameters:
+    recommendedForYou:
       type: object
-      properties:
-        userToken:
-          $ref: '#/components/schemas/userToken'
-      required:
-        - userToken
-    recommendedForYouQueryParameters:
-      allOf:
-        - $ref: '#/components/schemas/searchParamsObject'
-        - $ref: '#/components/schemas/baseRecommendedForYouQueryParameters'
-    baseRecommendedForYouQuery:
-      type: object
-      additionalProperties: false
       properties:
         model:
           $ref: '#/components/schemas/recommendedForYouModel'
-        queryParameters:
-          $ref: '#/components/schemas/recommendedForYouQueryParameters'
         fallbackParameters:
-          $ref: '#/components/schemas/recommendedForYouQueryParameters'
+          $ref: '#/components/schemas/fallbackParams'
       required:
         - model
     recommendedForYouQuery:
+      title: Recommended for you
       allOf:
         - $ref: '#/components/schemas/baseRecommendRequest'
-        - $ref: '#/components/schemas/baseRecommendedForYouQuery'
+        - $ref: '#/components/schemas/recommendedForYou'
     recommendationsRequest:
       oneOf:
+        - $ref: '#/components/schemas/boughtTogetherQuery'
+        - $ref: '#/components/schemas/relatedQuery'
         - $ref: '#/components/schemas/trendingItemsQuery'
         - $ref: '#/components/schemas/trendingFacetsQuery'
-        - $ref: '#/components/schemas/recommendationsQuery'
+        - $ref: '#/components/schemas/lookingSimilarQuery'
         - $ref: '#/components/schemas/recommendedForYouQuery'
     exhaustiveFacetsCount:
       type: boolean
@@ -4616,12 +4846,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/recommendationsHit'
-        query:
-          $ref: '#/components/schemas/query'
-        params:
-          type: string
-          description: URL-encoded string of all search parameters.
-          example: query=a&hitsPerPage=20
       required:
         - hits
     recommendationsResults:
@@ -4639,323 +4863,142 @@ components:
       type: string
       example: '2023-07-04T12:49:15Z'
       description: Date and time when the object was updated, in RFC 3339 format.
-    anchoring:
-      type: string
-      description: |
-        Which part of the search query the pattern should match:
-
-        - `startsWith`. The pattern must match the begginning of the query.
-        - `endsWith`. The pattern must match the end of the query.
-        - `is`. The pattern must match the query exactly.
-        - `contains`. The pattern must match anywhere in the query.
-
-        Empty queries are only allowed as pattern with `anchoring: is`.
-      enum:
-        - is
-        - startsWith
-        - endsWith
-        - contains
-    condition:
-      type: object
-      additionalProperties: false
-      properties:
-        pattern:
-          type: string
-          description: >
-            Query pattern that triggers the rule.
-
-
-            You can use either a literal string, or a special pattern
-            `{facet:ATTRIBUTE}`, where `ATTRIBUTE` is a facet name.
-
-            The rule is triggered if the query matches the literal string or a
-            value of the specified facet.
-
-            For example, with `pattern: {facet:genre}`, the rule is triggered
-            when users search for a genre, such as "comedy".
-          example: '{facet:genre}'
-        anchoring:
-          $ref: '#/components/schemas/anchoring'
-        alternatives:
-          type: boolean
-          description: Whether the pattern should match plurals, synonyms, and typos.
-          default: false
-        context:
-          type: string
-          pattern: '[A-Za-z0-9_-]+'
-          description: >
-            An additional restriction that only triggers the rule, when the
-            search has the same value as `ruleContexts` parameter.
-
-            For example, if `context: mobile`, the rule is only triggered when
-            the search request has a matching `ruleContexts: mobile`.
-
-            A rule context must only contain alphanumeric characters.
-          example: mobile
-        filters:
-          type: string
-          description: >
-            Filters that trigger the rule.
-
-
-            You can add add filters using the syntax `facet:value` so that the
-            rule is triggered, when the specific filter is selected.
-
-            You can use `filters` on its own or combine it with the `pattern`
-            parameter.
-          example: genre:comedy
-    editType:
-      description: Type of edit.
-      type: string
-      enum:
-        - remove
-        - replace
-    edit:
-      type: object
-      additionalProperties: false
-      properties:
-        type:
-          $ref: '#/components/schemas/editType'
-        delete:
-          description: Text or patterns to remove from the query string.
-          type: string
-        insert:
-          description: >-
-            Text to be added in place of the deleted text inside the query
-            string.
-          type: string
-    consequenceQueryObject:
-      type: object
-      additionalProperties: false
-      properties:
-        remove:
-          description: Words to remove from the search query.
-          type: array
-          items:
-            type: string
-        edits:
-          description: Changes to make to the search query.
-          type: array
-          items:
-            $ref: '#/components/schemas/edit'
-    consequenceQuery:
-      description: >
-        Replace or edit the search query.
-
-
-        If `consequenceQuery` is a string, the entire search query is replaced
-        with that string.
-
-        If `consequenceQuery` is an object, it describes incremental edits made
-        to the query.
-      oneOf:
-        - $ref: '#/components/schemas/consequenceQueryObject'
-        - type: string
-    automaticFacetFilter:
-      type: object
-      description: Filter or optional filter to be applied to the search.
-      additionalProperties: false
-      properties:
-        facet:
-          type: string
-          description: >
-            Facet name to be applied as filter.
-
-            The name must match placeholders in the `pattern` parameter.
-
-            For example, with `pattern: {facet:genre}`, `automaticFacetFilters`
-            must be `genre`.
-        score:
-          type: integer
-          default: 1
-          description: Filter scores to give different weights to individual filters.
-        disjunctive:
-          type: boolean
-          default: false
-          description: >
-            Whether the filter is disjunctive or conjunctive.
-
-
-            If true the filter has multiple matches, multiple occurences are
-            combined with the logical `OR` operation.
-
-            If false, multiple occurences are combined with the logical `AND`
-            operation.
-      required:
-        - facet
-    automaticFacetFilters:
-      description: >
-        Filter to be applied to the search.
-
-
-        You can use this to respond to search queries that match a facet value.
-
-        For example, if users search for "comedy", which matches a facet value
-        of the "genre" facet,
-
-        you can filter the results to show the top-ranked comedy movies.
-      oneOf:
-        - type: array
-          items:
-            $ref: '#/components/schemas/automaticFacetFilter'
-        - type: array
-          items:
-            type: string
-    params:
-      type: object
-      description: >
-        Parameters to apply to this search.
-
-
-        You can use all search parameters, plus special `automaticFacetFilters`,
-        `automaticOptionalFacetFilters`, and `query`.
-      additionalProperties: false
-      properties:
-        query:
-          $ref: '#/components/schemas/consequenceQuery'
-        automaticFacetFilters:
-          $ref: '#/components/schemas/automaticFacetFilters'
-        automaticOptionalFacetFilters:
-          $ref: '#/components/schemas/automaticFacetFilters'
-        renderingContent:
-          $ref: '#/components/schemas/renderingContent'
-    consequenceParams:
-      allOf:
-        - $ref: '#/components/schemas/baseSearchParamsWithoutQuery'
-        - $ref: '#/components/schemas/indexSettingsAsSearchParams'
-        - $ref: '#/components/schemas/params'
-    promotePosition:
-      type: integer
-      description: >-
-        Position in the search results where you want to show the promoted
-        records.
-      example: 0
-    promoteObjectIDs:
-      title: objectIDs
-      description: Records to promote.
-      type: object
-      additionalProperties: false
-      properties:
-        objectIDs:
-          type: array
-          maxItems: 100
-          description: |
-            Object IDs of the records you want to promote.
-
-            The records are placed as a group at the `position`.
-            For example, if you want to promote four records to position `0`,
-            they will be the first four search results.
-          items:
-            $ref: '#/components/schemas/objectID'
-        position:
-          $ref: '#/components/schemas/promotePosition'
-      required:
-        - position
-        - objectIDs
-    promoteObjectID:
+    ruleID:
       title: objectID
-      description: Record to promote.
+      type: string
+      description: Unique identifier of a rule object.
+    context:
+      type: string
+      pattern: '[A-Za-z0-9_-]+'
+      description: >
+        An additional restriction that only triggers the rule, when the search
+        has the same value as `ruleContexts` parameter.
+
+        For example, if `context: mobile`, the rule is only triggered when the
+        search request has a matching `ruleContexts: mobile`.
+
+        A rule context must only contain alphanumeric characters.
+      example: mobile
+    Condition:
       type: object
-      additionalProperties: false
+      description: |
+        Condition that triggers the rule.
+        If not specified, the rule is triggered for all recommendations.
+      properties:
+        filters:
+          $ref: '#/components/schemas/filters'
+        context:
+          $ref: '#/components/schemas/context'
+    HideConsequenceObject:
+      type: object
+      description: Object ID of the recommendation you want to exclude.
+      properties:
+        objectID:
+          $ref: '#/components/schemas/objectID'
+    HideConsequence:
+      type: array
+      description: Exclude items from recommendations.
+      minItems: 1
+      items:
+        $ref: '#/components/schemas/HideConsequenceObject'
+    PromoteConsequenceObject:
+      type: object
+      description: Object ID and position of the recommendation you want to pin.
       properties:
         objectID:
           $ref: '#/components/schemas/objectID'
         position:
-          $ref: '#/components/schemas/promotePosition'
-      required:
-        - position
-        - objectID
-    promote:
-      oneOf:
-        - $ref: '#/components/schemas/promoteObjectIDs'
-        - $ref: '#/components/schemas/promoteObjectID'
-    consequence:
+          type: integer
+          description: Index in the list of recommendations where to place this item.
+          minimum: 0
+    PromoteConsequence:
+      type: array
+      description: Place items at specific positions in the list of recommendations.
+      minItems: 1
+      items:
+        $ref: '#/components/schemas/PromoteConsequenceObject'
+    AutoFacetFilter:
       type: object
-      description: >
-        Effect of the rule.
-
-
-        For more information, see
-        [Consequences](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#consequences).
-      additionalProperties: false
+      description: >-
+        Facet attribute. Only recommendations with the same value (or only
+        recommendations with a different value) as the original viewed item are
+        included.
       properties:
-        params:
-          $ref: '#/components/schemas/consequenceParams'
-        promote:
-          type: array
-          maxItems: 300
-          description: >
-            Records you want to pin to a specific position in the search
-            results.
-
-
-            You can promote up to 300 records, either individually, or as groups
-            of up to 100 records each.
-          items:
-            $ref: '#/components/schemas/promote'
-        filterPromotes:
+        facet:
+          type: string
+          description: Facet attribute.
+        negative:
           type: boolean
-          default: false
           description: >
-            Whether promoted records must match an active filter for the
-            consequence to be applied.
+            Whether the filter is negative.
 
+            If true, recommendations must not have the same value for the
+            `facet` attribute.
 
-            This ensures that user actions (filtering the search) are given a
-            higher precendence.
-
-            For example, if you promote a record with the `color: red`
-            attribute, and the user filters the search for `color: blue`,
-
-            the "red" record won't be shown.
-        hide:
-          type: array
-          maxItems: 50
-          description: Records you want to hide from the search results.
-          items:
-            title: consequenceHide
-            type: object
-            description: Object ID of the record to hide.
-            additionalProperties: false
-            properties:
-              objectID:
-                $ref: '#/components/schemas/objectID'
-            required:
-              - objectID
-        userData:
-          description: >
-            A JSON object with custom data that will be appended to the
-            `userData` array in the response.
-
-            This object isn't interpreted by the API and is limited to 1&nbsp;kB
-            of minified JSON.
-          example:
-            settingID: f2a7b51e3503acc6a39b3784ffb84300
-            pluginVersion: 1.6.0
-    RuleResponse:
+            If false, recommendations must have the same value for the `facet`
+            attribute.
+    ParamsConsequence:
       type: object
-      description: Rule object.
+      description: Filter or boost recommendations matching a facet filter.
+      properties:
+        automaticFacetFilters:
+          type: array
+          description: >-
+            Filter recommendations that match or don't match the same
+            `facet:facet_value` combination as the viewed item.
+          items:
+            $ref: '#/components/schemas/AutoFacetFilter'
+        filters:
+          $ref: '#/components/schemas/filters'
+        optionalFilters:
+          type: array
+          description: >
+            Filters to promote or demote records in the search results.
+
+
+            Optional filters work like facet filters, but they don't exclude
+            records from the search results.
+
+            Records that match the optional filter rank before records that
+            don't match.
+
+            Matches with higher weights (`<score=N>`) rank before matches with
+            lower weights.
+
+            If you're using a negative filter `facet:-value`, matching records
+            rank after records that don't match.
+          items:
+            type: string
+          example:
+            - category:books<score=1>
+            - category:-movies<score=1>
+    Consequence:
+      type: object
+      description: Effect of the rule.
+      properties:
+        hide:
+          $ref: '#/components/schemas/HideConsequence'
+        promote:
+          $ref: '#/components/schemas/PromoteConsequence'
+        params:
+          $ref: '#/components/schemas/ParamsConsequence'
+    RecommendRule:
+      type: object
+      description: Recommend rule.
       additionalProperties: false
       properties:
         _metadata:
           type: object
+          description: Rule metadata.
           properties:
             lastUpdate:
               $ref: '#/components/schemas/updatedAt'
         objectID:
-          type: string
-          description: Unique identifier for a rule object.
-          example: hide-12345
-        conditions:
-          type: array
-          description: >
-            [Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions)
-            required to activate a rule. You can use up to 25 conditions per
-            rule.
-          items:
-            $ref: '#/components/schemas/condition'
+          $ref: '#/components/schemas/ruleID'
+        condition:
+          $ref: '#/components/schemas/Condition'
         consequence:
-          $ref: '#/components/schemas/consequence'
+          $ref: '#/components/schemas/Consequence'
         description:
           type: string
           description: >-
@@ -4968,8 +5011,6 @@ components:
           description: >-
             Indicates whether to enable the rule. If it isn't enabled, it isn't
             applied at query time.
-      required:
-        - objectID
     taskID:
       type: integer
       format: int64
@@ -5050,6 +5091,7 @@ components:
               deletedAt:
                 $ref: '#/components/schemas/deletedAt'
 x-tagGroups:
-  - name: General
+  - name: Recommend
     tags:
       - recommendations
+      - rules

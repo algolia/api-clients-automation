@@ -3214,11 +3214,20 @@ components:
     appId:
       type: apiKey
       in: header
-      name: X-Algolia-Application-Id
+      name: x-algolia-application-id
+      description: Your Algolia application ID.
     apiKey:
       type: apiKey
       in: header
-      name: X-Algolia-API-Key
+      name: x-algolia-api-key
+      description: >
+        Your Algolia API key with the necessary permissions to make the request.
+
+        Permissions are controlled through access control lists (ACL) and access
+        restrictions.
+
+        The required ACL to make a request is listed in each endpoint's
+        reference.
   parameters:
     PathInPath:
       name: path
@@ -3249,8 +3258,7 @@ components:
       description: Unique record identifier.
       required: true
       schema:
-        type: string
-        example: '123'
+        $ref: '#/components/schemas/objectID'
     ForwardToReplicas:
       in: query
       name: forwardToReplicas
@@ -3373,11 +3381,11 @@ components:
     filters:
       type: string
       description: >
-        Filter the search so that only records with matching values are included
-        in the results.
+        Filter expression to only include items that match the filter criteria
+        in the response.
 
 
-        These filters are supported:
+        You can use these filter expressions:
 
 
         - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of
@@ -3415,7 +3423,6 @@ components:
         For more information, see
         [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
       example: (category:Book OR category:Ebook) AND _tags:published
-      default: ''
       x-categories:
         - Filtering
     searchFiltersArrayString:
@@ -5324,6 +5331,7 @@ components:
     objectID:
       type: string
       description: Unique record identifier.
+      example: test-record-123
     highlightedValue:
       type: string
       description: Highlighted attribute value, including HTML tags.
@@ -6479,6 +6487,18 @@ components:
         - startsWith
         - endsWith
         - contains
+    context:
+      type: string
+      pattern: '[A-Za-z0-9_-]+'
+      description: >
+        An additional restriction that only triggers the rule, when the search
+        has the same value as `ruleContexts` parameter.
+
+        For example, if `context: mobile`, the rule is only triggered when the
+        search request has a matching `ruleContexts: mobile`.
+
+        A rule context must only contain alphanumeric characters.
+      example: mobile
     condition:
       type: object
       additionalProperties: false
@@ -6505,17 +6525,7 @@ components:
           description: Whether the pattern should match plurals, synonyms, and typos.
           default: false
         context:
-          type: string
-          pattern: '[A-Za-z0-9_-]+'
-          description: >
-            An additional restriction that only triggers the rule, when the
-            search has the same value as `ruleContexts` parameter.
-
-            For example, if `context: mobile`, the rule is only triggered when
-            the search request has a matching `ruleContexts: mobile`.
-
-            A rule context must only contain alphanumeric characters.
-          example: mobile
+          $ref: '#/components/schemas/context'
         filters:
           type: string
           description: >

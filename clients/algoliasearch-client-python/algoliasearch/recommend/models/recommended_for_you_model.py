@@ -12,7 +12,7 @@ from typing import Self
 
 class RecommendedForYouModel(str, Enum):
     """
-    Recommended for you model.
+    \"Recommened for you\" model.
     """
 
     """

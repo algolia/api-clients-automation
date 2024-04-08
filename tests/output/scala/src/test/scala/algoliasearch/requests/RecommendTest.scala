@@ -569,11 +569,11 @@ class RecommendTest extends AnyFunSuite {
     val future = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(
         requests = Seq(
-          RecommendationsQuery(
+          RelatedQuery(
             indexName = "indexName",
             objectID = "objectID",
-            model = RecommendationModels.withName("related-products"),
-            threshold = Some(42)
+            model = RelatedModel.withName("related-products"),
+            threshold = 42.1
           )
         )
       )
@@ -585,7 +585,7 @@ class RecommendTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/*/recommendations")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42}]}"""
+      """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -596,20 +596,20 @@ class RecommendTest extends AnyFunSuite {
     val future = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(
         requests = Seq(
-          RecommendationsQuery(
+          RelatedQuery(
             indexName = "indexName",
             objectID = "objectID",
-            model = RecommendationModels.withName("related-products"),
-            threshold = Some(42),
+            model = RelatedModel.withName("related-products"),
+            threshold = 42.1,
             maxRecommendations = Some(10),
             queryParameters = Some(
-              SearchParamsObject(
+              SearchParams(
                 query = Some("myQuery"),
                 facetFilters = Some(FacetFilters(Seq(MixedSearchFilters("query"))))
               )
             ),
             fallbackParameters = Some(
-              SearchParamsObject(
+              FallbackParams(
                 query = Some("myQuery"),
                 facetFilters = Some(FacetFilters(Seq(MixedSearchFilters("fallback"))))
               )
@@ -625,7 +625,7 @@ class RecommendTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/*/recommendations")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
+      """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -638,8 +638,10 @@ class RecommendTest extends AnyFunSuite {
         requests = Seq(
           TrendingItemsQuery(
             indexName = "indexName",
-            model = Some(TrendingItemsModel.withName("trending-items")),
-            threshold = Some(42)
+            model = TrendingItemsModel.withName("trending-items"),
+            threshold = 42.1,
+            facetName = "facet",
+            facetValue = "value"
           )
         )
       )
@@ -650,7 +652,9 @@ class RecommendTest extends AnyFunSuite {
 
     assert(res.path == "/1/indexes/*/recommendations")
     assert(res.method == "POST")
-    val expectedBody = parse("""{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42}]}""")
+    val expectedBody = parse(
+      """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"facetName":"facet","facetValue":"value"}]}"""
+    )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
@@ -662,13 +666,13 @@ class RecommendTest extends AnyFunSuite {
         requests = Seq(
           TrendingItemsQuery(
             indexName = "indexName",
-            model = Some(TrendingItemsModel.withName("trending-items")),
-            threshold = Some(42),
+            model = TrendingItemsModel.withName("trending-items"),
+            threshold = 42.1,
             maxRecommendations = Some(10),
-            facetName = Some("myFacetName"),
-            facetValue = Some("myFacetValue"),
+            facetName = "myFacetName",
+            facetValue = "myFacetValue",
             queryParameters = Some(
-              SearchParamsObject(
+              SearchParams(
                 query = Some("myQuery"),
                 facetFilters = Some(FacetFilters(Seq(MixedSearchFilters("query"))))
               )
@@ -690,7 +694,7 @@ class RecommendTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/*/recommendations")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
+      """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -701,17 +705,17 @@ class RecommendTest extends AnyFunSuite {
     val future = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(
         requests = Seq(
-          RecommendationsQuery(
+          RelatedQuery(
             indexName = "indexName1",
             objectID = "objectID1",
-            model = RecommendationModels.withName("related-products"),
-            threshold = Some(21)
+            model = RelatedModel.withName("related-products"),
+            threshold = 21.7
           ),
-          RecommendationsQuery(
+          RelatedQuery(
             indexName = "indexName2",
             objectID = "objectID2",
-            model = RecommendationModels.withName("related-products"),
-            threshold = Some(21)
+            model = RelatedModel.withName("related-products"),
+            threshold = 21.7
           )
         )
       )
@@ -723,7 +727,7 @@ class RecommendTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/*/recommendations")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21}]}"""
+      """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -734,39 +738,39 @@ class RecommendTest extends AnyFunSuite {
     val future = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(
         requests = Seq(
-          RecommendationsQuery(
+          RelatedQuery(
             indexName = "indexName1",
             objectID = "objectID1",
-            model = RecommendationModels.withName("related-products"),
-            threshold = Some(21),
+            model = RelatedModel.withName("related-products"),
+            threshold = 21.7,
             maxRecommendations = Some(10),
             queryParameters = Some(
-              SearchParamsObject(
+              SearchParams(
                 query = Some("myQuery"),
                 facetFilters = Some(FacetFilters(Seq(MixedSearchFilters("query1"))))
               )
             ),
             fallbackParameters = Some(
-              SearchParamsObject(
+              FallbackParams(
                 query = Some("myQuery"),
                 facetFilters = Some(FacetFilters(Seq(MixedSearchFilters("fallback1"))))
               )
             )
           ),
-          RecommendationsQuery(
+          RelatedQuery(
             indexName = "indexName2",
             objectID = "objectID2",
-            model = RecommendationModels.withName("related-products"),
-            threshold = Some(21),
+            model = RelatedModel.withName("related-products"),
+            threshold = 21.7,
             maxRecommendations = Some(10),
             queryParameters = Some(
-              SearchParamsObject(
+              SearchParams(
                 query = Some("myQuery"),
                 facetFilters = Some(FacetFilters(Seq(MixedSearchFilters("query2"))))
               )
             ),
             fallbackParameters = Some(
-              SearchParamsObject(
+              FallbackParams(
                 query = Some("myQuery"),
                 facetFilters = Some(FacetFilters(Seq(MixedSearchFilters("fallback2"))))
               )
@@ -782,7 +786,7 @@ class RecommendTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/*/recommendations")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}"""
+      """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -793,11 +797,11 @@ class RecommendTest extends AnyFunSuite {
     val future = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(
         requests = Seq(
-          RecommendationsQuery(
+          BoughtTogetherQuery(
             indexName = "indexName1",
             objectID = "objectID1",
-            model = RecommendationModels.withName("bought-together"),
-            threshold = Some(42)
+            model = FbtModel.withName("bought-together"),
+            threshold = 42.7
           )
         )
       )
@@ -809,7 +813,7 @@ class RecommendTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/*/recommendations")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42}]}"""
+      """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42.7}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)

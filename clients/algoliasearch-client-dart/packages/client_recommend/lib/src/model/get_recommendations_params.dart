@@ -12,12 +12,14 @@ final class GetRecommendationsParams {
     required this.requests,
   });
 
-  /// Request parameters depend on the model (recommendations or trending).
+  /// Recommendation request with parameters depending on the requested model.
   /// One of types:
+  /// - [LookingSimilarQuery]
+  /// - [RelatedQuery]
   /// - [TrendingItemsQuery]
-  /// - [RecommendationsQuery]
   /// - [RecommendedForYouQuery]
   /// - [TrendingFacetsQuery]
+  /// - [BoughtTogetherQuery]
   @JsonKey(name: r'requests')
   final Iterable<dynamic> requests;
 

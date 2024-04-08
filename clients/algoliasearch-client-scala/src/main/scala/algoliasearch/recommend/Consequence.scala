@@ -1,8 +1,26 @@
-/** Recommend API The Recommend API lets you generate recommendations with several AI models. > **Note**: You should use
-  * Algolia's [libraries and
-  * tools](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) to interact with
-  * the Recommend API. Using the HTTP endpoints directly is not covered by the
-  * [SLA](https://www.algolia.com/policies/sla/).
+/** Recommend API The Recommend API lets you retrieve recommendations from one of Algolia's AI recommendation models
+  * that you previously trained on your data. ## Client libraries Use Algolia's API clients and libraries to reliably
+  * integrate Algolia's APIs with your apps. The official API clients are covered by Algolia's [Service Level
+  * Agreement](https://www.algolia.com/policies/sla/). See: [Algolia's
+  * ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ## Base URLs
+  * The base URLs for requests to the Recommend API are: - `https://{APPLICATION_ID}.algolia.net` -
+  * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
+  * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
+  * URLs provide high availability by distributing requests with load balancing. **All requests must use HTTPS.** ##
+  * Retry strategy To guarantee a high availability, implement a retry strategy for all API requests using the URLs of
+  * your servers as fallbacks: - `https://{APPLICATION_ID}-1.algolianet.com` -
+  * `https://{APPLICATION_ID}-2.algolianet.com` - `https://{APPLICATION_ID}-3.algolianet.com` These URLs use a different
+  * DNS provider than the primary URLs. You should randomize this list to ensure an even load across the three servers.
+  * All Algolia API clients implement this retry strategy. ## Authentication To authenticate your API requests, add
+  * these headers: - `x-algolia-application-id`. Your Algolia application ID. - `x-algolia-api-key`. An API key with the
+  * necessary permissions to make the request. The required access control list (ACL) to make a request is listed in
+  * each endpoint's reference. You can find your application ID and API key in the [Algolia
+  * dashboard](https://dashboard.algolia.com/account). ## Request format Request bodies must be JSON objects. ##
+  * Response status and errors The Recommend API returns JSON responses. Since JSON doesn't guarantee any specific
+  * ordering, don't rely on the order of attributes in the API response. Successful responses return a `2xx` status.
+  * Client errors return a `4xx` status. Server errors are indicated by a `5xx` status. Error responses have a `message`
+  * property with more information. ## Version The current version of the Recommend API is version 1, as indicated by
+  * the `/1/` in each endpoint's URL.
   *
   * The version of the OpenAPI document: 1.0.0
   *
@@ -11,26 +29,15 @@
   */
 package algoliasearch.recommend
 
-/** Effect of the rule. For more information, see
-  * [Consequences](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#consequences).
+/** Effect of the rule.
   *
-  * @param promote
-  *   Records you want to pin to a specific position in the search results. You can promote up to 300 records, either
-  *   individually, or as groups of up to 100 records each.
-  * @param filterPromotes
-  *   Whether promoted records must match an active filter for the consequence to be applied. This ensures that user
-  *   actions (filtering the search) are given a higher precendence. For example, if you promote a record with the
-  *   `color: red` attribute, and the user filters the search for `color: blue`, the \"red\" record won't be shown.
   * @param hide
-  *   Records you want to hide from the search results.
-  * @param userData
-  *   A JSON object with custom data that will be appended to the `userData` array in the response. This object isn't
-  *   interpreted by the API and is limited to 1&nbsp;kB of minified JSON.
+  *   Exclude items from recommendations.
+  * @param promote
+  *   Place items at specific positions in the list of recommendations.
   */
 case class Consequence(
-    params: Option[ConsequenceParams] = scala.None,
-    promote: Option[Seq[Promote]] = scala.None,
-    filterPromotes: Option[Boolean] = scala.None,
-    hide: Option[Seq[ConsequenceHide]] = scala.None,
-    userData: Option[Any] = scala.None
+    hide: Option[Seq[HideConsequenceObject]] = scala.None,
+    promote: Option[Seq[PromoteConsequenceObject]] = scala.None,
+    params: Option[ParamsConsequence] = scala.None
 )

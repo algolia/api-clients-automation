@@ -148,12 +148,12 @@ public class SnippetRecommendClient
         Requests = new List<RecommendationsRequest>
         {
           new RecommendationsRequest(
-            new RecommendationsQuery
+            new RelatedQuery
             {
               IndexName = "indexName",
               ObjectID = "objectID",
-              Model = Enum.Parse<RecommendationModels>("RelatedProducts"),
-              Threshold = 42,
+              Model = Enum.Parse<RelatedModel>("RelatedProducts"),
+              Threshold = 42.1,
             }
           )
         },
