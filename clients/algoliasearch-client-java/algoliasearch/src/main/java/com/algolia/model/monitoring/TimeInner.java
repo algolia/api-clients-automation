@@ -21,7 +21,7 @@ public class TimeInner {
     return this;
   }
 
-  /** Timestamp in [Unix epoch time](https://wikipedia.org/wiki/Unix_time) in milliseconds. */
+  /** Timestamp, measured in milliseconds since the Unix epoch. */
   @javax.annotation.Nullable
   public Long getT() {
     return t;

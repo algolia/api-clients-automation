@@ -8,22 +8,12 @@ import com.fasterxml.jackson.databind.annotation.*;
 
 /**
  * Strategy for removing words from the query when it doesn't return any results. This helps to
- * avoid returning empty search results.
- *
- * <dl>
- *   <dt><code>none</code>
- *   <dd>No words are removed when a query doesn't return results.
- *   <dt><code>lastWords</code>
- *   <dd>Treat the last (then second to last, then third to last) word as optional, until there are
- *       results or at most 5 words have been removed.
- *   <dt><code>firstWords</code>
- *   <dd>Treat the first (then second, then third) word as optional, until there are results or at
- *       most 5 words have been removed.
- *   <dt><code>allOptional</code>
- *   <dd>Treat all words as optional.
- * </dl>
- *
- * For more information, see [Remove words to improve
+ * avoid returning empty search results. - `none`. No words are removed when a query doesn't return
+ * results. - `lastWords`. Treat the last (then second to last, then third to last) word as
+ * optional, until there are results or at most 5 words have been removed. - `firstWords`. Treat the
+ * first (then second, then third) word as optional, until there are results or at most 5 words have
+ * been removed. - `allOptional`. Treat all words as optional. For more information, see [Remove
+ * words to improve
  * results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results/).
  */
 public enum RemoveWordsIfNoResults {

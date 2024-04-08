@@ -6,7 +6,7 @@ info:
     Algolia applications.
 
 
-    # Base URL
+    ## Base URL
 
 
     The base URL for requests to the Usage API is:
@@ -18,30 +18,22 @@ info:
     **All requests must use HTTPS.**
 
 
-    # Authentication
+    ## Authentication
 
 
     To authenticate your API requests, add these headers:
 
 
-    <dl>
+    - `x-algolia-application-id`. Your Algolia application ID.
 
-    <dt><code>x-algolia-application-id</code></dt>
-
-    <dd>Your Algolia application ID.</dd>
-
-    <dt><code>x-algolia-api-key</code></dt>
-
-    <dd>The Usage API key.</dd>
-
-    </dl>
+    - `x-algolia-api-key`. The Usage API key.
 
 
     You can find your application ID and Usage API key in the [Algolia
     dashboard](https://dashboard.algolia.com/account).
 
 
-    # Response status and errors
+    ## Response status and errors
 
 
     The Usage API returns JSON responses.
@@ -56,7 +48,7 @@ info:
     Error responses have a `message` property with more information.
 
 
-    # Version
+    ## Version
 
 
     The current version of the Usage API is version 1, as indicated by the `/1/`
@@ -1418,8 +1410,8 @@ paths:
         Retrieves usage statistics evaluated over a specified period.
       parameters:
         - $ref: '#/components/parameters/statisticParameter'
-        - $ref: '#/components/parameters/startDateParameter'
-        - $ref: '#/components/parameters/endDateParameter'
+        - $ref: '#/components/parameters/StartDateRequired'
+        - $ref: '#/components/parameters/EndDateRequired'
         - $ref: '#/components/parameters/granularityParameter'
       responses:
         '200':
@@ -1812,8 +1804,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/statisticParameter'
         - $ref: '#/components/parameters/IndexName'
-        - $ref: '#/components/parameters/startDateParameter'
-        - $ref: '#/components/parameters/endDateParameter'
+        - $ref: '#/components/parameters/StartDateRequired'
+        - $ref: '#/components/parameters/EndDateRequired'
         - $ref: '#/components/parameters/granularityParameter'
       responses:
         '200':
@@ -2246,7 +2238,7 @@ components:
         following metrics, separated by a comma.
 
 
-        ### Search operations
+        **Search operations**
 
 
         - `search_operations`. All search operations.
@@ -2264,7 +2256,7 @@ components:
         search](/specs/search#tag/Search/operation/search) operations.
 
 
-        ### ACL operations
+        **ACL operations**
 
 
         - `acl_operations`. All ACL operations.
@@ -2289,7 +2281,7 @@ components:
         - `list_api_key_operations`. Number of list index API keys operations.
 
 
-        ### Indexing operations
+        **Indexing operations**
 
 
         - `indexing_operations`. All indexing operations.
@@ -2324,7 +2316,7 @@ components:
         [wait](/specs/search#tag/Indices/operation/getTask) operations.
 
 
-        ### Record operations
+        **Record operations**
 
 
         - `record_operations`. All record operations.
@@ -2355,7 +2347,7 @@ components:
         operations.
 
 
-        ### Synonym operations
+        **Synonym operations**
 
 
         - `synonym_operations`. All synonym operations.
@@ -2383,7 +2375,7 @@ components:
         synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations.
 
 
-        ### Rule operations
+        **Rule operations**
 
 
         - `rule_operations`. All rule operations.
@@ -2409,7 +2401,7 @@ components:
         rules](/specs/search#tag/Rules/operation/searchRules) operations.
 
 
-        ### Total operations
+        **Total operations**
 
 
         - `total_recommend_requests`. Number of [Recommend
@@ -2422,7 +2414,7 @@ components:
         - `total_operations`. Sum of all operations
 
 
-        ### Total Query Suggestions operations
+        **Total Query Suggestions operations**
 
 
         Query Suggestions operations are a subset of `total_search_operations`.
@@ -2460,7 +2452,7 @@ components:
         operations.
 
 
-        ### Processing time
+        **Processing time**
 
 
         - `avg_processing_time`. Average processing time (in milliseconds).
@@ -2475,7 +2467,7 @@ components:
         one or more seconds to process.
 
 
-        ### Indices
+        **Indices**
 
 
         - `records`. Number of records.
@@ -2485,7 +2477,7 @@ components:
         - `file_size`. The size of the records _and_ index metadata (in bytes).
 
 
-        ### Maximum queries per second
+        **Maximum queries per second**
 
 
         - `max_qps`. [Maximum queries per
@@ -2497,7 +2489,7 @@ components:
         - `total_max_qps`. Maximum queries per second across all servers.
 
 
-        ### Used search capacity
+        **Used search capacity**
 
 
         The following capacities are reported in percent:
@@ -2520,7 +2512,7 @@ components:
         servers.
 
 
-        ### Degraded queries
+        **Degraded queries**
 
 
         Check the impact of [degraded
@@ -2539,22 +2531,22 @@ components:
 
         - `degraded_queries_max_capacity_seconds_impacted`. Percentage of
         seconds affected by `max_capacity` degraded queries.
-    startDateParameter:
+    StartDateRequired:
+      in: query
       name: startDate
-      in: query
-      description: Start date in ISO 8601 format of the time period to analyze.
+      description: Start date of the period to analyze, in `YYYY-MM-DD` format.
       required: true
       schema:
         type: string
-        example: '2024-01-01'
-    endDateParameter:
+        example: '2022-09-19'
+    EndDateRequired:
+      in: query
       name: endDate
-      in: query
-      description: End date in ISO 8601 format of the time period to analyze.
+      description: End date of the period to analyze, in `YYYY-MM-DD` format.
       required: true
       schema:
         type: string
-        example: '2024-04-04'
+        example: '2023-01-21'
     granularityParameter:
       name: granularity
       in: query
@@ -2722,7 +2714,9 @@ components:
                   properties:
                     t:
                       type: integer
-                      description: Timestamp in milliseconds in Unix epoch time.
+                      description: >-
+                        Timestamp, measured in milliseconds since the Unix
+                        epoch.
                       example: 1455451200000
                     v:
                       description: Value of the statistics.

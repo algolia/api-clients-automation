@@ -18,7 +18,7 @@ package algoliasearch.recommend
   *   immediately. You can check the task's progress with the [`task` operation](#tag/Indices/operation/getTask) and
   *   this `taskID`.
   * @param deletedAt
-  *   Timestamp of deletion in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
+  *   Date and time when the object was deleted, in RFC 3339 format.
   */
 case class DeletedAtResponse(
     taskID: Long,

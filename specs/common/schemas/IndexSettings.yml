@@ -28,22 +28,16 @@ baseIndexSettings:
 
         **Modifiers**
 
-        <dl>
-        <dt><code>filterOnly("ATTRIBUTE")</code></dt>
-        <dd>Allows using this attribute as a filter, but doesn't evalue the facet values.</dd>
-        <dt><code>searchable("ATTRIBUTE")</code></dt>
-        <dd>Allows searching for facet values.</dd>
-        <dt><code>afterDistinct("ATTRIBUTE")</code></dt>
-        <dd>
+        - `filterOnly("ATTRIBUTE")`.
+          Allows using this attribute as a filter, but doesn't evalue the facet values.
 
-        Evaluates the facet count _after_ deduplication with `distinct`.
-        This ensures accurate facet counts.
-        You can apply this modifier to searchable facets: `afterDistinct(searchable(ATTRIBUTE))`.
+        - `searchable("ATTRIBUTE")`.
+          Allows searching for facet values.
 
-        </dd>
-        </dl>
-
-        Without modifiers, the attribute is used as a regular facet.
+        - `afterDistinct("ATTRIBUTE")`.
+          Evaluates the facet count _after_ deduplication with `distinct`.
+          This ensures accurate facet counts.
+          You can apply this modifier to searchable facets: `afterDistinct(searchable(ATTRIBUTE))`.
       default: []
       x-categories:
         - Faceting
@@ -63,17 +57,9 @@ baseIndexSettings:
 
         **Modifier**
 
-        <dl>
-        <dt><code>virtual("REPLICA")</code></dt>
-        <dd>
-
-        Create a virtual replica,
-        Virtual replicas don't increase the number of records and are optimized for [Relevant sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).
-
-        </dd>
-        </dl>
-
-        Without modifier, a standard replica is created, which duplicates your record count and is used for strict, or [exhaustive sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/exhaustive-sort/).
+        - `virtual("REPLICA")`.
+          Create a virtual replica,
+          Virtual replicas don't increase the number of records and are optimized for [Relevant sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).
       default: []
       x-categories:
         - Ranking
@@ -204,16 +190,8 @@ baseIndexSettings:
 
         **Modifier**
 
-        <dl>
-        <dt><code>equalOnly("ATTRIBUTE")</code></dt>
-        <dd>
-
-        Support only filtering based on equality comparisons `=` and `!=`.
-
-        </dd>
-        </dl>
-
-        Without modifier, all numeric comparisons are supported.
+        - `equalOnly("ATTRIBUTE")`.
+          Support only filtering based on equality comparisons `=` and `!=`.
       example:
         - equalOnly(quantity)
         - popularity
@@ -255,12 +233,8 @@ baseIndexSettings:
 
         **Modifier**
 
-        <dl>
-        <dt><code>unordered("ATTRIBUTE")</code></dt>
-        <dd>
-        Ignore the position of a match within the attribute.
-        </dd>
-        </dl>
+        - `unordered("ATTRIBUTE")`.
+          Ignore the position of a match within the attribute.
 
         Without modifier, matches at the beginning of an attribute rank higer than matches at the end.
       default: []
@@ -333,12 +307,10 @@ indexSettingsAsSearchParams:
 
         **Modifiers**
 
-        <dl>
-        <dt><code>asc("ATTRIBUTE")</code></dt>
-        <dd>Sort the index by the values of an attribute, in ascending order.</dd>
-        <dt><code>desc("ATTRIBUTE")</code></dt>
-        <dd>Sort the index by the values of an attribute, in descending order.</dd>
-        </dl>
+        - `asc("ATTRIBUTE")`.
+          Sort the index by the values of an attribute, in ascending order.
+        - `desc("ATTRIBUTE")`.
+          Sort the index by the values of an attribute, in descending order.
 
         Before you modify the default setting,
         you should test your changes in the dashboard,
@@ -371,14 +343,14 @@ indexSettingsAsSearchParams:
 
         **Modifiers**
 
-        <dl>
-        <dt><code>asc("ATTRIBUTE")</code></dt>
-        <dd>Sort the index by the values of an attribute, in ascending order.</dd>
-        <dt><code>desc("ATTRIBUTE")</code></dt>
-        <dd>Sort the index by the values of an attribute, in descending order.</dd>
-        </dl>
+        - `asc("ATTRIBUTE")`.
+          Sort the index by the values of an attribute, in ascending order.
 
-        If you use two or more custom ranking attributes, [reduce the precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/) of your first attributes,
+        - `desc("ATTRIBUTE")`.
+          Sort the index by the values of an attribute, in descending order.
+
+        If you use two or more custom ranking attributes,
+        [reduce the precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/) of your first attributes,
         or the other attributes will never be applied.
       default: []
       x-categories:
@@ -629,22 +601,14 @@ indexSettingsAsSearchParams:
       description: |
         Alternatives of query words that should be considered as exact matches by the Exact ranking criterion.
 
-        <dl>
-        <dt><code>ignorePlurals</code></dt>
-        <dd>
+        - `ignorePlurals`.
+          Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.
 
-        Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.
+        - `singleWordSynonym`.
+          Single-word synonyms, such as "NY/NYC" are considered exact matches.
 
-        </dd>
-        <dt><code>singleWordSynonym</code></dt>
-        <dd>
-        Single-word synonyms, such as "NY/NYC" are considered exact matches.
-        </dd>
-        <dt><code>multiWordsSynonym</code></dt>
-        <dd>
-        Multi-word synonyms, such as "NY/New York" are considered exact matches.
-        </dd>
-        </dl>.
+        - `multiWordsSynonym`.
+          Multi-word synonyms, such as "NY/New York" are considered exact matches.
       default: [ignorePlurals, singleWordSynonym]
       x-categories:
         - Query strategy
@@ -655,22 +619,13 @@ indexSettingsAsSearchParams:
       description: |
         Advanced search syntax features you want to support.
 
-        <dl>
-        <dt><code>exactPhrase</code></dt>
-        <dd>
+        - `exactPhrase`.
+          Phrases in quotes must match exactly.
+          For example, `sparkly blue "iPhone case"` only returns records with the exact string "iPhone case".
 
-        Phrases in quotes must match exactly.
-        For example, `sparkly blue "iPhone case"` only returns records with the exact string "iPhone case".
-
-        </dd>
-        <dt><code>excludeWords</code></dt>
-        <dd>
-
-        Query words prefixed with a `-` must not occur in a record.
-        For example, `search -engine` matches records that contain "search" but not "engine".
-
-        </dd>
-        </dl>
+        - `excludeWords`.
+          Query words prefixed with a `-` must not occur in a record.
+          For example, `search -engine` matches records that contain "search" but not "engine".
 
         This setting only has an effect if `advancedSyntax` is true.
       default: [exactPhrase, excludeWords]
@@ -739,15 +694,12 @@ indexSettingsAsSearchParams:
       description: |
         Order in which to retrieve facet values.
 
-        <dl>
-        <dt><code>count</code></dt>
-        <dd>
-        Facet values are retrieved by decreasing count.
-        The count is the number of matching records containing this facet value.
-        </dd>
-        <dt><code>alpha</code></dt>
-        <dd>Retrieve facet values alphabetically.</dd>
-        </dl>
+        - `count`.
+          Facet values are retrieved by decreasing count.
+          The count is the number of matching records containing this facet value.
+
+        - `alpha`.
+          Retrieve facet values alphabetically.
 
         This setting doesn't influence how facet values are displayed in your UI (see `renderingContent`).
         For more information, see [facet value display](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/facet-display/js/).
@@ -862,16 +814,19 @@ removeWordsIfNoResults:
     Strategy for removing words from the query when it doesn't return any results.
     This helps to avoid returning empty search results.
 
-    <dl>
-    <dt><code>none</code></dt>
-    <dd>No words are removed when a query doesn't return results.</dd>
-    <dt><code>lastWords</code></dt>
-    <dd>Treat the last (then second to last, then third to last) word as optional, until there are results or at most 5 words have been removed.</dd>
-    <dt><code>firstWords</code></dt>
-    <dd>Treat the first (then second, then third) word as optional, until there are results or at most 5 words have been removed.</dd>
-    <dt><code>allOptional</code></dt>
-    <dd>Treat all words as optional.</dd>
-    </dl>
+    - `none`.
+      No words are removed when a query doesn't return results.
+
+    - `lastWords`.
+      Treat the last (then second to last, then third to last) word as optional,
+      until there are results or at most 5 words have been removed.
+
+    - `firstWords`.
+      Treat the first (then second, then third) word as optional,
+      until there are results or at most 5 words have been removed.
+
+    - `allOptional`.
+      Treat all words as optional.
 
     For more information, see [Remove words to improve results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results/).
   default: none
@@ -887,24 +842,18 @@ exactOnSingleWordQuery:
   description: |
     Determines how the [Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes) is computed when the search query has only one word.
 
-    <dl>
-    <dt><code>attribute</code></dt>
-    <dd>
-    The Exact ranking criterion is 1 if the query word and attribute value are the same.
-    For example, a search for "road" will match the value "road", but not "road trip".
-    </dd>
-    <dt><code>none</code></dt>
-    <dd>
-    The Exact ranking criterion is ignored on single-word searches.
-    </dd>
-    <dt><code>word</code></dt>
-    <dd>
-    The Exact ranking criterion is 1 if the query word is found in the attribute value.
-    The query word must have at least 3 characters and must not be a stop word.
-    </dd>
-    </dl>
+    - `attribute`.
+      The Exact ranking criterion is 1 if the query word and attribute value are the same.
+      For example, a search for "road" will match the value "road", but not "road trip".
 
-    If `exactOnSingleWordQuery` is `word`, only exact matches will be highlighted, partial and prefix matches won't.
+    - `none`.
+      The Exact ranking criterion is ignored on single-word searches.
+
+    - `word`.
+      The Exact ranking criterion is 1 if the query word is found in the attribute value.
+      The query word must have at least 3 characters and must not be a stop word.
+      Only exact matches will be highlighted,
+      partial and prefix matches won't.
   default: attribute
   x-categories:
     - Query strategy
@@ -1076,17 +1025,16 @@ sortRemainingBy:
   description: |
     Order of facet values that aren't explicitly positioned with the `order` setting.
 
-    <dl>
-    <dt><code>count</code></dt>
-    <dd>
-    Order remaining facet values by decreasing count.
-    The count is the number of matching records containing this facet value.
-    </dd>
-    <dt><code>alpha</code></dt>
-    <dd>Sort facet values alphabetically.</dd>
-    <dt><code>hidden</code></dt>
-    <dd>Don't show facet values that aren't explicitly positioned.</dd>
-    </dl>.
+    - `count`.
+      Order remaining facet values by decreasing count.
+      The count is the number of matching records containing this facet value.
+
+    - `alpha`.
+      Sort facet values alphabetically.
+
+    - `hidden`.
+      Don't show facet values that aren't explicitly positioned.
+
   type: string
   enum: [count, alpha, hidden]
 

@@ -17,7 +17,7 @@ final class DeletedAtResponse {
   @JsonKey(name: r'taskID')
   final int taskID;
 
-  /// Timestamp of deletion in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
+  /// Date and time when the object was deleted, in RFC 3339 format.
   @JsonKey(name: r'deletedAt')
   final String deletedAt;
 

@@ -148,11 +148,6 @@ version:
   description: Version of the configuration. Version 1 is the initial configuration you used when creating the crawler.
   minimum: 1
 
-createdAt:
-  type: string
-  description: Timestamp in ISO 8601 format when this version of the configuration was created.
-  example: 2024-04-02T17:04:30Z
-
 authorId:
   type: string
   description: Universally unique identifier (UUID) of the user who created this version of the configuration.

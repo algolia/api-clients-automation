@@ -15,7 +15,7 @@ final class UserId {
     required this.dataSize,
   });
 
-  /// User ID.
+  /// Unique identifier of the user who makes the search request.
   @JsonKey(name: r'userID')
   final String userID;
 
