@@ -9,7 +9,7 @@ import algoliasearch.recommend.GetRecommendTaskResponse
 import algoliasearch.recommend.GetRecommendationsParams
 import algoliasearch.recommend.GetRecommendationsResponse
 import algoliasearch.recommend.RecommendModels._
-import algoliasearch.recommend.RuleResponse
+import algoliasearch.recommend.RecommendRule
 import algoliasearch.recommend.SearchRecommendRulesParams
 import algoliasearch.recommend.SearchRecommendRulesResponse
 import algoliasearch.recommend._
@@ -171,7 +171,7 @@ class RecommendClient(
     execute[T](request, requestOptions)
   }
 
-  /** Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+  /** Deletes a Recommend rule from a recommendation scenario.
     *
     * Required API Key ACLs:
     *   - editSettings
@@ -179,7 +179,7 @@ class RecommendClient(
     * @param indexName
     *   Name of the index on which to perform the operation.
     * @param model
-    *   [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+    *   [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
     * @param objectID
     *   Unique record identifier.
     */
@@ -201,7 +201,7 @@ class RecommendClient(
     execute[DeletedAtResponse](request, requestOptions)
   }
 
-  /** Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+  /** Retrieves a Recommend rule that you previously created in the Algolia dashboard.
     *
     * Required API Key ACLs:
     *   - settings
@@ -209,7 +209,7 @@ class RecommendClient(
     * @param indexName
     *   Name of the index on which to perform the operation.
     * @param model
-    *   [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+    *   [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
     * @param objectID
     *   Unique record identifier.
     */
@@ -218,7 +218,7 @@ class RecommendClient(
       model: RecommendModels,
       objectID: String,
       requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[RuleResponse] = Future {
+  )(implicit ec: ExecutionContext): Future[RecommendRule] = Future {
     requireNotNull(indexName, "Parameter `indexName` is required when calling `getRecommendRule`.")
     requireNotNull(model, "Parameter `model` is required when calling `getRecommendRule`.")
     requireNotNull(objectID, "Parameter `objectID` is required when calling `getRecommendRule`.")
@@ -228,11 +228,12 @@ class RecommendClient(
       .withMethod("GET")
       .withPath(s"/1/indexes/${escape(indexName)}/${escape(model)}/recommend/rules/${escape(objectID)}")
       .build()
-    execute[RuleResponse](request, requestOptions)
+    execute[RecommendRule](request, requestOptions)
   }
 
-  /** Some operations, such as deleting a Recommend rule, will respond with a `taskID` value. Use this value here to
-    * check the status of that task.
+  /** Checks the status of a given task. Deleting a Recommend rule is asynchronous. When you delete a rule, a task is
+    * created on a queue and completed depending on the load on the server. The API response includes a task ID that you
+    * can use to check the status.
     *
     * Required API Key ACLs:
     *   - editSettings
@@ -240,9 +241,9 @@ class RecommendClient(
     * @param indexName
     *   Name of the index on which to perform the operation.
     * @param model
-    *   [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+    *   [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
     * @param taskID
-    *   Unique identifier of a task. Numeric value (up to 64bits).
+    *   Unique task identifier.
     */
   def getRecommendStatus(
       indexName: String,
@@ -262,12 +263,7 @@ class RecommendClient(
     execute[GetRecommendTaskResponse](request, requestOptions)
   }
 
-  /** Returns results from either recommendation or trending models: - **Recommendations** are provided by the [Related
-    * Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and
-    * [Frequently Bought
-    * Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models -
-    * **Trending** models are [Trending Items and Trending Facet
-    * Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
+  /** Retrieves recommendations from selected AI models.
     *
     * Required API Key ACLs:
     *   - search
@@ -291,7 +287,7 @@ class RecommendClient(
     execute[GetRecommendationsResponse](request, requestOptions)
   }
 
-  /** List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+  /** Searches for Recommend rules. Use an empty query to list all rules for this recommendation scenario.
     *
     * Required API Key ACLs:
     *   - settings
@@ -299,7 +295,7 @@ class RecommendClient(
     * @param indexName
     *   Name of the index on which to perform the operation.
     * @param model
-    *   [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+    *   [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
     */
   def searchRecommendRules(
       indexName: String,

@@ -14,9 +14,14 @@ BaseRecommendRequest _$BaseRecommendRequestFromJson(
       ($checkedConvert) {
         final val = BaseRecommendRequest(
           indexName: $checkedConvert('indexName', (v) => v as String),
-          threshold: $checkedConvert('threshold', (v) => v as int?),
+          threshold: $checkedConvert('threshold', (v) => (v as num).toDouble()),
           maxRecommendations:
               $checkedConvert('maxRecommendations', (v) => v as int?),
+          queryParameters: $checkedConvert(
+              'queryParameters',
+              (v) => v == null
+                  ? null
+                  : SearchParams.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -26,6 +31,7 @@ Map<String, dynamic> _$BaseRecommendRequestToJson(
     BaseRecommendRequest instance) {
   final val = <String, dynamic>{
     'indexName': instance.indexName,
+    'threshold': instance.threshold,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -34,7 +40,7 @@ Map<String, dynamic> _$BaseRecommendRequestToJson(
     }
   }
 
-  writeNotNull('threshold', instance.threshold);
   writeNotNull('maxRecommendations', instance.maxRecommendations);
+  writeNotNull('queryParameters', instance.queryParameters?.toJson());
   return val;
 }

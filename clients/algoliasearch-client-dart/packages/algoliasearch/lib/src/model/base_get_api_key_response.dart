@@ -17,7 +17,7 @@ final class BaseGetApiKeyResponse {
   @JsonKey(name: r'value')
   final String? value;
 
-  /// Timestamp of creation in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
+  /// Timestamp when the object was created, in milliseconds since the Unix epoch.
   @JsonKey(name: r'createdAt')
   final int createdAt;
 

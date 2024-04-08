@@ -9,82 +9,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Effect of the rule. For more information, see
- * [Consequences](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#consequences).
- */
+/** Effect of the rule. */
 public class Consequence {
 
-  @JsonProperty("params")
-  private ConsequenceParams params;
+  @JsonProperty("hide")
+  private List<HideConsequenceObject> hide;
 
   @JsonProperty("promote")
-  private List<Promote> promote;
+  private List<PromoteConsequenceObject> promote;
 
-  @JsonProperty("filterPromotes")
-  private Boolean filterPromotes;
+  @JsonProperty("params")
+  private ParamsConsequence params;
 
-  @JsonProperty("hide")
-  private List<ConsequenceHide> hide;
-
-  @JsonProperty("userData")
-  private Object userData;
-
-  public Consequence setParams(ConsequenceParams params) {
-    this.params = params;
-    return this;
-  }
-
-  /** Get params */
-  @javax.annotation.Nullable
-  public ConsequenceParams getParams() {
-    return params;
-  }
-
-  public Consequence setPromote(List<Promote> promote) {
-    this.promote = promote;
-    return this;
-  }
-
-  public Consequence addPromote(Promote promoteItem) {
-    if (this.promote == null) {
-      this.promote = new ArrayList<>();
-    }
-    this.promote.add(promoteItem);
-    return this;
-  }
-
-  /**
-   * Records you want to pin to a specific position in the search results. You can promote up to 300
-   * records, either individually, or as groups of up to 100 records each.
-   */
-  @javax.annotation.Nullable
-  public List<Promote> getPromote() {
-    return promote;
-  }
-
-  public Consequence setFilterPromotes(Boolean filterPromotes) {
-    this.filterPromotes = filterPromotes;
-    return this;
-  }
-
-  /**
-   * Whether promoted records must match an active filter for the consequence to be applied. This
-   * ensures that user actions (filtering the search) are given a higher precendence. For example,
-   * if you promote a record with the `color: red` attribute, and the user filters the search for
-   * `color: blue`, the \"red\" record won't be shown.
-   */
-  @javax.annotation.Nullable
-  public Boolean getFilterPromotes() {
-    return filterPromotes;
-  }
-
-  public Consequence setHide(List<ConsequenceHide> hide) {
+  public Consequence setHide(List<HideConsequenceObject> hide) {
     this.hide = hide;
     return this;
   }
 
-  public Consequence addHide(ConsequenceHide hideItem) {
+  public Consequence addHide(HideConsequenceObject hideItem) {
     if (this.hide == null) {
       this.hide = new ArrayList<>();
     }
@@ -92,24 +34,40 @@ public class Consequence {
     return this;
   }
 
-  /** Records you want to hide from the search results. */
+  /** Exclude items from recommendations. */
   @javax.annotation.Nullable
-  public List<ConsequenceHide> getHide() {
+  public List<HideConsequenceObject> getHide() {
     return hide;
   }
 
-  public Consequence setUserData(Object userData) {
-    this.userData = userData;
+  public Consequence setPromote(List<PromoteConsequenceObject> promote) {
+    this.promote = promote;
     return this;
   }
 
-  /**
-   * A JSON object with custom data that will be appended to the `userData` array in the response.
-   * This object isn't interpreted by the API and is limited to 1&nbsp;kB of minified JSON.
-   */
+  public Consequence addPromote(PromoteConsequenceObject promoteItem) {
+    if (this.promote == null) {
+      this.promote = new ArrayList<>();
+    }
+    this.promote.add(promoteItem);
+    return this;
+  }
+
+  /** Place items at specific positions in the list of recommendations. */
   @javax.annotation.Nullable
-  public Object getUserData() {
-    return userData;
+  public List<PromoteConsequenceObject> getPromote() {
+    return promote;
+  }
+
+  public Consequence setParams(ParamsConsequence params) {
+    this.params = params;
+    return this;
+  }
+
+  /** Get params */
+  @javax.annotation.Nullable
+  public ParamsConsequence getParams() {
+    return params;
   }
 
   @Override
@@ -122,28 +80,24 @@ public class Consequence {
     }
     Consequence consequence = (Consequence) o;
     return (
-      Objects.equals(this.params, consequence.params) &&
-      Objects.equals(this.promote, consequence.promote) &&
-      Objects.equals(this.filterPromotes, consequence.filterPromotes) &&
       Objects.equals(this.hide, consequence.hide) &&
-      Objects.equals(this.userData, consequence.userData)
+      Objects.equals(this.promote, consequence.promote) &&
+      Objects.equals(this.params, consequence.params)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(params, promote, filterPromotes, hide, userData);
+    return Objects.hash(hide, promote, params);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Consequence {\n");
-    sb.append("    params: ").append(toIndentedString(params)).append("\n");
-    sb.append("    promote: ").append(toIndentedString(promote)).append("\n");
-    sb.append("    filterPromotes: ").append(toIndentedString(filterPromotes)).append("\n");
     sb.append("    hide: ").append(toIndentedString(hide)).append("\n");
-    sb.append("    userData: ").append(toIndentedString(userData)).append("\n");
+    sb.append("    promote: ").append(toIndentedString(promote)).append("\n");
+    sb.append("    params: ").append(toIndentedString(params)).append("\n");
     sb.append("}");
     return sb.toString();
   }

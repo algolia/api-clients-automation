@@ -9,10 +9,10 @@ info:
     connectors](https://dashboard.algolia.com/connectors).
 
 
-    # Base URLs
+    ## Base URLs
 
 
-    The base URLs for making requests to the Ingestion API are:
+    The base URLs for requests to the Ingestion API are:
 
 
     - `https://data.us.algolia.com`
@@ -27,43 +27,29 @@ info:
     **All requests must use HTTPS.**
 
 
-    # Authentication
+    ## Authentication
 
 
     To authenticate your API requests, add these headers:
 
 
-    <dl>
+    - `x-algolia-application-id`. Your Algolia application ID.
 
-    <dt><code>x-algolia-application-id</code></dt>
-
-    <dd>Your Algolia application ID.</dd>
-
-    <dt><code>x-algolia-api-key</code></dt>
-
-    <dd>
-
-    An API key with the necessary permissions to make the request.
-
-    The required access control list (ACL) to make a request is listed in each
-    endpoint's reference.
-
-    </dd>
-
-    </dl>
-
+    - `x-algolia-api-key`. An API key with the necessary permissions to make the
+    request.
+      The required access control list (ACL) to make a request is listed in each endpoint's reference.
 
     You can find your application ID and API key in the [Algolia
     dashboard](https://dashboard.algolia.com/account).
 
 
-    # Request format
+    ## Request format
 
 
     Request bodies must be JSON objects.
 
 
-    # Response status and errors
+    ## Response status and errors
 
 
     Response bodies are JSON objects.
@@ -91,7 +77,7 @@ info:
     Dynamic Re-Ranking.
 
 
-    # Version
+    ## Version
 
 
     The current version of the Insights API is version 1, as indicated by the
@@ -8682,11 +8668,20 @@ components:
     appId:
       type: apiKey
       in: header
-      name: X-Algolia-Application-Id
+      name: x-algolia-application-id
+      description: Your Algolia application ID.
     apiKey:
       type: apiKey
       in: header
-      name: X-Algolia-API-Key
+      name: x-algolia-api-key
+      description: >
+        Your Algolia API key with the necessary permissions to make the request.
+
+        Permissions are controlled through access control lists (ACL) and access
+        restrictions.
+
+        The required ACL to make a request is listed in each endpoint's
+        reference.
   parameters:
     PathInPath:
       name: path
@@ -9393,12 +9388,11 @@ components:
       description: |
         Destination type.
 
-        <dl>
-        <dt><code>search</code></dt>
-        <dd>Data is stored in an Algolia index.</dd>
-        <dt><code>insights</code></dt>
-        <dd>Data is recorded as user events in the Insights API.</dd>
-        </dl>.
+        - `search`.
+          Data is stored in an Algolia index.
+
+        - `insights`.
+          Data is recorded as user events in the Insights API.
       enum:
         - search
         - insights
@@ -10053,36 +10047,17 @@ components:
       description: |
         Task trigger, describing when a task should run.
 
-        <dl>
-        <dt><code>onDemand</code></dt>
-        <dd>
+        - `onDemand`.
+          Manually trigger the task with the `/run` endpoint.
 
-        Manually trigger the task with the `/run` endpoint.
+        - `schedule`.
+          Regularly trigger the task on a `cron` schedule.
 
-        </dd>
-        <dt><code>schedule</code></dt>
-        <dd>
+        - `subscription`.
+          Trigger the task after an event is received, such as, a webhook.
 
-        Regularly trigger the task on a `cron` schedule.
-
-        </dd>
-
-        <dt><code>subscription</code></dt>
-
-        <dd>
-
-        Trigger the task after an event is received, such as, a webhook.
-
-        </dd>
-
-        <dt><code>streaming</code></dt>
-
-        <dd>
-
-        Run the task continuously.
-
-        </dd>
-        </dl>.
+        - `streaming`.
+          Run the task continuously.
       enum:
         - onDemand
         - schedule

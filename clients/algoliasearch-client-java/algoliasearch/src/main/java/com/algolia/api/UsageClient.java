@@ -468,7 +468,7 @@ public class UsageClient extends ApiClient {
    * Retrieves the selected usage statistics for one index.
    *
    * @param statistic Usage statistics to retrieve. Use `*` to retrieve all usage metrics, otherwise
-   *     add one or more of the following metrics, separated by a comma. ### Search operations -
+   *     add one or more of the following metrics, separated by a comma. **Search operations** -
    *     `search_operations`. All search operations. - `total_search_operations`: Sum of all search
    *     operations. - `total_search_requests`: Sum of all [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -476,7 +476,7 @@ public class UsageClient extends ApiClient {
    *     `querysuggestions_total_search_requests`. - `queries_operations`. Number of [single index
    *     search](/specs/search#tag/Search/operation/searchSingleIndex) operations. -
    *     `multi_queries_operations`. Number of [multi-index
-   *     search](/specs/search#tag/Search/operation/search) operations. ### ACL operations -
+   *     search](/specs/search#tag/Search/operation/search) operations. **ACL operations** -
    *     `acl_operations`. All ACL operations. - `total_acl_operations`. Sum of all ACL operations.
    *     - `get_api_keys_operations`. Number of [list API
    *     keys](/specs/search#tag/Api-Keys/operation/listApiKeys) operations. -
@@ -488,11 +488,12 @@ public class UsageClient extends ApiClient {
    *     key](/specs/search#tag/Api-Keys/operation/updateApiKey) operations. -
    *     `delete_api_key_operations`. Number of [delete API
    *     key](/specs/search#tag/Api-Keys/operation/deleteApiKey) operations. -
-   *     `list_api_key_operations`. Number of list index API keys operations. ### Indexing
-   *     operations - `indexing_operations`. All indexing operations. - `total_indexing_operations`.
-   *     Sum of all indexing operations. - `browse_operations`. Number of [browse
-   *     index](/specs/search#tag/Search/operation/browse) operations. - `clear_index_operations`.
-   *     Number of [clear records](/specs/search#tag/Records/operation/clearObjects) operations. -
+   *     `list_api_key_operations`. Number of list index API keys operations. **Indexing
+   *     operations** - `indexing_operations`. All indexing operations. -
+   *     `total_indexing_operations`. Sum of all indexing operations. - `browse_operations`. Number
+   *     of [browse index](/specs/search#tag/Search/operation/browse) operations. -
+   *     `clear_index_operations`. Number of [clear
+   *     records](/specs/search#tag/Records/operation/clearObjects) operations. -
    *     `copy_move_operations`. Number of [copy or move
    *     index](/specs/search#tag/Indices/operation/operationIndex) operations. -
    *     `delete_index_operations`. Number of [delete
@@ -504,7 +505,7 @@ public class UsageClient extends ApiClient {
    *     `list_indices_operations`. Number of [list
    *     indices](/specs/search#tag/Indices/operation/listIndices) operations. -
    *     `wait_task_operations`. Number of [wait](/specs/search#tag/Indices/operation/getTask)
-   *     operations. ### Record operations - `record_operations`. All record operations. -
+   *     operations. **Record operations** - `record_operations`. All record operations. -
    *     `total_records_operations`. Sum of all record operations. - `add_record_operations`. Number
    *     of [add or replace record](/specs/search#tag/Records/operation/saveObject) operations. -
    *     `batch_operations`. Number of [batch
@@ -518,8 +519,8 @@ public class UsageClient extends ApiClient {
    *     `partial_update_record_operations`. Number of [partially update
    *     records](/specs/search#tag/Records/operation/partialUpdateObject) operations. -
    *     `update_record_operations`. Number of [add or replace record by
-   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. ### Synonym
-   *     operations - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
+   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. **Synonym
+   *     operations** - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
    *     Sum of all synonym operations. - `batch_synonym_operations`. Number of [save all
    *     synonyms](/specs/search#tag/Synonyms/operation/saveSynonyms) operations. -
    *     `clear_synonym_operations`. Number of [clear
@@ -531,7 +532,7 @@ public class UsageClient extends ApiClient {
    *     `query_synonym_operations`. Number of [search
    *     synonyms](/specs/search#tag/Synonyms/operation/searchSynonyms) operations. -
    *     `update_synonym_operations`. Number of [save a
-   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. ### Rule operations
+   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. **Rule operations**
    *     - `rule_operations`. All rule operations. - `total_rules_operations`. Sum of all rule
    *     operations. - `batch_rules_operations`. Number of [batch
    *     rules](/specs/search#tag/Rules/operation/saveRules) operations. - `clear_rules_operations`.
@@ -541,12 +542,12 @@ public class UsageClient extends ApiClient {
    *     Number of [get rule](/specs/search#tag/Rules/operation/getRule) operations. -
    *     `save_rules_operations`. Number of [save rule](/specs/search#operation/getIndexUsage)
    *     operations. - `search_rules_operations`. Number of [search
-   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. ### Total operations -
+   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. **Total operations** -
    *     `total_recommend_requests`. Number of [Recommend
    *     requests](https://www.algolia.com/doc/guides/algolia-ai/recommend/) -
    *     `total_write_operations`. Number of Write operations - `total_read_operations`. Number of
-   *     read operations - `total_operations`. Sum of all operations ### Total Query Suggestions
-   *     operations Query Suggestions operations are a subset of `total_search_operations`. -
+   *     read operations - `total_operations`. Sum of all operations **Total Query Suggestions
+   *     operations** Query Suggestions operations are a subset of `total_search_operations`. -
    *     `querysuggestions_total_search_operations`. Number of Query Suggestions search operations.
    *     - `querysuggestions_total_search_requests`. Number of Query Suggestions [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -560,23 +561,23 @@ public class UsageClient extends ApiClient {
    *     operations](#rule-operations). - `querysuggestions_total_write_operations`. Number of Query
    *     Suggestions Write operations. - `querysuggestions_total_read_operations`. Number of Query
    *     Suggestions Read operations. - `querysuggestions_total_operations`. Sum of all Query
-   *     Suggestions operations. ### Processing time - `avg_processing_time`. Average processing
+   *     Suggestions operations. **Processing time** - `avg_processing_time`. Average processing
    *     time (in milliseconds). - `90p_processing_time`. 90th percentile of processing time (in
    *     milliseconds). - `99p_processing_time`. 99th percentile of processing time (in
    *     milliseconds). - `queries_above_last_ms_processing_time`. Number of queries that take one
-   *     or more seconds to process. ### Indices - `records`. Number of records. - `data_size`. The
+   *     or more seconds to process. **Indices** - `records`. Number of records. - `data_size`. The
    *     size of the records (in bytes). - `file_size`. The size of the records _and_ index metadata
-   *     (in bytes). ### Maximum queries per second - `max_qps`. [Maximum queries per
+   *     (in bytes). **Maximum queries per second** - `max_qps`. [Maximum queries per
    *     second](https://support.algolia.com/hc/en-us/articles/4406975224721) per server. -
    *     `region_max_qps`. Maximum queries per second per region. - `total_max_qps`. Maximum queries
-   *     per second across all servers. ### Used search capacity The following capacities are
+   *     per second across all servers. **Used search capacity** The following capacities are
    *     reported in percent: - `used_search_capacity`. Maximum search capacity used per server. -
    *     `avg_used_search_capacity`. Average search capacity used per server. -
    *     `region_used_search_capacity`. Maximum search capacity used per region. -
    *     `region_avg_used_search_capacity`. Average search capacity used per region. -
    *     `total_used_search_capacity`. Maximum search capacity used for all servers. -
-   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. ###
-   *     Degraded queries Check the impact of [degraded
+   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. **Degraded
+   *     queries** Check the impact of [degraded
    *     queries](https://support.algolia.com/hc/en-us/articles/4406981934481). -
    *     `degraded_queries_ssd_used_queries_impacted`. Percentage of degraded queries due to the
    *     Algolia search engine having to read from the server's SSD. -
@@ -586,8 +587,8 @@ public class UsageClient extends ApiClient {
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param startDate Start date in ISO 8601 format of the time period to analyze. (required)
-   * @param endDate End date in ISO 8601 format of the time period to analyze. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @param granularity Granularity of the aggregated metrics. - `hourly`: the maximum time range
    *     for hourly metrics is 7 days. - `daily`: the maximum time range for daily metrics is 365
    *     days. (optional, default to daily)
@@ -610,7 +611,7 @@ public class UsageClient extends ApiClient {
    * Retrieves the selected usage statistics for one index.
    *
    * @param statistic Usage statistics to retrieve. Use `*` to retrieve all usage metrics, otherwise
-   *     add one or more of the following metrics, separated by a comma. ### Search operations -
+   *     add one or more of the following metrics, separated by a comma. **Search operations** -
    *     `search_operations`. All search operations. - `total_search_operations`: Sum of all search
    *     operations. - `total_search_requests`: Sum of all [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -618,7 +619,7 @@ public class UsageClient extends ApiClient {
    *     `querysuggestions_total_search_requests`. - `queries_operations`. Number of [single index
    *     search](/specs/search#tag/Search/operation/searchSingleIndex) operations. -
    *     `multi_queries_operations`. Number of [multi-index
-   *     search](/specs/search#tag/Search/operation/search) operations. ### ACL operations -
+   *     search](/specs/search#tag/Search/operation/search) operations. **ACL operations** -
    *     `acl_operations`. All ACL operations. - `total_acl_operations`. Sum of all ACL operations.
    *     - `get_api_keys_operations`. Number of [list API
    *     keys](/specs/search#tag/Api-Keys/operation/listApiKeys) operations. -
@@ -630,11 +631,12 @@ public class UsageClient extends ApiClient {
    *     key](/specs/search#tag/Api-Keys/operation/updateApiKey) operations. -
    *     `delete_api_key_operations`. Number of [delete API
    *     key](/specs/search#tag/Api-Keys/operation/deleteApiKey) operations. -
-   *     `list_api_key_operations`. Number of list index API keys operations. ### Indexing
-   *     operations - `indexing_operations`. All indexing operations. - `total_indexing_operations`.
-   *     Sum of all indexing operations. - `browse_operations`. Number of [browse
-   *     index](/specs/search#tag/Search/operation/browse) operations. - `clear_index_operations`.
-   *     Number of [clear records](/specs/search#tag/Records/operation/clearObjects) operations. -
+   *     `list_api_key_operations`. Number of list index API keys operations. **Indexing
+   *     operations** - `indexing_operations`. All indexing operations. -
+   *     `total_indexing_operations`. Sum of all indexing operations. - `browse_operations`. Number
+   *     of [browse index](/specs/search#tag/Search/operation/browse) operations. -
+   *     `clear_index_operations`. Number of [clear
+   *     records](/specs/search#tag/Records/operation/clearObjects) operations. -
    *     `copy_move_operations`. Number of [copy or move
    *     index](/specs/search#tag/Indices/operation/operationIndex) operations. -
    *     `delete_index_operations`. Number of [delete
@@ -646,7 +648,7 @@ public class UsageClient extends ApiClient {
    *     `list_indices_operations`. Number of [list
    *     indices](/specs/search#tag/Indices/operation/listIndices) operations. -
    *     `wait_task_operations`. Number of [wait](/specs/search#tag/Indices/operation/getTask)
-   *     operations. ### Record operations - `record_operations`. All record operations. -
+   *     operations. **Record operations** - `record_operations`. All record operations. -
    *     `total_records_operations`. Sum of all record operations. - `add_record_operations`. Number
    *     of [add or replace record](/specs/search#tag/Records/operation/saveObject) operations. -
    *     `batch_operations`. Number of [batch
@@ -660,8 +662,8 @@ public class UsageClient extends ApiClient {
    *     `partial_update_record_operations`. Number of [partially update
    *     records](/specs/search#tag/Records/operation/partialUpdateObject) operations. -
    *     `update_record_operations`. Number of [add or replace record by
-   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. ### Synonym
-   *     operations - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
+   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. **Synonym
+   *     operations** - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
    *     Sum of all synonym operations. - `batch_synonym_operations`. Number of [save all
    *     synonyms](/specs/search#tag/Synonyms/operation/saveSynonyms) operations. -
    *     `clear_synonym_operations`. Number of [clear
@@ -673,7 +675,7 @@ public class UsageClient extends ApiClient {
    *     `query_synonym_operations`. Number of [search
    *     synonyms](/specs/search#tag/Synonyms/operation/searchSynonyms) operations. -
    *     `update_synonym_operations`. Number of [save a
-   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. ### Rule operations
+   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. **Rule operations**
    *     - `rule_operations`. All rule operations. - `total_rules_operations`. Sum of all rule
    *     operations. - `batch_rules_operations`. Number of [batch
    *     rules](/specs/search#tag/Rules/operation/saveRules) operations. - `clear_rules_operations`.
@@ -683,12 +685,12 @@ public class UsageClient extends ApiClient {
    *     Number of [get rule](/specs/search#tag/Rules/operation/getRule) operations. -
    *     `save_rules_operations`. Number of [save rule](/specs/search#operation/getIndexUsage)
    *     operations. - `search_rules_operations`. Number of [search
-   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. ### Total operations -
+   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. **Total operations** -
    *     `total_recommend_requests`. Number of [Recommend
    *     requests](https://www.algolia.com/doc/guides/algolia-ai/recommend/) -
    *     `total_write_operations`. Number of Write operations - `total_read_operations`. Number of
-   *     read operations - `total_operations`. Sum of all operations ### Total Query Suggestions
-   *     operations Query Suggestions operations are a subset of `total_search_operations`. -
+   *     read operations - `total_operations`. Sum of all operations **Total Query Suggestions
+   *     operations** Query Suggestions operations are a subset of `total_search_operations`. -
    *     `querysuggestions_total_search_operations`. Number of Query Suggestions search operations.
    *     - `querysuggestions_total_search_requests`. Number of Query Suggestions [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -702,23 +704,23 @@ public class UsageClient extends ApiClient {
    *     operations](#rule-operations). - `querysuggestions_total_write_operations`. Number of Query
    *     Suggestions Write operations. - `querysuggestions_total_read_operations`. Number of Query
    *     Suggestions Read operations. - `querysuggestions_total_operations`. Sum of all Query
-   *     Suggestions operations. ### Processing time - `avg_processing_time`. Average processing
+   *     Suggestions operations. **Processing time** - `avg_processing_time`. Average processing
    *     time (in milliseconds). - `90p_processing_time`. 90th percentile of processing time (in
    *     milliseconds). - `99p_processing_time`. 99th percentile of processing time (in
    *     milliseconds). - `queries_above_last_ms_processing_time`. Number of queries that take one
-   *     or more seconds to process. ### Indices - `records`. Number of records. - `data_size`. The
+   *     or more seconds to process. **Indices** - `records`. Number of records. - `data_size`. The
    *     size of the records (in bytes). - `file_size`. The size of the records _and_ index metadata
-   *     (in bytes). ### Maximum queries per second - `max_qps`. [Maximum queries per
+   *     (in bytes). **Maximum queries per second** - `max_qps`. [Maximum queries per
    *     second](https://support.algolia.com/hc/en-us/articles/4406975224721) per server. -
    *     `region_max_qps`. Maximum queries per second per region. - `total_max_qps`. Maximum queries
-   *     per second across all servers. ### Used search capacity The following capacities are
+   *     per second across all servers. **Used search capacity** The following capacities are
    *     reported in percent: - `used_search_capacity`. Maximum search capacity used per server. -
    *     `avg_used_search_capacity`. Average search capacity used per server. -
    *     `region_used_search_capacity`. Maximum search capacity used per region. -
    *     `region_avg_used_search_capacity`. Average search capacity used per region. -
    *     `total_used_search_capacity`. Maximum search capacity used for all servers. -
-   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. ###
-   *     Degraded queries Check the impact of [degraded
+   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. **Degraded
+   *     queries** Check the impact of [degraded
    *     queries](https://support.algolia.com/hc/en-us/articles/4406981934481). -
    *     `degraded_queries_ssd_used_queries_impacted`. Percentage of degraded queries due to the
    *     Algolia search engine having to read from the server's SSD. -
@@ -728,8 +730,8 @@ public class UsageClient extends ApiClient {
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param startDate Start date in ISO 8601 format of the time period to analyze. (required)
-   * @param endDate End date in ISO 8601 format of the time period to analyze. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @param granularity Granularity of the aggregated metrics. - `hourly`: the maximum time range
    *     for hourly metrics is 7 days. - `daily`: the maximum time range for daily metrics is 365
    *     days. (optional, default to daily)
@@ -749,7 +751,7 @@ public class UsageClient extends ApiClient {
    * Retrieves the selected usage statistics for one index.
    *
    * @param statistic Usage statistics to retrieve. Use `*` to retrieve all usage metrics, otherwise
-   *     add one or more of the following metrics, separated by a comma. ### Search operations -
+   *     add one or more of the following metrics, separated by a comma. **Search operations** -
    *     `search_operations`. All search operations. - `total_search_operations`: Sum of all search
    *     operations. - `total_search_requests`: Sum of all [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -757,7 +759,7 @@ public class UsageClient extends ApiClient {
    *     `querysuggestions_total_search_requests`. - `queries_operations`. Number of [single index
    *     search](/specs/search#tag/Search/operation/searchSingleIndex) operations. -
    *     `multi_queries_operations`. Number of [multi-index
-   *     search](/specs/search#tag/Search/operation/search) operations. ### ACL operations -
+   *     search](/specs/search#tag/Search/operation/search) operations. **ACL operations** -
    *     `acl_operations`. All ACL operations. - `total_acl_operations`. Sum of all ACL operations.
    *     - `get_api_keys_operations`. Number of [list API
    *     keys](/specs/search#tag/Api-Keys/operation/listApiKeys) operations. -
@@ -769,11 +771,12 @@ public class UsageClient extends ApiClient {
    *     key](/specs/search#tag/Api-Keys/operation/updateApiKey) operations. -
    *     `delete_api_key_operations`. Number of [delete API
    *     key](/specs/search#tag/Api-Keys/operation/deleteApiKey) operations. -
-   *     `list_api_key_operations`. Number of list index API keys operations. ### Indexing
-   *     operations - `indexing_operations`. All indexing operations. - `total_indexing_operations`.
-   *     Sum of all indexing operations. - `browse_operations`. Number of [browse
-   *     index](/specs/search#tag/Search/operation/browse) operations. - `clear_index_operations`.
-   *     Number of [clear records](/specs/search#tag/Records/operation/clearObjects) operations. -
+   *     `list_api_key_operations`. Number of list index API keys operations. **Indexing
+   *     operations** - `indexing_operations`. All indexing operations. -
+   *     `total_indexing_operations`. Sum of all indexing operations. - `browse_operations`. Number
+   *     of [browse index](/specs/search#tag/Search/operation/browse) operations. -
+   *     `clear_index_operations`. Number of [clear
+   *     records](/specs/search#tag/Records/operation/clearObjects) operations. -
    *     `copy_move_operations`. Number of [copy or move
    *     index](/specs/search#tag/Indices/operation/operationIndex) operations. -
    *     `delete_index_operations`. Number of [delete
@@ -785,7 +788,7 @@ public class UsageClient extends ApiClient {
    *     `list_indices_operations`. Number of [list
    *     indices](/specs/search#tag/Indices/operation/listIndices) operations. -
    *     `wait_task_operations`. Number of [wait](/specs/search#tag/Indices/operation/getTask)
-   *     operations. ### Record operations - `record_operations`. All record operations. -
+   *     operations. **Record operations** - `record_operations`. All record operations. -
    *     `total_records_operations`. Sum of all record operations. - `add_record_operations`. Number
    *     of [add or replace record](/specs/search#tag/Records/operation/saveObject) operations. -
    *     `batch_operations`. Number of [batch
@@ -799,8 +802,8 @@ public class UsageClient extends ApiClient {
    *     `partial_update_record_operations`. Number of [partially update
    *     records](/specs/search#tag/Records/operation/partialUpdateObject) operations. -
    *     `update_record_operations`. Number of [add or replace record by
-   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. ### Synonym
-   *     operations - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
+   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. **Synonym
+   *     operations** - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
    *     Sum of all synonym operations. - `batch_synonym_operations`. Number of [save all
    *     synonyms](/specs/search#tag/Synonyms/operation/saveSynonyms) operations. -
    *     `clear_synonym_operations`. Number of [clear
@@ -812,7 +815,7 @@ public class UsageClient extends ApiClient {
    *     `query_synonym_operations`. Number of [search
    *     synonyms](/specs/search#tag/Synonyms/operation/searchSynonyms) operations. -
    *     `update_synonym_operations`. Number of [save a
-   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. ### Rule operations
+   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. **Rule operations**
    *     - `rule_operations`. All rule operations. - `total_rules_operations`. Sum of all rule
    *     operations. - `batch_rules_operations`. Number of [batch
    *     rules](/specs/search#tag/Rules/operation/saveRules) operations. - `clear_rules_operations`.
@@ -822,12 +825,12 @@ public class UsageClient extends ApiClient {
    *     Number of [get rule](/specs/search#tag/Rules/operation/getRule) operations. -
    *     `save_rules_operations`. Number of [save rule](/specs/search#operation/getIndexUsage)
    *     operations. - `search_rules_operations`. Number of [search
-   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. ### Total operations -
+   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. **Total operations** -
    *     `total_recommend_requests`. Number of [Recommend
    *     requests](https://www.algolia.com/doc/guides/algolia-ai/recommend/) -
    *     `total_write_operations`. Number of Write operations - `total_read_operations`. Number of
-   *     read operations - `total_operations`. Sum of all operations ### Total Query Suggestions
-   *     operations Query Suggestions operations are a subset of `total_search_operations`. -
+   *     read operations - `total_operations`. Sum of all operations **Total Query Suggestions
+   *     operations** Query Suggestions operations are a subset of `total_search_operations`. -
    *     `querysuggestions_total_search_operations`. Number of Query Suggestions search operations.
    *     - `querysuggestions_total_search_requests`. Number of Query Suggestions [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -841,23 +844,23 @@ public class UsageClient extends ApiClient {
    *     operations](#rule-operations). - `querysuggestions_total_write_operations`. Number of Query
    *     Suggestions Write operations. - `querysuggestions_total_read_operations`. Number of Query
    *     Suggestions Read operations. - `querysuggestions_total_operations`. Sum of all Query
-   *     Suggestions operations. ### Processing time - `avg_processing_time`. Average processing
+   *     Suggestions operations. **Processing time** - `avg_processing_time`. Average processing
    *     time (in milliseconds). - `90p_processing_time`. 90th percentile of processing time (in
    *     milliseconds). - `99p_processing_time`. 99th percentile of processing time (in
    *     milliseconds). - `queries_above_last_ms_processing_time`. Number of queries that take one
-   *     or more seconds to process. ### Indices - `records`. Number of records. - `data_size`. The
+   *     or more seconds to process. **Indices** - `records`. Number of records. - `data_size`. The
    *     size of the records (in bytes). - `file_size`. The size of the records _and_ index metadata
-   *     (in bytes). ### Maximum queries per second - `max_qps`. [Maximum queries per
+   *     (in bytes). **Maximum queries per second** - `max_qps`. [Maximum queries per
    *     second](https://support.algolia.com/hc/en-us/articles/4406975224721) per server. -
    *     `region_max_qps`. Maximum queries per second per region. - `total_max_qps`. Maximum queries
-   *     per second across all servers. ### Used search capacity The following capacities are
+   *     per second across all servers. **Used search capacity** The following capacities are
    *     reported in percent: - `used_search_capacity`. Maximum search capacity used per server. -
    *     `avg_used_search_capacity`. Average search capacity used per server. -
    *     `region_used_search_capacity`. Maximum search capacity used per region. -
    *     `region_avg_used_search_capacity`. Average search capacity used per region. -
    *     `total_used_search_capacity`. Maximum search capacity used for all servers. -
-   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. ###
-   *     Degraded queries Check the impact of [degraded
+   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. **Degraded
+   *     queries** Check the impact of [degraded
    *     queries](https://support.algolia.com/hc/en-us/articles/4406981934481). -
    *     `degraded_queries_ssd_used_queries_impacted`. Percentage of degraded queries due to the
    *     Algolia search engine having to read from the server's SSD. -
@@ -867,8 +870,8 @@ public class UsageClient extends ApiClient {
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param startDate Start date in ISO 8601 format of the time period to analyze. (required)
-   * @param endDate End date in ISO 8601 format of the time period to analyze. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -887,7 +890,7 @@ public class UsageClient extends ApiClient {
    * Retrieves the selected usage statistics for one index.
    *
    * @param statistic Usage statistics to retrieve. Use `*` to retrieve all usage metrics, otherwise
-   *     add one or more of the following metrics, separated by a comma. ### Search operations -
+   *     add one or more of the following metrics, separated by a comma. **Search operations** -
    *     `search_operations`. All search operations. - `total_search_operations`: Sum of all search
    *     operations. - `total_search_requests`: Sum of all [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -895,7 +898,7 @@ public class UsageClient extends ApiClient {
    *     `querysuggestions_total_search_requests`. - `queries_operations`. Number of [single index
    *     search](/specs/search#tag/Search/operation/searchSingleIndex) operations. -
    *     `multi_queries_operations`. Number of [multi-index
-   *     search](/specs/search#tag/Search/operation/search) operations. ### ACL operations -
+   *     search](/specs/search#tag/Search/operation/search) operations. **ACL operations** -
    *     `acl_operations`. All ACL operations. - `total_acl_operations`. Sum of all ACL operations.
    *     - `get_api_keys_operations`. Number of [list API
    *     keys](/specs/search#tag/Api-Keys/operation/listApiKeys) operations. -
@@ -907,11 +910,12 @@ public class UsageClient extends ApiClient {
    *     key](/specs/search#tag/Api-Keys/operation/updateApiKey) operations. -
    *     `delete_api_key_operations`. Number of [delete API
    *     key](/specs/search#tag/Api-Keys/operation/deleteApiKey) operations. -
-   *     `list_api_key_operations`. Number of list index API keys operations. ### Indexing
-   *     operations - `indexing_operations`. All indexing operations. - `total_indexing_operations`.
-   *     Sum of all indexing operations. - `browse_operations`. Number of [browse
-   *     index](/specs/search#tag/Search/operation/browse) operations. - `clear_index_operations`.
-   *     Number of [clear records](/specs/search#tag/Records/operation/clearObjects) operations. -
+   *     `list_api_key_operations`. Number of list index API keys operations. **Indexing
+   *     operations** - `indexing_operations`. All indexing operations. -
+   *     `total_indexing_operations`. Sum of all indexing operations. - `browse_operations`. Number
+   *     of [browse index](/specs/search#tag/Search/operation/browse) operations. -
+   *     `clear_index_operations`. Number of [clear
+   *     records](/specs/search#tag/Records/operation/clearObjects) operations. -
    *     `copy_move_operations`. Number of [copy or move
    *     index](/specs/search#tag/Indices/operation/operationIndex) operations. -
    *     `delete_index_operations`. Number of [delete
@@ -923,7 +927,7 @@ public class UsageClient extends ApiClient {
    *     `list_indices_operations`. Number of [list
    *     indices](/specs/search#tag/Indices/operation/listIndices) operations. -
    *     `wait_task_operations`. Number of [wait](/specs/search#tag/Indices/operation/getTask)
-   *     operations. ### Record operations - `record_operations`. All record operations. -
+   *     operations. **Record operations** - `record_operations`. All record operations. -
    *     `total_records_operations`. Sum of all record operations. - `add_record_operations`. Number
    *     of [add or replace record](/specs/search#tag/Records/operation/saveObject) operations. -
    *     `batch_operations`. Number of [batch
@@ -937,8 +941,8 @@ public class UsageClient extends ApiClient {
    *     `partial_update_record_operations`. Number of [partially update
    *     records](/specs/search#tag/Records/operation/partialUpdateObject) operations. -
    *     `update_record_operations`. Number of [add or replace record by
-   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. ### Synonym
-   *     operations - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
+   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. **Synonym
+   *     operations** - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
    *     Sum of all synonym operations. - `batch_synonym_operations`. Number of [save all
    *     synonyms](/specs/search#tag/Synonyms/operation/saveSynonyms) operations. -
    *     `clear_synonym_operations`. Number of [clear
@@ -950,7 +954,7 @@ public class UsageClient extends ApiClient {
    *     `query_synonym_operations`. Number of [search
    *     synonyms](/specs/search#tag/Synonyms/operation/searchSynonyms) operations. -
    *     `update_synonym_operations`. Number of [save a
-   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. ### Rule operations
+   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. **Rule operations**
    *     - `rule_operations`. All rule operations. - `total_rules_operations`. Sum of all rule
    *     operations. - `batch_rules_operations`. Number of [batch
    *     rules](/specs/search#tag/Rules/operation/saveRules) operations. - `clear_rules_operations`.
@@ -960,12 +964,12 @@ public class UsageClient extends ApiClient {
    *     Number of [get rule](/specs/search#tag/Rules/operation/getRule) operations. -
    *     `save_rules_operations`. Number of [save rule](/specs/search#operation/getIndexUsage)
    *     operations. - `search_rules_operations`. Number of [search
-   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. ### Total operations -
+   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. **Total operations** -
    *     `total_recommend_requests`. Number of [Recommend
    *     requests](https://www.algolia.com/doc/guides/algolia-ai/recommend/) -
    *     `total_write_operations`. Number of Write operations - `total_read_operations`. Number of
-   *     read operations - `total_operations`. Sum of all operations ### Total Query Suggestions
-   *     operations Query Suggestions operations are a subset of `total_search_operations`. -
+   *     read operations - `total_operations`. Sum of all operations **Total Query Suggestions
+   *     operations** Query Suggestions operations are a subset of `total_search_operations`. -
    *     `querysuggestions_total_search_operations`. Number of Query Suggestions search operations.
    *     - `querysuggestions_total_search_requests`. Number of Query Suggestions [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -979,23 +983,23 @@ public class UsageClient extends ApiClient {
    *     operations](#rule-operations). - `querysuggestions_total_write_operations`. Number of Query
    *     Suggestions Write operations. - `querysuggestions_total_read_operations`. Number of Query
    *     Suggestions Read operations. - `querysuggestions_total_operations`. Sum of all Query
-   *     Suggestions operations. ### Processing time - `avg_processing_time`. Average processing
+   *     Suggestions operations. **Processing time** - `avg_processing_time`. Average processing
    *     time (in milliseconds). - `90p_processing_time`. 90th percentile of processing time (in
    *     milliseconds). - `99p_processing_time`. 99th percentile of processing time (in
    *     milliseconds). - `queries_above_last_ms_processing_time`. Number of queries that take one
-   *     or more seconds to process. ### Indices - `records`. Number of records. - `data_size`. The
+   *     or more seconds to process. **Indices** - `records`. Number of records. - `data_size`. The
    *     size of the records (in bytes). - `file_size`. The size of the records _and_ index metadata
-   *     (in bytes). ### Maximum queries per second - `max_qps`. [Maximum queries per
+   *     (in bytes). **Maximum queries per second** - `max_qps`. [Maximum queries per
    *     second](https://support.algolia.com/hc/en-us/articles/4406975224721) per server. -
    *     `region_max_qps`. Maximum queries per second per region. - `total_max_qps`. Maximum queries
-   *     per second across all servers. ### Used search capacity The following capacities are
+   *     per second across all servers. **Used search capacity** The following capacities are
    *     reported in percent: - `used_search_capacity`. Maximum search capacity used per server. -
    *     `avg_used_search_capacity`. Average search capacity used per server. -
    *     `region_used_search_capacity`. Maximum search capacity used per region. -
    *     `region_avg_used_search_capacity`. Average search capacity used per region. -
    *     `total_used_search_capacity`. Maximum search capacity used for all servers. -
-   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. ###
-   *     Degraded queries Check the impact of [degraded
+   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. **Degraded
+   *     queries** Check the impact of [degraded
    *     queries](https://support.algolia.com/hc/en-us/articles/4406981934481). -
    *     `degraded_queries_ssd_used_queries_impacted`. Percentage of degraded queries due to the
    *     Algolia search engine having to read from the server's SSD. -
@@ -1005,8 +1009,8 @@ public class UsageClient extends ApiClient {
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param startDate Start date in ISO 8601 format of the time period to analyze. (required)
-   * @param endDate End date in ISO 8601 format of the time period to analyze. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetUsage200Response getIndexUsage(
@@ -1022,7 +1026,7 @@ public class UsageClient extends ApiClient {
    * (asynchronously) Retrieves the selected usage statistics for one index.
    *
    * @param statistic Usage statistics to retrieve. Use `*` to retrieve all usage metrics, otherwise
-   *     add one or more of the following metrics, separated by a comma. ### Search operations -
+   *     add one or more of the following metrics, separated by a comma. **Search operations** -
    *     `search_operations`. All search operations. - `total_search_operations`: Sum of all search
    *     operations. - `total_search_requests`: Sum of all [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -1030,7 +1034,7 @@ public class UsageClient extends ApiClient {
    *     `querysuggestions_total_search_requests`. - `queries_operations`. Number of [single index
    *     search](/specs/search#tag/Search/operation/searchSingleIndex) operations. -
    *     `multi_queries_operations`. Number of [multi-index
-   *     search](/specs/search#tag/Search/operation/search) operations. ### ACL operations -
+   *     search](/specs/search#tag/Search/operation/search) operations. **ACL operations** -
    *     `acl_operations`. All ACL operations. - `total_acl_operations`. Sum of all ACL operations.
    *     - `get_api_keys_operations`. Number of [list API
    *     keys](/specs/search#tag/Api-Keys/operation/listApiKeys) operations. -
@@ -1042,11 +1046,12 @@ public class UsageClient extends ApiClient {
    *     key](/specs/search#tag/Api-Keys/operation/updateApiKey) operations. -
    *     `delete_api_key_operations`. Number of [delete API
    *     key](/specs/search#tag/Api-Keys/operation/deleteApiKey) operations. -
-   *     `list_api_key_operations`. Number of list index API keys operations. ### Indexing
-   *     operations - `indexing_operations`. All indexing operations. - `total_indexing_operations`.
-   *     Sum of all indexing operations. - `browse_operations`. Number of [browse
-   *     index](/specs/search#tag/Search/operation/browse) operations. - `clear_index_operations`.
-   *     Number of [clear records](/specs/search#tag/Records/operation/clearObjects) operations. -
+   *     `list_api_key_operations`. Number of list index API keys operations. **Indexing
+   *     operations** - `indexing_operations`. All indexing operations. -
+   *     `total_indexing_operations`. Sum of all indexing operations. - `browse_operations`. Number
+   *     of [browse index](/specs/search#tag/Search/operation/browse) operations. -
+   *     `clear_index_operations`. Number of [clear
+   *     records](/specs/search#tag/Records/operation/clearObjects) operations. -
    *     `copy_move_operations`. Number of [copy or move
    *     index](/specs/search#tag/Indices/operation/operationIndex) operations. -
    *     `delete_index_operations`. Number of [delete
@@ -1058,7 +1063,7 @@ public class UsageClient extends ApiClient {
    *     `list_indices_operations`. Number of [list
    *     indices](/specs/search#tag/Indices/operation/listIndices) operations. -
    *     `wait_task_operations`. Number of [wait](/specs/search#tag/Indices/operation/getTask)
-   *     operations. ### Record operations - `record_operations`. All record operations. -
+   *     operations. **Record operations** - `record_operations`. All record operations. -
    *     `total_records_operations`. Sum of all record operations. - `add_record_operations`. Number
    *     of [add or replace record](/specs/search#tag/Records/operation/saveObject) operations. -
    *     `batch_operations`. Number of [batch
@@ -1072,8 +1077,8 @@ public class UsageClient extends ApiClient {
    *     `partial_update_record_operations`. Number of [partially update
    *     records](/specs/search#tag/Records/operation/partialUpdateObject) operations. -
    *     `update_record_operations`. Number of [add or replace record by
-   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. ### Synonym
-   *     operations - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
+   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. **Synonym
+   *     operations** - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
    *     Sum of all synonym operations. - `batch_synonym_operations`. Number of [save all
    *     synonyms](/specs/search#tag/Synonyms/operation/saveSynonyms) operations. -
    *     `clear_synonym_operations`. Number of [clear
@@ -1085,7 +1090,7 @@ public class UsageClient extends ApiClient {
    *     `query_synonym_operations`. Number of [search
    *     synonyms](/specs/search#tag/Synonyms/operation/searchSynonyms) operations. -
    *     `update_synonym_operations`. Number of [save a
-   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. ### Rule operations
+   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. **Rule operations**
    *     - `rule_operations`. All rule operations. - `total_rules_operations`. Sum of all rule
    *     operations. - `batch_rules_operations`. Number of [batch
    *     rules](/specs/search#tag/Rules/operation/saveRules) operations. - `clear_rules_operations`.
@@ -1095,12 +1100,12 @@ public class UsageClient extends ApiClient {
    *     Number of [get rule](/specs/search#tag/Rules/operation/getRule) operations. -
    *     `save_rules_operations`. Number of [save rule](/specs/search#operation/getIndexUsage)
    *     operations. - `search_rules_operations`. Number of [search
-   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. ### Total operations -
+   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. **Total operations** -
    *     `total_recommend_requests`. Number of [Recommend
    *     requests](https://www.algolia.com/doc/guides/algolia-ai/recommend/) -
    *     `total_write_operations`. Number of Write operations - `total_read_operations`. Number of
-   *     read operations - `total_operations`. Sum of all operations ### Total Query Suggestions
-   *     operations Query Suggestions operations are a subset of `total_search_operations`. -
+   *     read operations - `total_operations`. Sum of all operations **Total Query Suggestions
+   *     operations** Query Suggestions operations are a subset of `total_search_operations`. -
    *     `querysuggestions_total_search_operations`. Number of Query Suggestions search operations.
    *     - `querysuggestions_total_search_requests`. Number of Query Suggestions [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -1114,23 +1119,23 @@ public class UsageClient extends ApiClient {
    *     operations](#rule-operations). - `querysuggestions_total_write_operations`. Number of Query
    *     Suggestions Write operations. - `querysuggestions_total_read_operations`. Number of Query
    *     Suggestions Read operations. - `querysuggestions_total_operations`. Sum of all Query
-   *     Suggestions operations. ### Processing time - `avg_processing_time`. Average processing
+   *     Suggestions operations. **Processing time** - `avg_processing_time`. Average processing
    *     time (in milliseconds). - `90p_processing_time`. 90th percentile of processing time (in
    *     milliseconds). - `99p_processing_time`. 99th percentile of processing time (in
    *     milliseconds). - `queries_above_last_ms_processing_time`. Number of queries that take one
-   *     or more seconds to process. ### Indices - `records`. Number of records. - `data_size`. The
+   *     or more seconds to process. **Indices** - `records`. Number of records. - `data_size`. The
    *     size of the records (in bytes). - `file_size`. The size of the records _and_ index metadata
-   *     (in bytes). ### Maximum queries per second - `max_qps`. [Maximum queries per
+   *     (in bytes). **Maximum queries per second** - `max_qps`. [Maximum queries per
    *     second](https://support.algolia.com/hc/en-us/articles/4406975224721) per server. -
    *     `region_max_qps`. Maximum queries per second per region. - `total_max_qps`. Maximum queries
-   *     per second across all servers. ### Used search capacity The following capacities are
+   *     per second across all servers. **Used search capacity** The following capacities are
    *     reported in percent: - `used_search_capacity`. Maximum search capacity used per server. -
    *     `avg_used_search_capacity`. Average search capacity used per server. -
    *     `region_used_search_capacity`. Maximum search capacity used per region. -
    *     `region_avg_used_search_capacity`. Average search capacity used per region. -
    *     `total_used_search_capacity`. Maximum search capacity used for all servers. -
-   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. ###
-   *     Degraded queries Check the impact of [degraded
+   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. **Degraded
+   *     queries** Check the impact of [degraded
    *     queries](https://support.algolia.com/hc/en-us/articles/4406981934481). -
    *     `degraded_queries_ssd_used_queries_impacted`. Percentage of degraded queries due to the
    *     Algolia search engine having to read from the server's SSD. -
@@ -1140,8 +1145,8 @@ public class UsageClient extends ApiClient {
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param startDate Start date in ISO 8601 format of the time period to analyze. (required)
-   * @param endDate End date in ISO 8601 format of the time period to analyze. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @param granularity Granularity of the aggregated metrics. - `hourly`: the maximum time range
    *     for hourly metrics is 7 days. - `daily`: the maximum time range for daily metrics is 365
    *     days. (optional, default to daily)
@@ -1180,7 +1185,7 @@ public class UsageClient extends ApiClient {
    * (asynchronously) Retrieves the selected usage statistics for one index.
    *
    * @param statistic Usage statistics to retrieve. Use `*` to retrieve all usage metrics, otherwise
-   *     add one or more of the following metrics, separated by a comma. ### Search operations -
+   *     add one or more of the following metrics, separated by a comma. **Search operations** -
    *     `search_operations`. All search operations. - `total_search_operations`: Sum of all search
    *     operations. - `total_search_requests`: Sum of all [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -1188,7 +1193,7 @@ public class UsageClient extends ApiClient {
    *     `querysuggestions_total_search_requests`. - `queries_operations`. Number of [single index
    *     search](/specs/search#tag/Search/operation/searchSingleIndex) operations. -
    *     `multi_queries_operations`. Number of [multi-index
-   *     search](/specs/search#tag/Search/operation/search) operations. ### ACL operations -
+   *     search](/specs/search#tag/Search/operation/search) operations. **ACL operations** -
    *     `acl_operations`. All ACL operations. - `total_acl_operations`. Sum of all ACL operations.
    *     - `get_api_keys_operations`. Number of [list API
    *     keys](/specs/search#tag/Api-Keys/operation/listApiKeys) operations. -
@@ -1200,11 +1205,12 @@ public class UsageClient extends ApiClient {
    *     key](/specs/search#tag/Api-Keys/operation/updateApiKey) operations. -
    *     `delete_api_key_operations`. Number of [delete API
    *     key](/specs/search#tag/Api-Keys/operation/deleteApiKey) operations. -
-   *     `list_api_key_operations`. Number of list index API keys operations. ### Indexing
-   *     operations - `indexing_operations`. All indexing operations. - `total_indexing_operations`.
-   *     Sum of all indexing operations. - `browse_operations`. Number of [browse
-   *     index](/specs/search#tag/Search/operation/browse) operations. - `clear_index_operations`.
-   *     Number of [clear records](/specs/search#tag/Records/operation/clearObjects) operations. -
+   *     `list_api_key_operations`. Number of list index API keys operations. **Indexing
+   *     operations** - `indexing_operations`. All indexing operations. -
+   *     `total_indexing_operations`. Sum of all indexing operations. - `browse_operations`. Number
+   *     of [browse index](/specs/search#tag/Search/operation/browse) operations. -
+   *     `clear_index_operations`. Number of [clear
+   *     records](/specs/search#tag/Records/operation/clearObjects) operations. -
    *     `copy_move_operations`. Number of [copy or move
    *     index](/specs/search#tag/Indices/operation/operationIndex) operations. -
    *     `delete_index_operations`. Number of [delete
@@ -1216,7 +1222,7 @@ public class UsageClient extends ApiClient {
    *     `list_indices_operations`. Number of [list
    *     indices](/specs/search#tag/Indices/operation/listIndices) operations. -
    *     `wait_task_operations`. Number of [wait](/specs/search#tag/Indices/operation/getTask)
-   *     operations. ### Record operations - `record_operations`. All record operations. -
+   *     operations. **Record operations** - `record_operations`. All record operations. -
    *     `total_records_operations`. Sum of all record operations. - `add_record_operations`. Number
    *     of [add or replace record](/specs/search#tag/Records/operation/saveObject) operations. -
    *     `batch_operations`. Number of [batch
@@ -1230,8 +1236,8 @@ public class UsageClient extends ApiClient {
    *     `partial_update_record_operations`. Number of [partially update
    *     records](/specs/search#tag/Records/operation/partialUpdateObject) operations. -
    *     `update_record_operations`. Number of [add or replace record by
-   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. ### Synonym
-   *     operations - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
+   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. **Synonym
+   *     operations** - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
    *     Sum of all synonym operations. - `batch_synonym_operations`. Number of [save all
    *     synonyms](/specs/search#tag/Synonyms/operation/saveSynonyms) operations. -
    *     `clear_synonym_operations`. Number of [clear
@@ -1243,7 +1249,7 @@ public class UsageClient extends ApiClient {
    *     `query_synonym_operations`. Number of [search
    *     synonyms](/specs/search#tag/Synonyms/operation/searchSynonyms) operations. -
    *     `update_synonym_operations`. Number of [save a
-   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. ### Rule operations
+   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. **Rule operations**
    *     - `rule_operations`. All rule operations. - `total_rules_operations`. Sum of all rule
    *     operations. - `batch_rules_operations`. Number of [batch
    *     rules](/specs/search#tag/Rules/operation/saveRules) operations. - `clear_rules_operations`.
@@ -1253,12 +1259,12 @@ public class UsageClient extends ApiClient {
    *     Number of [get rule](/specs/search#tag/Rules/operation/getRule) operations. -
    *     `save_rules_operations`. Number of [save rule](/specs/search#operation/getIndexUsage)
    *     operations. - `search_rules_operations`. Number of [search
-   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. ### Total operations -
+   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. **Total operations** -
    *     `total_recommend_requests`. Number of [Recommend
    *     requests](https://www.algolia.com/doc/guides/algolia-ai/recommend/) -
    *     `total_write_operations`. Number of Write operations - `total_read_operations`. Number of
-   *     read operations - `total_operations`. Sum of all operations ### Total Query Suggestions
-   *     operations Query Suggestions operations are a subset of `total_search_operations`. -
+   *     read operations - `total_operations`. Sum of all operations **Total Query Suggestions
+   *     operations** Query Suggestions operations are a subset of `total_search_operations`. -
    *     `querysuggestions_total_search_operations`. Number of Query Suggestions search operations.
    *     - `querysuggestions_total_search_requests`. Number of Query Suggestions [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -1272,23 +1278,23 @@ public class UsageClient extends ApiClient {
    *     operations](#rule-operations). - `querysuggestions_total_write_operations`. Number of Query
    *     Suggestions Write operations. - `querysuggestions_total_read_operations`. Number of Query
    *     Suggestions Read operations. - `querysuggestions_total_operations`. Sum of all Query
-   *     Suggestions operations. ### Processing time - `avg_processing_time`. Average processing
+   *     Suggestions operations. **Processing time** - `avg_processing_time`. Average processing
    *     time (in milliseconds). - `90p_processing_time`. 90th percentile of processing time (in
    *     milliseconds). - `99p_processing_time`. 99th percentile of processing time (in
    *     milliseconds). - `queries_above_last_ms_processing_time`. Number of queries that take one
-   *     or more seconds to process. ### Indices - `records`. Number of records. - `data_size`. The
+   *     or more seconds to process. **Indices** - `records`. Number of records. - `data_size`. The
    *     size of the records (in bytes). - `file_size`. The size of the records _and_ index metadata
-   *     (in bytes). ### Maximum queries per second - `max_qps`. [Maximum queries per
+   *     (in bytes). **Maximum queries per second** - `max_qps`. [Maximum queries per
    *     second](https://support.algolia.com/hc/en-us/articles/4406975224721) per server. -
    *     `region_max_qps`. Maximum queries per second per region. - `total_max_qps`. Maximum queries
-   *     per second across all servers. ### Used search capacity The following capacities are
+   *     per second across all servers. **Used search capacity** The following capacities are
    *     reported in percent: - `used_search_capacity`. Maximum search capacity used per server. -
    *     `avg_used_search_capacity`. Average search capacity used per server. -
    *     `region_used_search_capacity`. Maximum search capacity used per region. -
    *     `region_avg_used_search_capacity`. Average search capacity used per region. -
    *     `total_used_search_capacity`. Maximum search capacity used for all servers. -
-   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. ###
-   *     Degraded queries Check the impact of [degraded
+   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. **Degraded
+   *     queries** Check the impact of [degraded
    *     queries](https://support.algolia.com/hc/en-us/articles/4406981934481). -
    *     `degraded_queries_ssd_used_queries_impacted`. Percentage of degraded queries due to the
    *     Algolia search engine having to read from the server's SSD. -
@@ -1298,8 +1304,8 @@ public class UsageClient extends ApiClient {
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param startDate Start date in ISO 8601 format of the time period to analyze. (required)
-   * @param endDate End date in ISO 8601 format of the time period to analyze. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @param granularity Granularity of the aggregated metrics. - `hourly`: the maximum time range
    *     for hourly metrics is 7 days. - `daily`: the maximum time range for daily metrics is 365
    *     days. (optional, default to daily)
@@ -1319,7 +1325,7 @@ public class UsageClient extends ApiClient {
    * (asynchronously) Retrieves the selected usage statistics for one index.
    *
    * @param statistic Usage statistics to retrieve. Use `*` to retrieve all usage metrics, otherwise
-   *     add one or more of the following metrics, separated by a comma. ### Search operations -
+   *     add one or more of the following metrics, separated by a comma. **Search operations** -
    *     `search_operations`. All search operations. - `total_search_operations`: Sum of all search
    *     operations. - `total_search_requests`: Sum of all [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -1327,7 +1333,7 @@ public class UsageClient extends ApiClient {
    *     `querysuggestions_total_search_requests`. - `queries_operations`. Number of [single index
    *     search](/specs/search#tag/Search/operation/searchSingleIndex) operations. -
    *     `multi_queries_operations`. Number of [multi-index
-   *     search](/specs/search#tag/Search/operation/search) operations. ### ACL operations -
+   *     search](/specs/search#tag/Search/operation/search) operations. **ACL operations** -
    *     `acl_operations`. All ACL operations. - `total_acl_operations`. Sum of all ACL operations.
    *     - `get_api_keys_operations`. Number of [list API
    *     keys](/specs/search#tag/Api-Keys/operation/listApiKeys) operations. -
@@ -1339,11 +1345,12 @@ public class UsageClient extends ApiClient {
    *     key](/specs/search#tag/Api-Keys/operation/updateApiKey) operations. -
    *     `delete_api_key_operations`. Number of [delete API
    *     key](/specs/search#tag/Api-Keys/operation/deleteApiKey) operations. -
-   *     `list_api_key_operations`. Number of list index API keys operations. ### Indexing
-   *     operations - `indexing_operations`. All indexing operations. - `total_indexing_operations`.
-   *     Sum of all indexing operations. - `browse_operations`. Number of [browse
-   *     index](/specs/search#tag/Search/operation/browse) operations. - `clear_index_operations`.
-   *     Number of [clear records](/specs/search#tag/Records/operation/clearObjects) operations. -
+   *     `list_api_key_operations`. Number of list index API keys operations. **Indexing
+   *     operations** - `indexing_operations`. All indexing operations. -
+   *     `total_indexing_operations`. Sum of all indexing operations. - `browse_operations`. Number
+   *     of [browse index](/specs/search#tag/Search/operation/browse) operations. -
+   *     `clear_index_operations`. Number of [clear
+   *     records](/specs/search#tag/Records/operation/clearObjects) operations. -
    *     `copy_move_operations`. Number of [copy or move
    *     index](/specs/search#tag/Indices/operation/operationIndex) operations. -
    *     `delete_index_operations`. Number of [delete
@@ -1355,7 +1362,7 @@ public class UsageClient extends ApiClient {
    *     `list_indices_operations`. Number of [list
    *     indices](/specs/search#tag/Indices/operation/listIndices) operations. -
    *     `wait_task_operations`. Number of [wait](/specs/search#tag/Indices/operation/getTask)
-   *     operations. ### Record operations - `record_operations`. All record operations. -
+   *     operations. **Record operations** - `record_operations`. All record operations. -
    *     `total_records_operations`. Sum of all record operations. - `add_record_operations`. Number
    *     of [add or replace record](/specs/search#tag/Records/operation/saveObject) operations. -
    *     `batch_operations`. Number of [batch
@@ -1369,8 +1376,8 @@ public class UsageClient extends ApiClient {
    *     `partial_update_record_operations`. Number of [partially update
    *     records](/specs/search#tag/Records/operation/partialUpdateObject) operations. -
    *     `update_record_operations`. Number of [add or replace record by
-   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. ### Synonym
-   *     operations - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
+   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. **Synonym
+   *     operations** - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
    *     Sum of all synonym operations. - `batch_synonym_operations`. Number of [save all
    *     synonyms](/specs/search#tag/Synonyms/operation/saveSynonyms) operations. -
    *     `clear_synonym_operations`. Number of [clear
@@ -1382,7 +1389,7 @@ public class UsageClient extends ApiClient {
    *     `query_synonym_operations`. Number of [search
    *     synonyms](/specs/search#tag/Synonyms/operation/searchSynonyms) operations. -
    *     `update_synonym_operations`. Number of [save a
-   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. ### Rule operations
+   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. **Rule operations**
    *     - `rule_operations`. All rule operations. - `total_rules_operations`. Sum of all rule
    *     operations. - `batch_rules_operations`. Number of [batch
    *     rules](/specs/search#tag/Rules/operation/saveRules) operations. - `clear_rules_operations`.
@@ -1392,12 +1399,12 @@ public class UsageClient extends ApiClient {
    *     Number of [get rule](/specs/search#tag/Rules/operation/getRule) operations. -
    *     `save_rules_operations`. Number of [save rule](/specs/search#operation/getIndexUsage)
    *     operations. - `search_rules_operations`. Number of [search
-   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. ### Total operations -
+   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. **Total operations** -
    *     `total_recommend_requests`. Number of [Recommend
    *     requests](https://www.algolia.com/doc/guides/algolia-ai/recommend/) -
    *     `total_write_operations`. Number of Write operations - `total_read_operations`. Number of
-   *     read operations - `total_operations`. Sum of all operations ### Total Query Suggestions
-   *     operations Query Suggestions operations are a subset of `total_search_operations`. -
+   *     read operations - `total_operations`. Sum of all operations **Total Query Suggestions
+   *     operations** Query Suggestions operations are a subset of `total_search_operations`. -
    *     `querysuggestions_total_search_operations`. Number of Query Suggestions search operations.
    *     - `querysuggestions_total_search_requests`. Number of Query Suggestions [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -1411,23 +1418,23 @@ public class UsageClient extends ApiClient {
    *     operations](#rule-operations). - `querysuggestions_total_write_operations`. Number of Query
    *     Suggestions Write operations. - `querysuggestions_total_read_operations`. Number of Query
    *     Suggestions Read operations. - `querysuggestions_total_operations`. Sum of all Query
-   *     Suggestions operations. ### Processing time - `avg_processing_time`. Average processing
+   *     Suggestions operations. **Processing time** - `avg_processing_time`. Average processing
    *     time (in milliseconds). - `90p_processing_time`. 90th percentile of processing time (in
    *     milliseconds). - `99p_processing_time`. 99th percentile of processing time (in
    *     milliseconds). - `queries_above_last_ms_processing_time`. Number of queries that take one
-   *     or more seconds to process. ### Indices - `records`. Number of records. - `data_size`. The
+   *     or more seconds to process. **Indices** - `records`. Number of records. - `data_size`. The
    *     size of the records (in bytes). - `file_size`. The size of the records _and_ index metadata
-   *     (in bytes). ### Maximum queries per second - `max_qps`. [Maximum queries per
+   *     (in bytes). **Maximum queries per second** - `max_qps`. [Maximum queries per
    *     second](https://support.algolia.com/hc/en-us/articles/4406975224721) per server. -
    *     `region_max_qps`. Maximum queries per second per region. - `total_max_qps`. Maximum queries
-   *     per second across all servers. ### Used search capacity The following capacities are
+   *     per second across all servers. **Used search capacity** The following capacities are
    *     reported in percent: - `used_search_capacity`. Maximum search capacity used per server. -
    *     `avg_used_search_capacity`. Average search capacity used per server. -
    *     `region_used_search_capacity`. Maximum search capacity used per region. -
    *     `region_avg_used_search_capacity`. Average search capacity used per region. -
    *     `total_used_search_capacity`. Maximum search capacity used for all servers. -
-   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. ###
-   *     Degraded queries Check the impact of [degraded
+   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. **Degraded
+   *     queries** Check the impact of [degraded
    *     queries](https://support.algolia.com/hc/en-us/articles/4406981934481). -
    *     `degraded_queries_ssd_used_queries_impacted`. Percentage of degraded queries due to the
    *     Algolia search engine having to read from the server's SSD. -
@@ -1437,8 +1444,8 @@ public class UsageClient extends ApiClient {
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param startDate Start date in ISO 8601 format of the time period to analyze. (required)
-   * @param endDate End date in ISO 8601 format of the time period to analyze. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -1457,7 +1464,7 @@ public class UsageClient extends ApiClient {
    * (asynchronously) Retrieves the selected usage statistics for one index.
    *
    * @param statistic Usage statistics to retrieve. Use `*` to retrieve all usage metrics, otherwise
-   *     add one or more of the following metrics, separated by a comma. ### Search operations -
+   *     add one or more of the following metrics, separated by a comma. **Search operations** -
    *     `search_operations`. All search operations. - `total_search_operations`: Sum of all search
    *     operations. - `total_search_requests`: Sum of all [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -1465,7 +1472,7 @@ public class UsageClient extends ApiClient {
    *     `querysuggestions_total_search_requests`. - `queries_operations`. Number of [single index
    *     search](/specs/search#tag/Search/operation/searchSingleIndex) operations. -
    *     `multi_queries_operations`. Number of [multi-index
-   *     search](/specs/search#tag/Search/operation/search) operations. ### ACL operations -
+   *     search](/specs/search#tag/Search/operation/search) operations. **ACL operations** -
    *     `acl_operations`. All ACL operations. - `total_acl_operations`. Sum of all ACL operations.
    *     - `get_api_keys_operations`. Number of [list API
    *     keys](/specs/search#tag/Api-Keys/operation/listApiKeys) operations. -
@@ -1477,11 +1484,12 @@ public class UsageClient extends ApiClient {
    *     key](/specs/search#tag/Api-Keys/operation/updateApiKey) operations. -
    *     `delete_api_key_operations`. Number of [delete API
    *     key](/specs/search#tag/Api-Keys/operation/deleteApiKey) operations. -
-   *     `list_api_key_operations`. Number of list index API keys operations. ### Indexing
-   *     operations - `indexing_operations`. All indexing operations. - `total_indexing_operations`.
-   *     Sum of all indexing operations. - `browse_operations`. Number of [browse
-   *     index](/specs/search#tag/Search/operation/browse) operations. - `clear_index_operations`.
-   *     Number of [clear records](/specs/search#tag/Records/operation/clearObjects) operations. -
+   *     `list_api_key_operations`. Number of list index API keys operations. **Indexing
+   *     operations** - `indexing_operations`. All indexing operations. -
+   *     `total_indexing_operations`. Sum of all indexing operations. - `browse_operations`. Number
+   *     of [browse index](/specs/search#tag/Search/operation/browse) operations. -
+   *     `clear_index_operations`. Number of [clear
+   *     records](/specs/search#tag/Records/operation/clearObjects) operations. -
    *     `copy_move_operations`. Number of [copy or move
    *     index](/specs/search#tag/Indices/operation/operationIndex) operations. -
    *     `delete_index_operations`. Number of [delete
@@ -1493,7 +1501,7 @@ public class UsageClient extends ApiClient {
    *     `list_indices_operations`. Number of [list
    *     indices](/specs/search#tag/Indices/operation/listIndices) operations. -
    *     `wait_task_operations`. Number of [wait](/specs/search#tag/Indices/operation/getTask)
-   *     operations. ### Record operations - `record_operations`. All record operations. -
+   *     operations. **Record operations** - `record_operations`. All record operations. -
    *     `total_records_operations`. Sum of all record operations. - `add_record_operations`. Number
    *     of [add or replace record](/specs/search#tag/Records/operation/saveObject) operations. -
    *     `batch_operations`. Number of [batch
@@ -1507,8 +1515,8 @@ public class UsageClient extends ApiClient {
    *     `partial_update_record_operations`. Number of [partially update
    *     records](/specs/search#tag/Records/operation/partialUpdateObject) operations. -
    *     `update_record_operations`. Number of [add or replace record by
-   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. ### Synonym
-   *     operations - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
+   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. **Synonym
+   *     operations** - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
    *     Sum of all synonym operations. - `batch_synonym_operations`. Number of [save all
    *     synonyms](/specs/search#tag/Synonyms/operation/saveSynonyms) operations. -
    *     `clear_synonym_operations`. Number of [clear
@@ -1520,7 +1528,7 @@ public class UsageClient extends ApiClient {
    *     `query_synonym_operations`. Number of [search
    *     synonyms](/specs/search#tag/Synonyms/operation/searchSynonyms) operations. -
    *     `update_synonym_operations`. Number of [save a
-   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. ### Rule operations
+   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. **Rule operations**
    *     - `rule_operations`. All rule operations. - `total_rules_operations`. Sum of all rule
    *     operations. - `batch_rules_operations`. Number of [batch
    *     rules](/specs/search#tag/Rules/operation/saveRules) operations. - `clear_rules_operations`.
@@ -1530,12 +1538,12 @@ public class UsageClient extends ApiClient {
    *     Number of [get rule](/specs/search#tag/Rules/operation/getRule) operations. -
    *     `save_rules_operations`. Number of [save rule](/specs/search#operation/getIndexUsage)
    *     operations. - `search_rules_operations`. Number of [search
-   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. ### Total operations -
+   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. **Total operations** -
    *     `total_recommend_requests`. Number of [Recommend
    *     requests](https://www.algolia.com/doc/guides/algolia-ai/recommend/) -
    *     `total_write_operations`. Number of Write operations - `total_read_operations`. Number of
-   *     read operations - `total_operations`. Sum of all operations ### Total Query Suggestions
-   *     operations Query Suggestions operations are a subset of `total_search_operations`. -
+   *     read operations - `total_operations`. Sum of all operations **Total Query Suggestions
+   *     operations** Query Suggestions operations are a subset of `total_search_operations`. -
    *     `querysuggestions_total_search_operations`. Number of Query Suggestions search operations.
    *     - `querysuggestions_total_search_requests`. Number of Query Suggestions [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -1549,23 +1557,23 @@ public class UsageClient extends ApiClient {
    *     operations](#rule-operations). - `querysuggestions_total_write_operations`. Number of Query
    *     Suggestions Write operations. - `querysuggestions_total_read_operations`. Number of Query
    *     Suggestions Read operations. - `querysuggestions_total_operations`. Sum of all Query
-   *     Suggestions operations. ### Processing time - `avg_processing_time`. Average processing
+   *     Suggestions operations. **Processing time** - `avg_processing_time`. Average processing
    *     time (in milliseconds). - `90p_processing_time`. 90th percentile of processing time (in
    *     milliseconds). - `99p_processing_time`. 99th percentile of processing time (in
    *     milliseconds). - `queries_above_last_ms_processing_time`. Number of queries that take one
-   *     or more seconds to process. ### Indices - `records`. Number of records. - `data_size`. The
+   *     or more seconds to process. **Indices** - `records`. Number of records. - `data_size`. The
    *     size of the records (in bytes). - `file_size`. The size of the records _and_ index metadata
-   *     (in bytes). ### Maximum queries per second - `max_qps`. [Maximum queries per
+   *     (in bytes). **Maximum queries per second** - `max_qps`. [Maximum queries per
    *     second](https://support.algolia.com/hc/en-us/articles/4406975224721) per server. -
    *     `region_max_qps`. Maximum queries per second per region. - `total_max_qps`. Maximum queries
-   *     per second across all servers. ### Used search capacity The following capacities are
+   *     per second across all servers. **Used search capacity** The following capacities are
    *     reported in percent: - `used_search_capacity`. Maximum search capacity used per server. -
    *     `avg_used_search_capacity`. Average search capacity used per server. -
    *     `region_used_search_capacity`. Maximum search capacity used per region. -
    *     `region_avg_used_search_capacity`. Average search capacity used per region. -
    *     `total_used_search_capacity`. Maximum search capacity used for all servers. -
-   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. ###
-   *     Degraded queries Check the impact of [degraded
+   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. **Degraded
+   *     queries** Check the impact of [degraded
    *     queries](https://support.algolia.com/hc/en-us/articles/4406981934481). -
    *     `degraded_queries_ssd_used_queries_impacted`. Percentage of degraded queries due to the
    *     Algolia search engine having to read from the server's SSD. -
@@ -1575,8 +1583,8 @@ public class UsageClient extends ApiClient {
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
    * @param indexName Name of the index on which to perform the operation. (required)
-   * @param startDate Start date in ISO 8601 format of the time period to analyze. (required)
-   * @param endDate End date in ISO 8601 format of the time period to analyze. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetUsage200Response> getIndexUsageAsync(
@@ -1592,7 +1600,7 @@ public class UsageClient extends ApiClient {
    * Retrieves usage statistics evaluated over a specified period.
    *
    * @param statistic Usage statistics to retrieve. Use `*` to retrieve all usage metrics, otherwise
-   *     add one or more of the following metrics, separated by a comma. ### Search operations -
+   *     add one or more of the following metrics, separated by a comma. **Search operations** -
    *     `search_operations`. All search operations. - `total_search_operations`: Sum of all search
    *     operations. - `total_search_requests`: Sum of all [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -1600,7 +1608,7 @@ public class UsageClient extends ApiClient {
    *     `querysuggestions_total_search_requests`. - `queries_operations`. Number of [single index
    *     search](/specs/search#tag/Search/operation/searchSingleIndex) operations. -
    *     `multi_queries_operations`. Number of [multi-index
-   *     search](/specs/search#tag/Search/operation/search) operations. ### ACL operations -
+   *     search](/specs/search#tag/Search/operation/search) operations. **ACL operations** -
    *     `acl_operations`. All ACL operations. - `total_acl_operations`. Sum of all ACL operations.
    *     - `get_api_keys_operations`. Number of [list API
    *     keys](/specs/search#tag/Api-Keys/operation/listApiKeys) operations. -
@@ -1612,11 +1620,12 @@ public class UsageClient extends ApiClient {
    *     key](/specs/search#tag/Api-Keys/operation/updateApiKey) operations. -
    *     `delete_api_key_operations`. Number of [delete API
    *     key](/specs/search#tag/Api-Keys/operation/deleteApiKey) operations. -
-   *     `list_api_key_operations`. Number of list index API keys operations. ### Indexing
-   *     operations - `indexing_operations`. All indexing operations. - `total_indexing_operations`.
-   *     Sum of all indexing operations. - `browse_operations`. Number of [browse
-   *     index](/specs/search#tag/Search/operation/browse) operations. - `clear_index_operations`.
-   *     Number of [clear records](/specs/search#tag/Records/operation/clearObjects) operations. -
+   *     `list_api_key_operations`. Number of list index API keys operations. **Indexing
+   *     operations** - `indexing_operations`. All indexing operations. -
+   *     `total_indexing_operations`. Sum of all indexing operations. - `browse_operations`. Number
+   *     of [browse index](/specs/search#tag/Search/operation/browse) operations. -
+   *     `clear_index_operations`. Number of [clear
+   *     records](/specs/search#tag/Records/operation/clearObjects) operations. -
    *     `copy_move_operations`. Number of [copy or move
    *     index](/specs/search#tag/Indices/operation/operationIndex) operations. -
    *     `delete_index_operations`. Number of [delete
@@ -1628,7 +1637,7 @@ public class UsageClient extends ApiClient {
    *     `list_indices_operations`. Number of [list
    *     indices](/specs/search#tag/Indices/operation/listIndices) operations. -
    *     `wait_task_operations`. Number of [wait](/specs/search#tag/Indices/operation/getTask)
-   *     operations. ### Record operations - `record_operations`. All record operations. -
+   *     operations. **Record operations** - `record_operations`. All record operations. -
    *     `total_records_operations`. Sum of all record operations. - `add_record_operations`. Number
    *     of [add or replace record](/specs/search#tag/Records/operation/saveObject) operations. -
    *     `batch_operations`. Number of [batch
@@ -1642,8 +1651,8 @@ public class UsageClient extends ApiClient {
    *     `partial_update_record_operations`. Number of [partially update
    *     records](/specs/search#tag/Records/operation/partialUpdateObject) operations. -
    *     `update_record_operations`. Number of [add or replace record by
-   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. ### Synonym
-   *     operations - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
+   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. **Synonym
+   *     operations** - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
    *     Sum of all synonym operations. - `batch_synonym_operations`. Number of [save all
    *     synonyms](/specs/search#tag/Synonyms/operation/saveSynonyms) operations. -
    *     `clear_synonym_operations`. Number of [clear
@@ -1655,7 +1664,7 @@ public class UsageClient extends ApiClient {
    *     `query_synonym_operations`. Number of [search
    *     synonyms](/specs/search#tag/Synonyms/operation/searchSynonyms) operations. -
    *     `update_synonym_operations`. Number of [save a
-   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. ### Rule operations
+   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. **Rule operations**
    *     - `rule_operations`. All rule operations. - `total_rules_operations`. Sum of all rule
    *     operations. - `batch_rules_operations`. Number of [batch
    *     rules](/specs/search#tag/Rules/operation/saveRules) operations. - `clear_rules_operations`.
@@ -1665,12 +1674,12 @@ public class UsageClient extends ApiClient {
    *     Number of [get rule](/specs/search#tag/Rules/operation/getRule) operations. -
    *     `save_rules_operations`. Number of [save rule](/specs/search#operation/getIndexUsage)
    *     operations. - `search_rules_operations`. Number of [search
-   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. ### Total operations -
+   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. **Total operations** -
    *     `total_recommend_requests`. Number of [Recommend
    *     requests](https://www.algolia.com/doc/guides/algolia-ai/recommend/) -
    *     `total_write_operations`. Number of Write operations - `total_read_operations`. Number of
-   *     read operations - `total_operations`. Sum of all operations ### Total Query Suggestions
-   *     operations Query Suggestions operations are a subset of `total_search_operations`. -
+   *     read operations - `total_operations`. Sum of all operations **Total Query Suggestions
+   *     operations** Query Suggestions operations are a subset of `total_search_operations`. -
    *     `querysuggestions_total_search_operations`. Number of Query Suggestions search operations.
    *     - `querysuggestions_total_search_requests`. Number of Query Suggestions [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -1684,23 +1693,23 @@ public class UsageClient extends ApiClient {
    *     operations](#rule-operations). - `querysuggestions_total_write_operations`. Number of Query
    *     Suggestions Write operations. - `querysuggestions_total_read_operations`. Number of Query
    *     Suggestions Read operations. - `querysuggestions_total_operations`. Sum of all Query
-   *     Suggestions operations. ### Processing time - `avg_processing_time`. Average processing
+   *     Suggestions operations. **Processing time** - `avg_processing_time`. Average processing
    *     time (in milliseconds). - `90p_processing_time`. 90th percentile of processing time (in
    *     milliseconds). - `99p_processing_time`. 99th percentile of processing time (in
    *     milliseconds). - `queries_above_last_ms_processing_time`. Number of queries that take one
-   *     or more seconds to process. ### Indices - `records`. Number of records. - `data_size`. The
+   *     or more seconds to process. **Indices** - `records`. Number of records. - `data_size`. The
    *     size of the records (in bytes). - `file_size`. The size of the records _and_ index metadata
-   *     (in bytes). ### Maximum queries per second - `max_qps`. [Maximum queries per
+   *     (in bytes). **Maximum queries per second** - `max_qps`. [Maximum queries per
    *     second](https://support.algolia.com/hc/en-us/articles/4406975224721) per server. -
    *     `region_max_qps`. Maximum queries per second per region. - `total_max_qps`. Maximum queries
-   *     per second across all servers. ### Used search capacity The following capacities are
+   *     per second across all servers. **Used search capacity** The following capacities are
    *     reported in percent: - `used_search_capacity`. Maximum search capacity used per server. -
    *     `avg_used_search_capacity`. Average search capacity used per server. -
    *     `region_used_search_capacity`. Maximum search capacity used per region. -
    *     `region_avg_used_search_capacity`. Average search capacity used per region. -
    *     `total_used_search_capacity`. Maximum search capacity used for all servers. -
-   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. ###
-   *     Degraded queries Check the impact of [degraded
+   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. **Degraded
+   *     queries** Check the impact of [degraded
    *     queries](https://support.algolia.com/hc/en-us/articles/4406981934481). -
    *     `degraded_queries_ssd_used_queries_impacted`. Percentage of degraded queries due to the
    *     Algolia search engine having to read from the server's SSD. -
@@ -1709,8 +1718,8 @@ public class UsageClient extends ApiClient {
    *     degraded queries due to all search threads being used. -
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
-   * @param startDate Start date in ISO 8601 format of the time period to analyze. (required)
-   * @param endDate End date in ISO 8601 format of the time period to analyze. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @param granularity Granularity of the aggregated metrics. - `hourly`: the maximum time range
    *     for hourly metrics is 7 days. - `daily`: the maximum time range for daily metrics is 365
    *     days. (optional, default to daily)
@@ -1732,7 +1741,7 @@ public class UsageClient extends ApiClient {
    * Retrieves usage statistics evaluated over a specified period.
    *
    * @param statistic Usage statistics to retrieve. Use `*` to retrieve all usage metrics, otherwise
-   *     add one or more of the following metrics, separated by a comma. ### Search operations -
+   *     add one or more of the following metrics, separated by a comma. **Search operations** -
    *     `search_operations`. All search operations. - `total_search_operations`: Sum of all search
    *     operations. - `total_search_requests`: Sum of all [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -1740,7 +1749,7 @@ public class UsageClient extends ApiClient {
    *     `querysuggestions_total_search_requests`. - `queries_operations`. Number of [single index
    *     search](/specs/search#tag/Search/operation/searchSingleIndex) operations. -
    *     `multi_queries_operations`. Number of [multi-index
-   *     search](/specs/search#tag/Search/operation/search) operations. ### ACL operations -
+   *     search](/specs/search#tag/Search/operation/search) operations. **ACL operations** -
    *     `acl_operations`. All ACL operations. - `total_acl_operations`. Sum of all ACL operations.
    *     - `get_api_keys_operations`. Number of [list API
    *     keys](/specs/search#tag/Api-Keys/operation/listApiKeys) operations. -
@@ -1752,11 +1761,12 @@ public class UsageClient extends ApiClient {
    *     key](/specs/search#tag/Api-Keys/operation/updateApiKey) operations. -
    *     `delete_api_key_operations`. Number of [delete API
    *     key](/specs/search#tag/Api-Keys/operation/deleteApiKey) operations. -
-   *     `list_api_key_operations`. Number of list index API keys operations. ### Indexing
-   *     operations - `indexing_operations`. All indexing operations. - `total_indexing_operations`.
-   *     Sum of all indexing operations. - `browse_operations`. Number of [browse
-   *     index](/specs/search#tag/Search/operation/browse) operations. - `clear_index_operations`.
-   *     Number of [clear records](/specs/search#tag/Records/operation/clearObjects) operations. -
+   *     `list_api_key_operations`. Number of list index API keys operations. **Indexing
+   *     operations** - `indexing_operations`. All indexing operations. -
+   *     `total_indexing_operations`. Sum of all indexing operations. - `browse_operations`. Number
+   *     of [browse index](/specs/search#tag/Search/operation/browse) operations. -
+   *     `clear_index_operations`. Number of [clear
+   *     records](/specs/search#tag/Records/operation/clearObjects) operations. -
    *     `copy_move_operations`. Number of [copy or move
    *     index](/specs/search#tag/Indices/operation/operationIndex) operations. -
    *     `delete_index_operations`. Number of [delete
@@ -1768,7 +1778,7 @@ public class UsageClient extends ApiClient {
    *     `list_indices_operations`. Number of [list
    *     indices](/specs/search#tag/Indices/operation/listIndices) operations. -
    *     `wait_task_operations`. Number of [wait](/specs/search#tag/Indices/operation/getTask)
-   *     operations. ### Record operations - `record_operations`. All record operations. -
+   *     operations. **Record operations** - `record_operations`. All record operations. -
    *     `total_records_operations`. Sum of all record operations. - `add_record_operations`. Number
    *     of [add or replace record](/specs/search#tag/Records/operation/saveObject) operations. -
    *     `batch_operations`. Number of [batch
@@ -1782,8 +1792,8 @@ public class UsageClient extends ApiClient {
    *     `partial_update_record_operations`. Number of [partially update
    *     records](/specs/search#tag/Records/operation/partialUpdateObject) operations. -
    *     `update_record_operations`. Number of [add or replace record by
-   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. ### Synonym
-   *     operations - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
+   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. **Synonym
+   *     operations** - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
    *     Sum of all synonym operations. - `batch_synonym_operations`. Number of [save all
    *     synonyms](/specs/search#tag/Synonyms/operation/saveSynonyms) operations. -
    *     `clear_synonym_operations`. Number of [clear
@@ -1795,7 +1805,7 @@ public class UsageClient extends ApiClient {
    *     `query_synonym_operations`. Number of [search
    *     synonyms](/specs/search#tag/Synonyms/operation/searchSynonyms) operations. -
    *     `update_synonym_operations`. Number of [save a
-   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. ### Rule operations
+   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. **Rule operations**
    *     - `rule_operations`. All rule operations. - `total_rules_operations`. Sum of all rule
    *     operations. - `batch_rules_operations`. Number of [batch
    *     rules](/specs/search#tag/Rules/operation/saveRules) operations. - `clear_rules_operations`.
@@ -1805,12 +1815,12 @@ public class UsageClient extends ApiClient {
    *     Number of [get rule](/specs/search#tag/Rules/operation/getRule) operations. -
    *     `save_rules_operations`. Number of [save rule](/specs/search#operation/getIndexUsage)
    *     operations. - `search_rules_operations`. Number of [search
-   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. ### Total operations -
+   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. **Total operations** -
    *     `total_recommend_requests`. Number of [Recommend
    *     requests](https://www.algolia.com/doc/guides/algolia-ai/recommend/) -
    *     `total_write_operations`. Number of Write operations - `total_read_operations`. Number of
-   *     read operations - `total_operations`. Sum of all operations ### Total Query Suggestions
-   *     operations Query Suggestions operations are a subset of `total_search_operations`. -
+   *     read operations - `total_operations`. Sum of all operations **Total Query Suggestions
+   *     operations** Query Suggestions operations are a subset of `total_search_operations`. -
    *     `querysuggestions_total_search_operations`. Number of Query Suggestions search operations.
    *     - `querysuggestions_total_search_requests`. Number of Query Suggestions [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -1824,23 +1834,23 @@ public class UsageClient extends ApiClient {
    *     operations](#rule-operations). - `querysuggestions_total_write_operations`. Number of Query
    *     Suggestions Write operations. - `querysuggestions_total_read_operations`. Number of Query
    *     Suggestions Read operations. - `querysuggestions_total_operations`. Sum of all Query
-   *     Suggestions operations. ### Processing time - `avg_processing_time`. Average processing
+   *     Suggestions operations. **Processing time** - `avg_processing_time`. Average processing
    *     time (in milliseconds). - `90p_processing_time`. 90th percentile of processing time (in
    *     milliseconds). - `99p_processing_time`. 99th percentile of processing time (in
    *     milliseconds). - `queries_above_last_ms_processing_time`. Number of queries that take one
-   *     or more seconds to process. ### Indices - `records`. Number of records. - `data_size`. The
+   *     or more seconds to process. **Indices** - `records`. Number of records. - `data_size`. The
    *     size of the records (in bytes). - `file_size`. The size of the records _and_ index metadata
-   *     (in bytes). ### Maximum queries per second - `max_qps`. [Maximum queries per
+   *     (in bytes). **Maximum queries per second** - `max_qps`. [Maximum queries per
    *     second](https://support.algolia.com/hc/en-us/articles/4406975224721) per server. -
    *     `region_max_qps`. Maximum queries per second per region. - `total_max_qps`. Maximum queries
-   *     per second across all servers. ### Used search capacity The following capacities are
+   *     per second across all servers. **Used search capacity** The following capacities are
    *     reported in percent: - `used_search_capacity`. Maximum search capacity used per server. -
    *     `avg_used_search_capacity`. Average search capacity used per server. -
    *     `region_used_search_capacity`. Maximum search capacity used per region. -
    *     `region_avg_used_search_capacity`. Average search capacity used per region. -
    *     `total_used_search_capacity`. Maximum search capacity used for all servers. -
-   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. ###
-   *     Degraded queries Check the impact of [degraded
+   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. **Degraded
+   *     queries** Check the impact of [degraded
    *     queries](https://support.algolia.com/hc/en-us/articles/4406981934481). -
    *     `degraded_queries_ssd_used_queries_impacted`. Percentage of degraded queries due to the
    *     Algolia search engine having to read from the server's SSD. -
@@ -1849,8 +1859,8 @@ public class UsageClient extends ApiClient {
    *     degraded queries due to all search threads being used. -
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
-   * @param startDate Start date in ISO 8601 format of the time period to analyze. (required)
-   * @param endDate End date in ISO 8601 format of the time period to analyze. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @param granularity Granularity of the aggregated metrics. - `hourly`: the maximum time range
    *     for hourly metrics is 7 days. - `daily`: the maximum time range for daily metrics is 365
    *     days. (optional, default to daily)
@@ -1869,7 +1879,7 @@ public class UsageClient extends ApiClient {
    * Retrieves usage statistics evaluated over a specified period.
    *
    * @param statistic Usage statistics to retrieve. Use `*` to retrieve all usage metrics, otherwise
-   *     add one or more of the following metrics, separated by a comma. ### Search operations -
+   *     add one or more of the following metrics, separated by a comma. **Search operations** -
    *     `search_operations`. All search operations. - `total_search_operations`: Sum of all search
    *     operations. - `total_search_requests`: Sum of all [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -1877,7 +1887,7 @@ public class UsageClient extends ApiClient {
    *     `querysuggestions_total_search_requests`. - `queries_operations`. Number of [single index
    *     search](/specs/search#tag/Search/operation/searchSingleIndex) operations. -
    *     `multi_queries_operations`. Number of [multi-index
-   *     search](/specs/search#tag/Search/operation/search) operations. ### ACL operations -
+   *     search](/specs/search#tag/Search/operation/search) operations. **ACL operations** -
    *     `acl_operations`. All ACL operations. - `total_acl_operations`. Sum of all ACL operations.
    *     - `get_api_keys_operations`. Number of [list API
    *     keys](/specs/search#tag/Api-Keys/operation/listApiKeys) operations. -
@@ -1889,11 +1899,12 @@ public class UsageClient extends ApiClient {
    *     key](/specs/search#tag/Api-Keys/operation/updateApiKey) operations. -
    *     `delete_api_key_operations`. Number of [delete API
    *     key](/specs/search#tag/Api-Keys/operation/deleteApiKey) operations. -
-   *     `list_api_key_operations`. Number of list index API keys operations. ### Indexing
-   *     operations - `indexing_operations`. All indexing operations. - `total_indexing_operations`.
-   *     Sum of all indexing operations. - `browse_operations`. Number of [browse
-   *     index](/specs/search#tag/Search/operation/browse) operations. - `clear_index_operations`.
-   *     Number of [clear records](/specs/search#tag/Records/operation/clearObjects) operations. -
+   *     `list_api_key_operations`. Number of list index API keys operations. **Indexing
+   *     operations** - `indexing_operations`. All indexing operations. -
+   *     `total_indexing_operations`. Sum of all indexing operations. - `browse_operations`. Number
+   *     of [browse index](/specs/search#tag/Search/operation/browse) operations. -
+   *     `clear_index_operations`. Number of [clear
+   *     records](/specs/search#tag/Records/operation/clearObjects) operations. -
    *     `copy_move_operations`. Number of [copy or move
    *     index](/specs/search#tag/Indices/operation/operationIndex) operations. -
    *     `delete_index_operations`. Number of [delete
@@ -1905,7 +1916,7 @@ public class UsageClient extends ApiClient {
    *     `list_indices_operations`. Number of [list
    *     indices](/specs/search#tag/Indices/operation/listIndices) operations. -
    *     `wait_task_operations`. Number of [wait](/specs/search#tag/Indices/operation/getTask)
-   *     operations. ### Record operations - `record_operations`. All record operations. -
+   *     operations. **Record operations** - `record_operations`. All record operations. -
    *     `total_records_operations`. Sum of all record operations. - `add_record_operations`. Number
    *     of [add or replace record](/specs/search#tag/Records/operation/saveObject) operations. -
    *     `batch_operations`. Number of [batch
@@ -1919,8 +1930,8 @@ public class UsageClient extends ApiClient {
    *     `partial_update_record_operations`. Number of [partially update
    *     records](/specs/search#tag/Records/operation/partialUpdateObject) operations. -
    *     `update_record_operations`. Number of [add or replace record by
-   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. ### Synonym
-   *     operations - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
+   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. **Synonym
+   *     operations** - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
    *     Sum of all synonym operations. - `batch_synonym_operations`. Number of [save all
    *     synonyms](/specs/search#tag/Synonyms/operation/saveSynonyms) operations. -
    *     `clear_synonym_operations`. Number of [clear
@@ -1932,7 +1943,7 @@ public class UsageClient extends ApiClient {
    *     `query_synonym_operations`. Number of [search
    *     synonyms](/specs/search#tag/Synonyms/operation/searchSynonyms) operations. -
    *     `update_synonym_operations`. Number of [save a
-   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. ### Rule operations
+   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. **Rule operations**
    *     - `rule_operations`. All rule operations. - `total_rules_operations`. Sum of all rule
    *     operations. - `batch_rules_operations`. Number of [batch
    *     rules](/specs/search#tag/Rules/operation/saveRules) operations. - `clear_rules_operations`.
@@ -1942,12 +1953,12 @@ public class UsageClient extends ApiClient {
    *     Number of [get rule](/specs/search#tag/Rules/operation/getRule) operations. -
    *     `save_rules_operations`. Number of [save rule](/specs/search#operation/getIndexUsage)
    *     operations. - `search_rules_operations`. Number of [search
-   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. ### Total operations -
+   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. **Total operations** -
    *     `total_recommend_requests`. Number of [Recommend
    *     requests](https://www.algolia.com/doc/guides/algolia-ai/recommend/) -
    *     `total_write_operations`. Number of Write operations - `total_read_operations`. Number of
-   *     read operations - `total_operations`. Sum of all operations ### Total Query Suggestions
-   *     operations Query Suggestions operations are a subset of `total_search_operations`. -
+   *     read operations - `total_operations`. Sum of all operations **Total Query Suggestions
+   *     operations** Query Suggestions operations are a subset of `total_search_operations`. -
    *     `querysuggestions_total_search_operations`. Number of Query Suggestions search operations.
    *     - `querysuggestions_total_search_requests`. Number of Query Suggestions [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -1961,23 +1972,23 @@ public class UsageClient extends ApiClient {
    *     operations](#rule-operations). - `querysuggestions_total_write_operations`. Number of Query
    *     Suggestions Write operations. - `querysuggestions_total_read_operations`. Number of Query
    *     Suggestions Read operations. - `querysuggestions_total_operations`. Sum of all Query
-   *     Suggestions operations. ### Processing time - `avg_processing_time`. Average processing
+   *     Suggestions operations. **Processing time** - `avg_processing_time`. Average processing
    *     time (in milliseconds). - `90p_processing_time`. 90th percentile of processing time (in
    *     milliseconds). - `99p_processing_time`. 99th percentile of processing time (in
    *     milliseconds). - `queries_above_last_ms_processing_time`. Number of queries that take one
-   *     or more seconds to process. ### Indices - `records`. Number of records. - `data_size`. The
+   *     or more seconds to process. **Indices** - `records`. Number of records. - `data_size`. The
    *     size of the records (in bytes). - `file_size`. The size of the records _and_ index metadata
-   *     (in bytes). ### Maximum queries per second - `max_qps`. [Maximum queries per
+   *     (in bytes). **Maximum queries per second** - `max_qps`. [Maximum queries per
    *     second](https://support.algolia.com/hc/en-us/articles/4406975224721) per server. -
    *     `region_max_qps`. Maximum queries per second per region. - `total_max_qps`. Maximum queries
-   *     per second across all servers. ### Used search capacity The following capacities are
+   *     per second across all servers. **Used search capacity** The following capacities are
    *     reported in percent: - `used_search_capacity`. Maximum search capacity used per server. -
    *     `avg_used_search_capacity`. Average search capacity used per server. -
    *     `region_used_search_capacity`. Maximum search capacity used per region. -
    *     `region_avg_used_search_capacity`. Average search capacity used per region. -
    *     `total_used_search_capacity`. Maximum search capacity used for all servers. -
-   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. ###
-   *     Degraded queries Check the impact of [degraded
+   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. **Degraded
+   *     queries** Check the impact of [degraded
    *     queries](https://support.algolia.com/hc/en-us/articles/4406981934481). -
    *     `degraded_queries_ssd_used_queries_impacted`. Percentage of degraded queries due to the
    *     Algolia search engine having to read from the server's SSD. -
@@ -1986,8 +1997,8 @@ public class UsageClient extends ApiClient {
    *     degraded queries due to all search threads being used. -
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
-   * @param startDate Start date in ISO 8601 format of the time period to analyze. (required)
-   * @param endDate End date in ISO 8601 format of the time period to analyze. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2005,7 +2016,7 @@ public class UsageClient extends ApiClient {
    * Retrieves usage statistics evaluated over a specified period.
    *
    * @param statistic Usage statistics to retrieve. Use `*` to retrieve all usage metrics, otherwise
-   *     add one or more of the following metrics, separated by a comma. ### Search operations -
+   *     add one or more of the following metrics, separated by a comma. **Search operations** -
    *     `search_operations`. All search operations. - `total_search_operations`: Sum of all search
    *     operations. - `total_search_requests`: Sum of all [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -2013,7 +2024,7 @@ public class UsageClient extends ApiClient {
    *     `querysuggestions_total_search_requests`. - `queries_operations`. Number of [single index
    *     search](/specs/search#tag/Search/operation/searchSingleIndex) operations. -
    *     `multi_queries_operations`. Number of [multi-index
-   *     search](/specs/search#tag/Search/operation/search) operations. ### ACL operations -
+   *     search](/specs/search#tag/Search/operation/search) operations. **ACL operations** -
    *     `acl_operations`. All ACL operations. - `total_acl_operations`. Sum of all ACL operations.
    *     - `get_api_keys_operations`. Number of [list API
    *     keys](/specs/search#tag/Api-Keys/operation/listApiKeys) operations. -
@@ -2025,11 +2036,12 @@ public class UsageClient extends ApiClient {
    *     key](/specs/search#tag/Api-Keys/operation/updateApiKey) operations. -
    *     `delete_api_key_operations`. Number of [delete API
    *     key](/specs/search#tag/Api-Keys/operation/deleteApiKey) operations. -
-   *     `list_api_key_operations`. Number of list index API keys operations. ### Indexing
-   *     operations - `indexing_operations`. All indexing operations. - `total_indexing_operations`.
-   *     Sum of all indexing operations. - `browse_operations`. Number of [browse
-   *     index](/specs/search#tag/Search/operation/browse) operations. - `clear_index_operations`.
-   *     Number of [clear records](/specs/search#tag/Records/operation/clearObjects) operations. -
+   *     `list_api_key_operations`. Number of list index API keys operations. **Indexing
+   *     operations** - `indexing_operations`. All indexing operations. -
+   *     `total_indexing_operations`. Sum of all indexing operations. - `browse_operations`. Number
+   *     of [browse index](/specs/search#tag/Search/operation/browse) operations. -
+   *     `clear_index_operations`. Number of [clear
+   *     records](/specs/search#tag/Records/operation/clearObjects) operations. -
    *     `copy_move_operations`. Number of [copy or move
    *     index](/specs/search#tag/Indices/operation/operationIndex) operations. -
    *     `delete_index_operations`. Number of [delete
@@ -2041,7 +2053,7 @@ public class UsageClient extends ApiClient {
    *     `list_indices_operations`. Number of [list
    *     indices](/specs/search#tag/Indices/operation/listIndices) operations. -
    *     `wait_task_operations`. Number of [wait](/specs/search#tag/Indices/operation/getTask)
-   *     operations. ### Record operations - `record_operations`. All record operations. -
+   *     operations. **Record operations** - `record_operations`. All record operations. -
    *     `total_records_operations`. Sum of all record operations. - `add_record_operations`. Number
    *     of [add or replace record](/specs/search#tag/Records/operation/saveObject) operations. -
    *     `batch_operations`. Number of [batch
@@ -2055,8 +2067,8 @@ public class UsageClient extends ApiClient {
    *     `partial_update_record_operations`. Number of [partially update
    *     records](/specs/search#tag/Records/operation/partialUpdateObject) operations. -
    *     `update_record_operations`. Number of [add or replace record by
-   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. ### Synonym
-   *     operations - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
+   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. **Synonym
+   *     operations** - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
    *     Sum of all synonym operations. - `batch_synonym_operations`. Number of [save all
    *     synonyms](/specs/search#tag/Synonyms/operation/saveSynonyms) operations. -
    *     `clear_synonym_operations`. Number of [clear
@@ -2068,7 +2080,7 @@ public class UsageClient extends ApiClient {
    *     `query_synonym_operations`. Number of [search
    *     synonyms](/specs/search#tag/Synonyms/operation/searchSynonyms) operations. -
    *     `update_synonym_operations`. Number of [save a
-   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. ### Rule operations
+   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. **Rule operations**
    *     - `rule_operations`. All rule operations. - `total_rules_operations`. Sum of all rule
    *     operations. - `batch_rules_operations`. Number of [batch
    *     rules](/specs/search#tag/Rules/operation/saveRules) operations. - `clear_rules_operations`.
@@ -2078,12 +2090,12 @@ public class UsageClient extends ApiClient {
    *     Number of [get rule](/specs/search#tag/Rules/operation/getRule) operations. -
    *     `save_rules_operations`. Number of [save rule](/specs/search#operation/getIndexUsage)
    *     operations. - `search_rules_operations`. Number of [search
-   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. ### Total operations -
+   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. **Total operations** -
    *     `total_recommend_requests`. Number of [Recommend
    *     requests](https://www.algolia.com/doc/guides/algolia-ai/recommend/) -
    *     `total_write_operations`. Number of Write operations - `total_read_operations`. Number of
-   *     read operations - `total_operations`. Sum of all operations ### Total Query Suggestions
-   *     operations Query Suggestions operations are a subset of `total_search_operations`. -
+   *     read operations - `total_operations`. Sum of all operations **Total Query Suggestions
+   *     operations** Query Suggestions operations are a subset of `total_search_operations`. -
    *     `querysuggestions_total_search_operations`. Number of Query Suggestions search operations.
    *     - `querysuggestions_total_search_requests`. Number of Query Suggestions [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -2097,23 +2109,23 @@ public class UsageClient extends ApiClient {
    *     operations](#rule-operations). - `querysuggestions_total_write_operations`. Number of Query
    *     Suggestions Write operations. - `querysuggestions_total_read_operations`. Number of Query
    *     Suggestions Read operations. - `querysuggestions_total_operations`. Sum of all Query
-   *     Suggestions operations. ### Processing time - `avg_processing_time`. Average processing
+   *     Suggestions operations. **Processing time** - `avg_processing_time`. Average processing
    *     time (in milliseconds). - `90p_processing_time`. 90th percentile of processing time (in
    *     milliseconds). - `99p_processing_time`. 99th percentile of processing time (in
    *     milliseconds). - `queries_above_last_ms_processing_time`. Number of queries that take one
-   *     or more seconds to process. ### Indices - `records`. Number of records. - `data_size`. The
+   *     or more seconds to process. **Indices** - `records`. Number of records. - `data_size`. The
    *     size of the records (in bytes). - `file_size`. The size of the records _and_ index metadata
-   *     (in bytes). ### Maximum queries per second - `max_qps`. [Maximum queries per
+   *     (in bytes). **Maximum queries per second** - `max_qps`. [Maximum queries per
    *     second](https://support.algolia.com/hc/en-us/articles/4406975224721) per server. -
    *     `region_max_qps`. Maximum queries per second per region. - `total_max_qps`. Maximum queries
-   *     per second across all servers. ### Used search capacity The following capacities are
+   *     per second across all servers. **Used search capacity** The following capacities are
    *     reported in percent: - `used_search_capacity`. Maximum search capacity used per server. -
    *     `avg_used_search_capacity`. Average search capacity used per server. -
    *     `region_used_search_capacity`. Maximum search capacity used per region. -
    *     `region_avg_used_search_capacity`. Average search capacity used per region. -
    *     `total_used_search_capacity`. Maximum search capacity used for all servers. -
-   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. ###
-   *     Degraded queries Check the impact of [degraded
+   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. **Degraded
+   *     queries** Check the impact of [degraded
    *     queries](https://support.algolia.com/hc/en-us/articles/4406981934481). -
    *     `degraded_queries_ssd_used_queries_impacted`. Percentage of degraded queries due to the
    *     Algolia search engine having to read from the server's SSD. -
@@ -2122,8 +2134,8 @@ public class UsageClient extends ApiClient {
    *     degraded queries due to all search threads being used. -
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
-   * @param startDate Start date in ISO 8601 format of the time period to analyze. (required)
-   * @param endDate End date in ISO 8601 format of the time period to analyze. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetUsage200Response getUsage(@Nonnull Statistic statistic, @Nonnull String startDate, @Nonnull String endDate)
@@ -2135,7 +2147,7 @@ public class UsageClient extends ApiClient {
    * (asynchronously) Retrieves usage statistics evaluated over a specified period.
    *
    * @param statistic Usage statistics to retrieve. Use `*` to retrieve all usage metrics, otherwise
-   *     add one or more of the following metrics, separated by a comma. ### Search operations -
+   *     add one or more of the following metrics, separated by a comma. **Search operations** -
    *     `search_operations`. All search operations. - `total_search_operations`: Sum of all search
    *     operations. - `total_search_requests`: Sum of all [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -2143,7 +2155,7 @@ public class UsageClient extends ApiClient {
    *     `querysuggestions_total_search_requests`. - `queries_operations`. Number of [single index
    *     search](/specs/search#tag/Search/operation/searchSingleIndex) operations. -
    *     `multi_queries_operations`. Number of [multi-index
-   *     search](/specs/search#tag/Search/operation/search) operations. ### ACL operations -
+   *     search](/specs/search#tag/Search/operation/search) operations. **ACL operations** -
    *     `acl_operations`. All ACL operations. - `total_acl_operations`. Sum of all ACL operations.
    *     - `get_api_keys_operations`. Number of [list API
    *     keys](/specs/search#tag/Api-Keys/operation/listApiKeys) operations. -
@@ -2155,11 +2167,12 @@ public class UsageClient extends ApiClient {
    *     key](/specs/search#tag/Api-Keys/operation/updateApiKey) operations. -
    *     `delete_api_key_operations`. Number of [delete API
    *     key](/specs/search#tag/Api-Keys/operation/deleteApiKey) operations. -
-   *     `list_api_key_operations`. Number of list index API keys operations. ### Indexing
-   *     operations - `indexing_operations`. All indexing operations. - `total_indexing_operations`.
-   *     Sum of all indexing operations. - `browse_operations`. Number of [browse
-   *     index](/specs/search#tag/Search/operation/browse) operations. - `clear_index_operations`.
-   *     Number of [clear records](/specs/search#tag/Records/operation/clearObjects) operations. -
+   *     `list_api_key_operations`. Number of list index API keys operations. **Indexing
+   *     operations** - `indexing_operations`. All indexing operations. -
+   *     `total_indexing_operations`. Sum of all indexing operations. - `browse_operations`. Number
+   *     of [browse index](/specs/search#tag/Search/operation/browse) operations. -
+   *     `clear_index_operations`. Number of [clear
+   *     records](/specs/search#tag/Records/operation/clearObjects) operations. -
    *     `copy_move_operations`. Number of [copy or move
    *     index](/specs/search#tag/Indices/operation/operationIndex) operations. -
    *     `delete_index_operations`. Number of [delete
@@ -2171,7 +2184,7 @@ public class UsageClient extends ApiClient {
    *     `list_indices_operations`. Number of [list
    *     indices](/specs/search#tag/Indices/operation/listIndices) operations. -
    *     `wait_task_operations`. Number of [wait](/specs/search#tag/Indices/operation/getTask)
-   *     operations. ### Record operations - `record_operations`. All record operations. -
+   *     operations. **Record operations** - `record_operations`. All record operations. -
    *     `total_records_operations`. Sum of all record operations. - `add_record_operations`. Number
    *     of [add or replace record](/specs/search#tag/Records/operation/saveObject) operations. -
    *     `batch_operations`. Number of [batch
@@ -2185,8 +2198,8 @@ public class UsageClient extends ApiClient {
    *     `partial_update_record_operations`. Number of [partially update
    *     records](/specs/search#tag/Records/operation/partialUpdateObject) operations. -
    *     `update_record_operations`. Number of [add or replace record by
-   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. ### Synonym
-   *     operations - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
+   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. **Synonym
+   *     operations** - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
    *     Sum of all synonym operations. - `batch_synonym_operations`. Number of [save all
    *     synonyms](/specs/search#tag/Synonyms/operation/saveSynonyms) operations. -
    *     `clear_synonym_operations`. Number of [clear
@@ -2198,7 +2211,7 @@ public class UsageClient extends ApiClient {
    *     `query_synonym_operations`. Number of [search
    *     synonyms](/specs/search#tag/Synonyms/operation/searchSynonyms) operations. -
    *     `update_synonym_operations`. Number of [save a
-   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. ### Rule operations
+   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. **Rule operations**
    *     - `rule_operations`. All rule operations. - `total_rules_operations`. Sum of all rule
    *     operations. - `batch_rules_operations`. Number of [batch
    *     rules](/specs/search#tag/Rules/operation/saveRules) operations. - `clear_rules_operations`.
@@ -2208,12 +2221,12 @@ public class UsageClient extends ApiClient {
    *     Number of [get rule](/specs/search#tag/Rules/operation/getRule) operations. -
    *     `save_rules_operations`. Number of [save rule](/specs/search#operation/getIndexUsage)
    *     operations. - `search_rules_operations`. Number of [search
-   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. ### Total operations -
+   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. **Total operations** -
    *     `total_recommend_requests`. Number of [Recommend
    *     requests](https://www.algolia.com/doc/guides/algolia-ai/recommend/) -
    *     `total_write_operations`. Number of Write operations - `total_read_operations`. Number of
-   *     read operations - `total_operations`. Sum of all operations ### Total Query Suggestions
-   *     operations Query Suggestions operations are a subset of `total_search_operations`. -
+   *     read operations - `total_operations`. Sum of all operations **Total Query Suggestions
+   *     operations** Query Suggestions operations are a subset of `total_search_operations`. -
    *     `querysuggestions_total_search_operations`. Number of Query Suggestions search operations.
    *     - `querysuggestions_total_search_requests`. Number of Query Suggestions [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -2227,23 +2240,23 @@ public class UsageClient extends ApiClient {
    *     operations](#rule-operations). - `querysuggestions_total_write_operations`. Number of Query
    *     Suggestions Write operations. - `querysuggestions_total_read_operations`. Number of Query
    *     Suggestions Read operations. - `querysuggestions_total_operations`. Sum of all Query
-   *     Suggestions operations. ### Processing time - `avg_processing_time`. Average processing
+   *     Suggestions operations. **Processing time** - `avg_processing_time`. Average processing
    *     time (in milliseconds). - `90p_processing_time`. 90th percentile of processing time (in
    *     milliseconds). - `99p_processing_time`. 99th percentile of processing time (in
    *     milliseconds). - `queries_above_last_ms_processing_time`. Number of queries that take one
-   *     or more seconds to process. ### Indices - `records`. Number of records. - `data_size`. The
+   *     or more seconds to process. **Indices** - `records`. Number of records. - `data_size`. The
    *     size of the records (in bytes). - `file_size`. The size of the records _and_ index metadata
-   *     (in bytes). ### Maximum queries per second - `max_qps`. [Maximum queries per
+   *     (in bytes). **Maximum queries per second** - `max_qps`. [Maximum queries per
    *     second](https://support.algolia.com/hc/en-us/articles/4406975224721) per server. -
    *     `region_max_qps`. Maximum queries per second per region. - `total_max_qps`. Maximum queries
-   *     per second across all servers. ### Used search capacity The following capacities are
+   *     per second across all servers. **Used search capacity** The following capacities are
    *     reported in percent: - `used_search_capacity`. Maximum search capacity used per server. -
    *     `avg_used_search_capacity`. Average search capacity used per server. -
    *     `region_used_search_capacity`. Maximum search capacity used per region. -
    *     `region_avg_used_search_capacity`. Average search capacity used per region. -
    *     `total_used_search_capacity`. Maximum search capacity used for all servers. -
-   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. ###
-   *     Degraded queries Check the impact of [degraded
+   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. **Degraded
+   *     queries** Check the impact of [degraded
    *     queries](https://support.algolia.com/hc/en-us/articles/4406981934481). -
    *     `degraded_queries_ssd_used_queries_impacted`. Percentage of degraded queries due to the
    *     Algolia search engine having to read from the server's SSD. -
@@ -2252,8 +2265,8 @@ public class UsageClient extends ApiClient {
    *     degraded queries due to all search threads being used. -
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
-   * @param startDate Start date in ISO 8601 format of the time period to analyze. (required)
-   * @param endDate End date in ISO 8601 format of the time period to analyze. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @param granularity Granularity of the aggregated metrics. - `hourly`: the maximum time range
    *     for hourly metrics is 7 days. - `daily`: the maximum time range for daily metrics is 365
    *     days. (optional, default to daily)
@@ -2289,7 +2302,7 @@ public class UsageClient extends ApiClient {
    * (asynchronously) Retrieves usage statistics evaluated over a specified period.
    *
    * @param statistic Usage statistics to retrieve. Use `*` to retrieve all usage metrics, otherwise
-   *     add one or more of the following metrics, separated by a comma. ### Search operations -
+   *     add one or more of the following metrics, separated by a comma. **Search operations** -
    *     `search_operations`. All search operations. - `total_search_operations`: Sum of all search
    *     operations. - `total_search_requests`: Sum of all [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -2297,7 +2310,7 @@ public class UsageClient extends ApiClient {
    *     `querysuggestions_total_search_requests`. - `queries_operations`. Number of [single index
    *     search](/specs/search#tag/Search/operation/searchSingleIndex) operations. -
    *     `multi_queries_operations`. Number of [multi-index
-   *     search](/specs/search#tag/Search/operation/search) operations. ### ACL operations -
+   *     search](/specs/search#tag/Search/operation/search) operations. **ACL operations** -
    *     `acl_operations`. All ACL operations. - `total_acl_operations`. Sum of all ACL operations.
    *     - `get_api_keys_operations`. Number of [list API
    *     keys](/specs/search#tag/Api-Keys/operation/listApiKeys) operations. -
@@ -2309,11 +2322,12 @@ public class UsageClient extends ApiClient {
    *     key](/specs/search#tag/Api-Keys/operation/updateApiKey) operations. -
    *     `delete_api_key_operations`. Number of [delete API
    *     key](/specs/search#tag/Api-Keys/operation/deleteApiKey) operations. -
-   *     `list_api_key_operations`. Number of list index API keys operations. ### Indexing
-   *     operations - `indexing_operations`. All indexing operations. - `total_indexing_operations`.
-   *     Sum of all indexing operations. - `browse_operations`. Number of [browse
-   *     index](/specs/search#tag/Search/operation/browse) operations. - `clear_index_operations`.
-   *     Number of [clear records](/specs/search#tag/Records/operation/clearObjects) operations. -
+   *     `list_api_key_operations`. Number of list index API keys operations. **Indexing
+   *     operations** - `indexing_operations`. All indexing operations. -
+   *     `total_indexing_operations`. Sum of all indexing operations. - `browse_operations`. Number
+   *     of [browse index](/specs/search#tag/Search/operation/browse) operations. -
+   *     `clear_index_operations`. Number of [clear
+   *     records](/specs/search#tag/Records/operation/clearObjects) operations. -
    *     `copy_move_operations`. Number of [copy or move
    *     index](/specs/search#tag/Indices/operation/operationIndex) operations. -
    *     `delete_index_operations`. Number of [delete
@@ -2325,7 +2339,7 @@ public class UsageClient extends ApiClient {
    *     `list_indices_operations`. Number of [list
    *     indices](/specs/search#tag/Indices/operation/listIndices) operations. -
    *     `wait_task_operations`. Number of [wait](/specs/search#tag/Indices/operation/getTask)
-   *     operations. ### Record operations - `record_operations`. All record operations. -
+   *     operations. **Record operations** - `record_operations`. All record operations. -
    *     `total_records_operations`. Sum of all record operations. - `add_record_operations`. Number
    *     of [add or replace record](/specs/search#tag/Records/operation/saveObject) operations. -
    *     `batch_operations`. Number of [batch
@@ -2339,8 +2353,8 @@ public class UsageClient extends ApiClient {
    *     `partial_update_record_operations`. Number of [partially update
    *     records](/specs/search#tag/Records/operation/partialUpdateObject) operations. -
    *     `update_record_operations`. Number of [add or replace record by
-   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. ### Synonym
-   *     operations - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
+   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. **Synonym
+   *     operations** - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
    *     Sum of all synonym operations. - `batch_synonym_operations`. Number of [save all
    *     synonyms](/specs/search#tag/Synonyms/operation/saveSynonyms) operations. -
    *     `clear_synonym_operations`. Number of [clear
@@ -2352,7 +2366,7 @@ public class UsageClient extends ApiClient {
    *     `query_synonym_operations`. Number of [search
    *     synonyms](/specs/search#tag/Synonyms/operation/searchSynonyms) operations. -
    *     `update_synonym_operations`. Number of [save a
-   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. ### Rule operations
+   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. **Rule operations**
    *     - `rule_operations`. All rule operations. - `total_rules_operations`. Sum of all rule
    *     operations. - `batch_rules_operations`. Number of [batch
    *     rules](/specs/search#tag/Rules/operation/saveRules) operations. - `clear_rules_operations`.
@@ -2362,12 +2376,12 @@ public class UsageClient extends ApiClient {
    *     Number of [get rule](/specs/search#tag/Rules/operation/getRule) operations. -
    *     `save_rules_operations`. Number of [save rule](/specs/search#operation/getIndexUsage)
    *     operations. - `search_rules_operations`. Number of [search
-   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. ### Total operations -
+   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. **Total operations** -
    *     `total_recommend_requests`. Number of [Recommend
    *     requests](https://www.algolia.com/doc/guides/algolia-ai/recommend/) -
    *     `total_write_operations`. Number of Write operations - `total_read_operations`. Number of
-   *     read operations - `total_operations`. Sum of all operations ### Total Query Suggestions
-   *     operations Query Suggestions operations are a subset of `total_search_operations`. -
+   *     read operations - `total_operations`. Sum of all operations **Total Query Suggestions
+   *     operations** Query Suggestions operations are a subset of `total_search_operations`. -
    *     `querysuggestions_total_search_operations`. Number of Query Suggestions search operations.
    *     - `querysuggestions_total_search_requests`. Number of Query Suggestions [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -2381,23 +2395,23 @@ public class UsageClient extends ApiClient {
    *     operations](#rule-operations). - `querysuggestions_total_write_operations`. Number of Query
    *     Suggestions Write operations. - `querysuggestions_total_read_operations`. Number of Query
    *     Suggestions Read operations. - `querysuggestions_total_operations`. Sum of all Query
-   *     Suggestions operations. ### Processing time - `avg_processing_time`. Average processing
+   *     Suggestions operations. **Processing time** - `avg_processing_time`. Average processing
    *     time (in milliseconds). - `90p_processing_time`. 90th percentile of processing time (in
    *     milliseconds). - `99p_processing_time`. 99th percentile of processing time (in
    *     milliseconds). - `queries_above_last_ms_processing_time`. Number of queries that take one
-   *     or more seconds to process. ### Indices - `records`. Number of records. - `data_size`. The
+   *     or more seconds to process. **Indices** - `records`. Number of records. - `data_size`. The
    *     size of the records (in bytes). - `file_size`. The size of the records _and_ index metadata
-   *     (in bytes). ### Maximum queries per second - `max_qps`. [Maximum queries per
+   *     (in bytes). **Maximum queries per second** - `max_qps`. [Maximum queries per
    *     second](https://support.algolia.com/hc/en-us/articles/4406975224721) per server. -
    *     `region_max_qps`. Maximum queries per second per region. - `total_max_qps`. Maximum queries
-   *     per second across all servers. ### Used search capacity The following capacities are
+   *     per second across all servers. **Used search capacity** The following capacities are
    *     reported in percent: - `used_search_capacity`. Maximum search capacity used per server. -
    *     `avg_used_search_capacity`. Average search capacity used per server. -
    *     `region_used_search_capacity`. Maximum search capacity used per region. -
    *     `region_avg_used_search_capacity`. Average search capacity used per region. -
    *     `total_used_search_capacity`. Maximum search capacity used for all servers. -
-   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. ###
-   *     Degraded queries Check the impact of [degraded
+   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. **Degraded
+   *     queries** Check the impact of [degraded
    *     queries](https://support.algolia.com/hc/en-us/articles/4406981934481). -
    *     `degraded_queries_ssd_used_queries_impacted`. Percentage of degraded queries due to the
    *     Algolia search engine having to read from the server's SSD. -
@@ -2406,8 +2420,8 @@ public class UsageClient extends ApiClient {
    *     degraded queries due to all search threads being used. -
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
-   * @param startDate Start date in ISO 8601 format of the time period to analyze. (required)
-   * @param endDate End date in ISO 8601 format of the time period to analyze. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @param granularity Granularity of the aggregated metrics. - `hourly`: the maximum time range
    *     for hourly metrics is 7 days. - `daily`: the maximum time range for daily metrics is 365
    *     days. (optional, default to daily)
@@ -2426,7 +2440,7 @@ public class UsageClient extends ApiClient {
    * (asynchronously) Retrieves usage statistics evaluated over a specified period.
    *
    * @param statistic Usage statistics to retrieve. Use `*` to retrieve all usage metrics, otherwise
-   *     add one or more of the following metrics, separated by a comma. ### Search operations -
+   *     add one or more of the following metrics, separated by a comma. **Search operations** -
    *     `search_operations`. All search operations. - `total_search_operations`: Sum of all search
    *     operations. - `total_search_requests`: Sum of all [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -2434,7 +2448,7 @@ public class UsageClient extends ApiClient {
    *     `querysuggestions_total_search_requests`. - `queries_operations`. Number of [single index
    *     search](/specs/search#tag/Search/operation/searchSingleIndex) operations. -
    *     `multi_queries_operations`. Number of [multi-index
-   *     search](/specs/search#tag/Search/operation/search) operations. ### ACL operations -
+   *     search](/specs/search#tag/Search/operation/search) operations. **ACL operations** -
    *     `acl_operations`. All ACL operations. - `total_acl_operations`. Sum of all ACL operations.
    *     - `get_api_keys_operations`. Number of [list API
    *     keys](/specs/search#tag/Api-Keys/operation/listApiKeys) operations. -
@@ -2446,11 +2460,12 @@ public class UsageClient extends ApiClient {
    *     key](/specs/search#tag/Api-Keys/operation/updateApiKey) operations. -
    *     `delete_api_key_operations`. Number of [delete API
    *     key](/specs/search#tag/Api-Keys/operation/deleteApiKey) operations. -
-   *     `list_api_key_operations`. Number of list index API keys operations. ### Indexing
-   *     operations - `indexing_operations`. All indexing operations. - `total_indexing_operations`.
-   *     Sum of all indexing operations. - `browse_operations`. Number of [browse
-   *     index](/specs/search#tag/Search/operation/browse) operations. - `clear_index_operations`.
-   *     Number of [clear records](/specs/search#tag/Records/operation/clearObjects) operations. -
+   *     `list_api_key_operations`. Number of list index API keys operations. **Indexing
+   *     operations** - `indexing_operations`. All indexing operations. -
+   *     `total_indexing_operations`. Sum of all indexing operations. - `browse_operations`. Number
+   *     of [browse index](/specs/search#tag/Search/operation/browse) operations. -
+   *     `clear_index_operations`. Number of [clear
+   *     records](/specs/search#tag/Records/operation/clearObjects) operations. -
    *     `copy_move_operations`. Number of [copy or move
    *     index](/specs/search#tag/Indices/operation/operationIndex) operations. -
    *     `delete_index_operations`. Number of [delete
@@ -2462,7 +2477,7 @@ public class UsageClient extends ApiClient {
    *     `list_indices_operations`. Number of [list
    *     indices](/specs/search#tag/Indices/operation/listIndices) operations. -
    *     `wait_task_operations`. Number of [wait](/specs/search#tag/Indices/operation/getTask)
-   *     operations. ### Record operations - `record_operations`. All record operations. -
+   *     operations. **Record operations** - `record_operations`. All record operations. -
    *     `total_records_operations`. Sum of all record operations. - `add_record_operations`. Number
    *     of [add or replace record](/specs/search#tag/Records/operation/saveObject) operations. -
    *     `batch_operations`. Number of [batch
@@ -2476,8 +2491,8 @@ public class UsageClient extends ApiClient {
    *     `partial_update_record_operations`. Number of [partially update
    *     records](/specs/search#tag/Records/operation/partialUpdateObject) operations. -
    *     `update_record_operations`. Number of [add or replace record by
-   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. ### Synonym
-   *     operations - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
+   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. **Synonym
+   *     operations** - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
    *     Sum of all synonym operations. - `batch_synonym_operations`. Number of [save all
    *     synonyms](/specs/search#tag/Synonyms/operation/saveSynonyms) operations. -
    *     `clear_synonym_operations`. Number of [clear
@@ -2489,7 +2504,7 @@ public class UsageClient extends ApiClient {
    *     `query_synonym_operations`. Number of [search
    *     synonyms](/specs/search#tag/Synonyms/operation/searchSynonyms) operations. -
    *     `update_synonym_operations`. Number of [save a
-   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. ### Rule operations
+   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. **Rule operations**
    *     - `rule_operations`. All rule operations. - `total_rules_operations`. Sum of all rule
    *     operations. - `batch_rules_operations`. Number of [batch
    *     rules](/specs/search#tag/Rules/operation/saveRules) operations. - `clear_rules_operations`.
@@ -2499,12 +2514,12 @@ public class UsageClient extends ApiClient {
    *     Number of [get rule](/specs/search#tag/Rules/operation/getRule) operations. -
    *     `save_rules_operations`. Number of [save rule](/specs/search#operation/getIndexUsage)
    *     operations. - `search_rules_operations`. Number of [search
-   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. ### Total operations -
+   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. **Total operations** -
    *     `total_recommend_requests`. Number of [Recommend
    *     requests](https://www.algolia.com/doc/guides/algolia-ai/recommend/) -
    *     `total_write_operations`. Number of Write operations - `total_read_operations`. Number of
-   *     read operations - `total_operations`. Sum of all operations ### Total Query Suggestions
-   *     operations Query Suggestions operations are a subset of `total_search_operations`. -
+   *     read operations - `total_operations`. Sum of all operations **Total Query Suggestions
+   *     operations** Query Suggestions operations are a subset of `total_search_operations`. -
    *     `querysuggestions_total_search_operations`. Number of Query Suggestions search operations.
    *     - `querysuggestions_total_search_requests`. Number of Query Suggestions [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -2518,23 +2533,23 @@ public class UsageClient extends ApiClient {
    *     operations](#rule-operations). - `querysuggestions_total_write_operations`. Number of Query
    *     Suggestions Write operations. - `querysuggestions_total_read_operations`. Number of Query
    *     Suggestions Read operations. - `querysuggestions_total_operations`. Sum of all Query
-   *     Suggestions operations. ### Processing time - `avg_processing_time`. Average processing
+   *     Suggestions operations. **Processing time** - `avg_processing_time`. Average processing
    *     time (in milliseconds). - `90p_processing_time`. 90th percentile of processing time (in
    *     milliseconds). - `99p_processing_time`. 99th percentile of processing time (in
    *     milliseconds). - `queries_above_last_ms_processing_time`. Number of queries that take one
-   *     or more seconds to process. ### Indices - `records`. Number of records. - `data_size`. The
+   *     or more seconds to process. **Indices** - `records`. Number of records. - `data_size`. The
    *     size of the records (in bytes). - `file_size`. The size of the records _and_ index metadata
-   *     (in bytes). ### Maximum queries per second - `max_qps`. [Maximum queries per
+   *     (in bytes). **Maximum queries per second** - `max_qps`. [Maximum queries per
    *     second](https://support.algolia.com/hc/en-us/articles/4406975224721) per server. -
    *     `region_max_qps`. Maximum queries per second per region. - `total_max_qps`. Maximum queries
-   *     per second across all servers. ### Used search capacity The following capacities are
+   *     per second across all servers. **Used search capacity** The following capacities are
    *     reported in percent: - `used_search_capacity`. Maximum search capacity used per server. -
    *     `avg_used_search_capacity`. Average search capacity used per server. -
    *     `region_used_search_capacity`. Maximum search capacity used per region. -
    *     `region_avg_used_search_capacity`. Average search capacity used per region. -
    *     `total_used_search_capacity`. Maximum search capacity used for all servers. -
-   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. ###
-   *     Degraded queries Check the impact of [degraded
+   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. **Degraded
+   *     queries** Check the impact of [degraded
    *     queries](https://support.algolia.com/hc/en-us/articles/4406981934481). -
    *     `degraded_queries_ssd_used_queries_impacted`. Percentage of degraded queries due to the
    *     Algolia search engine having to read from the server's SSD. -
@@ -2543,8 +2558,8 @@ public class UsageClient extends ApiClient {
    *     degraded queries due to all search threads being used. -
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
-   * @param startDate Start date in ISO 8601 format of the time period to analyze. (required)
-   * @param endDate End date in ISO 8601 format of the time period to analyze. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2562,7 +2577,7 @@ public class UsageClient extends ApiClient {
    * (asynchronously) Retrieves usage statistics evaluated over a specified period.
    *
    * @param statistic Usage statistics to retrieve. Use `*` to retrieve all usage metrics, otherwise
-   *     add one or more of the following metrics, separated by a comma. ### Search operations -
+   *     add one or more of the following metrics, separated by a comma. **Search operations** -
    *     `search_operations`. All search operations. - `total_search_operations`: Sum of all search
    *     operations. - `total_search_requests`: Sum of all [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -2570,7 +2585,7 @@ public class UsageClient extends ApiClient {
    *     `querysuggestions_total_search_requests`. - `queries_operations`. Number of [single index
    *     search](/specs/search#tag/Search/operation/searchSingleIndex) operations. -
    *     `multi_queries_operations`. Number of [multi-index
-   *     search](/specs/search#tag/Search/operation/search) operations. ### ACL operations -
+   *     search](/specs/search#tag/Search/operation/search) operations. **ACL operations** -
    *     `acl_operations`. All ACL operations. - `total_acl_operations`. Sum of all ACL operations.
    *     - `get_api_keys_operations`. Number of [list API
    *     keys](/specs/search#tag/Api-Keys/operation/listApiKeys) operations. -
@@ -2582,11 +2597,12 @@ public class UsageClient extends ApiClient {
    *     key](/specs/search#tag/Api-Keys/operation/updateApiKey) operations. -
    *     `delete_api_key_operations`. Number of [delete API
    *     key](/specs/search#tag/Api-Keys/operation/deleteApiKey) operations. -
-   *     `list_api_key_operations`. Number of list index API keys operations. ### Indexing
-   *     operations - `indexing_operations`. All indexing operations. - `total_indexing_operations`.
-   *     Sum of all indexing operations. - `browse_operations`. Number of [browse
-   *     index](/specs/search#tag/Search/operation/browse) operations. - `clear_index_operations`.
-   *     Number of [clear records](/specs/search#tag/Records/operation/clearObjects) operations. -
+   *     `list_api_key_operations`. Number of list index API keys operations. **Indexing
+   *     operations** - `indexing_operations`. All indexing operations. -
+   *     `total_indexing_operations`. Sum of all indexing operations. - `browse_operations`. Number
+   *     of [browse index](/specs/search#tag/Search/operation/browse) operations. -
+   *     `clear_index_operations`. Number of [clear
+   *     records](/specs/search#tag/Records/operation/clearObjects) operations. -
    *     `copy_move_operations`. Number of [copy or move
    *     index](/specs/search#tag/Indices/operation/operationIndex) operations. -
    *     `delete_index_operations`. Number of [delete
@@ -2598,7 +2614,7 @@ public class UsageClient extends ApiClient {
    *     `list_indices_operations`. Number of [list
    *     indices](/specs/search#tag/Indices/operation/listIndices) operations. -
    *     `wait_task_operations`. Number of [wait](/specs/search#tag/Indices/operation/getTask)
-   *     operations. ### Record operations - `record_operations`. All record operations. -
+   *     operations. **Record operations** - `record_operations`. All record operations. -
    *     `total_records_operations`. Sum of all record operations. - `add_record_operations`. Number
    *     of [add or replace record](/specs/search#tag/Records/operation/saveObject) operations. -
    *     `batch_operations`. Number of [batch
@@ -2612,8 +2628,8 @@ public class UsageClient extends ApiClient {
    *     `partial_update_record_operations`. Number of [partially update
    *     records](/specs/search#tag/Records/operation/partialUpdateObject) operations. -
    *     `update_record_operations`. Number of [add or replace record by
-   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. ### Synonym
-   *     operations - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
+   *     objectID](/specs/search#tag/Records/operation/addOrUpdateObject) operations. **Synonym
+   *     operations** - `synonym_operations`. All synonym operations. - `total_synonym_operations`.
    *     Sum of all synonym operations. - `batch_synonym_operations`. Number of [save all
    *     synonyms](/specs/search#tag/Synonyms/operation/saveSynonyms) operations. -
    *     `clear_synonym_operations`. Number of [clear
@@ -2625,7 +2641,7 @@ public class UsageClient extends ApiClient {
    *     `query_synonym_operations`. Number of [search
    *     synonyms](/specs/search#tag/Synonyms/operation/searchSynonyms) operations. -
    *     `update_synonym_operations`. Number of [save a
-   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. ### Rule operations
+   *     synonym](/specs/search#tag/Synonyms/operation/saveSynonym) operations. **Rule operations**
    *     - `rule_operations`. All rule operations. - `total_rules_operations`. Sum of all rule
    *     operations. - `batch_rules_operations`. Number of [batch
    *     rules](/specs/search#tag/Rules/operation/saveRules) operations. - `clear_rules_operations`.
@@ -2635,12 +2651,12 @@ public class UsageClient extends ApiClient {
    *     Number of [get rule](/specs/search#tag/Rules/operation/getRule) operations. -
    *     `save_rules_operations`. Number of [save rule](/specs/search#operation/getIndexUsage)
    *     operations. - `search_rules_operations`. Number of [search
-   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. ### Total operations -
+   *     rules](/specs/search#tag/Rules/operation/searchRules) operations. **Total operations** -
    *     `total_recommend_requests`. Number of [Recommend
    *     requests](https://www.algolia.com/doc/guides/algolia-ai/recommend/) -
    *     `total_write_operations`. Number of Write operations - `total_read_operations`. Number of
-   *     read operations - `total_operations`. Sum of all operations ### Total Query Suggestions
-   *     operations Query Suggestions operations are a subset of `total_search_operations`. -
+   *     read operations - `total_operations`. Sum of all operations **Total Query Suggestions
+   *     operations** Query Suggestions operations are a subset of `total_search_operations`. -
    *     `querysuggestions_total_search_operations`. Number of Query Suggestions search operations.
    *     - `querysuggestions_total_search_requests`. Number of Query Suggestions [search
    *     requests](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-).
@@ -2654,23 +2670,23 @@ public class UsageClient extends ApiClient {
    *     operations](#rule-operations). - `querysuggestions_total_write_operations`. Number of Query
    *     Suggestions Write operations. - `querysuggestions_total_read_operations`. Number of Query
    *     Suggestions Read operations. - `querysuggestions_total_operations`. Sum of all Query
-   *     Suggestions operations. ### Processing time - `avg_processing_time`. Average processing
+   *     Suggestions operations. **Processing time** - `avg_processing_time`. Average processing
    *     time (in milliseconds). - `90p_processing_time`. 90th percentile of processing time (in
    *     milliseconds). - `99p_processing_time`. 99th percentile of processing time (in
    *     milliseconds). - `queries_above_last_ms_processing_time`. Number of queries that take one
-   *     or more seconds to process. ### Indices - `records`. Number of records. - `data_size`. The
+   *     or more seconds to process. **Indices** - `records`. Number of records. - `data_size`. The
    *     size of the records (in bytes). - `file_size`. The size of the records _and_ index metadata
-   *     (in bytes). ### Maximum queries per second - `max_qps`. [Maximum queries per
+   *     (in bytes). **Maximum queries per second** - `max_qps`. [Maximum queries per
    *     second](https://support.algolia.com/hc/en-us/articles/4406975224721) per server. -
    *     `region_max_qps`. Maximum queries per second per region. - `total_max_qps`. Maximum queries
-   *     per second across all servers. ### Used search capacity The following capacities are
+   *     per second across all servers. **Used search capacity** The following capacities are
    *     reported in percent: - `used_search_capacity`. Maximum search capacity used per server. -
    *     `avg_used_search_capacity`. Average search capacity used per server. -
    *     `region_used_search_capacity`. Maximum search capacity used per region. -
    *     `region_avg_used_search_capacity`. Average search capacity used per region. -
    *     `total_used_search_capacity`. Maximum search capacity used for all servers. -
-   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. ###
-   *     Degraded queries Check the impact of [degraded
+   *     `total_avg_used_search_capacity`. Average used search capacity for all servers. **Degraded
+   *     queries** Check the impact of [degraded
    *     queries](https://support.algolia.com/hc/en-us/articles/4406981934481). -
    *     `degraded_queries_ssd_used_queries_impacted`. Percentage of degraded queries due to the
    *     Algolia search engine having to read from the server's SSD. -
@@ -2679,8 +2695,8 @@ public class UsageClient extends ApiClient {
    *     degraded queries due to all search threads being used. -
    *     `degraded_queries_max_capacity_seconds_impacted`. Percentage of seconds affected by
    *     `max_capacity` degraded queries. (required)
-   * @param startDate Start date in ISO 8601 format of the time period to analyze. (required)
-   * @param endDate End date in ISO 8601 format of the time period to analyze. (required)
+   * @param startDate Start date of the period to analyze, in `YYYY-MM-DD` format. (required)
+   * @param endDate End date of the period to analyze, in `YYYY-MM-DD` format. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetUsage200Response> getUsageAsync(

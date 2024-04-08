@@ -32,10 +32,7 @@ public class BaseGetApiKeyResponse {
     return this;
   }
 
-  /**
-   * Timestamp of creation in milliseconds in [Unix epoch
-   * time](https://wikipedia.org/wiki/Unix_time).
-   */
+  /** Timestamp when the object was created, in milliseconds since the Unix epoch. */
   @javax.annotation.Nonnull
   public Long getCreatedAt() {
     return createdAt;

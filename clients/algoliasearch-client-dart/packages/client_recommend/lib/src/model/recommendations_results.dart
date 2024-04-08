@@ -42,8 +42,6 @@ final class RecommendationsResults {
     this.userData,
     this.queryID,
     required this.hits,
-    this.query,
-    this.params,
   });
 
   /// A/B test ID. This is only included in the response for indices that are part of an A/B test.
@@ -168,14 +166,6 @@ final class RecommendationsResults {
   @JsonKey(name: r'hits')
   final Iterable<dynamic> hits;
 
-  /// Search query.
-  @JsonKey(name: r'query')
-  final String? query;
-
-  /// URL-encoded string of all search parameters.
-  @JsonKey(name: r'params')
-  final String? params;
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -205,9 +195,7 @@ final class RecommendationsResults {
           other.serverUsed == serverUsed &&
           other.userData == userData &&
           other.queryID == queryID &&
-          other.hits == hits &&
-          other.query == query &&
-          other.params == params;
+          other.hits == hits;
 
   @override
   int get hashCode =>
@@ -236,9 +224,7 @@ final class RecommendationsResults {
       serverUsed.hashCode +
       userData.hashCode +
       queryID.hashCode +
-      hits.hashCode +
-      query.hashCode +
-      params.hashCode;
+      hits.hashCode;
 
   factory RecommendationsResults.fromJson(Map<String, dynamic> json) =>
       _$RecommendationsResultsFromJson(json);

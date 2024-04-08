@@ -15,10 +15,13 @@ public class TrendingItemsQuery implements RecommendationsRequest {
   private String indexName;
 
   @JsonProperty("threshold")
-  private Integer threshold;
+  private Double threshold;
 
   @JsonProperty("maxRecommendations")
   private Integer maxRecommendations;
+
+  @JsonProperty("queryParameters")
+  private SearchParams queryParameters;
 
   @JsonProperty("facetName")
   private String facetName;
@@ -28,9 +31,6 @@ public class TrendingItemsQuery implements RecommendationsRequest {
 
   @JsonProperty("model")
   private TrendingItemsModel model;
-
-  @JsonProperty("queryParameters")
-  private SearchParamsObject queryParameters;
 
   @JsonProperty("fallbackParameters")
   private SearchParamsObject fallbackParameters;
@@ -46,18 +46,17 @@ public class TrendingItemsQuery implements RecommendationsRequest {
     return indexName;
   }
 
-  public TrendingItemsQuery setThreshold(Integer threshold) {
+  public TrendingItemsQuery setThreshold(Double threshold) {
     this.threshold = threshold;
     return this;
   }
 
   /**
-   * Recommendations with a confidence score lower than `threshold` won't appear in results. >
-   * **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to
-   * 100, the more relevant the recommendations are. minimum: 0 maximum: 100
+   * Minimum score a recommendation must have to be included in the response. minimum: 0 maximum:
+   * 100
    */
-  @javax.annotation.Nullable
-  public Integer getThreshold() {
+  @javax.annotation.Nonnull
+  public Double getThreshold() {
     return threshold;
   }
 
@@ -66,10 +65,26 @@ public class TrendingItemsQuery implements RecommendationsRequest {
     return this;
   }
 
-  /** Maximum number of recommendations to retrieve. If 0, all recommendations will be returned. */
+  /**
+   * Maximum number of recommendations to retrieve. By default, all recommendations are returned and
+   * no fallback request is made. Depending on the available recommendations and the other request
+   * parameters, the actual number of recommendations may be lower than this value. minimum: 1
+   * maximum: 1000
+   */
   @javax.annotation.Nullable
   public Integer getMaxRecommendations() {
     return maxRecommendations;
+  }
+
+  public TrendingItemsQuery setQueryParameters(SearchParams queryParameters) {
+    this.queryParameters = queryParameters;
+    return this;
+  }
+
+  /** Get queryParameters */
+  @javax.annotation.Nullable
+  public SearchParams getQueryParameters() {
+    return queryParameters;
   }
 
   public TrendingItemsQuery setFacetName(String facetName) {
@@ -77,8 +92,11 @@ public class TrendingItemsQuery implements RecommendationsRequest {
     return this;
   }
 
-  /** Facet name for trending models. */
-  @javax.annotation.Nullable
+  /**
+   * Facet attribute. To be used in combination with `facetValue`. If specified, only
+   * recommendations matching the facet filter will be returned.
+   */
+  @javax.annotation.Nonnull
   public String getFacetName() {
     return facetName;
   }
@@ -88,8 +106,11 @@ public class TrendingItemsQuery implements RecommendationsRequest {
     return this;
   }
 
-  /** Facet value for trending models. */
-  @javax.annotation.Nullable
+  /**
+   * Facet value. To be used in combination with `facetName`. If specified, only recommendations
+   * matching the facet filter will be returned.
+   */
+  @javax.annotation.Nonnull
   public String getFacetValue() {
     return facetValue;
   }
@@ -100,20 +121,9 @@ public class TrendingItemsQuery implements RecommendationsRequest {
   }
 
   /** Get model */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public TrendingItemsModel getModel() {
     return model;
-  }
-
-  public TrendingItemsQuery setQueryParameters(SearchParamsObject queryParameters) {
-    this.queryParameters = queryParameters;
-    return this;
-  }
-
-  /** Get queryParameters */
-  @javax.annotation.Nullable
-  public SearchParamsObject getQueryParameters() {
-    return queryParameters;
   }
 
   public TrendingItemsQuery setFallbackParameters(SearchParamsObject fallbackParameters) {
@@ -140,17 +150,17 @@ public class TrendingItemsQuery implements RecommendationsRequest {
       Objects.equals(this.indexName, trendingItemsQuery.indexName) &&
       Objects.equals(this.threshold, trendingItemsQuery.threshold) &&
       Objects.equals(this.maxRecommendations, trendingItemsQuery.maxRecommendations) &&
+      Objects.equals(this.queryParameters, trendingItemsQuery.queryParameters) &&
       Objects.equals(this.facetName, trendingItemsQuery.facetName) &&
       Objects.equals(this.facetValue, trendingItemsQuery.facetValue) &&
       Objects.equals(this.model, trendingItemsQuery.model) &&
-      Objects.equals(this.queryParameters, trendingItemsQuery.queryParameters) &&
       Objects.equals(this.fallbackParameters, trendingItemsQuery.fallbackParameters)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(indexName, threshold, maxRecommendations, facetName, facetValue, model, queryParameters, fallbackParameters);
+    return Objects.hash(indexName, threshold, maxRecommendations, queryParameters, facetName, facetValue, model, fallbackParameters);
   }
 
   @Override
@@ -160,10 +170,10 @@ public class TrendingItemsQuery implements RecommendationsRequest {
     sb.append("    indexName: ").append(toIndentedString(indexName)).append("\n");
     sb.append("    threshold: ").append(toIndentedString(threshold)).append("\n");
     sb.append("    maxRecommendations: ").append(toIndentedString(maxRecommendations)).append("\n");
+    sb.append("    queryParameters: ").append(toIndentedString(queryParameters)).append("\n");
     sb.append("    facetName: ").append(toIndentedString(facetName)).append("\n");
     sb.append("    facetValue: ").append(toIndentedString(facetValue)).append("\n");
     sb.append("    model: ").append(toIndentedString(model)).append("\n");
-    sb.append("    queryParameters: ").append(toIndentedString(queryParameters)).append("\n");
     sb.append("    fallbackParameters: ").append(toIndentedString(fallbackParameters)).append("\n");
     sb.append("}");
     return sb.toString();

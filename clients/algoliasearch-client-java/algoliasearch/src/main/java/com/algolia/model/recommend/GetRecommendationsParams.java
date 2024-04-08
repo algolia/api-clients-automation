@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** Recommend parameters. */
+/** Recommend request body. */
 public class GetRecommendationsParams {
 
   @JsonProperty("requests")
@@ -25,7 +25,7 @@ public class GetRecommendationsParams {
     return this;
   }
 
-  /** Request parameters depend on the model (recommendations or trending). */
+  /** Recommendation request with parameters depending on the requested model. */
   @javax.annotation.Nonnull
   public List<RecommendationsRequest> getRequests() {
     return requests;

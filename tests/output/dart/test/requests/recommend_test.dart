@@ -614,11 +614,11 @@ void main() {
       call: (client) => client.getRecommendations(
         getRecommendationsParams: GetRecommendationsParams(
           requests: [
-            RecommendationsQuery(
+            RelatedQuery(
               indexName: "indexName",
               objectID: "objectID",
-              model: RecommendationModels.fromJson("related-products"),
-              threshold: 42,
+              model: RelatedModel.fromJson("related-products"),
+              threshold: 42.1,
             ),
           ],
         ),
@@ -627,7 +627,7 @@ void main() {
         expectPath(request.path, '/1/indexes/*/recommendations');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42}]}""");
+            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1}]}""");
       },
     ),
   );
@@ -644,19 +644,19 @@ void main() {
       call: (client) => client.getRecommendations(
         getRecommendationsParams: GetRecommendationsParams(
           requests: [
-            RecommendationsQuery(
+            RelatedQuery(
               indexName: "indexName",
               objectID: "objectID",
-              model: RecommendationModels.fromJson("related-products"),
-              threshold: 42,
+              model: RelatedModel.fromJson("related-products"),
+              threshold: 42.1,
               maxRecommendations: 10,
-              queryParameters: SearchParamsObject(
+              queryParameters: SearchParams(
                 query: "myQuery",
                 facetFilters: [
                   "query",
                 ],
               ),
-              fallbackParameters: SearchParamsObject(
+              fallbackParameters: FallbackParams(
                 query: "myQuery",
                 facetFilters: [
                   "fallback",
@@ -670,7 +670,7 @@ void main() {
         expectPath(request.path, '/1/indexes/*/recommendations');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}""");
+            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}""");
       },
     ),
   );
@@ -690,7 +690,9 @@ void main() {
             TrendingItemsQuery(
               indexName: "indexName",
               model: TrendingItemsModel.fromJson("trending-items"),
-              threshold: 42,
+              threshold: 42.1,
+              facetName: "facet",
+              facetValue: "value",
             ),
           ],
         ),
@@ -699,7 +701,7 @@ void main() {
         expectPath(request.path, '/1/indexes/*/recommendations');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42}]}""");
+            """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"facetName":"facet","facetValue":"value"}]}""");
       },
     ),
   );
@@ -719,11 +721,11 @@ void main() {
             TrendingItemsQuery(
               indexName: "indexName",
               model: TrendingItemsModel.fromJson("trending-items"),
-              threshold: 42,
+              threshold: 42.1,
               maxRecommendations: 10,
               facetName: "myFacetName",
               facetValue: "myFacetValue",
-              queryParameters: SearchParamsObject(
+              queryParameters: SearchParams(
                 query: "myQuery",
                 facetFilters: [
                   "query",
@@ -743,7 +745,7 @@ void main() {
         expectPath(request.path, '/1/indexes/*/recommendations');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}""");
+            """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}""");
       },
     ),
   );
@@ -760,17 +762,17 @@ void main() {
       call: (client) => client.getRecommendations(
         getRecommendationsParams: GetRecommendationsParams(
           requests: [
-            RecommendationsQuery(
+            RelatedQuery(
               indexName: "indexName1",
               objectID: "objectID1",
-              model: RecommendationModels.fromJson("related-products"),
-              threshold: 21,
+              model: RelatedModel.fromJson("related-products"),
+              threshold: 21.7,
             ),
-            RecommendationsQuery(
+            RelatedQuery(
               indexName: "indexName2",
               objectID: "objectID2",
-              model: RecommendationModels.fromJson("related-products"),
-              threshold: 21,
+              model: RelatedModel.fromJson("related-products"),
+              threshold: 21.7,
             ),
           ],
         ),
@@ -779,7 +781,7 @@ void main() {
         expectPath(request.path, '/1/indexes/*/recommendations');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21}]}""");
+            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7}]}""");
       },
     ),
   );
@@ -796,38 +798,38 @@ void main() {
       call: (client) => client.getRecommendations(
         getRecommendationsParams: GetRecommendationsParams(
           requests: [
-            RecommendationsQuery(
+            RelatedQuery(
               indexName: "indexName1",
               objectID: "objectID1",
-              model: RecommendationModels.fromJson("related-products"),
-              threshold: 21,
+              model: RelatedModel.fromJson("related-products"),
+              threshold: 21.7,
               maxRecommendations: 10,
-              queryParameters: SearchParamsObject(
+              queryParameters: SearchParams(
                 query: "myQuery",
                 facetFilters: [
                   "query1",
                 ],
               ),
-              fallbackParameters: SearchParamsObject(
+              fallbackParameters: FallbackParams(
                 query: "myQuery",
                 facetFilters: [
                   "fallback1",
                 ],
               ),
             ),
-            RecommendationsQuery(
+            RelatedQuery(
               indexName: "indexName2",
               objectID: "objectID2",
-              model: RecommendationModels.fromJson("related-products"),
-              threshold: 21,
+              model: RelatedModel.fromJson("related-products"),
+              threshold: 21.7,
               maxRecommendations: 10,
-              queryParameters: SearchParamsObject(
+              queryParameters: SearchParams(
                 query: "myQuery",
                 facetFilters: [
                   "query2",
                 ],
               ),
-              fallbackParameters: SearchParamsObject(
+              fallbackParameters: FallbackParams(
                 query: "myQuery",
                 facetFilters: [
                   "fallback2",
@@ -841,7 +843,7 @@ void main() {
         expectPath(request.path, '/1/indexes/*/recommendations');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}""");
+            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}""");
       },
     ),
   );
@@ -858,11 +860,11 @@ void main() {
       call: (client) => client.getRecommendations(
         getRecommendationsParams: GetRecommendationsParams(
           requests: [
-            RecommendationsQuery(
+            BoughtTogetherQuery(
               indexName: "indexName1",
               objectID: "objectID1",
-              model: RecommendationModels.fromJson("bought-together"),
-              threshold: 42,
+              model: FbtModel.fromJson("bought-together"),
+              threshold: 42.7,
             ),
           ],
         ),
@@ -871,7 +873,7 @@ void main() {
         expectPath(request.path, '/1/indexes/*/recommendations');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42}]}""");
+            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42.7}]}""");
       },
     ),
   );

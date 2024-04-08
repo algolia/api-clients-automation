@@ -1,20 +1,26 @@
 trendingFacetsQuery:
+  title: Trending facet values
   allOf:
     - $ref: './RecommendationsRequest.yml#/baseRecommendRequest'
-    - $ref: '#/baseTrendingFacetsQuery'
+    - $ref: '#/trendingFacets'
 
-baseTrendingFacetsQuery:
+trendingFacets:
   type: object
-  additionalProperties: false
   properties:
     facetName:
-      $ref: '../parameters.yml#/facetName'
+      description: Facet attribute for which to retrieve trending facet values.
     model:
       $ref: '#/trendingFacetsModel'
+    fallbackParameters:
+      $ref: './RecommendationsRequest.yml#/fallbackParams'
   required:
     - facetName
+    - model
 
 trendingFacetsModel:
-  description: Trending facets model.
   type: string
+  description: |
+    Trending facet values model.
+
+    This model recommends trending facet values for the specified facet attribute.
   enum: [trending-facets]

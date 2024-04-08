@@ -21,7 +21,7 @@ public class GetUsage200ResponseStatisticsInner {
     return this;
   }
 
-  /** Timestamp in milliseconds in Unix epoch time. */
+  /** Timestamp, measured in milliseconds since the Unix epoch. */
   @javax.annotation.Nullable
   public Integer getT() {
     return t;

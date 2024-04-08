@@ -466,7 +466,7 @@ class TestRecommendClient:
                         "indexName": "indexName",
                         "objectID": "objectID",
                         "model": "related-products",
-                        "threshold": 42,
+                        "threshold": 42.1,
                     },
                 ],
             },
@@ -477,7 +477,7 @@ class TestRecommendClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42}]}"""
+            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1}]}"""
         )
 
     async def test_get_recommendations_1(self):
@@ -491,7 +491,7 @@ class TestRecommendClient:
                         "indexName": "indexName",
                         "objectID": "objectID",
                         "model": "related-products",
-                        "threshold": 42,
+                        "threshold": 42.1,
                         "maxRecommendations": 10,
                         "queryParameters": {
                             "query": "myQuery",
@@ -515,7 +515,7 @@ class TestRecommendClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
+            """{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
         )
 
     async def test_get_recommendations_2(self):
@@ -528,7 +528,9 @@ class TestRecommendClient:
                     {
                         "indexName": "indexName",
                         "model": "trending-items",
-                        "threshold": 42,
+                        "threshold": 42.1,
+                        "facetName": "facet",
+                        "facetValue": "value",
                     },
                 ],
             },
@@ -539,7 +541,7 @@ class TestRecommendClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42}]}"""
+            """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"facetName":"facet","facetValue":"value"}]}"""
         )
 
     async def test_get_recommendations_3(self):
@@ -552,7 +554,7 @@ class TestRecommendClient:
                     {
                         "indexName": "indexName",
                         "model": "trending-items",
-                        "threshold": 42,
+                        "threshold": 42.1,
                         "maxRecommendations": 10,
                         "facetName": "myFacetName",
                         "facetValue": "myFacetValue",
@@ -578,7 +580,7 @@ class TestRecommendClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
+            """{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}"""
         )
 
     async def test_get_recommendations_4(self):
@@ -592,13 +594,13 @@ class TestRecommendClient:
                         "indexName": "indexName1",
                         "objectID": "objectID1",
                         "model": "related-products",
-                        "threshold": 21,
+                        "threshold": 21.7,
                     },
                     {
                         "indexName": "indexName2",
                         "objectID": "objectID2",
                         "model": "related-products",
-                        "threshold": 21,
+                        "threshold": 21.7,
                     },
                 ],
             },
@@ -609,7 +611,7 @@ class TestRecommendClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21}]}"""
+            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7}]}"""
         )
 
     async def test_get_recommendations_5(self):
@@ -623,7 +625,7 @@ class TestRecommendClient:
                         "indexName": "indexName1",
                         "objectID": "objectID1",
                         "model": "related-products",
-                        "threshold": 21,
+                        "threshold": 21.7,
                         "maxRecommendations": 10,
                         "queryParameters": {
                             "query": "myQuery",
@@ -642,7 +644,7 @@ class TestRecommendClient:
                         "indexName": "indexName2",
                         "objectID": "objectID2",
                         "model": "related-products",
-                        "threshold": 21,
+                        "threshold": 21.7,
                         "maxRecommendations": 10,
                         "queryParameters": {
                             "query": "myQuery",
@@ -666,7 +668,7 @@ class TestRecommendClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}"""
+            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}"""
         )
 
     async def test_get_recommendations_6(self):
@@ -680,7 +682,7 @@ class TestRecommendClient:
                         "indexName": "indexName1",
                         "objectID": "objectID1",
                         "model": "bought-together",
-                        "threshold": 42,
+                        "threshold": 42.7,
                     },
                 ],
             },
@@ -691,7 +693,7 @@ class TestRecommendClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42}]}"""
+            """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42.7}]}"""
         )
 
     async def test_search_recommend_rules_0(self):

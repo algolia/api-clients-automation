@@ -1,22 +1,25 @@
 get:
   tags:
-    - recommendations
+    - rules
   operationId: getRecommendStatus
   x-acl:
     - editSettings
-  summary: Get a Recommend task's status.
-  description: Some operations, such as deleting a Recommend rule, will respond with a `taskID` value. Use this value here to check the status of that task.
+  summary: Check task status.
+  description: |
+    Checks the status of a given task.
+
+    Deleting a Recommend rule is asynchronous.
+    When you delete a rule, a task is created on a queue and completed depending on the load on the server.
+    The API response includes a task ID that you can use to check the status.
   parameters:
     - $ref: '../../common/parameters.yml#/IndexName'
     - $ref: '../common/parameters.yml#/Models'
     - name: taskID
       in: path
-      description: Unique identifier of a task. Numeric value (up to 64bits).
+      description: Unique task identifier.
       required: true
       schema:
-        type: integer
-        format: int64
-        example: 13235
+        $ref: '../../common/responses/common.yml#/taskID'
   responses:
     '200':
       description: OK

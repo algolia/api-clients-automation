@@ -465,11 +465,11 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+   * Deletes a Recommend rule from a recommendation scenario.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param objectID Unique record identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -486,11 +486,11 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+   * Deletes a Recommend rule from a recommendation scenario.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -501,12 +501,11 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a [Recommend
-   * rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+   * (asynchronously) Deletes a Recommend rule from a recommendation scenario.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param objectID Unique record identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -534,12 +533,11 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete a [Recommend
-   * rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+   * (asynchronously) Deletes a Recommend rule from a recommendation scenario.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -553,18 +551,18 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+   * Retrieves a Recommend rule that you previously created in the Algolia dashboard.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param objectID Unique record identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public RuleResponse getRecommendRule(
+  public RecommendRule getRecommendRule(
     @Nonnull String indexName,
     @Nonnull RecommendModels model,
     @Nonnull String objectID,
@@ -574,34 +572,34 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+   * Retrieves a Recommend rule that you previously created in the Algolia dashboard.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public RuleResponse getRecommendRule(@Nonnull String indexName, @Nonnull RecommendModels model, @Nonnull String objectID)
+  public RecommendRule getRecommendRule(@Nonnull String indexName, @Nonnull RecommendModels model, @Nonnull String objectID)
     throws AlgoliaRuntimeException {
     return this.getRecommendRule(indexName, model, objectID, null);
   }
 
   /**
-   * (asynchronously) Return a [Recommend
-   * rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+   * (asynchronously) Retrieves a Recommend rule that you previously created in the Algolia
+   * dashboard.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param objectID Unique record identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<RuleResponse> getRecommendRuleAsync(
+  public CompletableFuture<RecommendRule> getRecommendRuleAsync(
     @Nonnull String indexName,
     @Nonnull RecommendModels model,
     @Nonnull String objectID,
@@ -618,21 +616,21 @@ public class RecommendClient extends ApiClient {
       .setPath("/1/indexes/{indexName}/{model}/recommend/rules/{objectID}", indexName, model, objectID)
       .setMethod("GET")
       .build();
-    return executeAsync(request, requestOptions, new TypeReference<RuleResponse>() {});
+    return executeAsync(request, requestOptions, new TypeReference<RecommendRule>() {});
   }
 
   /**
-   * (asynchronously) Return a [Recommend
-   * rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+   * (asynchronously) Retrieves a Recommend rule that you previously created in the Algolia
+   * dashboard.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param objectID Unique record identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<RuleResponse> getRecommendRuleAsync(
+  public CompletableFuture<RecommendRule> getRecommendRuleAsync(
     @Nonnull String indexName,
     @Nonnull RecommendModels model,
     @Nonnull String objectID
@@ -641,14 +639,15 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Some operations, such as deleting a Recommend rule, will respond with a `taskID` value. Use
-   * this value here to check the status of that task.
+   * Checks the status of a given task. Deleting a Recommend rule is asynchronous. When you delete a
+   * rule, a task is created on a queue and completed depending on the load on the server. The API
+   * response includes a task ID that you can use to check the status.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
-   * @param taskID Unique identifier of a task. Numeric value (up to 64bits). (required)
+   * @param taskID Unique task identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -663,14 +662,15 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Some operations, such as deleting a Recommend rule, will respond with a `taskID` value. Use
-   * this value here to check the status of that task.
+   * Checks the status of a given task. Deleting a Recommend rule is asynchronous. When you delete a
+   * rule, a task is created on a queue and completed depending on the load on the server. The API
+   * response includes a task ID that you can use to check the status.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
-   * @param taskID Unique identifier of a task. Numeric value (up to 64bits). (required)
+   * @param taskID Unique task identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public GetRecommendTaskResponse getRecommendStatus(@Nonnull String indexName, @Nonnull RecommendModels model, @Nonnull Long taskID)
@@ -679,14 +679,15 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Some operations, such as deleting a Recommend rule, will respond with a
-   * `taskID` value. Use this value here to check the status of that task.
+   * (asynchronously) Checks the status of a given task. Deleting a Recommend rule is asynchronous.
+   * When you delete a rule, a task is created on a queue and completed depending on the load on the
+   * server. The API response includes a task ID that you can use to check the status.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
-   * @param taskID Unique identifier of a task. Numeric value (up to 64bits). (required)
+   * @param taskID Unique task identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -712,14 +713,15 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Some operations, such as deleting a Recommend rule, will respond with a
-   * `taskID` value. Use this value here to check the status of that task.
+   * (asynchronously) Checks the status of a given task. Deleting a Recommend rule is asynchronous.
+   * When you delete a rule, a task is created on a queue and completed depending on the load on the
+   * server. The API response includes a task ID that you can use to check the status.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
-   * @param taskID Unique identifier of a task. Numeric value (up to 64bits). (required)
+   * @param taskID Unique task identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<GetRecommendTaskResponse> getRecommendStatusAsync(
@@ -731,13 +733,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Returns results from either recommendation or trending models: - **Recommendations** are
-   * provided by the [Related
-   * Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content)
-   * and [Frequently Bought
-   * Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together)
-   * models - **Trending** models are [Trending Items and Trending Facet
-   * Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
+   * Retrieves recommendations from selected AI models.
    *
    * @param getRecommendationsParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -752,13 +748,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * Returns results from either recommendation or trending models: - **Recommendations** are
-   * provided by the [Related
-   * Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content)
-   * and [Frequently Bought
-   * Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together)
-   * models - **Trending** models are [Trending Items and Trending Facet
-   * Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
+   * Retrieves recommendations from selected AI models.
    *
    * @param getRecommendationsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -769,13 +759,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns results from either recommendation or trending models: -
-   * **Recommendations** are provided by the [Related
-   * Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content)
-   * and [Frequently Bought
-   * Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together)
-   * models - **Trending** models are [Trending Items and Trending Facet
-   * Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
+   * (asynchronously) Retrieves recommendations from selected AI models.
    *
    * @param getRecommendationsParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -802,13 +786,7 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Returns results from either recommendation or trending models: -
-   * **Recommendations** are provided by the [Related
-   * Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content)
-   * and [Frequently Bought
-   * Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together)
-   * models - **Trending** models are [Trending Items and Trending Facet
-   * Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
+   * (asynchronously) Retrieves recommendations from selected AI models.
    *
    * @param getRecommendationsParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -819,11 +797,12 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+   * Searches for Recommend rules. Use an empty query to list all rules for this recommendation
+   * scenario.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param searchRecommendRulesParams (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -840,11 +819,12 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+   * Searches for Recommend rules. Use an empty query to list all rules for this recommendation
+   * scenario.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param searchRecommendRulesParams (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -858,11 +838,12 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+   * Searches for Recommend rules. Use an empty query to list all rules for this recommendation
+   * scenario.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -877,11 +858,12 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+   * Searches for Recommend rules. Use an empty query to list all rules for this recommendation
+   * scenario.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -891,12 +873,12 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List [Recommend
-   * rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+   * (asynchronously) Searches for Recommend rules. Use an empty query to list all rules for this
+   * recommendation scenario.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param searchRecommendRulesParams (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -924,12 +906,12 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List [Recommend
-   * rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+   * (asynchronously) Searches for Recommend rules. Use an empty query to list all rules for this
+   * recommendation scenario.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param searchRecommendRulesParams (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -943,12 +925,12 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List [Recommend
-   * rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+   * (asynchronously) Searches for Recommend rules. Use an empty query to list all rules for this
+   * recommendation scenario.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -963,12 +945,12 @@ public class RecommendClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List [Recommend
-   * rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+   * (asynchronously) Searches for Recommend rules. Use an empty query to list all rules for this
+   * recommendation scenario.
    *
    * @param indexName Name of the index on which to perform the operation. (required)
    * @param model [Recommend
-   *     models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   *     model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    *     (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */

@@ -5,9 +5,11 @@ package com.algolia.model.recommend;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-/** Recommend rules search parameters. */
+/** Recommend rules parameters. */
 public class SearchRecommendRulesParams {
 
   @JsonProperty("query")
@@ -25,6 +27,15 @@ public class SearchRecommendRulesParams {
   @JsonProperty("enabled")
   private Boolean enabled;
 
+  @JsonProperty("filters")
+  private String filters;
+
+  @JsonProperty("facets")
+  private List<String> facets;
+
+  @JsonProperty("maxValuesPerFacet")
+  private Integer maxValuesPerFacet;
+
   public SearchRecommendRulesParams setQuery(String query) {
     this.query = query;
     return this;
@@ -41,10 +52,7 @@ public class SearchRecommendRulesParams {
     return this;
   }
 
-  /**
-   * Restricts responses to the specified [contextual
-   * rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
-   */
+  /** Only search for rules with matching context. */
   @javax.annotation.Nullable
   public String getContext() {
     return context;
@@ -77,10 +85,54 @@ public class SearchRecommendRulesParams {
     return this;
   }
 
-  /** Restricts responses to enabled rules. When absent (default), _all_ rules are retrieved. */
+  /**
+   * Whether to only show rules where the value of their `enabled` property matches this parameter.
+   * If absent, show all rules, regardless of their `enabled` property.
+   */
   @javax.annotation.Nullable
   public Boolean getEnabled() {
     return enabled;
+  }
+
+  public SearchRecommendRulesParams setFilters(String filters) {
+    this.filters = filters;
+    return this;
+  }
+
+  /** Filter expression. This only searches for rules matching the filter expression. */
+  @javax.annotation.Nullable
+  public String getFilters() {
+    return filters;
+  }
+
+  public SearchRecommendRulesParams setFacets(List<String> facets) {
+    this.facets = facets;
+    return this;
+  }
+
+  public SearchRecommendRulesParams addFacets(String facetsItem) {
+    if (this.facets == null) {
+      this.facets = new ArrayList<>();
+    }
+    this.facets.add(facetsItem);
+    return this;
+  }
+
+  /** Include facets and facet values in the response. Use `['*']` to include all facets. */
+  @javax.annotation.Nullable
+  public List<String> getFacets() {
+    return facets;
+  }
+
+  public SearchRecommendRulesParams setMaxValuesPerFacet(Integer maxValuesPerFacet) {
+    this.maxValuesPerFacet = maxValuesPerFacet;
+    return this;
+  }
+
+  /** Maximum number of values to return for each facet. minimum: 1 maximum: 1000 */
+  @javax.annotation.Nullable
+  public Integer getMaxValuesPerFacet() {
+    return maxValuesPerFacet;
   }
 
   @Override
@@ -97,13 +149,16 @@ public class SearchRecommendRulesParams {
       Objects.equals(this.context, searchRecommendRulesParams.context) &&
       Objects.equals(this.page, searchRecommendRulesParams.page) &&
       Objects.equals(this.hitsPerPage, searchRecommendRulesParams.hitsPerPage) &&
-      Objects.equals(this.enabled, searchRecommendRulesParams.enabled)
+      Objects.equals(this.enabled, searchRecommendRulesParams.enabled) &&
+      Objects.equals(this.filters, searchRecommendRulesParams.filters) &&
+      Objects.equals(this.facets, searchRecommendRulesParams.facets) &&
+      Objects.equals(this.maxValuesPerFacet, searchRecommendRulesParams.maxValuesPerFacet)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(query, context, page, hitsPerPage, enabled);
+    return Objects.hash(query, context, page, hitsPerPage, enabled, filters, facets, maxValuesPerFacet);
   }
 
   @Override
@@ -115,6 +170,9 @@ public class SearchRecommendRulesParams {
     sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    hitsPerPage: ").append(toIndentedString(hitsPerPage)).append("\n");
     sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
+    sb.append("    filters: ").append(toIndentedString(filters)).append("\n");
+    sb.append("    facets: ").append(toIndentedString(facets)).append("\n");
+    sb.append("    maxValuesPerFacet: ").append(toIndentedString(maxValuesPerFacet)).append("\n");
     sb.append("}");
     return sb.toString();
   }

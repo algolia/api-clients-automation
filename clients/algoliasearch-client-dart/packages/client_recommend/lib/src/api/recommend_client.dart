@@ -9,7 +9,7 @@ import 'package:algolia_client_recommend/src/model/get_recommend_task_response.d
 import 'package:algolia_client_recommend/src/model/get_recommendations_params.dart';
 import 'package:algolia_client_recommend/src/model/get_recommendations_response.dart';
 import 'package:algolia_client_recommend/src/model/recommend_models.dart';
-import 'package:algolia_client_recommend/src/model/rule_response.dart';
+import 'package:algolia_client_recommend/src/model/recommend_rule.dart';
 import 'package:algolia_client_recommend/src/model/search_recommend_rules_params.dart';
 import 'package:algolia_client_recommend/src/model/search_recommend_rules_response.dart';
 
@@ -187,14 +187,14 @@ final class RecommendClient implements ApiClient {
     );
   }
 
-  /// Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+  /// Deletes a Recommend rule from a recommendation scenario.
   ///
   /// Required API Key ACLs:
   ///   - editSettings
   ///
   /// Parameters:
   /// * [indexName] Name of the index on which to perform the operation.
-  /// * [model] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+  /// * [model] [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
   /// * [objectID] Unique record identifier.
   /// * [requestOptions] additional request configuration.
   Future<DeletedAtResponse> deleteRecommendRule({
@@ -231,17 +231,17 @@ final class RecommendClient implements ApiClient {
     );
   }
 
-  /// Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+  /// Retrieves a Recommend rule that you previously created in the Algolia dashboard.
   ///
   /// Required API Key ACLs:
   ///   - settings
   ///
   /// Parameters:
   /// * [indexName] Name of the index on which to perform the operation.
-  /// * [model] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+  /// * [model] [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
   /// * [objectID] Unique record identifier.
   /// * [requestOptions] additional request configuration.
-  Future<RuleResponse> getRecommendRule({
+  Future<RecommendRule> getRecommendRule({
     required String indexName,
     required RecommendModels model,
     required String objectID,
@@ -268,22 +268,22 @@ final class RecommendClient implements ApiClient {
       request: request,
       options: requestOptions,
     );
-    return deserialize<RuleResponse, RuleResponse>(
+    return deserialize<RecommendRule, RecommendRule>(
       response,
-      'RuleResponse',
+      'RecommendRule',
       growable: true,
     );
   }
 
-  /// Some operations, such as deleting a Recommend rule, will respond with a `taskID` value. Use this value here to check the status of that task.
+  /// Checks the status of a given task.  Deleting a Recommend rule is asynchronous. When you delete a rule, a task is created on a queue and completed depending on the load on the server. The API response includes a task ID that you can use to check the status.
   ///
   /// Required API Key ACLs:
   ///   - editSettings
   ///
   /// Parameters:
   /// * [indexName] Name of the index on which to perform the operation.
-  /// * [model] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
-  /// * [taskID] Unique identifier of a task. Numeric value (up to 64bits).
+  /// * [model] [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+  /// * [taskID] Unique task identifier.
   /// * [requestOptions] additional request configuration.
   Future<GetRecommendTaskResponse> getRecommendStatus({
     required String indexName,
@@ -315,7 +315,7 @@ final class RecommendClient implements ApiClient {
     );
   }
 
-  /// Returns results from either recommendation or trending models:    - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models   - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
+  /// Retrieves recommendations from selected AI models.
   ///
   /// Required API Key ACLs:
   ///   - search
@@ -344,14 +344,14 @@ final class RecommendClient implements ApiClient {
     );
   }
 
-  /// List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+  /// Searches for Recommend rules.  Use an empty query to list all rules for this recommendation scenario.
   ///
   /// Required API Key ACLs:
   ///   - settings
   ///
   /// Parameters:
   /// * [indexName] Name of the index on which to perform the operation.
-  /// * [model] [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+  /// * [model] [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
   /// * [searchRecommendRulesParams]
   /// * [requestOptions] additional request configuration.
   Future<SearchRecommendRulesResponse> searchRecommendRules({

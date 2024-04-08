@@ -1,35 +1,21 @@
 recommendedForYouQuery:
+  title: Recommended for you
   allOf:
     - $ref: './RecommendationsRequest.yml#/baseRecommendRequest'
-    - $ref: '#/baseRecommendedForYouQuery'
+    - $ref: '#/recommendedForYou'
 
-recommendedForYouQueryParameters:
-  allOf:
-    - $ref: '../../../common/schemas/SearchParams.yml#/searchParamsObject'
-    - $ref: '#/baseRecommendedForYouQueryParameters'
-
-baseRecommendedForYouQueryParameters:
+recommendedForYou:
   type: object
-  properties:
-    userToken:
-      $ref: '../../../common/schemas/SearchParams.yml#/userToken'
-  required:
-    - userToken
-
-baseRecommendedForYouQuery:
-  type: object
-  additionalProperties: false
   properties:
     model:
       $ref: '#/recommendedForYouModel'
-    queryParameters:
-      $ref: '#/recommendedForYouQueryParameters'
     fallbackParameters:
-      $ref: '#/recommendedForYouQueryParameters'
+      $ref: './RecommendationsRequest.yml#/fallbackParams'
   required:
     - model
 
 recommendedForYouModel:
-  description: Recommended for you model.
   type: string
+  description: |
+    "Recommened for you" model.
   enum: [recommended-for-you]

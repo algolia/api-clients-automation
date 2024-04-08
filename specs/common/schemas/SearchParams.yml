@@ -397,9 +397,9 @@ listOfSearchFilters:
 filters:
   type: string
   description: |
-    Filter the search so that only records with matching values are included in the results.
+    Filter expression to only include items that match the filter criteria in the response.
 
-    These filters are supported:
+    You can use these filter expressions:
 
     - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`.
     - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive).
@@ -421,7 +421,6 @@ filters:
 
     For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
   example: '(category:Book OR category:Ebook) AND _tags:published'
-  default: ''
   x-categories:
     - Filtering
 

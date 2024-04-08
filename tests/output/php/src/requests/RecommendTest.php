@@ -627,7 +627,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 ['indexName' => 'indexName',
                     'objectID' => 'objectID',
                     'model' => 'related-products',
-                    'threshold' => 42,
+                    'threshold' => 42.1,
                 ],
             ],
             ],
@@ -637,7 +637,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/*/recommendations',
                 'method' => 'POST',
-                'body' => json_decode('{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42}]}'),
+                'body' => json_decode('{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1}]}'),
             ],
         ]);
     }
@@ -654,7 +654,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 ['indexName' => 'indexName',
                     'objectID' => 'objectID',
                     'model' => 'related-products',
-                    'threshold' => 42,
+                    'threshold' => 42.1,
                     'maxRecommendations' => 10,
                     'queryParameters' => ['query' => 'myQuery',
                         'facetFilters' => [
@@ -675,7 +675,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/*/recommendations',
                 'method' => 'POST',
-                'body' => json_decode('{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}'),
+                'body' => json_decode('{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}'),
             ],
         ]);
     }
@@ -691,7 +691,9 @@ class RecommendTest extends TestCase implements HttpClientInterface
             ['requests' => [
                 ['indexName' => 'indexName',
                     'model' => 'trending-items',
-                    'threshold' => 42,
+                    'threshold' => 42.1,
+                    'facetName' => 'facet',
+                    'facetValue' => 'value',
                 ],
             ],
             ],
@@ -701,7 +703,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/*/recommendations',
                 'method' => 'POST',
-                'body' => json_decode('{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42}]}'),
+                'body' => json_decode('{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"facetName":"facet","facetValue":"value"}]}'),
             ],
         ]);
     }
@@ -717,7 +719,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             ['requests' => [
                 ['indexName' => 'indexName',
                     'model' => 'trending-items',
-                    'threshold' => 42,
+                    'threshold' => 42.1,
                     'maxRecommendations' => 10,
                     'facetName' => 'myFacetName',
                     'facetValue' => 'myFacetValue',
@@ -740,7 +742,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/*/recommendations',
                 'method' => 'POST',
-                'body' => json_decode('{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}'),
+                'body' => json_decode('{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}'),
             ],
         ]);
     }
@@ -757,13 +759,13 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 ['indexName' => 'indexName1',
                     'objectID' => 'objectID1',
                     'model' => 'related-products',
-                    'threshold' => 21,
+                    'threshold' => 21.7,
                 ],
 
                 ['indexName' => 'indexName2',
                     'objectID' => 'objectID2',
                     'model' => 'related-products',
-                    'threshold' => 21,
+                    'threshold' => 21.7,
                 ],
             ],
             ],
@@ -773,7 +775,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/*/recommendations',
                 'method' => 'POST',
-                'body' => json_decode('{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21}]}'),
+                'body' => json_decode('{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7}]}'),
             ],
         ]);
     }
@@ -790,7 +792,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 ['indexName' => 'indexName1',
                     'objectID' => 'objectID1',
                     'model' => 'related-products',
-                    'threshold' => 21,
+                    'threshold' => 21.7,
                     'maxRecommendations' => 10,
                     'queryParameters' => ['query' => 'myQuery',
                         'facetFilters' => [
@@ -807,7 +809,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 ['indexName' => 'indexName2',
                     'objectID' => 'objectID2',
                     'model' => 'related-products',
-                    'threshold' => 21,
+                    'threshold' => 21.7,
                     'maxRecommendations' => 10,
                     'queryParameters' => ['query' => 'myQuery',
                         'facetFilters' => [
@@ -828,7 +830,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/*/recommendations',
                 'method' => 'POST',
-                'body' => json_decode('{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}'),
+                'body' => json_decode('{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}'),
             ],
         ]);
     }
@@ -845,7 +847,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
                 ['indexName' => 'indexName1',
                     'objectID' => 'objectID1',
                     'model' => 'bought-together',
-                    'threshold' => 42,
+                    'threshold' => 42.7,
                 ],
             ],
             ],
@@ -855,7 +857,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/indexes/*/recommendations',
                 'method' => 'POST',
-                'body' => json_decode('{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42}]}'),
+                'body' => json_decode('{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42.7}]}'),
             ],
         ]);
     }

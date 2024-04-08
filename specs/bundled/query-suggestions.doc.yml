@@ -14,10 +14,10 @@ info:
     to guide users and speed up their search.
 
 
-    # Base URLs
+    ## Base URLs
 
 
-    The base URLs for making requests to the Query Suggestions API are:
+    The base URLs for requests to the Query Suggestions API are:
 
 
     - `https://query-suggestions.us.algolia.com`
@@ -32,43 +32,29 @@ info:
     **All requests must use HTTPS.**
 
 
-    # Authentication
+    ## Authentication
 
 
     To authenticate your API requests, add these headers:
 
 
-    <dl>
+    - `x-algolia-application-id`. Your Algolia application ID.
 
-    <dt><code>x-algolia-application-id</code></dt>
-
-    <dd>Your Algolia application ID.</dd>
-
-    <dt><code>x-algolia-api-key</code></dt>
-
-    <dd>
-
-    An API key with the necessary permissions to make the request.
-
-    The required access control list (ACL) to make a request is listed in each
-    endpoint's reference.
-
-    </dd>
-
-    </dl>
-
+    - `x-algolia-api-key`. An API key with the necessary permissions to make the
+    request.
+      The required access control list (ACL) to make a request is listed in each endpoint's reference.
 
     You can find your application ID and API key in the [Algolia
     dashboard](https://dashboard.algolia.com/account).
 
 
-    # Request format
+    ## Request format
 
 
     Request bodies must be JSON objects.
 
 
-    # Response status and errors
+    ## Response status and errors
 
 
     Response bodies are JSON objects.
@@ -83,7 +69,7 @@ info:
     Error responses have a `message` property with more information.
 
 
-    # Version
+    ## Version
 
 
     The current version of the Query Suggestions API is version 1, as indicated
@@ -2308,17 +2294,14 @@ paths:
                   lastBuiltAt:
                     type: string
                     description: >-
-                      Timestamp in
-                      [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format
-                      when the Query Suggestions index was last built.
+                      Date and time when the Query Suggestions index was last
+                      built, in RFC 3339 format.
                     example: '2023-07-05T08:03:53Z'
                   lastSuccessfulBuiltAt:
                     type: string
                     description: >-
-                      Timestamp in
-                      [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format
-                      when the Query Suggestions index was last updated
-                      successfully.
+                      Date and time when the Query Suggestions index was last
+                      updated successfully.
                     example: '2023-07-05T08:03:53Z'
                   lastSuccessfulBuildDuration:
                     type: string
@@ -2532,9 +2515,7 @@ paths:
                 properties:
                   timestamp:
                     type: string
-                    description: >-
-                      Timestamp in
-                      [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
+                    description: Date and time of the log entry, in RFC 3339 format.
                     example: '2023-07-05T08:03:33.898076171Z'
                   level:
                     $ref: '#/components/schemas/LogLevel'
@@ -2745,11 +2726,20 @@ components:
     appId:
       type: apiKey
       in: header
-      name: X-Algolia-Application-Id
+      name: x-algolia-application-id
+      description: Your Algolia application ID.
     apiKey:
       type: apiKey
       in: header
-      name: X-Algolia-API-Key
+      name: x-algolia-api-key
+      description: >
+        Your Algolia API key with the necessary permissions to make the request.
+
+        Permissions are controlled through access control lists (ACL) and access
+        restrictions.
+
+        The required ACL to make a request is listed in each endpoint's
+        reference.
   parameters:
     PathInPath:
       name: path

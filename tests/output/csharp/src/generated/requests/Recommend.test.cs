@@ -569,12 +569,12 @@ public class RecommendClientRequestTests
         Requests = new List<RecommendationsRequest>
         {
           new RecommendationsRequest(
-            new RecommendationsQuery
+            new RelatedQuery
             {
               IndexName = "indexName",
               ObjectID = "objectID",
-              Model = Enum.Parse<RecommendationModels>("RelatedProducts"),
-              Threshold = 42,
+              Model = Enum.Parse<RelatedModel>("RelatedProducts"),
+              Threshold = 42.1,
             }
           )
         },
@@ -585,7 +585,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/indexes/*/recommendations", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42}]}",
+      "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -600,21 +600,21 @@ public class RecommendClientRequestTests
         Requests = new List<RecommendationsRequest>
         {
           new RecommendationsRequest(
-            new RecommendationsQuery
+            new RelatedQuery
             {
               IndexName = "indexName",
               ObjectID = "objectID",
-              Model = Enum.Parse<RecommendationModels>("RelatedProducts"),
-              Threshold = 42,
+              Model = Enum.Parse<RelatedModel>("RelatedProducts"),
+              Threshold = 42.1,
               MaxRecommendations = 10,
-              QueryParameters = new SearchParamsObject
+              QueryParameters = new SearchParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
                   new List<MixedSearchFilters> { new MixedSearchFilters("query") }
                 ),
               },
-              FallbackParameters = new SearchParamsObject
+              FallbackParameters = new FallbackParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
@@ -631,7 +631,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/indexes/*/recommendations", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}",
+      "{\"requests\":[{\"indexName\":\"indexName\",\"objectID\":\"objectID\",\"model\":\"related-products\",\"threshold\":42.1,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -650,7 +650,9 @@ public class RecommendClientRequestTests
             {
               IndexName = "indexName",
               Model = Enum.Parse<TrendingItemsModel>("TrendingItems"),
-              Threshold = 42,
+              Threshold = 42.1,
+              FacetName = "facet",
+              FacetValue = "value",
             }
           )
         },
@@ -661,7 +663,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/indexes/*/recommendations", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42}]}",
+      "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42.1,\"facetName\":\"facet\",\"facetValue\":\"value\"}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -680,11 +682,11 @@ public class RecommendClientRequestTests
             {
               IndexName = "indexName",
               Model = Enum.Parse<TrendingItemsModel>("TrendingItems"),
-              Threshold = 42,
+              Threshold = 42.1,
               MaxRecommendations = 10,
               FacetName = "myFacetName",
               FacetValue = "myFacetValue",
-              QueryParameters = new SearchParamsObject
+              QueryParameters = new SearchParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
@@ -708,7 +710,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/indexes/*/recommendations", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42,\"maxRecommendations\":10,\"facetName\":\"myFacetName\",\"facetValue\":\"myFacetValue\",\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}",
+      "{\"requests\":[{\"indexName\":\"indexName\",\"model\":\"trending-items\",\"threshold\":42.1,\"maxRecommendations\":10,\"facetName\":\"myFacetName\",\"facetValue\":\"myFacetValue\",\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback\"]}}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -723,21 +725,21 @@ public class RecommendClientRequestTests
         Requests = new List<RecommendationsRequest>
         {
           new RecommendationsRequest(
-            new RecommendationsQuery
+            new RelatedQuery
             {
               IndexName = "indexName1",
               ObjectID = "objectID1",
-              Model = Enum.Parse<RecommendationModels>("RelatedProducts"),
-              Threshold = 21,
+              Model = Enum.Parse<RelatedModel>("RelatedProducts"),
+              Threshold = 21.7,
             }
           ),
           new RecommendationsRequest(
-            new RecommendationsQuery
+            new RelatedQuery
             {
               IndexName = "indexName2",
               ObjectID = "objectID2",
-              Model = Enum.Parse<RecommendationModels>("RelatedProducts"),
-              Threshold = 21,
+              Model = Enum.Parse<RelatedModel>("RelatedProducts"),
+              Threshold = 21.7,
             }
           )
         },
@@ -748,7 +750,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/indexes/*/recommendations", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21}]}",
+      "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21.7},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21.7}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -763,21 +765,21 @@ public class RecommendClientRequestTests
         Requests = new List<RecommendationsRequest>
         {
           new RecommendationsRequest(
-            new RecommendationsQuery
+            new RelatedQuery
             {
               IndexName = "indexName1",
               ObjectID = "objectID1",
-              Model = Enum.Parse<RecommendationModels>("RelatedProducts"),
-              Threshold = 21,
+              Model = Enum.Parse<RelatedModel>("RelatedProducts"),
+              Threshold = 21.7,
               MaxRecommendations = 10,
-              QueryParameters = new SearchParamsObject
+              QueryParameters = new SearchParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
                   new List<MixedSearchFilters> { new MixedSearchFilters("query1") }
                 ),
               },
-              FallbackParameters = new SearchParamsObject
+              FallbackParameters = new FallbackParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
@@ -787,21 +789,21 @@ public class RecommendClientRequestTests
             }
           ),
           new RecommendationsRequest(
-            new RecommendationsQuery
+            new RelatedQuery
             {
               IndexName = "indexName2",
               ObjectID = "objectID2",
-              Model = Enum.Parse<RecommendationModels>("RelatedProducts"),
-              Threshold = 21,
+              Model = Enum.Parse<RelatedModel>("RelatedProducts"),
+              Threshold = 21.7,
               MaxRecommendations = 10,
-              QueryParameters = new SearchParamsObject
+              QueryParameters = new SearchParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
                   new List<MixedSearchFilters> { new MixedSearchFilters("query2") }
                 ),
               },
-              FallbackParameters = new SearchParamsObject
+              FallbackParameters = new FallbackParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
@@ -818,7 +820,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/indexes/*/recommendations", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query1\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback1\"]}},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query2\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback2\"]}}]}",
+      "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"related-products\",\"threshold\":21.7,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query1\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback1\"]}},{\"indexName\":\"indexName2\",\"objectID\":\"objectID2\",\"model\":\"related-products\",\"threshold\":21.7,\"maxRecommendations\":10,\"queryParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"query2\"]},\"fallbackParameters\":{\"query\":\"myQuery\",\"facetFilters\":[\"fallback2\"]}}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -833,12 +835,12 @@ public class RecommendClientRequestTests
         Requests = new List<RecommendationsRequest>
         {
           new RecommendationsRequest(
-            new RecommendationsQuery
+            new BoughtTogetherQuery
             {
               IndexName = "indexName1",
               ObjectID = "objectID1",
-              Model = Enum.Parse<RecommendationModels>("BoughtTogether"),
-              Threshold = 42,
+              Model = Enum.Parse<FbtModel>("BoughtTogether"),
+              Threshold = 42.7,
             }
           )
         },
@@ -849,7 +851,7 @@ public class RecommendClientRequestTests
     Assert.Equal("/1/indexes/*/recommendations", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"bought-together\",\"threshold\":42}]}",
+      "{\"requests\":[{\"indexName\":\"indexName1\",\"objectID\":\"objectID1\",\"model\":\"bought-together\",\"threshold\":42.7}]}",
       req.Body,
       new JsonDiffConfig(false)
     );

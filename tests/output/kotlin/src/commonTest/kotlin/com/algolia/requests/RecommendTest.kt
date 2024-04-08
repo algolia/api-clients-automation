@@ -534,11 +534,11 @@ class RecommendTest {
         getRecommendations(
           getRecommendationsParams = GetRecommendationsParams(
             requests = listOf(
-              RecommendationsQuery(
+              RelatedQuery(
                 indexName = "indexName",
                 objectID = "objectID",
-                model = RecommendationModels.entries.first { it.value == "related-products" },
-                threshold = 42,
+                model = RelatedModel.entries.first { it.value == "related-products" },
+                threshold = 42.1,
               ),
             ),
           ),
@@ -547,7 +547,7 @@ class RecommendTest {
       intercept = {
         assertEquals("/1/indexes/*/recommendations".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42}]}""", it.body)
+        assertJsonBody("""{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1}]}""", it.body)
       },
     )
   }
@@ -559,17 +559,17 @@ class RecommendTest {
         getRecommendations(
           getRecommendationsParams = GetRecommendationsParams(
             requests = listOf(
-              RecommendationsQuery(
+              RelatedQuery(
                 indexName = "indexName",
                 objectID = "objectID",
-                model = RecommendationModels.entries.first { it.value == "related-products" },
-                threshold = 42,
+                model = RelatedModel.entries.first { it.value == "related-products" },
+                threshold = 42.1,
                 maxRecommendations = 10,
-                queryParameters = SearchParamsObject(
+                queryParameters = SearchParams(
                   query = "myQuery",
                   facetFilters = FacetFilters.of(listOf(MixedSearchFilters.of("query"))),
                 ),
-                fallbackParameters = SearchParamsObject(
+                fallbackParameters = FallbackParams(
                   query = "myQuery",
                   facetFilters = FacetFilters.of(listOf(MixedSearchFilters.of("fallback"))),
                 ),
@@ -581,7 +581,7 @@ class RecommendTest {
       intercept = {
         assertEquals("/1/indexes/*/recommendations".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}""", it.body)
+        assertJsonBody("""{"requests":[{"indexName":"indexName","objectID":"objectID","model":"related-products","threshold":42.1,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}""", it.body)
       },
     )
   }
@@ -596,7 +596,9 @@ class RecommendTest {
               TrendingItemsQuery(
                 indexName = "indexName",
                 model = TrendingItemsModel.entries.first { it.value == "trending-items" },
-                threshold = 42,
+                threshold = 42.1,
+                facetName = "facet",
+                facetValue = "value",
               ),
             ),
           ),
@@ -605,7 +607,7 @@ class RecommendTest {
       intercept = {
         assertEquals("/1/indexes/*/recommendations".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42}]}""", it.body)
+        assertJsonBody("""{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"facetName":"facet","facetValue":"value"}]}""", it.body)
       },
     )
   }
@@ -620,11 +622,11 @@ class RecommendTest {
               TrendingItemsQuery(
                 indexName = "indexName",
                 model = TrendingItemsModel.entries.first { it.value == "trending-items" },
-                threshold = 42,
+                threshold = 42.1,
                 maxRecommendations = 10,
                 facetName = "myFacetName",
                 facetValue = "myFacetValue",
-                queryParameters = SearchParamsObject(
+                queryParameters = SearchParams(
                   query = "myQuery",
                   facetFilters = FacetFilters.of(listOf(MixedSearchFilters.of("query"))),
                 ),
@@ -640,7 +642,7 @@ class RecommendTest {
       intercept = {
         assertEquals("/1/indexes/*/recommendations".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}""", it.body)
+        assertJsonBody("""{"requests":[{"indexName":"indexName","model":"trending-items","threshold":42.1,"maxRecommendations":10,"facetName":"myFacetName","facetValue":"myFacetValue","queryParameters":{"query":"myQuery","facetFilters":["query"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback"]}}]}""", it.body)
       },
     )
   }
@@ -652,17 +654,17 @@ class RecommendTest {
         getRecommendations(
           getRecommendationsParams = GetRecommendationsParams(
             requests = listOf(
-              RecommendationsQuery(
+              RelatedQuery(
                 indexName = "indexName1",
                 objectID = "objectID1",
-                model = RecommendationModels.entries.first { it.value == "related-products" },
-                threshold = 21,
+                model = RelatedModel.entries.first { it.value == "related-products" },
+                threshold = 21.7,
               ),
-              RecommendationsQuery(
+              RelatedQuery(
                 indexName = "indexName2",
                 objectID = "objectID2",
-                model = RecommendationModels.entries.first { it.value == "related-products" },
-                threshold = 21,
+                model = RelatedModel.entries.first { it.value == "related-products" },
+                threshold = 21.7,
               ),
             ),
           ),
@@ -671,7 +673,7 @@ class RecommendTest {
       intercept = {
         assertEquals("/1/indexes/*/recommendations".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21}]}""", it.body)
+        assertJsonBody("""{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7}]}""", it.body)
       },
     )
   }
@@ -683,32 +685,32 @@ class RecommendTest {
         getRecommendations(
           getRecommendationsParams = GetRecommendationsParams(
             requests = listOf(
-              RecommendationsQuery(
+              RelatedQuery(
                 indexName = "indexName1",
                 objectID = "objectID1",
-                model = RecommendationModels.entries.first { it.value == "related-products" },
-                threshold = 21,
+                model = RelatedModel.entries.first { it.value == "related-products" },
+                threshold = 21.7,
                 maxRecommendations = 10,
-                queryParameters = SearchParamsObject(
+                queryParameters = SearchParams(
                   query = "myQuery",
                   facetFilters = FacetFilters.of(listOf(MixedSearchFilters.of("query1"))),
                 ),
-                fallbackParameters = SearchParamsObject(
+                fallbackParameters = FallbackParams(
                   query = "myQuery",
                   facetFilters = FacetFilters.of(listOf(MixedSearchFilters.of("fallback1"))),
                 ),
               ),
-              RecommendationsQuery(
+              RelatedQuery(
                 indexName = "indexName2",
                 objectID = "objectID2",
-                model = RecommendationModels.entries.first { it.value == "related-products" },
-                threshold = 21,
+                model = RelatedModel.entries.first { it.value == "related-products" },
+                threshold = 21.7,
                 maxRecommendations = 10,
-                queryParameters = SearchParamsObject(
+                queryParameters = SearchParams(
                   query = "myQuery",
                   facetFilters = FacetFilters.of(listOf(MixedSearchFilters.of("query2"))),
                 ),
-                fallbackParameters = SearchParamsObject(
+                fallbackParameters = FallbackParams(
                   query = "myQuery",
                   facetFilters = FacetFilters.of(listOf(MixedSearchFilters.of("fallback2"))),
                 ),
@@ -720,7 +722,7 @@ class RecommendTest {
       intercept = {
         assertEquals("/1/indexes/*/recommendations".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}""", it.body)
+        assertJsonBody("""{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query1"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback1"]}},{"indexName":"indexName2","objectID":"objectID2","model":"related-products","threshold":21.7,"maxRecommendations":10,"queryParameters":{"query":"myQuery","facetFilters":["query2"]},"fallbackParameters":{"query":"myQuery","facetFilters":["fallback2"]}}]}""", it.body)
       },
     )
   }
@@ -732,11 +734,11 @@ class RecommendTest {
         getRecommendations(
           getRecommendationsParams = GetRecommendationsParams(
             requests = listOf(
-              RecommendationsQuery(
+              BoughtTogetherQuery(
                 indexName = "indexName1",
                 objectID = "objectID1",
-                model = RecommendationModels.entries.first { it.value == "bought-together" },
-                threshold = 42,
+                model = FbtModel.entries.first { it.value == "bought-together" },
+                threshold = 42.7,
               ),
             ),
           ),
@@ -745,7 +747,7 @@ class RecommendTest {
       intercept = {
         assertEquals("/1/indexes/*/recommendations".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42}]}""", it.body)
+        assertJsonBody("""{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42.7}]}""", it.body)
       },
     )
   }

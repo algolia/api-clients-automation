@@ -6,7 +6,7 @@ info:
     and records.
 
 
-    # Client libraries
+    ## Client libraries
 
 
     Use Algolia's API clients and libraries to reliably integrate Algolia's APIs
@@ -20,10 +20,10 @@ info:
     ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/)
 
 
-    # Base URLs
+    ## Base URLs
 
 
-    The base URLs for making requests to the Search API are:
+    The base URLs for requests to the Search API are:
 
 
     - `https://{APPLICATION_ID}.algolia.net`
@@ -39,7 +39,7 @@ info:
     **All requests must use HTTPS.**
 
 
-    # Retry strategy
+    ## Retry strategy
 
 
     To guarantee a high availability, implement a retry strategy for all API
@@ -62,44 +62,30 @@ info:
     All Algolia API clients implement this retry strategy.
 
 
-    # Authentication
+    ## Authentication
 
 
     To authenticate your API requests, add these headers:
 
 
-    <dl>
+    - `x-algolia-application-id`. Your Algolia application ID.
 
-    <dt><code>x-algolia-application-id</code></dt>
-
-    <dd>Your Algolia application ID.</dd>
-
-    <dt><code>x-algolia-api-key</code></dt>
-
-    <dd>
-
-    An API key with the necessary permissions to make the request.
-
-    The required access control list (ACL) to make a request is listed in each
-    endpoint's reference.
-
-    </dd>
-
-    </dl>
-
+    - `x-algolia-api-key`. An API key with the necessary permissions to make the
+    request.
+      The required access control list (ACL) to make a request is listed in each endpoint's reference.
 
     You can find your application ID and API key in the [Algolia
     dashboard](https://dashboard.algolia.com/account).
 
 
-    # Request format
+    ## Request format
 
 
     Depending on the endpoint, request bodies are either JSON objects or arrays
     of JSON objects,
 
 
-    # Parameters
+    ## Parameters
 
 
     Parameters are passed as query parameters for GET and DELETE requests,
@@ -123,7 +109,7 @@ info:
     `attributesToRetrieve=%5B%22title%22,%22description%22%D`
 
 
-    # Response status and errors
+    ## Response status and errors
 
 
     The Search API returns JSON responses.
@@ -138,7 +124,7 @@ info:
     Error responses have a `message` property with more information.
 
 
-    # Version
+    ## Version
 
 
     The current version of the Search API is version 1, as indicated by the
@@ -386,11 +372,20 @@ components:
     appId:
       type: apiKey
       in: header
-      name: X-Algolia-Application-Id
+      name: x-algolia-application-id
+      description: Your Algolia application ID.
     apiKey:
       type: apiKey
       in: header
-      name: X-Algolia-API-Key
+      name: x-algolia-api-key
+      description: >
+        Your Algolia API key with the necessary permissions to make the request.
+
+        Permissions are controlled through access control lists (ACL) and access
+        restrictions.
+
+        The required ACL to make a request is listed in each endpoint's
+        reference.
   parameters:
     PathInPath:
       name: path
@@ -421,8 +416,7 @@ components:
       description: Unique record identifier.
       required: true
       schema:
-        type: string
-        example: '123'
+        $ref: '#/components/schemas/objectID'
     ForwardToReplicas:
       in: query
       name: forwardToReplicas
@@ -495,20 +489,18 @@ components:
         default: 100
     UserIDInHeader:
       name: X-Algolia-User-ID
-      description: User ID to assign.
+      description: Unique identifier of the user who makes the search request.
       in: header
       required: true
       schema:
-        type: string
-        pattern: ^[a-zA-Z0-9 \-*.]+$
+        $ref: '#/components/schemas/userID'
     UserIDInPath:
       name: userID
-      description: User ID to assign.
+      description: Unique identifier of the user who makes the search request.
       in: path
       required: true
       schema:
-        type: string
-        pattern: ^[a-zA-Z0-9 \-*.]+$
+        $ref: '#/components/schemas/userID'
   schemas:
     ErrorBase:
       description: Error.
@@ -547,11 +539,11 @@ components:
     filters:
       type: string
       description: >
-        Filter the search so that only records with matching values are included
-        in the results.
+        Filter expression to only include items that match the filter criteria
+        in the response.
 
 
-        These filters are supported:
+        You can use these filter expressions:
 
 
         - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of
@@ -589,7 +581,6 @@ components:
         For more information, see
         [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
       example: (category:Book OR category:Ebook) AND _tags:published
-      default: ''
       x-categories:
         - Filtering
     searchFiltersArrayString:
@@ -1367,29 +1358,19 @@ components:
         This helps to avoid returning empty search results.
 
 
-        <dl>
+        - `none`.
+          No words are removed when a query doesn't return results.
 
-        <dt><code>none</code></dt>
+        - `lastWords`.
+          Treat the last (then second to last, then third to last) word as optional,
+          until there are results or at most 5 words have been removed.
 
-        <dd>No words are removed when a query doesn't return results.</dd>
+        - `firstWords`.
+          Treat the first (then second, then third) word as optional,
+          until there are results or at most 5 words have been removed.
 
-        <dt><code>lastWords</code></dt>
-
-        <dd>Treat the last (then second to last, then third to last) word as
-        optional, until there are results or at most 5 words have been
-        removed.</dd>
-
-        <dt><code>firstWords</code></dt>
-
-        <dd>Treat the first (then second, then third) word as optional, until
-        there are results or at most 5 words have been removed.</dd>
-
-        <dt><code>allOptional</code></dt>
-
-        <dd>Treat all words as optional.</dd>
-
-        </dl>
-
+        - `allOptional`.
+          Treat all words as optional.
 
         For more information, see [Remove words to improve
         results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results/).
@@ -1438,45 +1419,18 @@ components:
         is computed when the search query has only one word.
 
 
-        <dl>
+        - `attribute`.
+          The Exact ranking criterion is 1 if the query word and attribute value are the same.
+          For example, a search for "road" will match the value "road", but not "road trip".
 
-        <dt><code>attribute</code></dt>
+        - `none`.
+          The Exact ranking criterion is ignored on single-word searches.
 
-        <dd>
-
-        The Exact ranking criterion is 1 if the query word and attribute value
-        are the same.
-
-        For example, a search for "road" will match the value "road", but not
-        "road trip".
-
-        </dd>
-
-        <dt><code>none</code></dt>
-
-        <dd>
-
-        The Exact ranking criterion is ignored on single-word searches.
-
-        </dd>
-
-        <dt><code>word</code></dt>
-
-        <dd>
-
-        The Exact ranking criterion is 1 if the query word is found in the
-        attribute value.
-
-        The query word must have at least 3 characters and must not be a stop
-        word.
-
-        </dd>
-
-        </dl>
-
-
-        If `exactOnSingleWordQuery` is `word`, only exact matches will be
-        highlighted, partial and prefix matches won't.
+        - `word`.
+          The Exact ranking criterion is 1 if the query word is found in the attribute value.
+          The query word must have at least 3 characters and must not be a stop word.
+          Only exact matches will be highlighted,
+          partial and prefix matches won't.
       default: attribute
       x-categories:
         - Query strategy
@@ -1568,27 +1522,15 @@ components:
         setting.
 
 
-        <dl>
+        - `count`.
+          Order remaining facet values by decreasing count.
+          The count is the number of matching records containing this facet value.
 
-        <dt><code>count</code></dt>
+        - `alpha`.
+          Sort facet values alphabetically.
 
-        <dd>
-
-        Order remaining facet values by decreasing count.
-
-        The count is the number of matching records containing this facet value.
-
-        </dd>
-
-        <dt><code>alpha</code></dt>
-
-        <dd>Sort facet values alphabetically.</dd>
-
-        <dt><code>hidden</code></dt>
-
-        <dd>Don't show facet values that aren't explicitly positioned.</dd>
-
-        </dl>.
+        - `hidden`.
+          Don't show facet values that aren't explicitly positioned.
       type: string
       enum:
         - count
@@ -1699,20 +1641,10 @@ components:
             **Modifiers**
 
 
-            <dl>
-
-            <dt><code>asc("ATTRIBUTE")</code></dt>
-
-            <dd>Sort the index by the values of an attribute, in ascending
-            order.</dd>
-
-            <dt><code>desc("ATTRIBUTE")</code></dt>
-
-            <dd>Sort the index by the values of an attribute, in descending
-            order.</dd>
-
-            </dl>
-
+            - `asc("ATTRIBUTE")`.
+              Sort the index by the values of an attribute, in ascending order.
+            - `desc("ATTRIBUTE")`.
+              Sort the index by the values of an attribute, in descending order.
 
             Before you modify the default setting,
 
@@ -1756,22 +1688,15 @@ components:
             **Modifiers**
 
 
-            <dl>
+            - `asc("ATTRIBUTE")`.
+              Sort the index by the values of an attribute, in ascending order.
 
-            <dt><code>asc("ATTRIBUTE")</code></dt>
+            - `desc("ATTRIBUTE")`.
+              Sort the index by the values of an attribute, in descending order.
 
-            <dd>Sort the index by the values of an attribute, in ascending
-            order.</dd>
+            If you use two or more custom ranking attributes,
 
-            <dt><code>desc("ATTRIBUTE")</code></dt>
-
-            <dd>Sort the index by the values of an attribute, in descending
-            order.</dd>
-
-            </dl>
-
-
-            If you use two or more custom ranking attributes, [reduce the
+            [reduce the
             precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/)
             of your first attributes,
 
@@ -2124,37 +2049,14 @@ components:
             matches by the Exact ranking criterion.
 
 
-            <dl>
+            - `ignorePlurals`.
+              Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches.
 
-            <dt><code>ignorePlurals</code></dt>
+            - `singleWordSynonym`.
+              Single-word synonyms, such as "NY/NYC" are considered exact matches.
 
-            <dd>
-
-
-            Plurals and similar declensions added by the `ignorePlurals` setting
-            are considered exact matches.
-
-
-            </dd>
-
-            <dt><code>singleWordSynonym</code></dt>
-
-            <dd>
-
-            Single-word synonyms, such as "NY/NYC" are considered exact matches.
-
-            </dd>
-
-            <dt><code>multiWordsSynonym</code></dt>
-
-            <dd>
-
-            Multi-word synonyms, such as "NY/New York" are considered exact
-            matches.
-
-            </dd>
-
-            </dl>.
+            - `multiWordsSynonym`.
+              Multi-word synonyms, such as "NY/New York" are considered exact matches.
           default:
             - ignorePlurals
             - singleWordSynonym
@@ -2164,40 +2066,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/advancedSyntaxFeatures'
-          description: >
+          description: |
             Advanced search syntax features you want to support.
 
+            - `exactPhrase`.
+              Phrases in quotes must match exactly.
+              For example, `sparkly blue "iPhone case"` only returns records with the exact string "iPhone case".
 
-            <dl>
-
-            <dt><code>exactPhrase</code></dt>
-
-            <dd>
-
-
-            Phrases in quotes must match exactly.
-
-            For example, `sparkly blue "iPhone case"` only returns records with
-            the exact string "iPhone case".
-
-
-            </dd>
-
-            <dt><code>excludeWords</code></dt>
-
-            <dd>
-
-
-            Query words prefixed with a `-` must not occur in a record.
-
-            For example, `search -engine` matches records that contain "search"
-            but not "engine".
-
-
-            </dd>
-
-            </dl>
-
+            - `excludeWords`.
+              Query words prefixed with a `-` must not occur in a record.
+              For example, `search -engine` matches records that contain "search" but not "engine".
 
             This setting only has an effect if `advancedSyntax` is true.
           default:
@@ -2295,25 +2173,12 @@ components:
             Order in which to retrieve facet values.
 
 
-            <dl>
+            - `count`.
+              Facet values are retrieved by decreasing count.
+              The count is the number of matching records containing this facet value.
 
-            <dt><code>count</code></dt>
-
-            <dd>
-
-            Facet values are retrieved by decreasing count.
-
-            The count is the number of matching records containing this facet
-            value.
-
-            </dd>
-
-            <dt><code>alpha</code></dt>
-
-            <dd>Retrieve facet values alphabetically.</dd>
-
-            </dl>
-
+            - `alpha`.
+              Retrieve facet values alphabetically.
 
             This setting doesn't influence how facet values are displayed in
             your UI (see `renderingContent`).
@@ -2624,6 +2489,7 @@ components:
     objectID:
       type: string
       description: Unique record identifier.
+      example: test-record-123
     highlightedValue:
       type: string
       description: Highlighted attribute value, including HTML tags.
@@ -3017,6 +2883,10 @@ components:
         - $ref: '#/components/schemas/baseSearchResponse'
         - $ref: '#/components/schemas/searchHits'
         - $ref: '#/components/schemas/cursor'
+    createdAt:
+      type: string
+      example: '2023-07-04T12:49:15Z'
+      description: Date and time when the object was created, in RFC 3339 format.
     taskID:
       type: integer
       format: int64
@@ -3031,18 +2901,14 @@ components:
     deletedAt:
       type: string
       example: '2023-06-27T14:42:38.831Z'
-      description: >-
-        Timestamp of deletion in [ISO 8601](https://wikipedia.org/wiki/ISO_8601)
-        format.
+      description: Date and time when the object was deleted, in RFC 3339 format.
     attribute:
       type: string
       description: Value of the attribute to update.
     updatedAt:
       type: string
       example: '2023-07-04T12:49:15Z'
-      description: >-
-        Timestamp of the last update in [ISO
-        8601](https://wikipedia.org/wiki/ISO_8601) format.
+      description: Date and time when the object was updated, in RFC 3339 format.
     deleteByParams:
       type: object
       additionalProperties: false
@@ -3142,36 +3008,16 @@ components:
             **Modifiers**
 
 
-            <dl>
+            - `filterOnly("ATTRIBUTE")`.
+              Allows using this attribute as a filter, but doesn't evalue the facet values.
 
-            <dt><code>filterOnly("ATTRIBUTE")</code></dt>
+            - `searchable("ATTRIBUTE")`.
+              Allows searching for facet values.
 
-            <dd>Allows using this attribute as a filter, but doesn't evalue the
-            facet values.</dd>
-
-            <dt><code>searchable("ATTRIBUTE")</code></dt>
-
-            <dd>Allows searching for facet values.</dd>
-
-            <dt><code>afterDistinct("ATTRIBUTE")</code></dt>
-
-            <dd>
-
-
-            Evaluates the facet count _after_ deduplication with `distinct`.
-
-            This ensures accurate facet counts.
-
-            You can apply this modifier to searchable facets:
-            `afterDistinct(searchable(ATTRIBUTE))`.
-
-
-            </dd>
-
-            </dl>
-
-
-            Without modifiers, the attribute is used as a regular facet.
+            - `afterDistinct("ATTRIBUTE")`.
+              Evaluates the facet count _after_ deduplication with `distinct`.
+              This ensures accurate facet counts.
+              You can apply this modifier to searchable facets: `afterDistinct(searchable(ATTRIBUTE))`.
           default: []
           x-categories:
             - Faceting
@@ -3207,28 +3053,9 @@ components:
             **Modifier**
 
 
-            <dl>
-
-            <dt><code>virtual("REPLICA")</code></dt>
-
-            <dd>
-
-
-            Create a virtual replica,
-
-            Virtual replicas don't increase the number of records and are
-            optimized for [Relevant
-            sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).
-
-
-            </dd>
-
-            </dl>
-
-
-            Without modifier, a standard replica is created, which duplicates
-            your record count and is used for strict, or [exhaustive
-            sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/exhaustive-sort/).
+            - `virtual("REPLICA")`.
+              Create a virtual replica,
+              Virtual replicas don't increase the number of records and are optimized for [Relevant sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).
           default: []
           x-categories:
             - Ranking
@@ -3413,22 +3240,8 @@ components:
             **Modifier**
 
 
-            <dl>
-
-            <dt><code>equalOnly("ATTRIBUTE")</code></dt>
-
-            <dd>
-
-
-            Support only filtering based on equality comparisons `=` and `!=`.
-
-
-            </dd>
-
-            </dl>
-
-
-            Without modifier, all numeric comparisons are supported.
+            - `equalOnly("ATTRIBUTE")`.
+              Support only filtering based on equality comparisons `=` and `!=`.
           example:
             - equalOnly(quantity)
             - popularity
@@ -3491,18 +3304,8 @@ components:
             **Modifier**
 
 
-            <dl>
-
-            <dt><code>unordered("ATTRIBUTE")</code></dt>
-
-            <dd>
-
-            Ignore the position of a match within the attribute.
-
-            </dd>
-
-            </dl>
-
+            - `unordered("ATTRIBUTE")`.
+              Ignore the position of a match within the attribute.
 
             Without modifier, matches at the beginning of an attribute rank
             higer than matches at the end.
@@ -3652,8 +3455,8 @@ components:
       format: int64
       example: 1656345570000
       description: >-
-        Timestamp of creation in milliseconds in [Unix epoch
-        time](https://wikipedia.org/wiki/Unix_time).
+        Timestamp when the object was created, in milliseconds since the Unix
+        epoch.
     baseGetApiKeyResponse:
       type: object
       additionalProperties: false
@@ -3811,12 +3614,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/baseGetApiKeyResponse'
         - $ref: '#/components/schemas/apiKey'
-    createdAt:
-      type: string
-      example: '2023-07-04T12:49:15Z'
-      description: >-
-        Timestamp of creation in [ISO 8601](https://wikipedia.org/wiki/ISO_8601)
-        format.
     addApiKeyResponse:
       type: object
       additionalProperties: false
@@ -3848,6 +3645,18 @@ components:
         - startsWith
         - endsWith
         - contains
+    context:
+      type: string
+      pattern: '[A-Za-z0-9_-]+'
+      description: >
+        An additional restriction that only triggers the rule, when the search
+        has the same value as `ruleContexts` parameter.
+
+        For example, if `context: mobile`, the rule is only triggered when the
+        search request has a matching `ruleContexts: mobile`.
+
+        A rule context must only contain alphanumeric characters.
+      example: mobile
     condition:
       type: object
       additionalProperties: false
@@ -3874,17 +3683,7 @@ components:
           description: Whether the pattern should match plurals, synonyms, and typos.
           default: false
         context:
-          type: string
-          pattern: '[A-Za-z0-9_-]+'
-          description: >
-            An additional restriction that only triggers the rule, when the
-            search has the same value as `ruleContexts` parameter.
-
-            For example, if `context: mobile`, the rule is only triggered when
-            the search request has a matching `ruleContexts: mobile`.
-
-            A rule context must only contain alphanumeric characters.
-          example: mobile
+          $ref: '#/components/schemas/context'
         filters:
           type: string
           description: >
@@ -4340,7 +4139,7 @@ components:
     userID:
       type: string
       pattern: ^[a-zA-Z0-9 \-*.]+$
-      description: User ID.
+      description: Unique identifier of the user who makes the search request.
       example: user1
     userId:
       title: userID
@@ -4538,9 +4337,8 @@ components:
           type: integer
           format: int64
           description: >-
-            Timestamp in [Unix epoch
-            time](https://en.wikipedia.org/wiki/Unix_time) when the API key
-            should expire.
+            Timestamp when the secured API key expires, measured in seconds
+            since the Unix epoch.
         restrictIndices:
           type: array
           items:

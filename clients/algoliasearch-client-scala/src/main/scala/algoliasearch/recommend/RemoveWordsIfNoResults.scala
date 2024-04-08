@@ -1,8 +1,26 @@
-/** Recommend API The Recommend API lets you generate recommendations with several AI models. > **Note**: You should use
-  * Algolia's [libraries and
-  * tools](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) to interact with
-  * the Recommend API. Using the HTTP endpoints directly is not covered by the
-  * [SLA](https://www.algolia.com/policies/sla/).
+/** Recommend API The Recommend API lets you retrieve recommendations from one of Algolia's AI recommendation models
+  * that you previously trained on your data. ## Client libraries Use Algolia's API clients and libraries to reliably
+  * integrate Algolia's APIs with your apps. The official API clients are covered by Algolia's [Service Level
+  * Agreement](https://www.algolia.com/policies/sla/). See: [Algolia's
+  * ecosystem](https://www.algolia.com/doc/guides/getting-started/how-algolia-works/in-depth/ecosystem/) ## Base URLs
+  * The base URLs for requests to the Recommend API are: - `https://{APPLICATION_ID}.algolia.net` -
+  * `https://{APPLICATION_ID}-dsn.algolia.net`. If your subscription includes a [Distributed Search
+  * Network](https://dashboard.algolia.com/infra), this ensures that requests are sent to servers closest to users. Both
+  * URLs provide high availability by distributing requests with load balancing. **All requests must use HTTPS.** ##
+  * Retry strategy To guarantee a high availability, implement a retry strategy for all API requests using the URLs of
+  * your servers as fallbacks: - `https://{APPLICATION_ID}-1.algolianet.com` -
+  * `https://{APPLICATION_ID}-2.algolianet.com` - `https://{APPLICATION_ID}-3.algolianet.com` These URLs use a different
+  * DNS provider than the primary URLs. You should randomize this list to ensure an even load across the three servers.
+  * All Algolia API clients implement this retry strategy. ## Authentication To authenticate your API requests, add
+  * these headers: - `x-algolia-application-id`. Your Algolia application ID. - `x-algolia-api-key`. An API key with the
+  * necessary permissions to make the request. The required access control list (ACL) to make a request is listed in
+  * each endpoint's reference. You can find your application ID and API key in the [Algolia
+  * dashboard](https://dashboard.algolia.com/account). ## Request format Request bodies must be JSON objects. ##
+  * Response status and errors The Recommend API returns JSON responses. Since JSON doesn't guarantee any specific
+  * ordering, don't rely on the order of attributes in the API response. Successful responses return a `2xx` status.
+  * Client errors return a `4xx` status. Server errors are indicated by a `5xx` status. Error responses have a `message`
+  * property with more information. ## Version The current version of the Recommend API is version 1, as indicated by
+  * the `/1/` in each endpoint's URL.
   *
   * The version of the OpenAPI document: 1.0.0
   *
@@ -16,11 +34,10 @@ import org.json4s._
 sealed trait RemoveWordsIfNoResults
 
 /** Strategy for removing words from the query when it doesn't return any results. This helps to avoid returning empty
-  * search results. <dl> <dt><code>none</code></dt> <dd>No words are removed when a query doesn't return results.</dd>
-  * <dt><code>lastWords</code></dt> <dd>Treat the last (then second to last, then third to last) word as optional, until
-  * there are results or at most 5 words have been removed.</dd> <dt><code>firstWords</code></dt> <dd>Treat the first
-  * (then second, then third) word as optional, until there are results or at most 5 words have been removed.</dd>
-  * <dt><code>allOptional</code></dt> <dd>Treat all words as optional.</dd> </dl> For more information, see [Remove
+  * search results. - `none`. No words are removed when a query doesn't return results. - `lastWords`. Treat the last
+  * (then second to last, then third to last) word as optional, until there are results or at most 5 words have been
+  * removed. - `firstWords`. Treat the first (then second, then third) word as optional, until there are results or at
+  * most 5 words have been removed. - `allOptional`. Treat all words as optional. For more information, see [Remove
   * words to improve
   * results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results/).
   */

@@ -240,7 +240,7 @@ class SearchClient
      * Required API Key ACLs:
      *  - admin
      *
-     * @param string $xAlgoliaUserID     User ID to assign. (required)
+     * @param string $xAlgoliaUserID     Unique identifier of the user who makes the search request. (required)
      * @param array  $assignUserIdParams assignUserIdParams (required)
      *                                   - $assignUserIdParams['cluster'] => (string) Cluster name. (required)
      *
@@ -330,7 +330,7 @@ class SearchClient
      * Required API Key ACLs:
      *  - admin
      *
-     * @param string $xAlgoliaUserID           User ID to assign. (required)
+     * @param string $xAlgoliaUserID           Unique identifier of the user who makes the search request. (required)
      * @param array  $batchAssignUserIdsParams batchAssignUserIdsParams (required)
      *                                         - $batchAssignUserIdsParams['cluster'] => (string) Cluster name. (required)
      *                                         - $batchAssignUserIdsParams['users'] => (array) User IDs to assign. (required)
@@ -785,7 +785,7 @@ class SearchClient
      * @param string $indexName      Name of the index on which to perform the operation. (required)
      * @param array  $deleteByParams deleteByParams (required)
      *                               - $deleteByParams['facetFilters'] => (array)
-     *                               - $deleteByParams['filters'] => (string) Filter the search so that only records with matching values are included in the results.  These filters are supported:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
+     *                               - $deleteByParams['filters'] => (string) Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can't use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can't combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
      *                               - $deleteByParams['numericFilters'] => (array)
      *                               - $deleteByParams['tagFilters'] => (array)
      *                               - $deleteByParams['aroundLatLng'] => (string) Coordinates for the center of a circle, expressed as a comma-separated string of latitude and longitude.  Only records included within circle around this central location are included in the results. The radius of the circle is determined by the `aroundRadius` and `minimumAroundRadius` settings. This parameter is ignored if you also specify `insidePolygon` or `insideBoundingBox`.
@@ -1524,7 +1524,7 @@ class SearchClient
      * Required API Key ACLs:
      *  - admin
      *
-     * @param string $userID         User ID to assign. (required)
+     * @param string $userID         Unique identifier of the user who makes the search request. (required)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Search\UserId|array<string, mixed>
@@ -1841,7 +1841,7 @@ class SearchClient
      * Required API Key ACLs:
      *  - admin
      *
-     * @param string $userID         User ID to assign. (required)
+     * @param string $userID         Unique identifier of the user who makes the search request. (required)
      * @param array  $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
      *
      * @return \Algolia\AlgoliaSearch\Model\Search\RemoveUserIdResponse|array<string, mixed>

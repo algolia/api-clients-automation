@@ -15,19 +15,19 @@ public class RecommendedForYouQuery implements RecommendationsRequest {
   private String indexName;
 
   @JsonProperty("threshold")
-  private Integer threshold;
+  private Double threshold;
 
   @JsonProperty("maxRecommendations")
   private Integer maxRecommendations;
 
+  @JsonProperty("queryParameters")
+  private SearchParams queryParameters;
+
   @JsonProperty("model")
   private RecommendedForYouModel model;
 
-  @JsonProperty("queryParameters")
-  private RecommendedForYouQueryParameters queryParameters;
-
   @JsonProperty("fallbackParameters")
-  private RecommendedForYouQueryParameters fallbackParameters;
+  private FallbackParams fallbackParameters;
 
   public RecommendedForYouQuery setIndexName(String indexName) {
     this.indexName = indexName;
@@ -40,18 +40,17 @@ public class RecommendedForYouQuery implements RecommendationsRequest {
     return indexName;
   }
 
-  public RecommendedForYouQuery setThreshold(Integer threshold) {
+  public RecommendedForYouQuery setThreshold(Double threshold) {
     this.threshold = threshold;
     return this;
   }
 
   /**
-   * Recommendations with a confidence score lower than `threshold` won't appear in results. >
-   * **Note**: Each recommendation has a confidence score of 0 to 100. The closer the score is to
-   * 100, the more relevant the recommendations are. minimum: 0 maximum: 100
+   * Minimum score a recommendation must have to be included in the response. minimum: 0 maximum:
+   * 100
    */
-  @javax.annotation.Nullable
-  public Integer getThreshold() {
+  @javax.annotation.Nonnull
+  public Double getThreshold() {
     return threshold;
   }
 
@@ -60,10 +59,26 @@ public class RecommendedForYouQuery implements RecommendationsRequest {
     return this;
   }
 
-  /** Maximum number of recommendations to retrieve. If 0, all recommendations will be returned. */
+  /**
+   * Maximum number of recommendations to retrieve. By default, all recommendations are returned and
+   * no fallback request is made. Depending on the available recommendations and the other request
+   * parameters, the actual number of recommendations may be lower than this value. minimum: 1
+   * maximum: 1000
+   */
   @javax.annotation.Nullable
   public Integer getMaxRecommendations() {
     return maxRecommendations;
+  }
+
+  public RecommendedForYouQuery setQueryParameters(SearchParams queryParameters) {
+    this.queryParameters = queryParameters;
+    return this;
+  }
+
+  /** Get queryParameters */
+  @javax.annotation.Nullable
+  public SearchParams getQueryParameters() {
+    return queryParameters;
   }
 
   public RecommendedForYouQuery setModel(RecommendedForYouModel model) {
@@ -77,25 +92,14 @@ public class RecommendedForYouQuery implements RecommendationsRequest {
     return model;
   }
 
-  public RecommendedForYouQuery setQueryParameters(RecommendedForYouQueryParameters queryParameters) {
-    this.queryParameters = queryParameters;
-    return this;
-  }
-
-  /** Get queryParameters */
-  @javax.annotation.Nullable
-  public RecommendedForYouQueryParameters getQueryParameters() {
-    return queryParameters;
-  }
-
-  public RecommendedForYouQuery setFallbackParameters(RecommendedForYouQueryParameters fallbackParameters) {
+  public RecommendedForYouQuery setFallbackParameters(FallbackParams fallbackParameters) {
     this.fallbackParameters = fallbackParameters;
     return this;
   }
 
   /** Get fallbackParameters */
   @javax.annotation.Nullable
-  public RecommendedForYouQueryParameters getFallbackParameters() {
+  public FallbackParams getFallbackParameters() {
     return fallbackParameters;
   }
 
@@ -112,15 +116,15 @@ public class RecommendedForYouQuery implements RecommendationsRequest {
       Objects.equals(this.indexName, recommendedForYouQuery.indexName) &&
       Objects.equals(this.threshold, recommendedForYouQuery.threshold) &&
       Objects.equals(this.maxRecommendations, recommendedForYouQuery.maxRecommendations) &&
-      Objects.equals(this.model, recommendedForYouQuery.model) &&
       Objects.equals(this.queryParameters, recommendedForYouQuery.queryParameters) &&
+      Objects.equals(this.model, recommendedForYouQuery.model) &&
       Objects.equals(this.fallbackParameters, recommendedForYouQuery.fallbackParameters)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(indexName, threshold, maxRecommendations, model, queryParameters, fallbackParameters);
+    return Objects.hash(indexName, threshold, maxRecommendations, queryParameters, model, fallbackParameters);
   }
 
   @Override
@@ -130,8 +134,8 @@ public class RecommendedForYouQuery implements RecommendationsRequest {
     sb.append("    indexName: ").append(toIndentedString(indexName)).append("\n");
     sb.append("    threshold: ").append(toIndentedString(threshold)).append("\n");
     sb.append("    maxRecommendations: ").append(toIndentedString(maxRecommendations)).append("\n");
-    sb.append("    model: ").append(toIndentedString(model)).append("\n");
     sb.append("    queryParameters: ").append(toIndentedString(queryParameters)).append("\n");
+    sb.append("    model: ").append(toIndentedString(model)).append("\n");
     sb.append("    fallbackParameters: ").append(toIndentedString(fallbackParameters)).append("\n");
     sb.append("}");
     return sb.toString();

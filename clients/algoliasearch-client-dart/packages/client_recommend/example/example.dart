@@ -9,15 +9,15 @@ void main() async {
 
   // Creating recommendation requests for different products.
   var requests = [
-    RecommendationsQuery(
-      model: RecommendationModels.relatedProducts,
+    RelatedQuery(
+      model: RelatedModel.relatedProducts,
       objectID: '6445156',
       indexName: 'instant_search',
       threshold: 70,
       maxRecommendations: 3,
     ),
-    RecommendationsQuery(
-      model: RecommendationModels.relatedProducts,
+    RelatedQuery(
+      model: RelatedModel.relatedProducts,
       objectID: '6443034',
       indexName: 'instant_search',
       threshold: 70,

@@ -6,7 +6,7 @@ package com.algolia.model.recommend;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 
-/** Recommended for you model. */
+/** \"Recommened for you\" model. */
 public enum RecommendedForYouModel {
   RECOMMENDED_FOR_YOU("recommended-for-you");
 

@@ -13,7 +13,7 @@ import java.util.Objects;
 public class SearchRecommendRulesResponse {
 
   @JsonProperty("hits")
-  private List<RuleResponse> hits = new ArrayList<>();
+  private List<RecommendRule> hits = new ArrayList<>();
 
   @JsonProperty("nbHits")
   private Integer nbHits;
@@ -24,19 +24,19 @@ public class SearchRecommendRulesResponse {
   @JsonProperty("nbPages")
   private Integer nbPages;
 
-  public SearchRecommendRulesResponse setHits(List<RuleResponse> hits) {
+  public SearchRecommendRulesResponse setHits(List<RecommendRule> hits) {
     this.hits = hits;
     return this;
   }
 
-  public SearchRecommendRulesResponse addHits(RuleResponse hitsItem) {
+  public SearchRecommendRulesResponse addHits(RecommendRule hitsItem) {
     this.hits.add(hitsItem);
     return this;
   }
 
-  /** Fetched rules. */
+  /** Recommend rules that match the search criteria. */
   @javax.annotation.Nonnull
-  public List<RuleResponse> getHits() {
+  public List<RecommendRule> getHits() {
     return hits;
   }
 
