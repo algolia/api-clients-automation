@@ -87,7 +87,7 @@ ABTest:
     variants:
       $ref: 'Variant.yml#/variants'
     configuration:
-      $ref: '#/Configuration'
+      $ref: '#/ABTestConfiguration'
   required:
     - status
     - name
@@ -118,7 +118,8 @@ Status:
     - expired
     - failed
 
-Configuration:
+ABTestConfiguration:
+  title: configuration
   type: object
   description: A/B test configuration.
   properties:
