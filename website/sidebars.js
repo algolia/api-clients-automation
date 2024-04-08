@@ -29,6 +29,7 @@ const sidebars = {
       collapsed: false,
       items: [
         'contributing/add-new-api-client',
+        'contributing/docs',
         'contributing/add-new-language',
         {
           type: 'category',
@@ -45,10 +46,8 @@ const sidebars = {
           type: 'category',
           label: 'CI',
           collapsed: false,
-          items: [
-            'contributing/CI/overview',
-          ]
-        }
+          items: ['contributing/CI/overview'],
+        },
       ],
     },
   ],
