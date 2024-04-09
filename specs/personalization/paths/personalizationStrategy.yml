@@ -4,8 +4,8 @@ get:
   operationId: getPersonalizationStrategy
   x-acl:
     - recommendation
-  summary: Get the current strategy.
-  description: The strategy contains information on the events and facets that impact user profiles and personalized search results.
+  summary: Retrieve the personalization strategy.
+  description: Retrieves the current personalization strategy.
   responses:
     '200':
       description: OK
@@ -28,8 +28,8 @@ post:
   operationId: setPersonalizationStrategy
   x-acl:
     - recommendation
-  summary: Set a new strategy.
-  description: A strategy defines the events and facets that impact user profiles and personalized search results.
+  summary: Define the personalization strategy.
+  description: Creates a new personalization strategy.
   requestBody:
     required: true
     content:
@@ -51,6 +51,7 @@ post:
               message:
                 type: string
                 description: A message confirming the strategy update.
+                example: Strategy was successfully updated.
     '400':
       $ref: '../../common/responses/BadRequest.yml'
     '402':

@@ -6,7 +6,7 @@
         {
           "score": 42,
           "eventName": "Algolia",
-          "eventType": "Event"
+          "eventType": "click"
         }
       ],
       "facetScoring": [
@@ -25,7 +25,7 @@
           {
             "score": 42,
             "eventName": "Algolia",
-            "eventType": "Event"
+            "eventType": "click"
           }
         ],
         "facetScoring": [

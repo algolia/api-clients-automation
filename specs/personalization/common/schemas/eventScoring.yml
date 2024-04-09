@@ -10,7 +10,15 @@ eventScoring:
       $ref: 'personalizationStrategy.yml#/score'
     eventName:
       type: string
-      description: The name of the event.
+      description: Event name.
     eventType:
-      type: string
-      description: The type of the event.
+      $ref: '#/EventType'
+
+EventType:
+  title: eventType
+  type: string
+  description: Event type.
+  enum:
+    - click
+    - conversion
+    - view
