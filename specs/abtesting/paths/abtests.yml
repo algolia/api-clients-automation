@@ -5,7 +5,7 @@ post:
   x-acl:
     - editSettings
   summary: Create an A/B test.
-  description: Creates an A/B test.
+  description: Creates a new A/B test.
   requestBody:
     required: true
     content:
@@ -33,6 +33,13 @@ post:
   responses:
     '200':
       description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../analytics/common/parameters.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../analytics/common/parameters.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../analytics/common/parameters.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:
@@ -53,25 +60,32 @@ get:
   x-acl:
     - analytics
   summary: List all A/B tests.
-  description: List all A/B tests.
+  description: Lists all A/B tests you configured for this application.
   parameters:
     - $ref: '../../common/parameters.yml#/Offset'
     - $ref: '../../common/parameters.yml#/Limit'
     - name: indexPrefix
       in: query
-      description: Only return A/B tests for indices starting with this prefix.
+      description: Index name prefix. Only A/B tests for indices starting with this string are included in the response.
       example: 'dev_'
       schema:
         type: string
     - name: indexSuffix
       in: query
-      description: Only return A/B tests for indices ending with this suffix.
+      description: Index name suffix. Only A/B tests for indices ending with this string are included in the response.
       example: '_development'
       schema:
         type: string
   responses:
     '200':
       description: OK
+      headers:
+        x-ratelimit-limit:
+          $ref: '../../analytics/common/parameters.yml#/x-ratelimit-limit'
+        x-ratelimit-remaining:
+          $ref: '../../analytics/common/parameters.yml#/x-ratelimit-remaining'
+        x-ratelimit-reset:
+          $ref: '../../analytics/common/parameters.yml#/x-ratelimit-reset'
       content:
         application/json:
           schema:
@@ -83,7 +97,7 @@ get:
                 $ref: '../common/schemas/ABTest.yml#/ABTests'
               count:
                 type: integer
-                description: Number of A/B tests implemented.
+                description: Number of A/B tests.
                 example: 10
               total:
                 type: integer

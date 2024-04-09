@@ -97,6 +97,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "snippetresultoption",
     "sortremainingby",
     "source",
+    "status",
     "supportedlanguage",
     "tagfilters",
     "taskstatus",
