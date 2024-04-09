@@ -19,7 +19,7 @@ class ListABTestsResponse(BaseModel):
     """
 
     abtests: Optional[List[ABTest]] = Field(description="A/B tests.")
-    count: StrictInt = Field(description="Number of A/B tests implemented.")
+    count: StrictInt = Field(description="Number of A/B tests.")
     total: StrictInt = Field(description="Number of retrievable A/B tests.")
 
     model_config = {"populate_by_name": True, "validate_assignment": True}

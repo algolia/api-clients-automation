@@ -36,7 +36,7 @@ public class AbTestsVariant implements AddABTestsVariant {
     return this;
   }
 
-  /** A/B test traffic percentage. */
+  /** Percentage of search requests each variant receives. minimum: 0 maximum: 100 */
   @javax.annotation.Nonnull
   public Integer getTrafficPercentage() {
     return trafficPercentage;
@@ -47,7 +47,7 @@ public class AbTestsVariant implements AddABTestsVariant {
     return this;
   }
 
-  /** A/B test description. */
+  /** Description for this variant. */
   @javax.annotation.Nullable
   public String getDescription() {
     return description;

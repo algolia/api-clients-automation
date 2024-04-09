@@ -41,7 +41,7 @@ public class ListABTestsResponse {
     return this;
   }
 
-  /** Number of A/B tests implemented. */
+  /** Number of A/B tests. */
   @javax.annotation.Nonnull
   public Integer getCount() {
     return count;

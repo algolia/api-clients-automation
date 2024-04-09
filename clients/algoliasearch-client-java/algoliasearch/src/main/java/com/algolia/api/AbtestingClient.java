@@ -61,7 +61,7 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * Creates an A/B test.
+   * Creates a new A/B test.
    *
    * @param addABTestsRequest (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -74,7 +74,7 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * Creates an A/B test.
+   * Creates a new A/B test.
    *
    * @param addABTestsRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -84,7 +84,7 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Creates an A/B test.
+   * (asynchronously) Creates a new A/B test.
    *
    * @param addABTestsRequest (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -100,7 +100,7 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Creates an A/B test.
+   * (asynchronously) Creates a new A/B test.
    *
    * @param addABTestsRequest (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -528,10 +528,9 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * Delete an A/B test. To determine the `id` for an A/B test, use the [`listABTests`
-   * operation](#tag/abtest/operation/listABTests).
+   * Deletes an A/B test by its ID.
    *
-   * @param id Unique A/B test ID. (required)
+   * @param id Unique A/B test identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -541,10 +540,9 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * Delete an A/B test. To determine the `id` for an A/B test, use the [`listABTests`
-   * operation](#tag/abtest/operation/listABTests).
+   * Deletes an A/B test by its ID.
    *
-   * @param id Unique A/B test ID. (required)
+   * @param id Unique A/B test identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ABTestResponse deleteABTest(@Nonnull Integer id) throws AlgoliaRuntimeException {
@@ -552,10 +550,9 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete an A/B test. To determine the `id` for an A/B test, use the
-   * [`listABTests` operation](#tag/abtest/operation/listABTests).
+   * (asynchronously) Deletes an A/B test by its ID.
    *
-   * @param id Unique A/B test ID. (required)
+   * @param id Unique A/B test identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -570,10 +567,9 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete an A/B test. To determine the `id` for an A/B test, use the
-   * [`listABTests` operation](#tag/abtest/operation/listABTests).
+   * (asynchronously) Deletes an A/B test by its ID.
    *
-   * @param id Unique A/B test ID. (required)
+   * @param id Unique A/B test identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ABTestResponse> deleteABTestAsync(@Nonnull Integer id) throws AlgoliaRuntimeException {
@@ -581,10 +577,9 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * Get specific details for an A/B test. To determine the `id` for an A/B test, use the
-   * [`listABTests` operation](#tag/abtest/operation/listABTests).
+   * Retrieves the details for an A/B test by its ID.
    *
-   * @param id Unique A/B test ID. (required)
+   * @param id Unique A/B test identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -594,10 +589,9 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * Get specific details for an A/B test. To determine the `id` for an A/B test, use the
-   * [`listABTests` operation](#tag/abtest/operation/listABTests).
+   * Retrieves the details for an A/B test by its ID.
    *
-   * @param id Unique A/B test ID. (required)
+   * @param id Unique A/B test identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ABTest getABTest(@Nonnull Integer id) throws AlgoliaRuntimeException {
@@ -605,10 +599,9 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get specific details for an A/B test. To determine the `id` for an A/B test,
-   * use the [`listABTests` operation](#tag/abtest/operation/listABTests).
+   * (asynchronously) Retrieves the details for an A/B test by its ID.
    *
-   * @param id Unique A/B test ID. (required)
+   * @param id Unique A/B test identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -622,10 +615,9 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get specific details for an A/B test. To determine the `id` for an A/B test,
-   * use the [`listABTests` operation](#tag/abtest/operation/listABTests).
+   * (asynchronously) Retrieves the details for an A/B test by its ID.
    *
-   * @param id Unique A/B test ID. (required)
+   * @param id Unique A/B test identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ABTest> getABTestAsync(@Nonnull Integer id) throws AlgoliaRuntimeException {
@@ -633,12 +625,14 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * List all A/B tests.
+   * Lists all A/B tests you configured for this application.
    *
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param limit Number of items to return. (optional, default to 10)
-   * @param indexPrefix Only return A/B tests for indices starting with this prefix. (optional)
-   * @param indexSuffix Only return A/B tests for indices ending with this suffix. (optional)
+   * @param indexPrefix Index name prefix. Only A/B tests for indices starting with this string are
+   *     included in the response. (optional)
+   * @param indexSuffix Index name suffix. Only A/B tests for indices ending with this string are
+   *     included in the response. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -654,12 +648,14 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * List all A/B tests.
+   * Lists all A/B tests you configured for this application.
    *
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param limit Number of items to return. (optional, default to 10)
-   * @param indexPrefix Only return A/B tests for indices starting with this prefix. (optional)
-   * @param indexSuffix Only return A/B tests for indices ending with this suffix. (optional)
+   * @param indexPrefix Index name prefix. Only A/B tests for indices starting with this string are
+   *     included in the response. (optional)
+   * @param indexSuffix Index name suffix. Only A/B tests for indices ending with this string are
+   *     included in the response. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ListABTestsResponse listABTests(Integer offset, Integer limit, String indexPrefix, String indexSuffix)
@@ -668,7 +664,7 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * List all A/B tests.
+   * Lists all A/B tests you configured for this application.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -679,7 +675,7 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * List all A/B tests.
+   * Lists all A/B tests you configured for this application.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -688,12 +684,14 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List all A/B tests.
+   * (asynchronously) Lists all A/B tests you configured for this application.
    *
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param limit Number of items to return. (optional, default to 10)
-   * @param indexPrefix Only return A/B tests for indices starting with this prefix. (optional)
-   * @param indexSuffix Only return A/B tests for indices ending with this suffix. (optional)
+   * @param indexPrefix Index name prefix. Only A/B tests for indices starting with this string are
+   *     included in the response. (optional)
+   * @param indexSuffix Index name suffix. Only A/B tests for indices ending with this string are
+   *     included in the response. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -718,12 +716,14 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List all A/B tests.
+   * (asynchronously) Lists all A/B tests you configured for this application.
    *
    * @param offset Position of the first item to return. (optional, default to 0)
    * @param limit Number of items to return. (optional, default to 10)
-   * @param indexPrefix Only return A/B tests for indices starting with this prefix. (optional)
-   * @param indexSuffix Only return A/B tests for indices ending with this suffix. (optional)
+   * @param indexPrefix Index name prefix. Only A/B tests for indices starting with this string are
+   *     included in the response. (optional)
+   * @param indexSuffix Index name suffix. Only A/B tests for indices ending with this string are
+   *     included in the response. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ListABTestsResponse> listABTestsAsync(Integer offset, Integer limit, String indexPrefix, String indexSuffix)
@@ -732,7 +732,7 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List all A/B tests.
+   * (asynchronously) Lists all A/B tests you configured for this application.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -743,7 +743,7 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) List all A/B tests.
+   * (asynchronously) Lists all A/B tests you configured for this application.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -752,11 +752,9 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * If stopped, the test is over and can't be restarted. There is now only one index, receiving
-   * 100% of all search requests. The data gathered for stopped A/B tests is retained. To determine
-   * the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
+   * Stops an A/B test by its ID. You can't restart stopped A/B tests.
    *
-   * @param id Unique A/B test ID. (required)
+   * @param id Unique A/B test identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -766,11 +764,9 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * If stopped, the test is over and can't be restarted. There is now only one index, receiving
-   * 100% of all search requests. The data gathered for stopped A/B tests is retained. To determine
-   * the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
+   * Stops an A/B test by its ID. You can't restart stopped A/B tests.
    *
-   * @param id Unique A/B test ID. (required)
+   * @param id Unique A/B test identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public ABTestResponse stopABTest(@Nonnull Integer id) throws AlgoliaRuntimeException {
@@ -778,12 +774,9 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) If stopped, the test is over and can't be restarted. There is now only one
-   * index, receiving 100% of all search requests. The data gathered for stopped A/B tests is
-   * retained. To determine the `id` for an A/B test, use the [`listABTests`
-   * operation](#tag/abtest/operation/listABTests).
+   * (asynchronously) Stops an A/B test by its ID. You can't restart stopped A/B tests.
    *
-   * @param id Unique A/B test ID. (required)
+   * @param id Unique A/B test identifier. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -798,12 +791,9 @@ public class AbtestingClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) If stopped, the test is over and can't be restarted. There is now only one
-   * index, receiving 100% of all search requests. The data gathered for stopped A/B tests is
-   * retained. To determine the `id` for an A/B test, use the [`listABTests`
-   * operation](#tag/abtest/operation/listABTests).
+   * (asynchronously) Stops an A/B test by its ID. You can't restart stopped A/B tests.
    *
-   * @param id Unique A/B test ID. (required)
+   * @param id Unique A/B test identifier. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<ABTestResponse> stopABTestAsync(@Nonnull Integer id) throws AlgoliaRuntimeException {
