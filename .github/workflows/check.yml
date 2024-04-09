@@ -311,7 +311,21 @@ jobs:
         with:
           type: specs
 
-      - name: Setup
+      - name: (attempt 1) Setup
+        id: setup_1
+        uses: ./.github/actions/setup
+        with:
+          language: ${{ matrix.client.language }}
+
+      - name: (attempt 2) Setup
+        id: setup_2
+        if: steps.setup_1.outcome == 'failure'
+        uses: ./.github/actions/setup
+        with:
+          language: ${{ matrix.client.language }}
+
+      - name: (attempt 3) Setup
+        if: steps.setup_2.outcome == 'failure'
         uses: ./.github/actions/setup
         with:
           language: ${{ matrix.client.language }}
