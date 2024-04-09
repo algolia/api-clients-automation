@@ -327,7 +327,39 @@ jobs:
           language: ${{ matrix.client.language }}
 
       - name: (attempt 3) Setup
-        if: steps.setup_2.outcome == 'failure'
+        id: setup_3
+        continue-on-error: true
+        if: steps.setup_3.outcome == 'failure'
+        uses: ./.github/actions/setup
+        with:
+          language: ${{ matrix.client.language }}
+
+      - name: (attempt 4) Setup
+        id: setup_4
+        continue-on-error: true
+        if: steps.setup_3.outcome == 'failure'
+        uses: ./.github/actions/setup
+        with:
+          language: ${{ matrix.client.language }}
+
+      - name: (attempt 5) Setup
+        id: setup_5
+        continue-on-error: true
+        if: steps.setup_4.outcome == 'failure'
+        uses: ./.github/actions/setup
+        with:
+          language: ${{ matrix.client.language }}
+
+      - name: (attempt 6) Setup
+        id: setup_6
+        continue-on-error: true
+        if: steps.setup_4.outcome == 'failure'
+        uses: ./.github/actions/setup
+        with:
+          language: ${{ matrix.client.language }}
+
+      - name: (attempt 7) Setup
+        if: steps.setup_6.outcome == 'failure'
         uses: ./.github/actions/setup
         with:
           language: ${{ matrix.client.language }}
