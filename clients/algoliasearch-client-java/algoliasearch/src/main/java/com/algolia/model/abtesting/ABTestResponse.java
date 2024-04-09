@@ -35,7 +35,7 @@ public class ABTestResponse {
     return this;
   }
 
-  /** Unique A/B test ID. */
+  /** Unique A/B test identifier. */
   @javax.annotation.Nonnull
   public Integer getAbTestID() {
     return abTestID;

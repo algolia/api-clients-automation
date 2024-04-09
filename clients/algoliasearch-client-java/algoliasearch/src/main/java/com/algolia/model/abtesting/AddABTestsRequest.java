@@ -53,7 +53,7 @@ public class AddABTestsRequest {
     return this;
   }
 
-  /** End date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format. */
+  /** End date and time of the A/B test, in RFC 3339 format. */
   @javax.annotation.Nonnull
   public String getEndAt() {
     return endAt;

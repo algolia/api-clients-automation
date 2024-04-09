@@ -89,8 +89,9 @@ public class Variant {
   }
 
   /**
-   * Variant's [add-to-cart
-   * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#add-to-cart-rate).
+   * [Add-to-cart
+   * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#add-to-cart-rate)
+   * for this variant.
    */
   @javax.annotation.Nullable
   public Double getAddToCartRate() {
@@ -103,8 +104,9 @@ public class Variant {
   }
 
   /**
-   * Variant's [average click
-   * position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position).
+   * [Average click
+   * position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position)
+   * for this variant.
    */
   @javax.annotation.Nullable
   public Integer getAverageClickPosition() {
@@ -128,8 +130,9 @@ public class Variant {
   }
 
   /**
-   * Variant's [click-through
-   * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+   * [Click-through
+   * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate)
+   * for this variant.
    */
   @javax.annotation.Nullable
   public Double getClickThroughRate() {
@@ -153,8 +156,9 @@ public class Variant {
   }
 
   /**
-   * Variant's [conversion
-   * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+   * [Conversion
+   * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate)
+   * for this variant.
    */
   @javax.annotation.Nullable
   public Double getConversionRate() {
@@ -185,7 +189,7 @@ public class Variant {
     return this;
   }
 
-  /** A/B test description. */
+  /** Description for this variant. */
   @javax.annotation.Nonnull
   public String getDescription() {
     return description;
@@ -197,9 +201,9 @@ public class Variant {
   }
 
   /**
-   * The estimated number of searches that will need to be run to achieve the desired confidence
-   * level and statistical power. A `minimumDetectableEffect` must be set in the `configuration`
-   * object for this to be used.
+   * Estimated number of searches required to achieve the desired statistical significance. The A/B
+   * test configuration must include a `mininmumDetectableEffect` setting for this number to be
+   * included in the response.
    */
   @javax.annotation.Nullable
   public Integer getEstimatedSampleSize() {
@@ -236,7 +240,7 @@ public class Variant {
   /**
    * Number of [searches without
    * results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results)
-   * for that variant.
+   * for this variant.
    */
   @javax.annotation.Nullable
   public Integer getNoResultCount() {
@@ -260,8 +264,9 @@ public class Variant {
   }
 
   /**
-   * Variant's [purchase
-   * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#purchase-rate).
+   * [Purchase
+   * rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#purchase-rate) for
+   * this variant.
    */
   @javax.annotation.Nullable
   public Double getPurchaseRate() {
@@ -273,7 +278,7 @@ public class Variant {
     return this;
   }
 
-  /** Number of searches carried out during the A/B test. */
+  /** Number of searches for this variant. */
   @javax.annotation.Nullable
   public Integer getSearchCount() {
     return searchCount;
@@ -298,7 +303,7 @@ public class Variant {
     return this;
   }
 
-  /** A/B test traffic percentage. */
+  /** Percentage of search requests each variant receives. minimum: 0 maximum: 100 */
   @javax.annotation.Nonnull
   public Integer getTrafficPercentage() {
     return trafficPercentage;
@@ -309,7 +314,7 @@ public class Variant {
     return this;
   }
 
-  /** Number of users during the A/B test. */
+  /** Number of users that made searches to this variant. */
   @javax.annotation.Nullable
   public Integer getUserCount() {
     return userCount;
@@ -320,7 +325,7 @@ public class Variant {
     return this;
   }
 
-  /** Number of users that performed a tracked search during the A/B test. */
+  /** Number of users that made tracked searches to this variant. */
   @javax.annotation.Nullable
   public Integer getTrackedUserCount() {
     return trackedUserCount;

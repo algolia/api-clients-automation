@@ -44,17 +44,20 @@ public class ABTest {
   private String name;
 
   @JsonProperty("status")
-  private String status;
+  private Status status;
 
   @JsonProperty("variants")
   private List<Variant> variants = new ArrayList<>();
+
+  @JsonProperty("configuration")
+  private ABTestConfiguration _configuration;
 
   public ABTest setAbTestID(Integer abTestID) {
     this.abTestID = abTestID;
     return this;
   }
 
-  /** Unique A/B test ID. */
+  /** Unique A/B test identifier. */
   @javax.annotation.Nonnull
   public Integer getAbTestID() {
     return abTestID;
@@ -65,11 +68,7 @@ public class ABTest {
     return this;
   }
 
-  /**
-   * [A/B test
-   * significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
-   * based on click data. A value of 0.95 or over is considered to be _significant_.
-   */
+  /** Get clickSignificance */
   @javax.annotation.Nullable
   public Double getClickSignificance() {
     return clickSignificance;
@@ -80,11 +79,7 @@ public class ABTest {
     return this;
   }
 
-  /**
-   * [A/B test
-   * significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
-   * based on conversion. A value of 0.95 or over is considered to be _significant_.
-   */
+  /** Get conversionSignificance */
   @javax.annotation.Nullable
   public Double getConversionSignificance() {
     return conversionSignificance;
@@ -95,11 +90,7 @@ public class ABTest {
     return this;
   }
 
-  /**
-   * [A/B test
-   * significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
-   * based on add-to-cart data. A value of 0.95 or over is considered to be _significant_.
-   */
+  /** Get addToCartSignificance */
   @javax.annotation.Nullable
   public Double getAddToCartSignificance() {
     return addToCartSignificance;
@@ -110,11 +101,7 @@ public class ABTest {
     return this;
   }
 
-  /**
-   * [A/B test
-   * significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
-   * based on purchase data. A value of 0.95 or over is considered to be _significant_.
-   */
+  /** Get purchaseSignificance */
   @javax.annotation.Nullable
   public Double getPurchaseSignificance() {
     return purchaseSignificance;
@@ -130,11 +117,7 @@ public class ABTest {
     return this;
   }
 
-  /**
-   * [A/B test
-   * significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance)
-   * based on revenue data. A value of 0.95 or over is considered to be _significant_.
-   */
+  /** Get revenueSignificance */
   @javax.annotation.Nullable
   public Map<String, Double> getRevenueSignificance() {
     return revenueSignificance;
@@ -145,7 +128,7 @@ public class ABTest {
     return this;
   }
 
-  /** Update date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format. */
+  /** Date and time when the A/B test was last updated, in RFC 3339 format. */
   @javax.annotation.Nonnull
   public String getUpdatedAt() {
     return updatedAt;
@@ -156,7 +139,7 @@ public class ABTest {
     return this;
   }
 
-  /** Creation date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format. */
+  /** Date and time when the A/B test was created, in RFC 3339 format. */
   @javax.annotation.Nonnull
   public String getCreatedAt() {
     return createdAt;
@@ -167,7 +150,7 @@ public class ABTest {
     return this;
   }
 
-  /** End date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format. */
+  /** End date and time of the A/B test, in RFC 3339 format. */
   @javax.annotation.Nonnull
   public String getEndAt() {
     return endAt;
@@ -184,14 +167,14 @@ public class ABTest {
     return name;
   }
 
-  public ABTest setStatus(String status) {
+  public ABTest setStatus(Status status) {
     this.status = status;
     return this;
   }
 
-  /** A/B test status. */
+  /** Get status */
   @javax.annotation.Nonnull
-  public String getStatus() {
+  public Status getStatus() {
     return status;
   }
 
@@ -205,10 +188,24 @@ public class ABTest {
     return this;
   }
 
-  /** A/B test variants. */
+  /**
+   * A/B test variants. The first variant is your _control_ index, typically your production index.
+   * The second variant is an index with changed settings that you want to test against the control.
+   */
   @javax.annotation.Nonnull
   public List<Variant> getVariants() {
     return variants;
+  }
+
+  public ABTest setConfiguration(ABTestConfiguration _configuration) {
+    this._configuration = _configuration;
+    return this;
+  }
+
+  /** Get _configuration */
+  @javax.annotation.Nullable
+  public ABTestConfiguration getConfiguration() {
+    return _configuration;
   }
 
   @Override
@@ -232,7 +229,8 @@ public class ABTest {
       Objects.equals(this.endAt, abTest.endAt) &&
       Objects.equals(this.name, abTest.name) &&
       Objects.equals(this.status, abTest.status) &&
-      Objects.equals(this.variants, abTest.variants)
+      Objects.equals(this.variants, abTest.variants) &&
+      Objects.equals(this._configuration, abTest._configuration)
     );
   }
 
@@ -250,7 +248,8 @@ public class ABTest {
       endAt,
       name,
       status,
-      variants
+      variants,
+      _configuration
     );
   }
 
@@ -270,6 +269,7 @@ public class ABTest {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    variants: ").append(toIndentedString(variants)).append("\n");
+    sb.append("    _configuration: ").append(toIndentedString(_configuration)).append("\n");
     sb.append("}");
     return sb.toString();
   }

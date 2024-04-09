@@ -67,7 +67,7 @@ class AbtestingClient(
       options = clientOptions
     ) {
 
-  /** Creates an A/B test.
+  /** Creates a new A/B test.
     *
     * Required API Key ACLs:
     *   - editSettings
@@ -186,14 +186,13 @@ class AbtestingClient(
     execute[T](request, requestOptions)
   }
 
-  /** Delete an A/B test. To determine the `id` for an A/B test, use the [`listABTests`
-    * operation](#tag/abtest/operation/listABTests).
+  /** Deletes an A/B test by its ID.
     *
     * Required API Key ACLs:
     *   - editSettings
     *
     * @param id
-    *   Unique A/B test ID.
+    *   Unique A/B test identifier.
     */
   def deleteABTest(id: Int, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
@@ -208,14 +207,13 @@ class AbtestingClient(
     execute[ABTestResponse](request, requestOptions)
   }
 
-  /** Get specific details for an A/B test. To determine the `id` for an A/B test, use the [`listABTests`
-    * operation](#tag/abtest/operation/listABTests).
+  /** Retrieves the details for an A/B test by its ID.
     *
     * Required API Key ACLs:
     *   - analytics
     *
     * @param id
-    *   Unique A/B test ID.
+    *   Unique A/B test identifier.
     */
   def getABTest(id: Int, requestOptions: Option[RequestOptions] = None)(implicit ec: ExecutionContext): Future[ABTest] =
     Future {
@@ -229,7 +227,7 @@ class AbtestingClient(
       execute[ABTest](request, requestOptions)
     }
 
-  /** List all A/B tests.
+  /** Lists all A/B tests you configured for this application.
     *
     * Required API Key ACLs:
     *   - analytics
@@ -239,9 +237,9 @@ class AbtestingClient(
     * @param limit
     *   Number of items to return.
     * @param indexPrefix
-    *   Only return A/B tests for indices starting with this prefix.
+    *   Index name prefix. Only A/B tests for indices starting with this string are included in the response.
     * @param indexSuffix
-    *   Only return A/B tests for indices ending with this suffix.
+    *   Index name suffix. Only A/B tests for indices ending with this string are included in the response.
     */
   def listABTests(
       offset: Option[Int] = None,
@@ -263,15 +261,13 @@ class AbtestingClient(
     execute[ListABTestsResponse](request, requestOptions)
   }
 
-  /** If stopped, the test is over and can't be restarted. There is now only one index, receiving 100% of all search
-    * requests. The data gathered for stopped A/B tests is retained. To determine the `id` for an A/B test, use the
-    * [`listABTests` operation](#tag/abtest/operation/listABTests).
+  /** Stops an A/B test by its ID. You can't restart stopped A/B tests.
     *
     * Required API Key ACLs:
     *   - editSettings
     *
     * @param id
-    *   Unique A/B test ID.
+    *   Unique A/B test identifier.
     */
   def stopABTest(id: Int, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
