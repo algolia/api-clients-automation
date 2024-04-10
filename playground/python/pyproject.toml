@@ -2,7 +2,7 @@
 name = "app"
 version = "0.0.1"
 description = "playground for the algoliasearch-client-python repository"
-authors = ["Algolia Team <support@algolia.com>"]
+authors = ["Algolia Team <https://support.algolia.com/hc/en-us/requests/new>"]
 license = "MIT"
 readme = "README.md"
 homepage = "https://www.algolia.com"
