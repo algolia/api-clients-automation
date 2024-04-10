@@ -180,7 +180,7 @@ def snippet_for_set_personalization_strategy
       event_scoring: [EventScoring.new(
         score: 42,
         event_name: "Algolia",
-        event_type: "Event"
+        event_type: 'click'
       )],
       facet_scoring: [FacetScoring.new(score: 42, facet_name: "Event")],
       personalization_impact: 42

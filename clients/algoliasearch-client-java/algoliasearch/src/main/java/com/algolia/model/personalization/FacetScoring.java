@@ -21,7 +21,7 @@ public class FacetScoring {
     return this;
   }
 
-  /** The score for the event. */
+  /** Event score. */
   @javax.annotation.Nonnull
   public Integer getScore() {
     return score;
@@ -32,7 +32,7 @@ public class FacetScoring {
     return this;
   }
 
-  /** The name of the facet. */
+  /** Facet attribute name. */
   @javax.annotation.Nonnull
   public String getFacetName() {
     return facetName;

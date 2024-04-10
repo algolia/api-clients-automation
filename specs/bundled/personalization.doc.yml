@@ -1,7 +1,71 @@
 openapi: 3.0.2
 info:
   title: Personalization API
-  description: API powering the Personalization feature of Algolia.
+  description: >
+    The Personalization API lets you access user profiles built from the
+    personalization strategy.
+
+
+    ## Base URLs
+
+
+    The base URLs for requests to the Personalization API are:
+
+
+    - `https://personalization.us.algolia.com`
+
+    - `https://personalization.eu.algolia.com`
+
+
+    Use the URL that matches your [analytics
+    region](https://dashboard.algolia.com/account/infrastructure/analytics).
+
+
+    **All requests must use HTTPS.**
+
+
+    ## Authentication
+
+
+    To authenticate your API requests, add these headers:
+
+
+    - `x-algolia-application-id`. Your Algolia application ID.
+
+    - `x-algolia-api-key`. An API key with the necessary permissions to make the
+    request.
+      The required access control list (ACL) to make a request is listed in each endpoint's reference.
+
+    You can find your application ID and API key in the [Algolia
+    dashboard](https://dashboard.algolia.com/account).
+
+
+    ## Request format
+
+
+    Request bodies must be JSON objects.
+
+
+    ## Response status and errors
+
+
+    The Personalization API returns JSON responses.
+
+    Since JSON doesn't guarantee any specific ordering, don't rely on the order
+    of attributes in the API response.
+
+
+    Successful responses return a `2xx` status. Client errors return a `4xx`
+    status. Server errors are indicated by a `5xx` status.
+
+    Error responses have a `message` property with more information.
+
+
+    ## Version
+
+
+    The current version of the Personalization API is version 1, as indicated by
+    the `/1/` in each endpoint's URL.
   version: 1.0.0
 servers:
   - url: https://personalization.{region}.algolia.com
@@ -17,10 +81,24 @@ security:
 tags:
   - name: profiles
     x-displayName: Profiles
-    description: Manage users' profiles.
+    description: >
+      User profiles represent the affinities each user profile has for the
+      different facets in your index.
+
+      The more a user viewed and clicked search results with a specific facet,
+
+      the higher the affinity for that facet.
   - name: strategies
     x-displayName: Strategies
-    description: Manage personalization strategies.
+    description: >
+      The personalization strategy defines how personalization should affect the
+      search results,
+
+      and how much each facet and event type impact the personalization.
+externalDocs:
+  url: https://www.algolia.com/doc/guides/personalization/what-is-personalization/
+  description: |
+    Related guide: Algolia Personalization.
 paths:
   /{path}:
     get:
@@ -860,17 +938,8 @@ paths:
       operationId: getUserTokenProfile
       x-acl:
         - recommendation
-      summary: Get a user profile.
-      description: >
-        Get the user profile built from Personalization strategy.
-
-
-        The profile is structured by facet name used in the strategy. Each facet
-        value is mapped to its score. Each score represents the user affinity
-        for a specific facet value given the userToken past events and the
-        Personalization strategy defined. Scores are bounded to 20. The last
-        processed event timestamp is provided using the ISO 8601 format for
-        debugging purposes.
+      summary: Retrieve a user profile.
+      description: Retrieves a user profile and their affinities for different facets.
       parameters:
         - $ref: '#/components/parameters/UserToken'
       responses:
@@ -891,10 +960,19 @@ paths:
                     $ref: '#/components/schemas/userToken'
                   lastEventAt:
                     type: string
-                    description: Date of last event update. (ISO-8601 format).
+                    description: >-
+                      Date and time of the last event from this user, in RFC
+                      3339 format.
                   scores:
                     type: object
-                    description: The userToken scores.
+                    description: >
+                      Scores for different facet values.
+
+
+                      Scores represent the user affinity for a user profile
+                      towards specific facet values,
+
+                      given the personalization strategy and past events.
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1100,18 +1178,11 @@ paths:
         - recommendation
       summary: Delete a user profile.
       description: >
-        Delete the user profile and all its associated data.
+        Deletes a user profile.
 
 
-        Returns, as part of the response, a date until which the data can safely
-        be considered as deleted for the given user. This means if you send
-        events for the given user before this date, they will be ignored. Any
-        data received after the deletedUntil date will start building a new user
-        profile.
-
-
-        It might take a couple hours for the deletion request to be fully
-        processed.
+        The response includes a date and time when the user profile can safely
+        be considered deleted.
       parameters:
         - $ref: '#/components/parameters/UserToken'
       responses:
@@ -1131,11 +1202,12 @@ paths:
                     $ref: '#/components/schemas/userToken'
                   deletedUntil:
                     type: string
-                    description: >-
-                      A date until which the data can safely be considered as
-                      deleted for the given user. Any data received after the
-                      `deletedUntil` date will start building a new user
-                      profile.
+                    description: >
+                      Date and time when the user profile can be safely
+                      considered to be deleted.
+
+                      Any events received after the `deletedUntil` date start a
+                      new user profile.
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1339,10 +1411,8 @@ paths:
       operationId: getPersonalizationStrategy
       x-acl:
         - recommendation
-      summary: Get the current strategy.
-      description: >-
-        The strategy contains information on the events and facets that impact
-        user profiles and personalized search results.
+      summary: Retrieve the personalization strategy.
+      description: Retrieves the current personalization strategy.
       responses:
         '200':
           description: OK
@@ -1537,10 +1607,8 @@ paths:
       operationId: setPersonalizationStrategy
       x-acl:
         - recommendation
-      summary: Set a new strategy.
-      description: >-
-        A strategy defines the events and facets that impact user profiles and
-        personalized search results.
+      summary: Define the personalization strategy.
+      description: Creates a new personalization strategy.
       requestBody:
         required: true
         content:
@@ -1562,6 +1630,7 @@ paths:
                   message:
                     type: string
                     description: A message confirming the strategy update.
+                    example: Strategy was successfully updated.
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -1589,7 +1658,7 @@ paths:
                   {
                     Score = 42,
                     EventName = "Algolia",
-                    EventType = "Event",
+                    EventType = Enum.Parse<EventType>("Click"),
                   }
                 },
                 FacetScoring = new List<FacetScoring>
@@ -1620,7 +1689,7 @@ paths:
             client.SetPersonalizationStrategy(client.NewApiSetPersonalizationStrategyRequest(
 
               personalization.NewEmptyPersonalizationStrategyParams().SetEventScoring(
-                []personalization.EventScoring{*personalization.NewEmptyEventScoring().SetScore(42).SetEventName("Algolia").SetEventType("Event")}).SetFacetScoring(
+                []personalization.EventScoring{*personalization.NewEmptyEventScoring().SetScore(42).SetEventName("Algolia").SetEventType(personalization.EventType("click"))}).SetFacetScoring(
                 []personalization.FacetScoring{*personalization.NewEmptyFacetScoring().SetScore(42).SetFacetName("Event")}).SetPersonalizationImpact(42),
             ))
 
@@ -1647,7 +1716,7 @@ paths:
 
             client.setPersonalizationStrategy(
               new PersonalizationStrategyParams()
-                .setEventScoring(List.of(new EventScoring().setScore(42).setEventName("Algolia").setEventType("Event")))
+                .setEventScoring(List.of(new EventScoring().setScore(42).setEventName("Algolia").setEventType(EventType.fromValue("click"))))
                 .setFacetScoring(List.of(new FacetScoring().setScore(42).setFacetName("Event")))
                 .setPersonalizationImpact(42)
             );
@@ -1663,7 +1732,7 @@ paths:
 
             // Call the API
             const response = await client.setPersonalizationStrategy({
-              eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'Event' }],
+              eventScoring: [{ score: 42, eventName: 'Algolia', eventType: 'click' }],
               facetScoring: [{ score: 42, facetName: 'Event' }],
               personalizationImpact: 42,
             });
@@ -1687,7 +1756,7 @@ paths:
                   EventScoring(
                     score = 42,
                     eventName = "Algolia",
-                    eventType = "Event",
+                    eventType = EventType.entries.first { it.value == "click" },
                   ),
                 ),
                 facetScoring = listOf(
@@ -1720,7 +1789,7 @@ paths:
                 ['eventScoring' => [
                     ['score' => 42,
                         'eventName' => 'Algolia',
-                        'eventType' => 'Event',
+                        'eventType' => 'click',
                     ],
                 ],
                     'facetScoring' => [
@@ -1753,7 +1822,7 @@ paths:
                         {
                             "score": 42,
                             "eventName": "Algolia",
-                            "eventType": "Event",
+                            "eventType": "click",
                         },
                     ],
                     "facetScoring": [
@@ -1791,7 +1860,7 @@ paths:
                 event_scoring: [EventScoring.new(
                   score: 42,
                   event_name: "Algolia",
-                  event_type: "Event"
+                  event_type: 'click'
                 )],
                 facet_scoring: [FacetScoring.new(score: 42, facet_name: "Event")],
                 personalization_impact: 42
@@ -1820,7 +1889,7 @@ paths:
                   EventScoring(
                     score = 42,
                     eventName = "Algolia",
-                    eventType = "Event"
+                    eventType = EventType.withName("click")
                   )
                 ),
                 facetScoring = Seq(
@@ -1851,7 +1920,7 @@ paths:
             _ = try await
             client.setPersonalizationStrategy(personalizationStrategyParams:
             PersonalizationStrategyParams(
-                eventScoring: [EventScoring(score: 42, eventName: "Algolia", eventType: "Event")],
+                eventScoring: [EventScoring(score: 42, eventName: "Algolia", eventType: PersonalizationEventType.click)],
                 facetScoring: [FacetScoring(score: 42, facetName: "Event")],
                 personalizationImpact: 42
             ))
@@ -1895,10 +1964,10 @@ components:
       in: path
       required: true
       description: >-
-        userToken representing the user for which to fetch the Personalization
-        profile.
+        Unique identifier representing a user for which to fetch the
+        personalization profile.
       schema:
-        type: string
+        $ref: '#/components/schemas/userToken'
   schemas:
     ErrorBase:
       description: Error.
@@ -1910,12 +1979,28 @@ components:
           example: Invalid Application-Id or API-Key
     userToken:
       type: string
-      description: >-
-        userToken representing the user for which to fetch the Personalization
-        profile.
+      description: >
+        Unique pseudonymous or anonymous user identifier.
+
+
+        This helps with analytics and click and conversion events.
+
+        For more information, see [user
+        token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
+      example: test-user-123
+      x-categories:
+        - Personalization
     score:
       type: integer
-      description: The score for the event.
+      description: Event score.
+    EventType:
+      title: eventType
+      type: string
+      description: Event type.
+      enum:
+        - click
+        - conversion
+        - view
     eventScoring:
       type: object
       additionalProperties: false
@@ -1928,10 +2013,9 @@ components:
           $ref: '#/components/schemas/score'
         eventName:
           type: string
-          description: The name of the event.
+          description: Event name.
         eventType:
-          type: string
-          description: The type of the event.
+          $ref: '#/components/schemas/EventType'
     facetScoring:
       type: object
       additionalProperties: false
@@ -1943,7 +2027,7 @@ components:
           $ref: '#/components/schemas/score'
         facetName:
           type: string
-          description: The name of the facet.
+          description: Facet attribute name.
     personalizationStrategyParams:
       type: object
       additionalProperties: false
@@ -1954,20 +2038,32 @@ components:
       properties:
         eventScoring:
           type: array
-          description: Scores associated with the events.
+          description: >
+            Scores associated with each event.
+
+
+            The higher the scores, the higher the impact of those events on the
+            personalization of search results.
           items:
             $ref: '#/components/schemas/eventScoring'
         facetScoring:
           type: array
-          description: Scores associated with the facets.
+          description: >
+            Scores associated with each facet.
+
+
+            The higher the scores, the higher the impact of those events on the
+            personalization of search results.
           items:
             $ref: '#/components/schemas/facetScoring'
         personalizationImpact:
           type: integer
-          description: >-
-            The impact that personalization has on search results: a number
-            between 0 (personalization disabled) and 100 (personalization fully
-            enabled).
+          minimum: 0
+          maximum: 100
+          description: |
+            Impact of personalization on the search results.
+
+            If set to 0, personalization has no impact on the search results.
   responses:
     BadRequest:
       description: Bad request or request arguments.

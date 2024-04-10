@@ -167,7 +167,7 @@ class SnippetPersonalizationClient
             ['eventScoring' => [
                 ['score' => 42,
                     'eventName' => 'Algolia',
-                    'eventType' => 'Event',
+                    'eventType' => 'click',
                 ],
             ],
                 'facetScoring' => [

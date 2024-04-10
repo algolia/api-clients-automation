@@ -566,7 +566,7 @@ class PersonalizationTest extends AnyFunSuite {
           EventScoring(
             score = 42,
             eventName = "Algolia",
-            eventType = "Event"
+            eventType = EventType.withName("click")
           )
         ),
         facetScoring = Seq(
@@ -585,7 +585,7 @@ class PersonalizationTest extends AnyFunSuite {
     assert(res.path == "/1/strategies/personalization")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"Event"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}"""
+      """{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"click"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)

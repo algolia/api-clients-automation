@@ -618,7 +618,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             ['eventScoring' => [
                 ['score' => 42,
                     'eventName' => 'Algolia',
-                    'eventType' => 'Event',
+                    'eventType' => 'click',
                 ],
             ],
                 'facetScoring' => [
@@ -634,7 +634,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/strategies/personalization',
                 'method' => 'POST',
-                'body' => json_decode('{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"Event"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}'),
+                'body' => json_decode('{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"click"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}'),
             ],
         ]);
     }

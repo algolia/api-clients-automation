@@ -530,7 +530,7 @@ class PersonalizationTest {
               EventScoring(
                 score = 42,
                 eventName = "Algolia",
-                eventType = "Event",
+                eventType = EventType.entries.first { it.value == "click" },
               ),
             ),
             facetScoring = listOf(
@@ -546,7 +546,7 @@ class PersonalizationTest {
       intercept = {
         assertEquals("/1/strategies/personalization".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"Event"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}""", it.body)
+        assertJsonBody("""{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"click"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}""", it.body)
       },
     )
   }

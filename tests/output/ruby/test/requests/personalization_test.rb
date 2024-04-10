@@ -350,7 +350,7 @@ class TestPersonalizationClient < Test::Unit::TestCase
         event_scoring: [EventScoring.new(
           score: 42,
           event_name: "Algolia",
-          event_type: "Event"
+          event_type: 'click'
         )],
         facet_scoring: [FacetScoring.new(score: 42, facet_name: "Event")],
         personalization_impact: 42
@@ -362,7 +362,7 @@ class TestPersonalizationClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"Event"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}'), JSON.parse(req.body)
+      JSON.parse('{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"click"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}'), JSON.parse(req.body)
     )
   end
 end

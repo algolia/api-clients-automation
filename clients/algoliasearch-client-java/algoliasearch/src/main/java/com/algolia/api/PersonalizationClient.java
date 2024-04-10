@@ -471,13 +471,10 @@ public class PersonalizationClient extends ApiClient {
   }
 
   /**
-   * Delete the user profile and all its associated data. Returns, as part of the response, a date
-   * until which the data can safely be considered as deleted for the given user. This means if you
-   * send events for the given user before this date, they will be ignored. Any data received after
-   * the deletedUntil date will start building a new user profile. It might take a couple hours for
-   * the deletion request to be fully processed.
+   * Deletes a user profile. The response includes a date and time when the user profile can safely
+   * be considered deleted.
    *
-   * @param userToken userToken representing the user for which to fetch the Personalization
+   * @param userToken Unique identifier representing a user for which to fetch the personalization
    *     profile. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -489,13 +486,10 @@ public class PersonalizationClient extends ApiClient {
   }
 
   /**
-   * Delete the user profile and all its associated data. Returns, as part of the response, a date
-   * until which the data can safely be considered as deleted for the given user. This means if you
-   * send events for the given user before this date, they will be ignored. Any data received after
-   * the deletedUntil date will start building a new user profile. It might take a couple hours for
-   * the deletion request to be fully processed.
+   * Deletes a user profile. The response includes a date and time when the user profile can safely
+   * be considered deleted.
    *
-   * @param userToken userToken representing the user for which to fetch the Personalization
+   * @param userToken Unique identifier representing a user for which to fetch the personalization
    *     profile. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -504,13 +498,10 @@ public class PersonalizationClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete the user profile and all its associated data. Returns, as part of the
-   * response, a date until which the data can safely be considered as deleted for the given user.
-   * This means if you send events for the given user before this date, they will be ignored. Any
-   * data received after the deletedUntil date will start building a new user profile. It might take
-   * a couple hours for the deletion request to be fully processed.
+   * (asynchronously) Deletes a user profile. The response includes a date and time when the user
+   * profile can safely be considered deleted.
    *
-   * @param userToken userToken representing the user for which to fetch the Personalization
+   * @param userToken Unique identifier representing a user for which to fetch the personalization
    *     profile. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -525,13 +516,10 @@ public class PersonalizationClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Delete the user profile and all its associated data. Returns, as part of the
-   * response, a date until which the data can safely be considered as deleted for the given user.
-   * This means if you send events for the given user before this date, they will be ignored. Any
-   * data received after the deletedUntil date will start building a new user profile. It might take
-   * a couple hours for the deletion request to be fully processed.
+   * (asynchronously) Deletes a user profile. The response includes a date and time when the user
+   * profile can safely be considered deleted.
    *
-   * @param userToken userToken representing the user for which to fetch the Personalization
+   * @param userToken Unique identifier representing a user for which to fetch the personalization
    *     profile. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -540,8 +528,7 @@ public class PersonalizationClient extends ApiClient {
   }
 
   /**
-   * The strategy contains information on the events and facets that impact user profiles and
-   * personalized search results.
+   * Retrieves the current personalization strategy.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -552,8 +539,7 @@ public class PersonalizationClient extends ApiClient {
   }
 
   /**
-   * The strategy contains information on the events and facets that impact user profiles and
-   * personalized search results.
+   * Retrieves the current personalization strategy.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -562,8 +548,7 @@ public class PersonalizationClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) The strategy contains information on the events and facets that impact user
-   * profiles and personalized search results.
+   * (asynchronously) Retrieves the current personalization strategy.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -577,8 +562,7 @@ public class PersonalizationClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) The strategy contains information on the events and facets that impact user
-   * profiles and personalized search results.
+   * (asynchronously) Retrieves the current personalization strategy.
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -587,13 +571,9 @@ public class PersonalizationClient extends ApiClient {
   }
 
   /**
-   * Get the user profile built from Personalization strategy. The profile is structured by facet
-   * name used in the strategy. Each facet value is mapped to its score. Each score represents the
-   * user affinity for a specific facet value given the userToken past events and the
-   * Personalization strategy defined. Scores are bounded to 20. The last processed event timestamp
-   * is provided using the ISO 8601 format for debugging purposes.
+   * Retrieves a user profile and their affinities for different facets.
    *
-   * @param userToken userToken representing the user for which to fetch the Personalization
+   * @param userToken Unique identifier representing a user for which to fetch the personalization
    *     profile. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -604,13 +584,9 @@ public class PersonalizationClient extends ApiClient {
   }
 
   /**
-   * Get the user profile built from Personalization strategy. The profile is structured by facet
-   * name used in the strategy. Each facet value is mapped to its score. Each score represents the
-   * user affinity for a specific facet value given the userToken past events and the
-   * Personalization strategy defined. Scores are bounded to 20. The last processed event timestamp
-   * is provided using the ISO 8601 format for debugging purposes.
+   * Retrieves a user profile and their affinities for different facets.
    *
-   * @param userToken userToken representing the user for which to fetch the Personalization
+   * @param userToken Unique identifier representing a user for which to fetch the personalization
    *     profile. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -619,13 +595,9 @@ public class PersonalizationClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get the user profile built from Personalization strategy. The profile is
-   * structured by facet name used in the strategy. Each facet value is mapped to its score. Each
-   * score represents the user affinity for a specific facet value given the userToken past events
-   * and the Personalization strategy defined. Scores are bounded to 20. The last processed event
-   * timestamp is provided using the ISO 8601 format for debugging purposes.
+   * (asynchronously) Retrieves a user profile and their affinities for different facets.
    *
-   * @param userToken userToken representing the user for which to fetch the Personalization
+   * @param userToken Unique identifier representing a user for which to fetch the personalization
    *     profile. (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -640,13 +612,9 @@ public class PersonalizationClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Get the user profile built from Personalization strategy. The profile is
-   * structured by facet name used in the strategy. Each facet value is mapped to its score. Each
-   * score represents the user affinity for a specific facet value given the userToken past events
-   * and the Personalization strategy defined. Scores are bounded to 20. The last processed event
-   * timestamp is provided using the ISO 8601 format for debugging purposes.
+   * (asynchronously) Retrieves a user profile and their affinities for different facets.
    *
-   * @param userToken userToken representing the user for which to fetch the Personalization
+   * @param userToken Unique identifier representing a user for which to fetch the personalization
    *     profile. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -655,8 +623,7 @@ public class PersonalizationClient extends ApiClient {
   }
 
   /**
-   * A strategy defines the events and facets that impact user profiles and personalized search
-   * results.
+   * Creates a new personalization strategy.
    *
    * @param personalizationStrategyParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -671,8 +638,7 @@ public class PersonalizationClient extends ApiClient {
   }
 
   /**
-   * A strategy defines the events and facets that impact user profiles and personalized search
-   * results.
+   * Creates a new personalization strategy.
    *
    * @param personalizationStrategyParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -684,8 +650,7 @@ public class PersonalizationClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) A strategy defines the events and facets that impact user profiles and
-   * personalized search results.
+   * (asynchronously) Creates a new personalization strategy.
    *
    * @param personalizationStrategyParams (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -711,8 +676,7 @@ public class PersonalizationClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) A strategy defines the events and facets that impact user profiles and
-   * personalized search results.
+   * (asynchronously) Creates a new personalization strategy.
    *
    * @param personalizationStrategyParams (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call

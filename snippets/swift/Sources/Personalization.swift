@@ -105,7 +105,7 @@ final class PersonalizationClientSnippet {
 
         // Call the API
         _ = try await client.setPersonalizationStrategy(personalizationStrategyParams: PersonalizationStrategyParams(
-            eventScoring: [EventScoring(score: 42, eventName: "Algolia", eventType: "Event")],
+            eventScoring: [EventScoring(score: 42, eventName: "Algolia", eventType: PersonalizationEventType.click)],
             facetScoring: [FacetScoring(score: 42, facetName: "Event")],
             personalizationImpact: 42
         ))

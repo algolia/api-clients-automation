@@ -447,7 +447,7 @@ func TestPersonalization_SetPersonalizationStrategy(t *testing.T) {
 		_, err := client.SetPersonalizationStrategy(client.NewApiSetPersonalizationStrategyRequest(
 
 			personalization.NewEmptyPersonalizationStrategyParams().SetEventScoring(
-				[]personalization.EventScoring{*personalization.NewEmptyEventScoring().SetScore(42).SetEventName("Algolia").SetEventType("Event")}).SetFacetScoring(
+				[]personalization.EventScoring{*personalization.NewEmptyEventScoring().SetScore(42).SetEventName("Algolia").SetEventType(personalization.EventType("click"))}).SetFacetScoring(
 				[]personalization.FacetScoring{*personalization.NewEmptyFacetScoring().SetScore(42).SetFacetName("Event")}).SetPersonalizationImpact(42),
 		))
 		require.NoError(t, err)
@@ -456,6 +456,6 @@ func TestPersonalization_SetPersonalizationStrategy(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"Event"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}`)
+		ja.Assertf(*echo.Body, `{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"click"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}`)
 	})
 }

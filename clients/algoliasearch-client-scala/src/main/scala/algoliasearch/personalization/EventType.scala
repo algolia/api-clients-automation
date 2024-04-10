@@ -19,14 +19,38 @@
   */
 package algoliasearch.personalization
 
-/** FacetScoring
-  *
-  * @param score
-  *   Event score.
-  * @param facetName
-  *   Facet attribute name.
+import org.json4s._
+
+sealed trait EventType
+
+/** Event type.
   */
-case class FacetScoring(
-    score: Int,
-    facetName: String
-)
+object EventType {
+  case object Click extends EventType {
+    override def toString = "click"
+  }
+  case object Conversion extends EventType {
+    override def toString = "conversion"
+  }
+  case object View extends EventType {
+    override def toString = "view"
+  }
+  val values: Seq[EventType] = Seq(Click, Conversion, View)
+
+  def withName(name: String): EventType = EventType.values
+    .find(_.toString == name)
+    .getOrElse(throw new MappingException(s"Unknown EventType value: $name"))
+}
+
+class EventTypeSerializer
+    extends CustomSerializer[EventType](_ =>
+      (
+        {
+          case JString(value) => EventType.withName(value)
+          case JNull          => null
+        },
+        { case value: EventType =>
+          JString(value.toString)
+        }
+      )
+    )

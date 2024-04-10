@@ -136,7 +136,7 @@ class SnippetPersonalizationClient {
           EventScoring(
             score = 42,
             eventName = "Algolia",
-            eventType = "Event",
+            eventType = EventType.entries.first { it.value == "click" },
           ),
         ),
         facetScoring = listOf(

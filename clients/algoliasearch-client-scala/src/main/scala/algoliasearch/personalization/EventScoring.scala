@@ -1,4 +1,16 @@
-/** Personalization API API powering the Personalization feature of Algolia.
+/** Personalization API The Personalization API lets you access user profiles built from the personalization strategy.
+  * ## Base URLs The base URLs for requests to the Personalization API are: - `https://personalization.us.algolia.com` -
+  * `https://personalization.eu.algolia.com` Use the URL that matches your [analytics
+  * region](https://dashboard.algolia.com/account/infrastructure/analytics). **All requests must use HTTPS.** ##
+  * Authentication To authenticate your API requests, add these headers: - `x-algolia-application-id`. Your Algolia
+  * application ID. - `x-algolia-api-key`. An API key with the necessary permissions to make the request. The required
+  * access control list (ACL) to make a request is listed in each endpoint's reference. You can find your application ID
+  * and API key in the [Algolia dashboard](https://dashboard.algolia.com/account). ## Request format Request bodies must
+  * be JSON objects. ## Response status and errors The Personalization API returns JSON responses. Since JSON doesn't
+  * guarantee any specific ordering, don't rely on the order of attributes in the API response. Successful responses
+  * return a `2xx` status. Client errors return a `4xx` status. Server errors are indicated by a `5xx` status. Error
+  * responses have a `message` property with more information. ## Version The current version of the Personalization API
+  * is version 1, as indicated by the `/1/` in each endpoint's URL.
   *
   * The version of the OpenAPI document: 1.0.0
   *
@@ -7,17 +19,17 @@
   */
 package algoliasearch.personalization
 
+import algoliasearch.personalization.EventType._
+
 /** EventScoring
   *
   * @param score
-  *   The score for the event.
+  *   Event score.
   * @param eventName
-  *   The name of the event.
-  * @param eventType
-  *   The type of the event.
+  *   Event name.
   */
 case class EventScoring(
     score: Int,
     eventName: String,
-    eventType: String
+    eventType: EventType
 )

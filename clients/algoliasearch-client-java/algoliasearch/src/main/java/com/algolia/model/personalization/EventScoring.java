@@ -17,14 +17,14 @@ public class EventScoring {
   private String eventName;
 
   @JsonProperty("eventType")
-  private String eventType;
+  private EventType eventType;
 
   public EventScoring setScore(Integer score) {
     this.score = score;
     return this;
   }
 
-  /** The score for the event. */
+  /** Event score. */
   @javax.annotation.Nonnull
   public Integer getScore() {
     return score;
@@ -35,20 +35,20 @@ public class EventScoring {
     return this;
   }
 
-  /** The name of the event. */
+  /** Event name. */
   @javax.annotation.Nonnull
   public String getEventName() {
     return eventName;
   }
 
-  public EventScoring setEventType(String eventType) {
+  public EventScoring setEventType(EventType eventType) {
     this.eventType = eventType;
     return this;
   }
 
-  /** The type of the event. */
+  /** Get eventType */
   @javax.annotation.Nonnull
-  public String getEventType() {
+  public EventType getEventType() {
     return eventType;
   }
 

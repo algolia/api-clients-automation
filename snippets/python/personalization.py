@@ -180,7 +180,7 @@ async def snippet_for_set_personalization_strategy():
                 {
                     "score": 42,
                     "eventName": "Algolia",
-                    "eventType": "Event",
+                    "eventType": "click",
                 },
             ],
             "facetScoring": [

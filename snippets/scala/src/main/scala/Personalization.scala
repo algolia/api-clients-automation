@@ -162,7 +162,7 @@ class SnippetPersonalizationClient {
           EventScoring(
             score = 42,
             eventName = "Algolia",
-            eventType = "Event"
+            eventType = EventType.withName("click")
           )
         ),
         facetScoring = Seq(

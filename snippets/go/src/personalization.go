@@ -218,7 +218,7 @@ func SnippetForSetPersonalizationStrategyOfPersonalization() {
 	resp, err := client.SetPersonalizationStrategy(client.NewApiSetPersonalizationStrategyRequest(
 
 		personalization.NewEmptyPersonalizationStrategyParams().SetEventScoring(
-			[]personalization.EventScoring{*personalization.NewEmptyEventScoring().SetScore(42).SetEventName("Algolia").SetEventType("Event")}).SetFacetScoring(
+			[]personalization.EventScoring{*personalization.NewEmptyEventScoring().SetScore(42).SetEventName("Algolia").SetEventType(personalization.EventType("click"))}).SetFacetScoring(
 			[]personalization.FacetScoring{*personalization.NewEmptyFacetScoring().SetScore(42).SetFacetName("Event")}).SetPersonalizationImpact(42),
 	))
 	if err != nil {

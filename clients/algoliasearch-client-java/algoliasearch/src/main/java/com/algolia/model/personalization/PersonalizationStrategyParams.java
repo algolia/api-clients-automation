@@ -31,7 +31,10 @@ public class PersonalizationStrategyParams {
     return this;
   }
 
-  /** Scores associated with the events. */
+  /**
+   * Scores associated with each event. The higher the scores, the higher the impact of those events
+   * on the personalization of search results.
+   */
   @javax.annotation.Nonnull
   public List<EventScoring> getEventScoring() {
     return eventScoring;
@@ -47,7 +50,10 @@ public class PersonalizationStrategyParams {
     return this;
   }
 
-  /** Scores associated with the facets. */
+  /**
+   * Scores associated with each facet. The higher the scores, the higher the impact of those events
+   * on the personalization of search results.
+   */
   @javax.annotation.Nonnull
   public List<FacetScoring> getFacetScoring() {
     return facetScoring;
@@ -59,8 +65,8 @@ public class PersonalizationStrategyParams {
   }
 
   /**
-   * The impact that personalization has on search results: a number between 0 (personalization
-   * disabled) and 100 (personalization fully enabled).
+   * Impact of personalization on the search results. If set to 0, personalization has no impact on
+   * the search results. minimum: 0 maximum: 100
    */
   @javax.annotation.Nonnull
   public Integer getPersonalizationImpact() {

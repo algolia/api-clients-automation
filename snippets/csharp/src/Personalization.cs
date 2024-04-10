@@ -155,7 +155,7 @@ public class SnippetPersonalizationClient
           {
             Score = 42,
             EventName = "Algolia",
-            EventType = "Event",
+            EventType = Enum.Parse<EventType>("Click"),
           }
         },
         FacetScoring = new List<FacetScoring>

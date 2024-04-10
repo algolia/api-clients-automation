@@ -451,7 +451,7 @@ class TestPersonalizationClient:
                     {
                         "score": 42,
                         "eventName": "Algolia",
-                        "eventType": "Event",
+                        "eventType": "click",
                     },
                 ],
                 "facetScoring": [
@@ -469,5 +469,5 @@ class TestPersonalizationClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"Event"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}"""
+            """{"eventScoring":[{"score":42,"eventName":"Algolia","eventType":"click"}],"facetScoring":[{"score":42,"facetName":"Event"}],"personalizationImpact":42}"""
         )
