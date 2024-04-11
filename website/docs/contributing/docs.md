@@ -97,7 +97,7 @@ For APIs that are available to every Algolia subscription, see [Authentication](
 For APIs with requests that require authentication,
 describe the authentication method and where to find the credentials.
 
-For APIs that require a specific Algolia plan, see [Avalavailability-and-authentication](#availability-and-authentication).
+For APIs that require a specific Algolia plan, see [Availability and authentication](#availability-and-authentication).
 
 **Example:** [Search API](/specs/search#section/Authentication)
 
