@@ -13,7 +13,7 @@ eventName:
 
 index:
   type: string
-  description: Index name to which the event's items belong.
+  description: Index name (case-sensitive) to which the event's items belong.
   example: YourIndexName
 
 userToken:
