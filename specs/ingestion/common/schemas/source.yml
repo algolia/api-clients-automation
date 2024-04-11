@@ -463,37 +463,48 @@ SourceUpdateShopify:
   properties:
     collectionIDIndexing:
       type: boolean
+      default: false
       description: |
-        If a shop has `has_collection_search_page` set to true, we *will* index collection IDs even if this is set to `false`.
-        Default is `false`.
+        Whether to index collection IDs. 
+        
+        If your store has `has_collection_search_page` set to true,
+        collection IDs will be indexed even if `collectionIDIndexing` is false. 
     increaseProductCollectionLimit:
       type: boolean
+      default: false
       description: |
-        Used to determine if we should index 100 or 200 collections per product.
-        Default is `false`.
+        Whether to increase the number of indexed collections per product.
+        If true, Algolia indexes 200 collections per product.
+        If false, 100 collections per product are indexed.
     defaultPriceRatioAsOne:
       type: boolean
+      default: true
       description: |
-        The price ratio is determined by `sale_price`/`regular_price`. If no sale price is present, this indexes a 1 instead of a 0.
-        Default is `true`.
+        Whether to set the default price ratio to 1 if no sale price is present.
+        
+        The price ratio is determined by the ratio: `sale_price` / `regular_price`.
+        If no sale price is present, the price ratio would be 0.
+        If `defaultPriceRatioAsOne` is true, the price ratio is indexed as 1 instead.
     excludeOOSVariantsForPriceAtTRS:
       type: boolean
+      default: true
       description: |
-        Don't include out-of-stock variants when determining the `max_variant_price` and `min_variant_price` attributes.
-        Default is `true`.
+        Whether to exclude out-of-stock variants when determining the `max_variant_price` and `min_variant_price` attributes.
     includeVariantsInventory:
       type: boolean
+      default: true
       description: |
-        Whether we should include an object with the inventory of every variant on the object.
-        Default is `true`.
+        Whether to include an inventory with every variant for every product record.
     hasCollectionSearchPage:
       type: boolean
       description: |
-        Determine if we should index collection information (ID & handle) in the product records.
+        Whether to include collection IDs and handles in the product records.
     productNamedTags:
       type: boolean
       description: |
-        Whether to convert tags on products to named tags (see https://www.algolia.com/doc/integration/shopify/sending-and-managing-data/named-tags).
+        Whether to convert tags on products to named tags.
+        
+        To learn more, see [Named tags](https://www.algolia.com/doc/integration/shopify/sending-and-managing-data/named-tags).
 
 SourceShopify:
   allOf:
