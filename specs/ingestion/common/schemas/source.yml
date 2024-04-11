@@ -414,6 +414,7 @@ SourceInput:
     - $ref: '#/SourceBigQuery'
     - $ref: '#/SourceGA4BigQueryExport'
     - $ref: '#/SourceDocker'
+    - $ref: '#/SourceShopify'
 
 SourceUpdateCommercetools:
   type: object
@@ -449,7 +450,64 @@ SourceUpdateInput:
     - $ref: '#/SourceBigQuery'
     - $ref: '#/SourceGA4BigQueryExport'
     - $ref: '#/SourceUpdateDocker'
+    - $ref: '#/SourceUpdateShopify'
 
 DockerSourceStream:
   type: object
   description: Stream definition (see the Singer specification for details).
+
+SourceUpdateShopify:
+  title: Shopify
+  type: object
+  additionalProperties: false
+  properties:
+    collectionIDIndexing:
+      type: boolean
+      description: |
+        If a shop has `has_collection_search_page` set to true, we *will* index collection IDs even if this is set to `false`.
+        Default is `false`.
+    increaseProductCollectionLimit:
+      type: boolean
+      description: |
+        Used to determine if we should index 100 or 200 collections per product.
+        Default is `false`.
+    defaultPriceRatioAsOne:
+      type: boolean
+      description: |
+        The price ratio is determined by `sale_price`/`regular_price`. If no sale price is present, this indexes a 1 instead of a 0.
+        Default is `true`.
+    excludeOOSVariantsForPriceAtTRS:
+      type: boolean
+      description: |
+        Don't include out-of-stock variants when determining the `max_variant_price` and `min_variant_price` attributes.
+        Default is `true`.
+    includeVariantsInventory:
+      type: boolean
+      description: |
+        Whether we should include an object with the inventory of every variant on the object.
+        Default is `true`.
+    hasCollectionSearchPage:
+      type: boolean
+      description: |
+        Determine if we should index collection information (ID & handle) in the product records.
+    productNamedTags:
+      type: boolean
+      description: |
+        Whether to convert tags on products to named tags (see https://www.algolia.com/doc/integration/shopify/sending-and-managing-data/named-tags).
+
+SourceShopify:
+  allOf:
+    - $ref: '#/SourceUpdateShopify'
+    - $ref: '#/sourceShopifyBase'
+
+sourceShopifyBase:
+  type: object
+  additionalProperties: false
+  properties:
+    shopURL:
+      type: string
+      description: URL of the Shopify store.
+  required:
+    - shopURL
+  x-discriminator-fields:
+    - shopURL
