@@ -424,6 +424,9 @@ ShopifyInput:
         $ref: '#/ShopifyMetafield'
     market:
       $ref: '#/ShopifyMarket'
+  required:
+    - metafields
+    - market
 
 ShopifyMetafield:
   type: object
