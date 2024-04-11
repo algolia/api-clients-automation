@@ -497,10 +497,12 @@ SourceUpdateShopify:
         Whether to include an inventory with every variant for every product record.
     hasCollectionSearchPage:
       type: boolean
+      default: false
       description: |
         Whether to include collection IDs and handles in the product records.
     productNamedTags:
       type: boolean
+      default: false
       description: |
         Whether to convert tags on products to named tags.
         
