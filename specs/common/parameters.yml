@@ -137,7 +137,7 @@ id:
 indexName:
   type: string
   example: products
-  description: Index name.
+  description: Index name (case-sensitive).
 
 hitsPerPage:
   type: integer

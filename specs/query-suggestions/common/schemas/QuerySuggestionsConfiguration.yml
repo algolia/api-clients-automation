@@ -69,7 +69,7 @@ SourceIndex:
   properties:
     indexName:
       type: string
-      description: Name of the Algolia index to use as source for query suggestions.
+      description: Name of the Algolia index (case-sensitive) to use as source for query suggestions.
       example: products
     replicas:
       type: boolean
