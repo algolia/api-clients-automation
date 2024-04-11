@@ -194,7 +194,11 @@ runs:
     # Swift deps
     - name: Install swift
       if: ${{ inputs.language == 'swift' }}
-      uses: swift-actions/setup-swift@v2
+      # WORKAROUND for: https://github.com/swift-actions/setup-swift/issues/591
+      # BY GitHub Staff developer: redsun82
+      # IN pull request: https://github.com/github/codeql/pull/16153
+      # uses: swift-actions/setup-swift@v2
+      uses: redsun82/setup-swift@b2b6f77ab14f6a9b136b520dc53ec8eca27d2b99
       with:
         swift-version: ${{ steps.versions.outputs.SWIFT_VERSION }}
 
