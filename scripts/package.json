@@ -51,7 +51,7 @@
     "semver": "7.6.0",
     "spinnies": "0.5.1",
     "tsc-alias": "1.8.8",
-    "typescript": "5.4.4",
+    "typescript": "5.4.5",
     "vitest": "1.5.0",
     "zlib": "1.0.5"
   }
