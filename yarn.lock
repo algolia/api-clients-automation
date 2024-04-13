@@ -4563,12 +4563,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/micromatch@npm:4.0.6":
-  version: 4.0.6
-  resolution: "@types/micromatch@npm:4.0.6"
+"@types/micromatch@npm:4.0.7":
+  version: 4.0.7
+  resolution: "@types/micromatch@npm:4.0.7"
   dependencies:
     "@types/braces": "npm:*"
-  checksum: d86560645ad74acfd8251da612e459f72c1b146ad48cfd894aae1c4d0e55f2ea32491f793b623c7890dae546bf4b6e3b31fc536e4448ea5331c7a26acc450f94
+  checksum: 73ee13a35a6beb86e0b6abcd6c60eb1aa6e1a7dab7f4511162769f49c7984ac87694fa93b4c415e34c967633a0566808f1ee32a6f28616329e9d315ab96d54e2
   languageName: node
   linkType: hard
 
@@ -12374,7 +12374,7 @@ __metadata:
     "@types/folder-hash": "npm:4.0.4"
     "@types/fs-extra": "npm:11.0.4"
     "@types/js-yaml": "npm:4.0.9"
-    "@types/micromatch": "npm:4.0.6"
+    "@types/micromatch": "npm:4.0.7"
     "@types/node": "npm:20.12.7"
     "@types/semver": "npm:7.5.8"
     "@types/spinnies": "npm:0.5.3"
