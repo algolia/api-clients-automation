@@ -95,7 +95,6 @@ __metadata:
     eslint-config-algolia: "npm:22.0.0"
     eslint-config-prettier: "npm:9.1.0"
     eslint-plugin-algolia: "npm:2.0.0"
-    eslint-plugin-automation-custom: "npm:1.0.0"
     eslint-plugin-eslint-comments: "npm:3.2.0"
     eslint-plugin-import: "npm:2.29.1"
     eslint-plugin-jsdoc: "npm:48.2.3"
@@ -7168,7 +7167,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-automation-custom@npm:1.0.0, eslint-plugin-automation-custom@workspace:eslint":
+"eslint-plugin-automation-custom@workspace:eslint":
   version: 0.0.0-use.local
   resolution: "eslint-plugin-automation-custom@workspace:eslint"
   dependencies:

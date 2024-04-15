@@ -8,8 +8,6 @@ rm -rf .codesandbox \
   .editorconfig \
   .env \
   .env.example \
-  .eslintignore \
-  .eslintrc.cjs \
   .husky/ \
   .lintstagedrc \
   .nvmrc \
@@ -22,6 +20,7 @@ rm -rf .codesandbox \
   clients/ \
   config/ \
   eslint/ \
+  eslint.config.js \
   generators/ \
   netlify.toml \
   node_modules/ \

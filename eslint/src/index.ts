@@ -37,4 +37,12 @@ function parseForESLint(): any {
   };
 }
 
-export { rules, parseForESLint };
+export default {
+  meta: {
+    name: 'eslint-plugin-automation-custom',
+    version: '1.0.0',
+  },
+  configs: {},
+  rules,
+  processors: {},
+};
