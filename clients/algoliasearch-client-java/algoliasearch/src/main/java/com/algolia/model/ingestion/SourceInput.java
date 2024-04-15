@@ -86,6 +86,15 @@ public interface SourceInput {
           LOGGER.finest("Failed to deserialize oneOf SourceDocker (error: " + e.getMessage() + ") (type: SourceDocker)");
         }
       }
+      // deserialize SourceShopify
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(SourceShopify.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf SourceShopify (error: " + e.getMessage() + ") (type: SourceShopify)");
+        }
+      }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
     }
 
