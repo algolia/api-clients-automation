@@ -35,7 +35,7 @@ import algoliasearch.insights.ViewEvent._
   *   [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)
   *   framework.
   * @param index
-  *   Index name to which the event's items belong.
+  *   Index name (case-sensitive) to which the event's items belong.
   * @param objectIDs
   *   Object IDs of the records that are part of the event.
   * @param userToken

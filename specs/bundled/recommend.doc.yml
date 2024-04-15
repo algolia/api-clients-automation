@@ -2415,7 +2415,7 @@ components:
     indexName:
       type: string
       example: products
-      description: Index name.
+      description: Index name (case-sensitive).
     query:
       type: string
       description: Search query.
@@ -2707,9 +2707,9 @@ components:
       type: array
       items:
         type: array
+        minItems: 4
+        maxItems: 4
         items:
-          minItems: 4
-          maxItems: 4
           type: number
           format: double
       description: >
@@ -2742,9 +2742,9 @@ components:
       type: array
       items:
         type: array
+        minItems: 6
+        maxItems: 20000
         items:
-          minItems: 6
-          maxItems: 20000
           type: number
           format: double
       description: >
@@ -2759,7 +2759,7 @@ components:
         For more information, see [filtering inside
         polygons](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
 
-        This parameter is ignored, if you also specify `insideBoundingBox`.
+        This parameter is ignored if you also specify `insideBoundingBox`.
       example:
         -
           - 47.3165
@@ -2777,6 +2777,78 @@ components:
           - 2.0104
       x-categories:
         - Geo-Search
+    supportedLanguage:
+      type: string
+      description: ISO code for a supported language.
+      enum:
+        - af
+        - ar
+        - az
+        - bg
+        - bn
+        - ca
+        - cs
+        - cy
+        - da
+        - de
+        - el
+        - en
+        - eo
+        - es
+        - et
+        - eu
+        - fa
+        - fi
+        - fo
+        - fr
+        - ga
+        - gl
+        - he
+        - hi
+        - hu
+        - hy
+        - id
+        - is
+        - it
+        - ja
+        - ka
+        - kk
+        - ko
+        - ku
+        - ky
+        - lt
+        - lv
+        - mi
+        - mn
+        - mr
+        - ms
+        - mt
+        - nb
+        - nl
+        - 'no'
+        - ns
+        - pl
+        - ps
+        - pt
+        - pt-br
+        - qu
+        - ro
+        - ru
+        - sk
+        - sq
+        - sv
+        - sw
+        - ta
+        - te
+        - th
+        - tl
+        - tn
+        - tr
+        - tt
+        - uk
+        - ur
+        - uz
+        - zh
     userToken:
       type: string
       description: >
@@ -2853,7 +2925,9 @@ components:
           example:
             - title
             - author
-          description: Restricts a search to a subset of your searchable attributes.
+          description: |
+            Restricts a search to a subset of your searchable attributes.
+            Attribute names are case-sensitive.
           default: []
           x-categories:
             - Filtering
@@ -2930,7 +3004,7 @@ components:
         naturalLanguages:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/supportedLanguage'
           description: >
             ISO language codes that adjust settings that are useful for
             processing natural language queries (as opposed to keyword
@@ -3080,78 +3154,6 @@ components:
         - $ref: '#/components/schemas/typoToleranceEnum'
       x-categories:
         - Typos
-    supportedLanguage:
-      type: string
-      description: ISO code for a supported language.
-      enum:
-        - af
-        - ar
-        - az
-        - bg
-        - bn
-        - ca
-        - cs
-        - cy
-        - da
-        - de
-        - el
-        - en
-        - eo
-        - es
-        - et
-        - eu
-        - fa
-        - fi
-        - fo
-        - fr
-        - ga
-        - gl
-        - he
-        - hi
-        - hu
-        - hy
-        - id
-        - is
-        - it
-        - ja
-        - ka
-        - kk
-        - ko
-        - ku
-        - ky
-        - lt
-        - lv
-        - mi
-        - mn
-        - mr
-        - ms
-        - mt
-        - nb
-        - nl
-        - 'no'
-        - ns
-        - pl
-        - ps
-        - pt
-        - pt-br
-        - qu
-        - ro
-        - ru
-        - sk
-        - sq
-        - sv
-        - sw
-        - ta
-        - te
-        - th
-        - tl
-        - tn
-        - tr
-        - tt
-        - uk
-        - ur
-        - uz
-        - zh
     ignorePlurals:
       description: |
         Treat singular, plurals, and other forms of declensions as equivalent.
@@ -3470,7 +3472,7 @@ components:
     reRankingApplyFilter:
       description: >
         Restrict [Dynamic
-        Re-ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/)
+        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/)
         to records that match these filters.
       oneOf:
         - $ref: '#/components/schemas/listOfSearchFilters'
@@ -3496,6 +3498,8 @@ components:
 
             To reduce the size of your response, you can retrieve only some of
             the attributes.
+
+            Attribute names are case-sensitive.
 
 
             - `*` retrieves all attributes, except attributes included in the
@@ -3566,6 +3570,8 @@ components:
             Attributes to use as [custom
             ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/).
 
+            Attribute names are case-sensitive.
+
 
             The custom ranking attributes decide which items are shown first if
             the other ranking criteria are equal.
@@ -3630,6 +3636,8 @@ components:
             Use `*` to highlight all attributes or use an empty array `[]` to
             turn off highlighting.
 
+            Attribute names are case-sensitive.
+
 
             With highlighting, strings that match the search query are
             surrounded by HTML tags defined by `highlightPreTag` and
@@ -3652,6 +3660,8 @@ components:
             - description
           description: >
             Attributes for which to enable snippets.
+
+            Attribute names are case-sensitive.
 
 
             Snippets provide additional context to matched words.
@@ -3741,6 +3751,8 @@ components:
           description: >
             Attributes for which you want to turn off [typo
             tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
+
+            Attribute names are case-sensitive.
 
 
             Returning only exact matches can help when:
@@ -3915,6 +3927,8 @@ components:
             Searchable attributes for which you want to [turn off the Exact
             ranking
             criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).
+
+            Attribute names are case-sensitive.
 
 
             This can be useful for attributes with long values, where the
@@ -4116,6 +4130,9 @@ components:
           $ref: '#/components/schemas/reRankingApplyFilter'
     searchParamsObject:
       title: Search parameters as object
+      description: >-
+        Each parameter value, including the `query` must not be larger than 512
+        bytes.
       allOf:
         - $ref: '#/components/schemas/baseSearchParams'
         - $ref: '#/components/schemas/indexSettingsAsSearchParams'

@@ -46,7 +46,7 @@ public class MultipleBatchRequest {
     return this;
   }
 
-  /** Index to target for this operation. */
+  /** Index name (case-sensitive). */
   @javax.annotation.Nonnull
   public String getIndexName() {
     return indexName;

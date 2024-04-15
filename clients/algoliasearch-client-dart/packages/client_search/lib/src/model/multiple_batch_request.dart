@@ -22,7 +22,7 @@ final class MultipleBatchRequest {
   @JsonKey(name: r'body')
   final Object body;
 
-  /// Index to target for this operation.
+  /// Index name (case-sensitive).
   @JsonKey(name: r'indexName')
   final String indexName;
 

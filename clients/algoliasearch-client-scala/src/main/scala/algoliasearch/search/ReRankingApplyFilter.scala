@@ -35,7 +35,7 @@ package algoliasearch.search
 
 import org.json4s._
 
-/** Restrict [Dynamic Re-ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) to records that match these
+/** Restrict [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) to records that match these
   * filters.
   */
 sealed trait ReRankingApplyFilter

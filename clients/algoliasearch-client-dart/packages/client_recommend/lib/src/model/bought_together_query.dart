@@ -19,7 +19,7 @@ final class BoughtTogetherQuery {
     required this.objectID,
   });
 
-  /// Index name.
+  /// Index name (case-sensitive).
   @JsonKey(name: r'indexName')
   final String indexName;
 

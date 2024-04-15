@@ -14,7 +14,7 @@ final class SearchForHitsOptions {
     this.type,
   });
 
-  /// Index name.
+  /// Index name (case-sensitive).
   @JsonKey(name: r'indexName')
   final String indexName;
 

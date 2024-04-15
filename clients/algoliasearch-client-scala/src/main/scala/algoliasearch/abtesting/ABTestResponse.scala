@@ -26,7 +26,7 @@ package algoliasearch.abtesting
 /** ABTestResponse
   *
   * @param index
-  *   A/B test index.
+  *   Index name of the A/B test variant (case-sensitive).
   * @param abTestID
   *   Unique A/B test identifier.
   * @param taskID

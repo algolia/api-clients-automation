@@ -41,7 +41,7 @@ public class SourceIndex {
     return this;
   }
 
-  /** Name of the Algolia index to use as source for query suggestions. */
+  /** Name of the Algolia index (case-sensitive) to use as source for query suggestions. */
   @javax.annotation.Nonnull
   public String getIndexName() {
     return indexName;

@@ -19,7 +19,7 @@ final class OperationIndexParams {
   @JsonKey(name: r'operation')
   final OperationType operation;
 
-  /// Index name.
+  /// Index name (case-sensitive).
   @JsonKey(name: r'destination')
   final String destination;
 

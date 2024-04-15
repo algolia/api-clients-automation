@@ -24,7 +24,7 @@ public class ABTestResponse {
     return this;
   }
 
-  /** A/B test index. */
+  /** Index name of the A/B test variant (case-sensitive). */
   @javax.annotation.Nonnull
   public String getIndex() {
     return index;

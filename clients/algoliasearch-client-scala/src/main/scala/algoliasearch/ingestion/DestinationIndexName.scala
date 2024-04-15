@@ -28,7 +28,7 @@ import algoliasearch.ingestion.RecordType._
 /** DestinationIndexName
   *
   * @param indexName
-  *   Algolia index name.
+  *   Algolia index name (case-sensitive).
   * @param attributesToExclude
   *   Attributes from your source to exclude from Algolia records. Not all your data attributes will be useful for
   *   searching. Keeping your Algolia records small increases indexing and search performance. - Exclude nested

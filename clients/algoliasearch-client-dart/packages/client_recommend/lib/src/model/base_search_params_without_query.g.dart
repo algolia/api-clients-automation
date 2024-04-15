@@ -52,8 +52,11 @@ BaseSearchParamsWithoutQuery _$BaseSearchParamsWithoutQueryFromJson(
                       .map((e) => (e as num).toDouble())
                       .toList())
                   .toList()),
-          naturalLanguages: $checkedConvert('naturalLanguages',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          naturalLanguages: $checkedConvert(
+              'naturalLanguages',
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => $enumDecode(_$SupportedLanguageEnumMap, e))
+                  .toList()),
           ruleContexts: $checkedConvert('ruleContexts',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           personalizationImpact:
@@ -104,7 +107,8 @@ Map<String, dynamic> _$BaseSearchParamsWithoutQueryToJson(
   writeNotNull('minimumAroundRadius', instance.minimumAroundRadius);
   writeNotNull('insideBoundingBox', instance.insideBoundingBox);
   writeNotNull('insidePolygon', instance.insidePolygon);
-  writeNotNull('naturalLanguages', instance.naturalLanguages);
+  writeNotNull('naturalLanguages',
+      instance.naturalLanguages?.map((e) => e.toJson()).toList());
   writeNotNull('ruleContexts', instance.ruleContexts);
   writeNotNull('personalizationImpact', instance.personalizationImpact);
   writeNotNull('userToken', instance.userToken);
@@ -117,3 +121,74 @@ Map<String, dynamic> _$BaseSearchParamsWithoutQueryToJson(
   writeNotNull('enableABTest', instance.enableABTest);
   return val;
 }
+
+const _$SupportedLanguageEnumMap = {
+  SupportedLanguage.af: 'af',
+  SupportedLanguage.ar: 'ar',
+  SupportedLanguage.az: 'az',
+  SupportedLanguage.bg: 'bg',
+  SupportedLanguage.bn: 'bn',
+  SupportedLanguage.ca: 'ca',
+  SupportedLanguage.cs: 'cs',
+  SupportedLanguage.cy: 'cy',
+  SupportedLanguage.da: 'da',
+  SupportedLanguage.de: 'de',
+  SupportedLanguage.el: 'el',
+  SupportedLanguage.en: 'en',
+  SupportedLanguage.eo: 'eo',
+  SupportedLanguage.es: 'es',
+  SupportedLanguage.et: 'et',
+  SupportedLanguage.eu: 'eu',
+  SupportedLanguage.fa: 'fa',
+  SupportedLanguage.fi: 'fi',
+  SupportedLanguage.fo: 'fo',
+  SupportedLanguage.fr: 'fr',
+  SupportedLanguage.ga: 'ga',
+  SupportedLanguage.gl: 'gl',
+  SupportedLanguage.he: 'he',
+  SupportedLanguage.hi: 'hi',
+  SupportedLanguage.hu: 'hu',
+  SupportedLanguage.hy: 'hy',
+  SupportedLanguage.id: 'id',
+  SupportedLanguage.is_: 'is',
+  SupportedLanguage.it: 'it',
+  SupportedLanguage.ja: 'ja',
+  SupportedLanguage.ka: 'ka',
+  SupportedLanguage.kk: 'kk',
+  SupportedLanguage.ko: 'ko',
+  SupportedLanguage.ku: 'ku',
+  SupportedLanguage.ky: 'ky',
+  SupportedLanguage.lt: 'lt',
+  SupportedLanguage.lv: 'lv',
+  SupportedLanguage.mi: 'mi',
+  SupportedLanguage.mn: 'mn',
+  SupportedLanguage.mr: 'mr',
+  SupportedLanguage.ms: 'ms',
+  SupportedLanguage.mt: 'mt',
+  SupportedLanguage.nb: 'nb',
+  SupportedLanguage.nl: 'nl',
+  SupportedLanguage.no: 'no',
+  SupportedLanguage.ns: 'ns',
+  SupportedLanguage.pl: 'pl',
+  SupportedLanguage.ps: 'ps',
+  SupportedLanguage.pt: 'pt',
+  SupportedLanguage.ptBr: 'pt-br',
+  SupportedLanguage.qu: 'qu',
+  SupportedLanguage.ro: 'ro',
+  SupportedLanguage.ru: 'ru',
+  SupportedLanguage.sk: 'sk',
+  SupportedLanguage.sq: 'sq',
+  SupportedLanguage.sv: 'sv',
+  SupportedLanguage.sw: 'sw',
+  SupportedLanguage.ta: 'ta',
+  SupportedLanguage.te: 'te',
+  SupportedLanguage.th: 'th',
+  SupportedLanguage.tl: 'tl',
+  SupportedLanguage.tn: 'tn',
+  SupportedLanguage.tr: 'tr',
+  SupportedLanguage.tt: 'tt',
+  SupportedLanguage.uk: 'uk',
+  SupportedLanguage.ur: 'ur',
+  SupportedLanguage.uz: 'uz',
+  SupportedLanguage.zh: 'zh',
+};

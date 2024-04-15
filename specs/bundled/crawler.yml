@@ -1138,11 +1138,13 @@ components:
             [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/).
 
 
-            Facets are ways to categorize search results based on attributes.
+            Facets are attributes that let you categorize search results.
 
-            Facets can be used to let user filter search results.
+            They can be used for filtering search results.
 
             By default, no attribute is used for faceting.
+
+            Attribute names are case-sensitive.
 
 
             **Modifiers**
@@ -1228,6 +1230,8 @@ components:
             access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/),
 
             but don't want to include it in the search results.
+
+            Attribute names are case-sensitive.
           default: []
           x-categories:
             - Attributes
@@ -1259,6 +1263,8 @@ components:
 
             To support transliteration, you must set the indexing language to
             Japanese.
+
+            Attribute names are case-sensitive.
           type: array
           items:
             type: string
@@ -1273,9 +1279,11 @@ components:
             type: string
           example:
             - description
-          description: >-
+          description: >
             Attributes for which to split [camel
             case](https://wikipedia.org/wiki/Camel_case) words.
+
+            Attribute names are case-sensitive.
           default: []
           x-categories:
             - Languages
@@ -1288,6 +1296,8 @@ components:
             Searchable attributes to which Algolia should apply [word
             segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/)
             (decompounding).
+
+            Attribute names are case-sensitive.
 
 
             Compound words are formed by combining two or more individual words,
@@ -1341,9 +1351,11 @@ components:
             type: string
           example:
             - sku
-          description: >-
+          description: >
             Searchable attributes for which you want to turn off [prefix
             matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjusting-prefix-search).
+
+            Attribute names are case-sensitive.
           default: []
           x-categories:
             - Query strategy
@@ -1364,6 +1376,8 @@ components:
           description: >
             Numeric attributes that can be used as [numerical
             filters](https://www.algolia.com/doc/guides/managing-results/rules/detecting-intent/how-to/applying-a-custom-filter-for-a-specific-query/#numerical-filters).
+
+            Attribute names are case-sensitive.
 
 
             By default, all numeric attributes are available as numerical
@@ -1417,7 +1431,7 @@ components:
             - unordered(text)
             - emails.personal
           description: >
-            Attributes used for searching.
+            Attributes used for searching. Attribute names are case-sensitive.
 
 
             By default, all attributes are searchable and the
@@ -1474,6 +1488,8 @@ components:
         attributeForDistinct:
           description: >
             Attribute that should be used to establish groups of results.
+
+            Attribute names are case-sensitive.
 
 
             All records with the same value for this attribute are considered a
@@ -1863,7 +1879,7 @@ components:
     reRankingApplyFilter:
       description: >
         Restrict [Dynamic
-        Re-ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/)
+        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/)
         to records that match these filters.
       oneOf:
         - $ref: '#/components/schemas/listOfSearchFilters'
@@ -1889,6 +1905,8 @@ components:
 
             To reduce the size of your response, you can retrieve only some of
             the attributes.
+
+            Attribute names are case-sensitive.
 
 
             - `*` retrieves all attributes, except attributes included in the
@@ -1959,6 +1977,8 @@ components:
             Attributes to use as [custom
             ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/).
 
+            Attribute names are case-sensitive.
+
 
             The custom ranking attributes decide which items are shown first if
             the other ranking criteria are equal.
@@ -2023,6 +2043,8 @@ components:
             Use `*` to highlight all attributes or use an empty array `[]` to
             turn off highlighting.
 
+            Attribute names are case-sensitive.
+
 
             With highlighting, strings that match the search query are
             surrounded by HTML tags defined by `highlightPreTag` and
@@ -2045,6 +2067,8 @@ components:
             - description
           description: >
             Attributes for which to enable snippets.
+
+            Attribute names are case-sensitive.
 
 
             Snippets provide additional context to matched words.
@@ -2134,6 +2158,8 @@ components:
           description: >
             Attributes for which you want to turn off [typo
             tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
+
+            Attribute names are case-sensitive.
 
 
             Returning only exact matches can help when:
@@ -2308,6 +2334,8 @@ components:
             Searchable attributes for which you want to [turn off the Exact
             ranking
             criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).
+
+            Attribute names are case-sensitive.
 
 
             This can be useful for attributes with long values, where the

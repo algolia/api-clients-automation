@@ -34,7 +34,7 @@ import algoliasearch.recommend.FbtModel._
 /** BoughtTogetherQuery
   *
   * @param indexName
-  *   Index name.
+  *   Index name (case-sensitive).
   * @param threshold
   *   Minimum score a recommendation must have to be included in the response.
   * @param maxRecommendations

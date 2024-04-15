@@ -9454,7 +9454,7 @@ components:
       properties:
         indexName:
           type: string
-          description: Algolia index name.
+          description: Algolia index name (case-sensitive).
         recordType:
           $ref: '#/components/schemas/RecordType'
         attributesToExclude:

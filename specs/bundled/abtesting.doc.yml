@@ -2379,7 +2379,7 @@ components:
               example: 237
     index:
       type: string
-      description: A/B test index.
+      description: Index name of the A/B test variant (case-sensitive).
       example: delcourt_production
     trackedSearchCount:
       type: integer

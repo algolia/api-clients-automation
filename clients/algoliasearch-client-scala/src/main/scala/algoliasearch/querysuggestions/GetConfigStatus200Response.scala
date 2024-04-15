@@ -25,7 +25,7 @@ package algoliasearch.querysuggestions
 /** GetConfigStatus200Response
   *
   * @param indexName
-  *   Name of the Query Suggestions index.
+  *   Name of the Query Suggestions index (case-sensitive).
   * @param isRunning
   *   Whether the creation or update of the Query Suggestions index is in progress.
   * @param lastBuiltAt

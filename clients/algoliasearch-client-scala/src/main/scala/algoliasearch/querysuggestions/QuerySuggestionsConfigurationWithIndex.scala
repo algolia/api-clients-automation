@@ -31,7 +31,7 @@ package algoliasearch.querysuggestions
   * @param allowSpecialCharacters
   *   Whether to include suggestions with special characters.
   * @param indexName
-  *   Name of the Query Suggestions index.
+  *   Name of the Query Suggestions index (case-sensitive).
   */
 case class QuerySuggestionsConfigurationWithIndex(
     sourceIndices: Seq[SourceIndex],

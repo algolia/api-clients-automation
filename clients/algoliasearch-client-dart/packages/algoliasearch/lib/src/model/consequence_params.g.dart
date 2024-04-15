@@ -51,8 +51,11 @@ ConsequenceParams _$ConsequenceParamsFromJson(Map<String, dynamic> json) =>
                       .map((e) => (e as num).toDouble())
                       .toList())
                   .toList()),
-          naturalLanguages: $checkedConvert('naturalLanguages',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          naturalLanguages: $checkedConvert(
+              'naturalLanguages',
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => $enumDecode(_$SupportedLanguageEnumMap, e))
+                  .toList()),
           ruleContexts: $checkedConvert('ruleContexts',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           personalizationImpact:
@@ -202,7 +205,8 @@ Map<String, dynamic> _$ConsequenceParamsToJson(ConsequenceParams instance) {
   writeNotNull('minimumAroundRadius', instance.minimumAroundRadius);
   writeNotNull('insideBoundingBox', instance.insideBoundingBox);
   writeNotNull('insidePolygon', instance.insidePolygon);
-  writeNotNull('naturalLanguages', instance.naturalLanguages);
+  writeNotNull('naturalLanguages',
+      instance.naturalLanguages?.map((e) => e.toJson()).toList());
   writeNotNull('ruleContexts', instance.ruleContexts);
   writeNotNull('personalizationImpact', instance.personalizationImpact);
   writeNotNull('userToken', instance.userToken);

@@ -39,7 +39,7 @@ import algoliasearch.search.ScopeType._
 /** OperationIndexParams
   *
   * @param destination
-  *   Index name.
+  *   Index name (case-sensitive).
   * @param scope
   *   **Only for copying.** If you specify a scope, only the selected scopes are copied. Records and the other scopes
   *   are left unchanged. If you omit the `scope` parameter, everything is copied: records, settings, synonyms, and
