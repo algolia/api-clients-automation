@@ -52,6 +52,15 @@ public interface TaskInput {
           LOGGER.finest("Failed to deserialize oneOf StreamingUtilsInput (error: " + e.getMessage() + ") (type: StreamingUtilsInput)");
         }
       }
+      // deserialize ShopifyInput
+      if (tree.isObject()) {
+        try (JsonParser parser = tree.traverse(jp.getCodec())) {
+          return parser.readValueAs(ShopifyInput.class);
+        } catch (Exception e) {
+          // deserialization failed, continue
+          LOGGER.finest("Failed to deserialize oneOf ShopifyInput (error: " + e.getMessage() + ") (type: ShopifyInput)");
+        }
+      }
       throw new AlgoliaRuntimeException(String.format("Failed to deserialize json element: %s", tree));
     }
 

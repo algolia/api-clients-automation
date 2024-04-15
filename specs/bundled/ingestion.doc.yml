@@ -9870,6 +9870,86 @@ components:
         - image
         - imageType
         - configuration
+    SourceUpdateShopify:
+      title: Shopify
+      type: object
+      additionalProperties: false
+      properties:
+        collectionIDIndexing:
+          type: boolean
+          default: false
+          description: >
+            Whether to index collection IDs. 
+
+
+            If your store has `has_collection_search_page` set to true,
+
+            collection IDs will be indexed even if `collectionIDIndexing` is
+            false. 
+        increaseProductCollectionLimit:
+          type: boolean
+          default: false
+          description: |
+            Whether to increase the number of indexed collections per product.
+            If true, Algolia indexes 200 collections per product.
+            If false, 100 collections per product are indexed.
+        defaultPriceRatioAsOne:
+          type: boolean
+          default: true
+          description: >
+            Whether to set the default price ratio to 1 if no sale price is
+            present.
+
+
+            The price ratio is determined by the ratio: `sale_price` /
+            `regular_price`.
+
+            If no sale price is present, the price ratio would be 0.
+
+            If `defaultPriceRatioAsOne` is true, the price ratio is indexed as 1
+            instead.
+        excludeOOSVariantsForPriceAtTRS:
+          type: boolean
+          default: true
+          description: >
+            Whether to exclude out-of-stock variants when determining the
+            `max_variant_price` and `min_variant_price` attributes.
+        includeVariantsInventory:
+          type: boolean
+          default: true
+          description: >
+            Whether to include an inventory with every variant for every product
+            record.
+        hasCollectionSearchPage:
+          type: boolean
+          default: false
+          description: >
+            Whether to include collection IDs and handles in the product
+            records.
+        productNamedTags:
+          type: boolean
+          default: false
+          description: >
+            Whether to convert tags on products to named tags.
+
+
+            To learn more, see [Named
+            tags](https://www.algolia.com/doc/integration/shopify/sending-and-managing-data/named-tags).
+    sourceShopifyBase:
+      type: object
+      additionalProperties: false
+      properties:
+        shopURL:
+          type: string
+          description: URL of the Shopify store.
+      required:
+        - shopURL
+      x-discriminator-fields:
+        - shopURL
+    SourceShopify:
+      allOf:
+        - $ref: '#/components/schemas/SourceUpdateShopify'
+        - $ref: '#/components/schemas/sourceShopifyBase'
     SourceInput:
       oneOf:
         - $ref: '#/components/schemas/SourceCommercetools'
@@ -9879,6 +9959,7 @@ components:
         - $ref: '#/components/schemas/SourceBigQuery'
         - $ref: '#/components/schemas/SourceGA4BigQueryExport'
         - $ref: '#/components/schemas/SourceDocker'
+        - $ref: '#/components/schemas/SourceShopify'
     Source:
       type: object
       additionalProperties: false
@@ -10001,6 +10082,7 @@ components:
         - $ref: '#/components/schemas/SourceBigQuery'
         - $ref: '#/components/schemas/SourceGA4BigQueryExport'
         - $ref: '#/components/schemas/SourceUpdateDocker'
+        - $ref: '#/components/schemas/SourceUpdateShopify'
     SourceUpdate:
       type: object
       additionalProperties: false
@@ -10275,12 +10357,66 @@ components:
           $ref: '#/components/schemas/MappingInput'
       required:
         - mapping
+    ShopifyMetafield:
+      type: object
+      additionalProperties: false
+      description: Represents a metafield in Shopify.
+      properties:
+        namespace:
+          type: string
+        key:
+          type: string
+        value:
+          type: string
+      required:
+        - namespace
+        - key
+        - value
+    ShopifyMarket:
+      type: object
+      additionalProperties: false
+      description: Represents a market in Shopify.
+      properties:
+        countries:
+          type: array
+          items:
+            type: string
+        currencies:
+          type: array
+          items:
+            type: string
+        locales:
+          type: array
+          items:
+            type: string
+      required:
+        - countries
+        - currencies
+        - locales
+    ShopifyInput:
+      title: Shopify input
+      type: object
+      additionalProperties: false
+      description: >-
+        Represents the required elements of the task input when using a
+        `shopify` source.
+      properties:
+        metafields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShopifyMetafield'
+        market:
+          $ref: '#/components/schemas/ShopifyMarket'
+      required:
+        - metafields
+        - market
     TaskInput:
       description: Configuration of the task, depending on its type.
       oneOf:
         - $ref: '#/components/schemas/OnDemandDateUtilsInput'
         - $ref: '#/components/schemas/ScheduleDateUtilsInput'
         - $ref: '#/components/schemas/StreamingUtilsInput'
+        - $ref: '#/components/schemas/ShopifyInput'
     failureThreshold:
       type: integer
       minimum: 0

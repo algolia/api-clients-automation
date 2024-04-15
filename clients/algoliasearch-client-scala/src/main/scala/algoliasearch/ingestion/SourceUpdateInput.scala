@@ -52,6 +52,7 @@ object SourceUpdateInputSerializer extends Serializer[SourceUpdateInput] {
         case value: JObject => Extraction.extract[SourceJSON](value)
         case value: JObject => Extraction.extract[SourceCSV](value)
         case value: JObject => Extraction.extract[SourceUpdateDocker](value)
+        case value: JObject => Extraction.extract[SourceUpdateShopify](value)
         case _              => throw new MappingException("Can't convert " + json + " to SourceUpdateInput")
       }
   }
@@ -64,6 +65,7 @@ object SourceUpdateInputSerializer extends Serializer[SourceUpdateInput] {
       case value: SourceJSON                => Extraction.decompose(value)(format - this)
       case value: SourceCSV                 => Extraction.decompose(value)(format - this)
       case value: SourceUpdateDocker        => Extraction.decompose(value)(format - this)
+      case value: SourceUpdateShopify       => Extraction.decompose(value)(format - this)
     }
   }
 }
