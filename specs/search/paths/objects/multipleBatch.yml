@@ -31,9 +31,7 @@ post:
                     type: object
                     description: Operation arguments (varies with specified `action`).
                   indexName:
-                    type: string
-                    description: Index to target for this operation.
-                    example: 'index1'
+                    $ref: '../../../common/parameters.yml#/indexName'
                 required:
                   - action
                   - body

@@ -443,7 +443,7 @@
           "minWordSizefor2Typos": 0,
           "minimumAroundRadius": 1,
           "naturalLanguages": [
-            ""
+            "fr"
           ],
           "numericFilters": [
             ""
@@ -618,7 +618,7 @@
             "minWordSizefor2Typos": 0,
             "minimumAroundRadius": 1,
             "naturalLanguages": [
-              ""
+              "fr"
             ],
             "numericFilters": [
               ""
