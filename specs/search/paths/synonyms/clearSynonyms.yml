@@ -4,7 +4,7 @@ post:
   operationId: clearSynonyms
   x-acl:
     - editSettings
-  summary: Delete all synonyms.
+  summary: Delete all synonyms
   description: Deletes all synonyms from the index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'

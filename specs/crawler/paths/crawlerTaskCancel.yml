@@ -1,6 +1,6 @@
 post:
   operationId: cancelBlockingAction
-  summary: Cancel a blocking task.
+  summary: Cancel a blocking task
   description: |
     Cancels a blocking task.
 

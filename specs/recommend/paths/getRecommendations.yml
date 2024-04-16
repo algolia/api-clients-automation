@@ -6,7 +6,7 @@ post:
   x-cacheable: true
   x-acl:
     - search
-  summary: Retrieve recommendations.
+  summary: Retrieve recommendations
   description: |
     Retrieves recommendations from selected AI models.
   requestBody:

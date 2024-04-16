@@ -1,6 +1,6 @@
 post:
   operationId: runCrawler
-  summary: Unpause a crawler.
+  summary: Unpause a crawler
   description: |
     Unpauses the specified crawler.
     Previously ongoing crawls will be resumed.

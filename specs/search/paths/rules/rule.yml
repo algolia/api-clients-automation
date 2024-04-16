@@ -4,7 +4,7 @@ get:
   operationId: getRule
   x-acl:
     - settings
-  summary: Retrieve a rule.
+  summary: Retrieve a rule
   description: |
     Retrieves a rule by its ID.
     To find the object ID of rules, use the [`search` operation](#tag/Rules/operation/searchRules).
@@ -34,7 +34,7 @@ put:
   operationId: saveRule
   x-acl:
     - editSettings
-  summary: Create or replace a rule.
+  summary: Create or replace a rule
   description: |
     If a rule with the specified object ID doesn't exist, it's created.
     Otherwise, the existing rule is replaced.
@@ -72,7 +72,7 @@ delete:
   operationId: deleteRule
   x-acl:
     - editSettings
-  summary: Delete a rule.
+  summary: Delete a rule
   description: |
     Deletes a rule by its ID.
     To find the object ID for rules,

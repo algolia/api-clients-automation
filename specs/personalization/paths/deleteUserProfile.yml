@@ -4,7 +4,7 @@ delete:
   operationId: deleteUserProfile
   x-acl:
     - recommendation
-  summary: Delete a user profile.
+  summary: Delete a user profile
   description: |
     Deletes a user profile.
 

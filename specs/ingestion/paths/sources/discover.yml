@@ -1,7 +1,7 @@
 get:
   tags:
     - sources
-  summary: Retrieve a stream listing.
+  summary: Retrieve a stream listing
   description: |
     Retrieves a stream listing for a source.
 
@@ -35,7 +35,7 @@ get:
 post:
   tags:
     - sources
-  summary: Trigger a stream-listing request.
+  summary: Trigger a stream-listing request
   description: |
     Triggers a stream-listing request for a source.
     Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.

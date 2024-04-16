@@ -1,5 +1,5 @@
 get:
-  summary: Retrieve indexing times.
+  summary: Retrieve indexing times
   description: Retrieves average times for indexing operations for selected clusters.
   operationId: getIndexingTime
   security: []

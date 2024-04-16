@@ -4,7 +4,7 @@ get:
   operationId: getUserId
   x-acl:
     - admin
-  summary: Retrieve user ID.
+  summary: Retrieve user ID
   description: |
     Returns the user ID data stored in the mapping.
 
@@ -34,7 +34,7 @@ delete:
   operationId: removeUserId
   x-acl:
     - admin
-  summary: Delete user ID.
+  summary: Delete user ID
   description: Deletes a user ID and its associated data from the clusters.
   parameters:
     - $ref: '../../common/parameters.yml#/UserIDInPath'

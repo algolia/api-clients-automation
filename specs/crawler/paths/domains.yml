@@ -1,6 +1,6 @@
 get:
   operationId: listDomains
-  summary: List registered domains.
+  summary: List registered domains
   description: |
     Lists registered domains.
 

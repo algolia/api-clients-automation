@@ -4,7 +4,7 @@ get:
   operationId: getTopHits
   x-acl:
     - analytics
-  summary: Retrieve top search results.
+  summary: Retrieve top search results
   description: Retrieves the object IDs of the most frequent search results.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'

@@ -1,6 +1,6 @@
 get:
   operationId: getUsage
-  summary: Retrieve usage information.
+  summary: Retrieve usage information
   description: |
     Retrieves usage statistics evaluated over a specified period.
   parameters:

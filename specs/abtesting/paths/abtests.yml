@@ -4,7 +4,7 @@ post:
   operationId: addABTests
   x-acl:
     - editSettings
-  summary: Create an A/B test.
+  summary: Create an A/B test
   description: Creates a new A/B test.
   requestBody:
     required: true
@@ -59,7 +59,7 @@ get:
   operationId: listABTests
   x-acl:
     - analytics
-  summary: List all A/B tests.
+  summary: List all A/B tests
   description: Lists all A/B tests you configured for this application.
   parameters:
     - $ref: '../../common/parameters.yml#/Offset'

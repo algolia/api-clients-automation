@@ -4,7 +4,7 @@ get:
   operationId: getAverageClickPosition
   x-acl:
     - analytics
-  summary: Retrieve average click position.
+  summary: Retrieve average click position
   description: |
     Retrieves the average click position of your search results, including a daily breakdown.
 

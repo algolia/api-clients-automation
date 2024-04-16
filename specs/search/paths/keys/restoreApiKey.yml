@@ -4,7 +4,7 @@ post:
   operationId: restoreApiKey
   x-acl:
     - admin
-  summary: Restore an API key.
+  summary: Restore an API key
   description: |
     Restores a deleted API key.
 

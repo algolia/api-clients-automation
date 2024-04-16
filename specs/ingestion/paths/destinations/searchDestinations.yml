@@ -1,7 +1,7 @@
 post:
   tags:
     - destinations
-  summary: Search for destinations.
+  summary: Search for destinations
   description: Searches for destinations.
   operationId: searchDestinations
   x-acl:

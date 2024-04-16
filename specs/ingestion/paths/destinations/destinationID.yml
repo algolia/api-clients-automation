@@ -1,7 +1,7 @@
 get:
   tags:
     - destinations
-  summary: Retrieve a destination.
+  summary: Retrieve a destination
   description: Retrieves a destination by its ID.
   operationId: getDestination
   x-acl:
@@ -23,7 +23,7 @@ get:
 patch:
   tags:
     - destinations
-  summary: Update a destination.
+  summary: Update a destination
   description: Updates the destination by its ID.
   operationId: updateDestination
   x-acl:
@@ -51,7 +51,7 @@ patch:
 delete:
   tags:
     - destinations
-  summary: Delete a destination.
+  summary: Delete a destination
   description: Deletes a destination by its ID. You can't delete destinations that are referenced in tasks.
   operationId: deleteDestination
   x-acl:

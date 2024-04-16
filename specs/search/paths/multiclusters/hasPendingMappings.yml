@@ -4,7 +4,7 @@ get:
   operationId: hasPendingMappings
   x-acl:
     - admin
-  summary: Get migration and user mapping status.
+  summary: Get migration and user mapping status
   description: |
     To determine when the time-consuming process of creating a large batch of users or migrating users from one cluster to another is complete, this operation retrieves the status of the process.
   parameters:

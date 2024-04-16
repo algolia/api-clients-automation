@@ -4,7 +4,7 @@ post:
   operationId: operationIndex
   x-acl:
     - addObject
-  summary: Copy or move an index.
+  summary: Copy or move an index
   description: |
     Copies or moves (renames) an index within the same Algolia application.
 

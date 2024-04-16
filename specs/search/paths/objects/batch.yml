@@ -2,7 +2,7 @@ post:
   tags:
     - Records
   operationId: batch
-  summary: Batch indexing operations on one index.
+  summary: Batch indexing operations on one index
   description: |
     Adds, updates, or deletes records in one index with a single API request.
 
@@ -46,7 +46,7 @@ post:
             - requests
         examples:
           batch:
-            summary: Batch indexing request.
+            summary: Batch indexing request
             value:
               requests:
                 - action: addObject

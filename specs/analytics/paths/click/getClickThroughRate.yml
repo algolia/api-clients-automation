@@ -4,7 +4,7 @@ get:
   operationId: getClickThroughRate
   x-acl:
     - analytics
-  summary: Retrieve click-through rate.
+  summary: Retrieve click-through rate
   description: |
     Retrieves the click-through rate for all of your searches with at least one click event, including a daily breakdown
 

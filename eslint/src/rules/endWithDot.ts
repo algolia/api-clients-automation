@@ -5,10 +5,10 @@ import { isBlockScalar, isPairWithKey, isScalar } from '../utils';
 export const endWithDot: Rule.RuleModule = {
   meta: {
     docs: {
-      description: '`description`, `summary` must end with a dot',
+      description: '`description` must end with a period',
     },
     messages: {
-      endWithDot: 'content does not end with a dot',
+      endWithDot: 'description does not end with a period',
     },
     fixable: 'code',
   },
@@ -20,8 +20,7 @@ export const endWithDot: Rule.RuleModule = {
     return {
       YAMLPair(node): void {
         if (
-          !isPairWithKey(node, 'description') &&
-          !isPairWithKey(node, 'summary')
+          !isPairWithKey(node, 'description')
         ) {
           return;
         }

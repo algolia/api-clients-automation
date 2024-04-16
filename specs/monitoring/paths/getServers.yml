@@ -1,5 +1,5 @@
 get:
-  summary: Retrieve servers.
+  summary: Retrieve servers
   operationId: getServers
   security:
     - appId: []

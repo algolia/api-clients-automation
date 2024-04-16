@@ -4,7 +4,7 @@ get:
   operationId: getSearchesCount
   x-acl:
     - analytics
-  summary: Retrieve number of searches.
+  summary: Retrieve number of searches
   description: |
     Retrieves the number of searches within a time range, including a daily breakdown.
 

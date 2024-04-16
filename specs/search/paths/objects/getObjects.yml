@@ -6,7 +6,7 @@ post:
   x-cacheable: true
   x-acl:
     - search
-  summary: Retrieve records.
+  summary: Retrieve records
   description: |
     Retrieves one or more records, potentially from different indices.
 

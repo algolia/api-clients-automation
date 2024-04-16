@@ -1,7 +1,7 @@
 post:
   tags:
     - authentications
-  summary: Search for authentication resources.
+  summary: Search for authentication resources
   description: Searches for authentication resources.
   operationId: searchAuthentications
   x-acl:

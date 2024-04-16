@@ -4,7 +4,7 @@ get:
   operationId: getConversionRate
   x-acl:
     - analytics
-  summary: Retrieve conversion rate.
+  summary: Retrieve conversion rate
   description: |
     Retrieves the conversion rate for all of your searches with at least one conversion event, including a daily breakdown.
 

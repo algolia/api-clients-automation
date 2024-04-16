@@ -4,7 +4,7 @@ get:
   operationId: getTopSearches
   x-acl:
     - analytics
-  summary: Retrieve top searches.
+  summary: Retrieve top searches
   description: Returns the most popular search terms.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'

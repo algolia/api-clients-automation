@@ -1,7 +1,7 @@
 get:
   tags:
     - observability
-  summary: Retrieve a task run event.
+  summary: Retrieve a task run event
   description: Retrieves a single task run event by its ID.
   operationId: getEvent
   x-acl:

@@ -4,7 +4,7 @@ method:
     tags:
       - Api Keys
     operationId: generateSecuredApiKey
-    summary: Create secured API keys.
+    summary: Create secured API keys
     description: |
       Generates a secured API key without any requests to Algolia's servers.
 

@@ -4,7 +4,7 @@ get:
   operationId: getObject
   x-acl:
     - search
-  summary: Retrieve a record.
+  summary: Retrieve a record
   description: |
     Retrieves one record by its object ID.
 
@@ -53,7 +53,7 @@ put:
   operationId: addOrUpdateObject
   x-acl:
     - addObject
-  summary: Add or replace a record.
+  summary: Add or replace a record
   description: |
     If a record with the specified object ID exists, the existing record is replaced.
     Otherwise, a new record is added to the index.
@@ -88,7 +88,7 @@ delete:
   operationId: deleteObject
   x-acl:
     - deleteObject
-  summary: Delete a record.
+  summary: Delete a record
   description: |
     Deletes a record by its object ID.
 

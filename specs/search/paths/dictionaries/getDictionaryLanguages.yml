@@ -6,7 +6,7 @@ get:
     - settings
   description: |
     Lists supported languages with their supported dictionary types and number of custom entries.
-  summary: List available languages.
+  summary: List available languages
   externalDocs:
     url: https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/
     description: Supported languages.

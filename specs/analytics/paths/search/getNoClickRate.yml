@@ -4,7 +4,7 @@ get:
   operationId: getNoClickRate
   x-acl:
     - analytics
-  summary: Retrieve no click rate.
+  summary: Retrieve no click rate
   description: |
     Retrieves the fraction of searches that didn't lead to any click within a time range, including a daily breakdown.
 

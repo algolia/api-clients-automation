@@ -4,7 +4,7 @@ post:
   operationId: stopABTest
   x-acl:
     - editSettings
-  summary: Stop an A/B test.
+  summary: Stop an A/B test
   description: |
     Stops an A/B test by its ID.
 

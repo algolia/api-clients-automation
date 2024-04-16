@@ -4,7 +4,7 @@ get:
   operationId: getStatus
   x-acl:
     - analytics
-  summary: Retrieve update status.
+  summary: Retrieve update status
   description: |
     Retrieves the time when the Analytics data for the specified index was last updated.
 

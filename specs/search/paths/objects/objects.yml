@@ -14,7 +14,7 @@ post:
 
     To update _some_ attributes of a record, use the [`partial` operation](#tag/Records/operation/partial).
     To add, update, or replace multiple records, use the [`batch` operation](#tag/Records/operation/batch).
-  summary: Add or replace a record.
+  summary: Add or replace a record
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   requestBody:
@@ -58,7 +58,7 @@ delete:
   operationId: deleteIndex
   x-acl:
     - deleteIndex
-  summary: Delete an index.
+  summary: Delete an index
   description: |
     Deletes an index and all its settings.
 

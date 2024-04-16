@@ -5,7 +5,7 @@ get:
   x-acl:
     - search
   description: Retrieves an object with non-null index settings.
-  summary: Retrieve index settings.
+  summary: Retrieve index settings
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
   responses:
@@ -37,7 +37,7 @@ put:
     Specify `null` to reset a setting to its default value.
 
     For best performance, update the index settings before you add new records to your index.
-  summary: Update index settings.
+  summary: Update index settings
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - $ref: '../../../common/parameters.yml#/ForwardToReplicas'

@@ -4,7 +4,7 @@ post:
   operationId: browse
   x-acl:
     - browse
-  summary: Browse for records.
+  summary: Browse for records
   description: |
     Retrieves records from an index, up to 1,000 per request.
 

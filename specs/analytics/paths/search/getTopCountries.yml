@@ -4,7 +4,7 @@ get:
   operationId: getTopCountries
   x-acl:
     - analytics
-  summary: Retrieve top countries.
+  summary: Retrieve top countries
   description: Retrieves the countries with the most searches to your index.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'

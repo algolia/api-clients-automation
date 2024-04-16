@@ -4,7 +4,7 @@ get:
   operationId: getTopFiltersNoResults
   x-acl:
     - analytics
-  summary: Retrieve top filters for a search without results.
+  summary: Retrieve top filters for a search without results
   description: |
     Retrieves the most frequently used filters for a search that didn't return any results.
 

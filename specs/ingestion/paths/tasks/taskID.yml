@@ -1,7 +1,7 @@
 get:
   tags:
     - tasks
-  summary: Retrieve a task.
+  summary: Retrieve a task
   description: Retrieves a task by its ID.
   operationId: getTask
   x-acl:
@@ -23,7 +23,7 @@ get:
 patch:
   tags:
     - tasks
-  summary: Update a task.
+  summary: Update a task
   description: Updates a task by its ID.
   operationId: updateTask
   parameters:
@@ -47,7 +47,7 @@ patch:
 delete:
   tags:
     - tasks
-  summary: Delete a task.
+  summary: Delete a task
   description: Deletes a task by its ID.
   operationId: deleteTask
   parameters:

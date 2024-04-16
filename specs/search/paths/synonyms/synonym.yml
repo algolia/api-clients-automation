@@ -4,7 +4,7 @@ get:
   operationId: getSynonym
   x-acl:
     - settings
-  summary: Retrieve a synonym.
+  summary: Retrieve a synonym
   description: |
     Retrieves a syonym by its ID.
     To find the object IDs for your synonyms,
@@ -34,7 +34,7 @@ put:
   operationId: saveSynonym
   x-acl:
     - editSettings
-  summary: Create or replace a synonym.
+  summary: Create or replace a synonym
   description: |
     If a synonym with the specified object ID doesn't exist, Algolia adds a new one.
     Otherwise, the existing synonym is replaced.
@@ -84,7 +84,7 @@ delete:
   operationId: deleteSynonym
   x-acl:
     - editSettings
-  summary: Delete a synonym.
+  summary: Delete a synonym
   description: |
     Deletes a synonym by its ID.
     To find the object IDs of your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).

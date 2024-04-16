@@ -1,4 +1,5 @@
 import { endWithDot } from './rules/endWithDot';
+import { noFinalDot } from './rules/noFinalDot';
 import { noNewLine } from './rules/noNewLine';
 import { createOutOfLineRule } from './rules/outOfLineRule';
 import { singleQuoteRef } from './rules/singleQuoteRef';
@@ -6,6 +7,7 @@ import { validACL } from './rules/validACL';
 
 const rules = {
   'end-with-dot': endWithDot,
+  'no-final-dot': noFinalDot,
   'out-of-line-enum': createOutOfLineRule({ property: 'enum' }),
   'out-of-line-one-of': createOutOfLineRule({ property: 'oneOf' }),
   'out-of-line-all-of': createOutOfLineRule({ property: 'allOf' }),

@@ -9,7 +9,7 @@ module.exports = {
     '**/target',
     '**/.yarn',
     'website/specs',
-    '**/project.packagespec.json'
+    '**/project.packagespec.json',
   ],
 
   overrides: [
@@ -52,6 +52,7 @@ module.exports = {
           files: ['specs/**/*.yml'],
           rules: {
             'automation-custom/end-with-dot': 'error',
+            'automation-custom/no-final-dot': 'error',
             'automation-custom/single-quote-ref': 'error',
           },
           overrides: [
@@ -149,7 +150,7 @@ module.exports = {
 
       parserOptions: {
         tsconfigRootDir: __dirname,
-        project: './clients/algoliasearch-client-javascript/tsconfig.json'
+        project: './clients/algoliasearch-client-javascript/tsconfig.json',
       },
 
       rules: {
@@ -183,6 +184,6 @@ module.exports = {
       rules: {
         'automation-custom/no-new-line': 'error',
       },
-    }
+    },
   ],
 };
