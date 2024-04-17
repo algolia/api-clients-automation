@@ -133,7 +133,7 @@ paths:
   /{path}:
     get:
       operationId: customGet
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -163,7 +163,7 @@ paths:
           application/json:
             schema:
               type: object
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -193,7 +193,7 @@ paths:
           application/json:
             schema:
               type: object
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -217,7 +217,7 @@ paths:
         - ingestion
     delete:
       operationId: customDelete
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -243,7 +243,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: List authentication resources.
+      summary: List authentication resources
       description: Retrieves a list of all authentication resources.
       operationId: getAuthentications
       x-acl:
@@ -281,7 +281,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Create an authentication resource.
+      summary: Create an authentication resource
       description: Creates a new authentication resource.
       operationId: createAuthentication
       x-acl:
@@ -308,7 +308,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Search for authentication resources.
+      summary: Search for authentication resources
       description: Searches for authentication resources.
       operationId: searchAuthentications
       x-acl:
@@ -337,7 +337,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: Retrieve an authentication resource.
+      summary: Retrieve an authentication resource
       description: Retrieves an authentication resource by its ID.
       operationId: getAuthentication
       x-acl:
@@ -358,7 +358,7 @@ paths:
     patch:
       tags:
         - ingestion
-      summary: Update an authentication resource.
+      summary: Update an authentication resource
       description: Updates an authentication resource.
       operationId: updateAuthentication
       x-acl:
@@ -385,7 +385,7 @@ paths:
     delete:
       tags:
         - ingestion
-      summary: Delete an authentication resource.
+      summary: Delete an authentication resource
       description: >-
         Deletes an authentication resource. You can't delete authentication
         resources that are used by a source or a destination.
@@ -409,7 +409,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: List destinations.
+      summary: List destinations
       description: Retrieves a list of destinations.
       operationId: getDestinations
       x-acl:
@@ -447,7 +447,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Create a destination.
+      summary: Create a destination
       description: Creates a new destination.
       operationId: createDestination
       x-acl:
@@ -474,7 +474,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Search for destinations.
+      summary: Search for destinations
       description: Searches for destinations.
       operationId: searchDestinations
       x-acl:
@@ -503,7 +503,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: Retrieve a destination.
+      summary: Retrieve a destination
       description: Retrieves a destination by its ID.
       operationId: getDestination
       x-acl:
@@ -524,7 +524,7 @@ paths:
     patch:
       tags:
         - ingestion
-      summary: Update a destination.
+      summary: Update a destination
       description: Updates the destination by its ID.
       operationId: updateDestination
       x-acl:
@@ -551,7 +551,7 @@ paths:
     delete:
       tags:
         - ingestion
-      summary: Delete a destination.
+      summary: Delete a destination
       description: >-
         Deletes a destination by its ID. You can't delete destinations that are
         referenced in tasks.
@@ -575,7 +575,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: List sources.
+      summary: List sources
       description: Retrieves a list of sources.
       operationId: getSources
       x-acl:
@@ -613,7 +613,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Create a source.
+      summary: Create a source
       description: Creates a new source.
       operationId: createSource
       x-acl:
@@ -640,7 +640,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Search for sources.
+      summary: Search for sources
       description: Searches for sources.
       operationId: searchSources
       x-acl:
@@ -669,7 +669,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: Retrieve a source.
+      summary: Retrieve a source
       description: Retrieve a source by its ID.
       operationId: getSource
       x-acl:
@@ -690,7 +690,7 @@ paths:
     patch:
       tags:
         - ingestion
-      summary: Update a source.
+      summary: Update a source
       description: Updates a source by its ID.
       operationId: updateSource
       x-acl:
@@ -717,7 +717,7 @@ paths:
     delete:
       tags:
         - ingestion
-      summary: Delete a source.
+      summary: Delete a source
       description: >-
         Deletes a source by its ID. You can't delete sources that are referenced
         in tasks.
@@ -741,7 +741,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: Retrieve a stream listing.
+      summary: Retrieve a stream listing
       description: >
         Retrieves a stream listing for a source.
 
@@ -776,7 +776,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Trigger a stream-listing request.
+      summary: Trigger a stream-listing request
       description: >
         Triggers a stream-listing request for a source.
 
@@ -812,7 +812,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: List tasks.
+      summary: List tasks
       description: Retrieves a list of tasks.
       operationId: getTasks
       x-acl:
@@ -854,7 +854,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Create a task.
+      summary: Create a task
       description: Creates a new task.
       operationId: createTask
       requestBody:
@@ -877,7 +877,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Search for tasks.
+      summary: Search for tasks
       description: Searches for tasks.
       operationId: searchTasks
       x-acl:
@@ -906,7 +906,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: Retrieve a task.
+      summary: Retrieve a task
       description: Retrieves a task by its ID.
       operationId: getTask
       x-acl:
@@ -927,7 +927,7 @@ paths:
     patch:
       tags:
         - ingestion
-      summary: Update a task.
+      summary: Update a task
       description: Updates a task by its ID.
       operationId: updateTask
       parameters:
@@ -950,7 +950,7 @@ paths:
     delete:
       tags:
         - ingestion
-      summary: Delete a task.
+      summary: Delete a task
       description: Deletes a task by its ID.
       operationId: deleteTask
       parameters:
@@ -968,7 +968,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Run a task.
+      summary: Run a task
       description: >-
         Runs a task. You can check the status of task runs with the
         observability endpoints.
@@ -992,7 +992,7 @@ paths:
     put:
       tags:
         - ingestion
-      summary: Enable a task.
+      summary: Enable a task
       description: Enables a task.
       operationId: enableTask
       x-acl:
@@ -1014,7 +1014,7 @@ paths:
     put:
       tags:
         - ingestion
-      summary: Disable a task.
+      summary: Disable a task
       description: Disables a task.
       operationId: disableTask
       x-acl:
@@ -1036,7 +1036,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: List task runs.
+      summary: List task runs
       description: Retrieve a list of task runs.
       operationId: getRuns
       x-acl:
@@ -1077,7 +1077,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: Retrieve a task run.
+      summary: Retrieve a task run
       description: Retrieve a single task run by its ID.
       operationId: getRun
       x-acl:
@@ -1099,7 +1099,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: List task run events.
+      summary: List task run events
       description: Retrieves a list of events for a task run, identified by it's ID.
       operationId: getEvents
       x-acl:
@@ -1156,7 +1156,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: Retrieve a task run event.
+      summary: Retrieve a task run event
       description: Retrieves a single task run event by its ID.
       operationId: getEvent
       x-acl:

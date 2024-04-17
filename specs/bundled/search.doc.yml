@@ -272,7 +272,7 @@ paths:
   /{path}:
     get:
       operationId: customGet
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -471,7 +471,7 @@ paths:
           application/json:
             schema:
               type: object
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -670,7 +670,7 @@ paths:
           application/json:
             schema:
               type: object
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -863,7 +863,7 @@ paths:
             _ = try await client.customPut(path: "test/minimal")
     delete:
       operationId: customDelete
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -1069,7 +1069,7 @@ paths:
       x-cacheable: true
       x-acl:
         - search
-      summary: Search an index.
+      summary: Search an index
       description: >
         Searches a single index and return matching search results (_hits_).
 
@@ -1298,7 +1298,7 @@ paths:
       x-legacy-signature: true
       x-acl:
         - search
-      summary: Search multiple indices.
+      summary: Search multiple indices
       description: >
         Sends multiple search request to one or more indices.
 
@@ -1590,7 +1590,7 @@ paths:
       x-cacheable: true
       x-acl:
         - search
-      summary: Search for facet values.
+      summary: Search for facet values
       description: >
         Searches for values of a specified facet attribute.
 
@@ -1837,7 +1837,7 @@ paths:
       operationId: browse
       x-acl:
         - browse
-      summary: Browse for records.
+      summary: Browse for records
       description: >
         Retrieves records from an index, up to 1,000 per request.
 
@@ -2087,7 +2087,7 @@ paths:
 
         To add, update, or replace multiple records, use the [`batch`
         operation](#tag/Records/operation/batch).
-      summary: Add or replace a record.
+      summary: Add or replace a record
       parameters:
         - $ref: '#/components/parameters/IndexName'
       requestBody:
@@ -2341,7 +2341,7 @@ paths:
       operationId: deleteIndex
       x-acl:
         - deleteIndex
-      summary: Delete an index.
+      summary: Delete an index
       description: >
         Deletes an index and all its settings.
 
@@ -2559,7 +2559,7 @@ paths:
       operationId: getObject
       x-acl:
         - search
-      summary: Retrieve a record.
+      summary: Retrieve a record
       description: >
         Retrieves one record by its object ID.
 
@@ -2828,7 +2828,7 @@ paths:
       operationId: addOrUpdateObject
       x-acl:
         - addObject
-      summary: Add or replace a record.
+      summary: Add or replace a record
       description: >
         If a record with the specified object ID exists, the existing record is
         replaced.
@@ -3087,7 +3087,7 @@ paths:
       operationId: deleteObject
       x-acl:
         - deleteObject
-      summary: Delete a record.
+      summary: Delete a record
       description: >
         Deletes a record by its object ID.
 
@@ -3299,7 +3299,7 @@ paths:
       operationId: deleteBy
       x-acl:
         - deleteIndex
-      summary: Delete records matching a query.
+      summary: Delete records matching a query
       description: >
         This operation doesn't accept empty queries or filters.
 
@@ -3539,7 +3539,7 @@ paths:
       operationId: clearObjects
       x-acl:
         - deleteIndex
-      summary: Delete all records from an index.
+      summary: Delete all records from an index
       description: >-
         Deletes only the records from an index while keeping settings, synonyms,
         and rules.
@@ -3740,7 +3740,7 @@ paths:
       operationId: partialUpdateObject
       x-acl:
         - addObject
-      summary: Add or update attributes.
+      summary: Add or update attributes
       x-codegen-request-body-name: attributesToUpdate
       description: |
         Adds new attributes to a record, or update existing ones.
@@ -4058,7 +4058,7 @@ paths:
       tags:
         - Records
       operationId: batch
-      summary: Batch indexing operations on one index.
+      summary: Batch indexing operations on one index
       description: >
         Adds, updates, or deletes records in one index with a single API
         request.
@@ -4106,7 +4106,7 @@ paths:
                 - requests
             examples:
               batch:
-                summary: Batch indexing request.
+                summary: Batch indexing request
                 value:
                   requests:
                     - action: addObject
@@ -4410,7 +4410,7 @@ paths:
 
         - Actions are equivalent to the individual API requests of the same
         name.
-      summary: Batch indexing operations on multiple indices.
+      summary: Batch indexing operations on multiple indices
       requestBody:
         required: true
         content:
@@ -4443,7 +4443,7 @@ paths:
                 - requests
             examples:
               batch:
-                summary: Batch indexing request to two indices.
+                summary: Batch indexing request to two indices
                 value:
                   requests:
                     - action: addObject
@@ -4755,7 +4755,7 @@ paths:
       x-cacheable: true
       x-acl:
         - search
-      summary: Retrieve records.
+      summary: Retrieve records
       description: |
         Retrieves one or more records, potentially from different indices.
 
@@ -5105,7 +5105,7 @@ paths:
       x-acl:
         - search
       description: Retrieves an object with non-null index settings.
-      summary: Retrieve index settings.
+      summary: Retrieve index settings
       parameters:
         - $ref: '#/components/parameters/IndexName'
       responses:
@@ -5317,7 +5317,7 @@ paths:
 
         For best performance, update the index settings before you add new
         records to your index.
-      summary: Update index settings.
+      summary: Update index settings
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - $ref: '#/components/parameters/ForwardToReplicas'
@@ -5553,7 +5553,7 @@ paths:
       operationId: getSynonym
       x-acl:
         - settings
-      summary: Retrieve a synonym.
+      summary: Retrieve a synonym
       description: |
         Retrieves a syonym by its ID.
         To find the object IDs for your synonyms,
@@ -5762,7 +5762,7 @@ paths:
       operationId: saveSynonym
       x-acl:
         - editSettings
-      summary: Create or replace a synonym.
+      summary: Create or replace a synonym
       description: >
         If a synonym with the specified object ID doesn't exist, Algolia adds a
         new one.
@@ -6070,7 +6070,7 @@ paths:
       operationId: deleteSynonym
       x-acl:
         - editSettings
-      summary: Delete a synonym.
+      summary: Delete a synonym
       description: >
         Deletes a synonym by its ID.
 
@@ -6278,7 +6278,7 @@ paths:
       operationId: saveSynonyms
       x-acl:
         - editSettings
-      summary: Create or replace synonyms.
+      summary: Create or replace synonyms
       description: |
         If a synonym with the `objectID` doesn't exist, Algolia adds a new one.
         Otherwise, existing synonyms are replaced.
@@ -6659,7 +6659,7 @@ paths:
       operationId: clearSynonyms
       x-acl:
         - editSettings
-      summary: Delete all synonyms.
+      summary: Delete all synonyms
       description: Deletes all synonyms from the index.
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -6861,7 +6861,7 @@ paths:
       x-cacheable: true
       x-acl:
         - settings
-      summary: Search for synonyms.
+      summary: Search for synonyms
       description: Searches for synonyms in your index.
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -7089,7 +7089,7 @@ paths:
       operationId: listApiKeys
       x-acl:
         - admin
-      summary: List API keys.
+      summary: List API keys
       description: >-
         Lists all API keys associated with your Algolia application, including
         their permissions and restrictions.
@@ -7285,7 +7285,7 @@ paths:
       operationId: addApiKey
       x-acl:
         - admin
-      summary: Create an API key.
+      summary: Create an API key
       description: Creates a new API key with specific permissions and restrictions.
       requestBody:
         required: true
@@ -7561,7 +7561,7 @@ paths:
       tags:
         - Api Keys
       operationId: getApiKey
-      summary: Retrieve API key permissions.
+      summary: Retrieve API key permissions
       description: >
         Gets the permissions and restrictions of an API key.
 
@@ -7765,7 +7765,7 @@ paths:
       operationId: updateApiKey
       x-acl:
         - admin
-      summary: Update an API key.
+      summary: Update an API key
       description: |
         Replaces the permissions of an existing API key.
 
@@ -8061,7 +8061,7 @@ paths:
       operationId: deleteApiKey
       x-acl:
         - admin
-      summary: Delete an API key.
+      summary: Delete an API key
       description: Deletes the API key.
       parameters:
         - $ref: '#/components/parameters/KeyString'
@@ -8265,7 +8265,7 @@ paths:
       operationId: restoreApiKey
       x-acl:
         - admin
-      summary: Restore an API key.
+      summary: Restore an API key
       description: >
         Restores a deleted API key.
 
@@ -8472,7 +8472,7 @@ paths:
       operationId: getRule
       x-acl:
         - settings
-      summary: Retrieve a rule.
+      summary: Retrieve a rule
       description: >
         Retrieves a rule by its ID.
 
@@ -8682,7 +8682,7 @@ paths:
       operationId: saveRule
       x-acl:
         - editSettings
-      summary: Create or replace a rule.
+      summary: Create or replace a rule
       description: >
         If a rule with the specified object ID doesn't exist, it's created.
 
@@ -8983,7 +8983,7 @@ paths:
       operationId: deleteRule
       x-acl:
         - editSettings
-      summary: Delete a rule.
+      summary: Delete a rule
       description: |
         Deletes a rule by its ID.
         To find the object ID for rules,
@@ -9190,7 +9190,7 @@ paths:
       operationId: saveRules
       x-acl:
         - editSettings
-      summary: Create or update rules.
+      summary: Create or update rules
       description: >
         Create or update multiple rules.
 
@@ -9576,7 +9576,7 @@ paths:
       operationId: clearRules
       x-acl:
         - editSettings
-      summary: Delete all rules.
+      summary: Delete all rules
       description: Deletes all rules from the index.
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -9778,7 +9778,7 @@ paths:
       x-cacheable: true
       x-acl:
         - settings
-      summary: Search for rules.
+      summary: Search for rules
       description: Searches for rules in your index.
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -10065,7 +10065,7 @@ paths:
       description: >-
         Adds or deletes multiple entries from your plurals, segmentation, or
         stop word dictionaries.
-      summary: Add or delete dictionary entries.
+      summary: Add or delete dictionary entries
       parameters:
         - $ref: '#/components/parameters/DictionaryName'
       requestBody:
@@ -10467,7 +10467,7 @@ paths:
       x-acl:
         - settings
       description: Searches for standard and custom dictionary entries.
-      summary: Search dictionary entries.
+      summary: Search dictionary entries
       parameters:
         - $ref: '#/components/parameters/DictionaryName'
       requestBody:
@@ -10719,7 +10719,7 @@ paths:
       operationId: getDictionarySettings
       x-acl:
         - settings
-      summary: Retrieve dictionary settings.
+      summary: Retrieve dictionary settings
       description: >-
         Retrieves the languages for which standard dictionary entries are turned
         off.
@@ -10915,7 +10915,7 @@ paths:
       description: >-
         Turns standard stop word dictionary entries on or off for a given
         language.
-      summary: Update dictionary settings.
+      summary: Update dictionary settings
       requestBody:
         required: true
         content:
@@ -11196,7 +11196,7 @@ paths:
       description: >
         Lists supported languages with their supported dictionary types and
         number of custom entries.
-      summary: List available languages.
+      summary: List available languages
       externalDocs:
         url: >-
           https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/
@@ -11388,7 +11388,7 @@ paths:
       operationId: assignUserId
       x-acl:
         - admin
-      summary: Assign or move a user ID.
+      summary: Assign or move a user ID
       description: >
         Assigns or moves a user ID to a cluster.
 
@@ -11632,7 +11632,7 @@ paths:
       operationId: listUserIds
       x-acl:
         - admin
-      summary: List user IDs.
+      summary: List user IDs
       description: >
         Lists the userIDs assigned to a multi-cluster application.
 
@@ -11837,7 +11837,7 @@ paths:
       operationId: batchAssignUserIds
       x-acl:
         - admin
-      summary: Assign multiple userIDs.
+      summary: Assign multiple userIDs
       description: |
         Assigns multiple user IDs to a cluster.
 
@@ -12117,7 +12117,7 @@ paths:
       operationId: getTopUserIds
       x-acl:
         - admin
-      summary: Get top user IDs.
+      summary: Get top user IDs
       description: >
         Get the IDs of the 10 users with the highest number of records per
         cluster.
@@ -12328,7 +12328,7 @@ paths:
       operationId: getUserId
       x-acl:
         - admin
-      summary: Retrieve user ID.
+      summary: Retrieve user ID
       description: >
         Returns the user ID data stored in the mapping.
 
@@ -12531,7 +12531,7 @@ paths:
       operationId: removeUserId
       x-acl:
         - admin
-      summary: Delete user ID.
+      summary: Delete user ID
       description: Deletes a user ID and its associated data from the clusters.
       parameters:
         - $ref: '#/components/parameters/UserIDInPath'
@@ -12735,7 +12735,7 @@ paths:
       operationId: listClusters
       x-acl:
         - admin
-      summary: List clusters.
+      summary: List clusters
       description: Lists the available clusters in a multi-cluster setup.
       responses:
         '200':
@@ -12935,7 +12935,7 @@ paths:
       x-cacheable: true
       x-acl:
         - admin
-      summary: Search for user IDs.
+      summary: Search for user IDs
       description: >
         Since it can take a few seconds to get the data from the different
         clusters,
@@ -13270,7 +13270,7 @@ paths:
       operationId: hasPendingMappings
       x-acl:
         - admin
-      summary: Get migration and user mapping status.
+      summary: Get migration and user mapping status
       description: >
         To determine when the time-consuming process of creating a large batch
         of users or migrating users from one cluster to another is complete,
@@ -13493,7 +13493,7 @@ paths:
       operationId: getSources
       x-acl:
         - admin
-      summary: List allowed sources.
+      summary: List allowed sources
       description: Retrieves all allowed IP addresses with access to your application.
       responses:
         '200':
@@ -13677,7 +13677,7 @@ paths:
       operationId: replaceSources
       x-acl:
         - admin
-      summary: Replace allowed sources.
+      summary: Replace allowed sources
       description: Replaces the list of allowed sources.
       requestBody:
         required: true
@@ -13934,7 +13934,7 @@ paths:
       x-acl:
         - admin
       description: Adds a source to the list of allowed sources.
-      summary: Add a source.
+      summary: Add a source
       requestBody:
         required: true
         description: Source to add.
@@ -14159,7 +14159,7 @@ paths:
       x-acl:
         - admin
       description: Deletes a source from the list of allowed sources.
-      summary: Delete a source.
+      summary: Delete a source
       parameters:
         - name: source
           in: path
@@ -14380,7 +14380,7 @@ paths:
         - This request counts towards your [operations
         quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-)
         but doesn't appear in the logs itself.
-      summary: Retrieve log entries.
+      summary: Retrieve log entries
       parameters:
         - name: offset
           in: query
@@ -14750,7 +14750,7 @@ paths:
 
         The indexing tasks' responses include a task ID that you can use to
         check the status.
-      summary: Check task status.
+      summary: Check task status
       parameters:
         - $ref: '#/components/parameters/IndexName'
         - name: taskID
@@ -14970,7 +14970,7 @@ paths:
       operationId: operationIndex
       x-acl:
         - addObject
-      summary: Copy or move an index.
+      summary: Copy or move an index
       description: >
         Copies or moves (renames) an index within the same Algolia application.
 
@@ -15314,7 +15314,7 @@ paths:
       operationId: listIndices
       x-acl:
         - listIndexes
-      summary: List indices.
+      summary: List indices
       description: >
         Lists all indices in the current Algolia application.
 

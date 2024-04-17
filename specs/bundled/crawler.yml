@@ -131,7 +131,7 @@ paths:
   /1/crawlers:
     get:
       operationId: listCrawlers
-      summary: List crawlers.
+      summary: List crawlers
       description: Lists all your crawlers.
       tags:
         - crawler
@@ -157,7 +157,7 @@ paths:
           description: The call does not have results for this combinaison of query params.
     post:
       operationId: createCrawler
-      summary: Create a crawler.
+      summary: Create a crawler
       description: Creates a new crawler with the provided configuration.
       tags:
         - crawler
@@ -195,7 +195,7 @@ paths:
   /1/crawlers/{id}:
     get:
       operationId: getCrawler
-      summary: Retrieve crawler details.
+      summary: Retrieve crawler details
       description: >
         Retrieves details about the specified crawler, optionally with its
         configuration.
@@ -223,7 +223,7 @@ paths:
           $ref: '#/components/responses/NoRightsOnCrawler'
     patch:
       operationId: patchCrawler
-      summary: Update crawler.
+      summary: Update crawler
       description: >
         Updates the crawler, either its name or its configuration.
 
@@ -270,7 +270,7 @@ paths:
   /1/crawlers/{id}/run:
     post:
       operationId: runCrawler
-      summary: Unpause a crawler.
+      summary: Unpause a crawler
       description: |
         Unpauses the specified crawler.
         Previously ongoing crawls will be resumed.
@@ -291,7 +291,7 @@ paths:
   /1/crawlers/{id}/pause:
     post:
       operationId: pauseCrawler
-      summary: Pause a crawler.
+      summary: Pause a crawler
       description: Pauses the specified crawler.
       tags:
         - crawler
@@ -309,7 +309,7 @@ paths:
   /1/crawlers/{id}/reindex:
     post:
       operationId: startReindex
-      summary: Start a crawl.
+      summary: Start a crawl
       description: Starts or resumes a crawl.
       tags:
         - crawler
@@ -327,7 +327,7 @@ paths:
   /1/crawlers/{id}/test:
     post:
       operationId: testUrl
-      summary: Test crawling a URL.
+      summary: Test crawling a URL
       description: >
         Tests a URL with the crawler's configuration and shows the extracted
         records.
@@ -475,7 +475,7 @@ paths:
   /1/crawlers/{id}/urls/crawl:
     post:
       operationId: crawlUrls
-      summary: Crawl URLs.
+      summary: Crawl URLs
       description: >
         Crawls the specified URLs, extracts records from them, and adds them to
         the index.
@@ -523,7 +523,7 @@ paths:
   /1/crawlers/{id}/stats/urls:
     get:
       operationId: getStats
-      summary: Retrieve crawler stats.
+      summary: Retrieve crawler stats
       description: >-
         Retrieves information about the number of crawled, skipped, and failed
         URLs.
@@ -558,7 +558,7 @@ paths:
   /1/crawlers/{id}/config:
     patch:
       operationId: patchConfig
-      summary: Update crawler configuration.
+      summary: Update crawler configuration
       description: |
         Updates the configuration of the specified crawler.
         Every time you update the configuration, a new version is created.
@@ -583,7 +583,7 @@ paths:
   /1/crawlers/{id}/config/versions:
     get:
       operationId: listConfigVersions
-      summary: List configuration versions.
+      summary: List configuration versions
       description: >
         Lists previous versions of the specified crawler's configuration,
         including who authored the change.
@@ -610,7 +610,7 @@ paths:
   /1/crawlers/{id}/config/versions/{version}:
     get:
       operationId: getConfigVersion
-      summary: Retrieve a configuration version.
+      summary: Retrieve a configuration version
       description: |
         Retrieves the specified version of the crawler configuration.
 
@@ -646,7 +646,7 @@ paths:
   /1/crawlers/{id}/tasks/{taskID}:
     get:
       operationId: getTaskStatus
-      summary: Retrieve task status.
+      summary: Retrieve task status
       description: >-
         Retrieves the status of the specified tasks, whether they're pending or
         completed.
@@ -675,7 +675,7 @@ paths:
   /1/crawlers/{id}/tasks/{taskID}/cancel:
     post:
       operationId: cancelBlockingAction
-      summary: Cancel a blocking task.
+      summary: Cancel a blocking task
       description: |
         Cancels a blocking task.
 
@@ -698,7 +698,7 @@ paths:
   /1/domains:
     get:
       operationId: listDomains
-      summary: List registered domains.
+      summary: List registered domains
       description: |
         Lists registered domains.
 

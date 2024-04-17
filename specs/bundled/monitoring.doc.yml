@@ -85,7 +85,7 @@ paths:
   /{path}:
     get:
       operationId: customGet
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -278,7 +278,7 @@ paths:
           application/json:
             schema:
               type: object
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -471,7 +471,7 @@ paths:
           application/json:
             schema:
               type: object
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -658,7 +658,7 @@ paths:
             _ = try await client.customPut(path: "test/minimal")
     delete:
       operationId: customDelete
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -852,7 +852,7 @@ paths:
   /1/status:
     get:
       operationId: getStatus
-      summary: Retrieve status of all clusters.
+      summary: Retrieve status of all clusters
       security: []
       tags:
         - status
@@ -1021,7 +1021,7 @@ paths:
             _ = try await client.getStatus()
   /1/status/{clusters}:
     get:
-      summary: Retrieve cluster status.
+      summary: Retrieve cluster status
       description: Retrieves the status of selected clusters.
       operationId: getClusterStatus
       tags:
@@ -1217,7 +1217,7 @@ paths:
             _ = try await client.getClusterStatus(clusters: "c1-de")
   /1/incidents:
     get:
-      summary: Retrieve all incidents.
+      summary: Retrieve all incidents
       description: Retrieves known incidents for all clusters.
       operationId: getIncidents
       security: []
@@ -1387,7 +1387,7 @@ paths:
             _ = try await client.getIncidents()
   /1/incidents/{clusters}:
     get:
-      summary: Retrieve cluster incidents.
+      summary: Retrieve cluster incidents
       description: Retrieves known incidents for the selected clusters.
       operationId: getClusterIncidents
       tags:
@@ -1583,7 +1583,7 @@ paths:
             _ = try await client.getClusterIncidents(clusters: "c1-de")
   /1/inventory/servers:
     get:
-      summary: Retrieve servers.
+      summary: Retrieve servers
       operationId: getServers
       security:
         - appId: []
@@ -1764,7 +1764,7 @@ paths:
             _ = try await client.getServers()
   /1/latency/{clusters}:
     get:
-      summary: Retrieve search latency times.
+      summary: Retrieve search latency times
       description: Retrieves the average latency for search requests for selected clusters.
       operationId: getLatency
       security: []
@@ -1944,7 +1944,7 @@ paths:
             _ = try await client.getLatency(clusters: "c1-de")
   /1/indexing/{clusters}:
     get:
-      summary: Retrieve indexing times.
+      summary: Retrieve indexing times
       description: Retrieves average times for indexing operations for selected clusters.
       operationId: getIndexingTime
       security: []
@@ -2138,7 +2138,7 @@ paths:
             _ = try await client.getIndexingTime(clusters: "c1-de")
   /1/reachability/{clusters}/probes:
     get:
-      summary: Test the reachability of clusters.
+      summary: Test the reachability of clusters
       description: Test whether clusters are reachable or not.
       operationId: getReachability
       security: []
@@ -2332,7 +2332,7 @@ paths:
             _ = try await client.getReachability(clusters: "c1-de")
   /1/infrastructure/{metric}/period/{period}:
     get:
-      summary: Retrieve metrics.
+      summary: Retrieve metrics
       description: >
         Retrieves metrics related to your Algolia infrastructure, aggregated
         over a selected time window.
@@ -2810,7 +2810,7 @@ components:
             type: string
           examples:
             Unauthorized:
-              summary: Invalid credentials.
+              summary: Invalid credentials
               description: Use the Monitoring API key.
               value: Invalid credentials
     NotFoundResponse:

@@ -150,7 +150,7 @@ paths:
   /{path}:
     get:
       operationId: customGet
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -357,7 +357,7 @@ paths:
           application/json:
             schema:
               type: object
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -564,7 +564,7 @@ paths:
           application/json:
             schema:
               type: object
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -765,7 +765,7 @@ paths:
             _ = try await client.customPut(path: "test/minimal")
     delete:
       operationId: customDelete
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -979,7 +979,7 @@ paths:
       x-cacheable: true
       x-acl:
         - search
-      summary: Retrieve recommendations.
+      summary: Retrieve recommendations
       description: |
         Retrieves recommendations from selected AI models.
       requestBody:
@@ -1314,7 +1314,7 @@ paths:
       operationId: getRecommendRule
       x-acl:
         - settings
-      summary: Retrieve a rule.
+      summary: Retrieve a rule
       description: >-
         Retrieves a Recommend rule that you previously created in the Algolia
         dashboard.
@@ -1554,7 +1554,7 @@ paths:
       operationId: deleteRecommendRule
       x-acl:
         - editSettings
-      summary: Delete a rule.
+      summary: Delete a rule
       description: Deletes a Recommend rule from a recommendation scenario.
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -1789,7 +1789,7 @@ paths:
       operationId: getRecommendStatus
       x-acl:
         - editSettings
-      summary: Check task status.
+      summary: Check task status
       description: >
         Checks the status of a given task.
 
@@ -2052,7 +2052,7 @@ paths:
       x-cacheable: true
       x-acl:
         - settings
-      summary: Search for rules.
+      summary: Search for rules
       description: |
         Searches for Recommend rules.
 

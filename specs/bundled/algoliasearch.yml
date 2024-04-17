@@ -278,7 +278,7 @@ paths:
           application/json:
             schema:
               type: object
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -310,7 +310,7 @@ paths:
       x-legacy-signature: true
       x-acl:
         - search
-      summary: Search multiple indices.
+      summary: Search multiple indices
       description: >
         Sends multiple search request to one or more indices.
 
