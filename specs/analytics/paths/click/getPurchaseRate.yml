@@ -4,7 +4,7 @@ get:
   operationId: getPurchaseRate
   x-acl:
     - analytics
-  summary: Retrieve purchase rate.
+  summary: Retrieve purchase rate
   description: |
     Retrieves the purchase rate for all of your searches with at least one purchase event, including a daily breakdown.
 

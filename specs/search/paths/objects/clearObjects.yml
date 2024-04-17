@@ -4,7 +4,7 @@ post:
   operationId: clearObjects
   x-acl:
     - deleteIndex
-  summary: Delete all records from an index.
+  summary: Delete all records from an index
   description: Deletes only the records from an index while keeping settings, synonyms, and rules.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'

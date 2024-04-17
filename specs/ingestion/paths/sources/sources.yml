@@ -1,7 +1,7 @@
 get:
   tags:
     - sources
-  summary: List sources.
+  summary: List sources
   description: Retrieves a list of sources.
   operationId: getSources
   x-acl:
@@ -40,7 +40,7 @@ get:
 post:
   tags:
     - sources
-  summary: Create a source.
+  summary: Create a source
   description: Creates a new source.
   operationId: createSource
   x-acl:

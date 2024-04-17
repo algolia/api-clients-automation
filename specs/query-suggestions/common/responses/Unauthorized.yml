@@ -5,7 +5,7 @@ content:
       $ref: './BaseResponse.yml'
     examples:
       Unauthorized:
-        summary: Wrong region.
+        summary: Wrong region
         description: |
           Make sure to make your request to the server corresponding to your region.
 
@@ -15,13 +15,13 @@ content:
           message: The log processing region does not match.
 
       InvalidCredentials:
-        summary: Invalid credentials.
+        summary: Invalid credentials
         description: Your application ID or API key is wrong.
         value:
           status: 401
           message: Invalid credentials
       MissingACL:
-        summary: Key is missing ACL.
+        summary: Key is missing ACL
         description: Your API key is missing the required ACL for this operation.
         value:
           status: 401

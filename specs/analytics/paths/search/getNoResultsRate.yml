@@ -4,7 +4,7 @@ get:
   operationId: getNoResultsRate
   x-acl:
     - analytics
-  summary: Retrieve no results rate.
+  summary: Retrieve no results rate
   description: |
     Retrieves the fraction of searches that didn't return any results within a time range, including a daily breakdown.
 

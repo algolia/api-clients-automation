@@ -4,7 +4,7 @@ get:
   operationId: getRecommendRule
   x-acl:
     - settings
-  summary: Retrieve a rule.
+  summary: Retrieve a rule
   description: Retrieves a Recommend rule that you previously created in the Algolia dashboard.
   parameters:
     - $ref: '../../common/parameters.yml#/IndexName'
@@ -32,7 +32,7 @@ delete:
   operationId: deleteRecommendRule
   x-acl:
     - editSettings
-  summary: Delete a rule.
+  summary: Delete a rule
   description: Deletes a Recommend rule from a recommendation scenario.
   parameters:
     - $ref: '../../common/parameters.yml#/IndexName'

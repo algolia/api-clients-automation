@@ -1,6 +1,6 @@
 get:
   operationId: getStatus
-  summary: Retrieve status of all clusters.
+  summary: Retrieve status of all clusters
   security: []
   tags:
     - status

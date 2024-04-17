@@ -6,7 +6,7 @@ post:
   x-cacheable: true
   x-acl:
     - search
-  summary: Search for facet values.
+  summary: Search for facet values
   description: |
     Searches for values of a specified facet attribute.
 

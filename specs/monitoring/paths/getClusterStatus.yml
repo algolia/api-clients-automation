@@ -1,5 +1,5 @@
 get:
-  summary: Retrieve cluster status.
+  summary: Retrieve cluster status
   description: Retrieves the status of selected clusters.
   operationId: getClusterStatus
   tags:

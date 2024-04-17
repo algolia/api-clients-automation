@@ -1,5 +1,5 @@
 get:
-  summary: Test the reachability of clusters.
+  summary: Test the reachability of clusters
   description: Test whether clusters are reachable or not.
   operationId: getReachability
   security: []

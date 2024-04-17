@@ -1,7 +1,7 @@
 post:
   tags:
     - tasks
-  summary: Search for tasks.
+  summary: Search for tasks
   description: Searches for tasks.
   operationId: searchTasks
   x-acl:

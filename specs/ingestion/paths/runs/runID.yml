@@ -1,7 +1,7 @@
 get:
   tags:
     - observability
-  summary: Retrieve a task run.
+  summary: Retrieve a task run
   description: Retrieve a single task run by its ID.
   operationId: getRun
   x-acl:

@@ -1,6 +1,6 @@
 get:
   operationId: getTaskStatus
-  summary: Retrieve task status.
+  summary: Retrieve task status
   description: Retrieves the status of the specified tasks, whether they're pending or completed.
   tags:
     - tasks

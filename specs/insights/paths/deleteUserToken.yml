@@ -2,7 +2,7 @@ delete:
   tags:
     - usertokens
   operationId: deleteUserToken
-  summary: Delete user token.
+  summary: Delete user token
   description: |
     Deletes all events related to the specified user token from events metrics and analytics.
     To delete a personalization user profile, see [Delete a user profile](/specs/personalization#tag/profiles/operation/deleteUserProfile).

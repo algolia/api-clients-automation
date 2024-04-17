@@ -1,7 +1,7 @@
 get:
   tags:
     - authentications
-  summary: Retrieve an authentication resource.
+  summary: Retrieve an authentication resource
   description: Retrieves an authentication resource by its ID.
   operationId: getAuthentication
   x-acl:
@@ -23,7 +23,7 @@ get:
 patch:
   tags:
     - authentications
-  summary: Update an authentication resource.
+  summary: Update an authentication resource
   description: Updates an authentication resource.
   operationId: updateAuthentication
   x-acl:
@@ -51,7 +51,7 @@ patch:
 delete:
   tags:
     - authentications
-  summary: Delete an authentication resource.
+  summary: Delete an authentication resource
   description: Deletes an authentication resource. You can't delete authentication resources that are used by a source or a destination.
   operationId: deleteAuthentication
   x-acl:

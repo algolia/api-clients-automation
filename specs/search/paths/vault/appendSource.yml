@@ -5,7 +5,7 @@ post:
   x-acl:
     - admin
   description: Adds a source to the list of allowed sources.
-  summary: Add a source.
+  summary: Add a source
   requestBody:
     required: true
     description: Source to add.

@@ -4,7 +4,7 @@ post:
   operationId: batchAssignUserIds
   x-acl:
     - admin
-  summary: Assign multiple userIDs.
+  summary: Assign multiple userIDs
   description: |
     Assigns multiple user IDs to a cluster.
 

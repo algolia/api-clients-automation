@@ -5,7 +5,7 @@ post:
   x-acl:
     - editSettings
   description: Adds or deletes multiple entries from your plurals, segmentation, or stop word dictionaries.
-  summary: Add or delete dictionary entries.
+  summary: Add or delete dictionary entries
   parameters:
     - $ref: 'common/parameters.yml#/DictionaryName'
   requestBody:

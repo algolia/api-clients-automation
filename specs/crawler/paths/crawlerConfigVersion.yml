@@ -1,6 +1,6 @@
 get:
   operationId: getConfigVersion
-  summary: Retrieve a configuration version.
+  summary: Retrieve a configuration version
   description: |
     Retrieves the specified version of the crawler configuration.
 

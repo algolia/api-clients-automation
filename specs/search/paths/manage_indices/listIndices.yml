@@ -4,7 +4,7 @@ get:
   operationId: listIndices
   x-acl:
     - listIndexes
-  summary: List indices.
+  summary: List indices
   description: |
     Lists all indices in the current Algolia application.
 

@@ -7,7 +7,7 @@ post:
   x-legacy-signature: true
   x-acl:
     - search
-  summary: Search multiple indices.
+  summary: Search multiple indices
   description: |
     Sends multiple search request to one or more indices.
 

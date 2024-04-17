@@ -1,6 +1,6 @@
 get:
   operationId: getStats
-  summary: Retrieve crawler stats.
+  summary: Retrieve crawler stats
   description: Retrieves information about the number of crawled, skipped, and failed URLs.
   tags:
     - crawlers

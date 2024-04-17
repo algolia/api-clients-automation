@@ -6,7 +6,7 @@ post:
   x-cacheable: true
   x-acl:
     - settings
-  summary: Search for rules.
+  summary: Search for rules
   description: Searches for rules in your index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'

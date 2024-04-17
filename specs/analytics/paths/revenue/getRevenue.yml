@@ -4,7 +4,7 @@ get:
   operationId: getRevenue
   x-acl:
     - analytics
-  summary: Retrieve revenue data.
+  summary: Retrieve revenue data
   description: |
     Retrieves revenue-related metrics, such as the total revenue or the average order value.
 

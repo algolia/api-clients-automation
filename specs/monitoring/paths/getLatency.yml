@@ -1,5 +1,5 @@
 get:
-  summary: Retrieve search latency times.
+  summary: Retrieve search latency times
   description: Retrieves the average latency for search requests for selected clusters.
   operationId: getLatency
   security: []

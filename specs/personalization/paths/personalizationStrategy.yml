@@ -4,7 +4,7 @@ get:
   operationId: getPersonalizationStrategy
   x-acl:
     - recommendation
-  summary: Retrieve the personalization strategy.
+  summary: Retrieve the personalization strategy
   description: Retrieves the current personalization strategy.
   responses:
     '200':
@@ -28,7 +28,7 @@ post:
   operationId: setPersonalizationStrategy
   x-acl:
     - recommendation
-  summary: Define the personalization strategy.
+  summary: Define the personalization strategy
   description: Creates a new personalization strategy.
   requestBody:
     required: true

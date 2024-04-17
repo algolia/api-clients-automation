@@ -1,7 +1,7 @@
 get:
   tags:
     - destinations
-  summary: List destinations.
+  summary: List destinations
   description: Retrieves a list of destinations.
   operationId: getDestinations
   x-acl:
@@ -40,7 +40,7 @@ get:
 post:
   tags:
     - destinations
-  summary: Create a destination.
+  summary: Create a destination
   description: Creates a new destination.
   operationId: createDestination
   x-acl:

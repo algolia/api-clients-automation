@@ -5,7 +5,7 @@ delete:
   x-acl:
     - admin
   description: Deletes a source from the list of allowed sources.
-  summary: Delete a source.
+  summary: Delete a source
   parameters:
     - name: source
       in: path

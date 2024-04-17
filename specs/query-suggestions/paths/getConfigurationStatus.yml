@@ -4,7 +4,7 @@ get:
   operationId: getConfigStatus
   x-acl:
     - settings
-  summary: Retrieve configuration status.
+  summary: Retrieve configuration status
   description: Reports the status of a Query Suggestions index.
   parameters:
     - $ref: '../common/parameters.yml#/IndexName'

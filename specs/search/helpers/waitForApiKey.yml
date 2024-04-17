@@ -4,7 +4,7 @@ method:
     tags:
       - Api Keys
     operationId: waitForApiKey
-    summary: Wait for an API key operation.
+    summary: Wait for an API key operation
     description: Waits for an API key to be added, updated, or deleted.
     parameters:
       - in: query

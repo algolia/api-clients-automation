@@ -6,7 +6,7 @@ post:
   x-cacheable: true
   x-acl:
     - admin
-  summary: Search for user IDs.
+  summary: Search for user IDs
   description: |
     Since it can take a few seconds to get the data from the different clusters,
     the response isn't real-time.

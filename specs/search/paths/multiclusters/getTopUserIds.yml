@@ -4,7 +4,7 @@ get:
   operationId: getTopUserIds
   x-acl:
     - admin
-  summary: Get top user IDs.
+  summary: Get top user IDs
   description: |
     Get the IDs of the 10 users with the highest number of records per cluster.
 
