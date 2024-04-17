@@ -1,6 +1,6 @@
 import type { Rule } from 'eslint';
 
-import { isBlockScalar, isPairWithKey, isScalar } from '../utils';
+import { isPairWithKey, isScalar } from '../utils';
 
 export const noFinalDot: Rule.RuleModule = {
   meta: {
