@@ -837,12 +837,12 @@ class IngestionClientRequestsTests {
   void getAuthenticationsTest1() {
     assertDoesNotThrow(() -> {
       client.getAuthentications(
-        10,
+        2,
         1,
         List.of(AuthenticationType.fromValue("basic"), AuthenticationType.fromValue("algolia")),
         List.of(PlatformNone.fromValue("none")),
         AuthenticationSortKeys.fromValue("createdAt"),
-        OrderKeys.fromValue("desc")
+        OrderKeys.fromValue("asc")
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -852,7 +852,7 @@ class IngestionClientRequestsTests {
 
     try {
       Map<String, String> expectedQuery = json.readValue(
-        "{\"itemsPerPage\":\"10\",\"page\":\"1\",\"type\":\"basic%2Calgolia\",\"platform\":\"none\",\"sort\":\"createdAt\",\"order\":\"desc\"}",
+        "{\"itemsPerPage\":\"2\",\"page\":\"1\",\"type\":\"basic%2Calgolia\",\"platform\":\"none\",\"sort\":\"createdAt\",\"order\":\"asc\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, Object> actualQuery = req.queryParameters;
@@ -866,18 +866,16 @@ class IngestionClientRequestsTests {
     }
 
     var res = clientE2E.getAuthentications(
-      10,
+      2,
       1,
       List.of(AuthenticationType.fromValue("basic"), AuthenticationType.fromValue("algolia")),
       List.of(PlatformNone.fromValue("none")),
       AuthenticationSortKeys.fromValue("createdAt"),
-      OrderKeys.fromValue("desc")
+      OrderKeys.fromValue("asc")
     );
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"pagination\":{\"page\":1,\"itemsPerPage\":10},\"authentications\":[{\"authenticationID\":\"b57a7ea5-8592-493b-b75b-6c66d77aee7f\",\"type\":\"algolia\",\"name\":\"Auto-generated" +
-        " Authentication for T8JK9S7I7X -" +
-        " 1704732447751\",\"input\":{},\"createdAt\":\"2024-01-08T16:47:31Z\",\"updatedAt\":\"2024-01-08T16:47:31Z\"},{},{},{},{},{},{},{}]}",
+        "{\"pagination\":{\"page\":1,\"itemsPerPage\":2},\"authentications\":[{\"authenticationID\":\"474f050f-a771-464c-a016-323538029f5f\",\"type\":\"algolia\",\"name\":\"algolia-auth-1677060483885\",\"input\":{},\"createdAt\":\"2023-02-22T10:08:04Z\",\"updatedAt\":\"2023-10-25T08:41:56Z\"},{}]}",
         json.writeValueAsString(res),
         JSONCompareMode.LENIENT
       )

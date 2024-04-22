@@ -644,52 +644,46 @@ describe('getAuthentications', () => {
 
   test('getAuthentications with query params', async () => {
     const req = (await client.getAuthentications({
-      itemsPerPage: 10,
+      itemsPerPage: 2,
       page: 1,
       type: ['basic', 'algolia'],
       platform: ['none'],
       sort: 'createdAt',
-      order: 'desc',
+      order: 'asc',
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/authentications');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual({
-      itemsPerPage: '10',
+      itemsPerPage: '2',
       page: '1',
       type: 'basic%2Calgolia',
       platform: 'none',
       sort: 'createdAt',
-      order: 'desc',
+      order: 'asc',
     });
 
     const resp = await e2eClient.getAuthentications({
-      itemsPerPage: 10,
+      itemsPerPage: 2,
       page: 1,
       type: ['basic', 'algolia'],
       platform: ['none'],
       sort: 'createdAt',
-      order: 'desc',
+      order: 'asc',
     });
 
     const expectedBody = {
-      pagination: { page: 1, itemsPerPage: 10 },
+      pagination: { page: 1, itemsPerPage: 2 },
       authentications: [
         {
-          authenticationID: 'b57a7ea5-8592-493b-b75b-6c66d77aee7f',
+          authenticationID: '474f050f-a771-464c-a016-323538029f5f',
           type: 'algolia',
-          name: 'Auto-generated Authentication for T8JK9S7I7X - 1704732447751',
+          name: 'algolia-auth-1677060483885',
           input: {},
-          createdAt: '2024-01-08T16:47:31Z',
-          updatedAt: '2024-01-08T16:47:31Z',
+          createdAt: '2023-02-22T10:08:04Z',
+          updatedAt: '2023-10-25T08:41:56Z',
         },
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
         {},
       ],
     };

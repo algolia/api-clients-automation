@@ -787,18 +787,18 @@ class IngestionTest {
     client.runTest(
       call = {
         getAuthentications(
-          itemsPerPage = 10,
+          itemsPerPage = 2,
           page = 1,
           type = listOf(AuthenticationType.entries.first { it.value == "basic" }, AuthenticationType.entries.first { it.value == "algolia" }),
           platform = listOf(PlatformNone.entries.first { it.value == "none" }),
           sort = AuthenticationSortKeys.entries.first { it.value == "createdAt" },
-          order = OrderKeys.entries.first { it.value == "desc" },
+          order = OrderKeys.entries.first { it.value == "asc" },
         )
       },
       intercept = {
         assertEquals("/1/authentications".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("GET"), it.method)
-        assertQueryParams("""{"itemsPerPage":"10","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"desc"}""", it.url.encodedParameters)
+        assertQueryParams("""{"itemsPerPage":"2","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"asc"}""", it.url.encodedParameters)
         assertNoBody(it.body)
       },
     )
