@@ -215,13 +215,30 @@ export async function decideReleaseStrategy({
     );
 
     const currentVersion = versions[lang].current;
-    const nbGitDiff = await getNbGitDiff({
+    let nbGitDiff = await getNbGitDiff({
       branch: await getLastReleasedTag(),
       head: null,
       path: getLanguageFolder(lang as Language),
     });
 
     console.log(`Deciding next version bump for ${lang}.`);
+
+    // allows forcing a client release
+    if (process.env.LOCAL_TEST_DEV) {
+      nbGitDiff = 1;
+
+      if (commitsPerLang.length === 0) {
+        commitsPerLang.push({
+          message: `fix(${lang}): force release`,
+          type: 'fix',
+          scope: 'specs',
+          hash: await run('git rev-parse --abbrev-ref HEAD'),
+          prNumber: 0,
+          author: 'algolia-bot',
+          raw: 'fix(specs): force release',
+        });
+      }
+    }
 
     if (nbGitDiff === 0 || commitsPerLang.length === 0) {
       versionsToPublish[lang] = {
