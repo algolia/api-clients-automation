@@ -375,7 +375,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     Schema<?> schema = ModelUtils.unaliasSchema(this.openAPI, p, importMapping);
     Schema<?> target = ModelUtils.isGenerateAliasAsModel() ? p : schema;
     if (ModelUtils.isArraySchema(target)) {
-      Schema<?> items = getSchemaItems((ArraySchema) schema);
+      Schema<?> items = ModelUtils.getSchemaItems((ArraySchema) schema);
       return ModelUtils.isSet(target) && ModelUtils.isObjectSchema(items)
         ? "Set<" + getTypeDeclaration(items) + ">"
         : "[" + getTypeDeclaration(items) + "]";

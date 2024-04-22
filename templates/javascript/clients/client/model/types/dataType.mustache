@@ -1,6 +1,6 @@
 {{! possible data types of a parameter }}
 {{#isEnum}}
-  {{classname}}{{{nameInCamelCase}}}{{#isArray}}[]{{/isArray}}
+  {{classname}}{{{nameInPascalCase}}}{{#isArray}}[]{{/isArray}}
 {{/isEnum}}
 {{^isEnum}}
   {{#vendorExtensions.x-propagated-generic}}

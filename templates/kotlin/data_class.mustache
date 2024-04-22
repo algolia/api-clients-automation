@@ -46,7 +46,7 @@ public data class {{classname}}(
      * Values: {{#allowableValues}}{{#enumVars}}{{&name}}{{^-last}},{{/-last}}{{/enumVars}}{{/allowableValues}}
      */
     @Serializable
-    {{#nonPublicApi}}internal {{/nonPublicApi}}enum class {{{nameInCamelCase}}}(val value: {{^isContainer}}{{dataType}}{{/isContainer}}{{#isContainer}}String{{/isContainer}}) {
+    {{#nonPublicApi}}internal {{/nonPublicApi}}enum class {{{nameInPascalCase}}}(val value: {{^isContainer}}{{dataType}}{{/isContainer}}{{#isContainer}}String{{/isContainer}}) {
     {{#allowableValues}}
     {{#enumVars}}
         @SerialName(value = {{^isString}}"{{/isString}}{{{value}}}{{^isString}}"{{/isString}}) {{&name}}({{{value}}}){{^-last}},{{/-last}}{{#-last}};{{/-last}}
@@ -54,17 +54,17 @@ public data class {{classname}}(
     {{/allowableValues}}
     }{{#kotlinx_serialization}}{{#enumUnknownDefaultCase}}
 
-    @Serializer(forClass = {{{nameInCamelCase}}}::class)
-    internal object {{nameInCamelCase}}Serializer : KSerializer<{{nameInCamelCase}}> {
+    @Serializer(forClass = {{{nameInPascalCase}}}::class)
+    internal object {{nameInPascalCase}}Serializer : KSerializer<{{nameInPascalCase}}> {
         override val descriptor = {{{dataType}}}.serializer().descriptor
 
-        override fun deserialize(decoder: Decoder): {{nameInCamelCase}} {
+        override fun deserialize(decoder: Decoder): {{nameInPascalCase}} {
             val value = decoder.decodeSerializableValue({{{dataType}}}.serializer())
-            return {{nameInCamelCase}}.entries.firstOrNull { it.value == value }
-                ?: {{nameInCamelCase}}.{{#allowableValues}}{{#enumVars}}{{#-last}}{{&name}}{{/-last}}{{/enumVars}}{{/allowableValues}}
+            return {{nameInPascalCase}}.entries.firstOrNull { it.value == value }
+                ?: {{nameInPascalCase}}.{{#allowableValues}}{{#enumVars}}{{#-last}}{{&name}}{{/-last}}{{/enumVars}}{{/allowableValues}}
         }
 
-        override fun serialize(encoder: Encoder, value: {{nameInCamelCase}}) {
+        override fun serialize(encoder: Encoder, value: {{nameInPascalCase}}) {
             encoder.encodeSerializableValue({{{dataType}}}.serializer(), value.value)
         }
     }{{/enumUnknownDefaultCase}}{{/kotlinx_serialization}}
