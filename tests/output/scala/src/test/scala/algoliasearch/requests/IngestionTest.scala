@@ -840,12 +840,12 @@ class IngestionTest extends AnyFunSuite {
   test("getAuthentications with query params") {
     val (client, echo) = testClient()
     val future = client.getAuthentications(
-      itemsPerPage = Some(10),
+      itemsPerPage = Some(2),
       page = Some(1),
       `type` = Some(Seq(AuthenticationType.withName("basic"), AuthenticationType.withName("algolia"))),
       platform = Some(Seq(PlatformNone.withName("none"))),
       sort = Some(AuthenticationSortKeys.withName("createdAt")),
-      order = Some(OrderKeys.withName("desc"))
+      order = Some(OrderKeys.withName("asc"))
     )
 
     Await.ready(future, Duration.Inf)
@@ -855,7 +855,7 @@ class IngestionTest extends AnyFunSuite {
     assert(res.method == "GET")
     assert(res.body.isEmpty)
     val expectedQuery = parse(
-      """{"itemsPerPage":"10","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"desc"}"""
+      """{"itemsPerPage":"2","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"asc"}"""
     ).asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
@@ -865,17 +865,17 @@ class IngestionTest extends AnyFunSuite {
     }
     val e2eClient = testE2EClient()
     val e2eFuture = e2eClient.getAuthentications(
-      itemsPerPage = Some(10),
+      itemsPerPage = Some(2),
       page = Some(1),
       `type` = Some(Seq(AuthenticationType.withName("basic"), AuthenticationType.withName("algolia"))),
       platform = Some(Seq(PlatformNone.withName("none"))),
       sort = Some(AuthenticationSortKeys.withName("createdAt")),
-      order = Some(OrderKeys.withName("desc"))
+      order = Some(OrderKeys.withName("asc"))
     )
 
     val response = Await.result(e2eFuture, Duration.Inf)
     compareJSON(
-      """{"pagination":{"page":1,"itemsPerPage":10},"authentications":[{"authenticationID":"b57a7ea5-8592-493b-b75b-6c66d77aee7f","type":"algolia","name":"Auto-generated Authentication for T8JK9S7I7X - 1704732447751","input":{},"createdAt":"2024-01-08T16:47:31Z","updatedAt":"2024-01-08T16:47:31Z"},{},{},{},{},{},{},{}]}""",
+      """{"pagination":{"page":1,"itemsPerPage":2},"authentications":[{"authenticationID":"474f050f-a771-464c-a016-323538029f5f","type":"algolia","name":"algolia-auth-1677060483885","input":{},"createdAt":"2023-02-22T10:08:04Z","updatedAt":"2023-10-25T08:41:56Z"},{}]}""",
       write(response),
       JSONCompareMode.LENIENT
     )

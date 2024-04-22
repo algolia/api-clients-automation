@@ -716,7 +716,7 @@ class TestIngestionClient:
         getAuthentications with query params
         """
         _req = await self._client.get_authentications_with_http_info(
-            items_per_page=10,
+            items_per_page=2,
             page=1,
             type=[
                 "basic",
@@ -726,7 +726,7 @@ class TestIngestionClient:
                 "none",
             ],
             sort="createdAt",
-            order="desc",
+            order="asc",
         )
 
         assert _req.path == "/1/authentications"
@@ -734,12 +734,12 @@ class TestIngestionClient:
         assert (
             _req.query_parameters.items()
             == {
-                "itemsPerPage": "10",
+                "itemsPerPage": "2",
                 "page": "1",
                 "type": "basic%2Calgolia",
                 "platform": "none",
                 "sort": "createdAt",
-                "order": "desc",
+                "order": "asc",
             }.items()
         )
         assert _req.headers.items() >= {}.items()
@@ -748,7 +748,7 @@ class TestIngestionClient:
         raw_resp = await IngestionClient(
             self._e2e_app_id, self._e2e_api_key, "us"
         ).get_authentications_with_http_info(
-            items_per_page=10,
+            items_per_page=2,
             page=1,
             type=[
                 "basic",
@@ -758,14 +758,14 @@ class TestIngestionClient:
                 "none",
             ],
             sort="createdAt",
-            order="desc",
+            order="asc",
         )
         assert raw_resp.status_code == 200
 
         resp = await IngestionClient(
             self._e2e_app_id, self._e2e_api_key, "us"
         ).get_authentications(
-            items_per_page=10,
+            items_per_page=2,
             page=1,
             type=[
                 "basic",
@@ -775,10 +775,10 @@ class TestIngestionClient:
                 "none",
             ],
             sort="createdAt",
-            order="desc",
+            order="asc",
         )
         _expected_body = loads(
-            """{"pagination":{"page":1,"itemsPerPage":10},"authentications":[{"authenticationID":"b57a7ea5-8592-493b-b75b-6c66d77aee7f","type":"algolia","name":"Auto-generated Authentication for T8JK9S7I7X - 1704732447751","input":{},"createdAt":"2024-01-08T16:47:31Z","updatedAt":"2024-01-08T16:47:31Z"},{},{},{},{},{},{},{}]}"""
+            """{"pagination":{"page":1,"itemsPerPage":2},"authentications":[{"authenticationID":"474f050f-a771-464c-a016-323538029f5f","type":"algolia","name":"algolia-auth-1677060483885","input":{},"createdAt":"2023-02-22T10:08:04Z","updatedAt":"2023-10-25T08:41:56Z"},{}]}"""
         )
         assert self._helpers.union(_expected_body, resp) == _expected_body
 

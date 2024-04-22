@@ -833,7 +833,7 @@ public class IngestionClientRequestTests
   public async Task GetAuthenticationsTest1()
   {
     await _client.GetAuthenticationsAsync(
-      10,
+      2,
       1,
       new List<AuthenticationType>
       {
@@ -842,7 +842,7 @@ public class IngestionClientRequestTests
       },
       new List<PlatformWithNone> { new PlatformWithNone(Enum.Parse<PlatformNone>("None")) },
       Enum.Parse<AuthenticationSortKeys>("CreatedAt"),
-      Enum.Parse<OrderKeys>("Desc")
+      Enum.Parse<OrderKeys>("Asc")
     );
 
     var req = _echo.LastResponse;
@@ -850,7 +850,7 @@ public class IngestionClientRequestTests
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"itemsPerPage\":\"10\",\"page\":\"1\",\"type\":\"basic%2Calgolia\",\"platform\":\"none\",\"sort\":\"createdAt\",\"order\":\"desc\"}"
+      "{\"itemsPerPage\":\"2\",\"page\":\"1\",\"type\":\"basic%2Calgolia\",\"platform\":\"none\",\"sort\":\"createdAt\",\"order\":\"asc\"}"
     );
     Assert.NotNull(expectedQuery);
 
@@ -867,7 +867,7 @@ public class IngestionClientRequestTests
     try
     {
       var resp = await _e2eClient.GetAuthenticationsAsync(
-        10,
+        2,
         1,
         new List<AuthenticationType>
         {
@@ -876,13 +876,13 @@ public class IngestionClientRequestTests
         },
         new List<PlatformWithNone> { new PlatformWithNone(Enum.Parse<PlatformNone>("None")) },
         Enum.Parse<AuthenticationSortKeys>("CreatedAt"),
-        Enum.Parse<OrderKeys>("Desc")
+        Enum.Parse<OrderKeys>("Asc")
       );
       // Check status code 200
       Assert.NotNull(resp);
 
       JsonAssert.EqualOverrideDefault(
-        "{\"pagination\":{\"page\":1,\"itemsPerPage\":10},\"authentications\":[{\"authenticationID\":\"b57a7ea5-8592-493b-b75b-6c66d77aee7f\",\"type\":\"algolia\",\"name\":\"Auto-generated Authentication for T8JK9S7I7X - 1704732447751\",\"input\":{},\"createdAt\":\"2024-01-08T16:47:31Z\",\"updatedAt\":\"2024-01-08T16:47:31Z\"},{},{},{},{},{},{},{}]}",
+        "{\"pagination\":{\"page\":1,\"itemsPerPage\":2},\"authentications\":[{\"authenticationID\":\"474f050f-a771-464c-a016-323538029f5f\",\"type\":\"algolia\",\"name\":\"algolia-auth-1677060483885\",\"input\":{},\"createdAt\":\"2023-02-22T10:08:04Z\",\"updatedAt\":\"2023-10-25T08:41:56Z\"},{}]}",
         JsonSerializer.Serialize(resp, JsonConfig.Options),
         new JsonDiffConfig(true)
       );
