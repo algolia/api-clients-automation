@@ -215,13 +215,18 @@ export async function decideReleaseStrategy({
     );
 
     const currentVersion = versions[lang].current;
-    const nbGitDiff = await getNbGitDiff({
+    let nbGitDiff = await getNbGitDiff({
       branch: await getLastReleasedTag(),
       head: null,
       path: getLanguageFolder(lang as Language),
     });
 
     console.log(`Deciding next version bump for ${lang}.`);
+
+    // allows forcing a CI release
+    if (process.env.LOCAL_TEST_DEV) {
+      nbGitDiff = 1;
+    }
 
     if (nbGitDiff === 0 || commitsPerLang.length === 0) {
       versionsToPublish[lang] = {
