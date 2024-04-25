@@ -50,7 +50,8 @@ export const patterns = [
   '!clients/algoliasearch-client-go/algolia/debug/*',
   '!clients/algoliasearch-client-go/algolia/utils/*',
 
-  'tests/output/go/go.sum',
+  '!tests/output/go/go.*',
+  '!snippets/go/go.*',
 
   // Java
   '!clients/algoliasearch-client-java/**',

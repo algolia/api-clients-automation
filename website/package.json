@@ -29,6 +29,6 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "redocusaurus": "2.0.2",
-    "remark-smartypants": "2.1.0"
+    "remark-smartypants": "3.0.0"
   }
 }
