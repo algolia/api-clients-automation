@@ -14,8 +14,9 @@ SearchDictionaryEntriesParams _$SearchDictionaryEntriesParamsFromJson(
       ($checkedConvert) {
         final val = SearchDictionaryEntriesParams(
           query: $checkedConvert('query', (v) => v as String),
-          page: $checkedConvert('page', (v) => v as int?),
-          hitsPerPage: $checkedConvert('hitsPerPage', (v) => v as int?),
+          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
+          hitsPerPage:
+              $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
           language: $checkedConvert('language',
               (v) => $enumDecodeNullable(_$SupportedLanguageEnumMap, v)),
         );

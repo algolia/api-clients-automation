@@ -12,9 +12,11 @@ Personalization _$PersonalizationFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = Personalization(
-          filtersScore: $checkedConvert('filtersScore', (v) => v as int?),
-          rankingScore: $checkedConvert('rankingScore', (v) => v as int?),
-          score: $checkedConvert('score', (v) => v as int?),
+          filtersScore:
+              $checkedConvert('filtersScore', (v) => (v as num?)?.toInt()),
+          rankingScore:
+              $checkedConvert('rankingScore', (v) => (v as num?)?.toInt()),
+          score: $checkedConvert('score', (v) => (v as num?)?.toInt()),
         );
         return val;
       },

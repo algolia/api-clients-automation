@@ -16,8 +16,8 @@ BaseIndexSettings _$BaseIndexSettingsFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           replicas: $checkedConvert('replicas',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          paginationLimitedTo:
-              $checkedConvert('paginationLimitedTo', (v) => v as int?),
+          paginationLimitedTo: $checkedConvert(
+              'paginationLimitedTo', (v) => (v as num?)?.toInt()),
           unretrievableAttributes: $checkedConvert('unretrievableAttributes',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           disableTypoToleranceOnWords: $checkedConvert(
