@@ -15,12 +15,13 @@ FetchedIndex _$FetchedIndexFromJson(Map<String, dynamic> json) =>
           name: $checkedConvert('name', (v) => v as String),
           createdAt: $checkedConvert('createdAt', (v) => v as String),
           updatedAt: $checkedConvert('updatedAt', (v) => v as String),
-          entries: $checkedConvert('entries', (v) => v as int),
-          dataSize: $checkedConvert('dataSize', (v) => v as int),
-          fileSize: $checkedConvert('fileSize', (v) => v as int),
-          lastBuildTimeS: $checkedConvert('lastBuildTimeS', (v) => v as int),
-          numberOfPendingTasks:
-              $checkedConvert('numberOfPendingTasks', (v) => v as int),
+          entries: $checkedConvert('entries', (v) => (v as num).toInt()),
+          dataSize: $checkedConvert('dataSize', (v) => (v as num).toInt()),
+          fileSize: $checkedConvert('fileSize', (v) => (v as num).toInt()),
+          lastBuildTimeS:
+              $checkedConvert('lastBuildTimeS', (v) => (v as num).toInt()),
+          numberOfPendingTasks: $checkedConvert(
+              'numberOfPendingTasks', (v) => (v as num).toInt()),
           pendingTask: $checkedConvert('pendingTask', (v) => v as bool),
           primary: $checkedConvert('primary', (v) => v as String?),
           replicas: $checkedConvert('replicas',

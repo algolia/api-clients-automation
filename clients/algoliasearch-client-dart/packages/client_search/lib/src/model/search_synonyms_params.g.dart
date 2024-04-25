@@ -16,8 +16,9 @@ SearchSynonymsParams _$SearchSynonymsParamsFromJson(
           query: $checkedConvert('query', (v) => v as String?),
           type: $checkedConvert(
               'type', (v) => $enumDecodeNullable(_$SynonymTypeEnumMap, v)),
-          page: $checkedConvert('page', (v) => v as int?),
-          hitsPerPage: $checkedConvert('hitsPerPage', (v) => v as int?),
+          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
+          hitsPerPage:
+              $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
         );
         return val;
       },

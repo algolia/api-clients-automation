@@ -19,14 +19,15 @@ ApiKey _$ApiKeyFromJson(Map<String, dynamic> json) => $checkedCreate(
           description: $checkedConvert('description', (v) => v as String?),
           indexes: $checkedConvert('indexes',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          maxHitsPerQuery: $checkedConvert('maxHitsPerQuery', (v) => v as int?),
-          maxQueriesPerIPPerHour:
-              $checkedConvert('maxQueriesPerIPPerHour', (v) => v as int?),
+          maxHitsPerQuery:
+              $checkedConvert('maxHitsPerQuery', (v) => (v as num?)?.toInt()),
+          maxQueriesPerIPPerHour: $checkedConvert(
+              'maxQueriesPerIPPerHour', (v) => (v as num?)?.toInt()),
           queryParameters:
               $checkedConvert('queryParameters', (v) => v as String?),
           referers: $checkedConvert('referers',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          validity: $checkedConvert('validity', (v) => v as int?),
+          validity: $checkedConvert('validity', (v) => (v as num?)?.toInt()),
         );
         return val;
       },

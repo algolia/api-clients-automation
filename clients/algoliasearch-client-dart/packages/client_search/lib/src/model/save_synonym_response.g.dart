@@ -12,7 +12,7 @@ SaveSynonymResponse _$SaveSynonymResponseFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = SaveSynonymResponse(
-          taskID: $checkedConvert('taskID', (v) => v as int),
+          taskID: $checkedConvert('taskID', (v) => (v as num).toInt()),
           updatedAt: $checkedConvert('updatedAt', (v) => v as String),
           id: $checkedConvert('id', (v) => v as String),
         );

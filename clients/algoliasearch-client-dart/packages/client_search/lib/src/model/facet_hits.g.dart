@@ -13,7 +13,7 @@ FacetHits _$FacetHitsFromJson(Map<String, dynamic> json) => $checkedCreate(
         final val = FacetHits(
           value: $checkedConvert('value', (v) => v as String),
           highlighted: $checkedConvert('highlighted', (v) => v as String),
-          count: $checkedConvert('count', (v) => v as int),
+          count: $checkedConvert('count', (v) => (v as num).toInt()),
         );
         return val;
       },

@@ -15,14 +15,15 @@ SearchRecommendRulesParams _$SearchRecommendRulesParamsFromJson(
         final val = SearchRecommendRulesParams(
           query: $checkedConvert('query', (v) => v as String?),
           context: $checkedConvert('context', (v) => v as String?),
-          page: $checkedConvert('page', (v) => v as int?),
-          hitsPerPage: $checkedConvert('hitsPerPage', (v) => v as int?),
+          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
+          hitsPerPage:
+              $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
           enabled: $checkedConvert('enabled', (v) => v as bool?),
           filters: $checkedConvert('filters', (v) => v as String?),
           facets: $checkedConvert('facets',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           maxValuesPerFacet:
-              $checkedConvert('maxValuesPerFacet', (v) => v as int?),
+              $checkedConvert('maxValuesPerFacet', (v) => (v as num?)?.toInt()),
         );
         return val;
       },
