@@ -745,7 +745,9 @@ indexSettingsAsSearchParams:
       x-categories:
         - Filtering
     reRankingApplyFilter:
-      $ref: '#/reRankingApplyFilter'
+      oneOf:
+        - $ref: '#/reRankingApplyFilter'
+        - type: 'null'
 
 maxFacetHits:
   type: integer
@@ -759,11 +761,12 @@ reRankingApplyFilter:
   description: |
     Restrict [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) to records that match these filters.
   oneOf:
-    - $ref: './SearchParams.yml#/listOfSearchFilters'
+    - type: array
+      items:
+        $ref: '#/reRankingApplyFilter'
     - type: string
       x-categories:
         - Filtering
-    - type: 'null'
 
 hitsPerPage:
   type: integer

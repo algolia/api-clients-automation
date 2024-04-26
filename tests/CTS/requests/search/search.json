@@ -309,7 +309,10 @@
             "facetFilters": [
               "mySearch:filters",
               [
-                "mySearch:filters"
+                "mySearch:filters",
+                [
+                  "mySearch:filters"
+                ]
               ]
             ],
             "reRankingApplyFilter": [
