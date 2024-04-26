@@ -395,6 +395,18 @@
               "editor:neovim"
             ]
           ]
+        },
+        {
+          "indexName": "cts_e2e_search_facet",
+          "facetFilters": [
+            "editor:'visual studio'",
+            [
+              "editor:neovim",
+              [
+                "editor:goland"
+              ]
+            ]
+          ]
         }
       ]
     },
@@ -440,6 +452,18 @@
               "editor:'visual studio'",
               [
                 "editor:neovim"
+              ]
+            ]
+          },
+          {
+            "indexName": "cts_e2e_search_facet",
+            "facetFilters": [
+              "editor:'visual studio'",
+              [
+                "editor:neovim",
+                [
+                  "editor:goland"
+                ]
               ]
             ]
           }
@@ -528,6 +552,16 @@
             "hits": [],
             "query": "",
             "params": "facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%5D%5D"
+          },
+          {
+            "hitsPerPage": 20,
+            "index": "cts_e2e_search_facet",
+            "nbHits": 0,
+            "nbPages": 0,
+            "page": 0,
+            "hits": [],
+            "query": "",
+            "params": "facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%2C%5B%22editor%3Agoland%22%5D%5D%5D"
           }
         ]
       }
