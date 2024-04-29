@@ -136,7 +136,7 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
     // this is to prevent F811 from flake8 because we have some recusrive models
     String modelName = objs.getModels().get(0).getModel().getClassname();
     for (Map<String, String> imp : objs.getImports()) {
-      if (imp.get("import").endsWith(modelName)) {
+      if (imp.get("import").endsWith("import " + modelName)) {
         imp.remove("import");
       }
     }

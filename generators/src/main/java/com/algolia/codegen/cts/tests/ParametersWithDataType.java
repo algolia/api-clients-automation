@@ -306,7 +306,8 @@ public class ParametersWithDataType {
 
       testOutput.putAll(traverseParams(paramName, param, match, parent, suffix, isParentFreeFormObject));
 
-      HashMap<String, Object> oneOfModel = new HashMap<>();
+      Map<String, Object> oneOfModel = new HashMap<>();
+      oneOfModel.put("isArray", false);
       IJsonSchemaValidationProperties current = match;
       String typeName = getTypeName(current);
       boolean isList = false;
