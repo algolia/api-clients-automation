@@ -89,13 +89,13 @@
               },
               {
                 "count": 1,
-                "highlighted": "vscode",
-                "value": "vscode"
+                "highlighted": "visual studio",
+                "value": "visual studio"
               },
               {
                 "count": 1,
-                "highlighted": "visual studio",
-                "value": "visual studio"
+                "highlighted": "vscode",
+                "value": "vscode"
               }
             ]
           }
