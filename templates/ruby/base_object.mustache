@@ -23,10 +23,8 @@
       end
       {{#getAdditionalPropertiesIsAnyType}}
 
-      # merge additional_properties into transformed_hash
-      @additional_properties.each_pair do |k, v|
-        transformed_hash[k.to_sym] = v
-      end unless @additional_properties.nil?
+      # add extra attribute to transformed_hash
+      transformed_hash.merge!(attributes.reject { |k, _| attribute_map.key?(k.to_sym) })
       {{/getAdditionalPropertiesIsAnyType}}
       new(transformed_hash)
     end

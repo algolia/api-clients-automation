@@ -378,25 +378,6 @@ insidePolygon:
   x-categories:
     - Geo-Search
 
-# There is duplicated logic here because we want to keep a correct description
-# and using `$ref` override everything.
-searchFiltersArrayString:
-  title: search filter array
-  type: array
-  items:
-    type: string
-
-mixedSearchFilters:
-  oneOf:
-    - $ref: '#/searchFiltersArrayString'
-    - type: string
-
-listOfSearchFilters:
-  type: array
-  title: search filters
-  items:
-    $ref: '#/mixedSearchFilters'
-
 filters:
   type: string
   description: |
@@ -441,7 +422,9 @@ facetFilters:
     `facet:\-value`.
   example: [['category:Book', 'category:-Movie'], 'author:John Doe']
   oneOf:
-    - $ref: '#/listOfSearchFilters'
+    - type: array
+      items:
+        $ref: '#/facetFilters'
     - type: string
   x-categories:
     - Filtering
@@ -457,7 +440,9 @@ tagFilters:
     The same combination and escaping rules apply as for `facetFilters`.
   example: [['Book', 'Movie'], 'SciFi']
   oneOf:
-    - $ref: '#/listOfSearchFilters'
+    - type: array
+      items:
+        $ref: '#/tagFilters'
     - type: string
   x-categories:
     - Filtering
@@ -473,7 +458,9 @@ numericFilters:
     The same combination rules apply as for `facetFilters`.
   example: [['inStock = 1', 'deliveryDate < 1441755506'], 'price < 1000']
   oneOf:
-    - $ref: '#/listOfSearchFilters'
+    - type: array
+      items:
+        $ref: '#/numericFilters'
     - type: string
   x-categories:
     - Filtering
@@ -492,7 +479,9 @@ optionalFilters:
 
   example: ['category:Book', 'author:John Doe']
   oneOf:
-    - $ref: '#/listOfSearchFilters'
+    - type: array
+      items:
+        $ref: '#/optionalFilters'
     - type: string
   x-categories:
     - Filtering
