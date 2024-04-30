@@ -1,3 +1,7 @@
+## [9.0.0-beta.2](https://github.com/algolia/algoliasearch-client-swift/compare/9.0.0-beta.1...9.0.0-beta.2)
+
+- [3aaa27710](https://github.com/algolia/api-clients-automation/commit/3aaa27710) chore(swift): add privacy manifest ([#3039](https://github.com/algolia/api-clients-automation/pull/3039)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [9.0.0-beta.1](https://github.com/algolia/algoliasearch-client-swift/compare/9.0.0-beta.0...9.0.0-beta.1)
 
 - [b621988bc](https://github.com/algolia/api-clients-automation/commit/b621988bc) feat(specs): promote @kai687 to code owner ([#3014](https://github.com/algolia/api-clients-automation/pull/3014)) by [@Fluf22](https://github.com/Fluf22/)
