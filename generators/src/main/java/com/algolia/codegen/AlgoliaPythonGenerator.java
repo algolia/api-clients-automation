@@ -10,6 +10,7 @@ import org.openapitools.codegen.*;
 import org.openapitools.codegen.CodegenConstants;
 import org.openapitools.codegen.languages.PythonClientCodegen;
 import org.openapitools.codegen.model.ModelMap;
+import org.openapitools.codegen.model.ModelsMap;
 import org.openapitools.codegen.model.OperationsMap;
 
 public class AlgoliaPythonGenerator extends PythonClientCodegen {
@@ -128,5 +129,17 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
     operations.setImports(imports);
 
     return operations;
+  }
+
+  @Override
+  public ModelsMap postProcessModels(ModelsMap objs) {
+    // this is to prevent F811 from flake8 because we have some recusrive models
+    String modelName = objs.getModels().get(0).getModel().getClassname();
+    for (Map<String, String> imp : objs.getImports()) {
+      if (imp.get("import").endsWith("import " + modelName)) {
+        imp.remove("import");
+      }
+    }
+    return objs;
   }
 }

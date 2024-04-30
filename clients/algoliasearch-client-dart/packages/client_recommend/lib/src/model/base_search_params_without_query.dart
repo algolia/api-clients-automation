@@ -52,28 +52,28 @@ final class BaseSearchParamsWithoutQuery {
   final String? filters;
 
   /// One of types:
-  /// - [List<List<String>>]
+  /// - [List<List<FacetFilters>>]
   /// - [String]
   /// - [List<String>]
   @JsonKey(name: r'facetFilters')
   final dynamic facetFilters;
 
   /// One of types:
-  /// - [List<List<String>>]
   /// - [String]
+  /// - [List<List<OptionalFilters>>]
   /// - [List<String>]
   @JsonKey(name: r'optionalFilters')
   final dynamic optionalFilters;
 
   /// One of types:
-  /// - [List<List<String>>]
+  /// - [List<List<NumericFilters>>]
   /// - [String]
   /// - [List<String>]
   @JsonKey(name: r'numericFilters')
   final dynamic numericFilters;
 
   /// One of types:
-  /// - [List<List<String>>]
+  /// - [List<List<TagFilters>>]
   /// - [String]
   /// - [List<String>]
   @JsonKey(name: r'tagFilters')

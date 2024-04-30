@@ -23,9 +23,9 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = OptionalFilters.Deserializer.class)
 public interface OptionalFilters {
-  // OptionalFilters as List<MixedSearchFilters> wrapper.
-  static OptionalFilters of(List<MixedSearchFilters> value) {
-    return new ListOfMixedSearchFiltersWrapper(value);
+  // OptionalFilters as List<OptionalFilters> wrapper.
+  static OptionalFilters of(List<OptionalFilters> value) {
+    return new ListOfOptionalFiltersWrapper(value);
   }
 
   // OptionalFilters as String wrapper.
@@ -33,24 +33,24 @@ public interface OptionalFilters {
     return new StringWrapper(value);
   }
 
-  // OptionalFilters as List<MixedSearchFilters> wrapper.
-  @JsonSerialize(using = ListOfMixedSearchFiltersWrapper.Serializer.class)
-  class ListOfMixedSearchFiltersWrapper implements OptionalFilters {
+  // OptionalFilters as List<OptionalFilters> wrapper.
+  @JsonSerialize(using = ListOfOptionalFiltersWrapper.Serializer.class)
+  class ListOfOptionalFiltersWrapper implements OptionalFilters {
 
-    private final List<MixedSearchFilters> value;
+    private final List<OptionalFilters> value;
 
-    ListOfMixedSearchFiltersWrapper(List<MixedSearchFilters> value) {
+    ListOfOptionalFiltersWrapper(List<OptionalFilters> value) {
       this.value = value;
     }
 
-    public List<MixedSearchFilters> getValue() {
+    public List<OptionalFilters> getValue() {
       return value;
     }
 
-    static class Serializer extends JsonSerializer<ListOfMixedSearchFiltersWrapper> {
+    static class Serializer extends JsonSerializer<ListOfOptionalFiltersWrapper> {
 
       @Override
-      public void serialize(ListOfMixedSearchFiltersWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+      public void serialize(ListOfOptionalFiltersWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeObject(value.getValue());
       }
     }
@@ -86,16 +86,14 @@ public interface OptionalFilters {
     @Override
     public OptionalFilters deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-      // deserialize List<MixedSearchFilters>
+      // deserialize List<OptionalFilters>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          List<MixedSearchFilters> value = parser.readValueAs(new TypeReference<List<MixedSearchFilters>>() {});
-          return new OptionalFilters.ListOfMixedSearchFiltersWrapper(value);
+          List<OptionalFilters> value = parser.readValueAs(new TypeReference<List<OptionalFilters>>() {});
+          return new OptionalFilters.ListOfOptionalFiltersWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
-          LOGGER.finest(
-            "Failed to deserialize oneOf List<MixedSearchFilters> (error: " + e.getMessage() + ") (type: List<MixedSearchFilters>)"
-          );
+          LOGGER.finest("Failed to deserialize oneOf List<OptionalFilters> (error: " + e.getMessage() + ") (type: List<OptionalFilters>)");
         }
       }
       // deserialize String

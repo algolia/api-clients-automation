@@ -1862,31 +1862,18 @@ components:
           $ref: '#/components/schemas/facetOrdering'
       x-categories:
         - Advanced
-    searchFiltersArrayString:
-      title: search filter array
-      type: array
-      items:
-        type: string
-    mixedSearchFilters:
-      oneOf:
-        - $ref: '#/components/schemas/searchFiltersArrayString'
-        - type: string
-    listOfSearchFilters:
-      type: array
-      title: search filters
-      items:
-        $ref: '#/components/schemas/mixedSearchFilters'
     reRankingApplyFilter:
       description: >
         Restrict [Dynamic
         Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/)
         to records that match these filters.
       oneOf:
-        - $ref: '#/components/schemas/listOfSearchFilters'
+        - type: array
+          items:
+            $ref: '#/components/schemas/reRankingApplyFilter'
         - type: string
           x-categories:
             - Filtering
-        - type: 'null'
     indexSettingsAsSearchParams:
       type: object
       additionalProperties: false
@@ -2534,7 +2521,9 @@ components:
           x-categories:
             - Filtering
         reRankingApplyFilter:
-          $ref: '#/components/schemas/reRankingApplyFilter'
+          oneOf:
+            - $ref: '#/components/schemas/reRankingApplyFilter'
+            - type: 'null'
     indexSettings:
       description: Index settings.
       allOf:

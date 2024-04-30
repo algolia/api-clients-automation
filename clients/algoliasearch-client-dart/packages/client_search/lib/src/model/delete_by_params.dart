@@ -20,7 +20,7 @@ final class DeleteByParams {
   });
 
   /// One of types:
-  /// - [List<List<String>>]
+  /// - [List<List<FacetFilters>>]
   /// - [String]
   /// - [List<String>]
   @JsonKey(name: r'facetFilters')
@@ -31,14 +31,14 @@ final class DeleteByParams {
   final String? filters;
 
   /// One of types:
-  /// - [List<List<String>>]
+  /// - [List<List<NumericFilters>>]
   /// - [String]
   /// - [List<String>]
   @JsonKey(name: r'numericFilters')
   final dynamic numericFilters;
 
   /// One of types:
-  /// - [List<List<String>>]
+  /// - [List<List<TagFilters>>]
   /// - [String]
   /// - [List<String>]
   @JsonKey(name: r'tagFilters')

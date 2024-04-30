@@ -45,11 +45,11 @@ sealed trait FacetFilters
 
 object FacetFilters {
 
-  case class SeqOfMixedSearchFilters(value: Seq[MixedSearchFilters]) extends FacetFilters
+  case class SeqOfFacetFilters(value: Seq[FacetFilters]) extends FacetFilters
   case class StringValue(value: String) extends FacetFilters
 
-  def apply(value: Seq[MixedSearchFilters]): FacetFilters = {
-    FacetFilters.SeqOfMixedSearchFilters(value)
+  def apply(value: Seq[FacetFilters]): FacetFilters = {
+    FacetFilters.SeqOfFacetFilters(value)
   }
   def apply(value: String): FacetFilters = {
     FacetFilters.StringValue(value)
@@ -62,7 +62,7 @@ object FacetFiltersSerializer extends Serializer[FacetFilters] {
     case (TypeInfo(clazz, _), json) if clazz == classOf[FacetFilters] =>
       json match {
         case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
-          FacetFilters.SeqOfMixedSearchFilters(value.map(_.extract))
+          FacetFilters.SeqOfFacetFilters(value.map(_.extract))
         case JString(value) => FacetFilters.StringValue(value)
         case _              => throw new MappingException("Can't convert " + json + " to FacetFilters")
       }
@@ -70,8 +70,8 @@ object FacetFiltersSerializer extends Serializer[FacetFilters] {
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: FacetFilters =>
     value match {
-      case FacetFilters.SeqOfMixedSearchFilters(value) => JArray(value.map(Extraction.decompose).toList)
-      case FacetFilters.StringValue(value)             => JString(value)
+      case FacetFilters.SeqOfFacetFilters(value) => JArray(value.map(Extraction.decompose).toList)
+      case FacetFilters.StringValue(value)       => JString(value)
     }
   }
 }

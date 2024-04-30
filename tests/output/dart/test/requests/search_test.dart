@@ -2524,6 +2524,9 @@ void main() {
                 "mySearch:filters",
                 [
                   "mySearch:filters",
+                  [
+                    "mySearch:filters",
+                  ],
                 ],
               ],
               reRankingApplyFilter: [
@@ -2558,7 +2561,63 @@ void main() {
         expectPath(request.path, '/1/indexes/*/queries');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"requests":[{"indexName":"theIndexName","facetFilters":"mySearch:filters","reRankingApplyFilter":"mySearch:filters","tagFilters":"mySearch:filters","numericFilters":"mySearch:filters","optionalFilters":"mySearch:filters"},{"indexName":"theIndexName","facetFilters":["mySearch:filters",["mySearch:filters"]],"reRankingApplyFilter":["mySearch:filters",["mySearch:filters"]],"tagFilters":["mySearch:filters",["mySearch:filters"]],"numericFilters":["mySearch:filters",["mySearch:filters"]],"optionalFilters":["mySearch:filters",["mySearch:filters"]]}]}""");
+            """{"requests":[{"indexName":"theIndexName","facetFilters":"mySearch:filters","reRankingApplyFilter":"mySearch:filters","tagFilters":"mySearch:filters","numericFilters":"mySearch:filters","optionalFilters":"mySearch:filters"},{"indexName":"theIndexName","facetFilters":["mySearch:filters",["mySearch:filters",["mySearch:filters"]]],"reRankingApplyFilter":["mySearch:filters",["mySearch:filters"]],"tagFilters":["mySearch:filters",["mySearch:filters"]],"numericFilters":["mySearch:filters",["mySearch:filters"]],"optionalFilters":["mySearch:filters",["mySearch:filters"]]}]}""");
+      },
+    ),
+  );
+
+  // search
+  test(
+    'search filters end to end',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        searchMethodParams: SearchMethodParams(
+          requests: [
+            SearchForHits(
+              indexName: "cts_e2e_search_facet",
+              filters: "editor:'visual studio' OR editor:neovim",
+            ),
+            SearchForHits(
+              indexName: "cts_e2e_search_facet",
+              facetFilters: [
+                "editor:'visual studio'",
+                "editor:neovim",
+              ],
+            ),
+            SearchForHits(
+              indexName: "cts_e2e_search_facet",
+              facetFilters: [
+                "editor:'visual studio'",
+                [
+                  "editor:neovim",
+                ],
+              ],
+            ),
+            SearchForHits(
+              indexName: "cts_e2e_search_facet",
+              facetFilters: [
+                "editor:'visual studio'",
+                [
+                  "editor:neovim",
+                  [
+                    "editor:goland",
+                  ],
+                ],
+              ],
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/queries');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"cts_e2e_search_facet","filters":"editor:'visual studio' OR editor:neovim"},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'","editor:neovim"]},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'",["editor:neovim"]]},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'",["editor:neovim",["editor:goland"]]]}]}""");
       },
     ),
   );

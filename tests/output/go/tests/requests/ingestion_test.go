@@ -4,6 +4,7 @@ package requests
 import (
 	"encoding/json"
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
@@ -656,7 +657,7 @@ func TestIngestion_EnableTask(t *testing.T) {
 		require.NoError(t, err)
 
 		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
+		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
 	})
 }
 
@@ -730,7 +731,7 @@ func TestIngestion_GetAuthentications(t *testing.T) {
 		require.NoError(t, err)
 
 		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
+		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
 	})
 }
 
@@ -887,7 +888,7 @@ func TestIngestion_GetSource(t *testing.T) {
 		require.NoError(t, err)
 
 		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
+		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
 	})
 }
 
@@ -1058,7 +1059,7 @@ func TestIngestion_SearchTasks(t *testing.T) {
 		require.NoError(t, err)
 
 		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
+		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
 	})
 }
 

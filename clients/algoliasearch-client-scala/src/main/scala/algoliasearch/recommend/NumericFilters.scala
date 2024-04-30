@@ -40,11 +40,11 @@ sealed trait NumericFilters
 
 object NumericFilters {
 
-  case class SeqOfMixedSearchFilters(value: Seq[MixedSearchFilters]) extends NumericFilters
+  case class SeqOfNumericFilters(value: Seq[NumericFilters]) extends NumericFilters
   case class StringValue(value: String) extends NumericFilters
 
-  def apply(value: Seq[MixedSearchFilters]): NumericFilters = {
-    NumericFilters.SeqOfMixedSearchFilters(value)
+  def apply(value: Seq[NumericFilters]): NumericFilters = {
+    NumericFilters.SeqOfNumericFilters(value)
   }
   def apply(value: String): NumericFilters = {
     NumericFilters.StringValue(value)
@@ -57,7 +57,7 @@ object NumericFiltersSerializer extends Serializer[NumericFilters] {
     case (TypeInfo(clazz, _), json) if clazz == classOf[NumericFilters] =>
       json match {
         case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
-          NumericFilters.SeqOfMixedSearchFilters(value.map(_.extract))
+          NumericFilters.SeqOfNumericFilters(value.map(_.extract))
         case JString(value) => NumericFilters.StringValue(value)
         case _              => throw new MappingException("Can't convert " + json + " to NumericFilters")
       }
@@ -65,8 +65,8 @@ object NumericFiltersSerializer extends Serializer[NumericFilters] {
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: NumericFilters =>
     value match {
-      case NumericFilters.SeqOfMixedSearchFilters(value) => JArray(value.map(Extraction.decompose).toList)
-      case NumericFilters.StringValue(value)             => JString(value)
+      case NumericFilters.SeqOfNumericFilters(value) => JArray(value.map(Extraction.decompose).toList)
+      case NumericFilters.StringValue(value)         => JString(value)
     }
   }
 }
