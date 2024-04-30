@@ -66,8 +66,8 @@ export async function removeExistingCodegen({
     case 'python':
       clientModel = toSnakeCase(clientName);
       clientApi = toSnakeCase(clientName);
-      baseModelFolder = '';
-      baseApiFolder = '';
+      baseModelFolder = 'algoliasearch/models';
+      baseApiFolder = 'algoliasearch';
       break;
     case 'ruby':
       clientModel = clientName.toLowerCase();
