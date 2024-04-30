@@ -19,9 +19,9 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = ReRankingApplyFilter.Deserializer.class)
 public interface ReRankingApplyFilter {
-  // ReRankingApplyFilter as List<MixedSearchFilters> wrapper.
-  static ReRankingApplyFilter of(List<MixedSearchFilters> value) {
-    return new ListOfMixedSearchFiltersWrapper(value);
+  // ReRankingApplyFilter as List<ReRankingApplyFilter> wrapper.
+  static ReRankingApplyFilter of(List<ReRankingApplyFilter> value) {
+    return new ListOfReRankingApplyFilterWrapper(value);
   }
 
   // ReRankingApplyFilter as String wrapper.
@@ -29,24 +29,24 @@ public interface ReRankingApplyFilter {
     return new StringWrapper(value);
   }
 
-  // ReRankingApplyFilter as List<MixedSearchFilters> wrapper.
-  @JsonSerialize(using = ListOfMixedSearchFiltersWrapper.Serializer.class)
-  class ListOfMixedSearchFiltersWrapper implements ReRankingApplyFilter {
+  // ReRankingApplyFilter as List<ReRankingApplyFilter> wrapper.
+  @JsonSerialize(using = ListOfReRankingApplyFilterWrapper.Serializer.class)
+  class ListOfReRankingApplyFilterWrapper implements ReRankingApplyFilter {
 
-    private final List<MixedSearchFilters> value;
+    private final List<ReRankingApplyFilter> value;
 
-    ListOfMixedSearchFiltersWrapper(List<MixedSearchFilters> value) {
+    ListOfReRankingApplyFilterWrapper(List<ReRankingApplyFilter> value) {
       this.value = value;
     }
 
-    public List<MixedSearchFilters> getValue() {
+    public List<ReRankingApplyFilter> getValue() {
       return value;
     }
 
-    static class Serializer extends JsonSerializer<ListOfMixedSearchFiltersWrapper> {
+    static class Serializer extends JsonSerializer<ListOfReRankingApplyFilterWrapper> {
 
       @Override
-      public void serialize(ListOfMixedSearchFiltersWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+      public void serialize(ListOfReRankingApplyFilterWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeObject(value.getValue());
       }
     }
@@ -82,15 +82,15 @@ public interface ReRankingApplyFilter {
     @Override
     public ReRankingApplyFilter deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-      // deserialize List<MixedSearchFilters>
+      // deserialize List<ReRankingApplyFilter>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          List<MixedSearchFilters> value = parser.readValueAs(new TypeReference<List<MixedSearchFilters>>() {});
-          return new ReRankingApplyFilter.ListOfMixedSearchFiltersWrapper(value);
+          List<ReRankingApplyFilter> value = parser.readValueAs(new TypeReference<List<ReRankingApplyFilter>>() {});
+          return new ReRankingApplyFilter.ListOfReRankingApplyFilterWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
           LOGGER.finest(
-            "Failed to deserialize oneOf List<MixedSearchFilters> (error: " + e.getMessage() + ") (type: List<MixedSearchFilters>)"
+            "Failed to deserialize oneOf List<ReRankingApplyFilter> (error: " + e.getMessage() + ") (type: List<ReRankingApplyFilter>)"
           );
         }
       }
@@ -110,7 +110,7 @@ public interface ReRankingApplyFilter {
     /** Handle deserialization of the 'null' value. */
     @Override
     public ReRankingApplyFilter getNullValue(DeserializationContext ctxt) throws JsonMappingException {
-      return null;
+      throw new JsonMappingException(ctxt.getParser(), "ReRankingApplyFilter cannot be null");
     }
   }
 }

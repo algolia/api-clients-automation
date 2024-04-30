@@ -3423,20 +3423,6 @@ components:
       example: (category:Book OR category:Ebook) AND _tags:published
       x-categories:
         - Filtering
-    searchFiltersArrayString:
-      title: search filter array
-      type: array
-      items:
-        type: string
-    mixedSearchFilters:
-      oneOf:
-        - $ref: '#/components/schemas/searchFiltersArrayString'
-        - type: string
-    listOfSearchFilters:
-      type: array
-      title: search filters
-      items:
-        $ref: '#/components/schemas/mixedSearchFilters'
     facetFilters:
       description: >
         Filter the search by facet values, so that only records with the same
@@ -3465,7 +3451,9 @@ components:
           - category:-Movie
         - author:John Doe
       oneOf:
-        - $ref: '#/components/schemas/listOfSearchFilters'
+        - type: array
+          items:
+            $ref: '#/components/schemas/facetFilters'
         - type: string
       x-categories:
         - Filtering
@@ -3493,7 +3481,9 @@ components:
         - category:Book
         - author:John Doe
       oneOf:
-        - $ref: '#/components/schemas/listOfSearchFilters'
+        - type: array
+          items:
+            $ref: '#/components/schemas/optionalFilters'
         - type: string
       x-categories:
         - Filtering
@@ -3519,7 +3509,9 @@ components:
           - deliveryDate < 1441755506
         - price < 1000
       oneOf:
-        - $ref: '#/components/schemas/listOfSearchFilters'
+        - type: array
+          items:
+            $ref: '#/components/schemas/numericFilters'
         - type: string
       x-categories:
         - Filtering
@@ -3544,7 +3536,9 @@ components:
           - Movie
         - SciFi
       oneOf:
-        - $ref: '#/components/schemas/listOfSearchFilters'
+        - type: array
+          items:
+            $ref: '#/components/schemas/tagFilters'
         - type: string
       x-categories:
         - Filtering
@@ -4423,11 +4417,12 @@ components:
         Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/)
         to records that match these filters.
       oneOf:
-        - $ref: '#/components/schemas/listOfSearchFilters'
+        - type: array
+          items:
+            $ref: '#/components/schemas/reRankingApplyFilter'
         - type: string
           x-categories:
             - Filtering
-        - type: 'null'
     indexSettingsAsSearchParams:
       type: object
       additionalProperties: false
@@ -5075,7 +5070,9 @@ components:
           x-categories:
             - Filtering
         reRankingApplyFilter:
-          $ref: '#/components/schemas/reRankingApplyFilter'
+          oneOf:
+            - $ref: '#/components/schemas/reRankingApplyFilter'
+            - type: 'null'
     searchParamsObject:
       title: Search parameters as object
       description: >-

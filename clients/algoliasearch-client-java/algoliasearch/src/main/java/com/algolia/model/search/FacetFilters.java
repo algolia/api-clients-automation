@@ -23,9 +23,9 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = FacetFilters.Deserializer.class)
 public interface FacetFilters {
-  // FacetFilters as List<MixedSearchFilters> wrapper.
-  static FacetFilters of(List<MixedSearchFilters> value) {
-    return new ListOfMixedSearchFiltersWrapper(value);
+  // FacetFilters as List<FacetFilters> wrapper.
+  static FacetFilters of(List<FacetFilters> value) {
+    return new ListOfFacetFiltersWrapper(value);
   }
 
   // FacetFilters as String wrapper.
@@ -33,24 +33,24 @@ public interface FacetFilters {
     return new StringWrapper(value);
   }
 
-  // FacetFilters as List<MixedSearchFilters> wrapper.
-  @JsonSerialize(using = ListOfMixedSearchFiltersWrapper.Serializer.class)
-  class ListOfMixedSearchFiltersWrapper implements FacetFilters {
+  // FacetFilters as List<FacetFilters> wrapper.
+  @JsonSerialize(using = ListOfFacetFiltersWrapper.Serializer.class)
+  class ListOfFacetFiltersWrapper implements FacetFilters {
 
-    private final List<MixedSearchFilters> value;
+    private final List<FacetFilters> value;
 
-    ListOfMixedSearchFiltersWrapper(List<MixedSearchFilters> value) {
+    ListOfFacetFiltersWrapper(List<FacetFilters> value) {
       this.value = value;
     }
 
-    public List<MixedSearchFilters> getValue() {
+    public List<FacetFilters> getValue() {
       return value;
     }
 
-    static class Serializer extends JsonSerializer<ListOfMixedSearchFiltersWrapper> {
+    static class Serializer extends JsonSerializer<ListOfFacetFiltersWrapper> {
 
       @Override
-      public void serialize(ListOfMixedSearchFiltersWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+      public void serialize(ListOfFacetFiltersWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeObject(value.getValue());
       }
     }
@@ -86,16 +86,14 @@ public interface FacetFilters {
     @Override
     public FacetFilters deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-      // deserialize List<MixedSearchFilters>
+      // deserialize List<FacetFilters>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          List<MixedSearchFilters> value = parser.readValueAs(new TypeReference<List<MixedSearchFilters>>() {});
-          return new FacetFilters.ListOfMixedSearchFiltersWrapper(value);
+          List<FacetFilters> value = parser.readValueAs(new TypeReference<List<FacetFilters>>() {});
+          return new FacetFilters.ListOfFacetFiltersWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
-          LOGGER.finest(
-            "Failed to deserialize oneOf List<MixedSearchFilters> (error: " + e.getMessage() + ") (type: List<MixedSearchFilters>)"
-          );
+          LOGGER.finest("Failed to deserialize oneOf List<FacetFilters> (error: " + e.getMessage() + ") (type: List<FacetFilters>)");
         }
       }
       // deserialize String

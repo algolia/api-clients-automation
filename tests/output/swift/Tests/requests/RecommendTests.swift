@@ -837,17 +837,14 @@ final class RecommendClientRequestsTests: XCTestCase {
                             queryParameters: RecommendSearchParams(
                                 query: "myQuery",
                                 facetFilters: RecommendFacetFilters
-                                    .arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters.string("query")])
+                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query")])
                             ),
                             model: RelatedModel.relatedProducts,
                             objectID: "objectID",
                             fallbackParameters: FallbackParams(
                                 query: "myQuery",
                                 facetFilters: RecommendFacetFilters
-                                    .arrayOfRecommendMixedSearchFilters([
-                                        RecommendMixedSearchFilters
-                                            .string("fallback"),
-                                    ])
+                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback")])
                             )
                         )),
                 ])
@@ -932,7 +929,7 @@ final class RecommendClientRequestsTests: XCTestCase {
                             queryParameters: RecommendSearchParams(
                                 query: "myQuery",
                                 facetFilters: RecommendFacetFilters
-                                    .arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters.string("query")])
+                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query")])
                             ),
                             facetName: "myFacetName",
                             facetValue: "myFacetValue",
@@ -940,10 +937,7 @@ final class RecommendClientRequestsTests: XCTestCase {
                             fallbackParameters: RecommendSearchParamsObject(
                                 query: "myQuery",
                                 facetFilters: RecommendFacetFilters
-                                    .arrayOfRecommendMixedSearchFilters([
-                                        RecommendMixedSearchFilters
-                                            .string("fallback"),
-                                    ])
+                                    .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback")])
                             )
                         )),
                 ])
@@ -1028,14 +1022,14 @@ final class RecommendClientRequestsTests: XCTestCase {
                     queryParameters: RecommendSearchParams(
                         query: "myQuery",
                         facetFilters: RecommendFacetFilters
-                            .arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters.string("query1")])
+                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query1")])
                     ),
                     model: RelatedModel.relatedProducts,
                     objectID: "objectID1",
                     fallbackParameters: FallbackParams(
                         query: "myQuery",
                         facetFilters: RecommendFacetFilters
-                            .arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters.string("fallback1")])
+                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback1")])
                     )
                 )),
                 RecommendationsRequest.relatedQuery(RelatedQuery(
@@ -1045,14 +1039,14 @@ final class RecommendClientRequestsTests: XCTestCase {
                     queryParameters: RecommendSearchParams(
                         query: "myQuery",
                         facetFilters: RecommendFacetFilters
-                            .arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters.string("query2")])
+                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("query2")])
                     ),
                     model: RelatedModel.relatedProducts,
                     objectID: "objectID2",
                     fallbackParameters: FallbackParams(
                         query: "myQuery",
                         facetFilters: RecommendFacetFilters
-                            .arrayOfRecommendMixedSearchFilters([RecommendMixedSearchFilters.string("fallback2")])
+                            .arrayOfRecommendFacetFilters([RecommendFacetFilters.string("fallback2")])
                     )
                 )),
             ]))

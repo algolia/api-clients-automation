@@ -500,7 +500,7 @@ class SearchTest extends AnyFunSuite {
       browseParams = Some(
         BrowseParamsObject(
           query = Some("myQuery"),
-          facetFilters = Some(FacetFilters(Seq(MixedSearchFilters("tags:algolia"))))
+          facetFilters = Some(FacetFilters(Seq(FacetFilters("tags:algolia"))))
         )
       )
     )
@@ -2129,7 +2129,7 @@ class SearchTest extends AnyFunSuite {
 
     val response = Await.result(e2eFuture, Duration.Inf)
     compareJSON(
-      """{"results":[{"exhaustiveFacetsCount":true,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}""",
+      """{"results":[{"exhaustiveFacetsCount":true,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"visual studio","value":"visual studio"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}""",
       write(response),
       JSONCompareMode.LENIENT
     )
@@ -2277,21 +2277,34 @@ class SearchTest extends AnyFunSuite {
           SearchForHits(
             indexName = "theIndexName",
             facetFilters = Some(
-              FacetFilters(Seq(MixedSearchFilters("mySearch:filters"), MixedSearchFilters(Seq("mySearch:filters"))))
+              FacetFilters(
+                Seq(
+                  FacetFilters("mySearch:filters"),
+                  FacetFilters(
+                    Seq(FacetFilters("mySearch:filters"), FacetFilters(Seq(FacetFilters("mySearch:filters"))))
+                  )
+                )
+              )
             ),
             reRankingApplyFilter = Some(
               ReRankingApplyFilter(
-                Seq(MixedSearchFilters("mySearch:filters"), MixedSearchFilters(Seq("mySearch:filters")))
+                Seq(
+                  ReRankingApplyFilter("mySearch:filters"),
+                  ReRankingApplyFilter(Seq(ReRankingApplyFilter("mySearch:filters")))
+                )
               )
             ),
-            tagFilters = Some(
-              TagFilters(Seq(MixedSearchFilters("mySearch:filters"), MixedSearchFilters(Seq("mySearch:filters"))))
-            ),
+            tagFilters =
+              Some(TagFilters(Seq(TagFilters("mySearch:filters"), TagFilters(Seq(TagFilters("mySearch:filters")))))),
             numericFilters = Some(
-              NumericFilters(Seq(MixedSearchFilters("mySearch:filters"), MixedSearchFilters(Seq("mySearch:filters"))))
+              NumericFilters(
+                Seq(NumericFilters("mySearch:filters"), NumericFilters(Seq(NumericFilters("mySearch:filters"))))
+              )
             ),
             optionalFilters = Some(
-              OptionalFilters(Seq(MixedSearchFilters("mySearch:filters"), MixedSearchFilters(Seq("mySearch:filters"))))
+              OptionalFilters(
+                Seq(OptionalFilters("mySearch:filters"), OptionalFilters(Seq(OptionalFilters("mySearch:filters"))))
+              )
             )
           )
         )
@@ -2304,10 +2317,101 @@ class SearchTest extends AnyFunSuite {
     assert(res.path == "/1/indexes/*/queries")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"requests":[{"indexName":"theIndexName","facetFilters":"mySearch:filters","reRankingApplyFilter":"mySearch:filters","tagFilters":"mySearch:filters","numericFilters":"mySearch:filters","optionalFilters":"mySearch:filters"},{"indexName":"theIndexName","facetFilters":["mySearch:filters",["mySearch:filters"]],"reRankingApplyFilter":["mySearch:filters",["mySearch:filters"]],"tagFilters":["mySearch:filters",["mySearch:filters"]],"numericFilters":["mySearch:filters",["mySearch:filters"]],"optionalFilters":["mySearch:filters",["mySearch:filters"]]}]}"""
+      """{"requests":[{"indexName":"theIndexName","facetFilters":"mySearch:filters","reRankingApplyFilter":"mySearch:filters","tagFilters":"mySearch:filters","numericFilters":"mySearch:filters","optionalFilters":"mySearch:filters"},{"indexName":"theIndexName","facetFilters":["mySearch:filters",["mySearch:filters",["mySearch:filters"]]],"reRankingApplyFilter":["mySearch:filters",["mySearch:filters"]],"tagFilters":["mySearch:filters",["mySearch:filters"]],"numericFilters":["mySearch:filters",["mySearch:filters"]],"optionalFilters":["mySearch:filters",["mySearch:filters"]]}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
+  }
+
+  test("search filters end to end") {
+    val (client, echo) = testClient()
+    val future = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = Seq(
+          SearchForHits(
+            indexName = "cts_e2e_search_facet",
+            filters = Some("editor:'visual studio' OR editor:neovim")
+          ),
+          SearchForHits(
+            indexName = "cts_e2e_search_facet",
+            facetFilters =
+              Some(FacetFilters(Seq(FacetFilters("editor:'visual studio'"), FacetFilters("editor:neovim"))))
+          ),
+          SearchForHits(
+            indexName = "cts_e2e_search_facet",
+            facetFilters = Some(
+              FacetFilters(
+                Seq(FacetFilters("editor:'visual studio'"), FacetFilters(Seq(FacetFilters("editor:neovim"))))
+              )
+            )
+          ),
+          SearchForHits(
+            indexName = "cts_e2e_search_facet",
+            facetFilters = Some(
+              FacetFilters(
+                Seq(
+                  FacetFilters("editor:'visual studio'"),
+                  FacetFilters(Seq(FacetFilters("editor:neovim"), FacetFilters(Seq(FacetFilters("editor:goland")))))
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/*/queries")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"requests":[{"indexName":"cts_e2e_search_facet","filters":"editor:'visual studio' OR editor:neovim"},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'","editor:neovim"]},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'",["editor:neovim"]]},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'",["editor:neovim",["editor:goland"]]]}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+    val e2eClient = testE2EClient()
+    val e2eFuture = e2eClient.search(
+      searchMethodParams = SearchMethodParams(
+        requests = Seq(
+          SearchForHits(
+            indexName = "cts_e2e_search_facet",
+            filters = Some("editor:'visual studio' OR editor:neovim")
+          ),
+          SearchForHits(
+            indexName = "cts_e2e_search_facet",
+            facetFilters =
+              Some(FacetFilters(Seq(FacetFilters("editor:'visual studio'"), FacetFilters("editor:neovim"))))
+          ),
+          SearchForHits(
+            indexName = "cts_e2e_search_facet",
+            facetFilters = Some(
+              FacetFilters(
+                Seq(FacetFilters("editor:'visual studio'"), FacetFilters(Seq(FacetFilters("editor:neovim"))))
+              )
+            )
+          ),
+          SearchForHits(
+            indexName = "cts_e2e_search_facet",
+            facetFilters = Some(
+              FacetFilters(
+                Seq(
+                  FacetFilters("editor:'visual studio'"),
+                  FacetFilters(Seq(FacetFilters("editor:neovim"), FacetFilters(Seq(FacetFilters("editor:goland")))))
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+
+    val response = Await.result(e2eFuture, Duration.Inf)
+    compareJSON(
+      """{"results":[{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":2,"nbPages":1,"page":0,"hits":[{"editor":"visual studio","_highlightResult":{"editor":{"value":"visual studio","matchLevel":"none"}}},{"editor":"neovim","_highlightResult":{"editor":{"value":"neovim","matchLevel":"none"}}}],"query":"","params":"filters=editor%3A%27visual+studio%27+OR+editor%3Aneovim"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%22editor%3Aneovim%22%5D"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%5D%5D"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%2C%5B%22editor%3Agoland%22%5D%5D%5D"}]}""",
+      write(response),
+      JSONCompareMode.LENIENT
+    )
   }
 
   test("search with all search parameters") {
@@ -2341,7 +2445,7 @@ class SearchTest extends AnyFunSuite {
             enableReRanking = Some(true),
             enableRules = Some(true),
             exactOnSingleWordQuery = Some(ExactOnSingleWordQuery.withName("attribute")),
-            facetFilters = Some(FacetFilters(Seq(MixedSearchFilters("")))),
+            facetFilters = Some(FacetFilters(Seq(FacetFilters("")))),
             facetingAfterDistinct = Some(true),
             facets = Some(Seq("")),
             filters = Some(""),
@@ -2366,9 +2470,9 @@ class SearchTest extends AnyFunSuite {
             minWordSizefor2Typos = Some(0),
             minimumAroundRadius = Some(1),
             naturalLanguages = Some(Seq(SupportedLanguage.withName("fr"))),
-            numericFilters = Some(NumericFilters(Seq(MixedSearchFilters("")))),
+            numericFilters = Some(NumericFilters(Seq(NumericFilters("")))),
             offset = Some(0),
-            optionalFilters = Some(OptionalFilters(Seq(MixedSearchFilters("")))),
+            optionalFilters = Some(OptionalFilters(Seq(OptionalFilters("")))),
             optionalWords = Some(Seq("")),
             page = Some(0),
             percentileComputation = Some(true),
@@ -2377,7 +2481,7 @@ class SearchTest extends AnyFunSuite {
             queryLanguages = Some(Seq(SupportedLanguage.withName("fr"))),
             queryType = Some(QueryType.withName("prefixAll")),
             ranking = Some(Seq("")),
-            reRankingApplyFilter = Some(ReRankingApplyFilter(Seq(MixedSearchFilters("")))),
+            reRankingApplyFilter = Some(ReRankingApplyFilter(Seq(ReRankingApplyFilter("")))),
             relevancyStrictness = Some(0),
             removeStopWords = Some(RemoveStopWords(true)),
             removeWordsIfNoResults = Some(RemoveWordsIfNoResults.withName("allOptional")),
@@ -2412,7 +2516,7 @@ class SearchTest extends AnyFunSuite {
             sortFacetValuesBy = Some(""),
             sumOrFiltersScores = Some(true),
             synonyms = Some(true),
-            tagFilters = Some(TagFilters(Seq(MixedSearchFilters("")))),
+            tagFilters = Some(TagFilters(Seq(TagFilters("")))),
             `type` = Some(SearchTypeDefault.withName("default")),
             typoTolerance = Some(TypoToleranceEnum.withName("min")),
             userToken = Some("")
@@ -2595,7 +2699,7 @@ class SearchTest extends AnyFunSuite {
       searchParams = Some(
         SearchParamsObject(
           query = Some("myQuery"),
-          facetFilters = Some(FacetFilters(Seq(MixedSearchFilters("tags:algolia"))))
+          facetFilters = Some(FacetFilters(Seq(FacetFilters("tags:algolia"))))
         )
       )
     )
