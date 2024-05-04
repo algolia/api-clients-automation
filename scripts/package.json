@@ -52,7 +52,7 @@
     "spinnies": "0.5.1",
     "tsc-alias": "1.8.8",
     "typescript": "5.4.5",
-    "vitest": "1.5.3",
+    "vitest": "1.6.0",
     "zlib": "1.0.5"
   }
 }
