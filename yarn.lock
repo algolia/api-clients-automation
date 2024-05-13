@@ -88,7 +88,7 @@ __metadata:
   dependencies:
     "@babel/eslint-parser": "npm:7.24.5"
     "@openapitools/openapi-generator-cli": "npm:2.13.1"
-    "@redocly/cli": "npm:1.12.0"
+    "@redocly/cli": "npm:1.12.2"
     "@typescript-eslint/eslint-plugin": "npm:7.8.0"
     "@typescript-eslint/parser": "npm:7.8.0"
     eslint: "npm:8.57.0"
@@ -4090,11 +4090,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/cli@npm:1.12.0":
-  version: 1.12.0
-  resolution: "@redocly/cli@npm:1.12.0"
+"@redocly/cli@npm:1.12.2":
+  version: 1.12.2
+  resolution: "@redocly/cli@npm:1.12.2"
   dependencies:
-    "@redocly/openapi-core": "npm:1.12.0"
+    "@redocly/openapi-core": "npm:1.12.2"
     abort-controller: "npm:^3.0.0"
     chokidar: "npm:^3.5.1"
     colorette: "npm:^1.2.0"
@@ -4115,7 +4115,7 @@ __metadata:
   bin:
     openapi: bin/cli.js
     redocly: bin/cli.js
-  checksum: 939170d4c09700cc1dc58a01e33a7db6bd28a133ecd265b96207e12ffc0140f059260e69803ff9eece9ad9604ce08041ec88af436cc5874927c2bb4a348ad71a
+  checksum: 9e04dca2f31b7bfd826b9660d05c5565387e2986898015367f978cc8eba93e57f192030942914d76961678084adc9094aae76d68b747c2a6b1ac4a66615503c8
   languageName: node
   linkType: hard
 
@@ -4126,12 +4126,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/openapi-core@npm:1.12.0":
-  version: 1.12.0
-  resolution: "@redocly/openapi-core@npm:1.12.0"
+"@redocly/config@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "@redocly/config@npm:0.5.0"
+  checksum: dbe8adcabea25c84b2135f167981f5cb27c162410c63bab474097e6b91c4ca40b45de0da8ad8786f5550543cf4fa52b1955c21960760f5f54823f730884b0b08
+  languageName: node
+  linkType: hard
+
+"@redocly/openapi-core@npm:1.12.2":
+  version: 1.12.2
+  resolution: "@redocly/openapi-core@npm:1.12.2"
   dependencies:
     "@redocly/ajv": "npm:^8.11.0"
-    "@redocly/config": "npm:^0.2.0"
+    "@redocly/config": "npm:^0.5.0"
     colorette: "npm:^1.2.0"
     js-levenshtein: "npm:^1.1.6"
     js-yaml: "npm:^4.1.0"
@@ -4140,7 +4147,7 @@ __metadata:
     node-fetch: "npm:^2.6.1"
     pluralize: "npm:^8.0.0"
     yaml-ast-parser: "npm:0.0.43"
-  checksum: 7979cb04e88fb8cd9962b17e1906d2c735989f79048ad9ba0c69c99500dc28618a8b4d1c792aa502f82156230942701ada968a5d933231c40e4ac78ee6978faf
+  checksum: 6bf637ad36ab4f5398572f462aaffd89332e85460717e2099da0ad8267a939acfe111f0f575d0db2f1ab7e3dccfe67a2717ab578000568225da9f63b2573b270
   languageName: node
   linkType: hard
 
