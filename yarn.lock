@@ -12458,7 +12458,7 @@ __metadata:
     micromatch: "npm:4.0.5"
     semver: "npm:7.6.0"
     spinnies: "npm:0.5.1"
-    tsc-alias: "npm:1.8.8"
+    tsc-alias: "npm:1.8.9"
     typescript: "npm:5.4.5"
     vitest: "npm:1.6.0"
     zlib: "npm:1.0.5"
@@ -13477,9 +13477,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsc-alias@npm:1.8.8":
-  version: 1.8.8
-  resolution: "tsc-alias@npm:1.8.8"
+"tsc-alias@npm:1.8.9":
+  version: 1.8.9
+  resolution: "tsc-alias@npm:1.8.9"
   dependencies:
     chokidar: "npm:^3.5.3"
     commander: "npm:^9.0.0"
@@ -13489,7 +13489,7 @@ __metadata:
     plimit-lit: "npm:^1.2.6"
   bin:
     tsc-alias: dist/bin/index.js
-  checksum: 145d7bb23a618e1136c8addd4b4ed23a1d503a37d3fc5b3698a993fea9331180a68853b0e78ff50fb3fb7ed95d4996a2d82f77395814bbd1c40adee8a9151d90
+  checksum: 876484cdb9648103c4de442e7b28300e559b1ce520a859b1a2143a6ab9a606d8c219130cf6e0e96a282cabd9522d7d12ee315338c196ab161707ba9e7b9da9b9
   languageName: node
   linkType: hard
 
