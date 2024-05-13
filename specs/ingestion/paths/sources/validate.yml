@@ -1,0 +1,35 @@
+post:
+  tags:
+    - sources
+  summary: Validate a source payload
+  description: |
+    Validates a source payload to ensure it can be created and that the data source can be reached by Algolia.
+  operationId: validateSource
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/source.yml#SourceValidateResponse'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+
+patch:
+  tags:
+    - sources
+  summary: Validate a source payload after it is merged with the original source
+  description: |
+    Merge deeply the payload into the original source and validate the resulting payload to ensure
+    it's a valid object against Algolia requirement, and that the data source is still reachable.
+  operationId: validateSourceWithId
+  parameters:
+    - $ref: '../../common/parameters.yml#/pathSourceID'
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings

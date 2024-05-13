@@ -524,3 +524,24 @@ sourceShopifyBase:
     - shopURL
   x-discriminator-fields:
     - shopURL
+
+SourceValidateResponse:
+  type: object
+  additionalProperties: false
+  properties:
+    runID:
+      type: boolean
+    data:
+      type: array
+      items:
+        type: object
+        additionalProperties: true
+    events:
+      type: array
+      items:
+        $ref: '../../common/schemas/event.yml#/Event'
+    message:
+      type: string
+  required:
+    - runID
+    - message
