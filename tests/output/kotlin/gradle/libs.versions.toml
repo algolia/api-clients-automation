@@ -1,8 +1,8 @@
 [versions]
-kotlin = "1.9.23"
-coroutines = "1.8.0"
+kotlin = "1.9.24"
+coroutines = "1.8.1"
 serialization = "1.5.0"
-ktor = "2.3.10"
+ktor = "2.3.11"
 
 [libraries]
 coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
