@@ -1,3 +1,7 @@
+## [1.9.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.9.0...1.9.1)
+
+- [1250c2b3c](https://github.com/algolia/api-clients-automation/commit/1250c2b3c) fix(specs): simplify filter types ([#3042](https://github.com/algolia/api-clients-automation/pull/3042)) by [@millotp](https://github.com/millotp/)
+
 ## [1.9.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.8.0...1.9.0)
 
 - [b621988bc](https://github.com/algolia/api-clients-automation/commit/b621988bc) feat(specs): promote @kai687 to code owner ([#3014](https://github.com/algolia/api-clients-automation/pull/3014)) by [@Fluf22](https://github.com/Fluf22/)
