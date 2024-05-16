@@ -19,8 +19,7 @@ final class SearchForFacetValuesResponse {
   @JsonKey(name: r'facetHits')
   final List<FacetHits> facetHits;
 
-  /// See the `facetsCount` field of the `exhaustive` object in the response.
-  @Deprecated('exhaustiveFacetsCount has been deprecated')
+  /// Whether the facet count is exhaustive (true) or approximate (false). For more information, see [Why are my facet and hit counts not accurate](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
   @JsonKey(name: r'exhaustiveFacetsCount')
   final bool exhaustiveFacetsCount;
 
@@ -33,10 +32,14 @@ final class SearchForFacetValuesResponse {
       identical(this, other) ||
       other is SearchForFacetValuesResponse &&
           other.facetHits == facetHits &&
+          other.exhaustiveFacetsCount == exhaustiveFacetsCount &&
           other.processingTimeMS == processingTimeMS;
 
   @override
-  int get hashCode => facetHits.hashCode + processingTimeMS.hashCode;
+  int get hashCode =>
+      facetHits.hashCode +
+      exhaustiveFacetsCount.hashCode +
+      processingTimeMS.hashCode;
 
   factory SearchForFacetValuesResponse.fromJson(Map<String, dynamic> json) =>
       _$SearchForFacetValuesResponseFromJson(json);

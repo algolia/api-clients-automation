@@ -2533,10 +2533,6 @@ components:
         - $ref: '#/components/schemas/trendingFacetsQuery'
         - $ref: '#/components/schemas/lookingSimilarQuery'
         - $ref: '#/components/schemas/recommendedForYouQuery'
-    exhaustiveFacetsCount:
-      type: boolean
-      description: See the `facetsCount` field of the `exhaustive` object in the response.
-      deprecated: true
     nbHits:
       type: integer
       description: Number of results (hits).
@@ -2668,7 +2664,11 @@ components:
                 alternatives exist for the query). This field will not be
                 included when typo-tolerance is entirely disabled.
         exhaustiveFacetsCount:
-          $ref: '#/components/schemas/exhaustiveFacetsCount'
+          type: boolean
+          description: >-
+            See the `facetsCount` field of the `exhaustive` object in the
+            response.
+          deprecated: true
         exhaustiveNbHits:
           type: boolean
           description: See the `nbHits` field of the `exhaustive` object in the response.
