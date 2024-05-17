@@ -38,6 +38,7 @@ final class RetryStrategy {
                 connectTimeout: options.connectTimeout,
                 clientSegments: [segment, ...?options.agentSegments],
                 logger: options.logger,
+                interceptors: options.interceptors,
               ),
         );
 
