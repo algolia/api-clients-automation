@@ -1,3 +1,9 @@
+## [1.10.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.9.0...1.10.0)
+
+- [73d0d5a98](https://github.com/algolia/api-clients-automation/commit/73d0d5a98) feat(dart): add dio interceptors to client options ([#3054](https://github.com/algolia/api-clients-automation/pull/3054)) by [@aallam](https://github.com/aallam/)
+- [2b70d9ea5](https://github.com/algolia/api-clients-automation/commit/2b70d9ea5) fix(specs): exhaustiveFacetsCount is not deprecated for sffv ([#3089](https://github.com/algolia/api-clients-automation/pull/3089)) by [@kai687](https://github.com/kai687/)
+- [1250c2b3c](https://github.com/algolia/api-clients-automation/commit/1250c2b3c) fix(specs): simplify filter types ([#3042](https://github.com/algolia/api-clients-automation/pull/3042)) by [@millotp](https://github.com/millotp/)
+
 ## [1.9.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.8.0...1.9.0)
 
 - [b621988bc](https://github.com/algolia/api-clients-automation/commit/b621988bc) feat(specs): promote @kai687 to code owner ([#3014](https://github.com/algolia/api-clients-automation/pull/3014)) by [@Fluf22](https://github.com/Fluf22/)
