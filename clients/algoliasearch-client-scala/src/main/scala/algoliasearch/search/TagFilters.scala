@@ -44,11 +44,11 @@ sealed trait TagFilters
 
 object TagFilters {
 
-  case class SeqOfMixedSearchFilters(value: Seq[MixedSearchFilters]) extends TagFilters
+  case class SeqOfTagFilters(value: Seq[TagFilters]) extends TagFilters
   case class StringValue(value: String) extends TagFilters
 
-  def apply(value: Seq[MixedSearchFilters]): TagFilters = {
-    TagFilters.SeqOfMixedSearchFilters(value)
+  def apply(value: Seq[TagFilters]): TagFilters = {
+    TagFilters.SeqOfTagFilters(value)
   }
   def apply(value: String): TagFilters = {
     TagFilters.StringValue(value)
@@ -60,17 +60,16 @@ object TagFiltersSerializer extends Serializer[TagFilters] {
 
     case (TypeInfo(clazz, _), json) if clazz == classOf[TagFilters] =>
       json match {
-        case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
-          TagFilters.SeqOfMixedSearchFilters(value.map(_.extract))
-        case JString(value) => TagFilters.StringValue(value)
-        case _              => throw new MappingException("Can't convert " + json + " to TagFilters")
+        case JArray(value) if value.forall(_.isInstanceOf[JArray]) => TagFilters.SeqOfTagFilters(value.map(_.extract))
+        case JString(value)                                        => TagFilters.StringValue(value)
+        case _ => throw new MappingException("Can't convert " + json + " to TagFilters")
       }
   }
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: TagFilters =>
     value match {
-      case TagFilters.SeqOfMixedSearchFilters(value) => JArray(value.map(Extraction.decompose).toList)
-      case TagFilters.StringValue(value)             => JString(value)
+      case TagFilters.SeqOfTagFilters(value) => JArray(value.map(Extraction.decompose).toList)
+      case TagFilters.StringValue(value)     => JString(value)
     }
   }
 }

@@ -66,8 +66,6 @@ class SpinnerWrapper {
   }
 }
 
-export type Spinner = SpinnerStatic | SpinnerWrapper;
-
-export function createSpinner(text: string): Spinner {
+export function createSpinner(text: string): SpinnerStatic | SpinnerWrapper {
   return CI || isVerbose() ? new SpinnerStatic(text) : new SpinnerWrapper(text, text);
 }

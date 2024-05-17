@@ -21,9 +21,9 @@ import java.util.logging.Logger;
  */
 @JsonDeserialize(using = TagFilters.Deserializer.class)
 public interface TagFilters {
-  // TagFilters as List<MixedSearchFilters> wrapper.
-  static TagFilters of(List<MixedSearchFilters> value) {
-    return new ListOfMixedSearchFiltersWrapper(value);
+  // TagFilters as List<TagFilters> wrapper.
+  static TagFilters of(List<TagFilters> value) {
+    return new ListOfTagFiltersWrapper(value);
   }
 
   // TagFilters as String wrapper.
@@ -31,24 +31,24 @@ public interface TagFilters {
     return new StringWrapper(value);
   }
 
-  // TagFilters as List<MixedSearchFilters> wrapper.
-  @JsonSerialize(using = ListOfMixedSearchFiltersWrapper.Serializer.class)
-  class ListOfMixedSearchFiltersWrapper implements TagFilters {
+  // TagFilters as List<TagFilters> wrapper.
+  @JsonSerialize(using = ListOfTagFiltersWrapper.Serializer.class)
+  class ListOfTagFiltersWrapper implements TagFilters {
 
-    private final List<MixedSearchFilters> value;
+    private final List<TagFilters> value;
 
-    ListOfMixedSearchFiltersWrapper(List<MixedSearchFilters> value) {
+    ListOfTagFiltersWrapper(List<TagFilters> value) {
       this.value = value;
     }
 
-    public List<MixedSearchFilters> getValue() {
+    public List<TagFilters> getValue() {
       return value;
     }
 
-    static class Serializer extends JsonSerializer<ListOfMixedSearchFiltersWrapper> {
+    static class Serializer extends JsonSerializer<ListOfTagFiltersWrapper> {
 
       @Override
-      public void serialize(ListOfMixedSearchFiltersWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+      public void serialize(ListOfTagFiltersWrapper value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeObject(value.getValue());
       }
     }
@@ -84,16 +84,14 @@ public interface TagFilters {
     @Override
     public TagFilters deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-      // deserialize List<MixedSearchFilters>
+      // deserialize List<TagFilters>
       if (tree.isArray()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          List<MixedSearchFilters> value = parser.readValueAs(new TypeReference<List<MixedSearchFilters>>() {});
-          return new TagFilters.ListOfMixedSearchFiltersWrapper(value);
+          List<TagFilters> value = parser.readValueAs(new TypeReference<List<TagFilters>>() {});
+          return new TagFilters.ListOfTagFiltersWrapper(value);
         } catch (Exception e) {
           // deserialization failed, continue
-          LOGGER.finest(
-            "Failed to deserialize oneOf List<MixedSearchFilters> (error: " + e.getMessage() + ") (type: List<MixedSearchFilters>)"
-          );
+          LOGGER.finest("Failed to deserialize oneOf List<TagFilters> (error: " + e.getMessage() + ") (type: List<TagFilters>)");
         }
       }
       // deserialize String

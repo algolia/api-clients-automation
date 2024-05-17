@@ -64,10 +64,10 @@ export async function removeExistingCodegen({
       clientApi = `${clientName}*.php`;
       break;
     case 'python':
-      clientModel = toSnakeCase(clientName);
+      clientModel = `${toSnakeCase(clientName)}/models`;
       clientApi = toSnakeCase(clientName);
-      baseModelFolder = '';
-      baseApiFolder = '';
+      baseModelFolder = 'algoliasearch';
+      baseApiFolder = 'algoliasearch';
       break;
     case 'ruby':
       clientModel = clientName.toLowerCase();

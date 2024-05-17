@@ -4,6 +4,7 @@ package requests
 import (
 	"encoding/json"
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
@@ -1224,7 +1225,7 @@ func TestAnalytics_GetTopSearches(t *testing.T) {
 		require.NoError(t, err)
 
 		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
+		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
 	})
 }
 

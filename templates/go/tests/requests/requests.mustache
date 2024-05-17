@@ -7,6 +7,7 @@ import (
   "os"
   "testing"
   "time"
+  "strings"
 
   "github.com/kinbiko/jsonassert"
   "github.com/stretchr/testify/require"
@@ -129,7 +130,7 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}_{{#lambda.ti
       require.NoError(t, err)
 
       jaE2E := jsonassert.New(t)
-      jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
+      jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
       {{/body}}
       {{/response}}
     })

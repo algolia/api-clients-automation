@@ -245,7 +245,7 @@ final class IndexSettingsAsSearchParams {
   final bool? enableReRanking;
 
   /// One of types:
-  /// - [List<List<String>>]
+  /// - [List<List<ReRankingApplyFilter>>]
   /// - [String]
   /// - [List<String>]
   @JsonKey(name: r'reRankingApplyFilter')

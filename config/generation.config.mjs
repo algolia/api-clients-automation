@@ -90,9 +90,6 @@ export const patterns = [
   'clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/api/**',
   'clients/algoliasearch-client-kotlin/client/src/commonMain/kotlin/com/algolia/client/model/**',
 
-  'tests/output/kotlin/src/commonTest/kotlin/com/algolia/client/**',
-  'tests/output/kotlin/src/commonTest/kotlin/com/algolia/requests/**',
-
   // PHP
   '!clients/algoliasearch-client-php/**',
   'clients/algoliasearch-client-php/lib/Api/*',
@@ -116,6 +113,7 @@ export const patterns = [
   'clients/algoliasearch-client-python/.gitignore',
 
   'tests/output/python/requirements.txt',
+  '!tests/output/python/**/__init__.py',
 
   // Ruby
   '!snippets/ruby/Gemfile',

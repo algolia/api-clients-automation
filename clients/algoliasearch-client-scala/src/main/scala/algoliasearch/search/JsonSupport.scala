@@ -77,7 +77,6 @@ object JsonSupport {
     FacetFiltersSerializer :+
     HighlightResultSerializer :+
     IgnorePluralsSerializer :+
-    MixedSearchFiltersSerializer :+
     NumericFiltersSerializer :+
     OptionalFiltersSerializer :+
     PromoteSerializer :+

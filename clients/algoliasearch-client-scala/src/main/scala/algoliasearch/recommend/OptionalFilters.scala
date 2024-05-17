@@ -41,11 +41,11 @@ sealed trait OptionalFilters
 
 object OptionalFilters {
 
-  case class SeqOfMixedSearchFilters(value: Seq[MixedSearchFilters]) extends OptionalFilters
+  case class SeqOfOptionalFilters(value: Seq[OptionalFilters]) extends OptionalFilters
   case class StringValue(value: String) extends OptionalFilters
 
-  def apply(value: Seq[MixedSearchFilters]): OptionalFilters = {
-    OptionalFilters.SeqOfMixedSearchFilters(value)
+  def apply(value: Seq[OptionalFilters]): OptionalFilters = {
+    OptionalFilters.SeqOfOptionalFilters(value)
   }
   def apply(value: String): OptionalFilters = {
     OptionalFilters.StringValue(value)
@@ -58,7 +58,7 @@ object OptionalFiltersSerializer extends Serializer[OptionalFilters] {
     case (TypeInfo(clazz, _), json) if clazz == classOf[OptionalFilters] =>
       json match {
         case JArray(value) if value.forall(_.isInstanceOf[JArray]) =>
-          OptionalFilters.SeqOfMixedSearchFilters(value.map(_.extract))
+          OptionalFilters.SeqOfOptionalFilters(value.map(_.extract))
         case JString(value) => OptionalFilters.StringValue(value)
         case _              => throw new MappingException("Can't convert " + json + " to OptionalFilters")
       }
@@ -66,8 +66,8 @@ object OptionalFiltersSerializer extends Serializer[OptionalFilters] {
 
   override def serialize(implicit format: Formats): PartialFunction[Any, JValue] = { case value: OptionalFilters =>
     value match {
-      case OptionalFilters.SeqOfMixedSearchFilters(value) => JArray(value.map(Extraction.decompose).toList)
-      case OptionalFilters.StringValue(value)             => JString(value)
+      case OptionalFilters.SeqOfOptionalFilters(value) => JArray(value.map(Extraction.decompose).toList)
+      case OptionalFilters.StringValue(value)          => JString(value)
     }
   }
 }

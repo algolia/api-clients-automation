@@ -109,28 +109,28 @@ final class FallbackParams {
   final String? filters;
 
   /// One of types:
-  /// - [List<List<String>>]
+  /// - [List<List<FacetFilters>>]
   /// - [String]
   /// - [List<String>]
   @JsonKey(name: r'facetFilters')
   final dynamic facetFilters;
 
   /// One of types:
-  /// - [List<List<String>>]
   /// - [String]
+  /// - [List<List<OptionalFilters>>]
   /// - [List<String>]
   @JsonKey(name: r'optionalFilters')
   final dynamic optionalFilters;
 
   /// One of types:
-  /// - [List<List<String>>]
+  /// - [List<List<NumericFilters>>]
   /// - [String]
   /// - [List<String>]
   @JsonKey(name: r'numericFilters')
   final dynamic numericFilters;
 
   /// One of types:
-  /// - [List<List<String>>]
+  /// - [List<List<TagFilters>>]
   /// - [String]
   /// - [List<String>]
   @JsonKey(name: r'tagFilters')
@@ -427,7 +427,7 @@ final class FallbackParams {
   final bool? enableReRanking;
 
   /// One of types:
-  /// - [List<List<String>>]
+  /// - [List<List<ReRankingApplyFilter>>]
   /// - [String]
   /// - [List<String>]
   @JsonKey(name: r'reRankingApplyFilter')
@@ -594,7 +594,7 @@ final class FallbackParams {
       attributeCriteriaComputedByMinProximity.hashCode +
       renderingContent.hashCode +
       enableReRanking.hashCode +
-      (reRankingApplyFilter == null ? 0 : reRankingApplyFilter.hashCode);
+      reRankingApplyFilter.hashCode;
 
   factory FallbackParams.fromJson(Map<String, dynamic> json) =>
       _$FallbackParamsFromJson(json);
