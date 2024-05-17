@@ -35,18 +35,16 @@ final class ClientOptions {
   final Iterable<Interceptor>? interceptors;
 
   /// Constructs a [ClientOptions] instance with the provided parameters.
-  const ClientOptions({
-    this.connectTimeout = const Duration(seconds: 2),
-    this.writeTimeout = const Duration(seconds: 30),
-    this.readTimeout = const Duration(seconds: 5),
-    this.hosts,
-    this.headers,
-    this.agentSegments,
-    this.requester,
-    this.logger,
-    this.interceptors
-  });
-
+  const ClientOptions(
+      {this.connectTimeout = const Duration(seconds: 2),
+      this.writeTimeout = const Duration(seconds: 30),
+      this.readTimeout = const Duration(seconds: 5),
+      this.hosts,
+      this.headers,
+      this.agentSegments,
+      this.requester,
+      this.logger,
+      this.interceptors});
 
   @override
   bool operator ==(Object other) =>
