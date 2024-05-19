@@ -3154,7 +3154,7 @@ __metadata:
     "@types/rollup-plugin-node-globals": "npm:1.4.4"
     "@types/semver": "npm:7.5.8"
     bundlesize2: "npm:0.0.31"
-    execa: "npm:9.0.2"
+    execa: "npm:9.1.0"
     lerna: "npm:8.0.0"
     nx: "npm:19.0.4"
     rollup: "npm:4.17.2"
@@ -4720,9 +4720,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"execa@npm:9.0.2":
-  version: 9.0.2
-  resolution: "execa@npm:9.0.2"
+"execa@npm:9.1.0":
+  version: 9.1.0
+  resolution: "execa@npm:9.1.0"
   dependencies:
     "@sindresorhus/merge-streams": "npm:^4.0.0"
     cross-spawn: "npm:^7.0.3"
@@ -4736,7 +4736,7 @@ __metadata:
     signal-exit: "npm:^4.1.0"
     strip-final-newline: "npm:^4.0.0"
     yoctocolors: "npm:^2.0.0"
-  checksum: 7f322e145dd49be03a1859fd9a20a81e0d7f29d663bd5073677811915fdfb2e92e7c3acc1be68d45ab2142874f05895c522a6d4498d9c13f74375f5969d9cc7b
+  checksum: a764df0bfa1c5d5df8cc54f8aaf2dd1757389e2c80f2aa3b77cc4d3bebe5b6fcade904469877149af8afba0d305a86e04102934bd7e25c4d07c96688ee77426c
   languageName: node
   linkType: hard
 
