@@ -28,7 +28,7 @@
     "website:build": "bash scripts/website/build.sh"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "7.24.5",
+    "@babel/eslint-parser": "7.24.6",
     "@openapitools/openapi-generator-cli": "2.13.4",
     "@redocly/cli": "1.12.2",
     "@typescript-eslint/eslint-plugin": "7.9.0",
