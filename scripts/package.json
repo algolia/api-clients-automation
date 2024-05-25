@@ -47,7 +47,7 @@
     "fs-extra": "11.2.0",
     "js-yaml": "4.1.0",
     "knip": "5.16.0",
-    "micromatch": "4.0.5",
+    "micromatch": "4.0.7",
     "semver": "7.6.2",
     "spinnies": "0.5.1",
     "tsc-alias": "1.8.10",
