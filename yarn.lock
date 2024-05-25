@@ -81,7 +81,7 @@ __metadata:
   dependencies:
     "@babel/eslint-parser": "npm:7.24.6"
     "@openapitools/openapi-generator-cli": "npm:2.13.4"
-    "@redocly/cli": "npm:1.12.2"
+    "@redocly/cli": "npm:1.13.0"
     "@typescript-eslint/eslint-plugin": "npm:7.9.0"
     "@typescript-eslint/parser": "npm:7.9.0"
     eslint: "npm:8.57.0"
@@ -4011,11 +4011,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/cli@npm:1.12.2":
-  version: 1.12.2
-  resolution: "@redocly/cli@npm:1.12.2"
+"@redocly/cli@npm:1.13.0":
+  version: 1.13.0
+  resolution: "@redocly/cli@npm:1.13.0"
   dependencies:
-    "@redocly/openapi-core": "npm:1.12.2"
+    "@redocly/openapi-core": "npm:1.13.0"
     abort-controller: "npm:^3.0.0"
     chokidar: "npm:^3.5.1"
     colorette: "npm:^1.2.0"
@@ -4036,7 +4036,7 @@ __metadata:
   bin:
     openapi: bin/cli.js
     redocly: bin/cli.js
-  checksum: 9e04dca2f31b7bfd826b9660d05c5565387e2986898015367f978cc8eba93e57f192030942914d76961678084adc9094aae76d68b747c2a6b1ac4a66615503c8
+  checksum: 353192b2f65d16ef991c5b2575872fae0caa4b715d02e1db67a2cf9c5c9d69ef82fe6b6642b69bbabf4d89e56d41f6fe694d600c8974cea79754da84051d431f
   languageName: node
   linkType: hard
 
@@ -4047,7 +4047,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/openapi-core@npm:1.12.2, @redocly/openapi-core@npm:^1.4.0":
+"@redocly/openapi-core@npm:1.13.0":
+  version: 1.13.0
+  resolution: "@redocly/openapi-core@npm:1.13.0"
+  dependencies:
+    "@redocly/ajv": "npm:^8.11.0"
+    "@redocly/config": "npm:^0.5.0"
+    colorette: "npm:^1.2.0"
+    js-levenshtein: "npm:^1.1.6"
+    js-yaml: "npm:^4.1.0"
+    lodash.isequal: "npm:^4.5.0"
+    minimatch: "npm:^5.0.1"
+    node-fetch: "npm:^2.6.1"
+    pluralize: "npm:^8.0.0"
+    yaml-ast-parser: "npm:0.0.43"
+  checksum: 9a9a8c053ea13cde72de901e9c006cbdb9d072aecd6ca308b15cb6f4a0af6e16a86e92914d4b799096501d1b5aba133a9cfd9d0280b7f9cf021d06903499130c
+  languageName: node
+  linkType: hard
+
+"@redocly/openapi-core@npm:^1.4.0":
   version: 1.12.2
   resolution: "@redocly/openapi-core@npm:1.12.2"
   dependencies:
