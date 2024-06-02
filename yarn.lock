@@ -4662,12 +4662,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:20.12.12":
+"@types/node@npm:*":
   version: 20.12.12
   resolution: "@types/node@npm:20.12.12"
   dependencies:
     undici-types: "npm:~5.26.4"
   checksum: e3945da0a3017bdc1f88f15bdfb823f526b2a717bd58d4640082d6eb0bd2794b5c99bfb914b9e9324ec116dce36066990353ed1c777e8a7b0641f772575793c4
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:20.14.0":
+  version: 20.14.0
+  resolution: "@types/node@npm:20.14.0"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: 49b332fbf8aee4dc4f61cc1f1f6e130632510f795dd7b274e55894516feaf4bec8a3d13ea764e2443e340a64ce9bbeb006d14513bf6ccdd4f21161eccc7f311e
   languageName: node
   linkType: hard
 
@@ -12427,7 +12436,7 @@ __metadata:
     "@types/fs-extra": "npm:11.0.4"
     "@types/js-yaml": "npm:4.0.9"
     "@types/micromatch": "npm:4.0.7"
-    "@types/node": "npm:20.12.12"
+    "@types/node": "npm:20.14.0"
     "@types/semver": "npm:7.5.8"
     "@types/spinnies": "npm:0.5.3"
     "@vercel/ncc": "npm:0.38.1"
