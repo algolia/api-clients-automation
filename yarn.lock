@@ -9921,9 +9921,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:5.16.0":
-  version: 5.16.0
-  resolution: "knip@npm:5.16.0"
+"knip@npm:5.17.3":
+  version: 5.17.3
+  resolution: "knip@npm:5.17.3"
   dependencies:
     "@ericcornelissen/bash-parser": "npm:0.5.2"
     "@nodelib/fs.walk": "npm:2.0.0"
@@ -9949,7 +9949,7 @@ __metadata:
   bin:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
-  checksum: 526483d9aadfae1b1513449caaa72fe16ee61cbd6b65cae49825cf0b101a7819eff468fb4b04ed378bf57940db3581b520f5a2db951bfb710781c14c116cb65e
+  checksum: 8da79c4cc957afd90bccc7f5cbbd4275de3cf9b7a3d23be6ce951a5092cd00de3ed8ddd284017d30f5931cff6ee9c91dd6824a41acb6d4425110da26482ac609
   languageName: node
   linkType: hard
 
@@ -12442,7 +12442,7 @@ __metadata:
     folder-hash: "npm:4.0.4"
     fs-extra: "npm:11.2.0"
     js-yaml: "npm:4.1.0"
-    knip: "npm:5.16.0"
+    knip: "npm:5.17.3"
     micromatch: "npm:4.0.7"
     semver: "npm:7.6.2"
     spinnies: "npm:0.5.1"
