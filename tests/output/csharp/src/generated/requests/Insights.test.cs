@@ -602,7 +602,7 @@ public class InsightsClientRequestTests
               Index = "products",
               UserToken = "user-123456",
               AuthenticatedUserToken = "user-123456",
-              Timestamp = 1716163200000L,
+              Timestamp = 1717459200000L,
               ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
               QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
             }
@@ -615,7 +615,7 @@ public class InsightsClientRequestTests
               Index = "products",
               UserToken = "user-123456",
               AuthenticatedUserToken = "user-123456",
-              Timestamp = 1716163200000L,
+              Timestamp = 1717459200000L,
               ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
             }
           )
@@ -627,7 +627,7 @@ public class InsightsClientRequestTests
     Assert.Equal("/1/events", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1716163200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1716163200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
+      "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1717459200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1717459200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -648,7 +648,7 @@ public class InsightsClientRequestTests
                 Index = "products",
                 UserToken = "user-123456",
                 AuthenticatedUserToken = "user-123456",
-                Timestamp = 1716163200000L,
+                Timestamp = 1717459200000L,
                 ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
                 QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
               }
@@ -661,7 +661,7 @@ public class InsightsClientRequestTests
                 Index = "products",
                 UserToken = "user-123456",
                 AuthenticatedUserToken = "user-123456",
-                Timestamp = 1716163200000L,
+                Timestamp = 1717459200000L,
                 ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
               }
             )
