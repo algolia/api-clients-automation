@@ -52,6 +52,7 @@
     "prettier-plugin-java": "2.5.0",
     "renovate-config-algolia": "2.1.10"
   },
+  "packageManager": "yarn@4.2.2",
   "engines": {
     "node": "^20.0.0",
     "yarn": "^4.0.0"
