@@ -66,7 +66,7 @@ Once you've successfully built and mounted the Docker image, you can now play wi
 
 :::caution
 
-You should run the commands via the [Docker container](#mounting-the-docker-image) to avoid issues.
+You should run the commands via the [Docker container](#mounting-the-docker-images) to avoid issues.
 
 :::
 

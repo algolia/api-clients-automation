@@ -25,7 +25,7 @@ Generated code in production can be find on repository of the clients.
 
 ## Usage
 
-See [the installation](/docs/clients/installation) page.
+See [the usage](/docs/clients/usage) page.
 
 ## Example
 
