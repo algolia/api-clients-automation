@@ -1,3 +1,7 @@
+## [3.0.0-beta.28](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.0.0-beta.27...3.0.0-beta.28)
+
+- [cdc866549](https://github.com/algolia/api-clients-automation/commit/cdc866549) fix(specs): dont mention index api keys ([#3117](https://github.com/algolia/api-clients-automation/pull/3117)) by [@kai687](https://github.com/kai687/)
+
 ## [3.0.0-beta.27](https://github.com/algolia/algoliasearch-client-kotlin/compare/3.0.0-beta.26...3.0.0-beta.27)
 
 - [09cf06739](https://github.com/algolia/api-clients-automation/commit/09cf06739) fix(kotlin): ci release workflow ([#3091](https://github.com/algolia/api-clients-automation/pull/3091)) by [@Fluf22](https://github.com/Fluf22/)

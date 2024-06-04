@@ -1,3 +1,7 @@
+## [4.0.0b18](https://github.com/algolia/algoliasearch-client-python/compare/4.0.0b17...4.0.0b18)
+
+- [cdc866549](https://github.com/algolia/api-clients-automation/commit/cdc866549) fix(specs): dont mention index api keys ([#3117](https://github.com/algolia/api-clients-automation/pull/3117)) by [@kai687](https://github.com/kai687/)
+
 ## [4.0.0b17](https://github.com/algolia/algoliasearch-client-python/compare/4.0.0b16...4.0.0b17)
 
 - [2b70d9ea5](https://github.com/algolia/api-clients-automation/commit/2b70d9ea5) fix(specs): exhaustiveFacetsCount is not deprecated for sffv ([#3089](https://github.com/algolia/api-clients-automation/pull/3089)) by [@kai687](https://github.com/kai687/)
