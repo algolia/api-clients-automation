@@ -59,7 +59,7 @@ const sidebars = {
       label: 'Getting Started',
       collapsed: false,
       items: [
-        'clients/installation',
+        'clients/usage',
         {
           type: 'category',
           label: 'Migration guide',
@@ -69,13 +69,8 @@ const sidebars = {
             id: 'clients/migration-guides/index',
           },
           items: [
-            'clients/migration-guides/go',
-            'clients/migration-guides/java',
             'clients/migration-guides/javascript',
-            'clients/migration-guides/kotlin',
             'clients/migration-guides/php',
-            'clients/migration-guides/python',
-            'clients/migration-guides/csharp',
           ],
         },
       ],

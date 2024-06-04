@@ -1,5 +1,5 @@
 ---
-title: Installation
+title: Usage
 ---
 
 :::warning
@@ -7,6 +7,8 @@ title: Installation
 The amount of changes in this new version is significant. **If you are upgrading for v4, you should thoroughly test your application before deploying to production.**
 
 :::
+
+## Installation
 
 import { TabsLanguage } from '../../src/components/TabsLanguage';
 import TabItem from '@theme/TabItem';
@@ -22,17 +24,17 @@ To get started, you first need to install `algoliasearch` (or any other availabl
 All of our clients comes with type definition, and are available for both `browser` and `node` environments.
 
 ```bash
-yarn add algoliasearch@alpha
+yarn add algoliasearch@beta
 # or
-npm install algoliasearch@alpha
+npm install algoliasearch@beta
 ```
 
 Or use a specific package:
 
 ```bash
-yarn add @algolia/client-search@alpha
+yarn add @algolia/client-search@beta
 # or
-npm install @algolia/client-search@alpha
+npm install @algolia/client-search@beta
 ```
 
 **Without a package manager**
@@ -40,7 +42,7 @@ npm install @algolia/client-search@alpha
 Add the following JavaScript snippet to the `<head>` of your website:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/algoliasearch.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@beta/dist/algoliasearch.umd.min.js"></script>
 ```
 
 </TabItem>
@@ -58,14 +60,13 @@ pip install --upgrade 'algoliasearch>=4.0,<5.0'
 First, install Algolia PHP API Client via the composer package manager:
 
 ```bash
-composer require algolia/algoliasearch-client-php
+composer require algolia/algoliasearch-client-php "^4.0@beta"
 ```
 
 </TabItem>
 <TabItem value="java">
 
 To get started, add the <Link href={`https://oss.sonatype.org/service/local/repositories/releases/content/com/algolia/algoliasearch/${versions.java}/algoliasearch-${versions.java}.jar`}>algoliasearch-client-java</Link> dependency to your project, either with [Maven](https://maven.apache.org/):
-
 
 <CodeBlock language="xml">
 {`<dependency>
@@ -102,9 +103,9 @@ dependencies {
 
 2. Choose and add to your dependencies one of [Ktor's engines](https://ktor.io/docs/http-client-engines.html).
 
-  - **BOM**
+**BOM**
 
-    Alternatively, you can use `algoliasearch-client-kotlin-bom`  by adding the following dependency to your `build.gradle` file
+Alternatively, you can use `algoliasearch-client-kotlin-bom`  by adding the following dependency to your `build.gradle` file
 
 <CodeBlock language="groovy">
 {`dependencies {
@@ -133,27 +134,26 @@ go get github.com/algolia/algoliasearch-client-go/v4
 </TabItem>
 
 <TabItem value="csharp">
-  To get started, add the <Link href={`https://www.nuget.org/packages/Algolia.Search/${versions.csharp}`}>Algolia.Search</Link> Nugget dependency to your project:
+To get started, first install the `Algolia.Search` client.
 
-  With dotnet CLI:
+You can get the last version of the client from [NuGet](https://www.nuget.org/packages/Algolia.Search/).
 
-  <CodeBlock language="bash">
-    {`dotnet add package Algolia.Search --version ${versions.csharp}`}
-  </CodeBlock>
+If you are using the .NET CLI, you can install the package using the following command:
 
-  Or directly in your `.csproj` file:
+```bash
+dotnet add package Algolia.Search --version <The version you want to install>
+```
 
-  <CodeBlock language="xml">
-  {`<ItemGroup>
-    <PackageReference Include="Algolia.Search" Version=${versions.csharp} />
-</ItemGroup>`}
-  </CodeBlock>
+Or directly in your `.csproj` file:
+```xml
+<PackageReference Include="Algolia.Search" Version=${versions.csharp} />
+```
 </TabItem>
 
 
 </TabsLanguage>
 
-## Using the client
+## Example
 
 You can now import the Algolia API client in your project and play with it.
 
@@ -438,23 +438,13 @@ func main() {
 ```csharp
 using Algolia.Search.Clients;
 using Algolia.Search.Models.Search;
-using Algolia.Search.Utils;
 
-// Instantiate the client
 var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 
-// Add a new record to your Algolia index
-var saveResponse = await client.SaveObjectAsync("<YOUR_INDEX_NAME>",
-  new { objectID = "123", firstName = "john", lastname = "doe" });
-
-// Wait for the task to be processed on the Algolia side (optional)
-await client.WaitForTaskAsync("<YOUR_INDEX_NAME>", saveResponse.TaskID);
-
-// Fetch search results
-var request = new SearchQuery(new SearchForHits("<YOUR_INDEX_NAME>") { Query = "john" });
-var response = await client.SearchAsync<Hit>(new SearchMethodParams(new List<SearchQuery> { request }));
-
-Console.WriteLine(response);
+client.Search<YOUR_RECORD_TYPE_CLASS>(new SearchMethodParams(new List<SearchQuery>
+{
+  new(new SearchForHits("<YOUR_INDEX>") { Query = "<YOUR_QUERY>" })
+}));
 ```
 
 </TabItem>

@@ -51,27 +51,54 @@ const searchResults = await client.search({
 ```py
 from algoliasearch.search.client import SearchClient
 
-client = SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
 
-searchResults = await client.search(search_method_params={"requests": [{"indexName": "nvim"}]})
+# using a raw dict
+
+search_resp = await client.search(search_method_params={"requests": [{"indexName": "nvim"}]})
+
+# using the given models
+
+from algoliasearch.search.models.search_method_params import SearchMethodParams
+from algoliasearch.search.models.search_for_hits import SearchForHits
+from algoliasearch.search.models.search_query import SearchQuery
+
+search_resp = await client.search(
+    search_method_params=SearchMethodParams(
+        requests=[
+            SearchQuery(SearchForHits(index_name="nvim")),
+        ],
+    ),
+)
+
+print(search_resp.to_json())
 ```
 
 </TabItem>
 <TabItem value="php">
 
 ```php
-$client = Algolia\AlgoliaSearch\Api\SearchClient::create(
+use Algolia\AlgoliaSearch\Api\SearchClient;
+
+$client = SearchClient::create(
     '<YOUR_APP_ID>',
     '<YOUR_API_KEY>'
 );
 
-$client->search([
+// only query string
+$searchResults = $client->search([
+    'requests' => [
+        ['indexName' => '<YOUR_INDEX_NAME>', 'query' =>'<YOUR_QUERY>'],
+    ],
+]);
+
+$searchResults2 = $client->search([
     'requests' => [
         [
-            'indexName' => '<YOUR_INDEX_NAME>',
+            'indexName' => '<YOUR_INDEX_NAME>', 
             'query' => '<YOUR_QUERY>',
             'attributesToRetrieve' => ['firstname', 'lastname'],
-            'hitsPerPage': 50,
+            'hitsPerPage' => 50,
         ],
     ],
 ]);
@@ -102,6 +129,51 @@ client.search(
 ```
 
 </TabItem>
+<TabItem value="kotlin">
+
+```kotlin
+import com.algolia.client.api.SearchClient
+import com.algolia.client.model.search.*
+
+val client = SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>")
+val response = client.search(
+    SearchMethodParams(
+        requests = listOf(SearchForHits(indexName = "<YOUR_INDEX_NAME>", query = "<YOUR_QUERY>"))
+    )
+)
+```
+
+</TabItem>
+<TabItem value="go">
+
+```go
+import (
+  "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
+)
+
+indexName := "<INDEX_NAME>"
+appID := "<APPLICATION_ID>"
+apiKey := "<API_KEY>"
+
+searchClient, _ := search.NewClient(appID, apiKey)
+
+results, err := searchClient.Search(
+  searchClient.NewApiSearchRequest(
+    search.NewSearchMethodParams(
+      []search.SearchQuery{
+        search.SearchForHitsAsSearchQuery(
+          search.NewSearchForHits(
+            indexName,
+            search.WithSearchForHitsQuery("<YOUR_QUERY>"),
+          ),
+        ),
+      },
+    ),
+  ),
+)
+```
+
+</TabItem>
 <TabItem value="csharp">
 
 ```csharp
@@ -110,14 +182,10 @@ using Algolia.Search.Models.Search;
 
 var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 
-client.Search<Hit>(new SearchMethodParams([
-  new SearchQuery(new SearchForHits("<YOUR_INDEX_NAME>")
-  {
-    Query = "<YOUR_QUERY>",
-    AttributesToRetrieve = ["firstname", "lastname"],
-    HitsPerPage = 50
-  })
-]));
+client.Search<YOUR_RECORD_TYPE_CLASS>(new SearchMethodParams(new List<SearchQuery>
+{
+  new(new SearchForHits("<YOUR_INDEX>") { Query = "<YOUR_QUERY>" })
+}));
 ```
 
 </TabItem>
@@ -759,10 +827,5 @@ foreach (var synonym in browseSynonyms)
 
 You can find specific client breaking changes in their own section:
 
-- [Go migration guide](/docs/clients/migration-guides/go)
-- [Java migration guide](/docs/clients/migration-guides/java)
 - [JavaScript migration guide](/docs/clients/migration-guides/javascript)
-- [Kotlin migration guide](/docs/clients/migration-guides/kotlin)
 - [PHP migration guide](/docs/clients/migration-guides/php)
-- [Python migration guide](/docs/clients/migration-guides/python)
-- [C# migration guide](/docs/clients/migration-guides/csharp)
