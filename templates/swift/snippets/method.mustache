@@ -25,7 +25,7 @@ final class {{client}}Snippet {
   {{/hasRequestOptions}}
 
     // Call the API
-    let _{{#isGeneric}}: {{{returnType}}}<Hit>{{/isGeneric}} = try await client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, requestOptions: requestOptions{{/hasRequestOptions}})
+    let response{{#isGeneric}}: {{{returnType}}}<Hit>{{/isGeneric}} = try await client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, requestOptions: requestOptions{{/hasRequestOptions}})
     // SEPARATOR<
   }
   {{/snippet}}
