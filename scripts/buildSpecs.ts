@@ -42,15 +42,16 @@ async function transformSnippetsToCodeSamples(clientName: string): Promise<Snipp
       'utf8',
     );
 
+    const importMatch = snippetFileContent.match(/>IMPORT\n([\s\S]*?)\n.*IMPORT</);
+    if (importMatch) {
+      snippetSamples[gen.language].import = importMatch[1];
+    }
+
     // iterate over every matches (operationId) and store it in the hashmap for later use
     for (const match of snippetFileContent.matchAll(/>SEPARATOR (.+)\n([\s\S]*?)SEPARATOR</g)) {
       const lines: string[] = match[0].split('\n').slice(1, -1);
       if (!lines.length) {
         throw new Error(`No snippet found for ${gen.language} ${gen.client}`);
-      }
-
-      if (!snippetSamples[gen.language]) {
-        snippetSamples[gen.language] = {};
       }
 
       snippetSamples[gen.language][match[1]] = '';
@@ -95,6 +96,13 @@ async function transformBundle({
   const bundledSpec = yaml.load(await fsp.readFile(bundledPath, 'utf8')) as Spec;
   const tagsDefinitions = bundledSpec.tags;
   const snippetSamples = docs ? await transformSnippetsToCodeSamples(clientName) : {};
+
+  if (docs) {
+    await fsp.writeFile(
+      toAbsolutePath(`website/src/generated/${clientName}-snippets.js`),
+      `export const snippets = ${JSON.stringify(snippetSamples, null, 2)}`,
+    );
+  }
 
   for (const [pathKey, pathMethods] of Object.entries(bundledSpec.paths)) {
     for (const [method, specMethod] of Object.entries(pathMethods)) {
