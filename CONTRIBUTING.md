@@ -2,9 +2,9 @@
 
 Welcome to the contributing guide for the api-clients-automation repository!
 
-You can find a lot more information about how to contribute [on our documentation](https://api-clients-automation.netlify.app/docs/contributing/introduction/)
+Please read [our contributing guides](https://api-clients-automation.netlify.app/docs/contributing/introduction/) for advanced usage.
 
-If this guide does not contain what you are looking for and thus prevents you from contributing, don't hesitate to [open an issue](https://github.com/algolia/api-clients-automation/issues/new/choose).
+If you can't find what you are looking for, please [open an issue](https://github.com/algolia/api-clients-automation/issues/new/choose).
 
 ## Reporting an issue
 
@@ -19,16 +19,8 @@ Another element that will help us go faster at solving the issue is to provide a
 For any code contribution, you need to:
 
 - Fork and clone the project
-- Create a new branch for what you want to solve (fix/_issue-number_, feat/_name-of-the-feature_)
 - Make your changes
 - Open a pull request
-
-Then:
-
-- A team member will review the pull request
-- Automatic checks will run
-
-When every check is green and a team member approves, your contribution is merged! 🚀
 
 ## Commit conventions
 
@@ -59,6 +51,6 @@ Some examples of valid commit messages (used as first lines):
 
 To run this project, you will need:
 
-- Node.js ≥ 18 – [nvm](https://github.com/creationix/nvm#install-script) is recommended
+- Node.js ≥ 20 – [nvm](https://github.com/creationix/nvm#install-script) is recommended
 - [Yarn](https://yarnpkg.com)
 - [Docker](https://docs.docker.com/desktop/install/mac-install/)
