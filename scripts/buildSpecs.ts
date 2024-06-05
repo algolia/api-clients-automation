@@ -22,6 +22,25 @@ function getCodeSampleLabel(language: Language): CodeSamples['label'] {
   }
 }
 
+// Iterates over the snippet samples and sanitize the data to only keep the method part in order to use it in the guides.
+function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSamples): string {
+  for (const [language, operationWithSample] of Object.entries(snippetSamples)) {
+    for (const [operation, sample] of Object.entries(operationWithSample)) {
+      const sampleMatch = sample.match(
+        /.*Initialize the client\n(.*)(.|\n*)(.*Call the API\n)((.|\n)*)/,
+      );
+      if (sampleMatch) {
+        if (!('init' in snippetSamples[language])) {
+          snippetSamples[language].init = sampleMatch[1];
+        }
+        snippetSamples[language][operation] = sampleMatch[4];
+      }
+    }
+  }
+
+  return JSON.stringify(snippetSamples, null, 2);
+}
+
 // For a given `clientName`, reads the matching snippet file for every available clients and builds an hashmap of snippets per operationId per language.
 async function transformSnippetsToCodeSamples(clientName: string): Promise<SnippetSamples> {
   const snippetSamples = Object.values(GENERATORS).reduce(
@@ -95,12 +114,14 @@ async function transformBundle({
 
   const bundledSpec = yaml.load(await fsp.readFile(bundledPath, 'utf8')) as Spec;
   const tagsDefinitions = bundledSpec.tags;
-  const snippetSamples = docs ? await transformSnippetsToCodeSamples(clientName) : {};
+  const snippetSamples = docs
+    ? await transformSnippetsToCodeSamples(clientName)
+    : ({} as SnippetSamples);
 
   if (docs) {
     await fsp.writeFile(
       toAbsolutePath(`website/src/generated/${clientName}-snippets.js`),
-      `export const snippets = ${JSON.stringify(snippetSamples, null, 2)}`,
+      `export const snippets = ${transformCodeSamplesToGuideMethods(JSON.parse(JSON.stringify(snippetSamples)))}`,
     );
   }
 

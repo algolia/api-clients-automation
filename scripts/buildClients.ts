@@ -53,7 +53,6 @@ export async function buildClients(generators: Generator[]): Promise<void> {
   const generatorsMap = generators.reduce(
     (map, gen) => {
       if (!(gen.language in map)) {
-        // eslint-disable-next-line no-param-reassign
         map[gen.language] = [];
       }
 
