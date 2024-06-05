@@ -26,14 +26,18 @@ function getCodeSampleLabel(language: Language): CodeSamples['label'] {
 function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSamples): string {
   for (const [language, operationWithSample] of Object.entries(snippetSamples)) {
     for (const [operation, sample] of Object.entries(operationWithSample)) {
+      if (operation === 'import') {
+        continue;
+      }
+
       const sampleMatch = sample.match(
-        /.*Initialize the client\n(.*)(.|\n*)(.*Call the API\n)((.|\n)*)/,
+        /.*Initialize the client\n(.*)((.|\n)*)(.*Call the API\n)((.|\n)*)/,
       );
       if (sampleMatch) {
         if (!('init' in snippetSamples[language])) {
-          snippetSamples[language].init = sampleMatch[1];
+          snippetSamples[language].init = sampleMatch[1].replace(/\n$/, '');
         }
-        snippetSamples[language][operation] = sampleMatch[4];
+        snippetSamples[language][operation] = sampleMatch[5].replace(/\n$/, '');
       }
     }
   }
@@ -63,7 +67,7 @@ async function transformSnippetsToCodeSamples(clientName: string): Promise<Snipp
 
     const importMatch = snippetFileContent.match(/>IMPORT\n([\s\S]*?)\n.*IMPORT</);
     if (importMatch) {
-      snippetSamples[gen.language].import = importMatch[1];
+      snippetSamples[gen.language].import = importMatch[1].replace(/\n$/, '');
     }
 
     // iterate over every matches (operationId) and store it in the hashmap for later use
