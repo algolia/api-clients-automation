@@ -13,8 +13,8 @@ UserHit _$UserHitFromJson(Map<String, dynamic> json) => $checkedCreate(
         final val = UserHit(
           userID: $checkedConvert('userID', (v) => v as String),
           clusterName: $checkedConvert('clusterName', (v) => v as String),
-          nbRecords: $checkedConvert('nbRecords', (v) => v as int),
-          dataSize: $checkedConvert('dataSize', (v) => v as int),
+          nbRecords: $checkedConvert('nbRecords', (v) => (v as num).toInt()),
+          dataSize: $checkedConvert('dataSize', (v) => (v as num).toInt()),
           objectID: $checkedConvert('objectID', (v) => v as String),
           highlightResult: $checkedConvert('_highlightResult',
               (v) => UserHighlightResult.fromJson(v as Map<String, dynamic>)),

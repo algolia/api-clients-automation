@@ -16,7 +16,7 @@ final class BaseRecommendRequest {
     this.queryParameters,
   });
 
-  /// Index name.
+  /// Index name (case-sensitive).
   @JsonKey(name: r'indexName')
   final String indexName;
 

@@ -4,7 +4,7 @@ get:
   operationId: getABTest
   x-acl:
     - analytics
-  summary: Retrieve A/B test details.
+  summary: Retrieve A/B test details
   description: Retrieves the details for an A/B test by its ID.
   parameters:
     - $ref: '../common/parameters.yml#/ID'
@@ -37,7 +37,7 @@ delete:
   operationId: deleteABTest
   x-acl:
     - editSettings
-  summary: Delete an A/B test.
+  summary: Delete an A/B test
   description: Deletes an A/B test by its ID.
   parameters:
     - $ref: '../common/parameters.yml#/ID'

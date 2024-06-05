@@ -7,11 +7,11 @@
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 
 apic() {
-  (cd scripts && NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js $*)
+  (cd $ROOT/scripts && NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js $*)
 }
 
 apicb() {
-  (cd scripts && yarn build:cli && NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js $*)
+  (cd $ROOT/scripts && yarn build:cli && NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js $*)
 }
 
 export apic

@@ -12,7 +12,7 @@ ObjectData _$ObjectDataFromJson(Map<String, dynamic> json) => $checkedCreate(
       ($checkedConvert) {
         final val = ObjectData(
           price: $checkedConvert('price', (v) => v),
-          quantity: $checkedConvert('quantity', (v) => v as int?),
+          quantity: $checkedConvert('quantity', (v) => (v as num?)?.toInt()),
           discount: $checkedConvert('discount', (v) => v),
         );
         return val;

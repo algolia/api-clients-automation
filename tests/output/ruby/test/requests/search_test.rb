@@ -1477,7 +1477,7 @@ class TestSearchClient < Test::Unit::TestCase
         strategy: 'stopIfEnoughMatches'
       )
     )
-    expected_body = JSON.parse('{"results":[{"exhaustiveFacetsCount":true,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}')
+    expected_body = JSON.parse('{"results":[{"exhaustiveFacetsCount":true,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"visual studio","value":"visual studio"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}')
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
@@ -1597,7 +1597,7 @@ class TestSearchClient < Test::Unit::TestCase
           ),
           SearchForHits.new(
             index_name: "theIndexName",
-            facet_filters: ["mySearch:filters", ["mySearch:filters"]],
+            facet_filters: ["mySearch:filters", ["mySearch:filters", ["mySearch:filters"]]],
             re_ranking_apply_filter: ["mySearch:filters", ["mySearch:filters"]],
             tag_filters: ["mySearch:filters", ["mySearch:filters"]],
             numeric_filters: ["mySearch:filters", ["mySearch:filters"]],
@@ -1612,12 +1612,95 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"requests":[{"indexName":"theIndexName","facetFilters":"mySearch:filters","reRankingApplyFilter":"mySearch:filters","tagFilters":"mySearch:filters","numericFilters":"mySearch:filters","optionalFilters":"mySearch:filters"},{"indexName":"theIndexName","facetFilters":["mySearch:filters",["mySearch:filters"]],"reRankingApplyFilter":["mySearch:filters",["mySearch:filters"]],"tagFilters":["mySearch:filters",["mySearch:filters"]],"numericFilters":["mySearch:filters",["mySearch:filters"]],"optionalFilters":["mySearch:filters",["mySearch:filters"]]}]}'), JSON.parse(req.body)
+      JSON.parse('{"requests":[{"indexName":"theIndexName","facetFilters":"mySearch:filters","reRankingApplyFilter":"mySearch:filters","tagFilters":"mySearch:filters","numericFilters":"mySearch:filters","optionalFilters":"mySearch:filters"},{"indexName":"theIndexName","facetFilters":["mySearch:filters",["mySearch:filters",["mySearch:filters"]]],"reRankingApplyFilter":["mySearch:filters",["mySearch:filters"]],"tagFilters":["mySearch:filters",["mySearch:filters"]],"numericFilters":["mySearch:filters",["mySearch:filters"]],"optionalFilters":["mySearch:filters",["mySearch:filters"]]}]}'), JSON.parse(req.body)
     )
   end
 
-  # search with all search parameters
+  # search filters end to end
   def test_search7
+    req = @client.search_with_http_info(
+      SearchMethodParams.new(
+        requests: [
+          SearchForHits.new(
+            index_name: "cts_e2e_search_facet",
+            filters: "editor:'visual studio' OR editor:neovim"
+          ),
+          SearchForHits.new(
+            index_name: "cts_e2e_search_facet",
+            facet_filters: ["editor:'visual studio'", "editor:neovim"]
+          ),
+          SearchForHits.new(
+            index_name: "cts_e2e_search_facet",
+            facet_filters: ["editor:'visual studio'", ["editor:neovim"]]
+          ),
+          SearchForHits.new(
+            index_name: "cts_e2e_search_facet",
+            facet_filters: ["editor:'visual studio'", ["editor:neovim", ["editor:goland"]]]
+          )
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/indexes/*/queries', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse(%q({"requests":[{"indexName":"cts_e2e_search_facet","filters":"editor:'visual studio' OR editor:neovim"},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'","editor:neovim"]},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'",["editor:neovim"]]},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'",["editor:neovim",["editor:goland"]]]}]})), JSON.parse(req.body)
+    )
+
+    res = @e2e_client.search_with_http_info(
+      SearchMethodParams.new(
+        requests: [
+          SearchForHits.new(
+            index_name: "cts_e2e_search_facet",
+            filters: "editor:'visual studio' OR editor:neovim"
+          ),
+          SearchForHits.new(
+            index_name: "cts_e2e_search_facet",
+            facet_filters: ["editor:'visual studio'", "editor:neovim"]
+          ),
+          SearchForHits.new(
+            index_name: "cts_e2e_search_facet",
+            facet_filters: ["editor:'visual studio'", ["editor:neovim"]]
+          ),
+          SearchForHits.new(
+            index_name: "cts_e2e_search_facet",
+            facet_filters: ["editor:'visual studio'", ["editor:neovim", ["editor:goland"]]]
+          )
+        ]
+      )
+    )
+
+    assert_equal(res.status, 200)
+    res = @e2e_client.search(
+      SearchMethodParams.new(
+        requests: [
+          SearchForHits.new(
+            index_name: "cts_e2e_search_facet",
+            filters: "editor:'visual studio' OR editor:neovim"
+          ),
+          SearchForHits.new(
+            index_name: "cts_e2e_search_facet",
+            facet_filters: ["editor:'visual studio'", "editor:neovim"]
+          ),
+          SearchForHits.new(
+            index_name: "cts_e2e_search_facet",
+            facet_filters: ["editor:'visual studio'", ["editor:neovim"]]
+          ),
+          SearchForHits.new(
+            index_name: "cts_e2e_search_facet",
+            facet_filters: ["editor:'visual studio'", ["editor:neovim", ["editor:goland"]]]
+          )
+        ]
+      )
+    )
+    expected_body = JSON.parse('{"results":[{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":2,"nbPages":1,"page":0,"hits":[{"editor":"visual studio","_highlightResult":{"editor":{"value":"visual studio","matchLevel":"none"}}},{"editor":"neovim","_highlightResult":{"editor":{"value":"neovim","matchLevel":"none"}}}],"query":"","params":"filters=editor%3A%27visual+studio%27+OR+editor%3Aneovim"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%22editor%3Aneovim%22%5D"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%5D%5D"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%2C%5B%22editor%3Agoland%22%5D%5D%5D"}]}')
+    assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
+  end
+
+  # search with all search parameters
+  def test_search8
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [SearchForHits.new(
@@ -1672,7 +1755,7 @@ class TestSearchClient < Test::Unit::TestCase
           min_word_sizefor1_typo: 0,
           min_word_sizefor2_typos: 0,
           minimum_around_radius: 1,
-          natural_languages: [""],
+          natural_languages: ['fr'],
           numeric_filters: [""],
           offset: 0,
           optional_filters: [""],
@@ -1720,7 +1803,7 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":["fr"],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}'), JSON.parse(req.body)
+      JSON.parse('{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":["fr"],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":["fr"],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}'), JSON.parse(req.body)
     )
   end
 

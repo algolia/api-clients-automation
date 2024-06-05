@@ -13,7 +13,7 @@ UpdatedAtWithObjectIdResponse _$UpdatedAtWithObjectIdResponseFromJson(
       json,
       ($checkedConvert) {
         final val = UpdatedAtWithObjectIdResponse(
-          taskID: $checkedConvert('taskID', (v) => v as int?),
+          taskID: $checkedConvert('taskID', (v) => (v as num?)?.toInt()),
           updatedAt: $checkedConvert('updatedAt', (v) => v as String?),
           objectID: $checkedConvert('objectID', (v) => v as String?),
         );

@@ -4,7 +4,7 @@ post:
   operationId: assignUserId
   x-acl:
     - admin
-  summary: Assign or move a user ID.
+  summary: Assign or move a user ID
   description: |
     Assigns or moves a user ID to a cluster.
 
@@ -43,7 +43,7 @@ get:
   operationId: listUserIds
   x-acl:
     - admin
-  summary: List user IDs.
+  summary: List user IDs
   description: |
     Lists the userIDs assigned to a multi-cluster application.
 

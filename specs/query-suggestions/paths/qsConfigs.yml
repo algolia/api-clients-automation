@@ -4,7 +4,7 @@ get:
   operationId: getAllConfigs
   x-acl:
     - settings
-  summary: List configurations.
+  summary: List configurations
   description: Retrieves all Query Suggestions configurations of your Algolia application.
   responses:
     '200':
@@ -24,7 +24,7 @@ post:
   operationId: createConfig
   x-acl:
     - editSettings
-  summary: Create a configuration.
+  summary: Create a configuration
   description: |
     Creates a new Query Suggestions configuration.
 
@@ -44,7 +44,7 @@ post:
             $ref: '../common/responses/BaseResponse.yml'
           examples:
             Created:
-              summary: Configuration created.
+              summary: Configuration created
               value:
                 status: 200
                 message: Configuration was created, and a new indexing job has been scheduled.

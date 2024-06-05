@@ -5,6 +5,6 @@ content:
       type: string
     examples:
       Unauthorized:
-        summary: Invalid credentials.
+        summary: Invalid credentials
         description: Use the Monitoring API key.
         value: Invalid credentials

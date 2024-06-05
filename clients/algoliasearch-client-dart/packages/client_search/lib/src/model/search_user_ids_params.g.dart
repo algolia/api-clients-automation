@@ -14,8 +14,9 @@ SearchUserIdsParams _$SearchUserIdsParamsFromJson(Map<String, dynamic> json) =>
         final val = SearchUserIdsParams(
           query: $checkedConvert('query', (v) => v as String),
           clusterName: $checkedConvert('clusterName', (v) => v as String?),
-          page: $checkedConvert('page', (v) => v as int?),
-          hitsPerPage: $checkedConvert('hitsPerPage', (v) => v as int?),
+          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
+          hitsPerPage:
+              $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
         );
         return val;
       },

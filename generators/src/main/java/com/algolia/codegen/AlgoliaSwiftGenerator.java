@@ -71,7 +71,6 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "languages",
     "matchedgeolocation",
     "matchlevel",
-    "mixedsearchfilters",
     "mode",
     "numericfilters",
     "optionalfilters",

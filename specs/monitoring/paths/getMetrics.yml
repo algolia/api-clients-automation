@@ -1,5 +1,5 @@
 get:
-  summary: Retrieve metrics.
+  summary: Retrieve metrics
   description: |
     Retrieves metrics related to your Algolia infrastructure, aggregated over a selected time window.
 

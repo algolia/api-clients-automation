@@ -4,7 +4,7 @@ get:
   operationId: getLogFile
   x-acl:
     - settings
-  summary: Retrieve logs.
+  summary: Retrieve logs
   description: Retrieves the logs for a single Query Suggestions index.
   parameters:
     - $ref: '../common/parameters.yml#/IndexName'

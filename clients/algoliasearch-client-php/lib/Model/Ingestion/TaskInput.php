@@ -22,6 +22,8 @@ class TaskInput extends \Algolia\AlgoliaSearch\Model\AbstractModel implements Mo
         'endDate' => 'string',
         'mapping' => '\Algolia\AlgoliaSearch\Model\Ingestion\MappingInput',
         'timeframe' => 'int',
+        'metafields' => '\Algolia\AlgoliaSearch\Model\Ingestion\ShopifyMetafield[]',
+        'market' => '\Algolia\AlgoliaSearch\Model\Ingestion\ShopifyMarket',
     ];
 
     /**
@@ -34,6 +36,8 @@ class TaskInput extends \Algolia\AlgoliaSearch\Model\AbstractModel implements Mo
         'endDate' => null,
         'mapping' => null,
         'timeframe' => null,
+        'metafields' => null,
+        'market' => null,
     ];
 
     /**
@@ -47,6 +51,8 @@ class TaskInput extends \Algolia\AlgoliaSearch\Model\AbstractModel implements Mo
         'endDate' => 'endDate',
         'mapping' => 'mapping',
         'timeframe' => 'timeframe',
+        'metafields' => 'metafields',
+        'market' => 'market',
     ];
 
     /**
@@ -59,6 +65,8 @@ class TaskInput extends \Algolia\AlgoliaSearch\Model\AbstractModel implements Mo
         'endDate' => 'setEndDate',
         'mapping' => 'setMapping',
         'timeframe' => 'setTimeframe',
+        'metafields' => 'setMetafields',
+        'market' => 'setMarket',
     ];
 
     /**
@@ -71,6 +79,8 @@ class TaskInput extends \Algolia\AlgoliaSearch\Model\AbstractModel implements Mo
         'endDate' => 'getEndDate',
         'mapping' => 'getMapping',
         'timeframe' => 'getTimeframe',
+        'metafields' => 'getMetafields',
+        'market' => 'getMarket',
     ];
 
     /**
@@ -98,6 +108,12 @@ class TaskInput extends \Algolia\AlgoliaSearch\Model\AbstractModel implements Mo
         }
         if (isset($data['timeframe'])) {
             $this->container['timeframe'] = $data['timeframe'];
+        }
+        if (isset($data['metafields'])) {
+            $this->container['metafields'] = $data['metafields'];
+        }
+        if (isset($data['market'])) {
+            $this->container['market'] = $data['market'];
         }
     }
 
@@ -179,6 +195,13 @@ class TaskInput extends \Algolia\AlgoliaSearch\Model\AbstractModel implements Mo
 
         if ($this->container['timeframe'] < 1) {
             $invalidProperties[] = "invalid value for 'timeframe', must be bigger than or equal to 1.";
+        }
+
+        if (!isset($this->container['metafields']) || null === $this->container['metafields']) {
+            $invalidProperties[] = "'metafields' can't be null";
+        }
+        if (!isset($this->container['market']) || null === $this->container['market']) {
+            $invalidProperties[] = "'market' can't be null";
         }
 
         return $invalidProperties;
@@ -294,6 +317,54 @@ class TaskInput extends \Algolia\AlgoliaSearch\Model\AbstractModel implements Mo
         }
 
         $this->container['timeframe'] = $timeframe;
+
+        return $this;
+    }
+
+    /**
+     * Gets metafields.
+     *
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\ShopifyMetafield[]
+     */
+    public function getMetafields()
+    {
+        return $this->container['metafields'] ?? null;
+    }
+
+    /**
+     * Sets metafields.
+     *
+     * @param \Algolia\AlgoliaSearch\Model\Ingestion\ShopifyMetafield[] $metafields metafields
+     *
+     * @return self
+     */
+    public function setMetafields($metafields)
+    {
+        $this->container['metafields'] = $metafields;
+
+        return $this;
+    }
+
+    /**
+     * Gets market.
+     *
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\ShopifyMarket
+     */
+    public function getMarket()
+    {
+        return $this->container['market'] ?? null;
+    }
+
+    /**
+     * Sets market.
+     *
+     * @param \Algolia\AlgoliaSearch\Model\Ingestion\ShopifyMarket $market market
+     *
+     * @return self
+     */
+    public function setMarket($market)
+    {
+        $this->container['market'] = $market;
 
         return $this;
     }

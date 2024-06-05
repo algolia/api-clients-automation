@@ -40,7 +40,7 @@ import algoliasearch.search.Action._
   * @param body
   *   Operation arguments (varies with specified `action`).
   * @param indexName
-  *   Index to target for this operation.
+  *   Index name (case-sensitive).
   */
 case class MultipleBatchRequest(
     action: Action,

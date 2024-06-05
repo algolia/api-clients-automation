@@ -166,7 +166,7 @@ public class DeleteByParams {
    * point is represented by its latitude and longitude. Provide multiple polygons as nested arrays.
    * For more information, see [filtering inside
    * polygons](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
-   * This parameter is ignored, if you also specify `insideBoundingBox`.
+   * This parameter is ignored if you also specify `insideBoundingBox`.
    */
   @javax.annotation.Nullable
   public List<List<Double>> getInsidePolygon() {

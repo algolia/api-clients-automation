@@ -12,7 +12,7 @@ get:
     a task is created on a queue and completed depending on the load on the server.
 
     The indexing tasks' responses include a task ID that you can use to check the status.
-  summary: Check task status.
+  summary: Check task status
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - name: taskID

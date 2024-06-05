@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** SearchParamsObject */
+/** Each parameter value, including the `query` must not be larger than 512 bytes. */
 @JsonDeserialize(as = SearchParamsObject.class)
 public class SearchParamsObject implements SearchParams {
 
@@ -77,7 +77,7 @@ public class SearchParamsObject implements SearchParams {
   private List<List<Double>> insidePolygon;
 
   @JsonProperty("naturalLanguages")
-  private List<String> naturalLanguages;
+  private List<SupportedLanguage> naturalLanguages;
 
   @JsonProperty("ruleContexts")
   private List<String> ruleContexts;
@@ -369,7 +369,10 @@ public class SearchParamsObject implements SearchParams {
     return this;
   }
 
-  /** Restricts a search to a subset of your searchable attributes. */
+  /**
+   * Restricts a search to a subset of your searchable attributes. Attribute names are
+   * case-sensitive.
+   */
   @javax.annotation.Nullable
   public List<String> getRestrictSearchableAttributes() {
     return restrictSearchableAttributes;
@@ -555,19 +558,19 @@ public class SearchParamsObject implements SearchParams {
    * point is represented by its latitude and longitude. Provide multiple polygons as nested arrays.
    * For more information, see [filtering inside
    * polygons](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
-   * This parameter is ignored, if you also specify `insideBoundingBox`.
+   * This parameter is ignored if you also specify `insideBoundingBox`.
    */
   @javax.annotation.Nullable
   public List<List<Double>> getInsidePolygon() {
     return insidePolygon;
   }
 
-  public SearchParamsObject setNaturalLanguages(List<String> naturalLanguages) {
+  public SearchParamsObject setNaturalLanguages(List<SupportedLanguage> naturalLanguages) {
     this.naturalLanguages = naturalLanguages;
     return this;
   }
 
-  public SearchParamsObject addNaturalLanguages(String naturalLanguagesItem) {
+  public SearchParamsObject addNaturalLanguages(SupportedLanguage naturalLanguagesItem) {
     if (this.naturalLanguages == null) {
       this.naturalLanguages = new ArrayList<>();
     }
@@ -582,7 +585,7 @@ public class SearchParamsObject implements SearchParams {
    * `natural_language` attribute to `ruleContexts` and `analyticsTags`.
    */
   @javax.annotation.Nullable
-  public List<String> getNaturalLanguages() {
+  public List<SupportedLanguage> getNaturalLanguages() {
     return naturalLanguages;
   }
 
@@ -748,10 +751,11 @@ public class SearchParamsObject implements SearchParams {
 
   /**
    * Attributes to include in the API response. To reduce the size of your response, you can
-   * retrieve only some of the attributes. - `*` retrieves all attributes, except attributes
-   * included in the `customRanking` and `unretrievableAttributes` settings. - To retrieve all
-   * attributes except a specific one, prefix the attribute with a dash and combine it with the `*`:
-   * `[\"*\", \"-ATTRIBUTE\"]`. - The `objectID` attribute is always included.
+   * retrieve only some of the attributes. Attribute names are case-sensitive. - `*` retrieves all
+   * attributes, except attributes included in the `customRanking` and `unretrievableAttributes`
+   * settings. - To retrieve all attributes except a specific one, prefix the attribute with a dash
+   * and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`. - The `objectID` attribute is always
+   * included.
    */
   @javax.annotation.Nullable
   public List<String> getAttributesToRetrieve() {
@@ -804,13 +808,13 @@ public class SearchParamsObject implements SearchParams {
 
   /**
    * Attributes to use as [custom
-   * ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/). The
-   * custom ranking attributes decide which items are shown first if the other ranking criteria are
-   * equal. Records with missing values for your selected custom ranking attributes are always
-   * sorted last. Boolean attributes are sorted based on their alphabetical order. **Modifiers** -
-   * `asc(\"ATTRIBUTE\")`. Sort the index by the values of an attribute, in ascending order. -
-   * `desc(\"ATTRIBUTE\")`. Sort the index by the values of an attribute, in descending order. If
-   * you use two or more custom ranking attributes, [reduce the
+   * ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/).
+   * Attribute names are case-sensitive. The custom ranking attributes decide which items are shown
+   * first if the other ranking criteria are equal. Records with missing values for your selected
+   * custom ranking attributes are always sorted last. Boolean attributes are sorted based on their
+   * alphabetical order. **Modifiers** - `asc(\"ATTRIBUTE\")`. Sort the index by the values of an
+   * attribute, in ascending order. - `desc(\"ATTRIBUTE\")`. Sort the index by the values of an
+   * attribute, in descending order. If you use two or more custom ranking attributes, [reduce the
    * precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/)
    * of your first attributes, or the other attributes will never be applied.
    */
@@ -850,10 +854,11 @@ public class SearchParamsObject implements SearchParams {
 
   /**
    * Attributes to highlight. By default, all searchable attributes are highlighted. Use `*` to
-   * highlight all attributes or use an empty array `[]` to turn off highlighting. With
-   * highlighting, strings that match the search query are surrounded by HTML tags defined by
-   * `highlightPreTag` and `highlightPostTag`. You can use this to visually highlight matching parts
-   * of a search query in your UI. For more information, see [Highlighting and
+   * highlight all attributes or use an empty array `[]` to turn off highlighting. Attribute names
+   * are case-sensitive. With highlighting, strings that match the search query are surrounded by
+   * HTML tags defined by `highlightPreTag` and `highlightPostTag`. You can use this to visually
+   * highlight matching parts of a search query in your UI. For more information, see [Highlighting
+   * and
    * snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js/).
    */
   @javax.annotation.Nullable
@@ -875,10 +880,11 @@ public class SearchParamsObject implements SearchParams {
   }
 
   /**
-   * Attributes for which to enable snippets. Snippets provide additional context to matched words.
-   * If you enable snippets, they include 10 words, including the matched word. The matched word
-   * will also be wrapped by HTML tags for highlighting. You can adjust the number of words with the
-   * following notation: `ATTRIBUTE:NUMBER`, where `NUMBER` is the number of words to be extracted.
+   * Attributes for which to enable snippets. Attribute names are case-sensitive. Snippets provide
+   * additional context to matched words. If you enable snippets, they include 10 words, including
+   * the matched word. The matched word will also be wrapped by HTML tags for highlighting. You can
+   * adjust the number of words with the following notation: `ATTRIBUTE:NUMBER`, where `NUMBER` is
+   * the number of words to be extracted.
    */
   @javax.annotation.Nullable
   public List<String> getAttributesToSnippet() {
@@ -1014,7 +1020,8 @@ public class SearchParamsObject implements SearchParams {
   /**
    * Attributes for which you want to turn off [typo
    * tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
-   * Returning only exact matches can help when: - [Searching in hyphenated
+   * Attribute names are case-sensitive. Returning only exact matches can help when: - [Searching in
+   * hyphenated
    * attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/).
    * - Reducing the number of matches when you have too many. This can happen with attributes that
    * are long blocks of text, such as product descriptions. Consider alternatives such as
@@ -1242,10 +1249,10 @@ public class SearchParamsObject implements SearchParams {
   /**
    * Searchable attributes for which you want to [turn off the Exact ranking
    * criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).
-   * This can be useful for attributes with long values, where the likelyhood of an exact match is
-   * high, such as product descriptions. Turning off the Exact ranking criterion for these
-   * attributes favors exact matching on other attributes. This reduces the impact of individual
-   * attributes with a lot of content on ranking.
+   * Attribute names are case-sensitive. This can be useful for attributes with long values, where
+   * the likelyhood of an exact match is high, such as product descriptions. Turning off the Exact
+   * ranking criterion for these attributes favors exact matching on other attributes. This reduces
+   * the impact of individual attributes with a lot of content on ranking.
    */
   @javax.annotation.Nullable
   public List<String> getDisableExactOnAttributes() {

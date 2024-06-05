@@ -611,14 +611,14 @@ public class RecommendClientRequestTests
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
-                  new List<MixedSearchFilters> { new MixedSearchFilters("query") }
+                  new List<FacetFilters> { new FacetFilters("query") }
                 ),
               },
               FallbackParameters = new FallbackParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
-                  new List<MixedSearchFilters> { new MixedSearchFilters("fallback") }
+                  new List<FacetFilters> { new FacetFilters("fallback") }
                 ),
               },
             }
@@ -690,14 +690,14 @@ public class RecommendClientRequestTests
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
-                  new List<MixedSearchFilters> { new MixedSearchFilters("query") }
+                  new List<FacetFilters> { new FacetFilters("query") }
                 ),
               },
               FallbackParameters = new SearchParamsObject
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
-                  new List<MixedSearchFilters> { new MixedSearchFilters("fallback") }
+                  new List<FacetFilters> { new FacetFilters("fallback") }
                 ),
               },
             }
@@ -776,14 +776,14 @@ public class RecommendClientRequestTests
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
-                  new List<MixedSearchFilters> { new MixedSearchFilters("query1") }
+                  new List<FacetFilters> { new FacetFilters("query1") }
                 ),
               },
               FallbackParameters = new FallbackParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
-                  new List<MixedSearchFilters> { new MixedSearchFilters("fallback1") }
+                  new List<FacetFilters> { new FacetFilters("fallback1") }
                 ),
               },
             }
@@ -800,14 +800,14 @@ public class RecommendClientRequestTests
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
-                  new List<MixedSearchFilters> { new MixedSearchFilters("query2") }
+                  new List<FacetFilters> { new FacetFilters("query2") }
                 ),
               },
               FallbackParameters = new FallbackParams
               {
                 Query = "myQuery",
                 FacetFilters = new FacetFilters(
-                  new List<MixedSearchFilters> { new MixedSearchFilters("fallback2") }
+                  new List<FacetFilters> { new FacetFilters("fallback2") }
                 ),
               },
             }

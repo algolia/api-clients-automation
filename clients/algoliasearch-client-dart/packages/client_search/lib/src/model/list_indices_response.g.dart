@@ -17,7 +17,7 @@ ListIndicesResponse _$ListIndicesResponseFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>)
                   .map((e) => FetchedIndex.fromJson(e as Map<String, dynamic>))
                   .toList()),
-          nbPages: $checkedConvert('nbPages', (v) => v as int?),
+          nbPages: $checkedConvert('nbPages', (v) => (v as num?)?.toInt()),
         );
         return val;
       },

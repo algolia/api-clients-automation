@@ -4,7 +4,7 @@ get:
   operationId: getConfig
   x-acl:
     - settings
-  summary: Retrieve a configuration.
+  summary: Retrieve a configuration
   description: Retrieves a single Query Suggestions configuration by its index name.
   parameters:
     - $ref: '../common/parameters.yml#/IndexName'
@@ -28,7 +28,7 @@ put:
   operationId: updateConfig
   x-acl:
     - editSettings
-  summary: Update a configuration.
+  summary: Update a configuration
   description: Updates a QuerySuggestions configuration.
   parameters:
     - $ref: '../common/parameters.yml#/IndexName'
@@ -47,7 +47,7 @@ put:
             $ref: '../common/responses/BaseResponse.yml'
           examples:
             Created:
-              summary: Configuration created.
+              summary: Configuration created
               value:
                 'status': 200
                 'message': 'Configuration was updated, and a new indexing job has been scheduled.'
@@ -63,7 +63,7 @@ delete:
   operationId: deleteConfig
   x-acl:
     - editSettings
-  summary: Delete a configuration.
+  summary: Delete a configuration
   description: |
     Deletes a Query Suggestions configuration.
 
@@ -80,7 +80,7 @@ delete:
             $ref: '../common/responses/BaseResponse.yml'
           examples:
             Created:
-              summary: Configuration created.
+              summary: Configuration created
               value:
                 'status': 200
                 'message': 'Configuration was deleted with success.'

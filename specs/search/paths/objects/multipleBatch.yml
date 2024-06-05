@@ -7,7 +7,7 @@ post:
 
     - Actions are applied in the order they are specified.
     - Actions are equivalent to the individual API requests of the same name.
-  summary: Batch indexing operations on multiple indices.
+  summary: Batch indexing operations on multiple indices
   requestBody:
     required: true
     content:
@@ -31,9 +31,7 @@ post:
                     type: object
                     description: Operation arguments (varies with specified `action`).
                   indexName:
-                    type: string
-                    description: Index to target for this operation.
-                    example: 'index1'
+                    $ref: '../../../common/parameters.yml#/indexName'
                 required:
                   - action
                   - body
@@ -42,7 +40,7 @@ post:
             - requests
         examples:
           batch:
-            summary: Batch indexing request to two indices.
+            summary: Batch indexing request to two indices
             value:
               requests:
                 - action: addObject

@@ -1,7 +1,7 @@
 get:
   tags:
     - tasks
-  summary: List tasks.
+  summary: List tasks
   description: Retrieves a list of tasks.
   operationId: getTasks
   x-acl:
@@ -44,7 +44,7 @@ get:
 post:
   tags:
     - tasks
-  summary: Create a task.
+  summary: Create a task
   description: Creates a new task.
   operationId: createTask
   requestBody:

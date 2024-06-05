@@ -4,6 +4,7 @@ package requests
 import (
 	"encoding/json"
 	"os"
+	"strings"
 	"testing"
 	"time"
 
@@ -375,14 +376,14 @@ func TestSearch_Browse(t *testing.T) {
 		require.NoError(t, err)
 
 		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
+		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
 	})
 	t.Run("browse with search parameters", func(t *testing.T) {
 		_, err := client.Browse(client.NewApiBrowseRequest(
 			"indexName",
 		).WithBrowseParams(search.BrowseParamsObjectAsBrowseParams(
-			search.NewEmptyBrowseParamsObject().SetQuery("myQuery").SetFacetFilters(search.ArrayOfMixedSearchFiltersAsFacetFilters(
-				[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("tags:algolia")})))))
+			search.NewEmptyBrowseParamsObject().SetQuery("myQuery").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+				[]search.FacetFilters{*search.StringAsFacetFilters("tags:algolia")})))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/browse", echo.Path)
@@ -1124,7 +1125,7 @@ func TestSearch_GetSettings(t *testing.T) {
 		require.NoError(t, err)
 
 		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
+		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
 	})
 }
 
@@ -1666,7 +1667,7 @@ func TestSearch_Search(t *testing.T) {
 		require.NoError(t, err)
 
 		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
+		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
 	})
 	t.Run("search for a single facet request with minimal parameters", func(t *testing.T) {
 		_, err := client.Search(client.NewApiSearchRequest(
@@ -1699,7 +1700,7 @@ func TestSearch_Search(t *testing.T) {
 		err = json.Unmarshal(rawBody, &rawBodyMap)
 		require.NoError(t, err)
 
-		expectedBodyRaw := `{"results":[{"exhaustiveFacetsCount":true,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}`
+		expectedBodyRaw := `{"results":[{"exhaustiveFacetsCount":true,"facetHits":[{"count":1,"highlighted":"goland","value":"goland"},{"count":1,"highlighted":"neovim","value":"neovim"},{"count":1,"highlighted":"visual studio","value":"visual studio"},{"count":1,"highlighted":"vscode","value":"vscode"}]}]}`
 		var expectedBody any
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
@@ -1709,7 +1710,7 @@ func TestSearch_Search(t *testing.T) {
 		require.NoError(t, err)
 
 		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
+		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
 	})
 	t.Run("search for a single hits request with all parameters", func(t *testing.T) {
 		_, err := client.Search(client.NewApiSearchRequest(
@@ -1780,17 +1781,18 @@ func TestSearch_Search(t *testing.T) {
 			search.NewEmptySearchMethodParams().SetRequests(
 				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
 					search.NewEmptySearchForHits().SetIndexName("theIndexName").SetFacetFilters(search.StringAsFacetFilters("mySearch:filters")).SetReRankingApplyFilter(search.StringAsReRankingApplyFilter("mySearch:filters")).SetTagFilters(search.StringAsTagFilters("mySearch:filters")).SetNumericFilters(search.StringAsNumericFilters("mySearch:filters")).SetOptionalFilters(search.StringAsOptionalFilters("mySearch:filters"))), *search.SearchForHitsAsSearchQuery(
-					search.NewEmptySearchForHits().SetIndexName("theIndexName").SetFacetFilters(search.ArrayOfMixedSearchFiltersAsFacetFilters(
-						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("mySearch:filters"), *search.ArrayOfStringAsMixedSearchFilters(
-							[]string{"mySearch:filters"})})).SetReRankingApplyFilter(search.ArrayOfMixedSearchFiltersAsReRankingApplyFilter(
-						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("mySearch:filters"), *search.ArrayOfStringAsMixedSearchFilters(
-							[]string{"mySearch:filters"})})).SetTagFilters(search.ArrayOfMixedSearchFiltersAsTagFilters(
-						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("mySearch:filters"), *search.ArrayOfStringAsMixedSearchFilters(
-							[]string{"mySearch:filters"})})).SetNumericFilters(search.ArrayOfMixedSearchFiltersAsNumericFilters(
-						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("mySearch:filters"), *search.ArrayOfStringAsMixedSearchFilters(
-							[]string{"mySearch:filters"})})).SetOptionalFilters(search.ArrayOfMixedSearchFiltersAsOptionalFilters(
-						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("mySearch:filters"), *search.ArrayOfStringAsMixedSearchFilters(
-							[]string{"mySearch:filters"})})))}),
+					search.NewEmptySearchForHits().SetIndexName("theIndexName").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+						[]search.FacetFilters{*search.StringAsFacetFilters("mySearch:filters"), *search.ArrayOfFacetFiltersAsFacetFilters(
+							[]search.FacetFilters{*search.StringAsFacetFilters("mySearch:filters"), *search.ArrayOfFacetFiltersAsFacetFilters(
+								[]search.FacetFilters{*search.StringAsFacetFilters("mySearch:filters")})})})).SetReRankingApplyFilter(search.ArrayOfReRankingApplyFilterAsReRankingApplyFilter(
+						[]search.ReRankingApplyFilter{*search.StringAsReRankingApplyFilter("mySearch:filters"), *search.ArrayOfReRankingApplyFilterAsReRankingApplyFilter(
+							[]search.ReRankingApplyFilter{*search.StringAsReRankingApplyFilter("mySearch:filters")})})).SetTagFilters(search.ArrayOfTagFiltersAsTagFilters(
+						[]search.TagFilters{*search.StringAsTagFilters("mySearch:filters"), *search.ArrayOfTagFiltersAsTagFilters(
+							[]search.TagFilters{*search.StringAsTagFilters("mySearch:filters")})})).SetNumericFilters(search.ArrayOfNumericFiltersAsNumericFilters(
+						[]search.NumericFilters{*search.StringAsNumericFilters("mySearch:filters"), *search.ArrayOfNumericFiltersAsNumericFilters(
+							[]search.NumericFilters{*search.StringAsNumericFilters("mySearch:filters")})})).SetOptionalFilters(search.ArrayOfOptionalFiltersAsOptionalFilters(
+						[]search.OptionalFilters{*search.StringAsOptionalFilters("mySearch:filters"), *search.ArrayOfOptionalFiltersAsOptionalFilters(
+							[]search.OptionalFilters{*search.StringAsOptionalFilters("mySearch:filters")})})))}),
 		))
 		require.NoError(t, err)
 
@@ -1798,7 +1800,68 @@ func TestSearch_Search(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"theIndexName","facetFilters":"mySearch:filters","reRankingApplyFilter":"mySearch:filters","tagFilters":"mySearch:filters","numericFilters":"mySearch:filters","optionalFilters":"mySearch:filters"},{"indexName":"theIndexName","facetFilters":["mySearch:filters",["mySearch:filters"]],"reRankingApplyFilter":["mySearch:filters",["mySearch:filters"]],"tagFilters":["mySearch:filters",["mySearch:filters"]],"numericFilters":["mySearch:filters",["mySearch:filters"]],"optionalFilters":["mySearch:filters",["mySearch:filters"]]}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"theIndexName","facetFilters":"mySearch:filters","reRankingApplyFilter":"mySearch:filters","tagFilters":"mySearch:filters","numericFilters":"mySearch:filters","optionalFilters":"mySearch:filters"},{"indexName":"theIndexName","facetFilters":["mySearch:filters",["mySearch:filters",["mySearch:filters"]]],"reRankingApplyFilter":["mySearch:filters",["mySearch:filters"]],"tagFilters":["mySearch:filters",["mySearch:filters"]],"numericFilters":["mySearch:filters",["mySearch:filters"]],"optionalFilters":["mySearch:filters",["mySearch:filters"]]}]}`)
+	})
+	t.Run("search filters end to end", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
+
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_facet").SetFilters("editor:'visual studio' OR editor:neovim")), *search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_facet").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+						[]search.FacetFilters{*search.StringAsFacetFilters("editor:'visual studio'"), *search.StringAsFacetFilters("editor:neovim")}))), *search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_facet").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+						[]search.FacetFilters{*search.StringAsFacetFilters("editor:'visual studio'"), *search.ArrayOfFacetFiltersAsFacetFilters(
+							[]search.FacetFilters{*search.StringAsFacetFilters("editor:neovim")})}))), *search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_facet").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+						[]search.FacetFilters{*search.StringAsFacetFilters("editor:'visual studio'"), *search.ArrayOfFacetFiltersAsFacetFilters(
+							[]search.FacetFilters{*search.StringAsFacetFilters("editor:neovim"), *search.ArrayOfFacetFiltersAsFacetFilters(
+								[]search.FacetFilters{*search.StringAsFacetFilters("editor:goland")})})})))}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/*/queries", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"cts_e2e_search_facet","filters":"editor:'visual studio' OR editor:neovim"},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'","editor:neovim"]},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'",["editor:neovim"]]},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'",["editor:neovim",["editor:goland"]]]}]}`)
+		clientE2E := createE2ESearchClient(t)
+		res, err := clientE2E.Search(client.NewApiSearchRequest(
+
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_facet").SetFilters("editor:'visual studio' OR editor:neovim")), *search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_facet").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+						[]search.FacetFilters{*search.StringAsFacetFilters("editor:'visual studio'"), *search.StringAsFacetFilters("editor:neovim")}))), *search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_facet").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+						[]search.FacetFilters{*search.StringAsFacetFilters("editor:'visual studio'"), *search.ArrayOfFacetFiltersAsFacetFilters(
+							[]search.FacetFilters{*search.StringAsFacetFilters("editor:neovim")})}))), *search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("cts_e2e_search_facet").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+						[]search.FacetFilters{*search.StringAsFacetFilters("editor:'visual studio'"), *search.ArrayOfFacetFiltersAsFacetFilters(
+							[]search.FacetFilters{*search.StringAsFacetFilters("editor:neovim"), *search.ArrayOfFacetFiltersAsFacetFilters(
+								[]search.FacetFilters{*search.StringAsFacetFilters("editor:goland")})})})))}),
+		))
+		require.NoError(t, err)
+		_ = res
+
+		rawBody, err := json.Marshal(res)
+		require.NoError(t, err)
+
+		var rawBodyMap any
+		err = json.Unmarshal(rawBody, &rawBodyMap)
+		require.NoError(t, err)
+
+		expectedBodyRaw := `{"results":[{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":2,"nbPages":1,"page":0,"hits":[{"editor":"visual studio","_highlightResult":{"editor":{"value":"visual studio","matchLevel":"none"}}},{"editor":"neovim","_highlightResult":{"editor":{"value":"neovim","matchLevel":"none"}}}],"query":"","params":"filters=editor%3A%27visual+studio%27+OR+editor%3Aneovim"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%22editor%3Aneovim%22%5D"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%5D%5D"},{"hitsPerPage":20,"index":"cts_e2e_search_facet","nbHits":0,"nbPages":0,"page":0,"hits":[],"query":"","params":"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%2C%5B%22editor%3Agoland%22%5D%5D%5D"}]}`
+		var expectedBody any
+		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
+		require.NoError(t, err)
+
+		unionBody := tests.Union(expectedBody, rawBodyMap)
+		unionBodyRaw, err := json.Marshal(unionBody)
+		require.NoError(t, err)
+
+		jaE2E := jsonassert.New(t)
+		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
 	})
 	t.Run("search with all search parameters", func(t *testing.T) {
 		_, err := client.Search(client.NewApiSearchRequest(
@@ -1814,8 +1877,8 @@ func TestSearch_Search(t *testing.T) {
 						[]string{""}).SetClickAnalytics(true).SetCustomRanking(
 						[]string{""}).SetDecompoundQuery(true).SetDisableExactOnAttributes(
 						[]string{""}).SetDisableTypoToleranceOnAttributes(
-						[]string{""}).SetDistinct(search.Int32AsDistinct(0)).SetEnableABTest(true).SetEnablePersonalization(true).SetEnableReRanking(true).SetEnableRules(true).SetExactOnSingleWordQuery(search.ExactOnSingleWordQuery("attribute")).SetFacetFilters(search.ArrayOfMixedSearchFiltersAsFacetFilters(
-						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("")})).SetFacetingAfterDistinct(true).SetFacets(
+						[]string{""}).SetDistinct(search.Int32AsDistinct(0)).SetEnableABTest(true).SetEnablePersonalization(true).SetEnableReRanking(true).SetEnableRules(true).SetExactOnSingleWordQuery(search.ExactOnSingleWordQuery("attribute")).SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+						[]search.FacetFilters{*search.StringAsFacetFilters("")})).SetFacetingAfterDistinct(true).SetFacets(
 						[]string{""}).SetFilters("").SetGetRankingInfo(true).SetHighlightPostTag("").SetHighlightPreTag("").SetHitsPerPage(1).SetIgnorePlurals(search.BoolAsIgnorePlurals(false)).SetIndexName("theIndexName").SetInsideBoundingBox(
 						[][]float64{
 							[]float64{47.3165, 4.9665, 47.3424, 5.0201},
@@ -1823,13 +1886,13 @@ func TestSearch_Search(t *testing.T) {
 						[][]float64{
 							[]float64{47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9},
 							[]float64{40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104}}).SetKeepDiacriticsOnCharacters("").SetLength(1).SetMaxValuesPerFacet(0).SetMinProximity(1).SetMinWordSizefor1Typo(0).SetMinWordSizefor2Typos(0).SetMinimumAroundRadius(1).SetNaturalLanguages(
-						[]string{""}).SetNumericFilters(search.ArrayOfMixedSearchFiltersAsNumericFilters(
-						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("")})).SetOffset(0).SetOptionalFilters(search.ArrayOfMixedSearchFiltersAsOptionalFilters(
-						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("")})).SetOptionalWords(
+						[]search.SupportedLanguage{search.SupportedLanguage("fr")}).SetNumericFilters(search.ArrayOfNumericFiltersAsNumericFilters(
+						[]search.NumericFilters{*search.StringAsNumericFilters("")})).SetOffset(0).SetOptionalFilters(search.ArrayOfOptionalFiltersAsOptionalFilters(
+						[]search.OptionalFilters{*search.StringAsOptionalFilters("")})).SetOptionalWords(
 						[]string{""}).SetPage(0).SetPercentileComputation(true).SetPersonalizationImpact(0).SetQuery("").SetQueryLanguages(
 						[]search.SupportedLanguage{search.SupportedLanguage("fr")}).SetQueryType(search.QueryType("prefixAll")).SetRanking(
-						[]string{""}).SetReRankingApplyFilter(search.ArrayOfMixedSearchFiltersAsReRankingApplyFilter(
-						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("")})).SetRelevancyStrictness(0).SetRemoveStopWords(search.BoolAsRemoveStopWords(true)).SetRemoveWordsIfNoResults(search.RemoveWordsIfNoResults("allOptional")).SetRenderingContent(
+						[]string{""}).SetReRankingApplyFilter(search.ArrayOfReRankingApplyFilterAsReRankingApplyFilter(
+						[]search.ReRankingApplyFilter{*search.StringAsReRankingApplyFilter("")})).SetRelevancyStrictness(0).SetRemoveStopWords(search.BoolAsRemoveStopWords(true)).SetRemoveWordsIfNoResults(search.RemoveWordsIfNoResults("allOptional")).SetRenderingContent(
 						search.NewEmptyRenderingContent().SetFacetOrdering(
 							search.NewEmptyFacetOrdering().SetFacets(
 								search.NewEmptyFacets().SetOrder(
@@ -1837,8 +1900,8 @@ func TestSearch_Search(t *testing.T) {
 								[]string{"b"}).SetSortRemainingBy(search.SortRemainingBy("count"))}))).SetReplaceSynonymsInHighlight(true).SetResponseFields(
 						[]string{""}).SetRestrictHighlightAndSnippetArrays(true).SetRestrictSearchableAttributes(
 						[]string{""}).SetRuleContexts(
-						[]string{""}).SetSimilarQuery("").SetSnippetEllipsisText("").SetSortFacetValuesBy("").SetSumOrFiltersScores(true).SetSynonyms(true).SetTagFilters(search.ArrayOfMixedSearchFiltersAsTagFilters(
-						[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("")})).SetType(search.SearchTypeDefault("default")).SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("min"))).SetUserToken(""))}),
+						[]string{""}).SetSimilarQuery("").SetSnippetEllipsisText("").SetSortFacetValuesBy("").SetSumOrFiltersScores(true).SetSynonyms(true).SetTagFilters(search.ArrayOfTagFiltersAsTagFilters(
+						[]search.TagFilters{*search.StringAsTagFilters("")})).SetType(search.SearchTypeDefault("default")).SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("min"))).SetUserToken(""))}),
 		))
 		require.NoError(t, err)
 
@@ -1846,7 +1909,7 @@ func TestSearch_Search(t *testing.T) {
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":["fr"],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":["fr"],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":["fr"],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}`)
 	})
 }
 
@@ -1891,7 +1954,7 @@ func TestSearch_SearchDictionaryEntries(t *testing.T) {
 		require.NoError(t, err)
 
 		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
+		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
 	})
 	t.Run("get searchDictionaryEntries results with all parameters", func(t *testing.T) {
 		_, err := client.SearchDictionaryEntries(client.NewApiSearchDictionaryEntriesRequest(
@@ -1997,8 +2060,8 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		_, err := client.SearchSingleIndex(client.NewApiSearchSingleIndexRequest(
 			"indexName",
 		).WithSearchParams(search.SearchParamsObjectAsSearchParams(
-			search.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(search.ArrayOfMixedSearchFiltersAsFacetFilters(
-				[]search.MixedSearchFilters{*search.StringAsMixedSearchFilters("tags:algolia")})))))
+			search.NewEmptySearchParamsObject().SetQuery("myQuery").SetFacetFilters(search.ArrayOfFacetFiltersAsFacetFilters(
+				[]search.FacetFilters{*search.StringAsFacetFilters("tags:algolia")})))))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/indexes/indexName/query", echo.Path)
@@ -2048,7 +2111,7 @@ func TestSearch_SearchSingleIndex(t *testing.T) {
 		require.NoError(t, err)
 
 		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
+		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
 	})
 }
 

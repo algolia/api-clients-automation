@@ -4,7 +4,7 @@ post:
   operationId: partialUpdateObject
   x-acl:
     - addObject
-  summary: Add or update attributes.
+  summary: Add or update attributes
   x-codegen-request-body-name: attributesToUpdate
   description: |
     Adds new attributes to a record, or update existing ones.

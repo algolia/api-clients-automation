@@ -123,7 +123,7 @@ paths:
   /{path}:
     get:
       operationId: customGet
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -348,7 +348,7 @@ paths:
           application/json:
             schema:
               type: object
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -573,7 +573,7 @@ paths:
           application/json:
             schema:
               type: object
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -792,7 +792,7 @@ paths:
             _ = try await client.customPut(path: "test/minimal")
     delete:
       operationId: customDelete
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -1020,7 +1020,7 @@ paths:
       tags:
         - events
       operationId: pushEvents
-      summary: Send events.
+      summary: Send events
       description: |
         Sends a list of events to the Insights API.
 
@@ -1051,7 +1051,7 @@ paths:
                     $ref: '#/components/schemas/EventsItems'
             examples:
               ClickObjectIDsAfterSearch:
-                summary: Click event after search requests.
+                summary: Click event after search requests
                 value:
                   events:
                     - eventName: Products Clicked
@@ -1065,7 +1065,7 @@ paths:
                         - 1
                       queryID: 7dfe2ada7bca48bdd0629649df0bee07
               ConversionObjectIDsAfterSearch:
-                summary: Conversion event after search or browse requests.
+                summary: Conversion event after search or browse requests
                 value:
                   events:
                     - eventName: Articles Liked
@@ -1077,7 +1077,7 @@ paths:
                         - article-1
                       queryID: 7dfe2ada7bca48bdd0629649df0bee07
               AddedToCartAfterSearch:
-                summary: Add-to-cart event after search or browse requests.
+                summary: Add-to-cart event after search or browse requests
                 value:
                   events:
                     - eventName: Products Added To Cart
@@ -1094,7 +1094,7 @@ paths:
                       currency: USD
                       queryID: 7dfe2ada7bca48bdd0629649df0bee07
               PurchasedAfterSearch:
-                summary: Purchase event after search or browse requests.
+                summary: Purchase event after search or browse requests
                 value:
                   events:
                     - eventName: Products Purchased
@@ -1118,7 +1118,7 @@ paths:
                       value: 69.97
                       currency: USD
               ClickObjectIDs:
-                summary: Click event.
+                summary: Click event
                 value:
                   events:
                     - eventName: Products Clicked
@@ -1129,7 +1129,7 @@ paths:
                       objectIDs:
                         - object-1
               ConversionObjectIDs:
-                summary: Conversion event.
+                summary: Conversion event
                 value:
                   events:
                     - eventName: Products Added To Cart
@@ -1140,7 +1140,7 @@ paths:
                       objectIDs:
                         - object-1
               AddedToCart:
-                summary: Add-to-cart event.
+                summary: Add-to-cart event
                 value:
                   events:
                     - eventName: Products Added To Cart
@@ -1156,7 +1156,7 @@ paths:
                           quantity: 1
                       currency: EUR
               Purchased:
-                summary: Purchase event.
+                summary: Purchase event
                 value:
                   events:
                     - eventName: Products Purchased
@@ -1176,7 +1176,7 @@ paths:
                       currency: USD
                       value: 69.97
               ClickFilter:
-                summary: Click event with filters.
+                summary: Click event with filters
                 value:
                   events:
                     - eventName: Category Clicked
@@ -1187,7 +1187,7 @@ paths:
                       filters:
                         - category:books
               ConversionFilter:
-                summary: Conversion event with filters.
+                summary: Conversion event with filters
                 value:
                   events:
                     - eventName: Category Converted
@@ -1198,7 +1198,7 @@ paths:
                       filters:
                         - category:books
               ViewObjectIDs:
-                summary: View event.
+                summary: View event
                 value:
                   events:
                     - eventName: Products Viewed
@@ -1209,7 +1209,7 @@ paths:
                       objectIDs:
                         - object-1
               ViewFilters:
-                summary: View event with filters.
+                summary: View event with filters
                 value:
                   events:
                     - eventName: Category Viewed
@@ -1228,7 +1228,7 @@ paths:
                 $ref: '#/components/schemas/EventsResponse'
               examples:
                 Success:
-                  summary: Events successfully sent to the Insights API.
+                  summary: Events successfully sent to the Insights API
                   description: >-
                     Success indicates that the Insights API received the events
                     correctly, and that event properties are formatted
@@ -1248,7 +1248,7 @@ paths:
                 title: HTML
               examples:
                 BadRequest:
-                  summary: Bad request.
+                  summary: Bad request
                   description: This error doesn't return a JSON object, but HTML.
                   value: >-
                     Error: Bad Request. Your client has issued a malformed or
@@ -1261,7 +1261,7 @@ paths:
                 $ref: '#/components/schemas/EventsResponse'
               examples:
                 Unauthorized:
-                  summary: Invalid credentials.
+                  summary: Invalid credentials
                   description: >-
                     You need to provide your application ID using the
                     `X-Algolia-Application-ID` header and your (search) API key
@@ -1277,7 +1277,7 @@ paths:
                 $ref: '#/components/schemas/EventsResponse'
               examples:
                 NotFound:
-                  summary: Unsupported operation.
+                  summary: Unsupported operation
                   description: Check that you're using the correct URL.
                   value:
                     status: 404
@@ -1294,7 +1294,7 @@ paths:
                 $ref: '#/components/schemas/EventsResponse'
               examples:
                 MethodNotAllowed:
-                  summary: Method not allowed.
+                  summary: Method not allowed
                   description: Check, that you send events with the `POST` method.
                   value:
                     status: 405
@@ -1307,7 +1307,7 @@ paths:
                 $ref: '#/components/schemas/EventsResponse'
               examples:
                 PayloadTooLarge:
-                  summary: Request body larger than 2&nbspMB.
+                  summary: Request body larger than 2&nbspMB
                   value:
                     status: 413
                     message: Request Entity Too Large
@@ -1319,12 +1319,12 @@ paths:
                 $ref: '#/components/schemas/EventsResponse'
               examples:
                 InvalidPayload:
-                  summary: Incorrect event object.
+                  summary: Incorrect event object
                   value:
                     status: 422
                     message: Invalid payload
                 NoEvents:
-                  summary: No events.
+                  summary: No events
                   description: >-
                     This can happen if you're sending an empty `events` array,
                     or if you try to send a single event object instead of the
@@ -1333,7 +1333,7 @@ paths:
                     status: 422
                     message: No events to process
                 NoEventsField:
-                  summary: Missing events attribute.
+                  summary: Missing events attribute
                   description: >-
                     This can happen if you try to send an array of events
                     directly instead of using the `events` attribute.
@@ -1343,39 +1343,39 @@ paths:
                       Invalid type for field : expected
                       insights.PublicEventsBatch, got array
                 EventNameRequired:
-                  summary: Missing eventName attribute.
+                  summary: Missing eventName attribute
                   value:
                     status: 422
                     message: EventName is required
                 WrongEventName:
-                  summary: Event name too long or wrong characters.
+                  summary: Event name too long or wrong characters
                   value:
                     status: 422
                     message: >-
                       EventName must contain only visible ASCII characters, and
                       be between 1 and 64 characters long
                 EventTypeRequired:
-                  summary: Missing eventType attribute.
+                  summary: Missing eventType attribute
                   value:
                     status: 422
                     message: EventType is required
                 WrongEventType:
-                  summary: Wrong event type.
+                  summary: Wrong event type
                   value:
                     status: 422
                     message: EventType must be one of "click", "conversion" or "view"
                 IndexRequired:
-                  summary: Missing index attribute.
+                  summary: Missing index attribute
                   value:
                     status: 422
                     message: The index field is required
                 UserTokenRequired:
-                  summary: Missing userToken attribute.
+                  summary: Missing userToken attribute
                   value:
                     status: 422
                     message: The userToken field is required
                 WrongUserToken:
-                  summary: Malformed user token.
+                  summary: Malformed user token
                   value:
                     status: 422
                     message: >-
@@ -1383,7 +1383,7 @@ paths:
                       slash, hyphen, or underscore characters, and be between 1
                       and 128 characters long
                 NoObjectIDsOrFilters:
-                  summary: Missing objectIDs or filters attribute.
+                  summary: Missing objectIDs or filters attribute
                   description: >-
                     Each event must include either the `objectIDs` or `filters`
                     attribute.
@@ -1391,19 +1391,19 @@ paths:
                     status: 422
                     message: Event should specify either some ObjectIDs or some Filters
                 BothDefined:
-                  summary: Both objectIDs and filters attributes defined.
+                  summary: Both objectIDs and filters attributes defined
                   value:
                     status: 422
                     message: Event should specify ObjectIDs or Filters, but not both
                 PositionsOnWrongEventType:
-                  summary: Wrong combination of positions and eventType attributes.
+                  summary: Wrong combination of positions and eventType attributes
                   value:
                     status: 422
                     message: >-
                       Only event of type click should specify the positions
                       attribute
                 PositionsWithoutQueryID:
-                  summary: Positions attribute without queryID.
+                  summary: Positions attribute without queryID
                   description: >-
                     Click events with the `positions` attribute require the
                     `queryID` attribute.
@@ -1413,7 +1413,7 @@ paths:
                       Event of type click with positions should specify a
                       queryID
                 WrongPositionsValue:
-                  summary: Wrong value in positions array.
+                  summary: Wrong value in positions array
                   description: Any value in the `positions` array must be greater than 0.
                   value:
                     status: 422
@@ -1421,7 +1421,7 @@ paths:
                       Event of type click may only have strictly positive
                       positions
                 WrongPositionsItems:
-                  summary: Wrong number of items in positions array.
+                  summary: Wrong number of items in positions array
                   description: >-
                     For click events with the `queryID` and `objectIDs`
                     attributes, you must include the `positions` attribute with
@@ -1432,14 +1432,14 @@ paths:
                       Event of type click should have the same number of
                       ObjectIDs and Positions
                 WrongQueryID:
-                  summary: Malformed query ID.
+                  summary: Malformed query ID
                   value:
                     status: 422
                     message: >-
                       Query ID must be a search query ID (32 characters
                       hexadecimal string)
                 InvalidDataType:
-                  summary: Wrong data type.
+                  summary: Wrong data type
                   description: >-
                     This can happen if one or more attribute is a number instead
                     of a string.
@@ -1447,12 +1447,12 @@ paths:
                     status: 422
                     message: 'Invalid type for field events: expected string, got number'
                 InvalidTimestamp:
-                  summary: Timestamp too old.
+                  summary: Timestamp too old
                   value:
                     status: 422
                     message: The timestamp must be at most 4 days in the past
                 TooManyEvents:
-                  summary: Too many events.
+                  summary: Too many events
                   description: You can include up to 1,000 events in a single API request.
                   value:
                     status: 422
@@ -1833,7 +1833,7 @@ paths:
       tags:
         - usertokens
       operationId: deleteUserToken
-      summary: Delete user token.
+      summary: Delete user token
       description: >
         Deletes all events related to the specified user token from events
         metrics and analytics.
@@ -2143,7 +2143,7 @@ components:
         - click
     index:
       type: string
-      description: Index name to which the event's items belong.
+      description: Index name (case-sensitive) to which the event's items belong.
       example: YourIndexName
     objectIDs:
       type: array

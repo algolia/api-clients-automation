@@ -30,6 +30,25 @@ To make using the specs in these contexts easier, follow these guidelines:
 - Use inline Markdown links judiciously.
   Don't link to readily searchable information, such as internet RFCs or Wikipedia.
 
+### Markdown in long descriptions
+
+Operations and parameters may need more information that can fit in one sentence.
+In that case, split your descriptions into two or more paragraphs:
+
+```yaml
+description: |
+  First sentence as short description (no markdown, just plain text).
+
+  More information in separate paragraphs after an empty line.
+  You can use **Markdown** here.
+```
+
+Use the `|` character to write multi-line descriptions.
+
+The first sentence can be used as a _short description_ in environments that don't support Markdown,
+such as the [Algolia CLI](https://github.com/algolia/cli/).
+After an empty line, you can provide more context.
+
 ## Capitalization
 
 In general, follow the capitalization of the API.
@@ -97,7 +116,7 @@ For APIs that are available to every Algolia subscription, see [Authentication](
 For APIs with requests that require authentication,
 describe the authentication method and where to find the credentials.
 
-For APIs that require a specific Algolia plan, see [Avalavailability-and-authentication](#availability-and-authentication).
+For APIs that require a specific Algolia plan, see [Availability and authentication](#availability-and-authentication).
 
 **Example:** [Search API](/specs/search#section/Authentication)
 
@@ -169,15 +188,6 @@ but you can expand it.
 
 Add paragraphs with more information that users might need when using this endpoint,
 such as limitations, side effects, or any other information that can't be expressed in the schema.
-
-Use the `|` character for multiline descriptions:
-
-```yaml
-description: |
-  A multiline description.
-
-  Multi-paragraph even.
-```
 
 ## Properties and parameter descriptions
 

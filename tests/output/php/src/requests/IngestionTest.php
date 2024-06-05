@@ -917,7 +917,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
     {
         $client = $this->getClient();
         $client->getAuthentications(
-            10,
+            2,
             1,
             [
                 'basic',
@@ -928,7 +928,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'none',
             ],
             'createdAt',
-            'desc',
+            'asc',
         );
 
         $this->assertRequests([
@@ -936,13 +936,13 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/authentications',
                 'method' => 'GET',
                 'body' => null,
-                'queryParameters' => json_decode('{"itemsPerPage":"10","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"desc"}', true),
+                'queryParameters' => json_decode('{"itemsPerPage":"2","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"asc"}', true),
             ],
         ]);
 
         $e2eClient = $this->getE2EClient();
         $resp = $e2eClient->getAuthentications(
-            10,
+            2,
             1,
             [
                 'basic',
@@ -953,10 +953,10 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'none',
             ],
             'createdAt',
-            'desc',
+            'asc',
         );
 
-        $expected = json_decode('{"pagination":{"page":1,"itemsPerPage":10},"authentications":[{"authenticationID":"b57a7ea5-8592-493b-b75b-6c66d77aee7f","type":"algolia","name":"Auto-generated Authentication for T8JK9S7I7X - 1704732447751","input":{},"createdAt":"2024-01-08T16:47:31Z","updatedAt":"2024-01-08T16:47:31Z"},{},{},{},{},{},{},{}]}', true);
+        $expected = json_decode('{"pagination":{"page":1,"itemsPerPage":2},"authentications":[{"authenticationID":"474f050f-a771-464c-a016-323538029f5f","type":"algolia","name":"algolia-auth-1677060483885","input":{},"createdAt":"2023-02-22T10:08:04Z","updatedAt":"2023-10-25T08:41:56Z"},{}]}', true);
 
         $this->assertEquals($this->union($expected, $resp), $expected);
     }

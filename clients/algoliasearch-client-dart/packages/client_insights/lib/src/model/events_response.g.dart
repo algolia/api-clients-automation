@@ -13,7 +13,7 @@ EventsResponse _$EventsResponseFromJson(Map<String, dynamic> json) =>
       ($checkedConvert) {
         final val = EventsResponse(
           message: $checkedConvert('message', (v) => v as String?),
-          status: $checkedConvert('status', (v) => v as int?),
+          status: $checkedConvert('status', (v) => (v as num?)?.toInt()),
         );
         return val;
       },

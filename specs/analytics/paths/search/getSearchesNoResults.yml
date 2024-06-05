@@ -4,7 +4,7 @@ get:
   operationId: getSearchesNoResults
   x-acl:
     - analytics
-  summary: Retrieve top searches without results.
+  summary: Retrieve top searches without results
   description: Retrieves the most popular searches that didn't return any results.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'

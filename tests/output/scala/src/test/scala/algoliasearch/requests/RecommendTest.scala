@@ -605,13 +605,13 @@ class RecommendTest extends AnyFunSuite {
             queryParameters = Some(
               SearchParams(
                 query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(MixedSearchFilters("query"))))
+                facetFilters = Some(FacetFilters(Seq(FacetFilters("query"))))
               )
             ),
             fallbackParameters = Some(
               FallbackParams(
                 query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(MixedSearchFilters("fallback"))))
+                facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback"))))
               )
             )
           )
@@ -674,13 +674,13 @@ class RecommendTest extends AnyFunSuite {
             queryParameters = Some(
               SearchParams(
                 query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(MixedSearchFilters("query"))))
+                facetFilters = Some(FacetFilters(Seq(FacetFilters("query"))))
               )
             ),
             fallbackParameters = Some(
               SearchParamsObject(
                 query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(MixedSearchFilters("fallback"))))
+                facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback"))))
               )
             )
           )
@@ -747,13 +747,13 @@ class RecommendTest extends AnyFunSuite {
             queryParameters = Some(
               SearchParams(
                 query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(MixedSearchFilters("query1"))))
+                facetFilters = Some(FacetFilters(Seq(FacetFilters("query1"))))
               )
             ),
             fallbackParameters = Some(
               FallbackParams(
                 query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(MixedSearchFilters("fallback1"))))
+                facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback1"))))
               )
             )
           ),
@@ -766,13 +766,13 @@ class RecommendTest extends AnyFunSuite {
             queryParameters = Some(
               SearchParams(
                 query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(MixedSearchFilters("query2"))))
+                facetFilters = Some(FacetFilters(Seq(FacetFilters("query2"))))
               )
             ),
             fallbackParameters = Some(
               FallbackParams(
                 query = Some("myQuery"),
-                facetFilters = Some(FacetFilters(Seq(MixedSearchFilters("fallback2"))))
+                facetFilters = Some(FacetFilters(Seq(FacetFilters("fallback2"))))
               )
             )
           )

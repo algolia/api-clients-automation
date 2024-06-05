@@ -33,6 +33,8 @@
   */
 package algoliasearch.search
 
+import algoliasearch.search.SupportedLanguage._
+
 /** BaseSearchParams
   *
   * @param query
@@ -62,7 +64,7 @@ package algoliasearch.search
   *   kept. For more information, see [filter
   *   scores](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/in-depth/filter-scoring/#accumulating-scores-with-sumorfiltersscores).
   * @param restrictSearchableAttributes
-  *   Restricts a search to a subset of your searchable attributes.
+  *   Restricts a search to a subset of your searchable attributes. Attribute names are case-sensitive.
   * @param facets
   *   Facets for which to retrieve facet values that match the search criteria and the number of matching facet values.
   *   To retrieve all facets, use the wildcard character `*`. For more information, see
@@ -97,7 +99,7 @@ package algoliasearch.search
   *   by its latitude and longitude. Provide multiple polygons as nested arrays. For more information, see [filtering
   *   inside
   *   polygons](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
-  *   This parameter is ignored, if you also specify `insideBoundingBox`.
+  *   This parameter is ignored if you also specify `insideBoundingBox`.
   * @param naturalLanguages
   *   ISO language codes that adjust settings that are useful for processing natural language queries (as opposed to
   *   keyword searches): - Sets `removeStopWords` and `ignorePlurals` to the list of provided languages. - Sets
@@ -154,7 +156,7 @@ case class BaseSearchParams(
     minimumAroundRadius: Option[Int] = scala.None,
     insideBoundingBox: Option[Seq[Seq[Double]]] = scala.None,
     insidePolygon: Option[Seq[Seq[Double]]] = scala.None,
-    naturalLanguages: Option[Seq[String]] = scala.None,
+    naturalLanguages: Option[Seq[SupportedLanguage]] = scala.None,
     ruleContexts: Option[Seq[String]] = scala.None,
     personalizationImpact: Option[Int] = scala.None,
     userToken: Option[String] = scala.None,

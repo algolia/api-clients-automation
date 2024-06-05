@@ -26,7 +26,7 @@ package algoliasearch.abtesting
 /** AbTestsVariant
   *
   * @param index
-  *   A/B test index.
+  *   Index name of the A/B test variant (case-sensitive).
   * @param trafficPercentage
   *   Percentage of search requests each variant receives.
   * @param description

@@ -7,7 +7,7 @@ post:
   x-acl:
     - settings
   description: Searches for standard and custom dictionary entries.
-  summary: Search dictionary entries.
+  summary: Search dictionary entries
   parameters:
     - $ref: 'common/parameters.yml#/DictionaryName'
   requestBody:

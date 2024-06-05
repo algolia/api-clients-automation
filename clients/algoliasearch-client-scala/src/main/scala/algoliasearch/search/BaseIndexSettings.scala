@@ -39,12 +39,12 @@ import algoliasearch.search.SupportedLanguage._
   *
   * @param attributesForFaceting
   *   Attributes used for [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/).
-  *   Facets are ways to categorize search results based on attributes. Facets can be used to let user filter search
-  *   results. By default, no attribute is used for faceting. **Modifiers** - `filterOnly(\"ATTRIBUTE\")`. Allows using
-  *   this attribute as a filter, but doesn't evalue the facet values. - `searchable(\"ATTRIBUTE\")`. Allows searching
-  *   for facet values. - `afterDistinct(\"ATTRIBUTE\")`. Evaluates the facet count _after_ deduplication with
-  *   `distinct`. This ensures accurate facet counts. You can apply this modifier to searchable facets:
-  *   `afterDistinct(searchable(ATTRIBUTE))`.
+  *   Facets are attributes that let you categorize search results. They can be used for filtering search results. By
+  *   default, no attribute is used for faceting. Attribute names are case-sensitive. **Modifiers** -
+  *   `filterOnly(\"ATTRIBUTE\")`. Allows using this attribute as a filter, but doesn't evalue the facet values. -
+  *   `searchable(\"ATTRIBUTE\")`. Allows searching for facet values. - `afterDistinct(\"ATTRIBUTE\")`. Evaluates the
+  *   facet count _after_ deduplication with `distinct`. This ensures accurate facet counts. You can apply this modifier
+  *   to searchable facets: `afterDistinct(searchable(ATTRIBUTE))`.
   * @param replicas
   *   Creates [replica
   *   indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/). Replicas
@@ -62,7 +62,7 @@ import algoliasearch.search.SupportedLanguage._
   *   Attributes that can't be retrieved at query time. This can be useful if you want to use an attribute for ranking
   *   or to [restrict
   *   access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/), but don't
-  *   want to include it in the search results.
+  *   want to include it in the search results. Attribute names are case-sensitive.
   * @param disableTypoToleranceOnWords
   *   Words for which you want to turn off [typo
   *   tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/). This also
@@ -73,16 +73,18 @@ import algoliasearch.search.SupportedLanguage._
   *   Attributes, for which you want to support [Japanese
   *   transliteration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#japanese-transliteration-and-type-ahead).
   *   Transliteration supports searching in any of the Japanese writing systems. To support transliteration, you must
-  *   set the indexing language to Japanese.
+  *   set the indexing language to Japanese. Attribute names are case-sensitive.
   * @param camelCaseAttributes
-  *   Attributes for which to split [camel case](https://wikipedia.org/wiki/Camel_case) words.
+  *   Attributes for which to split [camel case](https://wikipedia.org/wiki/Camel_case) words. Attribute names are
+  *   case-sensitive.
   * @param decompoundedAttributes
   *   Searchable attributes to which Algolia should apply [word
   *   segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/)
-  *   (decompounding). Compound words are formed by combining two or more individual words, and are particularly
-  *   prevalent in Germanic languages—for example, \"firefighter\". With decompounding, the individual components are
-  *   indexed separately. You can specify different lists for different languages. Decompounding is supported for these
-  *   languages: Dutch (`nl`), German (`de`), Finnish (`fi`), Danish (`da`), Swedish (`sv`), and Norwegian (`no`).
+  *   (decompounding). Attribute names are case-sensitive. Compound words are formed by combining two or more individual
+  *   words, and are particularly prevalent in Germanic languages—for example, \"firefighter\". With decompounding, the
+  *   individual components are indexed separately. You can specify different lists for different languages.
+  *   Decompounding is supported for these languages: Dutch (`nl`), German (`de`), Finnish (`fi`), Danish (`da`),
+  *   Swedish (`sv`), and Norwegian (`no`).
   * @param indexLanguages
   *   Languages for language-specific processing steps, such as word detection and dictionary settings. **You should
   *   always specify an indexing language.** If you don't specify an indexing language, the search engine uses all
@@ -94,22 +96,24 @@ import algoliasearch.search.SupportedLanguage._
   * @param disablePrefixOnAttributes
   *   Searchable attributes for which you want to turn off [prefix
   *   matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjusting-prefix-search).
+  *   Attribute names are case-sensitive.
   * @param allowCompressionOfIntegerArray
   *   Whether arrays with exclusively non-negative integers should be compressed for better performance. If true, the
   *   compressed arrays may be reordered.
   * @param numericAttributesForFiltering
   *   Numeric attributes that can be used as [numerical
   *   filters](https://www.algolia.com/doc/guides/managing-results/rules/detecting-intent/how-to/applying-a-custom-filter-for-a-specific-query/#numerical-filters).
-  *   By default, all numeric attributes are available as numerical filters. For faster indexing, reduce the number of
-  *   numeric attributes. If you want to turn off filtering for all numeric attributes, specifiy an attribute that
-  *   doesn't exist in your index, such as `NO_NUMERIC_FILTERING`. **Modifier** - `equalOnly(\"ATTRIBUTE\")`. Support
-  *   only filtering based on equality comparisons `=` and `!=`.
+  *   Attribute names are case-sensitive. By default, all numeric attributes are available as numerical filters. For
+  *   faster indexing, reduce the number of numeric attributes. If you want to turn off filtering for all numeric
+  *   attributes, specifiy an attribute that doesn't exist in your index, such as `NO_NUMERIC_FILTERING`. **Modifier** -
+  *   `equalOnly(\"ATTRIBUTE\")`. Support only filtering based on equality comparisons `=` and `!=`.
   * @param separatorsToIndex
   *   Controls which separators are indexed. Separators are all non-letter characters except spaces and currency
   *   characters, such as $€£¥. By default, separator characters aren't indexed. With `separatorsToIndex`, Algolia
   *   treats separator characters as separate words. For example, a search for `C#` would report two matches.
   * @param searchableAttributes
-  *   Attributes used for searching. By default, all attributes are searchable and the
+  *   Attributes used for searching. Attribute names are case-sensitive. By default, all attributes are searchable and
+  *   the
   *   [Attribute](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#attribute)
   *   ranking criterion is turned off. With a non-empty list, Algolia only returns results with matches in the selected
   *   attributes. In addition, the Attribute ranking criterion is turned on: matches in attributes that are higher in
@@ -125,11 +129,11 @@ import algoliasearch.search.SupportedLanguage._
   *   Characters and their normalized replacements. This overrides Algolia's default
   *   [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
   * @param attributeForDistinct
-  *   Attribute that should be used to establish groups of results. All records with the same value for this attribute
-  *   are considered a group. You can combine `attributeForDistinct` with the `distinct` search parameter to control how
-  *   many items per group are included in the search results. If you want to use the same attribute also for faceting,
-  *   use the `afterDistinct` modifier of the `attributesForFaceting` setting. This applies faceting _after_
-  *   deduplication, which will result in accurate facet counts.
+  *   Attribute that should be used to establish groups of results. Attribute names are case-sensitive. All records with
+  *   the same value for this attribute are considered a group. You can combine `attributeForDistinct` with the
+  *   `distinct` search parameter to control how many items per group are included in the search results. If you want to
+  *   use the same attribute also for faceting, use the `afterDistinct` modifier of the `attributesForFaceting` setting.
+  *   This applies faceting _after_ deduplication, which will result in accurate facet counts.
   */
 case class BaseIndexSettings(
     attributesForFaceting: Option[Seq[String]] = scala.None,

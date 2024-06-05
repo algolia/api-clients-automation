@@ -21,7 +21,7 @@ final class SearchForFacetsOptions {
   @JsonKey(name: r'facet')
   final String facet;
 
-  /// Index name.
+  /// Index name (case-sensitive).
   @JsonKey(name: r'indexName')
   final String indexName;
 

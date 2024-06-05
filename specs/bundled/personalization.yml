@@ -103,7 +103,7 @@ paths:
   /{path}:
     get:
       operationId: customGet
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -133,7 +133,7 @@ paths:
           application/json:
             schema:
               type: object
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -163,7 +163,7 @@ paths:
           application/json:
             schema:
               type: object
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -187,7 +187,7 @@ paths:
         - personalization
     delete:
       operationId: customDelete
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -216,7 +216,7 @@ paths:
       operationId: getUserTokenProfile
       x-acl:
         - recommendation
-      summary: Retrieve a user profile.
+      summary: Retrieve a user profile
       description: Retrieves a user profile and their affinities for different facets.
       parameters:
         - $ref: '#/components/parameters/UserToken'
@@ -266,7 +266,7 @@ paths:
       operationId: deleteUserProfile
       x-acl:
         - recommendation
-      summary: Delete a user profile.
+      summary: Delete a user profile
       description: >
         Deletes a user profile.
 
@@ -313,7 +313,7 @@ paths:
       operationId: getPersonalizationStrategy
       x-acl:
         - recommendation
-      summary: Retrieve the personalization strategy.
+      summary: Retrieve the personalization strategy
       description: Retrieves the current personalization strategy.
       responses:
         '200':
@@ -336,7 +336,7 @@ paths:
       operationId: setPersonalizationStrategy
       x-acl:
         - recommendation
-      summary: Define the personalization strategy.
+      summary: Define the personalization strategy
       description: Creates a new personalization strategy.
       requestBody:
         required: true

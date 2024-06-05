@@ -687,8 +687,7 @@ final class SearchClientRequestsTests: XCTestCase {
             indexName: "indexName",
             browseParams: BrowseParams.browseParamsObject(BrowseParamsObject(
                 query: "myQuery",
-                facetFilters: SearchFacetFilters
-                    .arrayOfSearchMixedSearchFilters([SearchMixedSearchFilters.string("tags:algolia")])
+                facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("tags:algolia")])
             ))
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -2858,7 +2857,7 @@ final class SearchClientRequestsTests: XCTestCase {
 
         let e2eExpectedBodyData =
             try XCTUnwrap(
-                "{\"results\":[{\"exhaustiveFacetsCount\":true,\"facetHits\":[{\"count\":1,\"highlighted\":\"goland\",\"value\":\"goland\"},{\"count\":1,\"highlighted\":\"neovim\",\"value\":\"neovim\"},{\"count\":1,\"highlighted\":\"vscode\",\"value\":\"vscode\"}]}]}"
+                "{\"results\":[{\"exhaustiveFacetsCount\":true,\"facetHits\":[{\"count\":1,\"highlighted\":\"goland\",\"value\":\"goland\"},{\"count\":1,\"highlighted\":\"neovim\",\"value\":\"neovim\"},{\"count\":1,\"highlighted\":\"visual studio\",\"value\":\"visual studio\"},{\"count\":1,\"highlighted\":\"vscode\",\"value\":\"vscode\"}]}]}"
                     .data(using: .utf8)
             )
 
@@ -3054,25 +3053,34 @@ final class SearchClientRequestsTests: XCTestCase {
                     indexName: "theIndexName"
                 )),
                 SearchQuery.searchForHits(SearchForHits(
-                    facetFilters: SearchFacetFilters.arrayOfSearchMixedSearchFilters([
-                        SearchMixedSearchFilters.string("mySearch:filters"),
-                        SearchMixedSearchFilters.arrayOfString(["mySearch:filters"]),
+                    facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([
+                        SearchFacetFilters.string("mySearch:filters"),
+                        SearchFacetFilters.arrayOfSearchFacetFilters([
+                            SearchFacetFilters.string("mySearch:filters"),
+                            SearchFacetFilters.arrayOfSearchFacetFilters(
+                                [SearchFacetFilters.string("mySearch:filters")]
+                            ),
+                        ]),
                     ]),
-                    optionalFilters: SearchOptionalFilters.arrayOfSearchMixedSearchFilters([
-                        SearchMixedSearchFilters.string("mySearch:filters"),
-                        SearchMixedSearchFilters.arrayOfString(["mySearch:filters"]),
+                    optionalFilters: SearchOptionalFilters.arrayOfSearchOptionalFilters([
+                        SearchOptionalFilters.string("mySearch:filters"),
+                        SearchOptionalFilters
+                            .arrayOfSearchOptionalFilters([SearchOptionalFilters.string("mySearch:filters")]),
                     ]),
-                    numericFilters: SearchNumericFilters.arrayOfSearchMixedSearchFilters([
-                        SearchMixedSearchFilters.string("mySearch:filters"),
-                        SearchMixedSearchFilters.arrayOfString(["mySearch:filters"]),
+                    numericFilters: SearchNumericFilters.arrayOfSearchNumericFilters([
+                        SearchNumericFilters.string("mySearch:filters"),
+                        SearchNumericFilters.arrayOfSearchNumericFilters(
+                            [SearchNumericFilters.string("mySearch:filters")]
+                        ),
                     ]),
-                    tagFilters: SearchTagFilters.arrayOfSearchMixedSearchFilters([
-                        SearchMixedSearchFilters.string("mySearch:filters"),
-                        SearchMixedSearchFilters.arrayOfString(["mySearch:filters"]),
+                    tagFilters: SearchTagFilters.arrayOfSearchTagFilters([
+                        SearchTagFilters.string("mySearch:filters"),
+                        SearchTagFilters.arrayOfSearchTagFilters([SearchTagFilters.string("mySearch:filters")]),
                     ]),
-                    reRankingApplyFilter: SearchReRankingApplyFilter.arrayOfSearchMixedSearchFilters([
-                        SearchMixedSearchFilters.string("mySearch:filters"),
-                        SearchMixedSearchFilters.arrayOfString(["mySearch:filters"]),
+                    reRankingApplyFilter: SearchReRankingApplyFilter.arrayOfSearchReRankingApplyFilter([
+                        SearchReRankingApplyFilter.string("mySearch:filters"),
+                        SearchReRankingApplyFilter
+                            .arrayOfSearchReRankingApplyFilter([SearchReRankingApplyFilter.string("mySearch:filters")]),
                     ]),
                     indexName: "theIndexName"
                 )),
@@ -3084,7 +3092,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"requests\":[{\"indexName\":\"theIndexName\",\"facetFilters\":\"mySearch:filters\",\"reRankingApplyFilter\":\"mySearch:filters\",\"tagFilters\":\"mySearch:filters\",\"numericFilters\":\"mySearch:filters\",\"optionalFilters\":\"mySearch:filters\"},{\"indexName\":\"theIndexName\",\"facetFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"reRankingApplyFilter\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"tagFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"numericFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"optionalFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]]}]}"
+            "{\"requests\":[{\"indexName\":\"theIndexName\",\"facetFilters\":\"mySearch:filters\",\"reRankingApplyFilter\":\"mySearch:filters\",\"tagFilters\":\"mySearch:filters\",\"numericFilters\":\"mySearch:filters\",\"optionalFilters\":\"mySearch:filters\"},{\"indexName\":\"theIndexName\",\"facetFilters\":[\"mySearch:filters\",[\"mySearch:filters\",[\"mySearch:filters\"]]],\"reRankingApplyFilter\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"tagFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"numericFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"optionalFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]]}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -3096,8 +3104,116 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// search with all search parameters
+    /// search filters end to end
     func testSearchTest7() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponses<Hit>> = try await client
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
+                SearchQuery.searchForHits(SearchForHits(
+                    filters: "editor:'visual studio' OR editor:neovim",
+                    indexName: "cts_e2e_search_facet"
+                )),
+                SearchQuery.searchForHits(SearchForHits(
+                    facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([
+                        SearchFacetFilters.string("editor:'visual studio'"),
+                        SearchFacetFilters.string("editor:neovim"),
+                    ]),
+                    indexName: "cts_e2e_search_facet"
+                )),
+                SearchQuery.searchForHits(SearchForHits(
+                    facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([
+                        SearchFacetFilters.string("editor:'visual studio'"),
+                        SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("editor:neovim")]),
+                    ]),
+                    indexName: "cts_e2e_search_facet"
+                )),
+                SearchQuery.searchForHits(SearchForHits(
+                    facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([
+                        SearchFacetFilters.string("editor:'visual studio'"),
+                        SearchFacetFilters.arrayOfSearchFacetFilters([
+                            SearchFacetFilters.string("editor:neovim"),
+                            SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("editor:goland")]),
+                        ]),
+                    ]),
+                    indexName: "cts_e2e_search_facet"
+                )),
+            ]))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"requests\":[{\"indexName\":\"cts_e2e_search_facet\",\"filters\":\"editor:'visual studio' OR editor:neovim\"},{\"indexName\":\"cts_e2e_search_facet\",\"facetFilters\":[\"editor:'visual studio'\",\"editor:neovim\"]},{\"indexName\":\"cts_e2e_search_facet\",\"facetFilters\":[\"editor:'visual studio'\",[\"editor:neovim\"]]},{\"indexName\":\"cts_e2e_search_facet\",\"facetFilters\":[\"editor:'visual studio'\",[\"editor:neovim\",[\"editor:goland\"]]]}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/*/queries")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+
+        guard let e2eClient = SearchClientRequestsTests.e2eClient else {
+            XCTFail("E2E client is not initialized")
+            return
+        }
+
+        let e2eResponse: Response<SearchResponses<Hit>> = try await e2eClient
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
+                SearchQuery.searchForHits(SearchForHits(
+                    filters: "editor:'visual studio' OR editor:neovim",
+                    indexName: "cts_e2e_search_facet"
+                )),
+                SearchQuery.searchForHits(SearchForHits(
+                    facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([
+                        SearchFacetFilters.string("editor:'visual studio'"),
+                        SearchFacetFilters.string("editor:neovim"),
+                    ]),
+                    indexName: "cts_e2e_search_facet"
+                )),
+                SearchQuery.searchForHits(SearchForHits(
+                    facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([
+                        SearchFacetFilters.string("editor:'visual studio'"),
+                        SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("editor:neovim")]),
+                    ]),
+                    indexName: "cts_e2e_search_facet"
+                )),
+                SearchQuery.searchForHits(SearchForHits(
+                    facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([
+                        SearchFacetFilters.string("editor:'visual studio'"),
+                        SearchFacetFilters.arrayOfSearchFacetFilters([
+                            SearchFacetFilters.string("editor:neovim"),
+                            SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("editor:goland")]),
+                        ]),
+                    ]),
+                    indexName: "cts_e2e_search_facet"
+                )),
+            ]))
+        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
+        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
+
+        let e2eExpectedBodyData =
+            try XCTUnwrap(
+                "{\"results\":[{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":2,\"nbPages\":1,\"page\":0,\"hits\":[{\"editor\":\"visual studio\",\"_highlightResult\":{\"editor\":{\"value\":\"visual studio\",\"matchLevel\":\"none\"}}},{\"editor\":\"neovim\",\"_highlightResult\":{\"editor\":{\"value\":\"neovim\",\"matchLevel\":\"none\"}}}],\"query\":\"\",\"params\":\"filters=editor%3A%27visual+studio%27+OR+editor%3Aneovim\"},{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":0,\"nbPages\":0,\"page\":0,\"hits\":[],\"query\":\"\",\"params\":\"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%22editor%3Aneovim%22%5D\"},{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":0,\"nbPages\":0,\"page\":0,\"hits\":[],\"query\":\"\",\"params\":\"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%5D%5D\"},{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":0,\"nbPages\":0,\"page\":0,\"hits\":[],\"query\":\"\",\"params\":\"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%2C%5B%22editor%3Agoland%22%5D%5D%5D\"}]}"
+                    .data(using: .utf8)
+            )
+
+        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
+
+        XCTAssertEqual(e2eResponse.statusCode, 200)
+    }
+
+    /// search with all search parameters
+    func testSearchTest8() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3112,15 +3228,12 @@ final class SearchClientRequestsTests: XCTestCase {
                         query: "",
                         similarQuery: "",
                         filters: "",
-                        facetFilters: SearchFacetFilters
-                            .arrayOfSearchMixedSearchFilters([SearchMixedSearchFilters.string("")]),
+                        facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("")]),
                         optionalFilters: SearchOptionalFilters
-                            .arrayOfSearchMixedSearchFilters([SearchMixedSearchFilters.string("")]),
-                        numericFilters: SearchNumericFilters.arrayOfSearchMixedSearchFilters(
-                            [SearchMixedSearchFilters.string("")]
-                        ),
-                        tagFilters: SearchTagFilters
-                            .arrayOfSearchMixedSearchFilters([SearchMixedSearchFilters.string("")]),
+                            .arrayOfSearchOptionalFilters([SearchOptionalFilters.string("")]),
+                        numericFilters: SearchNumericFilters
+                            .arrayOfSearchNumericFilters([SearchNumericFilters.string("")]),
+                        tagFilters: SearchTagFilters.arrayOfSearchTagFilters([SearchTagFilters.string("")]),
                         sumOrFiltersScores: true,
                         restrictSearchableAttributes: [""],
                         facets: [""],
@@ -3138,7 +3251,7 @@ final class SearchClientRequestsTests: XCTestCase {
                             [47.3165, 4.9665, 47.3424, 5.0201, 47.32, 4.9],
                             [40.9234, 2.1185, 38.643, 1.9916, 39.2587, 2.0104],
                         ],
-                        naturalLanguages: [""],
+                        naturalLanguages: [SearchSupportedLanguage.fr],
                         ruleContexts: [""],
                         personalizationImpact: 0,
                         userToken: "",
@@ -3193,7 +3306,7 @@ final class SearchClientRequestsTests: XCTestCase {
                         )),
                         enableReRanking: true,
                         reRankingApplyFilter: SearchReRankingApplyFilter
-                            .arrayOfSearchMixedSearchFilters([SearchMixedSearchFilters.string("")]),
+                            .arrayOfSearchReRankingApplyFilter([SearchReRankingApplyFilter.string("")]),
                         indexName: "theIndexName",
                         type: SearchTypeDefault.`default`
                     )),
@@ -3205,7 +3318,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"requests\":[{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"multiWordsSynonym\"],\"analytics\":true,\"analyticsTags\":[\"\"],\"aroundLatLng\":\"\",\"aroundLatLngViaIP\":true,\"aroundPrecision\":0,\"aroundRadius\":\"all\",\"attributeCriteriaComputedByMinProximity\":true,\"attributesToHighlight\":[\"\"],\"attributesToRetrieve\":[\"\"],\"attributesToSnippet\":[\"\"],\"clickAnalytics\":true,\"customRanking\":[\"\"],\"decompoundQuery\":true,\"disableExactOnAttributes\":[\"\"],\"disableTypoToleranceOnAttributes\":[\"\"],\"distinct\":0,\"enableABTest\":true,\"enablePersonalization\":true,\"enableReRanking\":true,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"facetFilters\":[\"\"],\"facetingAfterDistinct\":true,\"facets\":[\"\"],\"filters\":\"\",\"getRankingInfo\":true,\"highlightPostTag\":\"\",\"highlightPreTag\":\"\",\"hitsPerPage\":1,\"ignorePlurals\":false,\"indexName\":\"theIndexName\",\"insideBoundingBox\":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],\"insidePolygon\":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],\"keepDiacriticsOnCharacters\":\"\",\"length\":1,\"maxValuesPerFacet\":0,\"minProximity\":1,\"minWordSizefor1Typo\":0,\"minWordSizefor2Typos\":0,\"minimumAroundRadius\":1,\"naturalLanguages\":[\"\"],\"numericFilters\":[\"\"],\"offset\":0,\"optionalFilters\":[\"\"],\"optionalWords\":[\"\"],\"page\":0,\"percentileComputation\":true,\"personalizationImpact\":0,\"query\":\"\",\"queryLanguages\":[\"fr\"],\"queryType\":\"prefixAll\",\"ranking\":[\"\"],\"reRankingApplyFilter\":[\"\"],\"relevancyStrictness\":0,\"removeStopWords\":true,\"removeWordsIfNoResults\":\"allOptional\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"responseFields\":[\"\"],\"restrictHighlightAndSnippetArrays\":true,\"restrictSearchableAttributes\":[\"\"],\"ruleContexts\":[\"\"],\"similarQuery\":\"\",\"snippetEllipsisText\":\"\",\"sortFacetValuesBy\":\"\",\"sumOrFiltersScores\":true,\"synonyms\":true,\"tagFilters\":[\"\"],\"type\":\"default\",\"typoTolerance\":\"min\",\"userToken\":\"\"}]}"
+            "{\"requests\":[{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"multiWordsSynonym\"],\"analytics\":true,\"analyticsTags\":[\"\"],\"aroundLatLng\":\"\",\"aroundLatLngViaIP\":true,\"aroundPrecision\":0,\"aroundRadius\":\"all\",\"attributeCriteriaComputedByMinProximity\":true,\"attributesToHighlight\":[\"\"],\"attributesToRetrieve\":[\"\"],\"attributesToSnippet\":[\"\"],\"clickAnalytics\":true,\"customRanking\":[\"\"],\"decompoundQuery\":true,\"disableExactOnAttributes\":[\"\"],\"disableTypoToleranceOnAttributes\":[\"\"],\"distinct\":0,\"enableABTest\":true,\"enablePersonalization\":true,\"enableReRanking\":true,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"facetFilters\":[\"\"],\"facetingAfterDistinct\":true,\"facets\":[\"\"],\"filters\":\"\",\"getRankingInfo\":true,\"highlightPostTag\":\"\",\"highlightPreTag\":\"\",\"hitsPerPage\":1,\"ignorePlurals\":false,\"indexName\":\"theIndexName\",\"insideBoundingBox\":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],\"insidePolygon\":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],\"keepDiacriticsOnCharacters\":\"\",\"length\":1,\"maxValuesPerFacet\":0,\"minProximity\":1,\"minWordSizefor1Typo\":0,\"minWordSizefor2Typos\":0,\"minimumAroundRadius\":1,\"naturalLanguages\":[\"fr\"],\"numericFilters\":[\"\"],\"offset\":0,\"optionalFilters\":[\"\"],\"optionalWords\":[\"\"],\"page\":0,\"percentileComputation\":true,\"personalizationImpact\":0,\"query\":\"\",\"queryLanguages\":[\"fr\"],\"queryType\":\"prefixAll\",\"ranking\":[\"\"],\"reRankingApplyFilter\":[\"\"],\"relevancyStrictness\":0,\"removeStopWords\":true,\"removeWordsIfNoResults\":\"allOptional\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"responseFields\":[\"\"],\"restrictHighlightAndSnippetArrays\":true,\"restrictSearchableAttributes\":[\"\"],\"ruleContexts\":[\"\"],\"similarQuery\":\"\",\"snippetEllipsisText\":\"\",\"sortFacetValuesBy\":\"\",\"sumOrFiltersScores\":true,\"synonyms\":true,\"tagFilters\":[\"\"],\"type\":\"default\",\"typoTolerance\":\"min\",\"userToken\":\"\"}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
@@ -3478,8 +3591,7 @@ final class SearchClientRequestsTests: XCTestCase {
             indexName: "indexName",
             searchParams: SearchSearchParams.searchSearchParamsObject(SearchSearchParamsObject(
                 query: "myQuery",
-                facetFilters: SearchFacetFilters
-                    .arrayOfSearchMixedSearchFilters([SearchMixedSearchFilters.string("tags:algolia")])
+                facetFilters: SearchFacetFilters.arrayOfSearchFacetFilters([SearchFacetFilters.string("tags:algolia")])
             ))
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)

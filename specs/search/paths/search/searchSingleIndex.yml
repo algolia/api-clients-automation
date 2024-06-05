@@ -6,7 +6,7 @@ post:
   x-cacheable: true
   x-acl:
     - search
-  summary: Search an index.
+  summary: Search an index
   description: |
     Searches a single index and return matching search results (_hits_).
 

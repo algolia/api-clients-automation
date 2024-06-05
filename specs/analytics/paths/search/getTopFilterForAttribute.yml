@@ -4,7 +4,7 @@ get:
   operationId: getTopFilterForAttribute
   x-acl:
     - analytics
-  summary: Retrieve top filter values.
+  summary: Retrieve top filter values
   description: |
     Retrieves the most frequent filter (facet) values for a filter attribute.
 

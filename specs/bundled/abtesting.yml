@@ -115,7 +115,7 @@ paths:
   /{path}:
     get:
       operationId: customGet
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -145,7 +145,7 @@ paths:
           application/json:
             schema:
               type: object
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -175,7 +175,7 @@ paths:
           application/json:
             schema:
               type: object
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -199,7 +199,7 @@ paths:
         - abtesting
     delete:
       operationId: customDelete
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -228,7 +228,7 @@ paths:
       operationId: addABTests
       x-acl:
         - editSettings
-      summary: Create an A/B test.
+      summary: Create an A/B test
       description: Creates a new A/B test.
       requestBody:
         required: true
@@ -282,7 +282,7 @@ paths:
       operationId: listABTests
       x-acl:
         - analytics
-      summary: List all A/B tests.
+      summary: List all A/B tests
       description: Lists all A/B tests you configured for this application.
       parameters:
         - $ref: '#/components/parameters/Offset'
@@ -349,7 +349,7 @@ paths:
       operationId: getABTest
       x-acl:
         - analytics
-      summary: Retrieve A/B test details.
+      summary: Retrieve A/B test details
       description: Retrieves the details for an A/B test by its ID.
       parameters:
         - $ref: '#/components/parameters/ID'
@@ -381,7 +381,7 @@ paths:
       operationId: deleteABTest
       x-acl:
         - editSettings
-      summary: Delete an A/B test.
+      summary: Delete an A/B test
       description: Deletes an A/B test by its ID.
       parameters:
         - $ref: '#/components/parameters/ID'
@@ -414,7 +414,7 @@ paths:
       operationId: stopABTest
       x-acl:
         - editSettings
-      summary: Stop an A/B test.
+      summary: Stop an A/B test
       description: |
         Stops an A/B test by its ID.
 
@@ -634,7 +634,7 @@ components:
               example: 237
     index:
       type: string
-      description: A/B test index.
+      description: Index name of the A/B test variant (case-sensitive).
       example: delcourt_production
     trackedSearchCount:
       type: integer

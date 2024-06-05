@@ -4,7 +4,7 @@ get:
   operationId: getSearchesNoClicks
   x-acl:
     - analytics
-  summary: Retrieve top searches without clicks.
+  summary: Retrieve top searches without clicks
   description: Retrieves the most popular searches that didn't lead to any clicks, from the 1,000 most frequent searches.
   parameters:
     - $ref: '../../../common/parameters.yml#/Index'

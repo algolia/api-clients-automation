@@ -4,7 +4,7 @@ post:
   operationId: clearRules
   x-acl:
     - editSettings
-  summary: Delete all rules.
+  summary: Delete all rules
   description: Deletes all rules from the index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'

@@ -278,7 +278,7 @@ paths:
           application/json:
             schema:
               type: object
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -310,7 +310,7 @@ paths:
       x-legacy-signature: true
       x-acl:
         - search
-      summary: Search multiple indices.
+      summary: Search multiple indices
       description: >
         Sends multiple search request to one or more indices.
 
@@ -583,20 +583,6 @@ components:
       example: (category:Book OR category:Ebook) AND _tags:published
       x-categories:
         - Filtering
-    searchFiltersArrayString:
-      title: search filter array
-      type: array
-      items:
-        type: string
-    mixedSearchFilters:
-      oneOf:
-        - $ref: '#/components/schemas/searchFiltersArrayString'
-        - type: string
-    listOfSearchFilters:
-      type: array
-      title: search filters
-      items:
-        $ref: '#/components/schemas/mixedSearchFilters'
     facetFilters:
       description: >
         Filter the search by facet values, so that only records with the same
@@ -625,7 +611,9 @@ components:
           - category:-Movie
         - author:John Doe
       oneOf:
-        - $ref: '#/components/schemas/listOfSearchFilters'
+        - type: array
+          items:
+            $ref: '#/components/schemas/facetFilters'
         - type: string
       x-categories:
         - Filtering
@@ -653,7 +641,9 @@ components:
         - category:Book
         - author:John Doe
       oneOf:
-        - $ref: '#/components/schemas/listOfSearchFilters'
+        - type: array
+          items:
+            $ref: '#/components/schemas/optionalFilters'
         - type: string
       x-categories:
         - Filtering
@@ -679,7 +669,9 @@ components:
           - deliveryDate < 1441755506
         - price < 1000
       oneOf:
-        - $ref: '#/components/schemas/listOfSearchFilters'
+        - type: array
+          items:
+            $ref: '#/components/schemas/numericFilters'
         - type: string
       x-categories:
         - Filtering
@@ -704,7 +696,9 @@ components:
           - Movie
         - SciFi
       oneOf:
-        - $ref: '#/components/schemas/listOfSearchFilters'
+        - type: array
+          items:
+            $ref: '#/components/schemas/tagFilters'
         - type: string
       x-categories:
         - Filtering
@@ -815,9 +809,9 @@ components:
       type: array
       items:
         type: array
+        minItems: 4
+        maxItems: 4
         items:
-          minItems: 4
-          maxItems: 4
           type: number
           format: double
       description: >
@@ -850,9 +844,9 @@ components:
       type: array
       items:
         type: array
+        minItems: 6
+        maxItems: 20000
         items:
-          minItems: 6
-          maxItems: 20000
           type: number
           format: double
       description: >
@@ -867,7 +861,7 @@ components:
         For more information, see [filtering inside
         polygons](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
 
-        This parameter is ignored, if you also specify `insideBoundingBox`.
+        This parameter is ignored if you also specify `insideBoundingBox`.
       example:
         -
           - 47.3165
@@ -885,6 +879,78 @@ components:
           - 2.0104
       x-categories:
         - Geo-Search
+    supportedLanguage:
+      type: string
+      description: ISO code for a supported language.
+      enum:
+        - af
+        - ar
+        - az
+        - bg
+        - bn
+        - ca
+        - cs
+        - cy
+        - da
+        - de
+        - el
+        - en
+        - eo
+        - es
+        - et
+        - eu
+        - fa
+        - fi
+        - fo
+        - fr
+        - ga
+        - gl
+        - he
+        - hi
+        - hu
+        - hy
+        - id
+        - is
+        - it
+        - ja
+        - ka
+        - kk
+        - ko
+        - ku
+        - ky
+        - lt
+        - lv
+        - mi
+        - mn
+        - mr
+        - ms
+        - mt
+        - nb
+        - nl
+        - 'no'
+        - ns
+        - pl
+        - ps
+        - pt
+        - pt-br
+        - qu
+        - ro
+        - ru
+        - sk
+        - sq
+        - sv
+        - sw
+        - ta
+        - te
+        - th
+        - tl
+        - tn
+        - tr
+        - tt
+        - uk
+        - ur
+        - uz
+        - zh
     userToken:
       type: string
       description: >
@@ -961,7 +1027,9 @@ components:
           example:
             - title
             - author
-          description: Restricts a search to a subset of your searchable attributes.
+          description: |
+            Restricts a search to a subset of your searchable attributes.
+            Attribute names are case-sensitive.
           default: []
           x-categories:
             - Filtering
@@ -1038,7 +1106,7 @@ components:
         naturalLanguages:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/supportedLanguage'
           description: >
             ISO language codes that adjust settings that are useful for
             processing natural language queries (as opposed to keyword
@@ -1188,78 +1256,6 @@ components:
         - $ref: '#/components/schemas/typoToleranceEnum'
       x-categories:
         - Typos
-    supportedLanguage:
-      type: string
-      description: ISO code for a supported language.
-      enum:
-        - af
-        - ar
-        - az
-        - bg
-        - bn
-        - ca
-        - cs
-        - cy
-        - da
-        - de
-        - el
-        - en
-        - eo
-        - es
-        - et
-        - eu
-        - fa
-        - fi
-        - fo
-        - fr
-        - ga
-        - gl
-        - he
-        - hi
-        - hu
-        - hy
-        - id
-        - is
-        - it
-        - ja
-        - ka
-        - kk
-        - ko
-        - ku
-        - ky
-        - lt
-        - lv
-        - mi
-        - mn
-        - mr
-        - ms
-        - mt
-        - nb
-        - nl
-        - 'no'
-        - ns
-        - pl
-        - ps
-        - pt
-        - pt-br
-        - qu
-        - ro
-        - ru
-        - sk
-        - sq
-        - sv
-        - sw
-        - ta
-        - te
-        - th
-        - tl
-        - tn
-        - tr
-        - tt
-        - uk
-        - ur
-        - uz
-        - zh
     ignorePlurals:
       description: |
         Treat singular, plurals, and other forms of declensions as equivalent.
@@ -1578,14 +1574,15 @@ components:
     reRankingApplyFilter:
       description: >
         Restrict [Dynamic
-        Re-ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/)
+        Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/)
         to records that match these filters.
       oneOf:
-        - $ref: '#/components/schemas/listOfSearchFilters'
+        - type: array
+          items:
+            $ref: '#/components/schemas/reRankingApplyFilter'
         - type: string
           x-categories:
             - Filtering
-        - type: 'null'
     indexSettingsAsSearchParams:
       type: object
       additionalProperties: false
@@ -1604,6 +1601,8 @@ components:
 
             To reduce the size of your response, you can retrieve only some of
             the attributes.
+
+            Attribute names are case-sensitive.
 
 
             - `*` retrieves all attributes, except attributes included in the
@@ -1674,6 +1673,8 @@ components:
             Attributes to use as [custom
             ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/).
 
+            Attribute names are case-sensitive.
+
 
             The custom ranking attributes decide which items are shown first if
             the other ranking criteria are equal.
@@ -1738,6 +1739,8 @@ components:
             Use `*` to highlight all attributes or use an empty array `[]` to
             turn off highlighting.
 
+            Attribute names are case-sensitive.
+
 
             With highlighting, strings that match the search query are
             surrounded by HTML tags defined by `highlightPreTag` and
@@ -1760,6 +1763,8 @@ components:
             - description
           description: >
             Attributes for which to enable snippets.
+
+            Attribute names are case-sensitive.
 
 
             Snippets provide additional context to matched words.
@@ -1849,6 +1854,8 @@ components:
           description: >
             Attributes for which you want to turn off [typo
             tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
+
+            Attribute names are case-sensitive.
 
 
             Returning only exact matches can help when:
@@ -2023,6 +2030,8 @@ components:
             Searchable attributes for which you want to [turn off the Exact
             ranking
             criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).
+
+            Attribute names are case-sensitive.
 
 
             This can be useful for attributes with long values, where the
@@ -2221,9 +2230,14 @@ components:
           x-categories:
             - Filtering
         reRankingApplyFilter:
-          $ref: '#/components/schemas/reRankingApplyFilter'
+          oneOf:
+            - $ref: '#/components/schemas/reRankingApplyFilter'
+            - type: 'null'
     searchParamsObject:
       title: Search parameters as object
+      description: >-
+        Each parameter value, including the `query` must not be larger than 512
+        bytes.
       allOf:
         - $ref: '#/components/schemas/baseSearchParams'
         - $ref: '#/components/schemas/indexSettingsAsSearchParams'
@@ -2231,10 +2245,6 @@ components:
       oneOf:
         - $ref: '#/components/schemas/searchParamsString'
         - $ref: '#/components/schemas/searchParamsObject'
-    exhaustiveFacetsCount:
-      type: boolean
-      description: See the `facetsCount` field of the `exhaustive` object in the response.
-      deprecated: true
     nbHits:
       type: integer
       description: Number of results (hits).
@@ -2366,7 +2376,11 @@ components:
                 alternatives exist for the query). This field will not be
                 included when typo-tolerance is entirely disabled.
         exhaustiveFacetsCount:
-          $ref: '#/components/schemas/exhaustiveFacetsCount'
+          type: boolean
+          description: >-
+            See the `facetsCount` field of the `exhaustive` object in the
+            response.
+          deprecated: true
         exhaustiveNbHits:
           type: boolean
           description: See the `nbHits` field of the `exhaustive` object in the response.
@@ -2733,7 +2747,7 @@ components:
     indexName:
       type: string
       example: products
-      description: Index name.
+      description: Index name (case-sensitive).
     searchTypeDefault:
       type: string
       enum:
@@ -2848,7 +2862,12 @@ components:
                   approximated](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
                 type: integer
         exhaustiveFacetsCount:
-          $ref: '#/components/schemas/exhaustiveFacetsCount'
+          type: boolean
+          description: >
+            Whether the facet count is exhaustive (true) or approximate (false).
+
+            For more information, see [Why are my facet and hit counts not
+            accurate](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
         processingTimeMS:
           $ref: '#/components/schemas/processingTimeMS'
     searchResult:
@@ -2998,11 +3017,13 @@ components:
             [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/).
 
 
-            Facets are ways to categorize search results based on attributes.
+            Facets are attributes that let you categorize search results.
 
-            Facets can be used to let user filter search results.
+            They can be used for filtering search results.
 
             By default, no attribute is used for faceting.
+
+            Attribute names are case-sensitive.
 
 
             **Modifiers**
@@ -3088,6 +3109,8 @@ components:
             access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/),
 
             but don't want to include it in the search results.
+
+            Attribute names are case-sensitive.
           default: []
           x-categories:
             - Attributes
@@ -3119,6 +3142,8 @@ components:
 
             To support transliteration, you must set the indexing language to
             Japanese.
+
+            Attribute names are case-sensitive.
           type: array
           items:
             type: string
@@ -3133,9 +3158,11 @@ components:
             type: string
           example:
             - description
-          description: >-
+          description: >
             Attributes for which to split [camel
             case](https://wikipedia.org/wiki/Camel_case) words.
+
+            Attribute names are case-sensitive.
           default: []
           x-categories:
             - Languages
@@ -3148,6 +3175,8 @@ components:
             Searchable attributes to which Algolia should apply [word
             segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/)
             (decompounding).
+
+            Attribute names are case-sensitive.
 
 
             Compound words are formed by combining two or more individual words,
@@ -3201,9 +3230,11 @@ components:
             type: string
           example:
             - sku
-          description: >-
+          description: >
             Searchable attributes for which you want to turn off [prefix
             matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjusting-prefix-search).
+
+            Attribute names are case-sensitive.
           default: []
           x-categories:
             - Query strategy
@@ -3224,6 +3255,8 @@ components:
           description: >
             Numeric attributes that can be used as [numerical
             filters](https://www.algolia.com/doc/guides/managing-results/rules/detecting-intent/how-to/applying-a-custom-filter-for-a-specific-query/#numerical-filters).
+
+            Attribute names are case-sensitive.
 
 
             By default, all numeric attributes are available as numerical
@@ -3277,7 +3310,7 @@ components:
             - unordered(text)
             - emails.personal
           description: >
-            Attributes used for searching.
+            Attributes used for searching. Attribute names are case-sensitive.
 
 
             By default, all attributes are searchable and the
@@ -3334,6 +3367,8 @@ components:
         attributeForDistinct:
           description: >
             Attribute that should be used to establish groups of results.
+
+            Attribute names are case-sensitive.
 
 
             All records with the same value for this attribute are considered a

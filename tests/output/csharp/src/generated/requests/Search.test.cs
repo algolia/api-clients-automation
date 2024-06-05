@@ -548,7 +548,7 @@ public class SearchClientRequestTests
         {
           Query = "myQuery",
           FacetFilters = new FacetFilters(
-            new List<MixedSearchFilters> { new MixedSearchFilters("tags:algolia") }
+            new List<FacetFilters> { new FacetFilters("tags:algolia") }
           ),
         }
       )
@@ -2142,7 +2142,7 @@ public class SearchClientRequestTests
       Assert.NotNull(resp);
 
       JsonAssert.EqualOverrideDefault(
-        "{\"results\":[{\"exhaustiveFacetsCount\":true,\"facetHits\":[{\"count\":1,\"highlighted\":\"goland\",\"value\":\"goland\"},{\"count\":1,\"highlighted\":\"neovim\",\"value\":\"neovim\"},{\"count\":1,\"highlighted\":\"vscode\",\"value\":\"vscode\"}]}]}",
+        "{\"results\":[{\"exhaustiveFacetsCount\":true,\"facetHits\":[{\"count\":1,\"highlighted\":\"goland\",\"value\":\"goland\"},{\"count\":1,\"highlighted\":\"neovim\",\"value\":\"neovim\"},{\"count\":1,\"highlighted\":\"visual studio\",\"value\":\"visual studio\"},{\"count\":1,\"highlighted\":\"vscode\",\"value\":\"vscode\"}]}]}",
         JsonSerializer.Serialize(resp, JsonConfig.Options),
         new JsonDiffConfig(true)
       );
@@ -2326,38 +2326,52 @@ public class SearchClientRequestTests
             {
               IndexName = "theIndexName",
               FacetFilters = new FacetFilters(
-                new List<MixedSearchFilters>
+                new List<FacetFilters>
                 {
-                  new MixedSearchFilters("mySearch:filters"),
-                  new MixedSearchFilters(new List<string> { "mySearch:filters" })
+                  new FacetFilters("mySearch:filters"),
+                  new FacetFilters(
+                    new List<FacetFilters>
+                    {
+                      new FacetFilters("mySearch:filters"),
+                      new FacetFilters(
+                        new List<FacetFilters> { new FacetFilters("mySearch:filters") }
+                      )
+                    }
+                  )
                 }
               ),
               ReRankingApplyFilter = new ReRankingApplyFilter(
-                new List<MixedSearchFilters>
+                new List<ReRankingApplyFilter>
                 {
-                  new MixedSearchFilters("mySearch:filters"),
-                  new MixedSearchFilters(new List<string> { "mySearch:filters" })
+                  new ReRankingApplyFilter("mySearch:filters"),
+                  new ReRankingApplyFilter(
+                    new List<ReRankingApplyFilter> { new ReRankingApplyFilter("mySearch:filters") }
+                  )
                 }
               ),
               TagFilters = new TagFilters(
-                new List<MixedSearchFilters>
+                new List<TagFilters>
                 {
-                  new MixedSearchFilters("mySearch:filters"),
-                  new MixedSearchFilters(new List<string> { "mySearch:filters" })
+                  new TagFilters("mySearch:filters"),
+                  new TagFilters(new List<TagFilters> { new TagFilters("mySearch:filters") })
                 }
               ),
               NumericFilters = new NumericFilters(
-                new List<MixedSearchFilters>
+                new List<NumericFilters>
                 {
-                  new MixedSearchFilters("mySearch:filters"),
-                  new MixedSearchFilters(new List<string> { "mySearch:filters" })
+                  new NumericFilters("mySearch:filters"),
+                  new NumericFilters(
+                    new List<NumericFilters> { new NumericFilters("mySearch:filters") }
+                  )
                 }
               ),
               OptionalFilters = new OptionalFilters(
-                new List<MixedSearchFilters>
+                new List<OptionalFilters>
                 {
-                  new MixedSearchFilters("mySearch:filters"),
-                  new MixedSearchFilters(new List<string> { "mySearch:filters" })
+                  new OptionalFilters("mySearch:filters"),
+                  new OptionalFilters(
+                    new List<OptionalFilters> { new OptionalFilters("mySearch:filters") }
+                  )
                 }
               ),
             }
@@ -2370,14 +2384,167 @@ public class SearchClientRequestTests
     Assert.Equal("/1/indexes/*/queries", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"requests\":[{\"indexName\":\"theIndexName\",\"facetFilters\":\"mySearch:filters\",\"reRankingApplyFilter\":\"mySearch:filters\",\"tagFilters\":\"mySearch:filters\",\"numericFilters\":\"mySearch:filters\",\"optionalFilters\":\"mySearch:filters\"},{\"indexName\":\"theIndexName\",\"facetFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"reRankingApplyFilter\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"tagFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"numericFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"optionalFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]]}]}",
+      "{\"requests\":[{\"indexName\":\"theIndexName\",\"facetFilters\":\"mySearch:filters\",\"reRankingApplyFilter\":\"mySearch:filters\",\"tagFilters\":\"mySearch:filters\",\"numericFilters\":\"mySearch:filters\",\"optionalFilters\":\"mySearch:filters\"},{\"indexName\":\"theIndexName\",\"facetFilters\":[\"mySearch:filters\",[\"mySearch:filters\",[\"mySearch:filters\"]]],\"reRankingApplyFilter\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"tagFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"numericFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]],\"optionalFilters\":[\"mySearch:filters\",[\"mySearch:filters\"]]}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
   }
 
-  [Fact(DisplayName = "search with all search parameters")]
+  [Fact(DisplayName = "search filters end to end")]
   public async Task SearchTest7()
+  {
+    await _client.SearchAsync<Hit>(
+      new SearchMethodParams
+      {
+        Requests = new List<SearchQuery>
+        {
+          new SearchQuery(
+            new SearchForHits
+            {
+              IndexName = "cts_e2e_search_facet",
+              Filters = "editor:'visual studio' OR editor:neovim",
+            }
+          ),
+          new SearchQuery(
+            new SearchForHits
+            {
+              IndexName = "cts_e2e_search_facet",
+              FacetFilters = new FacetFilters(
+                new List<FacetFilters>
+                {
+                  new FacetFilters("editor:'visual studio'"),
+                  new FacetFilters("editor:neovim")
+                }
+              ),
+            }
+          ),
+          new SearchQuery(
+            new SearchForHits
+            {
+              IndexName = "cts_e2e_search_facet",
+              FacetFilters = new FacetFilters(
+                new List<FacetFilters>
+                {
+                  new FacetFilters("editor:'visual studio'"),
+                  new FacetFilters(new List<FacetFilters> { new FacetFilters("editor:neovim") })
+                }
+              ),
+            }
+          ),
+          new SearchQuery(
+            new SearchForHits
+            {
+              IndexName = "cts_e2e_search_facet",
+              FacetFilters = new FacetFilters(
+                new List<FacetFilters>
+                {
+                  new FacetFilters("editor:'visual studio'"),
+                  new FacetFilters(
+                    new List<FacetFilters>
+                    {
+                      new FacetFilters("editor:neovim"),
+                      new FacetFilters(new List<FacetFilters> { new FacetFilters("editor:goland") })
+                    }
+                  )
+                }
+              ),
+            }
+          )
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/*/queries", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"requests\":[{\"indexName\":\"cts_e2e_search_facet\",\"filters\":\"editor:'visual studio' OR editor:neovim\"},{\"indexName\":\"cts_e2e_search_facet\",\"facetFilters\":[\"editor:'visual studio'\",\"editor:neovim\"]},{\"indexName\":\"cts_e2e_search_facet\",\"facetFilters\":[\"editor:'visual studio'\",[\"editor:neovim\"]]},{\"indexName\":\"cts_e2e_search_facet\",\"facetFilters\":[\"editor:'visual studio'\",[\"editor:neovim\",[\"editor:goland\"]]]}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+
+    // e2e
+    try
+    {
+      var resp = await _e2eClient.SearchAsync<Hit>(
+        new SearchMethodParams
+        {
+          Requests = new List<SearchQuery>
+          {
+            new SearchQuery(
+              new SearchForHits
+              {
+                IndexName = "cts_e2e_search_facet",
+                Filters = "editor:'visual studio' OR editor:neovim",
+              }
+            ),
+            new SearchQuery(
+              new SearchForHits
+              {
+                IndexName = "cts_e2e_search_facet",
+                FacetFilters = new FacetFilters(
+                  new List<FacetFilters>
+                  {
+                    new FacetFilters("editor:'visual studio'"),
+                    new FacetFilters("editor:neovim")
+                  }
+                ),
+              }
+            ),
+            new SearchQuery(
+              new SearchForHits
+              {
+                IndexName = "cts_e2e_search_facet",
+                FacetFilters = new FacetFilters(
+                  new List<FacetFilters>
+                  {
+                    new FacetFilters("editor:'visual studio'"),
+                    new FacetFilters(new List<FacetFilters> { new FacetFilters("editor:neovim") })
+                  }
+                ),
+              }
+            ),
+            new SearchQuery(
+              new SearchForHits
+              {
+                IndexName = "cts_e2e_search_facet",
+                FacetFilters = new FacetFilters(
+                  new List<FacetFilters>
+                  {
+                    new FacetFilters("editor:'visual studio'"),
+                    new FacetFilters(
+                      new List<FacetFilters>
+                      {
+                        new FacetFilters("editor:neovim"),
+                        new FacetFilters(
+                          new List<FacetFilters> { new FacetFilters("editor:goland") }
+                        )
+                      }
+                    )
+                  }
+                ),
+              }
+            )
+          },
+        }
+      );
+      // Check status code 200
+      Assert.NotNull(resp);
+
+      JsonAssert.EqualOverrideDefault(
+        "{\"results\":[{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":2,\"nbPages\":1,\"page\":0,\"hits\":[{\"editor\":\"visual studio\",\"_highlightResult\":{\"editor\":{\"value\":\"visual studio\",\"matchLevel\":\"none\"}}},{\"editor\":\"neovim\",\"_highlightResult\":{\"editor\":{\"value\":\"neovim\",\"matchLevel\":\"none\"}}}],\"query\":\"\",\"params\":\"filters=editor%3A%27visual+studio%27+OR+editor%3Aneovim\"},{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":0,\"nbPages\":0,\"page\":0,\"hits\":[],\"query\":\"\",\"params\":\"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%22editor%3Aneovim%22%5D\"},{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":0,\"nbPages\":0,\"page\":0,\"hits\":[],\"query\":\"\",\"params\":\"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%5D%5D\"},{\"hitsPerPage\":20,\"index\":\"cts_e2e_search_facet\",\"nbHits\":0,\"nbPages\":0,\"page\":0,\"hits\":[],\"query\":\"\",\"params\":\"facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%2C%5B%22editor%3Agoland%22%5D%5D%5D\"}]}",
+        JsonSerializer.Serialize(resp, JsonConfig.Options),
+        new JsonDiffConfig(true)
+      );
+    }
+    catch (Exception e)
+    {
+      Assert.Fail("An exception was thrown: " + e.Message);
+    }
+  }
+
+  [Fact(DisplayName = "search with all search parameters")]
+  public async Task SearchTest8()
   {
     await _client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2418,9 +2585,7 @@ public class SearchClientRequestTests
               EnableReRanking = true,
               EnableRules = true,
               ExactOnSingleWordQuery = Enum.Parse<ExactOnSingleWordQuery>("Attribute"),
-              FacetFilters = new FacetFilters(
-                new List<MixedSearchFilters> { new MixedSearchFilters("") }
-              ),
+              FacetFilters = new FacetFilters(new List<FacetFilters> { new FacetFilters("") }),
               FacetingAfterDistinct = true,
               Facets = new List<string> { "" },
               Filters = "",
@@ -2447,13 +2612,16 @@ public class SearchClientRequestTests
               MinWordSizefor1Typo = 0,
               MinWordSizefor2Typos = 0,
               MinimumAroundRadius = 1,
-              NaturalLanguages = new List<string> { "" },
+              NaturalLanguages = new List<SupportedLanguage>
+              {
+                Enum.Parse<SupportedLanguage>("Fr")
+              },
               NumericFilters = new NumericFilters(
-                new List<MixedSearchFilters> { new MixedSearchFilters("") }
+                new List<NumericFilters> { new NumericFilters("") }
               ),
               Offset = 0,
               OptionalFilters = new OptionalFilters(
-                new List<MixedSearchFilters> { new MixedSearchFilters("") }
+                new List<OptionalFilters> { new OptionalFilters("") }
               ),
               OptionalWords = new List<string> { "" },
               Page = 0,
@@ -2464,7 +2632,7 @@ public class SearchClientRequestTests
               QueryType = Enum.Parse<QueryType>("PrefixAll"),
               Ranking = new List<string> { "" },
               ReRankingApplyFilter = new ReRankingApplyFilter(
-                new List<MixedSearchFilters> { new MixedSearchFilters("") }
+                new List<ReRankingApplyFilter> { new ReRankingApplyFilter("") }
               ),
               RelevancyStrictness = 0,
               RemoveStopWords = new RemoveStopWords(true),
@@ -2500,9 +2668,7 @@ public class SearchClientRequestTests
               SortFacetValuesBy = "",
               SumOrFiltersScores = true,
               Synonyms = true,
-              TagFilters = new TagFilters(
-                new List<MixedSearchFilters> { new MixedSearchFilters("") }
-              ),
+              TagFilters = new TagFilters(new List<TagFilters> { new TagFilters("") }),
               Type = Enum.Parse<SearchTypeDefault>("Default"),
               TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>("Min")),
               UserToken = "",
@@ -2516,7 +2682,7 @@ public class SearchClientRequestTests
     Assert.Equal("/1/indexes/*/queries", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"requests\":[{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"multiWordsSynonym\"],\"analytics\":true,\"analyticsTags\":[\"\"],\"aroundLatLng\":\"\",\"aroundLatLngViaIP\":true,\"aroundPrecision\":0,\"aroundRadius\":\"all\",\"attributeCriteriaComputedByMinProximity\":true,\"attributesToHighlight\":[\"\"],\"attributesToRetrieve\":[\"\"],\"attributesToSnippet\":[\"\"],\"clickAnalytics\":true,\"customRanking\":[\"\"],\"decompoundQuery\":true,\"disableExactOnAttributes\":[\"\"],\"disableTypoToleranceOnAttributes\":[\"\"],\"distinct\":0,\"enableABTest\":true,\"enablePersonalization\":true,\"enableReRanking\":true,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"facetFilters\":[\"\"],\"facetingAfterDistinct\":true,\"facets\":[\"\"],\"filters\":\"\",\"getRankingInfo\":true,\"highlightPostTag\":\"\",\"highlightPreTag\":\"\",\"hitsPerPage\":1,\"ignorePlurals\":false,\"indexName\":\"theIndexName\",\"insideBoundingBox\":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],\"insidePolygon\":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],\"keepDiacriticsOnCharacters\":\"\",\"length\":1,\"maxValuesPerFacet\":0,\"minProximity\":1,\"minWordSizefor1Typo\":0,\"minWordSizefor2Typos\":0,\"minimumAroundRadius\":1,\"naturalLanguages\":[\"\"],\"numericFilters\":[\"\"],\"offset\":0,\"optionalFilters\":[\"\"],\"optionalWords\":[\"\"],\"page\":0,\"percentileComputation\":true,\"personalizationImpact\":0,\"query\":\"\",\"queryLanguages\":[\"fr\"],\"queryType\":\"prefixAll\",\"ranking\":[\"\"],\"reRankingApplyFilter\":[\"\"],\"relevancyStrictness\":0,\"removeStopWords\":true,\"removeWordsIfNoResults\":\"allOptional\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"responseFields\":[\"\"],\"restrictHighlightAndSnippetArrays\":true,\"restrictSearchableAttributes\":[\"\"],\"ruleContexts\":[\"\"],\"similarQuery\":\"\",\"snippetEllipsisText\":\"\",\"sortFacetValuesBy\":\"\",\"sumOrFiltersScores\":true,\"synonyms\":true,\"tagFilters\":[\"\"],\"type\":\"default\",\"typoTolerance\":\"min\",\"userToken\":\"\"}]}",
+      "{\"requests\":[{\"advancedSyntax\":true,\"advancedSyntaxFeatures\":[\"exactPhrase\"],\"allowTyposOnNumericTokens\":true,\"alternativesAsExact\":[\"multiWordsSynonym\"],\"analytics\":true,\"analyticsTags\":[\"\"],\"aroundLatLng\":\"\",\"aroundLatLngViaIP\":true,\"aroundPrecision\":0,\"aroundRadius\":\"all\",\"attributeCriteriaComputedByMinProximity\":true,\"attributesToHighlight\":[\"\"],\"attributesToRetrieve\":[\"\"],\"attributesToSnippet\":[\"\"],\"clickAnalytics\":true,\"customRanking\":[\"\"],\"decompoundQuery\":true,\"disableExactOnAttributes\":[\"\"],\"disableTypoToleranceOnAttributes\":[\"\"],\"distinct\":0,\"enableABTest\":true,\"enablePersonalization\":true,\"enableReRanking\":true,\"enableRules\":true,\"exactOnSingleWordQuery\":\"attribute\",\"facetFilters\":[\"\"],\"facetingAfterDistinct\":true,\"facets\":[\"\"],\"filters\":\"\",\"getRankingInfo\":true,\"highlightPostTag\":\"\",\"highlightPreTag\":\"\",\"hitsPerPage\":1,\"ignorePlurals\":false,\"indexName\":\"theIndexName\",\"insideBoundingBox\":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],\"insidePolygon\":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],\"keepDiacriticsOnCharacters\":\"\",\"length\":1,\"maxValuesPerFacet\":0,\"minProximity\":1,\"minWordSizefor1Typo\":0,\"minWordSizefor2Typos\":0,\"minimumAroundRadius\":1,\"naturalLanguages\":[\"fr\"],\"numericFilters\":[\"\"],\"offset\":0,\"optionalFilters\":[\"\"],\"optionalWords\":[\"\"],\"page\":0,\"percentileComputation\":true,\"personalizationImpact\":0,\"query\":\"\",\"queryLanguages\":[\"fr\"],\"queryType\":\"prefixAll\",\"ranking\":[\"\"],\"reRankingApplyFilter\":[\"\"],\"relevancyStrictness\":0,\"removeStopWords\":true,\"removeWordsIfNoResults\":\"allOptional\",\"renderingContent\":{\"facetOrdering\":{\"facets\":{\"order\":[\"a\",\"b\"]},\"values\":{\"a\":{\"order\":[\"b\"],\"sortRemainingBy\":\"count\"}}}},\"replaceSynonymsInHighlight\":true,\"responseFields\":[\"\"],\"restrictHighlightAndSnippetArrays\":true,\"restrictSearchableAttributes\":[\"\"],\"ruleContexts\":[\"\"],\"similarQuery\":\"\",\"snippetEllipsisText\":\"\",\"sortFacetValuesBy\":\"\",\"sumOrFiltersScores\":true,\"synonyms\":true,\"tagFilters\":[\"\"],\"type\":\"default\",\"typoTolerance\":\"min\",\"userToken\":\"\"}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -2675,7 +2841,7 @@ public class SearchClientRequestTests
         {
           Query = "myQuery",
           FacetFilters = new FacetFilters(
-            new List<MixedSearchFilters> { new MixedSearchFilters("tags:algolia") }
+            new List<FacetFilters> { new FacetFilters("tags:algolia") }
           ),
         }
       )

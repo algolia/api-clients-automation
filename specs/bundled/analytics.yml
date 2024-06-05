@@ -128,7 +128,7 @@ paths:
   /{path}:
     get:
       operationId: customGet
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -158,7 +158,7 @@ paths:
           application/json:
             schema:
               type: object
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -188,7 +188,7 @@ paths:
           application/json:
             schema:
               type: object
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -212,7 +212,7 @@ paths:
         - analytics
     delete:
       operationId: customDelete
-      summary: Send requests to the Algolia REST API.
+      summary: Send requests to the Algolia REST API
       description: This method allow you to send requests to the Algolia REST API.
       parameters:
         - $ref: '#/components/parameters/PathInPath'
@@ -241,7 +241,7 @@ paths:
       operationId: getTopSearches
       x-acl:
         - analytics
-      summary: Retrieve top searches.
+      summary: Retrieve top searches
       description: Returns the most popular search terms.
       parameters:
         - $ref: '#/components/parameters/Index'
@@ -283,7 +283,7 @@ paths:
       operationId: getSearchesCount
       x-acl:
         - analytics
-      summary: Retrieve number of searches.
+      summary: Retrieve number of searches
       description: >
         Retrieves the number of searches within a time range, including a daily
         breakdown.
@@ -348,7 +348,7 @@ paths:
       operationId: getSearchesNoResults
       x-acl:
         - analytics
-      summary: Retrieve top searches without results.
+      summary: Retrieve top searches without results
       description: Retrieves the most popular searches that didn't return any results.
       parameters:
         - $ref: '#/components/parameters/Index'
@@ -409,7 +409,7 @@ paths:
       operationId: getSearchesNoClicks
       x-acl:
         - analytics
-      summary: Retrieve top searches without clicks.
+      summary: Retrieve top searches without clicks
       description: >-
         Retrieves the most popular searches that didn't lead to any clicks, from
         the 1,000 most frequent searches.
@@ -475,7 +475,7 @@ paths:
       operationId: getNoResultsRate
       x-acl:
         - analytics
-      summary: Retrieve no results rate.
+      summary: Retrieve no results rate
       description: >
         Retrieves the fraction of searches that didn't return any results within
         a time range, including a daily breakdown.
@@ -552,7 +552,7 @@ paths:
       operationId: getNoClickRate
       x-acl:
         - analytics
-      summary: Retrieve no click rate.
+      summary: Retrieve no click rate
       description: >
         Retrieves the fraction of searches that didn't lead to any click within
         a time range, including a daily breakdown.
@@ -629,7 +629,7 @@ paths:
       operationId: getTopHits
       x-acl:
         - analytics
-      summary: Retrieve top search results.
+      summary: Retrieve top search results
       description: Retrieves the object IDs of the most frequent search results.
       parameters:
         - $ref: '#/components/parameters/Index'
@@ -670,7 +670,7 @@ paths:
       operationId: getUsersCount
       x-acl:
         - analytics
-      summary: Retrieve number of users.
+      summary: Retrieve number of users
       description: >
         Retrieves the number of unique users within a time range, including a
         daily breakdown.
@@ -750,7 +750,7 @@ paths:
       operationId: getTopFilterAttributes
       x-acl:
         - analytics
-      summary: Retrieve top filters.
+      summary: Retrieve top filters
       description: >
         Retrieves the most frequently used filter attributes.
 
@@ -794,7 +794,7 @@ paths:
       operationId: getTopFilterForAttribute
       x-acl:
         - analytics
-      summary: Retrieve top filter values.
+      summary: Retrieve top filter values
       description: >
         Retrieves the most frequent filter (facet) values for a filter
         attribute.
@@ -840,7 +840,7 @@ paths:
       operationId: getTopFiltersNoResults
       x-acl:
         - analytics
-      summary: Retrieve top filters for a search without results.
+      summary: Retrieve top filters for a search without results
       description: >
         Retrieves the most frequently used filters for a search that didn't
         return any results.
@@ -886,7 +886,7 @@ paths:
       operationId: getTopCountries
       x-acl:
         - analytics
-      summary: Retrieve top countries.
+      summary: Retrieve top countries
       description: Retrieves the countries with the most searches to your index.
       parameters:
         - $ref: '#/components/parameters/Index'
@@ -946,7 +946,7 @@ paths:
       operationId: getAverageClickPosition
       x-acl:
         - analytics
-      summary: Retrieve average click position.
+      summary: Retrieve average click position
       description: >
         Retrieves the average click position of your search results, including a
         daily breakdown.
@@ -1023,7 +1023,7 @@ paths:
       operationId: getClickPositions
       x-acl:
         - analytics
-      summary: Retrieve click positions.
+      summary: Retrieve click positions
       description: >
         Retrieves the positions in the search results and their associated
         number of clicks.
@@ -1072,7 +1072,7 @@ paths:
       operationId: getClickThroughRate
       x-acl:
         - analytics
-      summary: Retrieve click-through rate.
+      summary: Retrieve click-through rate
       description: >
         Retrieves the click-through rate for all of your searches with at least
         one click event, including a daily breakdown
@@ -1149,7 +1149,7 @@ paths:
       operationId: getConversionRate
       x-acl:
         - analytics
-      summary: Retrieve conversion rate.
+      summary: Retrieve conversion rate
       description: >
         Retrieves the conversion rate for all of your searches with at least one
         conversion event, including a daily breakdown.
@@ -1226,7 +1226,7 @@ paths:
       operationId: getAddToCartRate
       x-acl:
         - analytics
-      summary: Retrieve add-to-cart rate.
+      summary: Retrieve add-to-cart rate
       description: >
         Retrieves the add-to-cart rate for all of your searches with at least
         one add-to-cart event, including a daily breakdown.
@@ -1303,7 +1303,7 @@ paths:
       operationId: getPurchaseRate
       x-acl:
         - analytics
-      summary: Retrieve purchase rate.
+      summary: Retrieve purchase rate
       description: >
         Retrieves the purchase rate for all of your searches with at least one
         purchase event, including a daily breakdown.
@@ -1380,7 +1380,7 @@ paths:
       operationId: getRevenue
       x-acl:
         - analytics
-      summary: Retrieve revenue data.
+      summary: Retrieve revenue data
       description: >
         Retrieves revenue-related metrics, such as the total revenue or the
         average order value.
@@ -1440,7 +1440,7 @@ paths:
       operationId: getStatus
       x-acl:
         - analytics
-      summary: Retrieve update status.
+      summary: Retrieve update status
       description: >
         Retrieves the time when the Analytics data for the specified index was
         last updated.

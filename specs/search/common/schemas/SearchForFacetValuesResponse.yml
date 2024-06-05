@@ -29,6 +29,9 @@ searchForFacetValuesResponse:
             description: Number of records with this facet value. [The count may be approximated](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
             type: integer
     exhaustiveFacetsCount:
-      $ref: 'SearchResponse.yml#/exhaustiveFacetsCount'
+      type: boolean
+      description: |
+        Whether the facet count is exhaustive (true) or approximate (false).
+        For more information, see [Why are my facet and hit counts not accurate](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
     processingTimeMS:
       $ref: 'SearchResponse.yml#/processingTimeMS'

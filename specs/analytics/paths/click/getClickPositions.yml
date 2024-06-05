@@ -4,7 +4,7 @@ get:
   operationId: getClickPositions
   x-acl:
     - analytics
-  summary: Retrieve click positions.
+  summary: Retrieve click positions
   description: |
     Retrieves the positions in the search results and their associated number of clicks.
 

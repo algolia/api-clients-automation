@@ -4,7 +4,7 @@ get:
   operationId: getUserTokenProfile
   x-acl:
     - recommendation
-  summary: Retrieve a user profile.
+  summary: Retrieve a user profile
   description: Retrieves a user profile and their affinities for different facets.
   parameters:
     - $ref: '../common/parameters.yml#/UserToken'

@@ -493,7 +493,7 @@ class SearchTest {
           indexName = "indexName",
           browseParams = BrowseParamsObject(
             query = "myQuery",
-            facetFilters = FacetFilters.of(listOf(MixedSearchFilters.of("tags:algolia"))),
+            facetFilters = FacetFilters.of(listOf(FacetFilters.of("tags:algolia"))),
           ),
         )
       },
@@ -2201,11 +2201,11 @@ class SearchTest {
               ),
               SearchForHits(
                 indexName = "theIndexName",
-                facetFilters = FacetFilters.of(listOf(MixedSearchFilters.of("mySearch:filters"), MixedSearchFilters.of(listOf("mySearch:filters")))),
-                reRankingApplyFilter = ReRankingApplyFilter.of(listOf(MixedSearchFilters.of("mySearch:filters"), MixedSearchFilters.of(listOf("mySearch:filters")))),
-                tagFilters = TagFilters.of(listOf(MixedSearchFilters.of("mySearch:filters"), MixedSearchFilters.of(listOf("mySearch:filters")))),
-                numericFilters = NumericFilters.of(listOf(MixedSearchFilters.of("mySearch:filters"), MixedSearchFilters.of(listOf("mySearch:filters")))),
-                optionalFilters = OptionalFilters.of(listOf(MixedSearchFilters.of("mySearch:filters"), MixedSearchFilters.of(listOf("mySearch:filters")))),
+                facetFilters = FacetFilters.of(listOf(FacetFilters.of("mySearch:filters"), FacetFilters.of(listOf(FacetFilters.of("mySearch:filters"), FacetFilters.of(listOf(FacetFilters.of("mySearch:filters"))))))),
+                reRankingApplyFilter = ReRankingApplyFilter.of(listOf(ReRankingApplyFilter.of("mySearch:filters"), ReRankingApplyFilter.of(listOf(ReRankingApplyFilter.of("mySearch:filters"))))),
+                tagFilters = TagFilters.of(listOf(TagFilters.of("mySearch:filters"), TagFilters.of(listOf(TagFilters.of("mySearch:filters"))))),
+                numericFilters = NumericFilters.of(listOf(NumericFilters.of("mySearch:filters"), NumericFilters.of(listOf(NumericFilters.of("mySearch:filters"))))),
+                optionalFilters = OptionalFilters.of(listOf(OptionalFilters.of("mySearch:filters"), OptionalFilters.of(listOf(OptionalFilters.of("mySearch:filters"))))),
               ),
             ),
           ),
@@ -2214,7 +2214,42 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/*/queries".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"requests":[{"indexName":"theIndexName","facetFilters":"mySearch:filters","reRankingApplyFilter":"mySearch:filters","tagFilters":"mySearch:filters","numericFilters":"mySearch:filters","optionalFilters":"mySearch:filters"},{"indexName":"theIndexName","facetFilters":["mySearch:filters",["mySearch:filters"]],"reRankingApplyFilter":["mySearch:filters",["mySearch:filters"]],"tagFilters":["mySearch:filters",["mySearch:filters"]],"numericFilters":["mySearch:filters",["mySearch:filters"]],"optionalFilters":["mySearch:filters",["mySearch:filters"]]}]}""", it.body)
+        assertJsonBody("""{"requests":[{"indexName":"theIndexName","facetFilters":"mySearch:filters","reRankingApplyFilter":"mySearch:filters","tagFilters":"mySearch:filters","numericFilters":"mySearch:filters","optionalFilters":"mySearch:filters"},{"indexName":"theIndexName","facetFilters":["mySearch:filters",["mySearch:filters",["mySearch:filters"]]],"reRankingApplyFilter":["mySearch:filters",["mySearch:filters"]],"tagFilters":["mySearch:filters",["mySearch:filters"]],"numericFilters":["mySearch:filters",["mySearch:filters"]],"optionalFilters":["mySearch:filters",["mySearch:filters"]]}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `search filters end to end`() = runTest {
+    client.runTest(
+      call = {
+        search(
+          searchMethodParams = SearchMethodParams(
+            requests = listOf(
+              SearchForHits(
+                indexName = "cts_e2e_search_facet",
+                filters = "editor:'visual studio' OR editor:neovim",
+              ),
+              SearchForHits(
+                indexName = "cts_e2e_search_facet",
+                facetFilters = FacetFilters.of(listOf(FacetFilters.of("editor:'visual studio'"), FacetFilters.of("editor:neovim"))),
+              ),
+              SearchForHits(
+                indexName = "cts_e2e_search_facet",
+                facetFilters = FacetFilters.of(listOf(FacetFilters.of("editor:'visual studio'"), FacetFilters.of(listOf(FacetFilters.of("editor:neovim"))))),
+              ),
+              SearchForHits(
+                indexName = "cts_e2e_search_facet",
+                facetFilters = FacetFilters.of(listOf(FacetFilters.of("editor:'visual studio'"), FacetFilters.of(listOf(FacetFilters.of("editor:neovim"), FacetFilters.of(listOf(FacetFilters.of("editor:goland"))))))),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/*/queries".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"requests":[{"indexName":"cts_e2e_search_facet","filters":"editor:'visual studio' OR editor:neovim"},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'","editor:neovim"]},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'",["editor:neovim"]]},{"indexName":"cts_e2e_search_facet","facetFilters":["editor:'visual studio'",["editor:neovim",["editor:goland"]]]}]}""", it.body)
       },
     )
   }
@@ -2252,7 +2287,7 @@ class SearchTest {
                 enableReRanking = true,
                 enableRules = true,
                 exactOnSingleWordQuery = ExactOnSingleWordQuery.entries.first { it.value == "attribute" },
-                facetFilters = FacetFilters.of(listOf(MixedSearchFilters.of(""))),
+                facetFilters = FacetFilters.of(listOf(FacetFilters.of(""))),
                 facetingAfterDistinct = true,
                 facets = listOf(""),
                 filters = "",
@@ -2271,10 +2306,10 @@ class SearchTest {
                 minWordSizefor1Typo = 0,
                 minWordSizefor2Typos = 0,
                 minimumAroundRadius = 1,
-                naturalLanguages = listOf(""),
-                numericFilters = NumericFilters.of(listOf(MixedSearchFilters.of(""))),
+                naturalLanguages = listOf(SupportedLanguage.entries.first { it.value == "fr" }),
+                numericFilters = NumericFilters.of(listOf(NumericFilters.of(""))),
                 offset = 0,
-                optionalFilters = OptionalFilters.of(listOf(MixedSearchFilters.of(""))),
+                optionalFilters = OptionalFilters.of(listOf(OptionalFilters.of(""))),
                 optionalWords = listOf(""),
                 page = 0,
                 percentileComputation = true,
@@ -2283,7 +2318,7 @@ class SearchTest {
                 queryLanguages = listOf(SupportedLanguage.entries.first { it.value == "fr" }),
                 queryType = QueryType.entries.first { it.value == "prefixAll" },
                 ranking = listOf(""),
-                reRankingApplyFilter = ReRankingApplyFilter.of(listOf(MixedSearchFilters.of(""))),
+                reRankingApplyFilter = ReRankingApplyFilter.of(listOf(ReRankingApplyFilter.of(""))),
                 relevancyStrictness = 0,
                 removeStopWords = RemoveStopWords.of(true),
                 removeWordsIfNoResults = RemoveWordsIfNoResults.entries.first { it.value == "allOptional" },
@@ -2310,7 +2345,7 @@ class SearchTest {
                 sortFacetValuesBy = "",
                 sumOrFiltersScores = true,
                 synonyms = true,
-                tagFilters = TagFilters.of(listOf(MixedSearchFilters.of(""))),
+                tagFilters = TagFilters.of(listOf(TagFilters.of(""))),
                 type = SearchTypeDefault.entries.first { it.value == "default" },
                 typoTolerance = TypoToleranceEnum.entries.first { it.value == "min" },
                 userToken = "",
@@ -2322,7 +2357,7 @@ class SearchTest {
       intercept = {
         assertEquals("/1/indexes/*/queries".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":[""],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":["fr"],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}""", it.body)
+        assertJsonBody("""{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":["fr"],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":["fr"],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}""", it.body)
       },
     )
   }
@@ -2474,7 +2509,7 @@ class SearchTest {
           indexName = "indexName",
           searchParams = SearchParamsObject(
             query = "myQuery",
-            facetFilters = FacetFilters.of(listOf(MixedSearchFilters.of("tags:algolia"))),
+            facetFilters = FacetFilters.of(listOf(FacetFilters.of("tags:algolia"))),
           ),
         )
       },

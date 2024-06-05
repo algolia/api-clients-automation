@@ -1,6 +1,6 @@
 get:
   operationId: getCrawler
-  summary: Retrieve crawler details.
+  summary: Retrieve crawler details
   description: |
     Retrieves details about the specified crawler, optionally with its configuration.
   tags:
@@ -27,7 +27,7 @@ get:
       $ref: '../common/schemas/responses.yml#/NoRightsOnCrawler'
 patch:
   operationId: patchCrawler
-  summary: Update crawler.
+  summary: Update crawler
   description: |
     Updates the crawler, either its name or its configuration.
 

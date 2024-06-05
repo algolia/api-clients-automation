@@ -1706,6 +1706,7 @@ describe('search', () => {
           facetHits: [
             { count: 1, highlighted: 'goland', value: 'goland' },
             { count: 1, highlighted: 'neovim', value: 'neovim' },
+            { count: 1, highlighted: 'visual studio', value: 'visual studio' },
             { count: 1, highlighted: 'vscode', value: 'vscode' },
           ],
         },
@@ -1856,7 +1857,10 @@ describe('search', () => {
         },
         {
           indexName: 'theIndexName',
-          facetFilters: ['mySearch:filters', ['mySearch:filters']],
+          facetFilters: [
+            'mySearch:filters',
+            ['mySearch:filters', ['mySearch:filters']],
+          ],
           reRankingApplyFilter: ['mySearch:filters', ['mySearch:filters']],
           tagFilters: ['mySearch:filters', ['mySearch:filters']],
           numericFilters: ['mySearch:filters', ['mySearch:filters']],
@@ -1879,7 +1883,10 @@ describe('search', () => {
         },
         {
           indexName: 'theIndexName',
-          facetFilters: ['mySearch:filters', ['mySearch:filters']],
+          facetFilters: [
+            'mySearch:filters',
+            ['mySearch:filters', ['mySearch:filters']],
+          ],
           reRankingApplyFilter: ['mySearch:filters', ['mySearch:filters']],
           tagFilters: ['mySearch:filters', ['mySearch:filters']],
           numericFilters: ['mySearch:filters', ['mySearch:filters']],
@@ -1888,6 +1895,146 @@ describe('search', () => {
       ],
     });
     expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('search filters end to end', async () => {
+    const req = (await client.search({
+      requests: [
+        {
+          indexName: 'cts_e2e_search_facet',
+          filters: "editor:'visual studio' OR editor:neovim",
+        },
+        {
+          indexName: 'cts_e2e_search_facet',
+          facetFilters: ["editor:'visual studio'", 'editor:neovim'],
+        },
+        {
+          indexName: 'cts_e2e_search_facet',
+          facetFilters: ["editor:'visual studio'", ['editor:neovim']],
+        },
+        {
+          indexName: 'cts_e2e_search_facet',
+          facetFilters: [
+            "editor:'visual studio'",
+            ['editor:neovim', ['editor:goland']],
+          ],
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/queries');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          indexName: 'cts_e2e_search_facet',
+          filters: "editor:'visual studio' OR editor:neovim",
+        },
+        {
+          indexName: 'cts_e2e_search_facet',
+          facetFilters: ["editor:'visual studio'", 'editor:neovim'],
+        },
+        {
+          indexName: 'cts_e2e_search_facet',
+          facetFilters: ["editor:'visual studio'", ['editor:neovim']],
+        },
+        {
+          indexName: 'cts_e2e_search_facet',
+          facetFilters: [
+            "editor:'visual studio'",
+            ['editor:neovim', ['editor:goland']],
+          ],
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+
+    const resp = await e2eClient.search({
+      requests: [
+        {
+          indexName: 'cts_e2e_search_facet',
+          filters: "editor:'visual studio' OR editor:neovim",
+        },
+        {
+          indexName: 'cts_e2e_search_facet',
+          facetFilters: ["editor:'visual studio'", 'editor:neovim'],
+        },
+        {
+          indexName: 'cts_e2e_search_facet',
+          facetFilters: ["editor:'visual studio'", ['editor:neovim']],
+        },
+        {
+          indexName: 'cts_e2e_search_facet',
+          facetFilters: [
+            "editor:'visual studio'",
+            ['editor:neovim', ['editor:goland']],
+          ],
+        },
+      ],
+    });
+
+    const expectedBody = {
+      results: [
+        {
+          hitsPerPage: 20,
+          index: 'cts_e2e_search_facet',
+          nbHits: 2,
+          nbPages: 1,
+          page: 0,
+          hits: [
+            {
+              editor: 'visual studio',
+              _highlightResult: {
+                editor: { value: 'visual studio', matchLevel: 'none' },
+              },
+            },
+            {
+              editor: 'neovim',
+              _highlightResult: {
+                editor: { value: 'neovim', matchLevel: 'none' },
+              },
+            },
+          ],
+          query: '',
+          params: 'filters=editor%3A%27visual+studio%27+OR+editor%3Aneovim',
+        },
+        {
+          hitsPerPage: 20,
+          index: 'cts_e2e_search_facet',
+          nbHits: 0,
+          nbPages: 0,
+          page: 0,
+          hits: [],
+          query: '',
+          params:
+            'facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%22editor%3Aneovim%22%5D',
+        },
+        {
+          hitsPerPage: 20,
+          index: 'cts_e2e_search_facet',
+          nbHits: 0,
+          nbPages: 0,
+          page: 0,
+          hits: [],
+          query: '',
+          params:
+            'facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%5D%5D',
+        },
+        {
+          hitsPerPage: 20,
+          index: 'cts_e2e_search_facet',
+          nbHits: 0,
+          nbPages: 0,
+          page: 0,
+          hits: [],
+          query: '',
+          params:
+            'facetFilters=%5B%22editor%3A%27visual+studio%27%22%2C%5B%22editor%3Aneovim%22%2C%5B%22editor%3Agoland%22%5D%5D%5D',
+        },
+      ],
+    };
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
   });
 
   test('search with all search parameters', async () => {
@@ -1944,7 +2091,7 @@ describe('search', () => {
           minWordSizefor1Typo: 0,
           minWordSizefor2Typos: 0,
           minimumAroundRadius: 1,
-          naturalLanguages: [''],
+          naturalLanguages: ['fr'],
           numericFilters: [''],
           offset: 0,
           optionalFilters: [''],
@@ -2039,7 +2186,7 @@ describe('search', () => {
           minWordSizefor1Typo: 0,
           minWordSizefor2Typos: 0,
           minimumAroundRadius: 1,
-          naturalLanguages: [''],
+          naturalLanguages: ['fr'],
           numericFilters: [''],
           offset: 0,
           optionalFilters: [''],

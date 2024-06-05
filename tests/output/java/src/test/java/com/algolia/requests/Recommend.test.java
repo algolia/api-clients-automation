@@ -626,10 +626,10 @@ class RecommendClientRequestsTests {
                 .setThreshold(42.1)
                 .setMaxRecommendations(10)
                 .setQueryParameters(
-                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("query"))))
+                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("query"))))
                 )
                 .setFallbackParameters(
-                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("fallback"))))
+                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("fallback"))))
                 )
             )
           )
@@ -693,10 +693,10 @@ class RecommendClientRequestsTests {
                 .setFacetName("myFacetName")
                 .setFacetValue("myFacetValue")
                 .setQueryParameters(
-                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("query"))))
+                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("query"))))
                 )
                 .setFallbackParameters(
-                  new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("fallback"))))
+                  new SearchParamsObject().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("fallback"))))
                 )
             )
           )
@@ -763,10 +763,10 @@ class RecommendClientRequestsTests {
                 .setThreshold(21.7)
                 .setMaxRecommendations(10)
                 .setQueryParameters(
-                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("query1"))))
+                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("query1"))))
                 )
                 .setFallbackParameters(
-                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("fallback1"))))
+                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("fallback1"))))
                 ),
               new RelatedQuery()
                 .setIndexName("indexName2")
@@ -775,10 +775,10 @@ class RecommendClientRequestsTests {
                 .setThreshold(21.7)
                 .setMaxRecommendations(10)
                 .setQueryParameters(
-                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("query2"))))
+                  new SearchParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("query2"))))
                 )
                 .setFallbackParameters(
-                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(MixedSearchFilters.of("fallback2"))))
+                  new FallbackParams().setQuery("myQuery").setFacetFilters(FacetFilters.of(List.of(FacetFilters.of("fallback2"))))
                 )
             )
           )

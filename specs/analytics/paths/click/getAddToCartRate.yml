@@ -4,7 +4,7 @@ get:
   operationId: getAddToCartRate
   x-acl:
     - analytics
-  summary: Retrieve add-to-cart rate.
+  summary: Retrieve add-to-cart rate
   description: |
     Retrieves the add-to-cart rate for all of your searches with at least one add-to-cart event, including a daily breakdown.
 

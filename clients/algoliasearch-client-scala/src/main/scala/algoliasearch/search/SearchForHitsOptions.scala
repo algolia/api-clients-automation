@@ -38,7 +38,7 @@ import algoliasearch.search.SearchTypeDefault._
 /** SearchForHitsOptions
   *
   * @param indexName
-  *   Index name.
+  *   Index name (case-sensitive).
   */
 case class SearchForHitsOptions(
     indexName: String,

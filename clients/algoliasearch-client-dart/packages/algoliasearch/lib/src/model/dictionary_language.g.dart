@@ -12,7 +12,8 @@ DictionaryLanguage _$DictionaryLanguageFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = DictionaryLanguage(
-          nbCustomEntries: $checkedConvert('nbCustomEntries', (v) => v as int?),
+          nbCustomEntries:
+              $checkedConvert('nbCustomEntries', (v) => (v as num?)?.toInt()),
         );
         return val;
       },

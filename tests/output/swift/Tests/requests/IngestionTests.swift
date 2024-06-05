@@ -1221,12 +1221,12 @@ final class IngestionClientRequestsTests: XCTestCase {
         let client = IngestionClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.getAuthenticationsWithHTTPInfo(
-            itemsPerPage: 10,
+            itemsPerPage: 2,
             page: 1,
             type: [AuthenticationType.basic, AuthenticationType.algolia],
             platform: [PlatformWithNone.platformNone(PlatformNone.`none`)],
             sort: AuthenticationSortKeys.createdAt,
-            order: OrderKeys.desc
+            order: OrderKeys.asc
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -1238,7 +1238,7 @@ final class IngestionClientRequestsTests: XCTestCase {
 
         let expectedQueryParameters =
             try XCTUnwrap(
-                "{\"itemsPerPage\":\"10\",\"page\":\"1\",\"type\":\"basic%2Calgolia\",\"platform\":\"none\",\"sort\":\"createdAt\",\"order\":\"desc\"}"
+                "{\"itemsPerPage\":\"2\",\"page\":\"1\",\"type\":\"basic%2Calgolia\",\"platform\":\"none\",\"sort\":\"createdAt\",\"order\":\"asc\"}"
                     .data(using: .utf8)
             )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
@@ -1254,19 +1254,19 @@ final class IngestionClientRequestsTests: XCTestCase {
         }
 
         let e2eResponse = try await e2eClient.getAuthenticationsWithHTTPInfo(
-            itemsPerPage: 10,
+            itemsPerPage: 2,
             page: 1,
             type: [AuthenticationType.basic, AuthenticationType.algolia],
             platform: [PlatformWithNone.platformNone(PlatformNone.`none`)],
             sort: AuthenticationSortKeys.createdAt,
-            order: OrderKeys.desc
+            order: OrderKeys.asc
         )
         let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
         let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
 
         let e2eExpectedBodyData =
             try XCTUnwrap(
-                "{\"pagination\":{\"page\":1,\"itemsPerPage\":10},\"authentications\":[{\"authenticationID\":\"b57a7ea5-8592-493b-b75b-6c66d77aee7f\",\"type\":\"algolia\",\"name\":\"Auto-generated Authentication for T8JK9S7I7X - 1704732447751\",\"input\":{},\"createdAt\":\"2024-01-08T16:47:31Z\",\"updatedAt\":\"2024-01-08T16:47:31Z\"},{},{},{},{},{},{},{}]}"
+                "{\"pagination\":{\"page\":1,\"itemsPerPage\":2},\"authentications\":[{\"authenticationID\":\"474f050f-a771-464c-a016-323538029f5f\",\"type\":\"algolia\",\"name\":\"algolia-auth-1677060483885\",\"input\":{},\"createdAt\":\"2023-02-22T10:08:04Z\",\"updatedAt\":\"2023-10-25T08:41:56Z\"},{}]}"
                     .data(using: .utf8)
             )
 

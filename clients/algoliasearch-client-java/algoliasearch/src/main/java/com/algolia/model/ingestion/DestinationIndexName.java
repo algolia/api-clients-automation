@@ -27,7 +27,7 @@ public class DestinationIndexName implements DestinationInput {
     return this;
   }
 
-  /** Algolia index name. */
+  /** Algolia index name (case-sensitive). */
   @javax.annotation.Nonnull
   public String getIndexName() {
     return indexName;

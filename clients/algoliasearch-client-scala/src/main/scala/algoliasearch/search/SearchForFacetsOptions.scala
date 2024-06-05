@@ -40,7 +40,7 @@ import algoliasearch.search.SearchTypeFacet._
   * @param facet
   *   Facet name.
   * @param indexName
-  *   Index name.
+  *   Index name (case-sensitive).
   * @param facetQuery
   *   Text to search inside the facet's values.
   * @param maxFacetHits

@@ -93,7 +93,7 @@ public class PurchasedObjectIDs implements EventsItems {
     return this;
   }
 
-  /** Index name to which the event's items belong. */
+  /** Index name (case-sensitive) to which the event's items belong. */
   @javax.annotation.Nonnull
   public String getIndex() {
     return index;

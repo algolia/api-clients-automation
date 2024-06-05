@@ -29,7 +29,7 @@ PurchasedObjectIDs _$PurchasedObjectIDsFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)
                   ?.map((e) => ObjectData.fromJson(e as Map<String, dynamic>))
                   .toList()),
-          timestamp: $checkedConvert('timestamp', (v) => v as int?),
+          timestamp: $checkedConvert('timestamp', (v) => (v as num?)?.toInt()),
           value: $checkedConvert('value', (v) => v),
         );
         return val;

@@ -5,13 +5,13 @@ require 'time'
 
 module Algolia
   module Recommend
-    # Restrict [Dynamic Re-ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) to records that match these filters.
+    # Restrict [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) to records that match these filters.
     module ReRankingApplyFilter
       class << self
         # List of class defined in oneOf (OpenAPI v3)
         def openapi_one_of
           [
-            :'Array<MixedSearchFilters>',
+            :'Array<ReRankingApplyFilter>',
             :String
           ]
         end

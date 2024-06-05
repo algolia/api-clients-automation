@@ -4,6 +4,7 @@ package requests
 import (
 	"encoding/json"
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
@@ -656,7 +657,7 @@ func TestIngestion_EnableTask(t *testing.T) {
 		require.NoError(t, err)
 
 		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
+		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
 	})
 }
 
@@ -691,9 +692,9 @@ func TestIngestion_GetAuthentications(t *testing.T) {
 		require.Nil(t, echo.Body)
 	})
 	t.Run("getAuthentications with query params", func(t *testing.T) {
-		_, err := client.GetAuthentications(client.NewApiGetAuthenticationsRequest().WithItemsPerPage(10).WithPage(1).WithType(
+		_, err := client.GetAuthentications(client.NewApiGetAuthenticationsRequest().WithItemsPerPage(2).WithPage(1).WithType(
 			[]ingestion.AuthenticationType{ingestion.AuthenticationType("basic"), ingestion.AuthenticationType("algolia")}).WithPlatform(
-			[]ingestion.PlatformWithNone{*ingestion.PlatformNoneAsPlatformWithNone(ingestion.PlatformNone("none"))}).WithSort(ingestion.AuthenticationSortKeys("createdAt")).WithOrder(ingestion.OrderKeys("desc")))
+			[]ingestion.PlatformWithNone{*ingestion.PlatformNoneAsPlatformWithNone(ingestion.PlatformNone("none"))}).WithSort(ingestion.AuthenticationSortKeys("createdAt")).WithOrder(ingestion.OrderKeys("asc")))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/authentications", echo.Path)
@@ -701,15 +702,15 @@ func TestIngestion_GetAuthentications(t *testing.T) {
 
 		require.Nil(t, echo.Body)
 		queryParams := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"itemsPerPage":"10","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"desc"}`), &queryParams))
+		require.NoError(t, json.Unmarshal([]byte(`{"itemsPerPage":"2","page":"1","type":"basic%2Calgolia","platform":"none","sort":"createdAt","order":"asc"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
 		clientE2E := createE2EIngestionClient(t)
-		res, err := clientE2E.GetAuthentications(client.NewApiGetAuthenticationsRequest().WithItemsPerPage(10).WithPage(1).WithType(
+		res, err := clientE2E.GetAuthentications(client.NewApiGetAuthenticationsRequest().WithItemsPerPage(2).WithPage(1).WithType(
 			[]ingestion.AuthenticationType{ingestion.AuthenticationType("basic"), ingestion.AuthenticationType("algolia")}).WithPlatform(
-			[]ingestion.PlatformWithNone{*ingestion.PlatformNoneAsPlatformWithNone(ingestion.PlatformNone("none"))}).WithSort(ingestion.AuthenticationSortKeys("createdAt")).WithOrder(ingestion.OrderKeys("desc")))
+			[]ingestion.PlatformWithNone{*ingestion.PlatformNoneAsPlatformWithNone(ingestion.PlatformNone("none"))}).WithSort(ingestion.AuthenticationSortKeys("createdAt")).WithOrder(ingestion.OrderKeys("asc")))
 		require.NoError(t, err)
 		_ = res
 
@@ -720,7 +721,7 @@ func TestIngestion_GetAuthentications(t *testing.T) {
 		err = json.Unmarshal(rawBody, &rawBodyMap)
 		require.NoError(t, err)
 
-		expectedBodyRaw := `{"pagination":{"page":1,"itemsPerPage":10},"authentications":[{"authenticationID":"b57a7ea5-8592-493b-b75b-6c66d77aee7f","type":"algolia","name":"Auto-generated Authentication for T8JK9S7I7X - 1704732447751","input":{},"createdAt":"2024-01-08T16:47:31Z","updatedAt":"2024-01-08T16:47:31Z"},{},{},{},{},{},{},{}]}`
+		expectedBodyRaw := `{"pagination":{"page":1,"itemsPerPage":2},"authentications":[{"authenticationID":"474f050f-a771-464c-a016-323538029f5f","type":"algolia","name":"algolia-auth-1677060483885","input":{},"createdAt":"2023-02-22T10:08:04Z","updatedAt":"2023-10-25T08:41:56Z"},{}]}`
 		var expectedBody any
 		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
 		require.NoError(t, err)
@@ -730,7 +731,7 @@ func TestIngestion_GetAuthentications(t *testing.T) {
 		require.NoError(t, err)
 
 		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
+		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
 	})
 }
 
@@ -887,7 +888,7 @@ func TestIngestion_GetSource(t *testing.T) {
 		require.NoError(t, err)
 
 		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
+		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
 	})
 }
 
@@ -1058,7 +1059,7 @@ func TestIngestion_SearchTasks(t *testing.T) {
 		require.NoError(t, err)
 
 		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, string(unionBodyRaw))
+		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
 	})
 }
 

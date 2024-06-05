@@ -1,6 +1,6 @@
 patch:
   operationId: patchConfig
-  summary: Update crawler configuration.
+  summary: Update crawler configuration
   description: |
     Updates the configuration of the specified crawler.
     Every time you update the configuration, a new version is created.

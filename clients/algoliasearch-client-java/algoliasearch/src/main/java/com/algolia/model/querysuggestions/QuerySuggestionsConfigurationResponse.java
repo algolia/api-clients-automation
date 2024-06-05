@@ -49,7 +49,7 @@ public class QuerySuggestionsConfigurationResponse {
     return this;
   }
 
-  /** Name of the Query Suggestions index. */
+  /** Name of the Query Suggestions index (case-sensitive). */
   @javax.annotation.Nonnull
   public String getIndexName() {
     return indexName;

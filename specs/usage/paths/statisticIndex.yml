@@ -1,6 +1,6 @@
 get:
   operationId: getIndexUsage
-  summary: Retrieve usage information for one index.
+  summary: Retrieve usage information for one index
   description: |
     Retrieves the selected usage statistics for one index.
   parameters:

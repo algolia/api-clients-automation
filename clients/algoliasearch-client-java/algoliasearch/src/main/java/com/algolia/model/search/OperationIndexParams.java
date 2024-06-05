@@ -37,7 +37,7 @@ public class OperationIndexParams {
     return this;
   }
 
-  /** Index name. */
+  /** Index name (case-sensitive). */
   @javax.annotation.Nonnull
   public String getDestination() {
     return destination;

@@ -1,7 +1,7 @@
 get:
   tags:
     - authentications
-  summary: List authentication resources.
+  summary: List authentication resources
   description: Retrieves a list of all authentication resources.
   operationId: getAuthentications
   x-acl:
@@ -40,7 +40,7 @@ get:
 post:
   tags:
     - authentications
-  summary: Create an authentication resource.
+  summary: Create an authentication resource
   description: Creates a new authentication resource.
   operationId: createAuthentication
   x-acl:

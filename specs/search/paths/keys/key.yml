@@ -2,7 +2,7 @@ get:
   tags:
     - Api Keys
   operationId: getApiKey
-  summary: Retrieve API key permissions.
+  summary: Retrieve API key permissions
   description: |
     Gets the permissions and restrictions of an API key.
 
@@ -32,7 +32,7 @@ put:
   operationId: updateApiKey
   x-acl:
     - admin
-  summary: Update an API key.
+  summary: Update an API key
   description: |
     Replaces the permissions of an existing API key.
 
@@ -77,7 +77,7 @@ delete:
   operationId: deleteApiKey
   x-acl:
     - admin
-  summary: Delete an API key.
+  summary: Delete an API key
   description: Deletes the API key.
   parameters:
     - $ref: 'common/parameters.yml#/KeyString'

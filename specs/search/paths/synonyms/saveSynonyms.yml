@@ -4,7 +4,7 @@ post:
   operationId: saveSynonyms
   x-acl:
     - editSettings
-  summary: Create or replace synonyms.
+  summary: Create or replace synonyms
   description: |
     If a synonym with the `objectID` doesn't exist, Algolia adds a new one.
     Otherwise, existing synonyms are replaced.

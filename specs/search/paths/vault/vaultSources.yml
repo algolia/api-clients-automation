@@ -4,7 +4,7 @@ get:
   operationId: getSources
   x-acl:
     - admin
-  summary: List allowed sources.
+  summary: List allowed sources
   description: Retrieves all allowed IP addresses with access to your application.
   responses:
     '200':
@@ -28,7 +28,7 @@ put:
   operationId: replaceSources
   x-acl:
     - admin
-  summary: Replace allowed sources.
+  summary: Replace allowed sources
   description: Replaces the list of allowed sources.
   requestBody:
     required: true

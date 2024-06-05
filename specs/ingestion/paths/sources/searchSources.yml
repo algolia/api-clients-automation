@@ -1,7 +1,7 @@
 post:
   tags:
     - sources
-  summary: Search for sources.
+  summary: Search for sources
   description: Searches for sources.
   operationId: searchSources
   x-acl:

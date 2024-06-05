@@ -15,7 +15,7 @@ ObjectDataAfterSearch _$ObjectDataAfterSearchFromJson(
         final val = ObjectDataAfterSearch(
           queryID: $checkedConvert('queryID', (v) => v as String?),
           price: $checkedConvert('price', (v) => v),
-          quantity: $checkedConvert('quantity', (v) => v as int?),
+          quantity: $checkedConvert('quantity', (v) => (v as num?)?.toInt()),
           discount: $checkedConvert('discount', (v) => v),
         );
         return val;

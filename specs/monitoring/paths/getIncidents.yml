@@ -1,5 +1,5 @@
 get:
-  summary: Retrieve all incidents.
+  summary: Retrieve all incidents
   description: Retrieves known incidents for all clusters.
   operationId: getIncidents
   security: []

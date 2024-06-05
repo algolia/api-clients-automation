@@ -13,8 +13,8 @@ AroundPrecisionFromValueInner _$AroundPrecisionFromValueInnerFromJson(
       json,
       ($checkedConvert) {
         final val = AroundPrecisionFromValueInner(
-          from: $checkedConvert('from', (v) => v as int?),
-          value: $checkedConvert('value', (v) => v as int?),
+          from: $checkedConvert('from', (v) => (v as num?)?.toInt()),
+          value: $checkedConvert('value', (v) => (v as num?)?.toInt()),
         );
         return val;
       },

@@ -213,13 +213,13 @@ public class IndexSettings {
   /**
    * Attributes used for
    * [faceting](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/).
-   * Facets are ways to categorize search results based on attributes. Facets can be used to let
-   * user filter search results. By default, no attribute is used for faceting. **Modifiers** -
-   * `filterOnly(\"ATTRIBUTE\")`. Allows using this attribute as a filter, but doesn't evalue the
-   * facet values. - `searchable(\"ATTRIBUTE\")`. Allows searching for facet values. -
-   * `afterDistinct(\"ATTRIBUTE\")`. Evaluates the facet count _after_ deduplication with
-   * `distinct`. This ensures accurate facet counts. You can apply this modifier to searchable
-   * facets: `afterDistinct(searchable(ATTRIBUTE))`.
+   * Facets are attributes that let you categorize search results. They can be used for filtering
+   * search results. By default, no attribute is used for faceting. Attribute names are
+   * case-sensitive. **Modifiers** - `filterOnly(\"ATTRIBUTE\")`. Allows using this attribute as a
+   * filter, but doesn't evalue the facet values. - `searchable(\"ATTRIBUTE\")`. Allows searching
+   * for facet values. - `afterDistinct(\"ATTRIBUTE\")`. Evaluates the facet count _after_
+   * deduplication with `distinct`. This ensures accurate facet counts. You can apply this modifier
+   * to searchable facets: `afterDistinct(searchable(ATTRIBUTE))`.
    */
   @javax.annotation.Nullable
   public List<String> getAttributesForFaceting() {
@@ -289,7 +289,7 @@ public class IndexSettings {
    * Attributes that can't be retrieved at query time. This can be useful if you want to use an
    * attribute for ranking or to [restrict
    * access](https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/),
-   * but don't want to include it in the search results.
+   * but don't want to include it in the search results. Attribute names are case-sensitive.
    */
   @javax.annotation.Nullable
   public List<String> getUnretrievableAttributes() {
@@ -338,7 +338,8 @@ public class IndexSettings {
    * Attributes, for which you want to support [Japanese
    * transliteration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#japanese-transliteration-and-type-ahead).
    * Transliteration supports searching in any of the Japanese writing systems. To support
-   * transliteration, you must set the indexing language to Japanese.
+   * transliteration, you must set the indexing language to Japanese. Attribute names are
+   * case-sensitive.
    */
   @javax.annotation.Nullable
   public List<String> getAttributesToTransliterate() {
@@ -358,7 +359,10 @@ public class IndexSettings {
     return this;
   }
 
-  /** Attributes for which to split [camel case](https://wikipedia.org/wiki/Camel_case) words. */
+  /**
+   * Attributes for which to split [camel case](https://wikipedia.org/wiki/Camel_case) words.
+   * Attribute names are case-sensitive.
+   */
   @javax.annotation.Nullable
   public List<String> getCamelCaseAttributes() {
     return camelCaseAttributes;
@@ -372,11 +376,12 @@ public class IndexSettings {
   /**
    * Searchable attributes to which Algolia should apply [word
    * segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/)
-   * (decompounding). Compound words are formed by combining two or more individual words, and are
-   * particularly prevalent in Germanic languages—for example, \"firefighter\". With decompounding,
-   * the individual components are indexed separately. You can specify different lists for different
-   * languages. Decompounding is supported for these languages: Dutch (`nl`), German (`de`), Finnish
-   * (`fi`), Danish (`da`), Swedish (`sv`), and Norwegian (`no`).
+   * (decompounding). Attribute names are case-sensitive. Compound words are formed by combining two
+   * or more individual words, and are particularly prevalent in Germanic languages—for example,
+   * \"firefighter\". With decompounding, the individual components are indexed separately. You can
+   * specify different lists for different languages. Decompounding is supported for these
+   * languages: Dutch (`nl`), German (`de`), Finnish (`fi`), Danish (`da`), Swedish (`sv`), and
+   * Norwegian (`no`).
    */
   @javax.annotation.Nullable
   public Object getDecompoundedAttributes() {
@@ -426,6 +431,7 @@ public class IndexSettings {
   /**
    * Searchable attributes for which you want to turn off [prefix
    * matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjusting-prefix-search).
+   * Attribute names are case-sensitive.
    */
   @javax.annotation.Nullable
   public List<String> getDisablePrefixOnAttributes() {
@@ -462,11 +468,11 @@ public class IndexSettings {
   /**
    * Numeric attributes that can be used as [numerical
    * filters](https://www.algolia.com/doc/guides/managing-results/rules/detecting-intent/how-to/applying-a-custom-filter-for-a-specific-query/#numerical-filters).
-   * By default, all numeric attributes are available as numerical filters. For faster indexing,
-   * reduce the number of numeric attributes. If you want to turn off filtering for all numeric
-   * attributes, specifiy an attribute that doesn't exist in your index, such as
-   * `NO_NUMERIC_FILTERING`. **Modifier** - `equalOnly(\"ATTRIBUTE\")`. Support only filtering based
-   * on equality comparisons `=` and `!=`.
+   * Attribute names are case-sensitive. By default, all numeric attributes are available as
+   * numerical filters. For faster indexing, reduce the number of numeric attributes. If you want to
+   * turn off filtering for all numeric attributes, specifiy an attribute that doesn't exist in your
+   * index, such as `NO_NUMERIC_FILTERING`. **Modifier** - `equalOnly(\"ATTRIBUTE\")`. Support only
+   * filtering based on equality comparisons `=` and `!=`.
    */
   @javax.annotation.Nullable
   public List<String> getNumericAttributesForFiltering() {
@@ -503,7 +509,8 @@ public class IndexSettings {
   }
 
   /**
-   * Attributes used for searching. By default, all attributes are searchable and the
+   * Attributes used for searching. Attribute names are case-sensitive. By default, all attributes
+   * are searchable and the
    * [Attribute](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#attribute)
    * ranking criterion is turned off. With a non-empty list, Algolia only returns results with
    * matches in the selected attributes. In addition, the Attribute ranking criterion is turned on:
@@ -559,12 +566,12 @@ public class IndexSettings {
   }
 
   /**
-   * Attribute that should be used to establish groups of results. All records with the same value
-   * for this attribute are considered a group. You can combine `attributeForDistinct` with the
-   * `distinct` search parameter to control how many items per group are included in the search
-   * results. If you want to use the same attribute also for faceting, use the `afterDistinct`
-   * modifier of the `attributesForFaceting` setting. This applies faceting _after_ deduplication,
-   * which will result in accurate facet counts.
+   * Attribute that should be used to establish groups of results. Attribute names are
+   * case-sensitive. All records with the same value for this attribute are considered a group. You
+   * can combine `attributeForDistinct` with the `distinct` search parameter to control how many
+   * items per group are included in the search results. If you want to use the same attribute also
+   * for faceting, use the `afterDistinct` modifier of the `attributesForFaceting` setting. This
+   * applies faceting _after_ deduplication, which will result in accurate facet counts.
    */
   @javax.annotation.Nullable
   public String getAttributeForDistinct() {
@@ -586,10 +593,11 @@ public class IndexSettings {
 
   /**
    * Attributes to include in the API response. To reduce the size of your response, you can
-   * retrieve only some of the attributes. - `*` retrieves all attributes, except attributes
-   * included in the `customRanking` and `unretrievableAttributes` settings. - To retrieve all
-   * attributes except a specific one, prefix the attribute with a dash and combine it with the `*`:
-   * `[\"*\", \"-ATTRIBUTE\"]`. - The `objectID` attribute is always included.
+   * retrieve only some of the attributes. Attribute names are case-sensitive. - `*` retrieves all
+   * attributes, except attributes included in the `customRanking` and `unretrievableAttributes`
+   * settings. - To retrieve all attributes except a specific one, prefix the attribute with a dash
+   * and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`. - The `objectID` attribute is always
+   * included.
    */
   @javax.annotation.Nullable
   public List<String> getAttributesToRetrieve() {
@@ -642,13 +650,13 @@ public class IndexSettings {
 
   /**
    * Attributes to use as [custom
-   * ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/). The
-   * custom ranking attributes decide which items are shown first if the other ranking criteria are
-   * equal. Records with missing values for your selected custom ranking attributes are always
-   * sorted last. Boolean attributes are sorted based on their alphabetical order. **Modifiers** -
-   * `asc(\"ATTRIBUTE\")`. Sort the index by the values of an attribute, in ascending order. -
-   * `desc(\"ATTRIBUTE\")`. Sort the index by the values of an attribute, in descending order. If
-   * you use two or more custom ranking attributes, [reduce the
+   * ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/).
+   * Attribute names are case-sensitive. The custom ranking attributes decide which items are shown
+   * first if the other ranking criteria are equal. Records with missing values for your selected
+   * custom ranking attributes are always sorted last. Boolean attributes are sorted based on their
+   * alphabetical order. **Modifiers** - `asc(\"ATTRIBUTE\")`. Sort the index by the values of an
+   * attribute, in ascending order. - `desc(\"ATTRIBUTE\")`. Sort the index by the values of an
+   * attribute, in descending order. If you use two or more custom ranking attributes, [reduce the
    * precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/)
    * of your first attributes, or the other attributes will never be applied.
    */
@@ -688,10 +696,11 @@ public class IndexSettings {
 
   /**
    * Attributes to highlight. By default, all searchable attributes are highlighted. Use `*` to
-   * highlight all attributes or use an empty array `[]` to turn off highlighting. With
-   * highlighting, strings that match the search query are surrounded by HTML tags defined by
-   * `highlightPreTag` and `highlightPostTag`. You can use this to visually highlight matching parts
-   * of a search query in your UI. For more information, see [Highlighting and
+   * highlight all attributes or use an empty array `[]` to turn off highlighting. Attribute names
+   * are case-sensitive. With highlighting, strings that match the search query are surrounded by
+   * HTML tags defined by `highlightPreTag` and `highlightPostTag`. You can use this to visually
+   * highlight matching parts of a search query in your UI. For more information, see [Highlighting
+   * and
    * snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js/).
    */
   @javax.annotation.Nullable
@@ -713,10 +722,11 @@ public class IndexSettings {
   }
 
   /**
-   * Attributes for which to enable snippets. Snippets provide additional context to matched words.
-   * If you enable snippets, they include 10 words, including the matched word. The matched word
-   * will also be wrapped by HTML tags for highlighting. You can adjust the number of words with the
-   * following notation: `ATTRIBUTE:NUMBER`, where `NUMBER` is the number of words to be extracted.
+   * Attributes for which to enable snippets. Attribute names are case-sensitive. Snippets provide
+   * additional context to matched words. If you enable snippets, they include 10 words, including
+   * the matched word. The matched word will also be wrapped by HTML tags for highlighting. You can
+   * adjust the number of words with the following notation: `ATTRIBUTE:NUMBER`, where `NUMBER` is
+   * the number of words to be extracted.
    */
   @javax.annotation.Nullable
   public List<String> getAttributesToSnippet() {
@@ -852,7 +862,8 @@ public class IndexSettings {
   /**
    * Attributes for which you want to turn off [typo
    * tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
-   * Returning only exact matches can help when: - [Searching in hyphenated
+   * Attribute names are case-sensitive. Returning only exact matches can help when: - [Searching in
+   * hyphenated
    * attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes/).
    * - Reducing the number of matches when you have too many. This can happen with attributes that
    * are long blocks of text, such as product descriptions. Consider alternatives such as
@@ -1080,10 +1091,10 @@ public class IndexSettings {
   /**
    * Searchable attributes for which you want to [turn off the Exact ranking
    * criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes).
-   * This can be useful for attributes with long values, where the likelyhood of an exact match is
-   * high, such as product descriptions. Turning off the Exact ranking criterion for these
-   * attributes favors exact matching on other attributes. This reduces the impact of individual
-   * attributes with a lot of content on ranking.
+   * Attribute names are case-sensitive. This can be useful for attributes with long values, where
+   * the likelyhood of an exact match is high, such as product descriptions. Turning off the Exact
+   * ranking criterion for these attributes favors exact matching on other attributes. This reduces
+   * the impact of individual attributes with a lot of content on ranking.
    */
   @javax.annotation.Nullable
   public List<String> getDisableExactOnAttributes() {

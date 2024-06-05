@@ -21,7 +21,7 @@ final class LookingSimilarQuery {
     this.fallbackParameters,
   });
 
-  /// Index name.
+  /// Index name (case-sensitive).
   @JsonKey(name: r'indexName')
   final String indexName;
 

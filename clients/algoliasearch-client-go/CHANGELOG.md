@@ -1,3 +1,20 @@
+## [4.0.0-beta.14](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-beta.13...4.0.0-beta.14)
+
+- [2b70d9ea5](https://github.com/algolia/api-clients-automation/commit/2b70d9ea5) fix(specs): exhaustiveFacetsCount is not deprecated for sffv ([#3089](https://github.com/algolia/api-clients-automation/pull/3089)) by [@kai687](https://github.com/kai687/)
+- [1250c2b3c](https://github.com/algolia/api-clients-automation/commit/1250c2b3c) fix(specs): simplify filter types ([#3042](https://github.com/algolia/api-clients-automation/pull/3042)) by [@millotp](https://github.com/millotp/)
+
+## [4.0.0-beta.13](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-beta.12...4.0.0-beta.13)
+
+- [b621988bc](https://github.com/algolia/api-clients-automation/commit/b621988bc) feat(specs): promote @kai687 to code owner ([#3014](https://github.com/algolia/api-clients-automation/pull/3014)) by [@Fluf22](https://github.com/Fluf22/)
+- [f9877a8ae](https://github.com/algolia/api-clients-automation/commit/f9877a8ae) fix(specs): remove periods on summaries ([#3013](https://github.com/algolia/api-clients-automation/pull/3013)) by [@kai687](https://github.com/kai687/)
+
+## [4.0.0-beta.12](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-beta.11...4.0.0-beta.12)
+
+- [41121e77e](https://github.com/algolia/api-clients-automation/commit/41121e77e) fix(specs): attribute and index names case sensitive ([#2990](https://github.com/algolia/api-clients-automation/pull/2990)) by [@kai687](https://github.com/kai687/)
+- [67b0eab89](https://github.com/algolia/api-clients-automation/commit/67b0eab89) feat(specs): update shopify source and task inputs ([#2987](https://github.com/algolia/api-clients-automation/pull/2987)) by [@Fluf22](https://github.com/Fluf22/)
+- [60e8e6d68](https://github.com/algolia/api-clients-automation/commit/60e8e6d68) fix(specs): Personalization API ([#2982](https://github.com/algolia/api-clients-automation/pull/2982)) by [@kai687](https://github.com/kai687/)
+- [60322c0b5](https://github.com/algolia/api-clients-automation/commit/60322c0b5) fix(specs): a/b testing ([#2981](https://github.com/algolia/api-clients-automation/pull/2981)) by [@kai687](https://github.com/kai687/)
+
 ## [4.0.0-beta.11](https://github.com/algolia/algoliasearch-client-go/compare/4.0.0-beta.10...4.0.0-beta.11)
 
 - [dabdd0291](https://github.com/algolia/api-clients-automation/commit/dabdd0291) fix(specs): recommend api ([#2958](https://github.com/algolia/api-clients-automation/pull/2958)) by [@kai687](https://github.com/kai687/)

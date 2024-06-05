@@ -29,16 +29,16 @@ SearchForFacets _$SearchForFacetsFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           facetingAfterDistinct:
               $checkedConvert('facetingAfterDistinct', (v) => v as bool?),
-          page: $checkedConvert('page', (v) => v as int?),
-          offset: $checkedConvert('offset', (v) => v as int?),
-          length: $checkedConvert('length', (v) => v as int?),
+          page: $checkedConvert('page', (v) => (v as num?)?.toInt()),
+          offset: $checkedConvert('offset', (v) => (v as num?)?.toInt()),
+          length: $checkedConvert('length', (v) => (v as num?)?.toInt()),
           aroundLatLng: $checkedConvert('aroundLatLng', (v) => v as String?),
           aroundLatLngViaIP:
               $checkedConvert('aroundLatLngViaIP', (v) => v as bool?),
           aroundRadius: $checkedConvert('aroundRadius', (v) => v),
           aroundPrecision: $checkedConvert('aroundPrecision', (v) => v),
-          minimumAroundRadius:
-              $checkedConvert('minimumAroundRadius', (v) => v as int?),
+          minimumAroundRadius: $checkedConvert(
+              'minimumAroundRadius', (v) => (v as num?)?.toInt()),
           insideBoundingBox: $checkedConvert(
               'insideBoundingBox',
               (v) => (v as List<dynamic>?)
@@ -53,12 +53,15 @@ SearchForFacets _$SearchForFacetsFromJson(Map<String, dynamic> json) =>
                       .map((e) => (e as num).toDouble())
                       .toList())
                   .toList()),
-          naturalLanguages: $checkedConvert('naturalLanguages',
-              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          naturalLanguages: $checkedConvert(
+              'naturalLanguages',
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => $enumDecode(_$SupportedLanguageEnumMap, e))
+                  .toList()),
           ruleContexts: $checkedConvert('ruleContexts',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          personalizationImpact:
-              $checkedConvert('personalizationImpact', (v) => v as int?),
+          personalizationImpact: $checkedConvert(
+              'personalizationImpact', (v) => (v as num?)?.toInt()),
           userToken: $checkedConvert('userToken', (v) => v as String?),
           getRankingInfo: $checkedConvert('getRankingInfo', (v) => v as bool?),
           synonyms: $checkedConvert('synonyms', (v) => v as bool?),
@@ -75,8 +78,8 @@ SearchForFacets _$SearchForFacetsFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           customRanking: $checkedConvert('customRanking',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          relevancyStrictness:
-              $checkedConvert('relevancyStrictness', (v) => v as int?),
+          relevancyStrictness: $checkedConvert(
+              'relevancyStrictness', (v) => (v as num?)?.toInt()),
           attributesToHighlight: $checkedConvert('attributesToHighlight',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           attributesToSnippet: $checkedConvert('attributesToSnippet',
@@ -89,11 +92,12 @@ SearchForFacets _$SearchForFacetsFromJson(Map<String, dynamic> json) =>
               $checkedConvert('snippetEllipsisText', (v) => v as String?),
           restrictHighlightAndSnippetArrays: $checkedConvert(
               'restrictHighlightAndSnippetArrays', (v) => v as bool?),
-          hitsPerPage: $checkedConvert('hitsPerPage', (v) => v as int?),
-          minWordSizefor1Typo:
-              $checkedConvert('minWordSizefor1Typo', (v) => v as int?),
-          minWordSizefor2Typos:
-              $checkedConvert('minWordSizefor2Typos', (v) => v as int?),
+          hitsPerPage:
+              $checkedConvert('hitsPerPage', (v) => (v as num?)?.toInt()),
+          minWordSizefor1Typo: $checkedConvert(
+              'minWordSizefor1Typo', (v) => (v as num?)?.toInt()),
+          minWordSizefor2Typos: $checkedConvert(
+              'minWordSizefor2Typos', (v) => (v as num?)?.toInt()),
           typoTolerance: $checkedConvert('typoTolerance', (v) => v),
           allowTyposOnNumericTokens:
               $checkedConvert('allowTyposOnNumericTokens', (v) => v as bool?),
@@ -145,12 +149,14 @@ SearchForFacets _$SearchForFacetsFromJson(Map<String, dynamic> json) =>
           distinct: $checkedConvert('distinct', (v) => v),
           replaceSynonymsInHighlight:
               $checkedConvert('replaceSynonymsInHighlight', (v) => v as bool?),
-          minProximity: $checkedConvert('minProximity', (v) => v as int?),
+          minProximity:
+              $checkedConvert('minProximity', (v) => (v as num?)?.toInt()),
           responseFields: $checkedConvert('responseFields',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          maxFacetHits: $checkedConvert('maxFacetHits', (v) => v as int?),
+          maxFacetHits:
+              $checkedConvert('maxFacetHits', (v) => (v as num?)?.toInt()),
           maxValuesPerFacet:
-              $checkedConvert('maxValuesPerFacet', (v) => v as int?),
+              $checkedConvert('maxValuesPerFacet', (v) => (v as num?)?.toInt()),
           sortFacetValuesBy:
               $checkedConvert('sortFacetValuesBy', (v) => v as String?),
           attributeCriteriaComputedByMinProximity: $checkedConvert(
@@ -206,7 +212,8 @@ Map<String, dynamic> _$SearchForFacetsToJson(SearchForFacets instance) {
   writeNotNull('minimumAroundRadius', instance.minimumAroundRadius);
   writeNotNull('insideBoundingBox', instance.insideBoundingBox);
   writeNotNull('insidePolygon', instance.insidePolygon);
-  writeNotNull('naturalLanguages', instance.naturalLanguages);
+  writeNotNull('naturalLanguages',
+      instance.naturalLanguages?.map((e) => e.toJson()).toList());
   writeNotNull('ruleContexts', instance.ruleContexts);
   writeNotNull('personalizationImpact', instance.personalizationImpact);
   writeNotNull('userToken', instance.userToken);

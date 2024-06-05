@@ -567,11 +567,11 @@ class RecommendTest {
                 maxRecommendations = 10,
                 queryParameters = SearchParams(
                   query = "myQuery",
-                  facetFilters = FacetFilters.of(listOf(MixedSearchFilters.of("query"))),
+                  facetFilters = FacetFilters.of(listOf(FacetFilters.of("query"))),
                 ),
                 fallbackParameters = FallbackParams(
                   query = "myQuery",
-                  facetFilters = FacetFilters.of(listOf(MixedSearchFilters.of("fallback"))),
+                  facetFilters = FacetFilters.of(listOf(FacetFilters.of("fallback"))),
                 ),
               ),
             ),
@@ -628,11 +628,11 @@ class RecommendTest {
                 facetValue = "myFacetValue",
                 queryParameters = SearchParams(
                   query = "myQuery",
-                  facetFilters = FacetFilters.of(listOf(MixedSearchFilters.of("query"))),
+                  facetFilters = FacetFilters.of(listOf(FacetFilters.of("query"))),
                 ),
                 fallbackParameters = SearchParamsObject(
                   query = "myQuery",
-                  facetFilters = FacetFilters.of(listOf(MixedSearchFilters.of("fallback"))),
+                  facetFilters = FacetFilters.of(listOf(FacetFilters.of("fallback"))),
                 ),
               ),
             ),
@@ -693,11 +693,11 @@ class RecommendTest {
                 maxRecommendations = 10,
                 queryParameters = SearchParams(
                   query = "myQuery",
-                  facetFilters = FacetFilters.of(listOf(MixedSearchFilters.of("query1"))),
+                  facetFilters = FacetFilters.of(listOf(FacetFilters.of("query1"))),
                 ),
                 fallbackParameters = FallbackParams(
                   query = "myQuery",
-                  facetFilters = FacetFilters.of(listOf(MixedSearchFilters.of("fallback1"))),
+                  facetFilters = FacetFilters.of(listOf(FacetFilters.of("fallback1"))),
                 ),
               ),
               RelatedQuery(
@@ -708,11 +708,11 @@ class RecommendTest {
                 maxRecommendations = 10,
                 queryParameters = SearchParams(
                   query = "myQuery",
-                  facetFilters = FacetFilters.of(listOf(MixedSearchFilters.of("query2"))),
+                  facetFilters = FacetFilters.of(listOf(FacetFilters.of("query2"))),
                 ),
                 fallbackParameters = FallbackParams(
                   query = "myQuery",
-                  facetFilters = FacetFilters.of(listOf(MixedSearchFilters.of("fallback2"))),
+                  facetFilters = FacetFilters.of(listOf(FacetFilters.of("fallback2"))),
                 ),
               ),
             ),

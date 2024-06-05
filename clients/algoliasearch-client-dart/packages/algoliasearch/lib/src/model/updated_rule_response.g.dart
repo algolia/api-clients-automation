@@ -14,7 +14,7 @@ UpdatedRuleResponse _$UpdatedRuleResponseFromJson(Map<String, dynamic> json) =>
         final val = UpdatedRuleResponse(
           objectID: $checkedConvert('objectID', (v) => v as String),
           updatedAt: $checkedConvert('updatedAt', (v) => v as String),
-          taskID: $checkedConvert('taskID', (v) => v as int),
+          taskID: $checkedConvert('taskID', (v) => (v as num).toInt()),
         );
         return val;
       },

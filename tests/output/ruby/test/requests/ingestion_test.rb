@@ -558,23 +558,23 @@ class TestIngestionClient < Test::Unit::TestCase
   # getAuthentications with query params
   def test_get_authentications1
     req = @client.get_authentications_with_http_info(
-      10,
+      2,
       1,
       ['basic', 'algolia'],
       ['none'],
       'createdAt',
-      'desc'
+      'asc'
     )
 
     assert_equal(:get, req.method)
     assert_equal('/1/authentications', req.path)
     assert_equal(
-      { 'itemsPerPage': "10",
+      { 'itemsPerPage': "2",
         'page': "1",
         'type': "basic%2Calgolia",
         'platform': "none",
         'sort': "createdAt",
-        'order': "desc" }.to_a,
+        'order': "asc" }.to_a,
       req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
@@ -582,24 +582,24 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
 
     res = @e2e_client.get_authentications_with_http_info(
-      10,
+      2,
       1,
       ['basic', 'algolia'],
       ['none'],
       'createdAt',
-      'desc'
+      'asc'
     )
 
     assert_equal(res.status, 200)
     res = @e2e_client.get_authentications(
-      10,
+      2,
       1,
       ['basic', 'algolia'],
       ['none'],
       'createdAt',
-      'desc'
+      'asc'
     )
-    expected_body = JSON.parse('{"pagination":{"page":1,"itemsPerPage":10},"authentications":[{"authenticationID":"b57a7ea5-8592-493b-b75b-6c66d77aee7f","type":"algolia","name":"Auto-generated Authentication for T8JK9S7I7X - 1704732447751","input":{},"createdAt":"2024-01-08T16:47:31Z","updatedAt":"2024-01-08T16:47:31Z"},{},{},{},{},{},{},{}]}')
+    expected_body = JSON.parse('{"pagination":{"page":1,"itemsPerPage":2},"authentications":[{"authenticationID":"474f050f-a771-464c-a016-323538029f5f","type":"algolia","name":"algolia-auth-1677060483885","input":{},"createdAt":"2023-02-22T10:08:04Z","updatedAt":"2023-10-25T08:41:56Z"},{}]}')
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 

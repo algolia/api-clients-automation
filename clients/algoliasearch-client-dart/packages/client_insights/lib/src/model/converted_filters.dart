@@ -26,7 +26,7 @@ final class ConvertedFilters {
   @JsonKey(name: r'eventType')
   final ConversionEvent eventType;
 
-  /// Index name to which the event's items belong.
+  /// Index name (case-sensitive) to which the event's items belong.
   @JsonKey(name: r'index')
   final String index;
 

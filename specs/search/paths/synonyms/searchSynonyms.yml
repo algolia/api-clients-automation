@@ -6,7 +6,7 @@ post:
   x-cacheable: true
   x-acl:
     - settings
-  summary: Search for synonyms.
+  summary: Search for synonyms
   description: Searches for synonyms in your index.
   parameters:
     - $ref: '../../../common/parameters.yml#/IndexName'

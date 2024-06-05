@@ -4,7 +4,7 @@ get:
   operationId: getUsersCount
   x-acl:
     - analytics
-  summary: Retrieve number of users.
+  summary: Retrieve number of users
   description: |
     Retrieves the number of unique users within a time range, including a daily breakdown.
 

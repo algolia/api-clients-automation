@@ -4,7 +4,7 @@ post:
   operationId: deleteBy
   x-acl:
     - deleteIndex
-  summary: Delete records matching a query.
+  summary: Delete records matching a query
   description: |
     This operation doesn't accept empty queries or filters.
 

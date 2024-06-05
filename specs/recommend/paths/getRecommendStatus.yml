@@ -4,7 +4,7 @@ get:
   operationId: getRecommendStatus
   x-acl:
     - editSettings
-  summary: Check task status.
+  summary: Check task status
   description: |
     Checks the status of a given task.
 

@@ -37,7 +37,7 @@ public class TrendingFacetsQuery implements RecommendationsRequest {
     return this;
   }
 
-  /** Index name. */
+  /** Index name (case-sensitive). */
   @javax.annotation.Nonnull
   public String getIndexName() {
     return indexName;

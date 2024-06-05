@@ -73,7 +73,7 @@ public class BaseSearchParamsWithoutQuery {
   private List<List<Double>> insidePolygon;
 
   @JsonProperty("naturalLanguages")
-  private List<String> naturalLanguages;
+  private List<SupportedLanguage> naturalLanguages;
 
   @JsonProperty("ruleContexts")
   private List<String> ruleContexts;
@@ -222,7 +222,10 @@ public class BaseSearchParamsWithoutQuery {
     return this;
   }
 
-  /** Restricts a search to a subset of your searchable attributes. */
+  /**
+   * Restricts a search to a subset of your searchable attributes. Attribute names are
+   * case-sensitive.
+   */
   @javax.annotation.Nullable
   public List<String> getRestrictSearchableAttributes() {
     return restrictSearchableAttributes;
@@ -408,19 +411,19 @@ public class BaseSearchParamsWithoutQuery {
    * point is represented by its latitude and longitude. Provide multiple polygons as nested arrays.
    * For more information, see [filtering inside
    * polygons](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
-   * This parameter is ignored, if you also specify `insideBoundingBox`.
+   * This parameter is ignored if you also specify `insideBoundingBox`.
    */
   @javax.annotation.Nullable
   public List<List<Double>> getInsidePolygon() {
     return insidePolygon;
   }
 
-  public BaseSearchParamsWithoutQuery setNaturalLanguages(List<String> naturalLanguages) {
+  public BaseSearchParamsWithoutQuery setNaturalLanguages(List<SupportedLanguage> naturalLanguages) {
     this.naturalLanguages = naturalLanguages;
     return this;
   }
 
-  public BaseSearchParamsWithoutQuery addNaturalLanguages(String naturalLanguagesItem) {
+  public BaseSearchParamsWithoutQuery addNaturalLanguages(SupportedLanguage naturalLanguagesItem) {
     if (this.naturalLanguages == null) {
       this.naturalLanguages = new ArrayList<>();
     }
@@ -435,7 +438,7 @@ public class BaseSearchParamsWithoutQuery {
    * `natural_language` attribute to `ruleContexts` and `analyticsTags`.
    */
   @javax.annotation.Nullable
-  public List<String> getNaturalLanguages() {
+  public List<SupportedLanguage> getNaturalLanguages() {
     return naturalLanguages;
   }
 
