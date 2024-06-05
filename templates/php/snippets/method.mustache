@@ -21,7 +21,7 @@ class Snippet{{client}}
     {
         // >SEPARATOR {{method}}
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\{{client}}::create('<YOUR_APP_ID>', '<YOUR_API_KEY>'{{#hasRegionalHost}}, 'YOUR_APP_ID_REGION'{{/hasRegionalHost}});
+        $client = {{client}}::create('<YOUR_APP_ID>', '<YOUR_API_KEY>'{{#hasRegionalHost}}, 'YOUR_APP_ID_REGION'{{/hasRegionalHost}});
 
         {{#hasRequestOptions}}
           $requestOptions = [
