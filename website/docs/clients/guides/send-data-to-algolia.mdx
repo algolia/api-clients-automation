@@ -21,13 +21,14 @@ To push data to Algolia, you need an Application ID and a valid API key with the
 <TabItem value="javascript">
 
 ```js
-// for the default version
 import { algoliasearch } from 'algoliasearch';
 
-// you can also import the lite version, with search only methods
-// import { liteClient } from 'algoliasearch/lite';
-
 const client = algoliasearch('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+// for a lightweight version, you can import the `lite` client which only exposes search methods
+import { liteClient } from 'algoliasearch/lite';
+
+const client = liteClient('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 ```
 
 </TabItem>
@@ -93,6 +94,12 @@ var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
 </TabsLanguage>
 
 ## Sending your data
+
+:::caution
+
+If the data you are sending is more than 1000 records at once, wecommend you to use [our chunked batch solution](/docs/clients/guides/filtering-your-search) instead.
+
+:::
 
 Before sending anything to Algolia, you need to retrieve your data. You can do this in several ways, in our case we will pick it from the source code directly.
 
