@@ -179,6 +179,7 @@ public class TestsRequest extends TestsGenerator {
       if (snippets.size() == 0) {
         Map<String, Object> snippet = tests.get(0);
         snippet.put("description", snippet.get("testName"));
+        snippet.put("testName", "default");
         snippets = List.of(snippet);
       } else {
         for (Map<String, Object> snippet : snippets) {
