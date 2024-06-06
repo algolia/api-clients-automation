@@ -12,6 +12,7 @@ import java.util.Map;
 public class Request {
 
   public String testName;
+  public boolean forSnippet;
 
   public Map<String, Object> parameters;
   public RequestOptions requestOptions;
@@ -23,6 +24,7 @@ public class Request {
     StringBuilder sb = new StringBuilder();
     sb.append("class Request {\n");
     sb.append("    testName: ").append(testName).append("\n");
+    sb.append("    forSnippet").append(forSnippet).append("\n");
     sb.append("    parameters: ").append(parameters).append("\n");
     sb.append("    requestOptions: ").append(requestOptions).append("\n");
     sb.append("    request: ").append(request).append("\n");

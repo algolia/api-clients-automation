@@ -84,7 +84,7 @@ public class TestsRequest extends TestsGenerator {
       }
       Request[] op = cts.get(operationId);
 
-      List<Object> tests = new ArrayList<>();
+      List<Map<String, Object>> tests = new ArrayList<>();
       for (int i = 0; i < op.length; i++) {
         Map<String, Object> test = new HashMap<>();
         Request req = op[i];
@@ -174,10 +174,19 @@ public class TestsRequest extends TestsGenerator {
       testObj.put("tests", tests);
       testObj.put("operationId", operationId);
 
-      Map<String, Object> snippet = (Map<String, Object>) tests.get(0);
-      snippet.put("description", snippet.get("testName"));
-      testObj.put("snippet", snippet);
+      System.out.println(tests.get(0).get("forSnippet"));
 
+      List<Map<String, Object>> snippets = tests.stream().filter(t -> (boolean) t.getOrDefault("forSnippet", false)).toList();
+      if (snippets.size() == 0) {
+        Map<String, Object> snippet = tests.get(0);
+        snippet.put("description", snippet.get("testName"));
+        snippets = List.of(snippet);
+      } else {
+        for (Map<String, Object> snippet : snippets) {
+          snippet.put("description", snippet.get("testName"));
+        }
+      }
+      testObj.put("snippets", snippets);
       blocks.add(testObj);
     }
     bundle.put("blocksRequests", blocks);

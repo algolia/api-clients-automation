@@ -25,19 +25,24 @@ function getCodeSampleLabel(language: Language): CodeSamples['label'] {
 // Iterates over the snippet samples and sanitize the data to only keep the method part in order to use it in the guides.
 function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSamples): string {
   for (const [language, operationWithSample] of Object.entries(snippetSamples)) {
-    for (const [operation, sample] of Object.entries(operationWithSample)) {
+    for (const [operation, samples] of Object.entries(operationWithSample)) {
       if (operation === 'import') {
         continue;
       }
 
-      const sampleMatch = sample.match(
-        /.*Initialize the client\n(.*)((.|\n)*)(.*Call the API\n)((.|\n)*)/,
-      );
-      if (sampleMatch) {
-        if (!('init' in snippetSamples[language])) {
-          snippetSamples[language].init = sampleMatch[1].replace(/\n$/, '');
+      for (const [sampleName, sample] of Object.entries(samples)) {
+        const sampleMatch = sample.match(
+          /.*Initialize the client\n(.*)((.|\n)*)(.*Call the API\n)((.|\n)*)/,
+        );
+        if (sampleMatch) {
+          // eslint-disable-next-line max-depth
+          if (!('init' in snippetSamples[language])) {
+            snippetSamples[language].init = {
+              default: sampleMatch[1].replace(/\n$/, ''),
+            };
+          }
+          snippetSamples[language][operation][sampleName] = sampleMatch[5].replace(/\n$/, '');
         }
-        snippetSamples[language][operation] = sampleMatch[5].replace(/\n$/, '');
       }
     }
   }
@@ -67,17 +72,26 @@ async function transformSnippetsToCodeSamples(clientName: string): Promise<Snipp
 
     const importMatch = snippetFileContent.match(/>IMPORT\n([\s\S]*?)\n.*IMPORT</);
     if (importMatch) {
-      snippetSamples[gen.language].import = importMatch[1].replace(/\n$/, '');
+      snippetSamples[gen.language].import = {
+        default: importMatch[1].replace(/\n$/, ''),
+      };
     }
 
     // iterate over every matches (operationId) and store it in the hashmap for later use
-    for (const match of snippetFileContent.matchAll(/>SEPARATOR (.+)\n([\s\S]*?)SEPARATOR</g)) {
+    for (const match of snippetFileContent.matchAll(
+      />SEPARATOR (\w+) (.*)\n([\s\S]*?)SEPARATOR</g,
+    )) {
       const lines: string[] = match[0].split('\n').slice(1, -1);
       if (!lines.length) {
         throw new Error(`No snippet found for ${gen.language} ${gen.client}`);
       }
 
-      snippetSamples[gen.language][match[1]] = '';
+      if (!snippetSamples[gen.language][match[1]]) {
+        snippetSamples[gen.language][match[1]] = {};
+      }
+
+      const testName = match[2] || 'default';
+      snippetSamples[gen.language][match[1]][testName] = '';
 
       const indent = lines[0].length - lines[0].trim().length;
       // skip first and last lines because they contain the SEPARATOR or operationId
@@ -85,7 +99,8 @@ async function transformSnippetsToCodeSamples(clientName: string): Promise<Snipp
         // best effort to determine how far the snippet is indented so we
         // can have every snippets in the documentation on the far left
         // without impacting the formatting
-        snippetSamples[gen.language][match[1]] += `${line.slice(indent).replaceAll(/\t/g, '  ')}\n`;
+        snippetSamples[gen.language][match[1]][testName] +=
+          `${line.slice(indent).replaceAll(/\t/g, '  ')}\n`;
       });
     }
   }
@@ -153,11 +168,13 @@ async function transformBundle({
           specMethod['x-codeSamples'] = [];
         }
 
-        specMethod['x-codeSamples'].push({
-          lang: gen.language,
-          label: getCodeSampleLabel(gen.language),
-          source: snippetSamples[gen.language][specMethod.operationId],
-        });
+        if (snippetSamples[gen.language][specMethod.operationId]) {
+          specMethod['x-codeSamples'].push({
+            lang: gen.language,
+            label: getCodeSampleLabel(gen.language),
+            source: Object.values(snippetSamples[gen.language][specMethod.operationId])[0],
+          });
+        }
       }
 
       if (!bundledSpec.paths[pathKey][method].tags) {

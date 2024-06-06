@@ -124,7 +124,7 @@ export type CodeSamples = {
   source: string;
 };
 
-export type SnippetSamples = Record<Language, Record<string, string>>;
+export type SnippetSamples = Record<Language, Record<string, Record<string, string>>>;
 
 /**
  * Paths of a spec.

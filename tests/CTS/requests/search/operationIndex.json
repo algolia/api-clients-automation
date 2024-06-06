@@ -1,10 +1,12 @@
 [
   {
+    "testName": "scopes",
+    "forSnippet": true,
     "parameters": {
-      "indexName": "theIndexName",
+      "indexName": "SOURCE_INDEX_NAME",
       "operationIndexParams": {
-        "operation": "copy",
-        "destination": "dest",
+        "operation": "move",
+        "destination": "DESTINATION_INDEX_NAME",
         "scope": [
           "rules",
           "settings"
@@ -12,15 +14,53 @@
       }
     },
     "request": {
-      "path": "/1/indexes/theIndexName/operation",
+      "path": "/1/indexes/SOURCE_INDEX_NAME/operation",
       "method": "POST",
       "body": {
-        "operation": "copy",
-        "destination": "dest",
+        "operation": "move",
+        "destination": "DESTINATION_INDEX_NAME",
         "scope": [
           "rules",
           "settings"
         ]
+      }
+    }
+  },
+  {
+    "testName": "add",
+    "forSnippet": true,
+    "parameters": {
+      "indexName": "SOURCE_INDEX_NAME",
+      "operationIndexParams": {
+        "operation": "copy",
+        "destination": "DESTINATION_INDEX_NAME"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/SOURCE_INDEX_NAME/operation",
+      "method": "POST",
+      "body": {
+        "operation": "copy",
+        "destination": "DESTINATION_INDEX_NAME"
+      }
+    }
+  },
+  {
+    "testName": "move",
+    "forSnippet": true,
+    "parameters": {
+      "indexName": "SOURCE_INDEX_NAME",
+      "operationIndexParams": {
+        "operation": "move",
+        "destination": "DESTINATION_INDEX_NAME"
+      }
+    },
+    "request": {
+      "path": "/1/indexes/SOURCE_INDEX_NAME/operation",
+      "method": "POST",
+      "body": {
+        "operation": "move",
+        "destination": "DESTINATION_INDEX_NAME"
       }
     }
   }
