@@ -27,7 +27,7 @@
     }
   },
   {
-    "testName": "add",
+    "testName": "copy",
     "forSnippet": true,
     "parameters": {
       "indexName": "SOURCE_INDEX_NAME",

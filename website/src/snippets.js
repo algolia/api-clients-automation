@@ -9,9 +9,6 @@ import { snippets as recommendSnippets } from './generated/recommend-snippets';
 import { snippets as searchSnippets } from './generated/search-snippets';
 import { snippets as usageSnippets } from './generated/usage-snippets';
 
-
-
-
 export function waitForTaskSnippet(language, indexName = 'YOUR_INDEX_NAME') {
   return {
     'csharp': `await client.WaitForTaskAsync("${indexName}", response.TaskID);`,
@@ -29,6 +26,22 @@ if err != nil {
     'scala': `client.waitTask("${indexName}", response.getTaskID())`,
     'swift': `try await client.waitForTask(with: response.taskID, in: "${indexName}")`,
   }[language];
+}
+
+export function waitForApiKeySnippet(language, operation) {
+  switch (language) {
+    case 'csharp':
+    case 'dart':
+    case 'go':
+    case 'java':
+    case 'javascript':
+    case 'kotlin':
+    case 'php':
+    case 'python':
+    case 'ruby':
+    case 'scala':
+    case 'swift':
+  }
 }
 
 export function getSnippet(language, client, operationID, name = 'default') {
