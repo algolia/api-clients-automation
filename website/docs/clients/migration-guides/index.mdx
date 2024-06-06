@@ -10,9 +10,12 @@ The amount of changes in this new version is significant. If you were using a ve
 
 :::
 
-import { CodeBlockLanguage } from '../../src/components/CodeBlockLanguage';
-import { snippets as searchSnippets } from '../../src/generated/search-snippets';
-import { snippets as abtestingSnippets } from '../../src/generated/abtesting-snippets';
+import TabItem from '@theme/TabItem';
+import { CodeBlockLanguage } from '../../../src/components/CodeBlockLanguage';
+import { TabsLanguage } from '../../../src/components/TabsLanguage';
+import { snippets as abtestingSnippets } from '../../../src/generated/abtesting-snippets';
+import { snippets as searchSnippets } from '../../../src/generated/search-snippets';
+import { waitForTaskSnippet } from '../../../src/snippets';
 
 This document lists every known breaking change, not all of them may affect your application.
 
@@ -32,7 +35,7 @@ The `indexName` parameter is now **required** when calling those methods.
 ${searchSnippets[language].init}
 
 ${searchSnippets[language].search}
-`)}></CodeBlockLanguage>
+`)}/>
 
 ### A/B testing client
 
@@ -46,7 +49,7 @@ The `Abtesting` client now hosts all of the `A/B testing` related methods.
 ${abtestingSnippets[language].init}
 
 ${abtestingSnippets[language].getABTest}
-`)}></CodeBlockLanguage>
+`)}/>
 
 ### `wait`
 
@@ -64,7 +67,7 @@ ${searchSnippets[language].init}
 ${searchSnippets[language].saveObject}
 
 ${waitForTaskSnippet(language)}
-`)}></CodeBlockLanguage>
+`)}/>
 
 ### `moveIndex`/`copyIndex`
 
@@ -82,7 +85,7 @@ ${searchSnippets[language].init}
 ${searchSnippets[language].operationIndex}
 
 ${waitForTaskSnippet(language)}
-`)}></CodeBlockLanguage>
+`)}/>
 
 ### `saveObjects`
 
@@ -98,7 +101,7 @@ ${searchSnippets[language].init}
 ${searchSnippets[language].batch}
 
 ${waitForTaskSnippet(language)}
-`)}></CodeBlockLanguage>
+`)}/>
 
 ### `browseObjects`/`browseRules`/`browseSynonyms`
 
@@ -258,7 +261,6 @@ for (SynonymHit synonym : synonyms) {
 ```
 
 </TabItem>
-
 <TabItem value="csharp" >
 
 ```csharp
@@ -297,7 +299,6 @@ foreach (var synonym in browseSynonyms)
 ```
 
 </TabItem>
-
 </TabsLanguage>
 
 ## Client's specific breaking changes

@@ -10,13 +10,13 @@ The amount of changes in this new version is significant. **If you are upgrading
 
 ## Installation
 
-import { TabsLanguage } from '../../src/components/TabsLanguage';
-import { CodeBlockLanguage } from '../../src/components/CodeBlockLanguage';
-import TabItem from '@theme/TabItem';
-import { versions } from '../../src/generated/variables';
-import { snippets } from '../../src/generated/search-snippets';
 import CodeBlock from '@theme/CodeBlock';
 import Link from '@docusaurus/Link';
+import TabItem from '@theme/TabItem';
+import { CodeBlockLanguage } from '../../src/components/CodeBlockLanguage';
+import { TabsLanguage } from '../../src/components/TabsLanguage';
+import { snippets } from '../../src/generated/search-snippets';
+import { versions } from '../../src/generated/variables';
 import { waitForTaskSnippet } from '../../src/snippets';
 
 <TabsLanguage>
@@ -168,7 +168,7 @@ ${snippets[language].saveObject}
 ${waitForTaskSnippet(language)}
 
 ${snippets[language].search}
-`)}></CodeBlockLanguage>
+`)}/>
 
 ## Advanced use cases
 
