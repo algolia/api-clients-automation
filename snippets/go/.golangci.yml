@@ -2,8 +2,9 @@ linters:
   disable:
     - ineffassign
     - staticcheck
-service:
-  golangci-lint-version: 1.55.2
+
+issues:
+  exclude-generated: disable
 
 run:
   concurrency: 2
