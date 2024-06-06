@@ -44,27 +44,31 @@ export function waitForApiKeySnippet(language, operation) {
   }
 }
 
-export function getSnippet(language, client, operationID, name = 'default') {
+function getSnippetsForClient(client) {
   switch (client) {
     case 'abtesting':
-      return abtestingSnippets[language][operationID][name];
+      return abtestingSnippets;
     case 'analytics':
-      return analyticsSnippets[language][operationID][name];
+      return analyticsSnippets;
     case 'ingestion':
-      return ingestionSnippets[language][operationID][name];
+      return ingestionSnippets;
     case 'insights':
-      return insightsSnippets[language][operationID][name];
+      return insightsSnippets;
     case 'monitoring':
-      return monitoringSnippets[language][operationID][name];
+      return monitoringSnippets;
     case 'personalization':
-      return personalizationSnippets[language][operationID][name];
+      return personalizationSnippets;
     case 'querySuggestions':
-      return querySuggestionsSnippets[language][operationID][name];
+      return querySuggestionsSnippets;
     case 'recommend':
-      return recommendSnippets[language][operationID][name];
+      return recommendSnippets;
     case 'search':
-      return searchSnippets[language][operationID][name];
+      return searchSnippets;
     case 'usage':
-      return usageSnippets[language][operationID][name];
+      return usageSnippets;
   }
+}
+
+export function getSnippet(language, client, operationID, name = 'default') {
+  return getSnippetsForClient(client)?.[language]?.[operationID]?.[name] || '';
 }
