@@ -90,7 +90,7 @@ public class TestsRequest extends TestsGenerator {
         Request req = op[i];
         test.put("method", operationId);
         test.put("testName", req.testName == null ? operationId + i : req.testName);
-        test.put("testIndex", i);
+        test.put("testIndex", i == 0 ? "" : i);
         test.put("forSnippet", req.forSnippet);
         if (ope.returnType != null && ope.returnType.length() > 0) {
           test.put("returnType", camelize(ope.returnType));

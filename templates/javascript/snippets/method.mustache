@@ -7,12 +7,12 @@ import { {{client}} } from '{{{import}}}';
 import type { RequestOptions } from '{{{npmNamespace}}}/client-common';
 
 {{#blocksRequests}}
-{{#snippet}}
+{{#snippets}}
 // Snippet for the {{method}} method.
 //
 // {{{description}}}
-export async function snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}(): Promise<void> {
-  // >SEPARATOR {{method}}
+export async function snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}(): Promise<void> {
+  // >SEPARATOR {{method}} {{testName}}
   // Initialize the client
   const client = {{client}}("YOUR_APP_ID", "YOUR_API_KEY", {{#hasRegionalHost}}'YOUR_APP_ID_REGION', {{/hasRegionalHost}});
 
@@ -29,5 +29,5 @@ export async function snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascal
   // SEPARATOR<
 }
 
-{{/snippet}}
+{{/snippets}}
 {{/blocksRequests}}

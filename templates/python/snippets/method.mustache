@@ -4,14 +4,14 @@ from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}
 # IMPORT<
 
 {{#blocksRequests}}
-{{#snippet}}
-async def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}():
+{{#snippets}}
+async def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{testIndex}}():
     """
     Snippet for the {{method}} method.
 
     {{{description}}}
     """
-    # >SEPARATOR {{method}}
+    # >SEPARATOR {{method}} {{testName}}
     # Initialize the client
     _client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, "YOUR_APP_ID_REGION"{{/hasRegionalHost}})
 
@@ -25,5 +25,5 @@ async def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}():
     print(response.to_json())
     # SEPARATOR<
 
-{{/snippet}}
+{{/snippets}}
 {{/blocksRequests}}

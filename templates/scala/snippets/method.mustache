@@ -17,13 +17,13 @@ class Snippet{{client}} {
   implicit val formats: Formats = org.json4s.DefaultFormats
 
   {{#blocksRequests}}
-  {{#snippet}}
+  {{#snippets}}
   /** Snippet for the {{method}} method.
     *
     * {{{description}}}
     */
-  def snippetFor{{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}(): Unit = {
-    // >SEPARATOR {{method}}
+  def snippetFor{{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}(): Unit = {
+    // >SEPARATOR {{method}} {{testName}}
     // Initialize the client
     val client = {{client}}(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY"{{#hasRegionalHost}}, region = {{#fallbackToAliasHost}}Option({{/fallbackToAliasHost}}"YOUR_APP_ID_REGION"{{#fallbackToAliasHost}}){{/fallbackToAliasHost}}{{/hasRegionalHost}})
 
@@ -49,6 +49,6 @@ class Snippet{{client}} {
     // SEPARATOR<
   }
 
-  {{/snippet}}
+  {{/snippets}}
   {{/blocksRequests}}
 }
