@@ -5,7 +5,7 @@ import yaml from 'js-yaml';
 import { Cache } from './cache.js';
 import { GENERATORS, capitalize, createClientName, exists, run, toAbsolutePath } from './common.js';
 import { createSpinner } from './spinners.js';
-import type { CodeSamples, Language, SnippetSamples, Spec } from './types.js';
+import type { CodeSamples, Language, SnippetForMethod, SnippetSamples, Spec } from './types.js';
 
 const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'customPost'];
 
@@ -34,15 +34,19 @@ function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSamples): str
         const sampleMatch = sample.match(
           /.*Initialize the client\n(.*)((.|\n)*)(.*Call the API\n)((.|\n)*)/,
         );
-        if (sampleMatch) {
-          // eslint-disable-next-line max-depth
-          if (!('init' in snippetSamples[language])) {
-            snippetSamples[language].init = {
-              default: sampleMatch[1].replace(/\n$/, ''),
-            };
-          }
-          snippetSamples[language][operation][sampleName] = sampleMatch[5].replace(/\n$/, '');
+        if (!sampleMatch) {
+          continue;
         }
+
+        const initLine = sampleMatch[1];
+        const callLine = sampleMatch[5];
+
+        if (!('init' in snippetSamples[language])) {
+          snippetSamples[language].init = {
+            default: initLine.replace(/\n$/, ''),
+          };
+        }
+        snippetSamples[language][operation][sampleName] = callLine.replace(/\n$/, '');
       }
     }
   }
@@ -86,12 +90,16 @@ async function transformSnippetsToCodeSamples(clientName: string): Promise<Snipp
         throw new Error(`No snippet found for ${gen.language} ${gen.client}`);
       }
 
-      if (!snippetSamples[gen.language][match[1]]) {
-        snippetSamples[gen.language][match[1]] = {};
+      const operationId = match[1];
+      const testName = match[2] || 'default';
+
+      if (!snippetSamples[gen.language][operationId]) {
+        snippetSamples[gen.language][operationId] = {};
       }
 
-      const testName = match[2] || 'default';
-      snippetSamples[gen.language][match[1]][testName] = '';
+      const snippetForMethod: SnippetForMethod = snippetSamples[gen.language][operationId];
+
+      snippetForMethod[testName] = '';
 
       const indent = lines[0].length - lines[0].trim().length;
       // skip first and last lines because they contain the SEPARATOR or operationId
@@ -99,8 +107,7 @@ async function transformSnippetsToCodeSamples(clientName: string): Promise<Snipp
         // best effort to determine how far the snippet is indented so we
         // can have every snippets in the documentation on the far left
         // without impacting the formatting
-        snippetSamples[gen.language][match[1]][testName] +=
-          `${line.slice(indent).replaceAll(/\t/g, '  ')}\n`;
+        snippetForMethod[testName] += `${line.slice(indent).replaceAll(/\t/g, '  ')}\n`;
       });
     }
   }
