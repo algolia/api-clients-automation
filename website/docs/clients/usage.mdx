@@ -15,9 +15,8 @@ import Link from '@docusaurus/Link';
 import TabItem from '@theme/TabItem';
 import { CodeBlockLanguage } from '../../src/components/CodeBlockLanguage';
 import { TabsLanguage } from '../../src/components/TabsLanguage';
-import { snippets } from '../../src/generated/search-snippets';
 import { versions } from '../../src/generated/variables';
-import { waitForTaskSnippet } from '../../src/snippets';
+import { getSnippet, waitForTaskSnippet } from '../../src/snippets';
 
 <TabsLanguage>
 <TabItem value="javascript">
@@ -159,15 +158,15 @@ Or directly in your `.csproj` file:
 You can now import the Algolia API client in your project and play with it.
 
 <CodeBlockLanguage snippet={(language) => (
-`${snippets[language].import}
+`${getSnippet(language, 'search', 'import')}
 
-${snippets[language].init}
+${getSnippet(language, 'search', 'init')}
 
-${snippets[language].saveObject}
+${getSnippet(language, 'search','saveObject')}
 // Poll the task status to know when it has been indexed
 ${waitForTaskSnippet(language)}
 
-${snippets[language].search}
+${getSnippet(language, 'search', 'search')}
 `)}/>
 
 ## Advanced use cases

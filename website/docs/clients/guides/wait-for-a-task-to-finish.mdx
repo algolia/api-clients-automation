@@ -3,8 +3,7 @@ title: Wait for a task to finish
 ---
 
 import { CodeBlockLanguage } from '../../../src/components/CodeBlockLanguage';
-import { snippets } from '../../../src/generated/search-snippets';
-import { waitForTaskSnippet } from '../../../src/snippets';
+import { getSnippet, waitForTaskSnippet } from '../../../src/snippets';
 
 > The `waitForTask` method is only available in the `search` client context.
 
@@ -13,11 +12,11 @@ Some operations related to the Algolia index are not always instantaneous. Doing
 We provide a `waitForTask` helper method for you to easily wait for a specific task status.
 
 <CodeBlockLanguage snippet={(language) => (
-`${snippets[language].import}
+`${getSnippet(language, 'search', 'import')}
 
-${snippets[language].init}
+${getSnippet(language, 'search', 'init')}
 
-${snippets[language].deleteObject}
+${getSnippet(language, 'search', 'deleteObject')}
 
 ${waitForTaskSnippet(language)}
 `)}/>

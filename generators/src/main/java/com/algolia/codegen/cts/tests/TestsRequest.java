@@ -91,6 +91,7 @@ public class TestsRequest extends TestsGenerator {
         test.put("method", operationId);
         test.put("testName", req.testName == null ? operationId + i : req.testName);
         test.put("testIndex", i);
+        test.put("forSnippet", req.forSnippet);
         if (ope.returnType != null && ope.returnType.length() > 0) {
           test.put("returnType", camelize(ope.returnType));
         }
@@ -173,8 +174,6 @@ public class TestsRequest extends TestsGenerator {
       Map<String, Object> testObj = new HashMap<>();
       testObj.put("tests", tests);
       testObj.put("operationId", operationId);
-
-      System.out.println(tests.get(0).get("forSnippet"));
 
       List<Map<String, Object>> snippets = tests.stream().filter(t -> (boolean) t.getOrDefault("forSnippet", false)).toList();
       if (snippets.size() == 0) {
