@@ -13,8 +13,11 @@ import org.openapitools.codegen.SupportingFile;
 
 public class TestsRequest extends TestsGenerator {
 
-  public TestsRequest(String language, String client) {
+  private final boolean withSnippets;
+
+  public TestsRequest(String language, String client, boolean withSnippets) {
     super(language, client);
+    this.withSnippets = withSnippets;
   }
 
   protected Map<String, Request[]> loadRequestCTS() throws Exception {
@@ -175,18 +178,21 @@ public class TestsRequest extends TestsGenerator {
       testObj.put("tests", tests);
       testObj.put("operationId", operationId);
 
-      List<Map<String, Object>> snippets = tests.stream().filter(t -> (boolean) t.getOrDefault("forSnippet", false)).toList();
-      if (snippets.size() == 0) {
-        Map<String, Object> snippet = tests.get(0);
-        snippet.put("description", snippet.get("testName"));
-        snippet.put("testName", "default");
-        snippets = List.of(snippet);
-      } else {
-        for (Map<String, Object> snippet : snippets) {
+      if (withSnippets) {
+        List<Map<String, Object>> snippets = tests.stream().filter(t -> (boolean) t.getOrDefault("forSnippet", false)).toList();
+        if (snippets.size() == 0) {
+          Map<String, Object> snippet = tests.get(0);
           snippet.put("description", snippet.get("testName"));
+          snippet.put("testName", "default");
+          snippets = List.of(snippet);
+        } else {
+          for (Map<String, Object> snippet : snippets) {
+            snippet.put("description", snippet.get("testName"));
+          }
         }
+        testObj.put("snippets", snippets);
       }
-      testObj.put("snippets", snippets);
+
       blocks.add(testObj);
     }
     bundle.put("blocksRequests", blocks);

@@ -11,7 +11,7 @@ import org.openapitools.codegen.SupportingFile;
 public class SnippetsGenerator extends TestsRequest {
 
   public SnippetsGenerator(String language, String client) {
-    super(language, client);
+    super(language, client, true);
   }
 
   @Override
