@@ -45,6 +45,68 @@
     }
   },
   {
+    "testName": "retrieveFacets",
+    "isSnippet": true,
+    "parameters": {
+      "requests": [
+        {
+          "indexName": "<YOUR_INDEX_NAME>",
+          "query": "<YOUR_QUERY>",
+          "facets": [
+            "author",
+            "genre"
+          ]
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/indexes/*/queries",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "indexName": "<YOUR_INDEX_NAME>",
+            "query": "<YOUR_QUERY>",
+            "facets": [
+              "author",
+              "genre"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "testName": "retrieveFacetsWildcard",
+    "isSnippet": true,
+    "parameters": {
+      "requests": [
+        {
+          "indexName": "<YOUR_INDEX_NAME>",
+          "query": "<YOUR_QUERY>",
+          "facets": [
+            "*"
+          ]
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/indexes/*/queries",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "indexName": "<YOUR_INDEX_NAME>",
+            "query": "<YOUR_QUERY>",
+            "facets": [
+              "*"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
     "testName": "search for a single facet request with minimal parameters",
     "parameters": {
       "requests": [

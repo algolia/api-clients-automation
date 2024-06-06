@@ -70,5 +70,5 @@ function getSnippetsForClient(client) {
 }
 
 export function getSnippet(language, client, operationID, name = 'default') {
-  return getSnippetsForClient(client)?.[language]?.[operationID]?.[name] || `${client.operationID} is not implemented in ${language}`;
+  return getSnippetsForClient(client)?.[language]?.[operationID]?.[name] || `${client}.${operationID} is not implemented in ${language}`;
 }

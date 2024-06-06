@@ -1,7 +1,7 @@
 [
   {
     "testName": "scopes",
-    "forSnippet": true,
+    "isSnippet": true,
     "parameters": {
       "indexName": "SOURCE_INDEX_NAME",
       "operationIndexParams": {
@@ -28,7 +28,7 @@
   },
   {
     "testName": "copy",
-    "forSnippet": true,
+    "isSnippet": true,
     "parameters": {
       "indexName": "SOURCE_INDEX_NAME",
       "operationIndexParams": {
@@ -47,7 +47,7 @@
   },
   {
     "testName": "move",
-    "forSnippet": true,
+    "isSnippet": true,
     "parameters": {
       "indexName": "SOURCE_INDEX_NAME",
       "operationIndexParams": {

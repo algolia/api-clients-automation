@@ -94,7 +94,7 @@ public class TestsRequest extends TestsGenerator {
         test.put("method", operationId);
         test.put("testName", req.testName == null ? operationId + i : req.testName);
         test.put("testIndex", i == 0 ? "" : i);
-        test.put("forSnippet", req.forSnippet);
+        test.put("isSnippet", req.isSnippet);
         if (ope.returnType != null && ope.returnType.length() > 0) {
           test.put("returnType", camelize(ope.returnType));
         }
@@ -179,7 +179,7 @@ public class TestsRequest extends TestsGenerator {
       testObj.put("operationId", operationId);
 
       if (withSnippets) {
-        List<Map<String, Object>> snippets = tests.stream().filter(t -> (boolean) t.getOrDefault("forSnippet", false)).toList();
+        List<Map<String, Object>> snippets = tests.stream().filter(t -> (boolean) t.getOrDefault("isSnippet", false)).toList();
         if (snippets.size() == 0) {
           Map<String, Object> snippet = tests.get(0);
           snippet.put("description", snippet.get("testName"));
