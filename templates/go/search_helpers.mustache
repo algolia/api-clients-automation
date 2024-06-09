@@ -469,8 +469,8 @@ func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any
 	}
 
 	return &ReplaceAllObjectsResponse{
-		CopyOperationResponse: copyResp,
+		CopyOperationResponse: *copyResp,
 		BatchResponses:        batchResp,
-		MoveOperationResponse: moveResp,
+		MoveOperationResponse: *moveResp,
 	}, nil
 }
