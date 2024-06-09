@@ -65,3 +65,7 @@ replaceAllObjectsResponse:
     moveOperationResponse:
       description: The response of the `operationIndex` request for the `move` operation.
       $ref: '../../common/responses/common.yml#/updatedAtResponse'
+  required:
+    - copyOperationResponse
+    - batchResponses
+    - moveOperationResponse
