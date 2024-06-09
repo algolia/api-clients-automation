@@ -1,1 +1,1 @@
-{{#returnType}}{{#vendorExtensions.x-is-generic}}<T> {{{.}}}<T>{{/vendorExtensions.x-is-generic}}{{^vendorExtensions.x-is-generic}}{{{.}}}{{/vendorExtensions.x-is-generic}} {{/returnType}}{{^returnType}}void {{/returnType}}
+{{#returnType}}{{#vendorExtensions.x-is-generic}}<T> {{{.}}}{{#vendorExtensions.x-return-is-generic}}<T>{{/vendorExtensions.x-return-is-generic}}{{/vendorExtensions.x-is-generic}}{{^vendorExtensions.x-is-generic}}{{{.}}}{{/vendorExtensions.x-is-generic}} {{/returnType}}{{^returnType}}void {{/returnType}}

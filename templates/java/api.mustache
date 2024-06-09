@@ -118,11 +118,11 @@ public class {{classname}} extends ApiClient {
     /**
      * {{{notes}}}{{#allParams}}
      * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
-     {{#vendorExtensions}}{{#x-is-generic}}* @param innerType The class held by the index, could be your custom class or {@link Object}.{{/x-is-generic}}{{/vendorExtensions}}
+     {{#vendorExtensions.x-return-is-generic}}* @param innerType The class held by the index, could be your custom class or {@link Object}.{{/vendorExtensions.x-return-is-generic}}
      * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
     {{> api_javadoc}}
-    public {{> return_type}} {{operationId}}({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#hasRequiredParams}}{{#hasOptionalParams}},{{/hasOptionalParams}}{{/hasRequiredParams}}{{#optionalParams}} {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/optionalParams}}{{#vendorExtensions}}{{#x-is-generic}}, Class<T> innerType{{/x-is-generic}}{{/vendorExtensions}}{{#hasParams}}, {{/hasParams}}RequestOptions requestOptions) throws AlgoliaRuntimeException {
-        {{#returnType}}return {{/returnType}}LaunderThrowable.await({{operationId}}Async({{#allParams}}{{paramName}}, {{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}requestOptions));
+    public {{> return_type}} {{operationId}}({{#requiredParams}}@Nonnull {{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#hasRequiredParams}}{{#hasOptionalParams}},{{/hasOptionalParams}}{{/hasRequiredParams}}{{#optionalParams}} {{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} {{paramName}}{{^-last}}, {{/-last}}{{/optionalParams}}{{#vendorExtensions.x-return-is-generic}}, Class<T> innerType{{/vendorExtensions.x-return-is-generic}}{{#hasParams}}, {{/hasParams}}RequestOptions requestOptions) throws AlgoliaRuntimeException {
+        {{#returnType}}return {{/returnType}}LaunderThrowable.await({{operationId}}Async({{#allParams}}{{paramName}}, {{/allParams}}{{#vendorExtensions.x-return-is-generic}}innerType, {{/vendorExtensions.x-return-is-generic}}requestOptions));
         {{^returnType}}return ;{{/returnType}}
     }
 
@@ -130,10 +130,10 @@ public class {{classname}} extends ApiClient {
   /**
     * {{{notes}}}{{#allParams}}
     * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
-    {{#vendorExtensions}}{{#x-is-generic}}* @param innerType The class held by the index, could be your custom class or {@link Object}.{{/x-is-generic}}{{/vendorExtensions}}
+    {{#vendorExtensions.x-return-is-generic}}* @param innerType The class held by the index, could be your custom class or {@link Object}.{{/vendorExtensions.x-return-is-generic}}
     {{> api_javadoc}}
-  public {{> return_type}} {{operationId}}({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#hasRequiredParams}}{{#hasOptionalParams}},{{/hasOptionalParams}}{{/hasRequiredParams}}{{#optionalParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/optionalParams}}{{#vendorExtensions}}{{#x-is-generic}}, Class<T> innerType{{/x-is-generic}}{{/vendorExtensions}}) throws AlgoliaRuntimeException {
-    {{#returnType}}return {{/returnType}}this.{{operationId}}({{#allParams}}{{paramName}}, {{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}null);
+  public {{> return_type}} {{operationId}}({{#requiredParams}}@Nonnull {{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#hasRequiredParams}}{{#hasOptionalParams}},{{/hasOptionalParams}}{{/hasRequiredParams}}{{#optionalParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/optionalParams}}{{#vendorExtensions.x-return-is-generic}}, Class<T> innerType{{/vendorExtensions.x-return-is-generic}}) throws AlgoliaRuntimeException {
+    {{#returnType}}return {{/returnType}}this.{{operationId}}({{#allParams}}{{paramName}}, {{/allParams}}{{#vendorExtensions.x-return-is-generic}}innerType, {{/vendorExtensions.x-return-is-generic}}null);
   }
 
   {{! This case sets `requiredParams` + `requestOptions` }}
@@ -141,11 +141,11 @@ public class {{classname}} extends ApiClient {
   /**
     * {{{notes}}}{{#requiredParams}}
     * @param {{paramName}} {{{description}}} (required){{/requiredParams}}
-    {{#vendorExtensions}}{{#x-is-generic}}* @param innerType The class held by the index, could be your custom class or {@link Object}.{{/x-is-generic}}{{/vendorExtensions}}
+    {{#vendorExtensions.x-return-is-generic}}* @param innerType The class held by the index, could be your custom class or {@link Object}.{{/vendorExtensions.x-return-is-generic}}
     * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
    {{> api_javadoc}}
-  public {{> return_type}} {{operationId}}({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}, {{/requiredParams}}{{#vendorExtensions}}{{#x-is-generic}}Class<T> innerType, {{/x-is-generic}}{{/vendorExtensions}}RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    {{#returnType}}return {{/returnType}}this.{{operationId}}({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, {{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}requestOptions);
+  public {{> return_type}} {{operationId}}({{#requiredParams}}@Nonnull {{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} {{paramName}}, {{/requiredParams}}{{#vendorExtensions.x-return-is-generic}}Class<T> innerType, {{/vendorExtensions.x-return-is-generic}}RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    {{#returnType}}return {{/returnType}}this.{{operationId}}({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, {{#vendorExtensions.x-return-is-generic}}innerType, {{/vendorExtensions.x-return-is-generic}}requestOptions);
   }
   {{/optionalParams.0}}
 
@@ -154,21 +154,21 @@ public class {{classname}} extends ApiClient {
   /**
     * {{{notes}}}{{#requiredParams}}
     * @param {{paramName}} {{{description}}} (required){{/requiredParams}}
-    {{#vendorExtensions}}{{#x-is-generic}}* @param innerType The class held by the index, could be your custom class or {@link Object}.{{/x-is-generic}}{{/vendorExtensions}}
+    {{#vendorExtensions.x-return-is-generic}}* @param innerType The class held by the index, could be your custom class or {@link Object}.{{/vendorExtensions.x-return-is-generic}}
    {{> api_javadoc}}
-  public {{> return_type}} {{operationId}}({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#vendorExtensions}}{{#x-is-generic}}, Class<T> innerType{{/x-is-generic}}{{/vendorExtensions}}) throws AlgoliaRuntimeException {
-    {{#returnType}}return {{/returnType}}this.{{operationId}}({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, {{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}null);
+  public {{> return_type}} {{operationId}}({{#requiredParams}}@Nonnull {{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#vendorExtensions.x-return-is-generic}}, Class<T> innerType{{/vendorExtensions.x-return-is-generic}}) throws AlgoliaRuntimeException {
+    {{#returnType}}return {{/returnType}}this.{{operationId}}({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, {{#vendorExtensions.x-return-is-generic}}innerType, {{/vendorExtensions.x-return-is-generic}}null);
   }
   {{/optionalParams.0}}
 
   /**
   * (asynchronously)
   * {{{notes}}}{{#allParams}}
-  * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}
-  * @param innerType The class held by the index, could be your custom class or {@link Object}.{{/x-is-generic}}{{/vendorExtensions}}
+  * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}{{#vendorExtensions.x-return-is-generic}}
+  * @param innerType The class held by the index, could be your custom class or {@link Object}.{{/vendorExtensions.x-return-is-generic}}
   * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
   {{> api_javadoc}}
-  public {{> return_type_async}} {{operationId}}Async({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}},{{/requiredParams}}{{#optionalParams}}{{{dataType}}} {{paramName}}, {{/optionalParams}}{{#vendorExtensions}}{{#x-is-generic}}Class<T> innerType, {{/x-is-generic}}{{/vendorExtensions}}RequestOptions requestOptions) throws AlgoliaRuntimeException {
+  public {{> return_type_async}} {{operationId}}Async({{#requiredParams}}@Nonnull {{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} {{paramName}},{{/requiredParams}}{{#optionalParams}}{{{dataType}}} {{paramName}}, {{/optionalParams}}{{#vendorExtensions.x-return-is-generic}}Class<T> innerType, {{/vendorExtensions.x-return-is-generic}}RequestOptions requestOptions) throws AlgoliaRuntimeException {
     {{#allParams}}{{#required}}
     Parameters.requireNonNull({{paramName}}, "Parameter `{{paramName}}` is required when calling `{{operationId}}`.");
     {{/required}}{{/allParams}}
@@ -181,18 +181,18 @@ public class {{classname}} extends ApiClient {
         {{#headerParams}}.addHeader("{{baseName}}", {{paramName}}){{/headerParams}}    
           {{#vendorExtensions}}{{#queryParams}}{{^x-is-custom-request}}.addQueryParameter("{{baseName}}", {{paramName}}){{/x-is-custom-request}}{{#x-is-custom-request}}.addQueryParameters(parameters){{/x-is-custom-request}}{{/queryParams}}{{/vendorExtensions}}
         .build();
-    return executeAsync(request, requestOptions, {{#vendorExtensions}}{{#x-is-generic}}{{{returnType}}}.class, innerType{{/x-is-generic}}{{/vendorExtensions}}{{^vendorExtensions.x-is-generic}}{{^returnType}}null{{/returnType}}{{#returnType}}new TypeReference<{{{.}}}>(){}{{/returnType}}{{/vendorExtensions.x-is-generic}});
+    return executeAsync(request, requestOptions, {{#vendorExtensions}}{{#x-return-is-generic}}{{{returnType}}}.class, innerType{{/x-return-is-generic}}{{^x-return-is-generic}}{{^returnType}}null{{/returnType}}{{#returnType}}new TypeReference<{{{.}}}>(){}{{/returnType}}{{/x-return-is-generic}}{{/vendorExtensions}});
   }
 
   {{! This case only sets `requestOptions` as optional }}
   /**
   * (asynchronously)
   * {{{notes}}}{{#allParams}}
-  * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}
-  * @param innerType The class held by the index, could be your custom class or {@link Object}.{{/x-is-generic}}{{/vendorExtensions}}
+  * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}{{#vendorExtensions.x-return-is-generic}}
+  * @param innerType The class held by the index, could be your custom class or {@link Object}.{{/vendorExtensions.x-return-is-generic}}
   {{> api_javadoc}}
-  public {{> return_type_async}} {{operationId}}Async({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#hasRequiredParams}}{{#hasOptionalParams}},{{/hasOptionalParams}}{{/hasRequiredParams}}{{#optionalParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/optionalParams}}{{#vendorExtensions}}{{#x-is-generic}}, Class<T> innerType{{/x-is-generic}}{{/vendorExtensions}}) throws AlgoliaRuntimeException {
-    return this.{{operationId}}Async({{#allParams}}{{paramName}}, {{/allParams}}{{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}null);
+  public {{> return_type_async}} {{operationId}}Async({{#requiredParams}}@Nonnull {{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#hasRequiredParams}}{{#hasOptionalParams}},{{/hasOptionalParams}}{{/hasRequiredParams}}{{#optionalParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/optionalParams}}{{#vendorExtensions.x-return-is-generic}}, Class<T> innerType{{/vendorExtensions.x-return-is-generic}}) throws AlgoliaRuntimeException {
+    return this.{{operationId}}Async({{#allParams}}{{paramName}}, {{/allParams}}{{#vendorExtensions.x-return-is-generic}}innerType, {{/vendorExtensions.x-return-is-generic}}null);
   }
 
   {{! This case sets `requiredParams` + `requestOptions` }}
@@ -200,12 +200,12 @@ public class {{classname}} extends ApiClient {
   /**
   * (asynchronously)
   * {{{notes}}}{{#requiredParams}}
-  * @param {{paramName}} {{{description}}} (required){{/requiredParams}}{{#vendorExtensions}}{{#x-is-generic}}
-  * @param innerType The class held by the index, could be your custom class or {@link Object}.{{/x-is-generic}}{{/vendorExtensions}}
+  * @param {{paramName}} {{{description}}} (required){{/requiredParams}}{{#vendorExtensions.x-return-is-generic}}
+  * @param innerType The class held by the index, could be your custom class or {@link Object}.{{/vendorExtensions.x-return-is-generic}}
   * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
   {{> api_javadoc}}
-  public {{> return_type_async}} {{operationId}}Async({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}, {{/requiredParams}}{{#vendorExtensions}}{{#x-is-generic}}Class<T> innerType, {{/x-is-generic}}{{/vendorExtensions}}RequestOptions requestOptions) throws AlgoliaRuntimeException {
-    return this.{{operationId}}Async({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, {{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}requestOptions);
+  public {{> return_type_async}} {{operationId}}Async({{#requiredParams}}@Nonnull {{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} {{paramName}}, {{/requiredParams}}{{#vendorExtensions.x-return-is-generic}}Class<T> innerType, {{/vendorExtensions.x-return-is-generic}}RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.{{operationId}}Async({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, {{#vendorExtensions.x-return-is-generic}}innerType, {{/vendorExtensions.x-return-is-generic}}requestOptions);
   }
   {{/optionalParams.0}}
 
@@ -214,11 +214,11 @@ public class {{classname}} extends ApiClient {
   /**
   * (asynchronously)
   * {{{notes}}}{{#requiredParams}}
-  * @param {{paramName}} {{{description}}} (required){{/requiredParams}}{{#vendorExtensions}}{{#x-is-generic}}
-  * @param innerType The class held by the index, could be your custom class or {@link Object}.{{/x-is-generic}}{{/vendorExtensions}}
+  * @param {{paramName}} {{{description}}} (required){{/requiredParams}}{{#vendorExtensions.x-return-is-generic}}
+  * @param innerType The class held by the index, could be your custom class or {@link Object}.{{/vendorExtensions.x-return-is-generic}}
   {{> api_javadoc}}
-  public {{> return_type_async}} {{operationId}}Async({{#requiredParams}}@Nonnull {{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#vendorExtensions}}{{#x-is-generic}}, Class<T> innerType{{/x-is-generic}}{{/vendorExtensions}}) throws AlgoliaRuntimeException {
-    return this.{{operationId}}Async({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, {{#vendorExtensions}}{{#x-is-generic}}innerType, {{/x-is-generic}}{{/vendorExtensions}}null);
+  public {{> return_type_async}} {{operationId}}Async({{#requiredParams}}@Nonnull {{{dataType}}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensions.x-has-child-generic}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#vendorExtensions.x-return-is-generic}}, Class<T> innerType{{/vendorExtensions.x-return-is-generic}}) throws AlgoliaRuntimeException {
+    return this.{{operationId}}Async({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}{{#requiredParams.0}},{{/requiredParams.0}}{{#optionalParams}}null{{^-last}},{{/-last}}{{/optionalParams}}, {{#vendorExtensions.x-return-is-generic}}innerType, {{/vendorExtensions.x-return-is-generic}}null);
   }
   {{/optionalParams.0}}
   {{/operation}}

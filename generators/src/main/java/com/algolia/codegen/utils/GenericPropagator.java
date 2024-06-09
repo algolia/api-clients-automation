@@ -21,7 +21,17 @@ public class GenericPropagator {
       model.vendorExtensions.put(key, value);
     } else if (property instanceof CodegenProperty prop) {
       prop.vendorExtensions.put(key, value);
+    } else if (property instanceof CodegenParameter param) {
+      param.vendorExtensions.put(key, value);
+    } else if (property instanceof CodegenOperation ope) {
+      ope.vendorExtensions.put(key, value);
+    } else {
+      throw new IllegalArgumentException("Unsupported type for vendor extension: " + property.getClass());
     }
+  }
+
+  private static boolean getBooleanValue(Map<String, Object> vendorExtensions, String key) {
+    return (boolean) vendorExtensions.getOrDefault(key, false);
   }
 
   /**
@@ -41,19 +51,21 @@ public class GenericPropagator {
   }
 
   /**
-   * @return true if the vendor extensions of the property contains either x-propagated-generic or
-   *     x-has-child-generic
+   * @return true if the vendor extensions of the property contains either x-propagated-generic,
+   *     x-has-child-generic, or x-is-generic
    */
   private static boolean hasGeneric(IJsonSchemaValidationProperties property) {
-    if (property instanceof CodegenModel) {
+    if (property instanceof CodegenModel model) {
       return (
-        (boolean) ((CodegenModel) property).vendorExtensions.getOrDefault("x-propagated-generic", false) ||
-        (boolean) ((CodegenModel) property).vendorExtensions.getOrDefault("x-has-child-generic", false)
+        getBooleanValue(model.vendorExtensions, "x-propagated-generic") ||
+        getBooleanValue(model.vendorExtensions, "x-has-child-generic") ||
+        getBooleanValue(model.vendorExtensions, "x-is-generic")
       );
-    } else if (property instanceof CodegenProperty) {
+    } else if (property instanceof CodegenProperty prop) {
       return (
-        (boolean) ((CodegenProperty) property).vendorExtensions.getOrDefault("x-propagated-generic", false) ||
-        (boolean) ((CodegenProperty) property).vendorExtensions.getOrDefault("x-has-child-generic", false)
+        getBooleanValue(prop.vendorExtensions, "x-propagated-generic") ||
+        getBooleanValue(prop.vendorExtensions, "x-has-child-generic") ||
+        getBooleanValue(prop.vendorExtensions, "x-is-generic")
       );
     }
     return false;
@@ -189,21 +201,53 @@ public class GenericPropagator {
     }
   }
 
-  /** Mark operations with a generic return type with x-is-generic */
+  private static void setOperationGeneric(CodegenOperation ope, boolean returnIsGeneric) {
+    ope.vendorExtensions.put("x-is-generic", true);
+    ope.vendorExtensions.put("x-return-is-generic", returnIsGeneric);
+    // we use {{#optionalParams.0}} to check for optionalParams, so we loose the
+    // vendorExtensions at the operation level in the java generator
+    if (!ope.optionalParams.isEmpty()) {
+      ope.optionalParams.get(0).vendorExtensions.put("x-is-generic", true);
+      ope.optionalParams.get(0).vendorExtensions.put("x-return-is-generic", returnIsGeneric);
+    }
+  }
+
+  /** Mark operations with a generic parameters or return type with x-is-generic */
   public static void propagateGenericsToOperations(OperationsMap operations, List<ModelMap> allModels) {
     Map<String, CodegenModel> models = convertToMap(allModels);
     for (CodegenOperation ope : operations.getOperations().getOperation()) {
+      // apply the value to all sets of params
+      for (CodegenParameter param : ope.requiredParams) {
+        CodegenModel paramType = models.get(param.dataType);
+        if (hasGeneric(paramType)) {
+          setHasChildGeneric(param);
+          break;
+        }
+      }
+
+      for (CodegenParameter param : ope.optionalParams) {
+        CodegenModel paramType = models.get(param.dataType);
+        if (hasGeneric(paramType)) {
+          setHasChildGeneric(param);
+          break;
+        }
+      }
+
+      for (CodegenParameter param : ope.allParams) {
+        CodegenModel paramType = models.get(param.dataType);
+        if (hasGeneric(paramType)) {
+          setOperationGeneric(ope, false);
+          break;
+        }
+      }
+
+      // also check for the return type
       if (ope.returnType == null) {
         continue;
       }
       CodegenModel returnType = models.get(ope.returnType);
-      if (returnType != null && hasGeneric(returnType)) {
-        ope.vendorExtensions.put("x-is-generic", true);
-        // we use {{#optionalParams.0}} to check for optionalParams, so we loose the
-        // vendorExtensions at the operation level
-        if (!ope.optionalParams.isEmpty()) {
-          ope.optionalParams.get(0).vendorExtensions.put("x-is-generic", true);
-        }
+      if (hasGeneric(returnType)) {
+        setOperationGeneric(ope, true);
       }
     }
   }

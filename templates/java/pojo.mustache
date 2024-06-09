@@ -23,12 +23,7 @@ public class {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorE
     {{/isContainer}}
     {{/isEnum}}
   @JsonProperty("{{baseName}}")
-  {{#isContainer}}
-      private {{> generic_type}} {{name}}{{#required}}{{#defaultValue}} = {{{.}}}{{/defaultValue}}{{/required}};
-  {{/isContainer}}
-  {{^isContainer}}
-  {{#isDiscriminator}}protected{{/isDiscriminator}}{{^isDiscriminator}}private{{/isDiscriminator}} {{{datatypeWithEnum}}} {{name}};
-  {{/isContainer}}
+  private {{> generic_type}} {{name}}{{#isContainer}}{{#required}}{{#defaultValue}} = {{{.}}}{{/defaultValue}}{{/required}}{{/isContainer}};
 
   {{/vars}}
   {{#parent}}

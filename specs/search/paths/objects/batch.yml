@@ -33,6 +33,7 @@ post:
                     $ref: 'common/schemas.yml#/action'
                   body:
                     type: object
+                    x-is-generic: true
                     description: Operation arguments (varies with specified `action`).
                     example:
                       name: Betty Jane McCamey
