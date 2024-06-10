@@ -6,14 +6,18 @@
       "dictionaryName": "compounds",
       "batchDictionaryEntriesParams": {
         "clearExistingDictionaryEntries": true,
-        "requests": []
+        "requests": [
+          {}
+        ]
       }
     },
     "request": {
       "path": "/1/dictionaries/compounds/batch",
       "method": "POST",
       "body": {
-        "requests": []
+        "requests": [
+          {}
+        ]
       }
     }
   },
