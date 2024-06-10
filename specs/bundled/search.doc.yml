@@ -4125,17 +4125,7 @@ paths:
           content:
             application/json:
               schema:
-                title: batchResponse
-                type: object
-                additionalProperties: false
-                properties:
-                  taskID:
-                    $ref: '#/components/schemas/taskID'
-                  objectIDs:
-                    $ref: '#/components/schemas/objectIDs'
-                required:
-                  - taskID
-                  - objectIDs
+                $ref: '#/components/schemas/batchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -18081,6 +18071,18 @@ components:
           $ref: '#/components/schemas/insideBoundingBox'
         insidePolygon:
           $ref: '#/components/schemas/insidePolygon'
+    updatedAtResponse:
+      type: object
+      description: Response, taskID, and update timestamp.
+      additionalProperties: false
+      required:
+        - taskID
+        - updatedAt
+      properties:
+        taskID:
+          $ref: '#/components/schemas/taskID'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
     builtInOperationType:
       type: string
       enum:
@@ -18130,6 +18132,17 @@ components:
         - record-1
         - record-2
       description: Unique record identifiers.
+    batchResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        taskID:
+          $ref: '#/components/schemas/taskID'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+      required:
+        - taskID
+        - objectIDs
     baseIndexSettings:
       type: object
       title: Index settings.
@@ -19548,6 +19561,29 @@ components:
             an issue if many users search from the same IP address.
 
             To avoid this, add a user token to each generated API key.
+    replaceAllObjectsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        copyOperationResponse:
+          description: >-
+            The response of the `operationIndex` request for the `copy`
+            operation.
+          $ref: '#/components/schemas/updatedAtResponse'
+        batchResponses:
+          type: array
+          description: The response of the `batch` request(s).
+          items:
+            $ref: '#/components/schemas/batchResponse'
+        moveOperationResponse:
+          description: >-
+            The response of the `operationIndex` request for the `move`
+            operation.
+          $ref: '#/components/schemas/updatedAtResponse'
+      required:
+        - copyOperationResponse
+        - batchResponses
+        - moveOperationResponse
   responses:
     BadRequest:
       description: Bad request or request arguments.
@@ -19613,18 +19649,7 @@ components:
       content:
         application/json:
           schema:
-            title: updatedAtResponse
-            description: Response, taskID, and update timestamp.
-            additionalProperties: false
-            type: object
-            required:
-              - taskID
-              - updatedAt
-            properties:
-              taskID:
-                $ref: '#/components/schemas/taskID'
-              updatedAt:
-                $ref: '#/components/schemas/updatedAt'
+            $ref: '#/components/schemas/updatedAtResponse'
     CreatedAt:
       description: OK
       content:

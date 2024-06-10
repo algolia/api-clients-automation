@@ -100,6 +100,7 @@ export 'src/model/redirect_rule_index_metadata_data.dart';
 export 'src/model/remove_user_id_response.dart';
 export 'src/model/remove_words_if_no_results.dart';
 export 'src/model/rendering_content.dart';
+export 'src/model/replace_all_objects_response.dart';
 export 'src/model/replace_source_response.dart';
 export 'src/model/rule.dart';
 export 'src/model/save_object_response.dart';
