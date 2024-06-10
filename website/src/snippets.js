@@ -91,8 +91,8 @@ if err != nil {
     },
     'swift': {
       'add': `try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.add)`,
-      'update': `try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.add, apiKey: nil)`,
-      'delete': `try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.add)`,
+      'update': `try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.update, apiKey: nil)`,
+      'delete': `try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.delete)`,
     },
   }[language][operation] || `waitForApiKey.${operation} is not implemented in ${language}`;
 }
