@@ -1,24 +1,5 @@
 [
   {
-    "testName": "clear",
-    "isSnippet": true,
-    "parameters": {
-      "dictionaryName": "compounds",
-      "batchDictionaryEntriesParams": {
-        "clearExistingDictionaryEntries": true,
-        "requests": []
-      }
-    },
-    "request": {
-      "path": "/1/dictionaries/compounds/batch",
-      "method": "POST",
-      "body": {
-        "clearExistingDictionaryEntries": true,
-        "requests": []
-      }
-    }
-  },
-  {
     "testName": "replace",
     "isSnippet": true,
     "parameters": {
