@@ -10,14 +10,14 @@
             "action": "addObject",
             "body": {
               "key": "bar",
-              "foo": 1
+              "foo": "1"
             }
           },
           {
             "action": "addObject",
             "body": {
               "key": "baz",
-              "foo": 2
+              "foo": "2"
             }
           }
         ]
@@ -32,14 +32,14 @@
             "action": "addObject",
             "body": {
               "key": "bar",
-              "foo": 1
+              "foo": "1"
             }
           },
           {
             "action": "addObject",
             "body": {
               "key": "baz",
-              "foo": 2
+              "foo": "2"
             }
           }
         ]
