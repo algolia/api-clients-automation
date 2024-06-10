@@ -1,56 +1,11 @@
 [
   {
-    "testName": "get batchDictionaryEntries results with minimal parameters",
+    "testName": "replace",
+    "isSnippet": true,
     "parameters": {
-      "dictionaryName": "compounds",
+      "dictionaryName": "plurals",
       "batchDictionaryEntriesParams": {
-        "requests": [
-          {
-            "action": "addEntry",
-            "body": {
-              "objectID": "1",
-              "language": "en"
-            }
-          },
-          {
-            "action": "deleteEntry",
-            "body": {
-              "objectID": "2",
-              "language": "fr"
-            }
-          }
-        ]
-      }
-    },
-    "request": {
-      "path": "/1/dictionaries/compounds/batch",
-      "method": "POST",
-      "body": {
-        "requests": [
-          {
-            "action": "addEntry",
-            "body": {
-              "objectID": "1",
-              "language": "en"
-            }
-          },
-          {
-            "action": "deleteEntry",
-            "body": {
-              "objectID": "2",
-              "language": "fr"
-            }
-          }
-        ]
-      }
-    }
-  },
-  {
-    "testName": "get batchDictionaryEntries results with all parameters",
-    "parameters": {
-      "dictionaryName": "compounds",
-      "batchDictionaryEntriesParams": {
-        "clearExistingDictionaryEntries": false,
+        "clearExistingDictionaryEntries": true,
         "requests": [
           {
             "action": "addEntry",
@@ -68,32 +23,15 @@
               ],
               "state": "enabled"
             }
-          },
-          {
-            "action": "deleteEntry",
-            "body": {
-              "objectID": "2",
-              "language": "fr",
-              "word": "humility",
-              "words": [
-                "candor",
-                "algolia"
-              ],
-              "decomposition": [
-                "grit",
-                "algolia"
-              ],
-              "state": "enabled"
-            }
           }
         ]
       }
     },
     "request": {
-      "path": "/1/dictionaries/compounds/batch",
+      "path": "/1/dictionaries/plurals/batch",
       "method": "POST",
       "body": {
-        "clearExistingDictionaryEntries": false,
+        "clearExistingDictionaryEntries": true,
         "requests": [
           {
             "action": "addEntry",
@@ -111,19 +49,57 @@
               ],
               "state": "enabled"
             }
-          },
+          }
+        ]
+      }
+    }
+  },
+  {
+    "testName": "delete",
+    "isSnippet": true,
+    "parameters": {
+      "dictionaryName": "plurals",
+      "batchDictionaryEntriesParams": {
+        "clearExistingDictionaryEntries": true,
+        "requests": [
           {
             "action": "deleteEntry",
             "body": {
-              "objectID": "2",
-              "language": "fr",
-              "word": "humility",
+              "objectID": "1",
+              "language": "en",
+              "word": "fancy",
               "words": [
-                "candor",
+                "believe",
                 "algolia"
               ],
               "decomposition": [
-                "grit",
+                "trust",
+                "algolia"
+              ],
+              "state": "enabled"
+            }
+          }
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/dictionaries/plurals/batch",
+      "method": "POST",
+      "body": {
+        "clearExistingDictionaryEntries": true,
+        "requests": [
+          {
+            "action": "deleteEntry",
+            "body": {
+              "objectID": "1",
+              "language": "en",
+              "word": "fancy",
+              "words": [
+                "believe",
+                "algolia"
+              ],
+              "decomposition": [
+                "trust",
                 "algolia"
               ],
               "state": "enabled"
@@ -134,9 +110,10 @@
     }
   },
   {
-    "testName": "get batchDictionaryEntries results additional properties",
+    "testName": "append",
+    "isSnippet": true,
     "parameters": {
-      "dictionaryName": "compounds",
+      "dictionaryName": "stopwords",
       "batchDictionaryEntriesParams": {
         "requests": [
           {
@@ -151,7 +128,7 @@
       }
     },
     "request": {
-      "path": "/1/dictionaries/compounds/batch",
+      "path": "/1/dictionaries/stopwords/batch",
       "method": "POST",
       "body": {
         "requests": [

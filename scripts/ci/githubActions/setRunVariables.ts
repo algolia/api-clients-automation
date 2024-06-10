@@ -56,7 +56,6 @@ export const DEPENDENCIES = LANGUAGES.reduce(
     const key = `${lang.toUpperCase()}_CLIENT_CHANGED`;
     const langFolder = getLanguageFolder(lang);
 
-    // eslint-disable-next-line no-param-reassign
     finalDependencies[key] = [
       ':!**node_modules',
       `templates/${lang}`,

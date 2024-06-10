@@ -22,6 +22,7 @@ Generated code in production can be find on repository of the clients.
 - [Python](https://github.com/algolia/algoliasearch-client-python/tree/next)
 - [Ruby](https://github.com/algolia/algoliasearch-client-ruby/tree/next)
 - [Scala](https://github.com/algolia/algoliasearch-client-scala/tree/next)
+- [Swift](https://github.com/algolia/algoliasearch-client-swift/tree/next)
 
 ## Usage
 

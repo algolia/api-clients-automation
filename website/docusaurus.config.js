@@ -115,6 +115,7 @@ function getLabel(str) {
             'groovy',
             'csharp',
             'python',
+            'ruby',
           ],
         },
         navbar: {

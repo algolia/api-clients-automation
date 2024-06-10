@@ -25,4 +25,4 @@ yarn-error.log*
 
 specs
 
-src/generated
+src/generated/*.js

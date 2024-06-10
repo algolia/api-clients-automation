@@ -13,8 +13,11 @@ import org.openapitools.codegen.SupportingFile;
 
 public class TestsRequest extends TestsGenerator {
 
-  public TestsRequest(String language, String client) {
+  private final boolean withSnippets;
+
+  public TestsRequest(String language, String client, boolean withSnippets) {
     super(language, client);
+    this.withSnippets = withSnippets;
   }
 
   protected Map<String, Request[]> loadRequestCTS() throws Exception {
@@ -84,13 +87,14 @@ public class TestsRequest extends TestsGenerator {
       }
       Request[] op = cts.get(operationId);
 
-      List<Object> tests = new ArrayList<>();
+      List<Map<String, Object>> tests = new ArrayList<>();
       for (int i = 0; i < op.length; i++) {
         Map<String, Object> test = new HashMap<>();
         Request req = op[i];
         test.put("method", operationId);
-        test.put("testName", req.testName == null ? operationId + i : req.testName);
-        test.put("testIndex", i);
+        test.put("testName", req.testName == null ? operationId : req.testName);
+        test.put("testIndex", i == 0 ? "" : i);
+        test.put("isSnippet", req.isSnippet);
         if (ope.returnType != null && ope.returnType.length() > 0) {
           test.put("returnType", camelize(ope.returnType));
         }
@@ -174,9 +178,20 @@ public class TestsRequest extends TestsGenerator {
       testObj.put("tests", tests);
       testObj.put("operationId", operationId);
 
-      Map<String, Object> snippet = (Map<String, Object>) tests.get(0);
-      snippet.put("description", snippet.get("testName"));
-      testObj.put("snippet", snippet);
+      if (withSnippets) {
+        List<Map<String, Object>> snippets = tests.stream().filter(t -> (boolean) t.getOrDefault("isSnippet", false)).toList();
+        if (snippets.size() == 0) {
+          Map<String, Object> snippet = tests.get(0);
+          snippet.put("description", snippet.get("testName"));
+          snippet.put("testName", "default");
+          snippets = List.of(snippet);
+        } else {
+          for (Map<String, Object> snippet : snippets) {
+            snippet.put("description", snippet.get("testName"));
+          }
+        }
+        testObj.put("snippets", snippets);
+      }
 
       blocks.add(testObj);
     }

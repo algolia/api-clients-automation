@@ -10,8 +10,9 @@ The amount of changes in this new version is significant. If you were using a ve
 
 :::
 
-import { TabsLanguage } from '../../../src/components/TabsLanguage';
 import TabItem from '@theme/TabItem';
+import { CodeBlockLanguage } from '../../../src/components/CodeBlockLanguage';
+import { TabsLanguage } from '../../../src/components/TabsLanguage';
 
 This document lists every known breaking change, not all of them may affect your application.
 
@@ -25,171 +26,12 @@ Methods previously available at the `initIndex` level are now available at the `
 
 The `indexName` parameter is now **required** when calling those methods.
 
-<TabsLanguage>
-<TabItem value="javascript">
+<CodeBlockLanguage snippet={({getSnippet}) => (
+`${getSnippet('import')}
 
-```js
-import { algoliasearch } from 'algoliasearch';
-
-const client = algoliasearch('<YOUR_APP_ID>', '<YOUR_API_KEY>');
-
-const searchResults = await client.search({
-  requests: [
-    {
-      indexName: '<YOUR_INDEX_NAME>',
-      query: '<YOUR_QUERY>',
-      attributesToRetrieve: ['firstname', 'lastname'],
-      hitsPerPage: 50,
-    },
-  ],
-});
-```
-
-</TabItem>
-<TabItem value="python">
-
-```py
-from algoliasearch.search.client import SearchClient
-
-client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
-
-# using a raw dict
-
-search_resp = await client.search(search_method_params={"requests": [{"indexName": "nvim"}]})
-
-# using the given models
-
-from algoliasearch.search.models.search_method_params import SearchMethodParams
-from algoliasearch.search.models.search_for_hits import SearchForHits
-from algoliasearch.search.models.search_query import SearchQuery
-
-search_resp = await client.search(
-    search_method_params=SearchMethodParams(
-        requests=[
-            SearchQuery(SearchForHits(index_name="nvim")),
-        ],
-    ),
-)
-
-print(search_resp.to_json())
-```
-
-</TabItem>
-<TabItem value="php">
-
-```php
-use Algolia\AlgoliaSearch\Api\SearchClient;
-
-$client = SearchClient::create(
-    '<YOUR_APP_ID>',
-    '<YOUR_API_KEY>'
-);
-
-// only query string
-$searchResults = $client->search([
-    'requests' => [
-        ['indexName' => '<YOUR_INDEX_NAME>', 'query' =>'<YOUR_QUERY>'],
-    ],
-]);
-
-$searchResults2 = $client->search([
-    'requests' => [
-        [
-            'indexName' => '<YOUR_INDEX_NAME>', 
-            'query' => '<YOUR_QUERY>',
-            'attributesToRetrieve' => ['firstname', 'lastname'],
-            'hitsPerPage' => 50,
-        ],
-    ],
-]);
-```
-
-</TabItem>
-<TabItem value="java">
-
-```java
-import com.algolia.model.search.*;
-
-SearchClient client = new SearchClient(
-  "<YOUR_APP_ID>",
-  "<YOUR_API_KEY>"
-);
-
-client.search(
-  new SearchMethodParams()
-    .addRequests(
-      new SearchForHits()
-        .setIndexName("<YOUR_INDEX_NAME>")
-        .setQuery("<YOUR_QUERY>")
-        .addAttributesToRetrieve("firstname")
-        .addAttributesToRetrieve("lastname")
-        .setHitsPerPage(50)
-    )
-);
-```
-
-</TabItem>
-<TabItem value="kotlin">
-
-```kotlin
-import com.algolia.client.api.SearchClient
-import com.algolia.client.model.search.*
-
-val client = SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>")
-val response = client.search(
-    SearchMethodParams(
-        requests = listOf(SearchForHits(indexName = "<YOUR_INDEX_NAME>", query = "<YOUR_QUERY>"))
-    )
-)
-```
-
-</TabItem>
-<TabItem value="go">
-
-```go
-import (
-  "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
-)
-
-indexName := "<INDEX_NAME>"
-appID := "<APPLICATION_ID>"
-apiKey := "<API_KEY>"
-
-searchClient, _ := search.NewClient(appID, apiKey)
-
-results, err := searchClient.Search(
-  searchClient.NewApiSearchRequest(
-    search.NewSearchMethodParams(
-      []search.SearchQuery{
-        search.SearchForHitsAsSearchQuery(
-          search.NewSearchForHits(
-            indexName,
-            search.WithSearchForHitsQuery("<YOUR_QUERY>"),
-          ),
-        ),
-      },
-    ),
-  ),
-)
-```
-
-</TabItem>
-<TabItem value="csharp">
-
-```csharp
-using Algolia.Search.Clients;
-using Algolia.Search.Models.Search;
-
-var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
-
-client.Search<YOUR_RECORD_TYPE_CLASS>(new SearchMethodParams(new List<SearchQuery>
-{
-  new(new SearchForHits("<YOUR_INDEX>") { Query = "<YOUR_QUERY>" })
-}));
-```
-
-</TabItem>
-</TabsLanguage>
+${getSnippet('init')}
+${getSnippet('search', 'withHitsPerPage')}
+`)}/>
 
 ### A/B testing client
 
@@ -197,81 +39,13 @@ The A/B testing methods were previously available under the `Analytics` client, 
 
 The `Abtesting` client now hosts all of the `A/B testing` related methods.
 
-<TabsLanguage>
-<TabItem value="javascript">
+<CodeBlockLanguage client='abtesting' snippet={({getSnippet}) => (
+`${getSnippet('import')}
 
-> Usage with the `algoliasearch` client
+${getSnippet('init')}
 
-```js {2-3}
-import { algoliasearch } from 'algoliasearch';
-
-- const analyticsClient = algoliasearch('<YOUR_APP_ID>', '<YOUR_API_KEY>').initAnalytics();
-+ const abtestingClient = algoliasearch('<YOUR_APP_ID>', '<YOUR_API_KEY>');
-
-const abTest = await abtestingClient.getABTest({
-  id: 42,
-});
-```
-
-> Usage with the `client-abtesting` client
-
-```js
-import { abtestingClient } from '@algolia/client-abtesting';
-
-const client = abtestingClient('<YOUR_APP_ID>', '<YOUR_API_KEY>');
-
-const abTest = await abtestingClient.getABTest({
-  id: 42,
-});
-```
-
-</TabItem>
-<TabItem value="python">
-
-> Usage with the `algoliasearch` client
-
-```py {2-3}
-from algoliasearch.abtesting.client import AbtestingClient
-
-- analytics_client = AnalyticsClient('<YOUR_APP_ID>', '<YOUR_API_KEY>');
-+ abtesting_client = AbtestingClient('<YOUR_APP_ID>', '<YOUR_API_KEY>');
-
-ab_test = await abtesting_client.get_ab_test(id=42);
-```
-
-</TabItem>
-<TabItem value="php">
-
-```php
-- $client = AnalyticsClient::create('YOUR_APP_ID', 'YOUR_API_KEY');
-+ $client = AbtestingClient::create('YOUR_APP_ID', 'YOUR_API_KEY');
-
-$abTest = $client->getABTest(42);
-```
-
-</TabItem>
-<TabItem value="java">
-
-```java
-import com.algolia.api.AbtestingClient;
-import com.algolia.model.abtesting.*;
-
-AbtestingClient client = new AbtestingClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
-ABTest abTest = client.getABTest(42);
-```
-
-</TabItem>
-<TabItem value="csharp">
-
-```csharp
-using Algolia.Search.Clients;
-
-var client = new AbtestingClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
-client.GetABTest(42);
-```
-
-</TabItem>
-</TabsLanguage>
+${getSnippet('getABTest')}
+`)}/>
 
 ### `wait`
 
@@ -281,91 +55,15 @@ You can now optionally configure how the wait logic behaves by passing the `task
 
 [Read more in our dedicated guide](/docs/clients/guides/wait-for-a-task-to-finish)
 
-<TabsLanguage>
-<TabItem value="javascript">
+<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+`${getSnippet('import')}
 
-```js
-import { algoliasearch } from 'algoliasearch';
+${getSnippet('init')}
 
-const client = algoliasearch('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+${getSnippet('saveObject')}
 
-const { taskID } = await client.saveObject({
-  indexName: '<YOUR_INDEX_NAME>',
-  body: {
-    title: 'My Algolia Object',
-  },
-});
-
-// Poll the task status with defaults values
-await client.waitForTask({ indexName: '<YOUR_INDEX_NAME>', taskID });
-```
-
-</TabItem>
-<TabItem value="python">
-
-```py
-from algoliasearch.search.client import SearchClient
-
-client = SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
-
-save_resp = await client.save_object(index_name="nvim", body={"description": "blazing fast"})
-
-# Poll the task status with defaults values
-await client.wait_for_task(index_name="nvim", task_id=save_resp.task_id)
-```
-
-</TabItem>
-<TabItem value="php">
-
-```php
-$client = SearchClient::create(
-    '<YOUR_APP_ID>',
-    '<YOUR_APP_ID>'
-);
-
-$response = $client->saveObject(
-    '<YOUR_INDEX_NAME>',
-    ['title' => "My Algolia Object"],
-);
-
-// Poll the task status with defaults values
-$client->waitForTask('<YOUR_INDEX_NAME>', $response['taskID']);
-```
-
-</TabItem>
-<TabItem value="java">
-
-```java
-import com.algolia.model.search.*;
-
-Map<String, Object> body = new HashMap<>();
-body.put("title", "My Algolia Object");
-SaveObjectResponse response = client.saveObject(
-  "<YOUR_INDEX_NAME>",
-  body
-);
-
-// Poll the task status with defaults values
-client.waitForTask("<YOUR_INDEX_NAME>", response.getTaskID());
-```
-
-</TabItem>
-
-<TabItem value="csharp">
-
-```csharp
-using Algolia.Search.Clients;
-using Algolia.Search.Utils;
-
-var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
-var response = await client.SaveObjectAsync("<YOUR_INDEX_NAME>",
-  new { objectID = "123", firstName = "john", lastname = "doe" });
-
-await client.WaitForTaskAsync("<YOUR_INDEX_NAME>", response.TaskID);
-```
-
-</TabItem>
-</TabsLanguage>
+${waitForTaskSnippet()}
+`)}/>
 
 ### `moveIndex`/`copyIndex`
 
@@ -375,106 +73,15 @@ You can also decide what `scope` of the `source` index should be copied, [read m
 
 This method can be used as a replacement for the `copyRules`, `copySynonyms`, and `copySettings` method when using the associated `scope`.
 
-<TabsLanguage>
-<TabItem value="javascript">
+<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+`${getSnippet('import')}
 
-```js
-import { algoliasearch } from 'algoliasearch';
+${getSnippet('init')}
 
-const client = algoliasearch('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+${getSnippet('operationIndex', 'scopes')}
 
-const { taskID } = await client.operationIndex({
-  indexName: '<SOURCE_INDEX_NAME>',
-  operationIndexParams: {
-    // Enum for either `copy` or `move`
-    operation: 'copy', // 'move'
-    destination: '<DESTINATION_INDEX_NAME>',
-  },
-});
-
-// Poll the task status until it's done
-await client.waitForTask({ indexName: '<SOURCE_INDEX_NAME>', taskID });
-```
-
-</TabItem>
-<TabItem value="python">
-
-```js
-from algoliasearch.search.client import SearchClient
-
-client = SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
-
-copy_resp = await client.operation_id(
-    index_name="<SOURCE_INDEX_NAME>",
-    operation_index_params={
-        # operation can either be `copy` or `move`
-        operation="copy",
-        destination="<DESTINATION_INDEX_NAME>",
-    },
-)
-
-# Poll the task status until it's done
-await client.wait_for_task(index_name="<SOURCE_INDEX_NAME>", task_id=copy_resp.task_id)
-```
-
-</TabItem>
-<TabItem value="php">
-
-```php
-$client = SearchClient::create(
-    '<YOUR_APP_ID>',
-    '<YOUR_APP_ID>'
-);
-
-$response = $client->operationIndex(
-    '<SOURCE_INDEX_NAME>',
-    [
-        // Enum for either `copy` or `move`
-        'operation' => 'copy', // 'move'
-        'destination' => '<DESTINATION_INDEX_NAME>'
-    ]
-);
-
-// Poll the task status until it's done
-$client->waitForTask('<SOURCE_INDEX_NAME>', $response['taskID']);
-```
-
-</TabItem>
-<TabItem value="java">
-
-```java
-import com.algolia.model.search.*;
-
-UpdatedAtResponse response = client.operationIndex(
-  "<SOURCE_INDEX_NAME>",
-  new OperationIndexParams()
-    .setOperation(OperationType.COPY) // or MOVE
-    .setDestination("<DESTINATION_INDEX_NAME>")
-);
-
-// Poll the task status until it's done
-client.waitForTask("<SOURCE_INDEX_NAME>", response.getTaskID());
-```
-
-</TabItem>
-
-<TabItem value="csharp">
-
-```csharp
-using Algolia.Search.Clients;
-using Algolia.Search.Models.Search;
-using Algolia.Search.Utils;
-
-var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
-var response = await client.OperationIndexAsync("<SOURCE_INDEX_NAME>",
-  new OperationIndexParams(OperationType.Copy, "<DESTINATION_INDEX_NAME>"));
-
-await client.WaitForTaskAsync("<SOURCE_INDEX_NAME>", response.TaskID);
-```
-
-</TabItem>
-
-</TabsLanguage>
+${waitForTaskSnippet('<SOURCE_INDEX_NAME>')}
+`)}/>
 
 ### `saveObjects`
 
@@ -482,146 +89,15 @@ The `saveObjects` method has been removed, you can leverage the already existing
 
 [Read more in our dedicated guide](/docs/clients/guides/send-data-to-algolia) or [the API reference](/specs/search/#tag/Records/operation/batch).
 
-<TabsLanguage>
-<TabItem value="javascript">
+<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+`${getSnippet('import')}
 
-```js
-// The records retrieved by any of your data sources
-const recordsFromDataSource = [
-  { name: 'Tom Cruise' },
-  { name: 'Scarlett Johansson' },
-];
+${getSnippet('init')}
 
-// Here we construct the request to be sent to Algolia with the `batch` method
-const requests: BatchRequest[] = recordsFromDataSource.map((record) => {
-  return {
-    // `batch` allows you to do many Algolia operations, but here we want to index our record.
-    action: 'addObject',
-    body: record,
-  };
-});
+${getSnippet('batch', 'addObject')}
 
-await client.batch({
-  indexName: '<YOUR_INDEX_NAME>',
-  batchWriteParams: {
-    requests,
-  },
-});
-```
-</TabItem>
-<TabItem value="python">
-
-```py
-# The records retrieved by any of your data sources
-await client.batch({
-  index_name="<YOUR_INDEX_NAME>",
-  batch_write_params={
-    "requests":[
-        BatchRequest(action="addObject", body={ name: "Tom Cruise" })
-        BatchRequest(action="addObject", body={ name: "Scarlett Johansson" })
-    ]
-  }
-});
-```
-</TabItem>
-<TabItem value="php">
-
-```java
-// The records retrieved by any of your data sources
-$records = [
-    ['name' => 'Tom Cruise'],
-    ['name' => 'Scarlett Johansson']
-];
-
-// Here we construct the request to be sent to Algolia with the `batch` method
-$requests = [];
-
-foreach ($records as $record) {
-    $requests += [
-      'action' => 'addObject',
-      'body' => $record
-    ];
-}
-
-$client->batch(
-    '<YOUR_INDEX_NAME>',
-    [ 'requests' => $requests ]
-);
-```
-</TabItem>
-<TabItem value="java">
-
-```java
-import com.algolia.model.search.*;
-
-class Actor extends Hit {
-  public String name;
-
-  public Actor(String name) {
-    this.name = name;
-  }
-}
-
-// The records retrieved by any of your data sources
-List<Actor> records = Arrays.asList(
-  new Actor("Tom Cruise"),
-  new Actor("Scarlett Johansson")
-);
-
-// Here we construct the request to be sent to Algolia with the `batch` method
-List<BatchRequest> requests = new ArrayList<>();
-
-for (Actor record : records) {
-  requests.add(new BatchRequest()
-    .setAction(Action.ADD_OBJECT)
-    // Accepts any serializable class.
-    .setBody(record)
-  );
-}
-
-client.batch("<YOUR_INDEX_NAME>", new BatchWriteParams().setRequests(batch));
-
-```
-</TabItem>
-
-<TabItem value="csharp">
-
-```csharp
-using Algolia.Search.Clients;
-using Algolia.Search.Models.Search;
-using Action = Algolia.Search.Models.Search.Action;
-
-public class Actor : Hit
-{
-  public string Name;
-
-  public Actor(string name)
-  {
-    Name = name;
-  }
-}
-
-// The records retrieved by any of your data sources
-List<Actor> actors = new()
-{
-  new Actor("Tom Cruise"),
-  new Actor("Scarlett Johansson")
-};
-
-// Here we construct the request to be sent to Algolia with the `Batch` method.
-var requests = actors.Select(x => new BatchRequest(Action.AddObject, x)).ToList();
-
-// You can add other type of action, like update or delete an existing object.
-requests.Add(new BatchRequest(Action.UpdateObject, new Actor("Morgan Freeman") { ObjectID = "42" }));
-requests.Add(new BatchRequest(Action.DeleteObject, new Actor("John Doe") { ObjectID = "1" }));
-
-var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
-
-await client.BatchAsync("<YOUR_INDEX_INDEX>", new BatchWriteParams(requests));
-```
-
-</TabItem>
-</TabsLanguage>
+${waitForTaskSnippet()}
+`)}/>
 
 ### `browseObjects`/`browseRules`/`browseSynonyms`
 
@@ -781,7 +257,6 @@ for (SynonymHit synonym : synonyms) {
 ```
 
 </TabItem>
-
 <TabItem value="csharp" >
 
 ```csharp
@@ -820,7 +295,6 @@ foreach (var synonym in browseSynonyms)
 ```
 
 </TabItem>
-
 </TabsLanguage>
 
 ## Client's specific breaking changes

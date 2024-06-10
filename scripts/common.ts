@@ -47,7 +47,6 @@ export const GENERATORS = Object.entries(clientsConfig).reduce(
         clientName = client;
       }
 
-      // eslint-disable-next-line no-param-reassign
       current[key] = {
         additionalProperties: {},
         ...gen,
@@ -59,7 +58,6 @@ export const GENERATORS = Object.entries(clientsConfig).reduce(
 
       // guess the package name for js from the output folder variable
       if (language === 'javascript') {
-        // eslint-disable-next-line no-param-reassign
         current[key].additionalProperties.packageName = output.substring(
           output.lastIndexOf('/') + 1,
         );

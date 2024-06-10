@@ -5,7 +5,7 @@ import yaml from 'js-yaml';
 import { Cache } from './cache.js';
 import { GENERATORS, capitalize, createClientName, exists, run, toAbsolutePath } from './common.js';
 import { createSpinner } from './spinners.js';
-import type { CodeSamples, Language, SnippetSamples, Spec } from './types.js';
+import type { CodeSamples, Language, SnippetForMethod, SnippetSamples, Spec } from './types.js';
 
 const ALGOLIASEARCH_LITE_OPERATIONS = ['search', 'customPost'];
 
@@ -20,6 +20,38 @@ function getCodeSampleLabel(language: Language): CodeSamples['label'] {
     default:
       return capitalize(language) as CodeSamples['label'];
   }
+}
+
+// Iterates over the snippet samples and sanitize the data to only keep the method part in order to use it in the guides.
+function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSamples): string {
+  for (const [language, operationWithSample] of Object.entries(snippetSamples)) {
+    for (const [operation, samples] of Object.entries(operationWithSample)) {
+      if (operation === 'import') {
+        continue;
+      }
+
+      for (const [sampleName, sample] of Object.entries(samples)) {
+        const sampleMatch = sample.match(
+          /.*Initialize the client\n(.*)((.|\n)*)(.*Call the API\n)((.|\n)*)/,
+        );
+        if (!sampleMatch) {
+          continue;
+        }
+
+        const initLine = sampleMatch[1];
+        const callLine = sampleMatch[5];
+
+        if (!('init' in snippetSamples[language])) {
+          snippetSamples[language].init = {
+            default: initLine.replace(/\n$/, ''),
+          };
+        }
+        snippetSamples[language][operation][sampleName] = callLine.replace(/\n$/, '');
+      }
+    }
+  }
+
+  return JSON.stringify(snippetSamples, null, 2);
 }
 
 // For a given `clientName`, reads the matching snippet file for every available clients and builds an hashmap of snippets per operationId per language.
@@ -42,18 +74,32 @@ async function transformSnippetsToCodeSamples(clientName: string): Promise<Snipp
       'utf8',
     );
 
+    const importMatch = snippetFileContent.match(/>IMPORT\n([\s\S]*?)\n.*IMPORT</);
+    if (importMatch) {
+      snippetSamples[gen.language].import = {
+        default: importMatch[1].replace(/\n$/, ''),
+      };
+    }
+
     // iterate over every matches (operationId) and store it in the hashmap for later use
-    for (const match of snippetFileContent.matchAll(/>SEPARATOR (.+)\n([\s\S]*?)SEPARATOR</g)) {
+    for (const match of snippetFileContent.matchAll(
+      />SEPARATOR (\w+) (.*)\n([\s\S]*?)SEPARATOR</g,
+    )) {
       const lines: string[] = match[0].split('\n').slice(1, -1);
       if (!lines.length) {
         throw new Error(`No snippet found for ${gen.language} ${gen.client}`);
       }
 
-      if (!snippetSamples[gen.language]) {
-        snippetSamples[gen.language] = {};
+      const operationId = match[1];
+      const testName = match[2] || 'default';
+
+      if (!snippetSamples[gen.language][operationId]) {
+        snippetSamples[gen.language][operationId] = {};
       }
 
-      snippetSamples[gen.language][match[1]] = '';
+      const snippetForMethod: SnippetForMethod = snippetSamples[gen.language][operationId];
+
+      snippetForMethod[testName] = '';
 
       const indent = lines[0].length - lines[0].trim().length;
       // skip first and last lines because they contain the SEPARATOR or operationId
@@ -61,7 +107,7 @@ async function transformSnippetsToCodeSamples(clientName: string): Promise<Snipp
         // best effort to determine how far the snippet is indented so we
         // can have every snippets in the documentation on the far left
         // without impacting the formatting
-        snippetSamples[gen.language][match[1]] += `${line.slice(indent).replaceAll(/\t/g, '  ')}\n`;
+        snippetForMethod[testName] += `${line.slice(indent).replaceAll(/\t/g, '  ')}\n`;
       });
     }
   }
@@ -94,7 +140,16 @@ async function transformBundle({
 
   const bundledSpec = yaml.load(await fsp.readFile(bundledPath, 'utf8')) as Spec;
   const tagsDefinitions = bundledSpec.tags;
-  const snippetSamples = docs ? await transformSnippetsToCodeSamples(clientName) : {};
+  const snippetSamples = docs
+    ? await transformSnippetsToCodeSamples(clientName)
+    : ({} as SnippetSamples);
+
+  if (docs) {
+    await fsp.writeFile(
+      toAbsolutePath(`website/src/generated/${clientName}-snippets.js`),
+      `export const snippets = ${transformCodeSamplesToGuideMethods(JSON.parse(JSON.stringify(snippetSamples)))}`,
+    );
+  }
 
   for (const [pathKey, pathMethods] of Object.entries(bundledSpec.paths)) {
     for (const [method, specMethod] of Object.entries(pathMethods)) {
@@ -120,11 +175,13 @@ async function transformBundle({
           specMethod['x-codeSamples'] = [];
         }
 
-        specMethod['x-codeSamples'].push({
-          lang: gen.language,
-          label: getCodeSampleLabel(gen.language),
-          source: snippetSamples[gen.language][specMethod.operationId],
-        });
+        if (snippetSamples[gen.language][specMethod.operationId]) {
+          specMethod['x-codeSamples'].push({
+            lang: gen.language,
+            label: getCodeSampleLabel(gen.language),
+            source: Object.values(snippetSamples[gen.language][specMethod.operationId])[0],
+          });
+        }
       }
 
       if (!bundledSpec.paths[pathKey][method].tags) {

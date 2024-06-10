@@ -3,7 +3,9 @@ package algoliasearch.methods.snippets
 
 import scala.concurrent.duration.Duration
 
+// >IMPORT
 import algoliasearch.api.{{client}}
+// IMPORT<
 import algoliasearch.{{import}}.*
 
 import org.json4s.*
@@ -15,18 +17,18 @@ class Snippet{{client}} {
   implicit val formats: Formats = org.json4s.DefaultFormats
 
   {{#blocksRequests}}
-  {{#snippet}}
+  {{#snippets}}
   /** Snippet for the {{method}} method.
     *
     * {{{description}}}
     */
-  def snippetFor{{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}(): Unit = {
-    // >SEPARATOR {{method}}
+  def snippetFor{{#lambda.pascalcase}}{{client}}{{/lambda.pascalcase}}{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}(): Unit = {
+    // >SEPARATOR {{method}} {{testName}}
     // Initialize the client
     val client = {{client}}(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY"{{#hasRegionalHost}}, region = {{#fallbackToAliasHost}}Option({{/fallbackToAliasHost}}"YOUR_APP_ID_REGION"{{#fallbackToAliasHost}}){{/fallbackToAliasHost}}{{/hasRegionalHost}})
 
     // Call the API
-    val res = client.{{method}}{{#isCustomRequest}}[JObject]{{/isCustomRequest}}(
+    val response = client.{{method}}{{#isCustomRequest}}[JObject]{{/isCustomRequest}}(
     {{#parametersWithDataType}}
     {{> tests/request_param}}{{^-last}},{{/-last}}
     {{/parametersWithDataType}}
@@ -43,10 +45,10 @@ class Snippet{{client}} {
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
-  {{/snippet}}
+  {{/snippets}}
   {{/blocksRequests}}
 }
