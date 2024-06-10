@@ -32,7 +32,12 @@ export function waitForApiKeySnippet(language, operation) {
   return {
     'csharp': {
       'add': `await client.WaitForApiKeyAsync(ApiKeyOperation.Add, response.Key);`,
-      'update': `await client.WaitForApiKeyAsync(ApiKeyOperation.Update, response.Key);`,
+      'update': `await client.WaitForApiKeyAsync(ApiKeyOperation.Update, response.Key, {
+        Acl = new List<Acl> { Enum.Parse<Acl>("Search"), Enum.Parse<Acl>("AddObject") },
+        Validity = 300,
+        MaxQueriesPerIPPerHour = 100,
+        MaxHitsPerQuery = 20,
+      });`,
       'delete': `await client.WaitForApiKeyAsync(ApiKeyOperation.Delete, response.Key);`,
     },
     'dart': {
@@ -45,7 +50,7 @@ export function waitForApiKeySnippet(language, operation) {
 if err != nil {
   panic(err)
 }`,
-      'update': `waitResponse, err := client.WaitForApiKey(search.APIKEYOPERATION_UPDATE, response.Key, nil)
+      'update': `waitResponse, err := client.WaitForApiKey(search.APIKEYOPERATION_UPDATE, response.Key, search.NewEmptyApiKey().SetAcl([]search.Acl{search.Acl("search"), search.Acl("addObject")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20))
 if err != nil {
   panic(err)
 }`,
@@ -56,12 +61,21 @@ if err != nil {
     },
     'java': {
       'add': `client.waitForApiKey(ApiKeyOperation.ADD, response.Key, null)`,
-      'update': `client.waitForApiKey(ApiKeyOperation.UPDATE, response.Key, null)`,
+      'update': `client.waitForApiKey(ApiKeyOperation.UPDATE, response.Key, new ApiKey()
+        .setAcl(List.of(Acl.fromValue("search"), Acl.fromValue("addObject")))
+        .setValidity(300)
+        .setMaxQueriesPerIPPerHour(100)
+        .setMaxHitsPerQuery(20))`,
       'delete': `client.waitForApiKey(ApiKeyOperation.DELETE, response.Key, null)`,
     },
     'javascript': {
       'add': `await client.waitForApiKey({ operation: "${operation}", key: response.key });`,
-      'update': `await client.waitForApiKey({ operation: "${operation}", key: response.key, apiKey: null });`,
+      'update': `await client.waitForApiKey({ operation: "${operation}", key: response.key, apiKey: {
+        acl: ['search', 'addObject'],
+        validity: 300,
+        maxQueriesPerIPPerHour: 100,
+        maxHitsPerQuery: 20,
+      }});`,
       'delete': `await client.waitForApiKey({ operation: "${operation}", key: response.key });`,
     },
     'kotlin': {
@@ -71,17 +85,38 @@ if err != nil {
     },
     'php': {
       'add': `$client->waitForApiKey('${operation}', $response['key']);`,
-      'update': `$client->waitForApiKey('${operation}', $response['key'], null);`,
+      'update': `$client->waitForApiKey('${operation}', $response['key'], [
+        'acl' => [
+          'search',
+          'addObject',
+        ],
+          'validity' => 300,
+          'maxQueriesPerIPPerHour' => 100,
+          'maxHitsPerQuery' => 20,
+        ]);`,
       'delete': `$client->waitForApiKey('${operation}', $response['key']);`,
     },
     'python': {
       'add': `await client.wait_for_api_key(operation="${operation}", key=response.key)`,
-      'update': `await client.wait_for_api_key(operation="${operation}", key=response.key, api_key=None)`,
+      'update': `await client.wait_for_api_key(operation="${operation}", key=response.key, api_key={
+          "acl": [
+              "search",
+              "addObject",
+          ],
+          "validity": 300,
+          "maxQueriesPerIPPerHour": 100,
+          "maxHitsPerQuery": 20,
+      })`,
       'delete': `await client.wait_for_api_key(operation="${operation}", key=response.key)`,
     },
     'ruby': {
       'add': `await client.wait_for_api_key(operation="${operation}", key=response.key)`,
-      'update': `await client.wait_for_api_key(operation="${operation}", key=response.key, api_key=nil)`,
+      'update': `await client.wait_for_api_key(operation="${operation}", key=response.key, api_key=ApiKey.new(
+        acl: ['search', 'addObject'],
+        validity: 300,
+        max_queries_per_ip_per_hour: 100,
+        max_hits_per_query: 20
+      ))`,
       'delete': `await client.wait_for_api_key(operation="${operation}", key=response.key)`,
     },
     'scala': {
@@ -91,7 +126,12 @@ if err != nil {
     },
     'swift': {
       'add': `try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.add)`,
-      'update': `try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.update, apiKey: nil)`,
+      'update': `try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.update, apiKey: ApiKey(
+          acl: [Acl.search, Acl.addObject],
+          maxHitsPerQuery: 20,
+          maxQueriesPerIPPerHour: 100,
+          validity: 300
+      ))`,
       'delete': `try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.delete)`,
     },
   }[language][operation] || `waitForApiKey.${operation} is not implemented in ${language}`;
