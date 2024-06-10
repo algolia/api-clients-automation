@@ -74,6 +74,7 @@ Page:
   description: |
     Requested page of the API response.
     If `null`, the API response is not paginated.
+  required: false
   schema:
     oneOf:
       - type: integer
@@ -98,6 +99,7 @@ HitsPerPage:
   in: query
   name: hitsPerPage
   description: Number of hits per page.
+  required: false
   schema:
     type: integer
     default: 100
@@ -106,6 +108,7 @@ Offset:
   in: query
   name: offset
   description: Position of the first item to return.
+  required: false
   schema:
     type: integer
     default: 0
@@ -115,6 +118,7 @@ Limit:
   in: query
   name: limit
   description: Number of items to return.
+  required: false
   schema:
     type: integer
     default: 10
