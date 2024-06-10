@@ -63,6 +63,7 @@ EndDateRequired:
 ForwardToReplicas:
   in: query
   name: forwardToReplicas
+  required: false
   description: Whether changes are applied to replica indices.
   schema:
     type: boolean
