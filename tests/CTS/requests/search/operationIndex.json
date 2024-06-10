@@ -3,10 +3,10 @@
     "testName": "scopes",
     "isSnippet": true,
     "parameters": {
-      "indexName": "SOURCE_INDEX_NAME",
+      "indexName": "<SOURCE_INDEX_NAME>",
       "operationIndexParams": {
         "operation": "move",
-        "destination": "DESTINATION_INDEX_NAME",
+        "destination": "<DESTINATION_INDEX_NAME>",
         "scope": [
           "rules",
           "settings"
@@ -14,11 +14,11 @@
       }
     },
     "request": {
-      "path": "/1/indexes/SOURCE_INDEX_NAME/operation",
+      "path": "/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation",
       "method": "POST",
       "body": {
         "operation": "move",
-        "destination": "DESTINATION_INDEX_NAME",
+        "destination": "<DESTINATION_INDEX_NAME>",
         "scope": [
           "rules",
           "settings"
@@ -30,18 +30,18 @@
     "testName": "copy",
     "isSnippet": true,
     "parameters": {
-      "indexName": "SOURCE_INDEX_NAME",
+      "indexName": "<SOURCE_INDEX_NAME>",
       "operationIndexParams": {
         "operation": "copy",
-        "destination": "DESTINATION_INDEX_NAME"
+        "destination": "<DESTINATION_INDEX_NAME>"
       }
     },
     "request": {
-      "path": "/1/indexes/SOURCE_INDEX_NAME/operation",
+      "path": "/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation",
       "method": "POST",
       "body": {
         "operation": "copy",
-        "destination": "DESTINATION_INDEX_NAME"
+        "destination": "<DESTINATION_INDEX_NAME>"
       }
     }
   },
@@ -49,18 +49,18 @@
     "testName": "move",
     "isSnippet": true,
     "parameters": {
-      "indexName": "SOURCE_INDEX_NAME",
+      "indexName": "<SOURCE_INDEX_NAME>",
       "operationIndexParams": {
         "operation": "move",
-        "destination": "DESTINATION_INDEX_NAME"
+        "destination": "<DESTINATION_INDEX_NAME>"
       }
     },
     "request": {
-      "path": "/1/indexes/SOURCE_INDEX_NAME/operation",
+      "path": "/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation",
       "method": "POST",
       "body": {
         "operation": "move",
-        "destination": "DESTINATION_INDEX_NAME"
+        "destination": "<DESTINATION_INDEX_NAME>"
       }
     }
   }

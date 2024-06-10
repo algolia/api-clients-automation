@@ -22,7 +22,7 @@ ${getSnippet(language, 'search', 'init')}
 
 ${getSnippet(language, 'search', 'operationIndex', 'copy')}
 
-${waitForTaskSnippet(language, 'SOURCE_INDEX_NAME')}
+${waitForTaskSnippet(language, '<SOURCE_INDEX_NAME>')}
 `)}/>
 
 ## Rename/move an index
@@ -32,7 +32,7 @@ Changing the name of an index doesn’t change the name of the index’s analyti
 <CodeBlockLanguage snippet={(language) => (
 `${getSnippet(language, 'search', 'operationIndex', 'move')}
 
-${waitForTaskSnippet(language, 'SOURCE_INDEX_NAME')}
+${waitForTaskSnippet(language, '<SOURCE_INDEX_NAME>')}
 `)}/>
 
 ## Scope your operation
@@ -44,5 +44,5 @@ The available scopes are: `rules`, `settings`, `synonyms`. You can provide one o
 <CodeBlockLanguage snippet={(language) => (
 `${getSnippet(language, 'search', 'operationIndex', 'scopes')}
 
-${waitForTaskSnippet(language, 'SOURCE_INDEX_NAME')}
+${waitForTaskSnippet(language, '<SOURCE_INDEX_NAME>')}
 `)}/>
