@@ -3,7 +3,7 @@ title: Wait for an API key to be valid
 ---
 
 import { CodeBlockLanguage } from '../../../src/components/CodeBlockLanguage';
-import { getSnippet, waitForTaskSnippet } from '../../../src/snippets';
+import { getSnippet, waitForApiKeySnippet } from '../../../src/snippets';
 
 > The `waitForApiKey` method is only available in the `search` client context.
 
@@ -20,7 +20,7 @@ ${getSnippet(language, 'search', 'init')}
 
 ${getSnippet(language, 'search', 'addApiKey')}
 
-${waitForTaskSnippet(language)}
+${waitForApiKeySnippet(language, 'add')}
 `)}/>
 
 ## `update`
@@ -32,7 +32,7 @@ ${getSnippet(language, 'search', 'init')}
 
 ${getSnippet(language, 'search', 'updateApiKey')}
 
-${waitForTaskSnippet(language)}
+${waitForApiKeySnippet(language, 'update')}
 `)}/>
 
 ## `delete`
@@ -44,5 +44,5 @@ ${getSnippet(language, 'search', 'init')}
 
 ${getSnippet(language, 'search', 'deleteApiKey')}
 
-${waitForTaskSnippet(language)}
+${waitForApiKeySnippet(language, 'delete')}
 `)}/>

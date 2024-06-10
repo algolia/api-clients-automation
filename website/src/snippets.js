@@ -29,19 +29,72 @@ if err != nil {
 }
 
 export function waitForApiKeySnippet(language, operation) {
-  switch (language) {
-    case 'csharp':
-    case 'dart':
-    case 'go':
-    case 'java':
-    case 'javascript':
-    case 'kotlin':
-    case 'php':
-    case 'python':
-    case 'ruby':
-    case 'scala':
-    case 'swift':
-  }
+  return {
+    'csharp': {
+      'add': `await client.WaitForApiKeyAsync(ApiKeyOperation.Add, response.Key);`,
+      'update': `await client.WaitForApiKeyAsync(ApiKeyOperation.Update, response.Key);`,
+      'delete': `await client.WaitForApiKeyAsync(ApiKeyOperation.Delete, response.Key);`,
+    },
+    'dart':{
+      'add': ``,
+      'update': ``,
+      'delete': ``,
+    },
+    'go':{
+    'add': `waitResponse, err := client.WaitForApiKey(search.APIKEYOPERATION_ADD, response.Key, nil)
+if err != nil {
+  panic(err)
+}`,
+    'update': `waitResponse, err := client.WaitForApiKey(search.APIKEYOPERATION_UPDATE, response.Key, nil)
+if err != nil {
+  panic(err)
+}`,
+    'delete': `waitResponse, err := client.WaitForApiKey(search.APIKEYOPERATION_DELETE, response.Key, nil)
+if err != nil {
+  panic(err)
+}`,
+    },
+    'java': {
+      'add': `client.waitForApiKey(ApiKeyOperation.ADD, response.Key, null)`,
+      'update': `client.waitForApiKey(ApiKeyOperation.UPDATE, response.Key, null)`,
+      'delete': `client.waitForApiKey(ApiKeyOperation.DELETE, response.Key, null)`,
+    },
+    'javascript': {
+      'add': `await client.waitForApiKey({ operation: "${operation}", key: response.key });`,
+      'update': `await client.waitForApiKey({ operation: "${operation}", key: response.key, apiKey: null });`,
+      'delete': `await client.waitForApiKey({ operation: "${operation}", key: response.key });`,
+    },
+    'kotlin': {
+      'add': ``,
+      'update': ``,
+      'delete': ``,
+    },
+    'php': {
+      'add': `$client->waitForApiKey('${operation}', $response['key']);`,
+      'update': `$client->waitForApiKey('${operation}', $response['key'], null);`,
+      'delete': `$client->waitForApiKey('${operation}', $response['key']);`,
+    },
+    'python': {
+      'add': `await client.wait_for_api_key(operation="${operation}", key=response.key)`,
+      'update': `await client.wait_for_api_key(operation="${operation}", key=response.key, api_key=None)`,
+      'delete': `await client.wait_for_api_key(operation="${operation}", key=response.key)`,
+    },
+    'ruby': {
+      'add': `await client.wait_for_api_key(operation="${operation}", key=response.key)`,
+      'update': `await client.wait_for_api_key(operation="${operation}", key=response.key, api_key=nil)`,
+      'delete': `await client.wait_for_api_key(operation="${operation}", key=response.key)`,
+    },
+    'scala': {
+      'add': ``,
+      'update': ``,
+      'delete': ``,
+    },
+    'swift': {
+      'add': `try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.add)`,
+      'update': `try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.add, apiKey: nil)`,
+      'delete': `try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.add)`,
+    },
+  }[language][operation] || `waitForApiKey.${operation} is not implemented in ${language}`;
 }
 
 function getSnippetsForClient(client) {
