@@ -92,7 +92,7 @@ public class TestsRequest extends TestsGenerator {
         Map<String, Object> test = new HashMap<>();
         Request req = op[i];
         test.put("method", operationId);
-        test.put("testName", req.testName == null ? operationId + i : req.testName);
+        test.put("testName", req.testName == null ? operationId + i : withSnippets ? req.testName : req.testName + i);
         test.put("testIndex", i == 0 ? "" : i);
         test.put("isSnippet", req.isSnippet);
         if (ope.returnType != null && ope.returnType.length() > 0) {
