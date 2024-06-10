@@ -23,6 +23,7 @@
           ]
         }
       ],
+      "forwardToReplicas": null,
       "clearExistingRules": true
     },
     "request": {
