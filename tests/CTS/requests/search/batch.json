@@ -9,7 +9,15 @@
           {
             "action": "addObject",
             "body": {
-              "key": "value"
+              "key": "bar",
+              "foo": 1
+            }
+          },
+          {
+            "action": "addObject",
+            "body": {
+              "key": "baz",
+              "foo": 2
             }
           }
         ]
@@ -23,7 +31,15 @@
           {
             "action": "addObject",
             "body": {
-              "key": "value"
+              "key": "bar",
+              "foo": 1
+            }
+          },
+          {
+            "action": "addObject",
+            "body": {
+              "key": "baz",
+              "foo": 2
             }
           }
         ]
