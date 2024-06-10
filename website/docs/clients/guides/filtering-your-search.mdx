@@ -3,7 +3,6 @@ title: Filtering your search
 ---
 
 import { CodeBlockLanguage } from '../../../src/components/CodeBlockLanguage';
-import { addComment, getSnippet, waitForTaskSnippet } from '../../../src/snippets';
 
 Filtering is primarily used in the context of front-end search. We call this faceting, where filters are displayed on the search UI as clickable items, allowing users to select one or more filters. This enables a more refined, drilled-down search experience.
 
@@ -13,14 +12,14 @@ Filtering is primarily used in the context of front-end search. We call this fac
 
 Initially, filter attributes must be defined as facets, using the `attributesForFaceting` parameter. This can be done using the `setSettings` method.
 
-<CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'search', 'import')}
+<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+`${getSnippet('import')}
 
-${getSnippet(language, 'search', 'init')}
+${getSnippet('init')}
 
-${getSnippet(language, 'search', 'setSettings', 'setSettingsAttributesForFaceting')}
+${getSnippet('setSettings', 'setSettingsAttributesForFaceting')}
 
-${waitForTaskSnippet(language)}
+${waitForTaskSnippet()}
 `)}/>
 
 ### 2. Filter by Attributes (at query time)
@@ -29,13 +28,13 @@ The actual filtering of records is performed at query time, not at indexing time
 
 #### Filtering by string using the `filters` field
 
-<CodeBlockLanguage snippet={(language) => (
-`${addComment(language, 'Only "Scarlett Johansson" actor')}
-${getSnippet(language, 'search', 'search', 'filterOnly')}
+<CodeBlockLanguage snippet={({addComment, getSnippet}) => (
+`${addComment('Only "Scarlett Johansson" actor')}
+${getSnippet('search', 'filterOnly')}
 
-${addComment(language, 'Only "Tom Cruise" or "Scarlett Johansson" actor')}
-${getSnippet(language, 'search', 'search', 'filterOr')}
+${addComment('Only "Tom Cruise" or "Scarlett Johansson" actor')}
+${getSnippet('search', 'filterOr')}
 
-${addComment(language, 'Everything but "Nicolas Cage" actor')}
-${getSnippet(language, 'search', 'search', 'filterNot')}
+${addComment('Everything but "Nicolas Cage" actor')}
+${getSnippet('search', 'filterNot')}
 `)}/>

@@ -3,7 +3,6 @@ title: Replace All Rules and Synonyms
 ---
 
 import { CodeBlockLanguage } from '../../../src/components/CodeBlockLanguage';
-import { getSnippet, waitForTaskSnippet } from '../../../src/snippets';
 
 In Algolia, you can replace all existing rules and synonyms by leveraging the appropriate methods. This guide will show you how to use `saveRules` and `saveSynonyms` methods to achieve this.
 
@@ -11,14 +10,14 @@ In Algolia, you can replace all existing rules and synonyms by leveraging the ap
 
 To replace all existing rules in Algolia, you can use the `saveRules` method with the `clearExistingRules` parameter set to `true`.
 
-<CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'search', 'import')}
+<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+`${getSnippet('import')}
 
-${getSnippet(language, 'search', 'init')}
+${getSnippet('init')}
 
-${getSnippet(language, 'search', 'saveRules')}
+${getSnippet('saveRules')}
 
-${waitForTaskSnippet(language)}
+${waitForTaskSnippet()}
 `)}/>
 
 The rules parameter should contain the array of rules you want to save.
@@ -28,10 +27,10 @@ By executing the above code, all existing rules will be removed, and the new rul
 
 To replace all existing synonyms in Algolia, you can use the `saveSynonyms` method with the `replaceExistingSynonyms` parameter set to `true`.
 
-<CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'search', 'saveSynonyms')}
+<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+`${getSnippet('saveSynonyms')}
 
-${waitForTaskSnippet(language)}
+${waitForTaskSnippet()}
 `)}/>
 The `synonymHit`parameter should contain the synonyms you want to save.
 By executing the above code, all existing synonyms will be replaced with the new synonyms provided.

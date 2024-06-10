@@ -3,7 +3,6 @@ title: Manage dictionary entries
 ---
 
 import { CodeBlockLanguage } from '../../../src/components/CodeBlockLanguage';
-import { getSnippet, waitForTaskSnippet } from '../../../src/snippets';
 
 The REST API offers [a single endpoint to manage your dictionary](https://api-clients-automation.netlify.app/specs/search#tag/Dictionaries/operation/batchDictionaryEntries). In this guide, we will demonstrate how to manage entries for different scenarios.
 
@@ -13,32 +12,32 @@ A `dictionaryName` can be either `stopwords`, `plurals` or `compounds`.
 
 > Useful when you have new data to add to a dictionary and don't want to impact existing entries.
 
-<CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'search', 'import')}
+<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+`${getSnippet('import')}
 
-${getSnippet(language, 'search', 'init')}
+${getSnippet('init')}
 
-${getSnippet(language, 'search', 'batchDictionaryEntries', 'append')}
+${getSnippet('batchDictionaryEntries', 'append')}
 
-${waitForTaskSnippet(language)}
+${waitForTaskSnippet()}
 `)}/>
 
 ## Replace dictionary entries
 
 > Useful when you want to clear every entries of a dictionary and add new ones at the same time.
 
-<CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'search', 'batchDictionaryEntries', 'replace')}
+<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+`${getSnippet('batchDictionaryEntries', 'replace')}
 
-${waitForTaskSnippet(language)}
+${waitForTaskSnippet()}
 `)}/>
 
 ## Delete entries in the dictionary
 
 > Useful when deleting one or many entries from a dictionary.
 
-<CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'search', 'batchDictionaryEntries', 'delete')}
+<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+`${getSnippet('batchDictionaryEntries', 'delete')}
 
-${waitForTaskSnippet(language)}
+${waitForTaskSnippet()}
 `)}/>

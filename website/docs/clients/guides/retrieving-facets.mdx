@@ -3,7 +3,6 @@ title: Retrieving facets
 ---
 
 import { CodeBlockLanguage } from '../../../src/components/CodeBlockLanguage';
-import { getSnippet } from '../../../src/snippets';
 
 To retrieve facets and their respective counts as part of the JSON response, you must specify a list of facets in the facets parameter at query time.
 
@@ -11,16 +10,16 @@ For example, you can retrieve your books' facets with the `search` method, and t
 
 > When the `facets` parameter is empty, the engine returns no facet information.
 
-<CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'search', 'import')}
+<CodeBlockLanguage snippet={({getSnippet}) => (
+`${getSnippet('import')}
 
-${getSnippet(language, 'search', 'init')}
+${getSnippet('init')}
 
-${getSnippet(language, 'search', 'search', 'retrieveFacets')}
+${getSnippet('search', 'retrieveFacets')}
 `)}/>
 
 To extract all facet information, you can use a wildcard (`*`).
 
-<CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'search', 'search', 'retrieveFacetsWildcard')}
+<CodeBlockLanguage snippet={({getSnippet}) => (
+`${getSnippet('search', 'retrieveFacetsWildcard')}
 `)}/>

@@ -3,7 +3,6 @@ title: Send data to Algolia
 ---
 
 import { CodeBlockLanguage } from '../../../src/components/CodeBlockLanguage';
-import { getSnippet, waitForTaskSnippet } from '../../../src/snippets';
 
 Algolia doesn’t search directly into your own data source. For data to be searchable, you need to send it to Algolia’s servers.
 
@@ -19,12 +18,12 @@ If the data you are sending is more than 1000 records at once, we recommend you 
 
 Before sending anything to Algolia, you need to retrieve your data. You can do this in several ways, in our case we will pick it from the source code directly.
 
-<CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'search', 'import')}
+<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+`${getSnippet('import')}
 
-${getSnippet(language, 'search', 'init')}
+${getSnippet('init')}
 
-${getSnippet(language, 'search', 'batch', 'addObject')}
+${getSnippet('batch', 'addObject')}
 
-${waitForTaskSnippet(language)}
+${waitForTaskSnippet()}
 `)}/>

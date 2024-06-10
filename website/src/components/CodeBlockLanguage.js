@@ -2,7 +2,7 @@ import React from 'react';
 import CodeBlock from '@theme/CodeBlock';
 import TabItem from '@theme/TabItem';
 import { languagesTabValues, TabsLanguage } from './TabsLanguage';
-import { addComment, getSnippet, waitForTaskSnippet } from '../snippets';
+import { addComment, getSnippet, waitForTaskSnippet, waitForApiKeySnippet } from '../snippets';
 
 export function CodeBlockLanguage(props) {
   return <TabsLanguage>
@@ -14,7 +14,8 @@ export function CodeBlockLanguage(props) {
             {props.snippet({
               getSnippet: (...args) => getSnippet(language, props.client || 'search', ...args),
               addComment: (comment) => addComment(language, comment),
-              waitForTaskSnippet: () => waitForTaskSnippet(language),
+              waitForTaskSnippet: (indexName = '<YOUR_INDEX_NAME>') => waitForTaskSnippet(language, indexName),
+              waitForApiKeySnippet: (operation) => waitForApiKeySnippet(language, operation),
               language,
             })}
           </CodeBlock>

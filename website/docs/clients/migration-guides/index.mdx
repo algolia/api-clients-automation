@@ -13,7 +13,6 @@ The amount of changes in this new version is significant. If you were using a ve
 import TabItem from '@theme/TabItem';
 import { CodeBlockLanguage } from '../../../src/components/CodeBlockLanguage';
 import { TabsLanguage } from '../../../src/components/TabsLanguage';
-import { waitForTaskSnippet, getSnippet } from '../../../src/snippets';
 
 This document lists every known breaking change, not all of them may affect your application.
 
@@ -27,11 +26,11 @@ Methods previously available at the `initIndex` level are now available at the `
 
 The `indexName` parameter is now **required** when calling those methods.
 
-<CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'search', 'import')}
+<CodeBlockLanguage snippet={({getSnippet}) => (
+`${getSnippet('import')}
 
-${getSnippet(language, 'search', 'init')}
-${getSnippet(language, 'search', 'search')}
+${getSnippet('init')}
+${getSnippet('search', 'withHitsPerPage')}
 `)}/>
 
 ### A/B testing client
@@ -40,12 +39,12 @@ The A/B testing methods were previously available under the `Analytics` client, 
 
 The `Abtesting` client now hosts all of the `A/B testing` related methods.
 
-<CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'abtesting', 'import')}
+<CodeBlockLanguage client='abtesting' snippet={({getSnippet}) => (
+`${getSnippet('import')}
 
-${getSnippet(language, 'abtesting', 'init')}
+${getSnippet('init')}
 
-${getSnippet(language, 'abtesting', 'getABTest')}
+${getSnippet('getABTest')}
 `)}/>
 
 ### `wait`
@@ -56,14 +55,14 @@ You can now optionally configure how the wait logic behaves by passing the `task
 
 [Read more in our dedicated guide](/docs/clients/guides/wait-for-a-task-to-finish)
 
-<CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'search', 'import')}
+<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+`${getSnippet('import')}
 
-${getSnippet(language, 'search', 'init')}
+${getSnippet('init')}
 
-${getSnippet(language, 'search', 'saveObject')}
+${getSnippet('saveObject')}
 
-${waitForTaskSnippet(language)}
+${waitForTaskSnippet()}
 `)}/>
 
 ### `moveIndex`/`copyIndex`
@@ -74,14 +73,14 @@ You can also decide what `scope` of the `source` index should be copied, [read m
 
 This method can be used as a replacement for the `copyRules`, `copySynonyms`, and `copySettings` method when using the associated `scope`.
 
-<CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'search', 'import')}
+<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+`${getSnippet('import')}
 
-${getSnippet(language, 'search', 'init')}
+${getSnippet('init')}
 
-${getSnippet(language, 'search', 'operationIndex', 'scopes')}
+${getSnippet('operationIndex', 'scopes')}
 
-${waitForTaskSnippet(language)}
+${waitForTaskSnippet('<SOURCE_INDEX_NAME>')}
 `)}/>
 
 ### `saveObjects`
@@ -90,14 +89,14 @@ The `saveObjects` method has been removed, you can leverage the already existing
 
 [Read more in our dedicated guide](/docs/clients/guides/send-data-to-algolia) or [the API reference](/specs/search/#tag/Records/operation/batch).
 
-<CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'search', 'import')}
+<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+`${getSnippet('import')}
 
-${getSnippet(language, 'search', 'init')}
+${getSnippet('init')}
 
-${getSnippet(language, 'search', 'batch')}
+${getSnippet('batch', 'addObject')}
 
-${waitForTaskSnippet(language)}
+${waitForTaskSnippet()}
 `)}/>
 
 ### `browseObjects`/`browseRules`/`browseSynonyms`

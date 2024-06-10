@@ -156,16 +156,19 @@ Or directly in your `.csproj` file:
 
 You can now import the Algolia API client in your project and play with it.
 
-<CodeBlockLanguage client='search' snippet={({getSnippet, addComment, waitForTaskSnippet, language}) => (
+<CodeBlockLanguage snippet={({getSnippet, addComment, waitForTaskSnippet}) => (
 `${getSnippet('import')}
 
 ${getSnippet('init')}
 
+${addComment('Add a new record to your Algolia index')}
 ${getSnippet('saveObject')}
+
 ${addComment('Poll the task status to know when it has been indexed')}
 ${waitForTaskSnippet()}
 
-${getSnippet('search')}
+${addComment('Fetch search results, with typo tolerance')}
+${getSnippet('search', 'withHitsPerPage')}
 `)}/>
 
 ## Advanced use cases

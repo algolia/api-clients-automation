@@ -9,7 +9,7 @@ import { snippets as recommendSnippets } from './generated/recommend-snippets';
 import { snippets as searchSnippets } from './generated/search-snippets';
 import { snippets as usageSnippets } from './generated/usage-snippets';
 
-export function waitForTaskSnippet(language, indexName = 'YOUR_INDEX_NAME') {
+export function waitForTaskSnippet(language, indexName = '<YOUR_INDEX_NAME>') {
   return {
     'csharp': `await client.WaitForTaskAsync("${indexName}", response.TaskID);`,
     'dart': `await client.waitTask('${indexName}', response.taskID);`,

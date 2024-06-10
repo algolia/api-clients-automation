@@ -9,30 +9,29 @@ This method is made to be used within **the same Algolia application**, for cros
 :::
 
 import { CodeBlockLanguage } from '../../../src/components/CodeBlockLanguage';
-import { getSnippet, waitForTaskSnippet } from '../../../src/snippets';
 
 ## Copy an index
 
 When you copy an index, it doesn’t copy the associated analytics data. The new index starts fresh. Be careful when using the `operationIndex` method with the `copy` parameter to overwrite an existing index, as it associates the existing analytics data of the overwritten index with the new one.
 
-<CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'search', 'import')}
+<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+`${getSnippet('import')}
 
-${getSnippet(language, 'search', 'init')}
+${getSnippet('init')}
 
-${getSnippet(language, 'search', 'operationIndex', 'copy')}
+${getSnippet('operationIndex', 'copy')}
 
-${waitForTaskSnippet(language, '<SOURCE_INDEX_NAME>')}
+${waitForTaskSnippet('<SOURCE_INDEX_NAME>')}
 `)}/>
 
 ## Rename/move an index
 
 Changing the name of an index doesn’t change the name of the index’s analytics. The new name references new analytics; the old and new analytics aren’t merged. If you want to preserve an index’s analytics history, you need to keep using the old name.
 
-<CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'search', 'operationIndex', 'move')}
+<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+`${getSnippet('operationIndex', 'move')}
 
-${waitForTaskSnippet(language, '<SOURCE_INDEX_NAME>')}
+${waitForTaskSnippet('<SOURCE_INDEX_NAME>')}
 `)}/>
 
 ## Scope your operation
@@ -41,8 +40,8 @@ When the scope is absent from the request, the index will be fully copied, but y
 
 The available scopes are: `rules`, `settings`, `synonyms`. You can provide one or many.
 
-<CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'search', 'operationIndex', 'scopes')}
+<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+`${getSnippet('operationIndex', 'scopes')}
 
-${waitForTaskSnippet(language, '<SOURCE_INDEX_NAME>')}
+${waitForTaskSnippet('<SOURCE_INDEX_NAME>')}
 `)}/>
