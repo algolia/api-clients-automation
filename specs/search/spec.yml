@@ -358,3 +358,9 @@ paths:
 
   /generateSecuredApiKey:
     $ref: 'helpers/generateSecuredApiKey.yml#/method'
+
+  /replaceAllObjects:
+    $ref: 'helpers/replaceAllObjects.yml#/method'
+
+  /chunkedBatch:
+    $ref: 'helpers/chunkedBatch.yml#/method'

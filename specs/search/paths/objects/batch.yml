@@ -65,17 +65,7 @@ post:
       content:
         application/json:
           schema:
-            title: batchResponse
-            type: object
-            additionalProperties: false
-            properties:
-              taskID:
-                $ref: '../../../common/responses/common.yml#/taskID'
-              objectIDs:
-                $ref: '../../../common/responses/common.yml#/objectIDs'
-            required:
-              - taskID
-              - objectIDs
+            $ref: './common/schemas.yml#/batchResponse'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

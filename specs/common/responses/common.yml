@@ -46,3 +46,16 @@ deletedAt:
   type: string
   example: 2023-06-27T14:42:38.831Z
   description: Date and time when the object was deleted, in RFC 3339 format.
+
+updatedAtResponse:
+  type: object
+  description: Response, taskID, and update timestamp.
+  additionalProperties: false
+  required:
+    - taskID
+    - updatedAt
+  properties:
+    taskID:
+      $ref: '#/taskID'
+    updatedAt:
+      $ref: '#/updatedAt'
