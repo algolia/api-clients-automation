@@ -262,6 +262,106 @@ describe('customPost', () => {
 });
 
 describe('search', () => {
+  test('withHitsPerPage', async () => {
+    const req = (await client.search({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          hitsPerPage: 50,
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/queries');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          hitsPerPage: 50,
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('filterOnly', async () => {
+    const req = (await client.search({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          filters: 'actor:Scarlett Johansson',
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/queries');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          filters: 'actor:Scarlett Johansson',
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('filterOr', async () => {
+    const req = (await client.search({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          filters: 'actor:Tom Cruise OR actor:Scarlett Johansson',
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/queries');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          filters: 'actor:Tom Cruise OR actor:Scarlett Johansson',
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('filterNot', async () => {
+    const req = (await client.search({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          filters: 'NOT actor:Nicolas Cage',
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/queries');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          filters: 'NOT actor:Nicolas Cage',
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
   test('search for a single hits request with minimal parameters', async () => {
     const req = (await client.search({
       requests: [{ indexName: 'cts_e2e_search_empty_index' }],
@@ -298,6 +398,56 @@ describe('search', () => {
     };
 
     expect(expectedBody).toEqual(union(expectedBody, resp));
+  });
+
+  test('retrieveFacets', async () => {
+    const req = (await client.search({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          facets: ['author', 'genre'],
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/queries');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          facets: ['author', 'genre'],
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('retrieveFacetsWildcard', async () => {
+    const req = (await client.search({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          facets: ['*'],
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/queries');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          facets: ['*'],
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('search for a single facet request with minimal parameters', async () => {

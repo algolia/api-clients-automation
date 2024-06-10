@@ -40,7 +40,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
      * Test case for CustomDelete
      * allow del method for a custom path with minimal parameters.
      */
-    public function testCustomDelete0()
+    public function testCustomDelete()
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -83,7 +83,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
      * Test case for CustomGet
      * allow get method for a custom path with minimal parameters.
      */
-    public function testCustomGet0()
+    public function testCustomGet()
     {
         $client = $this->getClient();
         $client->customGet(
@@ -161,7 +161,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
      * Test case for CustomPost
      * allow post method for a custom path with minimal parameters.
      */
-    public function testCustomPost0()
+    public function testCustomPost()
     {
         $client = $this->getClient();
         $client->customPost(
@@ -508,7 +508,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
      * Test case for CustomPut
      * allow put method for a custom path with minimal parameters.
      */
-    public function testCustomPut0()
+    public function testCustomPut()
     {
         $client = $this->getClient();
         $client->customPut(
@@ -553,7 +553,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
      * Test case for DeleteUserProfile
      * delete deleteUserProfile.
      */
-    public function testDeleteUserProfile0()
+    public function testDeleteUserProfile()
     {
         $client = $this->getClient();
         $client->deleteUserProfile(
@@ -573,7 +573,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
      * Test case for GetPersonalizationStrategy
      * get getPersonalizationStrategy.
      */
-    public function testGetPersonalizationStrategy0()
+    public function testGetPersonalizationStrategy()
     {
         $client = $this->getClient();
         $client->getPersonalizationStrategy();
@@ -591,7 +591,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
      * Test case for GetUserTokenProfile
      * get getUserTokenProfile.
      */
-    public function testGetUserTokenProfile0()
+    public function testGetUserTokenProfile()
     {
         $client = $this->getClient();
         $client->getUserTokenProfile(
@@ -611,7 +611,7 @@ class PersonalizationTest extends TestCase implements HttpClientInterface
      * Test case for SetPersonalizationStrategy
      * set setPersonalizationStrategy.
      */
-    public function testSetPersonalizationStrategy0()
+    public function testSetPersonalizationStrategy()
     {
         $client = $this->getClient();
         $client->setPersonalizationStrategy(

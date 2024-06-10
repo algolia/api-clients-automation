@@ -3,7 +3,9 @@ package algoliasearch.methods.snippets
 
 import scala.concurrent.duration.Duration
 
+// >IMPORT
 import algoliasearch.api.MonitoringClient
+// IMPORT<
 import algoliasearch.monitoring.*
 
 import org.json4s.*
@@ -19,17 +21,17 @@ class SnippetMonitoringClient {
     * allow del method for a custom path with minimal parameters
     */
   def snippetForMonitoringClientCustomDelete(): Unit = {
-    // >SEPARATOR customDelete
+    // >SEPARATOR customDelete default
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.customDelete[JObject](
+    val response = client.customDelete[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -38,17 +40,17 @@ class SnippetMonitoringClient {
     * allow get method for a custom path with minimal parameters
     */
   def snippetForMonitoringClientCustomGet(): Unit = {
-    // >SEPARATOR customGet
+    // >SEPARATOR customGet default
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.customGet[JObject](
+    val response = client.customGet[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -57,17 +59,17 @@ class SnippetMonitoringClient {
     * allow post method for a custom path with minimal parameters
     */
   def snippetForMonitoringClientCustomPost(): Unit = {
-    // >SEPARATOR customPost
+    // >SEPARATOR customPost default
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.customPost[JObject](
+    val response = client.customPost[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -76,17 +78,17 @@ class SnippetMonitoringClient {
     * allow put method for a custom path with minimal parameters
     */
   def snippetForMonitoringClientCustomPut(): Unit = {
-    // >SEPARATOR customPut
+    // >SEPARATOR customPut default
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.customPut[JObject](
+    val response = client.customPut[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -95,17 +97,17 @@ class SnippetMonitoringClient {
     * getClusterIncidents
     */
   def snippetForMonitoringClientGetClusterIncidents(): Unit = {
-    // >SEPARATOR getClusterIncidents
+    // >SEPARATOR getClusterIncidents default
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.getClusterIncidents(
+    val response = client.getClusterIncidents(
       clusters = "c1-de"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -114,17 +116,17 @@ class SnippetMonitoringClient {
     * getClusterStatus
     */
   def snippetForMonitoringClientGetClusterStatus(): Unit = {
-    // >SEPARATOR getClusterStatus
+    // >SEPARATOR getClusterStatus default
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.getClusterStatus(
+    val response = client.getClusterStatus(
       clusters = "c1-de"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -133,16 +135,16 @@ class SnippetMonitoringClient {
     * getIncidents
     */
   def snippetForMonitoringClientGetIncidents(): Unit = {
-    // >SEPARATOR getIncidents
+    // >SEPARATOR getIncidents default
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.getIncidents(
+    val response = client.getIncidents(
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -151,17 +153,17 @@ class SnippetMonitoringClient {
     * getIndexingTime
     */
   def snippetForMonitoringClientGetIndexingTime(): Unit = {
-    // >SEPARATOR getIndexingTime
+    // >SEPARATOR getIndexingTime default
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.getIndexingTime(
+    val response = client.getIndexingTime(
       clusters = "c1-de"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -170,17 +172,17 @@ class SnippetMonitoringClient {
     * getLatency
     */
   def snippetForMonitoringClientGetLatency(): Unit = {
-    // >SEPARATOR getLatency
+    // >SEPARATOR getLatency default
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.getLatency(
+    val response = client.getLatency(
       clusters = "c1-de"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -189,18 +191,18 @@ class SnippetMonitoringClient {
     * getMetrics
     */
   def snippetForMonitoringClientGetMetrics(): Unit = {
-    // >SEPARATOR getMetrics
+    // >SEPARATOR getMetrics default
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.getMetrics(
+    val response = client.getMetrics(
       metric = Metric.withName("avg_build_time"),
       period = Period.withName("minute")
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -209,17 +211,17 @@ class SnippetMonitoringClient {
     * getReachability
     */
   def snippetForMonitoringClientGetReachability(): Unit = {
-    // >SEPARATOR getReachability
+    // >SEPARATOR getReachability default
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.getReachability(
+    val response = client.getReachability(
       clusters = "c1-de"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -228,16 +230,16 @@ class SnippetMonitoringClient {
     * getInventory
     */
   def snippetForMonitoringClientGetServers(): Unit = {
-    // >SEPARATOR getServers
+    // >SEPARATOR getServers default
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.getServers(
+    val response = client.getServers(
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -246,16 +248,16 @@ class SnippetMonitoringClient {
     * getStatus
     */
   def snippetForMonitoringClientGetStatus(): Unit = {
-    // >SEPARATOR getStatus
+    // >SEPARATOR getStatus default
     // Initialize the client
     val client = MonitoringClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.getStatus(
+    val response = client.getStatus(
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 

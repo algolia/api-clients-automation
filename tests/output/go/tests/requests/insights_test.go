@@ -414,7 +414,7 @@ func TestInsights_DeleteUserToken(t *testing.T) {
 	client, echo := createInsightsClient(t)
 	_ = echo
 
-	t.Run("deleteUserToken0", func(t *testing.T) {
+	t.Run("deleteUserToken", func(t *testing.T) {
 		err := client.DeleteUserToken(client.NewApiDeleteUserTokenRequest(
 			"test-user-1",
 		))
@@ -431,7 +431,7 @@ func TestInsights_PushEvents(t *testing.T) {
 	client, echo := createInsightsClient(t)
 	_ = echo
 
-	t.Run("pushEvents0", func(t *testing.T) {
+	t.Run("pushEvents", func(t *testing.T) {
 		_, err := client.PushEvents(client.NewApiPushEventsRequest(
 
 			insights.NewEmptyInsightsEvents().SetEvents(

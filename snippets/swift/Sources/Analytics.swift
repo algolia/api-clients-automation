@@ -1,19 +1,22 @@
 #if canImport(Core)
     import Core
 #endif
+// >IMPORT
 import Analytics
+
+// IMPORT<
 
 final class AnalyticsClientSnippet {
     /// Snippet for the customDelete method.
     ///
     /// allow del method for a custom path with minimal parameters
     func snippetForCustomDelete() async throws {
-        // >SEPARATOR customDelete
+        // >SEPARATOR customDelete default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customDelete(path: "test/minimal")
+        let response = try await client.customDelete(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -21,12 +24,12 @@ final class AnalyticsClientSnippet {
     ///
     /// allow get method for a custom path with minimal parameters
     func snippetForCustomGet() async throws {
-        // >SEPARATOR customGet
+        // >SEPARATOR customGet default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customGet(path: "test/minimal")
+        let response = try await client.customGet(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -34,12 +37,12 @@ final class AnalyticsClientSnippet {
     ///
     /// allow post method for a custom path with minimal parameters
     func snippetForCustomPost() async throws {
-        // >SEPARATOR customPost
+        // >SEPARATOR customPost default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPost(path: "test/minimal")
+        let response = try await client.customPost(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -47,12 +50,12 @@ final class AnalyticsClientSnippet {
     ///
     /// allow put method for a custom path with minimal parameters
     func snippetForCustomPut() async throws {
-        // >SEPARATOR customPut
+        // >SEPARATOR customPut default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPut(path: "test/minimal")
+        let response = try await client.customPut(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -60,12 +63,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getAddToCartRate with minimal parameters
     func snippetForGetAddToCartRate() async throws {
-        // >SEPARATOR getAddToCartRate
+        // >SEPARATOR getAddToCartRate default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getAddToCartRate(index: "index")
+        let response = try await client.getAddToCartRate(index: "index")
         // SEPARATOR<
     }
 
@@ -73,12 +76,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getAverageClickPosition with minimal parameters
     func snippetForGetAverageClickPosition() async throws {
-        // >SEPARATOR getAverageClickPosition
+        // >SEPARATOR getAverageClickPosition default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getAverageClickPosition(index: "index")
+        let response = try await client.getAverageClickPosition(index: "index")
         // SEPARATOR<
     }
 
@@ -86,12 +89,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getClickPositions with minimal parameters
     func snippetForGetClickPositions() async throws {
-        // >SEPARATOR getClickPositions
+        // >SEPARATOR getClickPositions default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getClickPositions(index: "index")
+        let response = try await client.getClickPositions(index: "index")
         // SEPARATOR<
     }
 
@@ -99,12 +102,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getClickThroughRate with minimal parameters
     func snippetForGetClickThroughRate() async throws {
-        // >SEPARATOR getClickThroughRate
+        // >SEPARATOR getClickThroughRate default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getClickThroughRate(index: "index")
+        let response = try await client.getClickThroughRate(index: "index")
         // SEPARATOR<
     }
 
@@ -112,12 +115,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getConversationRate with minimal parameters
     func snippetForGetConversionRate() async throws {
-        // >SEPARATOR getConversionRate
+        // >SEPARATOR getConversionRate default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getConversionRate(index: "index")
+        let response = try await client.getConversionRate(index: "index")
         // SEPARATOR<
     }
 
@@ -125,12 +128,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getNoClickRate with minimal parameters
     func snippetForGetNoClickRate() async throws {
-        // >SEPARATOR getNoClickRate
+        // >SEPARATOR getNoClickRate default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getNoClickRate(index: "index")
+        let response = try await client.getNoClickRate(index: "index")
         // SEPARATOR<
     }
 
@@ -138,12 +141,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getNoResultsRate with minimal parameters
     func snippetForGetNoResultsRate() async throws {
-        // >SEPARATOR getNoResultsRate
+        // >SEPARATOR getNoResultsRate default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getNoResultsRate(index: "index")
+        let response = try await client.getNoResultsRate(index: "index")
         // SEPARATOR<
     }
 
@@ -151,12 +154,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getPurchaseRate with minimal parameters
     func snippetForGetPurchaseRate() async throws {
-        // >SEPARATOR getPurchaseRate
+        // >SEPARATOR getPurchaseRate default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getPurchaseRate(index: "index")
+        let response = try await client.getPurchaseRate(index: "index")
         // SEPARATOR<
     }
 
@@ -164,12 +167,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getRevenue with minimal parameters
     func snippetForGetRevenue() async throws {
-        // >SEPARATOR getRevenue
+        // >SEPARATOR getRevenue default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getRevenue(index: "index")
+        let response = try await client.getRevenue(index: "index")
         // SEPARATOR<
     }
 
@@ -177,12 +180,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getSearchesCount with minimal parameters
     func snippetForGetSearchesCount() async throws {
-        // >SEPARATOR getSearchesCount
+        // >SEPARATOR getSearchesCount default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getSearchesCount(index: "index")
+        let response = try await client.getSearchesCount(index: "index")
         // SEPARATOR<
     }
 
@@ -190,12 +193,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getSearchesNoClicks with minimal parameters
     func snippetForGetSearchesNoClicks() async throws {
-        // >SEPARATOR getSearchesNoClicks
+        // >SEPARATOR getSearchesNoClicks default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getSearchesNoClicks(index: "index")
+        let response = try await client.getSearchesNoClicks(index: "index")
         // SEPARATOR<
     }
 
@@ -203,12 +206,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getSearchesNoResults with minimal parameters
     func snippetForGetSearchesNoResults() async throws {
-        // >SEPARATOR getSearchesNoResults
+        // >SEPARATOR getSearchesNoResults default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getSearchesNoResults(index: "index")
+        let response = try await client.getSearchesNoResults(index: "index")
         // SEPARATOR<
     }
 
@@ -216,12 +219,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getStatus with minimal parameters
     func snippetForGetStatus() async throws {
-        // >SEPARATOR getStatus
+        // >SEPARATOR getStatus default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getStatus(index: "index")
+        let response = try await client.getStatus(index: "index")
         // SEPARATOR<
     }
 
@@ -229,12 +232,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getTopCountries with minimal parameters
     func snippetForGetTopCountries() async throws {
-        // >SEPARATOR getTopCountries
+        // >SEPARATOR getTopCountries default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getTopCountries(index: "index")
+        let response = try await client.getTopCountries(index: "index")
         // SEPARATOR<
     }
 
@@ -242,12 +245,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getTopFilterAttributes with minimal parameters
     func snippetForGetTopFilterAttributes() async throws {
-        // >SEPARATOR getTopFilterAttributes
+        // >SEPARATOR getTopFilterAttributes default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getTopFilterAttributes(index: "index")
+        let response = try await client.getTopFilterAttributes(index: "index")
         // SEPARATOR<
     }
 
@@ -255,12 +258,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getTopFilterForAttribute with minimal parameters
     func snippetForGetTopFilterForAttribute() async throws {
-        // >SEPARATOR getTopFilterForAttribute
+        // >SEPARATOR getTopFilterForAttribute default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getTopFilterForAttribute(attribute: "myAttribute", index: "index")
+        let response = try await client.getTopFilterForAttribute(attribute: "myAttribute", index: "index")
         // SEPARATOR<
     }
 
@@ -268,12 +271,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getTopFiltersNoResults with minimal parameters
     func snippetForGetTopFiltersNoResults() async throws {
-        // >SEPARATOR getTopFiltersNoResults
+        // >SEPARATOR getTopFiltersNoResults default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getTopFiltersNoResults(index: "index")
+        let response = try await client.getTopFiltersNoResults(index: "index")
         // SEPARATOR<
     }
 
@@ -281,12 +284,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getTopHits with minimal parameters
     func snippetForGetTopHits() async throws {
-        // >SEPARATOR getTopHits
+        // >SEPARATOR getTopHits default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getTopHits(index: "index")
+        let response = try await client.getTopHits(index: "index")
         // SEPARATOR<
     }
 
@@ -294,12 +297,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getTopSearches with minimal parameters
     func snippetForGetTopSearches() async throws {
-        // >SEPARATOR getTopSearches
+        // >SEPARATOR getTopSearches default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getTopSearches(index: "index")
+        let response = try await client.getTopSearches(index: "index")
         // SEPARATOR<
     }
 
@@ -307,12 +310,12 @@ final class AnalyticsClientSnippet {
     ///
     /// get getUsersCount with minimal parameters
     func snippetForGetUsersCount() async throws {
-        // >SEPARATOR getUsersCount
+        // >SEPARATOR getUsersCount default
         // Initialize the client
         let client = try AnalyticsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getUsersCount(index: "index")
+        let response = try await client.getUsersCount(index: "index")
         // SEPARATOR<
     }
 }

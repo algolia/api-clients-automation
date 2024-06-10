@@ -31,7 +31,7 @@ class TestInsightsClient:
     if _e2e_api_key is None:
         raise Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
 
-    async def test_custom_delete_0(self):
+    async def test_custom_delete_(self):
         """
         allow del method for a custom path with minimal parameters
         """
@@ -62,7 +62,7 @@ class TestInsightsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_custom_get_0(self):
+    async def test_custom_get_(self):
         """
         allow get method for a custom path with minimal parameters
         """
@@ -125,7 +125,7 @@ class TestInsightsClient:
         assert _req.headers.items() >= {"x-header-1": "spaces are left alone"}.items()
         assert _req.data is None
 
-    async def test_custom_post_0(self):
+    async def test_custom_post_(self):
         """
         allow post method for a custom path with minimal parameters
         """
@@ -384,7 +384,7 @@ class TestInsightsClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
-    async def test_custom_put_0(self):
+    async def test_custom_put_(self):
         """
         allow put method for a custom path with minimal parameters
         """
@@ -418,9 +418,9 @@ class TestInsightsClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
-    async def test_delete_user_token_0(self):
+    async def test_delete_user_token_(self):
         """
-        deleteUserToken0
+        deleteUserToken
         """
         _req = await self._client.delete_user_token_with_http_info(
             user_token="test-user-1",
@@ -432,9 +432,9 @@ class TestInsightsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_push_events_0(self):
+    async def test_push_events_(self):
         """
-        pushEvents0
+        pushEvents
         """
         _req = await self._client.push_events_with_http_info(
             insights_events={

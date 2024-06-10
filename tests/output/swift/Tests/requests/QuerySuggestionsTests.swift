@@ -49,8 +49,8 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         self.e2eClient = try? QuerySuggestionsClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY, region: .us)
     }
 
-    /// createConfig0
-    func testCreateConfigTest0() async throws {
+    /// createConfig
+    func testCreateConfigTest() async throws {
         let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
@@ -90,7 +90,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
     }
 
     /// allow del method for a custom path with minimal parameters
-    func testCustomDeleteTest0() async throws {
+    func testCustomDeleteTest() async throws {
         let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
@@ -143,7 +143,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
     }
 
     /// allow get method for a custom path with minimal parameters
-    func testCustomGetTest0() async throws {
+    func testCustomGetTest() async throws {
         let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
@@ -246,7 +246,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
     }
 
     /// allow post method for a custom path with minimal parameters
-    func testCustomPostTest0() async throws {
+    func testCustomPostTest() async throws {
         let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
@@ -733,7 +733,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
     }
 
     /// allow put method for a custom path with minimal parameters
-    func testCustomPutTest0() async throws {
+    func testCustomPutTest() async throws {
         let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
@@ -798,8 +798,8 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// deleteConfig0
-    func testDeleteConfigTest0() async throws {
+    /// deleteConfig
+    func testDeleteConfigTest() async throws {
         let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
@@ -820,8 +820,8 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getAllConfigs0
-    func testGetAllConfigsTest0() async throws {
+    /// getAllConfigs
+    func testGetAllConfigsTest() async throws {
         let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
@@ -843,7 +843,7 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
     }
 
     /// Retrieve QS config e2e
-    func testGetConfigTest0() async throws {
+    func testGetConfigTest() async throws {
         let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
@@ -883,8 +883,8 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
-    /// getConfigStatus0
-    func testGetConfigStatusTest0() async throws {
+    /// getConfigStatus
+    func testGetConfigStatusTest() async throws {
         let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
@@ -905,8 +905,8 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getLogFile0
-    func testGetLogFileTest0() async throws {
+    /// getLogFile
+    func testGetLogFileTest() async throws {
         let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,
@@ -927,8 +927,8 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// updateConfig0
-    func testUpdateConfigTest0() async throws {
+    /// updateConfig
+    func testUpdateConfigTest() async throws {
         let configuration = try QuerySuggestionsClientConfiguration(
             appID: QuerySuggestionsClientRequestsTests.APPLICATION_ID,
             apiKey: QuerySuggestionsClientRequestsTests.API_KEY,

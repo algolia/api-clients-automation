@@ -49,7 +49,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
      * Test case for CustomDelete
      * allow del method for a custom path with minimal parameters.
      */
-    public function testCustomDelete0()
+    public function testCustomDelete()
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -92,7 +92,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
      * Test case for CustomGet
      * allow get method for a custom path with minimal parameters.
      */
-    public function testCustomGet0()
+    public function testCustomGet()
     {
         $client = $this->getClient();
         $client->customGet(
@@ -170,7 +170,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
      * Test case for CustomPost
      * allow post method for a custom path with minimal parameters.
      */
-    public function testCustomPost0()
+    public function testCustomPost()
     {
         $client = $this->getClient();
         $client->customPost(
@@ -517,7 +517,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
      * Test case for CustomPut
      * allow put method for a custom path with minimal parameters.
      */
-    public function testCustomPut0()
+    public function testCustomPut()
     {
         $client = $this->getClient();
         $client->customPut(
@@ -560,9 +560,9 @@ class InsightsTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for DeleteUserToken
-     * deleteUserToken0.
+     * deleteUserToken.
      */
-    public function testDeleteUserToken0()
+    public function testDeleteUserToken()
     {
         $client = $this->getClient();
         $client->deleteUserToken(
@@ -580,9 +580,9 @@ class InsightsTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for PushEvents
-     * pushEvents0.
+     * pushEvents.
      */
-    public function testPushEvents0()
+    public function testPushEvents()
     {
         $client = $this->getClient();
         $client->pushEvents(

@@ -50,8 +50,8 @@ class QuerySuggestionsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("createConfig0")
-  void createConfigTest0() {
+  @DisplayName("createConfig")
+  void createConfigTest() {
     assertDoesNotThrow(() -> {
       client.createConfig(
         new QuerySuggestionsConfigurationWithIndex()
@@ -82,7 +82,7 @@ class QuerySuggestionsClientRequestsTests {
 
   @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
-  void customDeleteTest0() {
+  void customDeleteTest() {
     assertDoesNotThrow(() -> {
       client.customDelete("test/minimal");
     });
@@ -118,7 +118,7 @@ class QuerySuggestionsClientRequestsTests {
 
   @Test
   @DisplayName("allow get method for a custom path with minimal parameters")
-  void customGetTest0() {
+  void customGetTest() {
     assertDoesNotThrow(() -> {
       client.customGet("test/minimal");
     });
@@ -205,7 +205,7 @@ class QuerySuggestionsClientRequestsTests {
 
   @Test
   @DisplayName("allow post method for a custom path with minimal parameters")
-  void customPostTest0() {
+  void customPostTest() {
     assertDoesNotThrow(() -> {
       client.customPost("test/minimal");
     });
@@ -551,7 +551,7 @@ class QuerySuggestionsClientRequestsTests {
 
   @Test
   @DisplayName("allow put method for a custom path with minimal parameters")
-  void customPutTest0() {
+  void customPutTest() {
     assertDoesNotThrow(() -> {
       client.customPut("test/minimal");
     });
@@ -586,8 +586,8 @@ class QuerySuggestionsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteConfig0")
-  void deleteConfigTest0() {
+  @DisplayName("deleteConfig")
+  void deleteConfigTest() {
     assertDoesNotThrow(() -> {
       client.deleteConfig("theIndexName");
     });
@@ -598,8 +598,8 @@ class QuerySuggestionsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getAllConfigs0")
-  void getAllConfigsTest0() {
+  @DisplayName("getAllConfigs")
+  void getAllConfigsTest() {
     assertDoesNotThrow(() -> {
       client.getAllConfigs();
     });
@@ -611,7 +611,7 @@ class QuerySuggestionsClientRequestsTests {
 
   @Test
   @DisplayName("Retrieve QS config e2e")
-  void getConfigTest0() {
+  void getConfigTest() {
     assertDoesNotThrow(() -> {
       client.getConfig("cts_e2e_browse_query_suggestions");
     });
@@ -631,8 +631,8 @@ class QuerySuggestionsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getConfigStatus0")
-  void getConfigStatusTest0() {
+  @DisplayName("getConfigStatus")
+  void getConfigStatusTest() {
     assertDoesNotThrow(() -> {
       client.getConfigStatus("theIndexName");
     });
@@ -643,8 +643,8 @@ class QuerySuggestionsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getLogFile0")
-  void getLogFileTest0() {
+  @DisplayName("getLogFile")
+  void getLogFileTest() {
     assertDoesNotThrow(() -> {
       client.getLogFile("theIndexName");
     });
@@ -655,8 +655,8 @@ class QuerySuggestionsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("updateConfig0")
-  void updateConfigTest0() {
+  @DisplayName("updateConfig")
+  void updateConfigTest() {
     assertDoesNotThrow(() -> {
       client.updateConfig(
         "theIndexName",

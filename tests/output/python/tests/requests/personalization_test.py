@@ -14,7 +14,7 @@ class TestPersonalizationClient:
         config=_config, transporter=EchoTransporter(_config)
     )
 
-    async def test_custom_delete_0(self):
+    async def test_custom_delete_(self):
         """
         allow del method for a custom path with minimal parameters
         """
@@ -45,7 +45,7 @@ class TestPersonalizationClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_custom_get_0(self):
+    async def test_custom_get_(self):
         """
         allow get method for a custom path with minimal parameters
         """
@@ -108,7 +108,7 @@ class TestPersonalizationClient:
         assert _req.headers.items() >= {"x-header-1": "spaces are left alone"}.items()
         assert _req.data is None
 
-    async def test_custom_post_0(self):
+    async def test_custom_post_(self):
         """
         allow post method for a custom path with minimal parameters
         """
@@ -367,7 +367,7 @@ class TestPersonalizationClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
-    async def test_custom_put_0(self):
+    async def test_custom_put_(self):
         """
         allow put method for a custom path with minimal parameters
         """
@@ -401,7 +401,7 @@ class TestPersonalizationClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
-    async def test_delete_user_profile_0(self):
+    async def test_delete_user_profile_(self):
         """
         delete deleteUserProfile
         """
@@ -415,7 +415,7 @@ class TestPersonalizationClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_personalization_strategy_0(self):
+    async def test_get_personalization_strategy_(self):
         """
         get getPersonalizationStrategy
         """
@@ -427,7 +427,7 @@ class TestPersonalizationClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_user_token_profile_0(self):
+    async def test_get_user_token_profile_(self):
         """
         get getUserTokenProfile
         """
@@ -441,7 +441,7 @@ class TestPersonalizationClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_set_personalization_strategy_0(self):
+    async def test_set_personalization_strategy_(self):
         """
         set setPersonalizationStrategy
         """

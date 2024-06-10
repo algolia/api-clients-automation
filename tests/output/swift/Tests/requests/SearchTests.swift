@@ -49,8 +49,8 @@ final class SearchClientRequestsTests: XCTestCase {
         self.e2eClient = try? SearchClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY)
     }
 
-    /// addApiKey0
-    func testAddApiKeyTest0() async throws {
+    /// addApiKey
+    func testAddApiKeyTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -84,8 +84,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// addOrUpdateObject0
-    func testAddOrUpdateObjectTest0() async throws {
+    /// addOrUpdateObject
+    func testAddOrUpdateObjectTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -115,8 +115,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// appendSource0
-    func testAppendSourceTest0() async throws {
+    /// appendSource
+    func testAppendSourceTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -145,8 +145,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// assignUserId0
-    func testAssignUserIdTest0() async throws {
+    /// assignUserId
+    func testAssignUserIdTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -221,8 +221,8 @@ final class SearchClientRequestsTests: XCTestCase {
         }
     }
 
-    /// allows batch method with &#x60;addObject&#x60; action
-    func testBatchTest0() async throws {
+    /// addObject
+    func testBatchTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -231,11 +231,11 @@ final class SearchClientRequestsTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.batchWithHTTPInfo(
-            indexName: "theIndexName",
-            batchWriteParams: BatchWriteParams(requests: [BatchRequest(
-                action: Action.addObject,
-                body: ["key": "value"]
-            )])
+            indexName: "<YOUR_INDEX_NAME>",
+            batchWriteParams: BatchWriteParams(requests: [
+                BatchRequest(action: Action.addObject, body: ["key": "bar", "foo": "1"]),
+                BatchRequest(action: Action.addObject, body: ["key": "baz", "foo": "2"]),
+            ])
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -243,19 +243,20 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"value\"}}]}"
-            .data(using: .utf8)
+        let expectedBodyData =
+            "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"bar\",\"foo\":\"1\"}},{\"action\":\"addObject\",\"body\":{\"key\":\"baz\",\"foo\":\"2\"}}]}"
+                .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/batch")
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// allows batch method with &#x60;clear&#x60; action
+    /// clear
     func testBatchTest1() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -265,7 +266,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.batchWithHTTPInfo(
-            indexName: "theIndexName",
+            indexName: "<YOUR_INDEX_NAME>",
             batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.clear, body: ["key": "value"])])
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -280,13 +281,13 @@ final class SearchClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/batch")
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// allows batch method with &#x60;delete&#x60; action
+    /// delete
     func testBatchTest2() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -296,7 +297,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.batchWithHTTPInfo(
-            indexName: "theIndexName",
+            indexName: "<YOUR_INDEX_NAME>",
             batchWriteParams: BatchWriteParams(requests: [BatchRequest(action: Action.delete, body: ["key": "value"])])
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -311,13 +312,13 @@ final class SearchClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/batch")
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// allows batch method with &#x60;deleteObject&#x60; action
+    /// deleteObject
     func testBatchTest3() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -327,7 +328,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.batchWithHTTPInfo(
-            indexName: "theIndexName",
+            indexName: "<YOUR_INDEX_NAME>",
             batchWriteParams: BatchWriteParams(requests: [BatchRequest(
                 action: Action.deleteObject,
                 body: ["key": "value"]
@@ -345,13 +346,13 @@ final class SearchClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/batch")
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// allows batch method with &#x60;partialUpdateObject&#x60; action
+    /// partialUpdateObject
     func testBatchTest4() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -361,7 +362,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.batchWithHTTPInfo(
-            indexName: "theIndexName",
+            indexName: "<YOUR_INDEX_NAME>",
             batchWriteParams: BatchWriteParams(requests: [BatchRequest(
                 action: Action.partialUpdateObject,
                 body: ["key": "value"]
@@ -379,13 +380,13 @@ final class SearchClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/batch")
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// allows batch method with &#x60;partialUpdateObjectNoCreate&#x60; action
+    /// partialUpdateObjectNoCreate
     func testBatchTest5() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -395,7 +396,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.batchWithHTTPInfo(
-            indexName: "theIndexName",
+            indexName: "<YOUR_INDEX_NAME>",
             batchWriteParams: BatchWriteParams(requests: [BatchRequest(
                 action: Action.partialUpdateObjectNoCreate,
                 body: ["key": "value"]
@@ -414,13 +415,13 @@ final class SearchClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/batch")
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// allows batch method with &#x60;updateObject&#x60; action
+    /// updateObject
     func testBatchTest6() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -430,7 +431,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.batchWithHTTPInfo(
-            indexName: "theIndexName",
+            indexName: "<YOUR_INDEX_NAME>",
             batchWriteParams: BatchWriteParams(requests: [BatchRequest(
                 action: Action.updateObject,
                 body: ["key": "value"]
@@ -448,14 +449,14 @@ final class SearchClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/batch")
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// batchAssignUserIds0
-    func testBatchAssignUserIdsTest0() async throws {
+    /// batchAssignUserIds
+    func testBatchAssignUserIdsTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -492,8 +493,8 @@ final class SearchClientRequestsTests: XCTestCase {
         }
     }
 
-    /// get batchDictionaryEntries results with minimal parameters
-    func testBatchDictionaryEntriesTest0() async throws {
+    /// replace
+    func testBatchDictionaryEntriesTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -502,71 +503,20 @@ final class SearchClientRequestsTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.batchDictionaryEntriesWithHTTPInfo(
-            dictionaryName: DictionaryType.compounds,
-            batchDictionaryEntriesParams: BatchDictionaryEntriesParams(requests: [
-                BatchDictionaryEntriesRequest(action: DictionaryAction.addEntry, body: DictionaryEntry(
-                    objectID: "1",
-                    language: SearchSupportedLanguage.en
-                )),
-                BatchDictionaryEntriesRequest(
-                    action: DictionaryAction.deleteEntry,
-                    body: DictionaryEntry(objectID: "2", language: SearchSupportedLanguage.fr)
-                ),
-            ])
-        )
-        let responseBodyData = try XCTUnwrap(response.bodyData)
-        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
-
-        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
-        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
-
-        let expectedBodyData =
-            "{\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\"}},{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"2\",\"language\":\"fr\"}}]}"
-                .data(using: .utf8)
-        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
-
-        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
-
-        XCTAssertEqual(echoResponse.path, "/1/dictionaries/compounds/batch")
-        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
-
-        XCTAssertNil(echoResponse.queryParameters)
-    }
-
-    /// get batchDictionaryEntries results with all parameters
-    func testBatchDictionaryEntriesTest1() async throws {
-        let configuration = try SearchClientConfiguration(
-            appID: SearchClientRequestsTests.APPLICATION_ID,
-            apiKey: SearchClientRequestsTests.API_KEY
-        )
-        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
-        let client = SearchClient(configuration: configuration, transporter: transporter)
-
-        let response = try await client.batchDictionaryEntriesWithHTTPInfo(
-            dictionaryName: DictionaryType.compounds,
+            dictionaryName: DictionaryType.plurals,
             batchDictionaryEntriesParams: BatchDictionaryEntriesParams(
-                clearExistingDictionaryEntries: false,
-                requests: [
-                    BatchDictionaryEntriesRequest(action: DictionaryAction.addEntry, body: DictionaryEntry(
+                clearExistingDictionaryEntries: true,
+                requests: [BatchDictionaryEntriesRequest(
+                    action: DictionaryAction.addEntry,
+                    body: DictionaryEntry(
                         objectID: "1",
                         language: SearchSupportedLanguage.en,
                         word: "fancy",
                         words: ["believe", "algolia"],
                         decomposition: ["trust", "algolia"],
                         state: DictionaryEntryState.enabled
-                    )),
-                    BatchDictionaryEntriesRequest(
-                        action: DictionaryAction.deleteEntry,
-                        body: DictionaryEntry(
-                            objectID: "2",
-                            language: SearchSupportedLanguage.fr,
-                            word: "humility",
-                            words: ["candor", "algolia"],
-                            decomposition: ["grit", "algolia"],
-                            state: DictionaryEntryState.enabled
-                        )
-                    ),
-                ]
+                    )
+                )]
             )
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -576,19 +526,64 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
         let expectedBodyData =
-            "{\"clearExistingDictionaryEntries\":false,\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"word\":\"fancy\",\"words\":[\"believe\",\"algolia\"],\"decomposition\":[\"trust\",\"algolia\"],\"state\":\"enabled\"}},{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"2\",\"language\":\"fr\",\"word\":\"humility\",\"words\":[\"candor\",\"algolia\"],\"decomposition\":[\"grit\",\"algolia\"],\"state\":\"enabled\"}}]}"
+            "{\"clearExistingDictionaryEntries\":true,\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"word\":\"fancy\",\"words\":[\"believe\",\"algolia\"],\"decomposition\":[\"trust\",\"algolia\"],\"state\":\"enabled\"}}]}"
                 .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/dictionaries/compounds/batch")
+        XCTAssertEqual(echoResponse.path, "/1/dictionaries/plurals/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// get batchDictionaryEntries results additional properties
+    /// delete
+    func testBatchDictionaryEntriesTest1() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.batchDictionaryEntriesWithHTTPInfo(
+            dictionaryName: DictionaryType.plurals,
+            batchDictionaryEntriesParams: BatchDictionaryEntriesParams(
+                clearExistingDictionaryEntries: true,
+                requests: [BatchDictionaryEntriesRequest(
+                    action: DictionaryAction.deleteEntry,
+                    body: DictionaryEntry(
+                        objectID: "1",
+                        language: SearchSupportedLanguage.en,
+                        word: "fancy",
+                        words: ["believe", "algolia"],
+                        decomposition: ["trust", "algolia"],
+                        state: DictionaryEntryState.enabled
+                    )
+                )]
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"clearExistingDictionaryEntries\":true,\"requests\":[{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"word\":\"fancy\",\"words\":[\"believe\",\"algolia\"],\"decomposition\":[\"trust\",\"algolia\"],\"state\":\"enabled\"}}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/dictionaries/plurals/batch")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// append
     func testBatchDictionaryEntriesTest2() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -598,7 +593,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.batchDictionaryEntriesWithHTTPInfo(
-            dictionaryName: DictionaryType.compounds,
+            dictionaryName: DictionaryType.stopwords,
             batchDictionaryEntriesParams: BatchDictionaryEntriesParams(requests: [BatchDictionaryEntriesRequest(
                 action: DictionaryAction.addEntry,
                 body: DictionaryEntry(from: [
@@ -621,14 +616,14 @@ final class SearchClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/dictionaries/compounds/batch")
+        XCTAssertEqual(echoResponse.path, "/1/dictionaries/stopwords/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
     }
 
     /// browse with minimal parameters
-    func testBrowseTest0() async throws {
+    func testBrowseTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -737,8 +732,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// clearObjects0
-    func testClearObjectsTest0() async throws {
+    /// clearObjects
+    func testClearObjectsTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -760,8 +755,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// clearRules0
-    func testClearRulesTest0() async throws {
+    /// clearRules
+    func testClearRulesTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -783,8 +778,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// clearSynonyms0
-    func testClearSynonymsTest0() async throws {
+    /// clearSynonyms
+    func testClearSynonymsTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -807,7 +802,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// allow del method for a custom path with minimal parameters
-    func testCustomDeleteTest0() async throws {
+    func testCustomDeleteTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -858,7 +853,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// allow get method for a custom path with minimal parameters
-    func testCustomGetTest0() async throws {
+    func testCustomGetTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -958,7 +953,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// allow post method for a custom path with minimal parameters
-    func testCustomPostTest0() async throws {
+    func testCustomPostTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1434,7 +1429,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// allow put method for a custom path with minimal parameters
-    func testCustomPutTest0() async throws {
+    func testCustomPutTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1497,8 +1492,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// deleteApiKey0
-    func testDeleteApiKeyTest0() async throws {
+    /// deleteApiKey
+    func testDeleteApiKeyTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1518,8 +1513,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// deleteBy0
-    func testDeleteByTest0() async throws {
+    /// deleteBy
+    func testDeleteByTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1548,8 +1543,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// deleteIndex0
-    func testDeleteIndexTest0() async throws {
+    /// deleteIndex
+    func testDeleteIndexTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1569,8 +1564,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// deleteObject0
-    func testDeleteObjectTest0() async throws {
+    /// deleteObject
+    func testDeleteObjectTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1578,20 +1573,20 @@ final class SearchClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client.deleteObjectWithHTTPInfo(indexName: "theIndexName", objectID: "uniqueID")
+        let response = try await client.deleteObjectWithHTTPInfo(indexName: "<YOUR_INDEX_NAME>", objectID: "uniqueID")
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
         XCTAssertNil(echoResponse.originalBodyData)
 
-        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/uniqueID")
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/uniqueID")
         XCTAssertEqual(echoResponse.method, HTTPMethod.delete)
 
         XCTAssertNil(echoResponse.queryParameters)
     }
 
     /// delete rule simple case
-    func testDeleteRuleTest0() async throws {
+    func testDeleteRuleTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1632,8 +1627,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// deleteSource0
-    func testDeleteSourceTest0() async throws {
+    /// deleteSource
+    func testDeleteSourceTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1653,8 +1648,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// deleteSynonym0
-    func testDeleteSynonymTest0() async throws {
+    /// deleteSynonym
+    func testDeleteSynonymTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1674,8 +1669,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getApiKey0
-    func testGetApiKeyTest0() async throws {
+    /// getApiKey
+    func testGetApiKeyTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1696,7 +1691,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// get getDictionaryLanguages
-    func testGetDictionaryLanguagesTest0() async throws {
+    func testGetDictionaryLanguagesTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1717,7 +1712,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// get getDictionarySettings results
-    func testGetDictionarySettingsTest0() async throws {
+    func testGetDictionarySettingsTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1738,7 +1733,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// getLogs with minimal parameters
-    func testGetLogsTest0() async throws {
+    func testGetLogsTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1794,8 +1789,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// getObject0
-    func testGetObjectTest0() async throws {
+    /// getObject
+    func testGetObjectTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1828,8 +1823,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// getObjects0
-    func testGetObjectsTest0() async throws {
+    /// getObjects
+    func testGetObjectsTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1862,8 +1857,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getRule0
-    func testGetRuleTest0() async throws {
+    /// getRule
+    func testGetRuleTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1883,8 +1878,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getSettings0
-    func testGetSettingsTest0() async throws {
+    /// getSettings
+    func testGetSettingsTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1923,8 +1918,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
-    /// getSources0
-    func testGetSourcesTest0() async throws {
+    /// getSources
+    func testGetSourcesTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1944,8 +1939,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getSynonym0
-    func testGetSynonymTest0() async throws {
+    /// getSynonym
+    func testGetSynonymTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1965,8 +1960,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getTask0
-    func testGetTaskTest0() async throws {
+    /// getTask
+    func testGetTaskTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -1986,8 +1981,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getTopUserIds0
-    func testGetTopUserIdsTest0() async throws {
+    /// getTopUserIds
+    func testGetTopUserIdsTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2007,8 +2002,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getUserId0
-    func testGetUserIdTest0() async throws {
+    /// getUserId
+    func testGetUserIdTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2029,7 +2024,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// hasPendingMappings with minimal parameters
-    func testHasPendingMappingsTest0() async throws {
+    func testHasPendingMappingsTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2076,8 +2071,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// listApiKeys0
-    func testListApiKeysTest0() async throws {
+    /// listApiKeys
+    func testListApiKeysTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2097,8 +2092,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// listClusters0
-    func testListClustersTest0() async throws {
+    /// listClusters
+    func testListClustersTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2119,7 +2114,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// listIndices with minimal parameters
-    func testListIndicesTest0() async throws {
+    func testListIndicesTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2167,7 +2162,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// listUserIds with minimal parameters
-    func testListUserIdsTest0() async throws {
+    func testListUserIdsTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2214,8 +2209,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// multipleBatch0
-    func testMultipleBatchTest0() async throws {
+    /// multipleBatch
+    func testMultipleBatchTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2248,8 +2243,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// operationIndex0
-    func testOperationIndexTest0() async throws {
+    /// scopes
+    func testOperationIndexTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2258,10 +2253,10 @@ final class SearchClientRequestsTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.operationIndexWithHTTPInfo(
-            indexName: "theIndexName",
+            indexName: "<SOURCE_INDEX_NAME>",
             operationIndexParams: OperationIndexParams(
-                operation: OperationType.copy,
-                destination: "dest",
+                operation: OperationType.move,
+                destination: "<DESTINATION_INDEX_NAME>",
                 scope: [ScopeType.rules, ScopeType.settings]
             )
         )
@@ -2271,20 +2266,89 @@ final class SearchClientRequestsTests: XCTestCase {
         let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
         let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
 
-        let expectedBodyData = "{\"operation\":\"copy\",\"destination\":\"dest\",\"scope\":[\"rules\",\"settings\"]}"
-            .data(using: .utf8)
+        let expectedBodyData =
+            "{\"operation\":\"move\",\"destination\":\"<DESTINATION_INDEX_NAME>\",\"scope\":[\"rules\",\"settings\"]}"
+                .data(using: .utf8)
         let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName/operation")
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// partialUpdateObject0
-    func testPartialUpdateObjectTest0() async throws {
+    /// copy
+    func testOperationIndexTest1() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.operationIndexWithHTTPInfo(
+            indexName: "<SOURCE_INDEX_NAME>",
+            operationIndexParams: OperationIndexParams(
+                operation: OperationType.copy,
+                destination: "<DESTINATION_INDEX_NAME>"
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"operation\":\"copy\",\"destination\":\"<DESTINATION_INDEX_NAME>\"}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// move
+    func testOperationIndexTest2() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.operationIndexWithHTTPInfo(
+            indexName: "<SOURCE_INDEX_NAME>",
+            operationIndexParams: OperationIndexParams(
+                operation: OperationType.move,
+                destination: "<DESTINATION_INDEX_NAME>"
+            )
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData = "{\"operation\":\"move\",\"destination\":\"<DESTINATION_INDEX_NAME>\"}"
+            .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// partialUpdateObject
+    func testPartialUpdateObjectTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2326,8 +2390,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// removeUserId0
-    func testRemoveUserIdTest0() async throws {
+    /// removeUserId
+    func testRemoveUserIdTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2347,8 +2411,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// replaceSources0
-    func testReplaceSourcesTest0() async throws {
+    /// replaceSources
+    func testReplaceSourcesTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2377,8 +2441,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// restoreApiKey0
-    func testRestoreApiKeyTest0() async throws {
+    /// restoreApiKey
+    func testRestoreApiKeyTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2400,8 +2464,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// saveObject0
-    func testSaveObjectTest0() async throws {
+    /// saveObject
+    func testSaveObjectTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2410,7 +2474,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.saveObjectWithHTTPInfo(
-            indexName: "theIndexName",
+            indexName: "<YOUR_INDEX_NAME>",
             body: ["objectID": "id", "test": "val"]
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
@@ -2424,14 +2488,14 @@ final class SearchClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/indexes/theIndexName")
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         XCTAssertNil(echoResponse.queryParameters)
     }
 
     /// saveRule with minimal parameters
-    func testSaveRuleTest0() async throws {
+    func testSaveRuleTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2541,7 +2605,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// saveRules with minimal parameters
-    func testSaveRulesTest0() async throws {
+    func testSaveRulesTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2550,7 +2614,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.saveRulesWithHTTPInfo(
-            indexName: "indexName",
+            indexName: "<YOUR_INDEX_NAME>",
             rules: [
                 Rule(
                     objectID: "a-rule-id",
@@ -2560,7 +2624,9 @@ final class SearchClientRequestsTests: XCTestCase {
                     objectID: "a-second-rule-id",
                     conditions: [SearchCondition(pattern: "apple", anchoring: SearchAnchoring.contains)]
                 ),
-            ]
+            ],
+            forwardToReplicas: false,
+            clearExistingRules: true
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -2575,10 +2641,17 @@ final class SearchClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/batch")
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
-        XCTAssertNil(echoResponse.queryParameters)
+        let expectedQueryParameters =
+            try XCTUnwrap("{\"forwardToReplicas\":\"false\",\"clearExistingRules\":\"true\"}".data(using: .utf8))
+        let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
+            [String: String?].self,
+            from: expectedQueryParameters
+        )
+
+        XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
     /// saveRules with all parameters
@@ -2591,7 +2664,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.saveRulesWithHTTPInfo(
-            indexName: "indexName",
+            indexName: "<YOUR_INDEX_NAME>",
             rules: [Rule(
                 objectID: "id1",
                 conditions: [SearchCondition(
@@ -2643,7 +2716,7 @@ final class SearchClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/rules/batch")
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters =
@@ -2656,8 +2729,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// saveSynonym0
-    func testSaveSynonymTest0() async throws {
+    /// saveSynonym
+    func testSaveSynonymTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2696,8 +2769,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// saveSynonyms0
-    func testSaveSynonymsTest0() async throws {
+    /// saveSynonyms
+    func testSaveSynonymsTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2706,7 +2779,7 @@ final class SearchClientRequestsTests: XCTestCase {
         let client = SearchClient(configuration: configuration, transporter: transporter)
 
         let response = try await client.saveSynonymsWithHTTPInfo(
-            indexName: "indexName",
+            indexName: "<YOUR_INDEX_NAME>",
             synonymHit: [
                 SynonymHit(objectID: "id1", type: SynonymType.synonym, synonyms: ["car", "vehicule", "auto"]),
                 SynonymHit(
@@ -2717,7 +2790,7 @@ final class SearchClientRequestsTests: XCTestCase {
                 ),
             ],
             forwardToReplicas: true,
-            replaceExistingSynonyms: false
+            replaceExistingSynonyms: true
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
@@ -2732,12 +2805,12 @@ final class SearchClientRequestsTests: XCTestCase {
 
         XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
 
-        XCTAssertEqual(echoResponse.path, "/1/indexes/indexName/synonyms/batch")
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/synonyms/batch")
         XCTAssertEqual(echoResponse.method, HTTPMethod.post)
 
         let expectedQueryParameters =
             try XCTUnwrap(
-                "{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"false\"}"
+                "{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"true\"}"
                     .data(using: .utf8)
             )
         let expectedQueryParametersMap = try CodableHelper.jsonDecoder.decode(
@@ -2748,8 +2821,156 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
+    /// withHitsPerPage
+    func testSearchTest() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponses<Hit>> = try await client
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
+                SearchQuery
+                    .searchForHits(SearchForHits(
+                        query: "<YOUR_QUERY>",
+                        hitsPerPage: 50,
+                        indexName: "<YOUR_INDEX_NAME>"
+                    )),
+            ]))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"hitsPerPage\":50}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/*/queries")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// filterOnly
+    func testSearchTest1() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponses<Hit>> = try await client
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
+                SearchQuery
+                    .searchForHits(SearchForHits(
+                        query: "<YOUR_QUERY>",
+                        filters: "actor:Scarlett Johansson",
+                        indexName: "<YOUR_INDEX_NAME>"
+                    )),
+            ]))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"filters\":\"actor:Scarlett Johansson\"}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/*/queries")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// filterOr
+    func testSearchTest2() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponses<Hit>> = try await client
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
+                SearchQuery
+                    .searchForHits(SearchForHits(
+                        query: "<YOUR_QUERY>",
+                        filters: "actor:Tom Cruise OR actor:Scarlett Johansson",
+                        indexName: "<YOUR_INDEX_NAME>"
+                    )),
+            ]))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"filters\":\"actor:Tom Cruise OR actor:Scarlett Johansson\"}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/*/queries")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// filterNot
+    func testSearchTest3() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponses<Hit>> = try await client
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
+                SearchQuery
+                    .searchForHits(SearchForHits(
+                        query: "<YOUR_QUERY>",
+                        filters: "NOT actor:Nicolas Cage",
+                        indexName: "<YOUR_INDEX_NAME>"
+                    )),
+            ]))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"filters\":\"NOT actor:Nicolas Cage\"}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/*/queries")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// search for a single hits request with minimal parameters
-    func testSearchTest0() async throws {
+    func testSearchTest4() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2802,8 +3023,82 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
+    /// retrieveFacets
+    func testSearchTest5() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponses<Hit>> = try await client
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
+                SearchQuery
+                    .searchForHits(SearchForHits(
+                        query: "<YOUR_QUERY>",
+                        facets: ["author", "genre"],
+                        indexName: "<YOUR_INDEX_NAME>"
+                    )),
+            ]))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"facets\":[\"author\",\"genre\"]}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/*/queries")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
+    /// retrieveFacetsWildcard
+    func testSearchTest6() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response: Response<SearchResponses<Hit>> = try await client
+            .searchWithHTTPInfo(searchMethodParams: SearchMethodParams(requests: [
+                SearchQuery
+                    .searchForHits(SearchForHits(
+                        query: "<YOUR_QUERY>",
+                        facets: ["*"],
+                        indexName: "<YOUR_INDEX_NAME>"
+                    )),
+            ]))
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"facets\":[\"*\"]}]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/*/queries")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.post)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// search for a single facet request with minimal parameters
-    func testSearchTest1() async throws {
+    func testSearchTest7() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2867,7 +3162,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search for a single hits request with all parameters
-    func testSearchTest2() async throws {
+    func testSearchTest8() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2905,7 +3200,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search for a single facet request with all parameters
-    func testSearchTest3() async throws {
+    func testSearchTest9() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2945,7 +3240,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search for multiple mixed requests in multiple indices with minimal parameters
-    func testSearchTest4() async throws {
+    func testSearchTest10() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -2989,7 +3284,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search for multiple mixed requests in multiple indices with all parameters
-    func testSearchTest5() async throws {
+    func testSearchTest11() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3034,7 +3329,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search filters accept all of the possible shapes
-    func testSearchTest6() async throws {
+    func testSearchTest12() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3105,7 +3400,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search filters end to end
-    func testSearchTest7() async throws {
+    func testSearchTest13() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3213,7 +3508,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search with all search parameters
-    func testSearchTest8() async throws {
+    func testSearchTest14() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3331,7 +3626,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// get searchDictionaryEntries results with minimal parameters
-    func testSearchDictionaryEntriesTest0() async throws {
+    func testSearchDictionaryEntriesTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3419,7 +3714,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// get searchForFacetValues results with minimal parameters
-    func testSearchForFacetValuesTest0() async throws {
+    func testSearchForFacetValuesTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3482,8 +3777,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// searchRules0
-    func testSearchRulesTest0() async throws {
+    /// searchRules
+    func testSearchRulesTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3513,7 +3808,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// search with minimal parameters
-    func testSearchSingleIndexTest0() async throws {
+    func testSearchSingleIndexTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3674,7 +3969,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// searchSynonyms with minimal parameters
-    func testSearchSynonymsTest0() async throws {
+    func testSearchSynonymsTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3736,8 +4031,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// searchUserIds0
-    func testSearchUserIdsTest0() async throws {
+    /// searchUserIds
+    func testSearchUserIdsTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3770,7 +4065,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// get setDictionarySettings results with minimal parameters
-    func testSetDictionarySettingsTest0() async throws {
+    func testSetDictionarySettingsTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3840,8 +4135,44 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
+    /// setSettingsAttributesForFaceting
+    func testSetSettingsTest() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: SearchClientRequestsTests.APPLICATION_ID,
+            apiKey: SearchClientRequestsTests.API_KEY
+        )
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try await client.setSettingsWithHTTPInfo(
+            indexName: "<YOUR_INDEX_NAME>",
+            indexSettings: IndexSettings(attributesForFaceting: [
+                "actor",
+                "filterOnly(category)",
+                "searchable(publisher)",
+            ])
+        )
+        let responseBodyData = try XCTUnwrap(response.bodyData)
+        let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
+
+        let echoResponseBodyData = try XCTUnwrap(echoResponse.originalBodyData)
+        let echoResponseBodyJSON = try XCTUnwrap(echoResponseBodyData.jsonString)
+
+        let expectedBodyData =
+            "{\"attributesForFaceting\":[\"actor\",\"filterOnly(category)\",\"searchable(publisher)\"]}"
+                .data(using: .utf8)
+        let expectedBodyJSON = try XCTUnwrap(expectedBodyData?.jsonString)
+
+        XCTAssertEqual(echoResponseBodyJSON, expectedBodyJSON)
+
+        XCTAssertEqual(echoResponse.path, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings")
+        XCTAssertEqual(echoResponse.method, HTTPMethod.put)
+
+        XCTAssertNil(echoResponse.queryParameters)
+    }
+
     /// setSettings with minimal parameters
-    func testSetSettingsTest0() async throws {
+    func testSetSettingsTest1() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3891,7 +4222,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// setSettings allow boolean &#x60;typoTolerance&#x60;
-    func testSetSettingsTest1() async throws {
+    func testSetSettingsTest2() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3928,7 +4259,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// setSettings allow enum &#x60;typoTolerance&#x60;
-    func testSetSettingsTest2() async throws {
+    func testSetSettingsTest3() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -3968,7 +4299,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// setSettings allow boolean &#x60;ignorePlurals&#x60;
-    func testSetSettingsTest3() async throws {
+    func testSetSettingsTest4() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -4005,7 +4336,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// setSettings allow list of string &#x60;ignorePlurals&#x60;
-    func testSetSettingsTest4() async throws {
+    func testSetSettingsTest5() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -4045,7 +4376,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// setSettings allow boolean &#x60;removeStopWords&#x60;
-    func testSetSettingsTest5() async throws {
+    func testSetSettingsTest6() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -4082,7 +4413,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// setSettings allow list of string &#x60;removeStopWords&#x60;
-    func testSetSettingsTest6() async throws {
+    func testSetSettingsTest7() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -4122,7 +4453,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// setSettings allow boolean &#x60;distinct&#x60;
-    func testSetSettingsTest7() async throws {
+    func testSetSettingsTest8() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -4159,7 +4490,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// setSettings allow integers for &#x60;distinct&#x60;
-    func testSetSettingsTest8() async throws {
+    func testSetSettingsTest9() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -4196,7 +4527,7 @@ final class SearchClientRequestsTests: XCTestCase {
     }
 
     /// setSettings allow all &#x60;indexSettings&#x60;
-    func testSetSettingsTest9() async throws {
+    func testSetSettingsTest10() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY
@@ -4292,8 +4623,8 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// updateApiKey0
-    func testUpdateApiKeyTest0() async throws {
+    /// updateApiKey
+    func testUpdateApiKeyTest() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
             apiKey: SearchClientRequestsTests.API_KEY

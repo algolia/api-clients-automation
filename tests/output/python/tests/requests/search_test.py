@@ -39,9 +39,9 @@ class TestSearchClient:
     if _e2e_api_key is None:
         raise Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
 
-    async def test_add_api_key_0(self):
+    async def test_add_api_key_(self):
         """
-        addApiKey0
+        addApiKey
         """
         _req = await self._client.add_api_key_with_http_info(
             api_key={
@@ -64,9 +64,9 @@ class TestSearchClient:
             """{"acl":["search","addObject"],"description":"my new api key","validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20}"""
         )
 
-    async def test_add_or_update_object_0(self):
+    async def test_add_or_update_object_(self):
         """
-        addOrUpdateObject0
+        addOrUpdateObject
         """
         _req = await self._client.add_or_update_object_with_http_info(
             index_name="indexName",
@@ -82,9 +82,9 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"key":"value"}""")
 
-    async def test_append_source_0(self):
+    async def test_append_source_(self):
         """
-        appendSource0
+        appendSource
         """
         _req = await self._client.append_source_with_http_info(
             source={
@@ -101,9 +101,9 @@ class TestSearchClient:
             """{"source":"theSource","description":"theDescription"}"""
         )
 
-    async def test_assign_user_id_0(self):
+    async def test_assign_user_id_(self):
         """
-        assignUserId0
+        assignUserId
         """
         _req = await self._client.assign_user_id_with_http_info(
             x_algolia_user_id="userID",
@@ -137,38 +137,46 @@ class TestSearchClient:
         )
         assert loads(_req.data) == loads("""{"cluster":"cluster with spaces"}""")
 
-    async def test_batch_0(self):
+    async def test_batch_(self):
         """
-        allows batch method with `addObject` action
+        addObject
         """
         _req = await self._client.batch_with_http_info(
-            index_name="theIndexName",
+            index_name="<YOUR_INDEX_NAME>",
             batch_write_params={
                 "requests": [
                     {
                         "action": "addObject",
                         "body": {
-                            "key": "value",
+                            "key": "bar",
+                            "foo": "1",
+                        },
+                    },
+                    {
+                        "action": "addObject",
+                        "body": {
+                            "key": "baz",
+                            "foo": "2",
                         },
                     },
                 ],
             },
         )
 
-        assert _req.path == "/1/indexes/theIndexName/batch"
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"requests":[{"action":"addObject","body":{"key":"value"}}]}"""
+            """{"requests":[{"action":"addObject","body":{"key":"bar","foo":"1"}},{"action":"addObject","body":{"key":"baz","foo":"2"}}]}"""
         )
 
     async def test_batch_1(self):
         """
-        allows batch method with `clear` action
+        clear
         """
         _req = await self._client.batch_with_http_info(
-            index_name="theIndexName",
+            index_name="<YOUR_INDEX_NAME>",
             batch_write_params={
                 "requests": [
                     {
@@ -181,7 +189,7 @@ class TestSearchClient:
             },
         )
 
-        assert _req.path == "/1/indexes/theIndexName/batch"
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -191,10 +199,10 @@ class TestSearchClient:
 
     async def test_batch_2(self):
         """
-        allows batch method with `delete` action
+        delete
         """
         _req = await self._client.batch_with_http_info(
-            index_name="theIndexName",
+            index_name="<YOUR_INDEX_NAME>",
             batch_write_params={
                 "requests": [
                     {
@@ -207,7 +215,7 @@ class TestSearchClient:
             },
         )
 
-        assert _req.path == "/1/indexes/theIndexName/batch"
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -217,10 +225,10 @@ class TestSearchClient:
 
     async def test_batch_3(self):
         """
-        allows batch method with `deleteObject` action
+        deleteObject
         """
         _req = await self._client.batch_with_http_info(
-            index_name="theIndexName",
+            index_name="<YOUR_INDEX_NAME>",
             batch_write_params={
                 "requests": [
                     {
@@ -233,7 +241,7 @@ class TestSearchClient:
             },
         )
 
-        assert _req.path == "/1/indexes/theIndexName/batch"
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -243,10 +251,10 @@ class TestSearchClient:
 
     async def test_batch_4(self):
         """
-        allows batch method with `partialUpdateObject` action
+        partialUpdateObject
         """
         _req = await self._client.batch_with_http_info(
-            index_name="theIndexName",
+            index_name="<YOUR_INDEX_NAME>",
             batch_write_params={
                 "requests": [
                     {
@@ -259,7 +267,7 @@ class TestSearchClient:
             },
         )
 
-        assert _req.path == "/1/indexes/theIndexName/batch"
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -269,10 +277,10 @@ class TestSearchClient:
 
     async def test_batch_5(self):
         """
-        allows batch method with `partialUpdateObjectNoCreate` action
+        partialUpdateObjectNoCreate
         """
         _req = await self._client.batch_with_http_info(
-            index_name="theIndexName",
+            index_name="<YOUR_INDEX_NAME>",
             batch_write_params={
                 "requests": [
                     {
@@ -285,7 +293,7 @@ class TestSearchClient:
             },
         )
 
-        assert _req.path == "/1/indexes/theIndexName/batch"
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -295,10 +303,10 @@ class TestSearchClient:
 
     async def test_batch_6(self):
         """
-        allows batch method with `updateObject` action
+        updateObject
         """
         _req = await self._client.batch_with_http_info(
-            index_name="theIndexName",
+            index_name="<YOUR_INDEX_NAME>",
             batch_write_params={
                 "requests": [
                     {
@@ -311,7 +319,7 @@ class TestSearchClient:
             },
         )
 
-        assert _req.path == "/1/indexes/theIndexName/batch"
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -319,9 +327,9 @@ class TestSearchClient:
             """{"requests":[{"action":"updateObject","body":{"key":"value"}}]}"""
         )
 
-    async def test_batch_assign_user_ids_0(self):
+    async def test_batch_assign_user_ids_(self):
         """
-        batchAssignUserIds0
+        batchAssignUserIds
         """
         _req = await self._client.batch_assign_user_ids_with_http_info(
             x_algolia_user_id="userID",
@@ -342,48 +350,14 @@ class TestSearchClient:
             """{"cluster":"theCluster","users":["user1","user2"]}"""
         )
 
-    async def test_batch_dictionary_entries_0(self):
+    async def test_batch_dictionary_entries_(self):
         """
-        get batchDictionaryEntries results with minimal parameters
-        """
-        _req = await self._client.batch_dictionary_entries_with_http_info(
-            dictionary_name="compounds",
-            batch_dictionary_entries_params={
-                "requests": [
-                    {
-                        "action": "addEntry",
-                        "body": {
-                            "objectID": "1",
-                            "language": "en",
-                        },
-                    },
-                    {
-                        "action": "deleteEntry",
-                        "body": {
-                            "objectID": "2",
-                            "language": "fr",
-                        },
-                    },
-                ],
-            },
-        )
-
-        assert _req.path == "/1/dictionaries/compounds/batch"
-        assert _req.verb == "POST"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert loads(_req.data) == loads(
-            """{"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr"}}]}"""
-        )
-
-    async def test_batch_dictionary_entries_1(self):
-        """
-        get batchDictionaryEntries results with all parameters
+        replace
         """
         _req = await self._client.batch_dictionary_entries_with_http_info(
-            dictionary_name="compounds",
+            dictionary_name="plurals",
             batch_dictionary_entries_params={
-                "clearExistingDictionaryEntries": False,
+                "clearExistingDictionaryEntries": True,
                 "requests": [
                     {
                         "action": "addEntry",
@@ -402,18 +376,39 @@ class TestSearchClient:
                             "state": "enabled",
                         },
                     },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/dictionaries/plurals/batch"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"clearExistingDictionaryEntries":true,"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}}]}"""
+        )
+
+    async def test_batch_dictionary_entries_1(self):
+        """
+        delete
+        """
+        _req = await self._client.batch_dictionary_entries_with_http_info(
+            dictionary_name="plurals",
+            batch_dictionary_entries_params={
+                "clearExistingDictionaryEntries": True,
+                "requests": [
                     {
                         "action": "deleteEntry",
                         "body": {
-                            "objectID": "2",
-                            "language": "fr",
-                            "word": "humility",
+                            "objectID": "1",
+                            "language": "en",
+                            "word": "fancy",
                             "words": [
-                                "candor",
+                                "believe",
                                 "algolia",
                             ],
                             "decomposition": [
-                                "grit",
+                                "trust",
                                 "algolia",
                             ],
                             "state": "enabled",
@@ -423,20 +418,20 @@ class TestSearchClient:
             },
         )
 
-        assert _req.path == "/1/dictionaries/compounds/batch"
+        assert _req.path == "/1/dictionaries/plurals/batch"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"clearExistingDictionaryEntries":false,"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr","word":"humility","words":["candor","algolia"],"decomposition":["grit","algolia"],"state":"enabled"}}]}"""
+            """{"clearExistingDictionaryEntries":true,"requests":[{"action":"deleteEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}}]}"""
         )
 
     async def test_batch_dictionary_entries_2(self):
         """
-        get batchDictionaryEntries results additional properties
+        append
         """
         _req = await self._client.batch_dictionary_entries_with_http_info(
-            dictionary_name="compounds",
+            dictionary_name="stopwords",
             batch_dictionary_entries_params={
                 "requests": [
                     {
@@ -451,7 +446,7 @@ class TestSearchClient:
             },
         )
 
-        assert _req.path == "/1/dictionaries/compounds/batch"
+        assert _req.path == "/1/dictionaries/stopwords/batch"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
@@ -459,7 +454,7 @@ class TestSearchClient:
             """{"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","additional":"try me"}}]}"""
         )
 
-    async def test_browse_0(self):
+    async def test_browse_(self):
         """
         browse with minimal parameters
         """
@@ -527,9 +522,9 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"cursor":"test"}""")
 
-    async def test_clear_objects_0(self):
+    async def test_clear_objects_(self):
         """
-        clearObjects0
+        clearObjects
         """
         _req = await self._client.clear_objects_with_http_info(
             index_name="theIndexName",
@@ -540,9 +535,9 @@ class TestSearchClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
 
-    async def test_clear_rules_0(self):
+    async def test_clear_rules_(self):
         """
-        clearRules0
+        clearRules
         """
         _req = await self._client.clear_rules_with_http_info(
             index_name="indexName",
@@ -553,9 +548,9 @@ class TestSearchClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
 
-    async def test_clear_synonyms_0(self):
+    async def test_clear_synonyms_(self):
         """
-        clearSynonyms0
+        clearSynonyms
         """
         _req = await self._client.clear_synonyms_with_http_info(
             index_name="indexName",
@@ -566,7 +561,7 @@ class TestSearchClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
 
-    async def test_custom_delete_0(self):
+    async def test_custom_delete_(self):
         """
         allow del method for a custom path with minimal parameters
         """
@@ -597,7 +592,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_custom_get_0(self):
+    async def test_custom_get_(self):
         """
         allow get method for a custom path with minimal parameters
         """
@@ -660,7 +655,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {"x-header-1": "spaces are left alone"}.items()
         assert _req.data is None
 
-    async def test_custom_post_0(self):
+    async def test_custom_post_(self):
         """
         allow post method for a custom path with minimal parameters
         """
@@ -919,7 +914,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
-    async def test_custom_put_0(self):
+    async def test_custom_put_(self):
         """
         allow put method for a custom path with minimal parameters
         """
@@ -953,9 +948,9 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
-    async def test_delete_api_key_0(self):
+    async def test_delete_api_key_(self):
         """
-        deleteApiKey0
+        deleteApiKey
         """
         _req = await self._client.delete_api_key_with_http_info(
             key="myTestApiKey",
@@ -967,9 +962,9 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_delete_by_0(self):
+    async def test_delete_by_(self):
         """
-        deleteBy0
+        deleteBy
         """
         _req = await self._client.delete_by_with_http_info(
             index_name="theIndexName",
@@ -984,9 +979,9 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"filters":"brand:brandName"}""")
 
-    async def test_delete_index_0(self):
+    async def test_delete_index_(self):
         """
-        deleteIndex0
+        deleteIndex
         """
         _req = await self._client.delete_index_with_http_info(
             index_name="theIndexName",
@@ -998,22 +993,22 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_delete_object_0(self):
+    async def test_delete_object_(self):
         """
-        deleteObject0
+        deleteObject
         """
         _req = await self._client.delete_object_with_http_info(
-            index_name="theIndexName",
+            index_name="<YOUR_INDEX_NAME>",
             object_id="uniqueID",
         )
 
-        assert _req.path == "/1/indexes/theIndexName/uniqueID"
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/uniqueID"
         assert _req.verb == "DELETE"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_delete_rule_0(self):
+    async def test_delete_rule_(self):
         """
         delete rule simple case
         """
@@ -1043,9 +1038,9 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_delete_source_0(self):
+    async def test_delete_source_(self):
         """
-        deleteSource0
+        deleteSource
         """
         _req = await self._client.delete_source_with_http_info(
             source="theSource",
@@ -1057,9 +1052,9 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_delete_synonym_0(self):
+    async def test_delete_synonym_(self):
         """
-        deleteSynonym0
+        deleteSynonym
         """
         _req = await self._client.delete_synonym_with_http_info(
             index_name="indexName",
@@ -1072,9 +1067,9 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_api_key_0(self):
+    async def test_get_api_key_(self):
         """
-        getApiKey0
+        getApiKey
         """
         _req = await self._client.get_api_key_with_http_info(
             key="myTestApiKey",
@@ -1086,7 +1081,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_dictionary_languages_0(self):
+    async def test_get_dictionary_languages_(self):
         """
         get getDictionaryLanguages
         """
@@ -1098,7 +1093,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_dictionary_settings_0(self):
+    async def test_get_dictionary_settings_(self):
         """
         get getDictionarySettings results
         """
@@ -1110,7 +1105,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_logs_0(self):
+    async def test_get_logs_(self):
         """
         getLogs with minimal parameters
         """
@@ -1147,9 +1142,9 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_object_0(self):
+    async def test_get_object_(self):
         """
-        getObject0
+        getObject
         """
         _req = await self._client.get_object_with_http_info(
             index_name="theIndexName",
@@ -1169,9 +1164,9 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_objects_0(self):
+    async def test_get_objects_(self):
         """
-        getObjects0
+        getObjects
         """
         _req = await self._client.get_objects_with_http_info(
             get_objects_params={
@@ -1196,9 +1191,9 @@ class TestSearchClient:
             """{"requests":[{"attributesToRetrieve":["attr1","attr2"],"objectID":"uniqueID","indexName":"theIndexName"}]}"""
         )
 
-    async def test_get_rule_0(self):
+    async def test_get_rule_(self):
         """
-        getRule0
+        getRule
         """
         _req = await self._client.get_rule_with_http_info(
             index_name="indexName",
@@ -1211,9 +1206,9 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_settings_0(self):
+    async def test_get_settings_(self):
         """
-        getSettings0
+        getSettings
         """
         _req = await self._client.get_settings_with_http_info(
             index_name="cts_e2e_settings",
@@ -1240,9 +1235,9 @@ class TestSearchClient:
         )
         assert self._helpers.union(_expected_body, resp) == _expected_body
 
-    async def test_get_sources_0(self):
+    async def test_get_sources_(self):
         """
-        getSources0
+        getSources
         """
         _req = await self._client.get_sources_with_http_info()
 
@@ -1252,9 +1247,9 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_synonym_0(self):
+    async def test_get_synonym_(self):
         """
-        getSynonym0
+        getSynonym
         """
         _req = await self._client.get_synonym_with_http_info(
             index_name="indexName",
@@ -1267,9 +1262,9 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_task_0(self):
+    async def test_get_task_(self):
         """
-        getTask0
+        getTask
         """
         _req = await self._client.get_task_with_http_info(
             index_name="theIndexName",
@@ -1282,9 +1277,9 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_top_user_ids_0(self):
+    async def test_get_top_user_ids_(self):
         """
-        getTopUserIds0
+        getTopUserIds
         """
         _req = await self._client.get_top_user_ids_with_http_info()
 
@@ -1294,9 +1289,9 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_user_id_0(self):
+    async def test_get_user_id_(self):
         """
-        getUserId0
+        getUserId
         """
         _req = await self._client.get_user_id_with_http_info(
             user_id="uniqueID",
@@ -1308,7 +1303,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_has_pending_mappings_0(self):
+    async def test_has_pending_mappings_(self):
         """
         hasPendingMappings with minimal parameters
         """
@@ -1334,9 +1329,9 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_list_api_keys_0(self):
+    async def test_list_api_keys_(self):
         """
-        listApiKeys0
+        listApiKeys
         """
         _req = await self._client.list_api_keys_with_http_info()
 
@@ -1346,9 +1341,9 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_list_clusters_0(self):
+    async def test_list_clusters_(self):
         """
-        listClusters0
+        listClusters
         """
         _req = await self._client.list_clusters_with_http_info()
 
@@ -1358,7 +1353,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_list_indices_0(self):
+    async def test_list_indices_(self):
         """
         listIndices with minimal parameters
         """
@@ -1387,7 +1382,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_list_user_ids_0(self):
+    async def test_list_user_ids_(self):
         """
         listUserIds with minimal parameters
         """
@@ -1416,9 +1411,9 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_multiple_batch_0(self):
+    async def test_multiple_batch_(self):
         """
-        multipleBatch0
+        multipleBatch
         """
         _req = await self._client.multiple_batch_with_http_info(
             batch_params={
@@ -1442,15 +1437,15 @@ class TestSearchClient:
             """{"requests":[{"action":"addObject","body":{"key":"value"},"indexName":"theIndexName"}]}"""
         )
 
-    async def test_operation_index_0(self):
+    async def test_operation_index_(self):
         """
-        operationIndex0
+        scopes
         """
         _req = await self._client.operation_index_with_http_info(
-            index_name="theIndexName",
+            index_name="<SOURCE_INDEX_NAME>",
             operation_index_params={
-                "operation": "copy",
-                "destination": "dest",
+                "operation": "move",
+                "destination": "<DESTINATION_INDEX_NAME>",
                 "scope": [
                     "rules",
                     "settings",
@@ -1458,17 +1453,57 @@ class TestSearchClient:
             },
         )
 
-        assert _req.path == "/1/indexes/theIndexName/operation"
+        assert _req.path == "/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
-            """{"operation":"copy","destination":"dest","scope":["rules","settings"]}"""
+            """{"operation":"move","destination":"<DESTINATION_INDEX_NAME>","scope":["rules","settings"]}"""
         )
 
-    async def test_partial_update_object_0(self):
+    async def test_operation_index_1(self):
         """
-        partialUpdateObject0
+        copy
+        """
+        _req = await self._client.operation_index_with_http_info(
+            index_name="<SOURCE_INDEX_NAME>",
+            operation_index_params={
+                "operation": "copy",
+                "destination": "<DESTINATION_INDEX_NAME>",
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"operation":"copy","destination":"<DESTINATION_INDEX_NAME>"}"""
+        )
+
+    async def test_operation_index_2(self):
+        """
+        move
+        """
+        _req = await self._client.operation_index_with_http_info(
+            index_name="<SOURCE_INDEX_NAME>",
+            operation_index_params={
+                "operation": "move",
+                "destination": "<DESTINATION_INDEX_NAME>",
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"operation":"move","destination":"<DESTINATION_INDEX_NAME>"}"""
+        )
+
+    async def test_partial_update_object_(self):
+        """
+        partialUpdateObject
         """
         _req = await self._client.partial_update_object_with_http_info(
             index_name="theIndexName",
@@ -1491,9 +1526,9 @@ class TestSearchClient:
             """{"id1":"test","id2":{"_operation":"AddUnique","value":"test2"}}"""
         )
 
-    async def test_remove_user_id_0(self):
+    async def test_remove_user_id_(self):
         """
-        removeUserId0
+        removeUserId
         """
         _req = await self._client.remove_user_id_with_http_info(
             user_id="uniqueID",
@@ -1505,9 +1540,9 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_replace_sources_0(self):
+    async def test_replace_sources_(self):
         """
-        replaceSources0
+        replaceSources
         """
         _req = await self._client.replace_sources_with_http_info(
             source=[
@@ -1526,9 +1561,9 @@ class TestSearchClient:
             """[{"source":"theSource","description":"theDescription"}]"""
         )
 
-    async def test_restore_api_key_0(self):
+    async def test_restore_api_key_(self):
         """
-        restoreApiKey0
+        restoreApiKey
         """
         _req = await self._client.restore_api_key_with_http_info(
             key="myApiKey",
@@ -1539,25 +1574,25 @@ class TestSearchClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
 
-    async def test_save_object_0(self):
+    async def test_save_object_(self):
         """
-        saveObject0
+        saveObject
         """
         _req = await self._client.save_object_with_http_info(
-            index_name="theIndexName",
+            index_name="<YOUR_INDEX_NAME>",
             body={
                 "objectID": "id",
                 "test": "val",
             },
         )
 
-        assert _req.path == "/1/indexes/theIndexName"
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E"
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"objectID":"id","test":"val"}""")
 
-    async def test_save_rule_0(self):
+    async def test_save_rule_(self):
         """
         saveRule with minimal parameters
         """
@@ -1662,12 +1697,12 @@ class TestSearchClient:
             """{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}"""
         )
 
-    async def test_save_rules_0(self):
+    async def test_save_rules_(self):
         """
         saveRules with minimal parameters
         """
         _req = await self._client.save_rules_with_http_info(
-            index_name="indexName",
+            index_name="<YOUR_INDEX_NAME>",
             rules=[
                 {
                     "objectID": "a-rule-id",
@@ -1688,11 +1723,16 @@ class TestSearchClient:
                     ],
                 },
             ],
+            forward_to_replicas=False,
+            clear_existing_rules=True,
         )
 
-        assert _req.path == "/1/indexes/indexName/rules/batch"
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch"
         assert _req.verb == "POST"
-        assert _req.query_parameters.items() == {}.items()
+        assert (
+            _req.query_parameters.items()
+            == {"forwardToReplicas": "false", "clearExistingRules": "true"}.items()
+        )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}]},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}]}]"""
@@ -1703,7 +1743,7 @@ class TestSearchClient:
         saveRules with all parameters
         """
         _req = await self._client.save_rules_with_http_info(
-            index_name="indexName",
+            index_name="<YOUR_INDEX_NAME>",
             rules=[
                 {
                     "objectID": "id1",
@@ -1771,7 +1811,7 @@ class TestSearchClient:
             clear_existing_rules=True,
         )
 
-        assert _req.path == "/1/indexes/indexName/rules/batch"
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch"
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
@@ -1782,9 +1822,9 @@ class TestSearchClient:
             """[{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}]"""
         )
 
-    async def test_save_synonym_0(self):
+    async def test_save_synonym_(self):
         """
-        saveSynonym0
+        saveSynonym
         """
         _req = await self._client.save_synonym_with_http_info(
             index_name="indexName",
@@ -1809,12 +1849,12 @@ class TestSearchClient:
             """{"objectID":"id1","type":"synonym","synonyms":["car","vehicule","auto"]}"""
         )
 
-    async def test_save_synonyms_0(self):
+    async def test_save_synonyms_(self):
         """
-        saveSynonyms0
+        saveSynonyms
         """
         _req = await self._client.save_synonyms_with_http_info(
-            index_name="indexName",
+            index_name="<YOUR_INDEX_NAME>",
             synonym_hit=[
                 {
                     "objectID": "id1",
@@ -1837,21 +1877,117 @@ class TestSearchClient:
                 },
             ],
             forward_to_replicas=True,
-            replace_existing_synonyms=False,
+            replace_existing_synonyms=True,
         )
 
-        assert _req.path == "/1/indexes/indexName/synonyms/batch"
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/synonyms/batch"
         assert _req.verb == "POST"
         assert (
             _req.query_parameters.items()
-            == {"forwardToReplicas": "true", "replaceExistingSynonyms": "false"}.items()
+            == {"forwardToReplicas": "true", "replaceExistingSynonyms": "true"}.items()
         )
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads(
             """[{"objectID":"id1","type":"synonym","synonyms":["car","vehicule","auto"]},{"objectID":"id2","type":"onewaysynonym","input":"iphone","synonyms":["ephone","aphone","yphone"]}]"""
         )
 
-    async def test_search_0(self):
+    async def test_search_(self):
+        """
+        withHitsPerPage
+        """
+        _req = await self._client.search_with_http_info(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "<YOUR_INDEX_NAME>",
+                        "query": "<YOUR_QUERY>",
+                        "hitsPerPage": 50,
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/*/queries"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","hitsPerPage":50}]}"""
+        )
+
+    async def test_search_1(self):
+        """
+        filterOnly
+        """
+        _req = await self._client.search_with_http_info(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "<YOUR_INDEX_NAME>",
+                        "query": "<YOUR_QUERY>",
+                        "filters": "actor:Scarlett Johansson",
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/*/queries"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"actor:Scarlett Johansson"}]}"""
+        )
+
+    async def test_search_2(self):
+        """
+        filterOr
+        """
+        _req = await self._client.search_with_http_info(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "<YOUR_INDEX_NAME>",
+                        "query": "<YOUR_QUERY>",
+                        "filters": "actor:Tom Cruise OR actor:Scarlett Johansson",
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/*/queries"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"actor:Tom Cruise OR actor:Scarlett Johansson"}]}"""
+        )
+
+    async def test_search_3(self):
+        """
+        filterNot
+        """
+        _req = await self._client.search_with_http_info(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "<YOUR_INDEX_NAME>",
+                        "query": "<YOUR_QUERY>",
+                        "filters": "NOT actor:Nicolas Cage",
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/*/queries"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"NOT actor:Nicolas Cage"}]}"""
+        )
+
+    async def test_search_4(self):
         """
         search for a single hits request with minimal parameters
         """
@@ -1900,7 +2036,60 @@ class TestSearchClient:
         )
         assert self._helpers.union(_expected_body, resp) == _expected_body
 
-    async def test_search_1(self):
+    async def test_search_5(self):
+        """
+        retrieveFacets
+        """
+        _req = await self._client.search_with_http_info(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "<YOUR_INDEX_NAME>",
+                        "query": "<YOUR_QUERY>",
+                        "facets": [
+                            "author",
+                            "genre",
+                        ],
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/*/queries"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["author","genre"]}]}"""
+        )
+
+    async def test_search_6(self):
+        """
+        retrieveFacetsWildcard
+        """
+        _req = await self._client.search_with_http_info(
+            search_method_params={
+                "requests": [
+                    {
+                        "indexName": "<YOUR_INDEX_NAME>",
+                        "query": "<YOUR_QUERY>",
+                        "facets": [
+                            "*",
+                        ],
+                    },
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/*/queries"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["*"]}]}"""
+        )
+
+    async def test_search_7(self):
         """
         search for a single facet request with minimal parameters
         """
@@ -1958,7 +2147,7 @@ class TestSearchClient:
         )
         assert self._helpers.union(_expected_body, resp) == _expected_body
 
-    async def test_search_2(self):
+    async def test_search_8(self):
         """
         search for a single hits request with all parameters
         """
@@ -1983,7 +2172,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"theIndexName","query":"myQuery","hitsPerPage":50,"type":"default"}]}"""
         )
 
-    async def test_search_3(self):
+    async def test_search_9(self):
         """
         search for a single facet request with all parameters
         """
@@ -2011,7 +2200,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet","facetQuery":"theFacetQuery","query":"theQuery","maxFacetHits":50}],"strategy":"stopIfEnoughMatches"}"""
         )
 
-    async def test_search_4(self):
+    async def test_search_10(self):
         """
         search for multiple mixed requests in multiple indices with minimal parameters
         """
@@ -2043,7 +2232,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"theIndexName"},{"indexName":"theIndexName2","type":"facet","facet":"theFacet"},{"indexName":"theIndexName","type":"default"}],"strategy":"stopIfEnoughMatches"}"""
         )
 
-    async def test_search_5(self):
+    async def test_search_11(self):
         """
         search for multiple mixed requests in multiple indices with all parameters
         """
@@ -2077,7 +2266,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"theIndexName","type":"facet","facet":"theFacet","facetQuery":"theFacetQuery","query":"theQuery","maxFacetHits":50},{"indexName":"theIndexName","query":"myQuery","hitsPerPage":50,"type":"default"}],"strategy":"stopIfEnoughMatches"}"""
         )
 
-    async def test_search_6(self):
+    async def test_search_12(self):
         """
         search filters accept all of the possible shapes
         """
@@ -2140,7 +2329,7 @@ class TestSearchClient:
             """{"requests":[{"indexName":"theIndexName","facetFilters":"mySearch:filters","reRankingApplyFilter":"mySearch:filters","tagFilters":"mySearch:filters","numericFilters":"mySearch:filters","optionalFilters":"mySearch:filters"},{"indexName":"theIndexName","facetFilters":["mySearch:filters",["mySearch:filters",["mySearch:filters"]]],"reRankingApplyFilter":["mySearch:filters",["mySearch:filters"]],"tagFilters":["mySearch:filters",["mySearch:filters"]],"numericFilters":["mySearch:filters",["mySearch:filters"]],"optionalFilters":["mySearch:filters",["mySearch:filters"]]}]}"""
         )
 
-    async def test_search_7(self):
+    async def test_search_13(self):
         """
         search filters end to end
         """
@@ -2276,7 +2465,7 @@ class TestSearchClient:
         )
         assert self._helpers.union(_expected_body, resp) == _expected_body
 
-    async def test_search_8(self):
+    async def test_search_14(self):
         """
         search with all search parameters
         """
@@ -2463,7 +2652,7 @@ class TestSearchClient:
             """{"requests":[{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowTyposOnNumericTokens":true,"alternativesAsExact":["multiWordsSynonym"],"analytics":true,"analyticsTags":[""],"aroundLatLng":"","aroundLatLngViaIP":true,"aroundPrecision":0,"aroundRadius":"all","attributeCriteriaComputedByMinProximity":true,"attributesToHighlight":[""],"attributesToRetrieve":[""],"attributesToSnippet":[""],"clickAnalytics":true,"customRanking":[""],"decompoundQuery":true,"disableExactOnAttributes":[""],"disableTypoToleranceOnAttributes":[""],"distinct":0,"enableABTest":true,"enablePersonalization":true,"enableReRanking":true,"enableRules":true,"exactOnSingleWordQuery":"attribute","facetFilters":[""],"facetingAfterDistinct":true,"facets":[""],"filters":"","getRankingInfo":true,"highlightPostTag":"","highlightPreTag":"","hitsPerPage":1,"ignorePlurals":false,"indexName":"theIndexName","insideBoundingBox":[[47.3165,4.9665,47.3424,5.0201],[40.9234,2.1185,38.643,1.9916]],"insidePolygon":[[47.3165,4.9665,47.3424,5.0201,47.32,4.9],[40.9234,2.1185,38.643,1.9916,39.2587,2.0104]],"keepDiacriticsOnCharacters":"","length":1,"maxValuesPerFacet":0,"minProximity":1,"minWordSizefor1Typo":0,"minWordSizefor2Typos":0,"minimumAroundRadius":1,"naturalLanguages":["fr"],"numericFilters":[""],"offset":0,"optionalFilters":[""],"optionalWords":[""],"page":0,"percentileComputation":true,"personalizationImpact":0,"query":"","queryLanguages":["fr"],"queryType":"prefixAll","ranking":[""],"reRankingApplyFilter":[""],"relevancyStrictness":0,"removeStopWords":true,"removeWordsIfNoResults":"allOptional","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"responseFields":[""],"restrictHighlightAndSnippetArrays":true,"restrictSearchableAttributes":[""],"ruleContexts":[""],"similarQuery":"","snippetEllipsisText":"","sortFacetValuesBy":"","sumOrFiltersScores":true,"synonyms":true,"tagFilters":[""],"type":"default","typoTolerance":"min","userToken":""}]}"""
         )
 
-    async def test_search_dictionary_entries_0(self):
+    async def test_search_dictionary_entries_(self):
         """
         get searchDictionaryEntries results with minimal parameters
         """
@@ -2525,7 +2714,7 @@ class TestSearchClient:
             """{"query":"foo","page":4,"hitsPerPage":2,"language":"fr"}"""
         )
 
-    async def test_search_for_facet_values_0(self):
+    async def test_search_for_facet_values_(self):
         """
         get searchForFacetValues results with minimal parameters
         """
@@ -2562,9 +2751,9 @@ class TestSearchClient:
             """{"params":"query=foo&facetFilters=['bar']","facetQuery":"foo","maxFacetHits":42}"""
         )
 
-    async def test_search_rules_0(self):
+    async def test_search_rules_(self):
         """
-        searchRules0
+        searchRules
         """
         _req = await self._client.search_rules_with_http_info(
             index_name="indexName",
@@ -2579,7 +2768,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"query":"something"}""")
 
-    async def test_search_single_index_0(self):
+    async def test_search_single_index_(self):
         """
         search with minimal parameters
         """
@@ -2696,7 +2885,7 @@ class TestSearchClient:
         )
         assert self._helpers.union(_expected_body, resp) == _expected_body
 
-    async def test_search_synonyms_0(self):
+    async def test_search_synonyms_(self):
         """
         searchSynonyms with minimal parameters
         """
@@ -2732,9 +2921,9 @@ class TestSearchClient:
             """{"query":"myQuery","type":"altcorrection1","page":10,"hitsPerPage":10}"""
         )
 
-    async def test_search_user_ids_0(self):
+    async def test_search_user_ids_(self):
         """
-        searchUserIds0
+        searchUserIds
         """
         _req = await self._client.search_user_ids_with_http_info(
             search_user_ids_params={
@@ -2753,7 +2942,7 @@ class TestSearchClient:
             """{"query":"test","clusterName":"theClusterName","page":5,"hitsPerPage":10}"""
         )
 
-    async def test_set_dictionary_settings_0(self):
+    async def test_set_dictionary_settings_(self):
         """
         get setDictionarySettings results with minimal parameters
         """
@@ -2807,7 +2996,30 @@ class TestSearchClient:
             """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}"""
         )
 
-    async def test_set_settings_0(self):
+    async def test_set_settings_(self):
+        """
+        setSettingsAttributesForFaceting
+        """
+        _req = await self._client.set_settings_with_http_info(
+            index_name="<YOUR_INDEX_NAME>",
+            index_settings={
+                "attributesForFaceting": [
+                    "actor",
+                    "filterOnly(category)",
+                    "searchable(publisher)",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"attributesForFaceting":["actor","filterOnly(category)","searchable(publisher)"]}"""
+        )
+
+    async def test_set_settings_1(self):
         """
         setSettings with minimal parameters
         """
@@ -2836,7 +3048,7 @@ class TestSearchClient:
         )
         assert raw_resp.status_code == 200
 
-    async def test_set_settings_1(self):
+    async def test_set_settings_2(self):
         """
         setSettings allow boolean `typoTolerance`
         """
@@ -2854,7 +3066,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"typoTolerance":true}""")
 
-    async def test_set_settings_2(self):
+    async def test_set_settings_3(self):
         """
         setSettings allow enum `typoTolerance`
         """
@@ -2872,7 +3084,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"typoTolerance":"min"}""")
 
-    async def test_set_settings_3(self):
+    async def test_set_settings_4(self):
         """
         setSettings allow boolean `ignorePlurals`
         """
@@ -2890,7 +3102,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"ignorePlurals":true}""")
 
-    async def test_set_settings_4(self):
+    async def test_set_settings_5(self):
         """
         setSettings allow list of string `ignorePlurals`
         """
@@ -2910,7 +3122,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"ignorePlurals":["fr"]}""")
 
-    async def test_set_settings_5(self):
+    async def test_set_settings_6(self):
         """
         setSettings allow boolean `removeStopWords`
         """
@@ -2928,7 +3140,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"removeStopWords":true}""")
 
-    async def test_set_settings_6(self):
+    async def test_set_settings_7(self):
         """
         setSettings allow list of string `removeStopWords`
         """
@@ -2948,7 +3160,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"removeStopWords":["fr"]}""")
 
-    async def test_set_settings_7(self):
+    async def test_set_settings_8(self):
         """
         setSettings allow boolean `distinct`
         """
@@ -2966,7 +3178,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"distinct":true}""")
 
-    async def test_set_settings_8(self):
+    async def test_set_settings_9(self):
         """
         setSettings allow integers for `distinct`
         """
@@ -2984,7 +3196,7 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"distinct":1}""")
 
-    async def test_set_settings_9(self):
+    async def test_set_settings_10(self):
         """
         setSettings allow all `indexSettings`
         """
@@ -3136,9 +3348,9 @@ class TestSearchClient:
             """{"advancedSyntax":true,"advancedSyntaxFeatures":["exactPhrase"],"allowCompressionOfIntegerArray":true,"allowTyposOnNumericTokens":true,"alternativesAsExact":["singleWordSynonym"],"attributeCriteriaComputedByMinProximity":true,"attributeForDistinct":"test","attributesForFaceting":["algolia"],"attributesToHighlight":["algolia"],"attributesToRetrieve":["algolia"],"attributesToSnippet":["algolia"],"attributesToTransliterate":["algolia"],"camelCaseAttributes":["algolia"],"customNormalization":{"algolia":{"aloglia":"aglolia"}},"customRanking":["algolia"],"decompoundQuery":false,"decompoundedAttributes":{"algolia":"aloglia"},"disableExactOnAttributes":["algolia"],"disablePrefixOnAttributes":["algolia"],"disableTypoToleranceOnAttributes":["algolia"],"disableTypoToleranceOnWords":["algolia"],"distinct":3,"enablePersonalization":true,"enableReRanking":false,"enableRules":true,"exactOnSingleWordQuery":"attribute","highlightPreTag":"<span>","highlightPostTag":"</span>","hitsPerPage":10,"ignorePlurals":false,"indexLanguages":["fr"],"keepDiacriticsOnCharacters":"abc","maxFacetHits":20,"maxValuesPerFacet":30,"minProximity":6,"minWordSizefor1Typo":5,"minWordSizefor2Typos":11,"mode":"neuralSearch","numericAttributesForFiltering":["algolia"],"optionalWords":["myspace"],"paginationLimitedTo":0,"queryLanguages":["fr"],"queryType":"prefixLast","ranking":["geo"],"reRankingApplyFilter":"mySearch:filters","relevancyStrictness":10,"removeStopWords":false,"removeWordsIfNoResults":"lastWords","renderingContent":{"facetOrdering":{"facets":{"order":["a","b"]},"values":{"a":{"order":["b"],"sortRemainingBy":"count"}}}},"replaceSynonymsInHighlight":true,"replicas":[""],"responseFields":["algolia"],"restrictHighlightAndSnippetArrays":true,"searchableAttributes":["foo"],"semanticSearch":{"eventSources":["foo"]},"separatorsToIndex":"bar","snippetEllipsisText":"---","sortFacetValuesBy":"date","typoTolerance":false,"unretrievableAttributes":["foo"],"userData":{"user":"data"}}"""
         )
 
-    async def test_update_api_key_0(self):
+    async def test_update_api_key_(self):
         """
-        updateApiKey0
+        updateApiKey
         """
         _req = await self._client.update_api_key_with_http_info(
             key="myApiKey",

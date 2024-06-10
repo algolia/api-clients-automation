@@ -14,7 +14,7 @@ class TestMonitoringClient:
         config=_config, transporter=EchoTransporter(_config)
     )
 
-    async def test_custom_delete_0(self):
+    async def test_custom_delete_(self):
         """
         allow del method for a custom path with minimal parameters
         """
@@ -45,7 +45,7 @@ class TestMonitoringClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_custom_get_0(self):
+    async def test_custom_get_(self):
         """
         allow get method for a custom path with minimal parameters
         """
@@ -108,7 +108,7 @@ class TestMonitoringClient:
         assert _req.headers.items() >= {"x-header-1": "spaces are left alone"}.items()
         assert _req.data is None
 
-    async def test_custom_post_0(self):
+    async def test_custom_post_(self):
         """
         allow post method for a custom path with minimal parameters
         """
@@ -367,7 +367,7 @@ class TestMonitoringClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
-    async def test_custom_put_0(self):
+    async def test_custom_put_(self):
         """
         allow put method for a custom path with minimal parameters
         """
@@ -401,7 +401,7 @@ class TestMonitoringClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
-    async def test_get_cluster_incidents_0(self):
+    async def test_get_cluster_incidents_(self):
         """
         getClusterIncidents
         """
@@ -415,7 +415,7 @@ class TestMonitoringClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_cluster_status_0(self):
+    async def test_get_cluster_status_(self):
         """
         getClusterStatus
         """
@@ -429,7 +429,7 @@ class TestMonitoringClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_incidents_0(self):
+    async def test_get_incidents_(self):
         """
         getIncidents
         """
@@ -441,7 +441,7 @@ class TestMonitoringClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_indexing_time_0(self):
+    async def test_get_indexing_time_(self):
         """
         getIndexingTime
         """
@@ -455,7 +455,7 @@ class TestMonitoringClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_latency_0(self):
+    async def test_get_latency_(self):
         """
         getLatency
         """
@@ -469,7 +469,7 @@ class TestMonitoringClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_metrics_0(self):
+    async def test_get_metrics_(self):
         """
         getMetrics
         """
@@ -484,7 +484,7 @@ class TestMonitoringClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_reachability_0(self):
+    async def test_get_reachability_(self):
         """
         getReachability
         """
@@ -498,7 +498,7 @@ class TestMonitoringClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_servers_0(self):
+    async def test_get_servers_(self):
         """
         getInventory
         """
@@ -510,7 +510,7 @@ class TestMonitoringClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_status_0(self):
+    async def test_get_status_(self):
         """
         getStatus
         """

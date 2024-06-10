@@ -24,7 +24,7 @@ class TestAbtestingClient < Test::Unit::TestCase
   end
 
   # addABTests with minimal parameters
-  def test_add_ab_tests0
+  def test_add_ab_tests
     req = @client.add_ab_tests_with_http_info(
       AddABTestsRequest.new(
         end_at: "2022-12-31T00:00:00.000Z",
@@ -49,7 +49,7 @@ class TestAbtestingClient < Test::Unit::TestCase
   end
 
   # allow del method for a custom path with minimal parameters
-  def test_custom_delete0
+  def test_custom_delete
     req = @client.custom_delete_with_http_info("test/minimal")
 
     assert_equal(:delete, req.method)
@@ -73,7 +73,7 @@ class TestAbtestingClient < Test::Unit::TestCase
   end
 
   # allow get method for a custom path with minimal parameters
-  def test_custom_get0
+  def test_custom_get
     req = @client.custom_get_with_http_info("test/minimal")
 
     assert_equal(:get, req.method)
@@ -130,7 +130,7 @@ class TestAbtestingClient < Test::Unit::TestCase
   end
 
   # allow post method for a custom path with minimal parameters
-  def test_custom_post0
+  def test_custom_post
     req = @client.custom_post_with_http_info("test/minimal")
 
     assert_equal(:post, req.method)
@@ -313,7 +313,7 @@ class TestAbtestingClient < Test::Unit::TestCase
   end
 
   # allow put method for a custom path with minimal parameters
-  def test_custom_put0
+  def test_custom_put
     req = @client.custom_put_with_http_info("test/minimal")
 
     assert_equal(:put, req.method)
@@ -339,7 +339,7 @@ class TestAbtestingClient < Test::Unit::TestCase
   end
 
   # deleteABTest
-  def test_delete_ab_test0
+  def test_delete_ab_test
     req = @client.delete_ab_test_with_http_info(42)
 
     assert_equal(:delete, req.method)
@@ -351,7 +351,7 @@ class TestAbtestingClient < Test::Unit::TestCase
   end
 
   # getABTest
-  def test_get_ab_test0
+  def test_get_ab_test
     req = @client.get_ab_test_with_http_info(42)
 
     assert_equal(:get, req.method)
@@ -363,7 +363,7 @@ class TestAbtestingClient < Test::Unit::TestCase
   end
 
   # listABTests with minimal parameters
-  def test_list_ab_tests0
+  def test_list_ab_tests
     req = @client.list_ab_tests_with_http_info
 
     assert_equal(:get, req.method)
@@ -400,7 +400,7 @@ class TestAbtestingClient < Test::Unit::TestCase
   end
 
   # stopABTest
-  def test_stop_ab_test0
+  def test_stop_ab_test
     req = @client.stop_ab_test_with_http_info(42)
 
     assert_equal(:post, req.method)

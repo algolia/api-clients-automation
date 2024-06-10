@@ -24,7 +24,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # createAuthenticationOAuth
-  def test_create_authentication0
+  def test_create_authentication
     req = @client.create_authentication_with_http_info(
       AuthenticationCreate.new(
         type: 'oauth',
@@ -62,7 +62,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # createDestination
-  def test_create_destination0
+  def test_create_destination
     req = @client.create_destination_with_http_info(
       DestinationCreate.new(
         type: 'search',
@@ -82,7 +82,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # createSource
-  def test_create_source0
+  def test_create_source
     req = @client.create_source_with_http_info(
       SourceCreate.new(
         type: 'commercetools',
@@ -107,7 +107,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # createTaskOnDemand
-  def test_create_task0
+  def test_create_task
     req = @client.create_task_with_http_info(
       TaskCreate.new(
         source_id: "search",
@@ -167,7 +167,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # allow del method for a custom path with minimal parameters
-  def test_custom_delete0
+  def test_custom_delete
     req = @client.custom_delete_with_http_info("test/minimal")
 
     assert_equal(:delete, req.method)
@@ -191,7 +191,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # allow get method for a custom path with minimal parameters
-  def test_custom_get0
+  def test_custom_get
     req = @client.custom_get_with_http_info("test/minimal")
 
     assert_equal(:get, req.method)
@@ -248,7 +248,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # allow post method for a custom path with minimal parameters
-  def test_custom_post0
+  def test_custom_post
     req = @client.custom_post_with_http_info("test/minimal")
 
     assert_equal(:post, req.method)
@@ -431,7 +431,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # allow put method for a custom path with minimal parameters
-  def test_custom_put0
+  def test_custom_put
     req = @client.custom_put_with_http_info("test/minimal")
 
     assert_equal(:put, req.method)
@@ -457,7 +457,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # deleteAuthentication
-  def test_delete_authentication0
+  def test_delete_authentication
     req = @client.delete_authentication_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:delete, req.method)
@@ -469,7 +469,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # deleteDestination
-  def test_delete_destination0
+  def test_delete_destination
     req = @client.delete_destination_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:delete, req.method)
@@ -481,7 +481,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # deleteSource
-  def test_delete_source0
+  def test_delete_source
     req = @client.delete_source_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:delete, req.method)
@@ -493,7 +493,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # deleteTask
-  def test_delete_task0
+  def test_delete_task
     req = @client.delete_task_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:delete, req.method)
@@ -505,7 +505,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # disableTask
-  def test_disable_task0
+  def test_disable_task
     req = @client.disable_task_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:put, req.method)
@@ -515,7 +515,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # enable task e2e
-  def test_enable_task0
+  def test_enable_task
     req = @client.enable_task_with_http_info("76ab4c2a-ce17-496f-b7a6-506dc59ee498")
 
     assert_equal(:put, req.method)
@@ -532,7 +532,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # getAuthentication
-  def test_get_authentication0
+  def test_get_authentication
     req = @client.get_authentication_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:get, req.method)
@@ -544,7 +544,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # getAuthentications
-  def test_get_authentications0
+  def test_get_authentications
     req = @client.get_authentications_with_http_info
 
     assert_equal(:get, req.method)
@@ -604,7 +604,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # getDestination
-  def test_get_destination0
+  def test_get_destination
     req = @client.get_destination_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:get, req.method)
@@ -616,7 +616,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # getDestinations
-  def test_get_destinations0
+  def test_get_destinations
     req = @client.get_destinations_with_http_info
 
     assert_equal(:get, req.method)
@@ -628,7 +628,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # getDockerSourceStreams
-  def test_get_docker_source_streams0
+  def test_get_docker_source_streams
     req = @client.get_docker_source_streams_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:get, req.method)
@@ -640,7 +640,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # getEvent
-  def test_get_event0
+  def test_get_event
     req = @client.get_event_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
@@ -657,7 +657,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # getEvents
-  def test_get_events0
+  def test_get_events
     req = @client.get_events_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:get, req.method)
@@ -669,7 +669,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # getRun
-  def test_get_run0
+  def test_get_run
     req = @client.get_run_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:get, req.method)
@@ -681,7 +681,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # getRuns
-  def test_get_runs0
+  def test_get_runs
     req = @client.get_runs_with_http_info
 
     assert_equal(:get, req.method)
@@ -693,7 +693,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # getSource
-  def test_get_source0
+  def test_get_source
     req = @client.get_source_with_http_info("75eeb306-51d3-4e5e-a279-3c92bd8893ac")
 
     assert_equal(:get, req.method)
@@ -712,7 +712,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # getSources
-  def test_get_sources0
+  def test_get_sources
     req = @client.get_sources_with_http_info
 
     assert_equal(:get, req.method)
@@ -724,7 +724,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # getTask
-  def test_get_task0
+  def test_get_task
     req = @client.get_task_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:get, req.method)
@@ -736,7 +736,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # getTasks
-  def test_get_tasks0
+  def test_get_tasks
     req = @client.get_tasks_with_http_info
 
     assert_equal(:get, req.method)
@@ -748,7 +748,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # runTask
-  def test_run_task0
+  def test_run_task
     req = @client.run_task_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:post, req.method)
@@ -758,7 +758,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # searchAuthentications
-  def test_search_authentications0
+  def test_search_authentications
     req = @client.search_authentications_with_http_info(
       AuthenticationSearch.new(
         authentication_ids: [
@@ -777,7 +777,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # searchDestinations
-  def test_search_destinations0
+  def test_search_destinations
     req = @client.search_destinations_with_http_info(
       DestinationSearch.new(
         destination_ids: [
@@ -796,7 +796,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # searchSources
-  def test_search_sources0
+  def test_search_sources
     req = @client.search_sources_with_http_info(
       SourceSearch.new(
         source_ids: [
@@ -815,7 +815,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # searchTasks
-  def test_search_tasks0
+  def test_search_tasks
     req = @client.search_tasks_with_http_info(
       TaskSearch.new(
         task_ids: [
@@ -853,7 +853,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # triggerDockerSourceDiscover
-  def test_trigger_docker_source_discover0
+  def test_trigger_docker_source_discover
     req = @client.trigger_docker_source_discover_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
     assert_equal(:post, req.method)
@@ -863,7 +863,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # updateAuthentication
-  def test_update_authentication0
+  def test_update_authentication
     req = @client.update_authentication_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       AuthenticationUpdate.new(name: "newName")
@@ -877,7 +877,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # updateDestination
-  def test_update_destination0
+  def test_update_destination
     req = @client.update_destination_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       DestinationUpdate.new(name: "newName")
@@ -891,7 +891,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # updateSource
-  def test_update_source0
+  def test_update_source
     req = @client.update_source_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       SourceUpdate.new(name: "newName")
@@ -905,7 +905,7 @@ class TestIngestionClient < Test::Unit::TestCase
   end
 
   # updateTask
-  def test_update_task0
+  def test_update_task
     req = @client.update_task_with_http_info(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       TaskUpdate.new(enabled: false)

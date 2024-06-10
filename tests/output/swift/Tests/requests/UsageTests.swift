@@ -12,7 +12,7 @@ final class UsageClientRequestsTests: XCTestCase {
     static let API_KEY = "my_api_key"
 
     /// allow del method for a custom path with minimal parameters
-    func testCustomDeleteTest0() async throws {
+    func testCustomDeleteTest() async throws {
         let configuration = try UsageClientConfiguration(
             appID: UsageClientRequestsTests.APPLICATION_ID,
             apiKey: UsageClientRequestsTests.API_KEY
@@ -63,7 +63,7 @@ final class UsageClientRequestsTests: XCTestCase {
     }
 
     /// allow get method for a custom path with minimal parameters
-    func testCustomGetTest0() async throws {
+    func testCustomGetTest() async throws {
         let configuration = try UsageClientConfiguration(
             appID: UsageClientRequestsTests.APPLICATION_ID,
             apiKey: UsageClientRequestsTests.API_KEY
@@ -163,7 +163,7 @@ final class UsageClientRequestsTests: XCTestCase {
     }
 
     /// allow post method for a custom path with minimal parameters
-    func testCustomPostTest0() async throws {
+    func testCustomPostTest() async throws {
         let configuration = try UsageClientConfiguration(
             appID: UsageClientRequestsTests.APPLICATION_ID,
             apiKey: UsageClientRequestsTests.API_KEY
@@ -639,7 +639,7 @@ final class UsageClientRequestsTests: XCTestCase {
     }
 
     /// allow put method for a custom path with minimal parameters
-    func testCustomPutTest0() async throws {
+    func testCustomPutTest() async throws {
         let configuration = try UsageClientConfiguration(
             appID: UsageClientRequestsTests.APPLICATION_ID,
             apiKey: UsageClientRequestsTests.API_KEY
@@ -703,7 +703,7 @@ final class UsageClientRequestsTests: XCTestCase {
     }
 
     /// getIndexUsage with minimal parameters
-    func testGetIndexUsageTest0() async throws {
+    func testGetIndexUsageTest() async throws {
         let configuration = try UsageClientConfiguration(
             appID: UsageClientRequestsTests.APPLICATION_ID,
             apiKey: UsageClientRequestsTests.API_KEY
@@ -739,7 +739,7 @@ final class UsageClientRequestsTests: XCTestCase {
     }
 
     /// getUsage with minimal parameters
-    func testGetUsageTest0() async throws {
+    func testGetUsageTest() async throws {
         let configuration = try UsageClientConfiguration(
             appID: UsageClientRequestsTests.APPLICATION_ID,
             apiKey: UsageClientRequestsTests.API_KEY

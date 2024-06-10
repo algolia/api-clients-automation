@@ -1,15 +1,18 @@
 package com.algolia.methods.snippets;
 
+// >IMPORT
 import com.algolia.api.QuerySuggestionsClient;
 import com.algolia.model.querysuggestions.*;
+
+// IMPORT<
 
 class SnippetQuerySuggestionsClient {
 
   // Snippet for the createConfig method.
   //
-  // createConfig0
+  // createConfig
   void snippetForCreateConfig() {
-    // >SEPARATOR createConfig
+    // >SEPARATOR createConfig default
     // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -35,7 +38,7 @@ class SnippetQuerySuggestionsClient {
   //
   // allow del method for a custom path with minimal parameters
   void snippetForCustomDelete() {
-    // >SEPARATOR customDelete
+    // >SEPARATOR customDelete default
     // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -48,7 +51,7 @@ class SnippetQuerySuggestionsClient {
   //
   // allow get method for a custom path with minimal parameters
   void snippetForCustomGet() {
-    // >SEPARATOR customGet
+    // >SEPARATOR customGet default
     // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -61,7 +64,7 @@ class SnippetQuerySuggestionsClient {
   //
   // allow post method for a custom path with minimal parameters
   void snippetForCustomPost() {
-    // >SEPARATOR customPost
+    // >SEPARATOR customPost default
     // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -74,7 +77,7 @@ class SnippetQuerySuggestionsClient {
   //
   // allow put method for a custom path with minimal parameters
   void snippetForCustomPut() {
-    // >SEPARATOR customPut
+    // >SEPARATOR customPut default
     // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -85,9 +88,9 @@ class SnippetQuerySuggestionsClient {
 
   // Snippet for the deleteConfig method.
   //
-  // deleteConfig0
+  // deleteConfig
   void snippetForDeleteConfig() {
-    // >SEPARATOR deleteConfig
+    // >SEPARATOR deleteConfig default
     // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -98,9 +101,9 @@ class SnippetQuerySuggestionsClient {
 
   // Snippet for the getAllConfigs method.
   //
-  // getAllConfigs0
+  // getAllConfigs
   void snippetForGetAllConfigs() {
-    // >SEPARATOR getAllConfigs
+    // >SEPARATOR getAllConfigs default
     // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -113,7 +116,7 @@ class SnippetQuerySuggestionsClient {
   //
   // Retrieve QS config e2e
   void snippetForGetConfig() {
-    // >SEPARATOR getConfig
+    // >SEPARATOR getConfig default
     // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -124,9 +127,9 @@ class SnippetQuerySuggestionsClient {
 
   // Snippet for the getConfigStatus method.
   //
-  // getConfigStatus0
+  // getConfigStatus
   void snippetForGetConfigStatus() {
-    // >SEPARATOR getConfigStatus
+    // >SEPARATOR getConfigStatus default
     // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -137,9 +140,9 @@ class SnippetQuerySuggestionsClient {
 
   // Snippet for the getLogFile method.
   //
-  // getLogFile0
+  // getLogFile
   void snippetForGetLogFile() {
-    // >SEPARATOR getLogFile
+    // >SEPARATOR getLogFile default
     // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -150,9 +153,9 @@ class SnippetQuerySuggestionsClient {
 
   // Snippet for the updateConfig method.
   //
-  // updateConfig0
+  // updateConfig
   void snippetForUpdateConfig() {
-    // >SEPARATOR updateConfig
+    // >SEPARATOR updateConfig default
     // Initialize the client
     QuerySuggestionsClient client = new QuerySuggestionsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 

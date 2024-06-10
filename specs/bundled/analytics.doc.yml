@@ -176,7 +176,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomGet(client.NewApiCustomGetRequest(
+            response, err := client.CustomGet(client.NewApiCustomGetRequest(
               "test/minimal",
             ))
 
@@ -188,7 +188,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -240,9 +240,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -266,19 +265,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.custom_get(
+            response = await _client.custom_get(
                 path="test/minimal",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -290,17 +289,17 @@ paths:
 
             # Call the API
 
-            resp = client.custom_get("test/minimal")
+            response = client.custom_get("test/minimal")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -312,14 +311,14 @@ paths:
 
             // Call the API
 
-            val res = client.customGet[JObject](
+            val response = client.customGet[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -331,7 +330,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customGet(path: "test/minimal")
+            let response = try await client.customGet(path: "test/minimal")
     post:
       operationId: customPost
       requestBody:
@@ -388,7 +387,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomPost(client.NewApiCustomPostRequest(
+            response, err := client.CustomPost(client.NewApiCustomPostRequest(
               "test/minimal",
             ))
 
@@ -400,7 +399,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -452,9 +451,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -478,19 +476,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.custom_post(
+            response = await _client.custom_post(
                 path="test/minimal",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -502,17 +500,17 @@ paths:
 
             # Call the API
 
-            resp = client.custom_post("test/minimal")
+            response = client.custom_post("test/minimal")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -524,14 +522,14 @@ paths:
 
             // Call the API
 
-            val res = client.customPost[JObject](
+            val response = client.customPost[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -543,7 +541,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPost(path: "test/minimal")
+            let response = try await client.customPost(path: "test/minimal")
     put:
       operationId: customPut
       requestBody:
@@ -600,7 +598,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomPut(client.NewApiCustomPutRequest(
+            response, err := client.CustomPut(client.NewApiCustomPutRequest(
               "test/minimal",
             ))
 
@@ -612,7 +610,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -664,9 +662,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -690,19 +687,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.custom_put(
+            response = await _client.custom_put(
                 path="test/minimal",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -714,17 +711,17 @@ paths:
 
             # Call the API
 
-            resp = client.custom_put("test/minimal")
+            response = client.custom_put("test/minimal")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -736,14 +733,14 @@ paths:
 
             // Call the API
 
-            val res = client.customPut[JObject](
+            val response = client.customPut[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -755,7 +752,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPut(path: "test/minimal")
+            let response = try await client.customPut(path: "test/minimal")
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -806,7 +803,8 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+            response, err :=
+            client.CustomDelete(client.NewApiCustomDeleteRequest(
               "test/minimal",
             ))
 
@@ -818,7 +816,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -876,9 +874,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -902,19 +899,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.custom_delete(
+            response = await _client.custom_delete(
                 path="test/minimal",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -926,17 +923,17 @@ paths:
 
             # Call the API
 
-            resp = client.custom_delete("test/minimal")
+            response = client.custom_delete("test/minimal")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -948,14 +945,14 @@ paths:
 
             // Call the API
 
-            val res = client.customDelete[JObject](
+            val response = client.customDelete[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -967,7 +964,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customDelete(path: "test/minimal")
+            let response = try await client.customDelete(path: "test/minimal")
   /2/searches:
     get:
       tags:
@@ -1038,7 +1035,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetTopSearches(client.NewApiGetTopSearchesRequest(
               "index",
             ))
@@ -1051,7 +1048,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1103,9 +1100,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -1129,19 +1125,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_top_searches(
+            response = await _client.get_top_searches(
                 index="index",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1153,17 +1149,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_top_searches("index")
+            response = client.get_top_searches("index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1175,14 +1171,14 @@ paths:
 
             // Call the API
 
-            val res = client.getTopSearches(
+            val response = client.getTopSearches(
               index = "index"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1194,7 +1190,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getTopSearches(index: "index")
+            let response = try await client.getTopSearches(index: "index")
   /2/searches/count:
     get:
       tags:
@@ -1288,7 +1284,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetSearchesCount(client.NewApiGetSearchesCountRequest(
               "index",
             ))
@@ -1301,7 +1297,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1353,9 +1349,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -1379,19 +1374,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_searches_count(
+            response = await _client.get_searches_count(
                 index="index",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1403,17 +1398,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_searches_count("index")
+            response = client.get_searches_count("index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1425,14 +1420,14 @@ paths:
 
             // Call the API
 
-            val res = client.getSearchesCount(
+            val response = client.getSearchesCount(
               index = "index"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1444,7 +1439,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getSearchesCount(index: "index")
+            let response = try await client.getSearchesCount(index: "index")
   /2/searches/noResults:
     get:
       tags:
@@ -1534,7 +1529,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetSearchesNoResults(client.NewApiGetSearchesNoResultsRequest(
               "index",
             ))
@@ -1547,7 +1542,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1605,9 +1600,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -1631,19 +1625,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_searches_no_results(
+            response = await _client.get_searches_no_results(
                 index="index",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1655,17 +1649,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_searches_no_results("index")
+            response = client.get_searches_no_results("index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1677,14 +1671,14 @@ paths:
 
             // Call the API
 
-            val res = client.getSearchesNoResults(
+            val response = client.getSearchesNoResults(
               index = "index"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1696,7 +1690,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getSearchesNoResults(index: "index")
+            let response = try await client.getSearchesNoResults(index: "index")
   /2/searches/noClicks:
     get:
       tags:
@@ -1791,7 +1785,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetSearchesNoClicks(client.NewApiGetSearchesNoClicksRequest(
               "index",
             ))
@@ -1804,7 +1798,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1862,9 +1856,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -1888,19 +1881,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_searches_no_clicks(
+            response = await _client.get_searches_no_clicks(
                 index="index",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1912,17 +1905,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_searches_no_clicks("index")
+            response = client.get_searches_no_clicks("index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1934,14 +1927,14 @@ paths:
 
             // Call the API
 
-            val res = client.getSearchesNoClicks(
+            val response = client.getSearchesNoClicks(
               index = "index"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1953,7 +1946,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getSearchesNoClicks(index: "index")
+            let response = try await client.getSearchesNoClicks(index: "index")
   /2/searches/noResultRate:
     get:
       tags:
@@ -2059,7 +2052,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetNoResultsRate(client.NewApiGetNoResultsRateRequest(
               "index",
             ))
@@ -2072,7 +2065,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -2124,9 +2117,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -2150,19 +2142,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_no_results_rate(
+            response = await _client.get_no_results_rate(
                 index="index",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2174,17 +2166,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_no_results_rate("index")
+            response = client.get_no_results_rate("index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -2196,14 +2188,14 @@ paths:
 
             // Call the API
 
-            val res = client.getNoResultsRate(
+            val response = client.getNoResultsRate(
               index = "index"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2215,7 +2207,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getNoResultsRate(index: "index")
+            let response = try await client.getNoResultsRate(index: "index")
   /2/searches/noClickRate:
     get:
       tags:
@@ -2321,7 +2313,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetNoClickRate(client.NewApiGetNoClickRateRequest(
               "index",
             ))
@@ -2334,7 +2326,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -2386,9 +2378,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -2412,19 +2403,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_no_click_rate(
+            response = await _client.get_no_click_rate(
                 index="index",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2436,17 +2427,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_no_click_rate("index")
+            response = client.get_no_click_rate("index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -2458,14 +2449,14 @@ paths:
 
             // Call the API
 
-            val res = client.getNoClickRate(
+            val response = client.getNoClickRate(
               index = "index"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2477,7 +2468,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getNoClickRate(index: "index")
+            let response = try await client.getNoClickRate(index: "index")
   /2/hits:
     get:
       tags:
@@ -2547,7 +2538,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.GetTopHits(client.NewApiGetTopHitsRequest(
+            response, err := client.GetTopHits(client.NewApiGetTopHitsRequest(
               "index",
             ))
 
@@ -2559,7 +2550,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -2611,9 +2602,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -2637,19 +2627,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_top_hits(
+            response = await _client.get_top_hits(
                 index="index",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2661,17 +2651,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_top_hits("index")
+            response = client.get_top_hits("index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -2683,14 +2673,14 @@ paths:
 
             // Call the API
 
-            val res = client.getTopHits(
+            val response = client.getTopHits(
               index = "index"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2702,7 +2692,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getTopHits(index: "index")
+            let response = try await client.getTopHits(index: "index")
   /2/users/count:
     get:
       tags:
@@ -2811,7 +2801,8 @@ paths:
 
             // Call the API
 
-            resp, err := client.GetUsersCount(client.NewApiGetUsersCountRequest(
+            response, err :=
+            client.GetUsersCount(client.NewApiGetUsersCountRequest(
               "index",
             ))
 
@@ -2823,7 +2814,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -2875,9 +2866,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -2901,19 +2891,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_users_count(
+            response = await _client.get_users_count(
                 index="index",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2925,17 +2915,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_users_count("index")
+            response = client.get_users_count("index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -2947,14 +2937,14 @@ paths:
 
             // Call the API
 
-            val res = client.getUsersCount(
+            val response = client.getUsersCount(
               index = "index"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2966,7 +2956,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getUsersCount(index: "index")
+            let response = try await client.getUsersCount(index: "index")
   /2/filters:
     get:
       tags:
@@ -3039,7 +3029,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetTopFilterAttributes(client.NewApiGetTopFilterAttributesRequest(
               "index",
             ))
@@ -3052,7 +3042,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -3110,9 +3100,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -3136,19 +3125,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_top_filter_attributes(
+            response = await _client.get_top_filter_attributes(
                 index="index",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3160,17 +3149,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_top_filter_attributes("index")
+            response = client.get_top_filter_attributes("index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -3182,14 +3171,14 @@ paths:
 
             // Call the API
 
-            val res = client.getTopFilterAttributes(
+            val response = client.getTopFilterAttributes(
               index = "index"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3201,7 +3190,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.getTopFilterAttributes(index: "index")
+            let response = try await client.getTopFilterAttributes(index:
+            "index")
   /2/filters/{attribute}:
     get:
       tags:
@@ -3280,7 +3270,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(
               "myAttribute", "index",
             ))
@@ -3293,7 +3283,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -3349,9 +3339,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -3376,7 +3365,7 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_top_filter_for_attribute(
+            response = await _client.get_top_filter_for_attribute(
                 attribute="myAttribute",
                 index="index",
             )
@@ -3384,12 +3373,12 @@ paths:
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3401,17 +3390,18 @@ paths:
 
             # Call the API
 
-            resp = client.get_top_filter_for_attribute("myAttribute", "index")
+            response = client.get_top_filter_for_attribute("myAttribute",
+            "index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -3423,7 +3413,7 @@ paths:
 
             // Call the API
 
-            val res = client.getTopFilterForAttribute(
+            val response = client.getTopFilterForAttribute(
               attribute = "myAttribute",
               index = "index"
             )
@@ -3431,7 +3421,7 @@ paths:
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3443,7 +3433,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getTopFilterForAttribute(attribute:
+            let response = try await client.getTopFilterForAttribute(attribute:
             "myAttribute", index: "index")
   /2/filters/noResults:
     get:
@@ -3519,7 +3509,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetTopFiltersNoResults(client.NewApiGetTopFiltersNoResultsRequest(
               "index",
             ))
@@ -3532,7 +3522,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -3590,9 +3580,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -3616,19 +3605,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_top_filters_no_results(
+            response = await _client.get_top_filters_no_results(
                 index="index",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3640,17 +3629,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_top_filters_no_results("index")
+            response = client.get_top_filters_no_results("index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -3662,14 +3651,14 @@ paths:
 
             // Call the API
 
-            val res = client.getTopFiltersNoResults(
+            val response = client.getTopFiltersNoResults(
               index = "index"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3681,7 +3670,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.getTopFiltersNoResults(index: "index")
+            let response = try await client.getTopFiltersNoResults(index:
+            "index")
   /2/countries:
     get:
       tags:
@@ -3770,7 +3760,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetTopCountries(client.NewApiGetTopCountriesRequest(
               "index",
             ))
@@ -3783,7 +3773,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -3835,9 +3825,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -3861,19 +3850,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_top_countries(
+            response = await _client.get_top_countries(
                 index="index",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -3885,17 +3874,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_top_countries("index")
+            response = client.get_top_countries("index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -3907,14 +3896,14 @@ paths:
 
             // Call the API
 
-            val res = client.getTopCountries(
+            val response = client.getTopCountries(
               index = "index"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -3926,7 +3915,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getTopCountries(index: "index")
+            let response = try await client.getTopCountries(index: "index")
   /2/clicks/averageClickPosition:
     get:
       tags:
@@ -4032,7 +4021,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(
               "index",
             ))
@@ -4045,7 +4034,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -4103,9 +4092,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -4129,19 +4117,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_average_click_position(
+            response = await _client.get_average_click_position(
                 index="index",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -4153,17 +4141,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_average_click_position("index")
+            response = client.get_average_click_position("index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -4175,14 +4163,14 @@ paths:
 
             // Call the API
 
-            val res = client.getAverageClickPosition(
+            val response = client.getAverageClickPosition(
               index = "index"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4194,7 +4182,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.getAverageClickPosition(index: "index")
+            let response = try await client.getAverageClickPosition(index:
+            "index")
   /2/clicks/positions:
     get:
       tags:
@@ -4272,7 +4261,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetClickPositions(client.NewApiGetClickPositionsRequest(
               "index",
             ))
@@ -4285,7 +4274,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -4337,9 +4326,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -4363,19 +4351,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_click_positions(
+            response = await _client.get_click_positions(
                 index="index",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -4387,17 +4375,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_click_positions("index")
+            response = client.get_click_positions("index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -4409,14 +4397,14 @@ paths:
 
             // Call the API
 
-            val res = client.getClickPositions(
+            val response = client.getClickPositions(
               index = "index"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4428,7 +4416,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getClickPositions(index: "index")
+            let response = try await client.getClickPositions(index: "index")
   /2/clicks/clickThroughRate:
     get:
       tags:
@@ -4534,7 +4522,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetClickThroughRate(client.NewApiGetClickThroughRateRequest(
               "index",
             ))
@@ -4547,7 +4535,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -4605,9 +4593,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -4631,19 +4618,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_click_through_rate(
+            response = await _client.get_click_through_rate(
                 index="index",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -4655,17 +4642,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_click_through_rate("index")
+            response = client.get_click_through_rate("index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -4677,14 +4664,14 @@ paths:
 
             // Call the API
 
-            val res = client.getClickThroughRate(
+            val response = client.getClickThroughRate(
               index = "index"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4696,7 +4683,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getClickThroughRate(index: "index")
+            let response = try await client.getClickThroughRate(index: "index")
   /2/conversions/conversionRate:
     get:
       tags:
@@ -4802,7 +4789,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetConversionRate(client.NewApiGetConversionRateRequest(
               "index",
             ))
@@ -4815,7 +4802,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -4867,9 +4854,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -4893,19 +4879,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_conversion_rate(
+            response = await _client.get_conversion_rate(
                 index="index",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -4917,17 +4903,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_conversion_rate("index")
+            response = client.get_conversion_rate("index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -4939,14 +4925,14 @@ paths:
 
             // Call the API
 
-            val res = client.getConversionRate(
+            val response = client.getConversionRate(
               index = "index"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -4958,7 +4944,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getConversionRate(index: "index")
+            let response = try await client.getConversionRate(index: "index")
   /2/conversions/addToCartRate:
     get:
       tags:
@@ -5064,7 +5050,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetAddToCartRate(client.NewApiGetAddToCartRateRequest(
               "index",
             ))
@@ -5077,7 +5063,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -5129,9 +5115,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -5155,19 +5140,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_add_to_cart_rate(
+            response = await _client.get_add_to_cart_rate(
                 index="index",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -5179,17 +5164,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_add_to_cart_rate("index")
+            response = client.get_add_to_cart_rate("index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -5201,14 +5186,14 @@ paths:
 
             // Call the API
 
-            val res = client.getAddToCartRate(
+            val response = client.getAddToCartRate(
               index = "index"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5220,7 +5205,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getAddToCartRate(index: "index")
+            let response = try await client.getAddToCartRate(index: "index")
   /2/conversions/purchaseRate:
     get:
       tags:
@@ -5326,7 +5311,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetPurchaseRate(client.NewApiGetPurchaseRateRequest(
               "index",
             ))
@@ -5339,7 +5324,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -5391,9 +5376,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -5417,19 +5401,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_purchase_rate(
+            response = await _client.get_purchase_rate(
                 index="index",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -5441,17 +5425,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_purchase_rate("index")
+            response = client.get_purchase_rate("index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -5463,14 +5447,14 @@ paths:
 
             // Call the API
 
-            val res = client.getPurchaseRate(
+            val response = client.getPurchaseRate(
               index = "index"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5482,7 +5466,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getPurchaseRate(index: "index")
+            let response = try await client.getPurchaseRate(index: "index")
   /2/conversions/revenue:
     get:
       tags:
@@ -5571,7 +5555,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.GetRevenue(client.NewApiGetRevenueRequest(
+            response, err := client.GetRevenue(client.NewApiGetRevenueRequest(
               "index",
             ))
 
@@ -5583,7 +5567,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -5635,9 +5619,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -5661,19 +5644,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_revenue(
+            response = await _client.get_revenue(
                 index="index",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -5685,17 +5668,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_revenue("index")
+            response = client.get_revenue("index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -5707,14 +5690,14 @@ paths:
 
             // Call the API
 
-            val res = client.getRevenue(
+            val response = client.getRevenue(
               index = "index"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5726,7 +5709,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getRevenue(index: "index")
+            let response = try await client.getRevenue(index: "index")
   /2/status:
     get:
       tags:
@@ -5793,7 +5776,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.GetStatus(client.NewApiGetStatusRequest(
+            response, err := client.GetStatus(client.NewApiGetStatusRequest(
               "index",
             ))
 
@@ -5805,7 +5788,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -5857,9 +5840,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -5883,19 +5865,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_status(
+            response = await _client.get_status(
                 index="index",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -5907,17 +5889,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_status("index")
+            response = client.get_status("index")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -5929,14 +5911,14 @@ paths:
 
             // Call the API
 
-            val res = client.getStatus(
+            val response = client.getStatus(
               index = "index"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -5948,7 +5930,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getStatus(index: "index")
+            let response = try await client.getStatus(index: "index")
 components:
   securitySchemes:
     appId:
@@ -6049,6 +6031,7 @@ components:
       in: query
       name: limit
       description: Number of items to return.
+      required: false
       schema:
         type: integer
         default: 10
@@ -6056,6 +6039,7 @@ components:
       in: query
       name: offset
       description: Position of the first item to return.
+      required: false
       schema:
         type: integer
         default: 0

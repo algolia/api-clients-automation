@@ -12,7 +12,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
     static let API_KEY = "my_api_key"
 
     /// allow del method for a custom path with minimal parameters
-    func testCustomDeleteTest0() async throws {
+    func testCustomDeleteTest() async throws {
         let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
@@ -63,7 +63,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
     }
 
     /// allow get method for a custom path with minimal parameters
-    func testCustomGetTest0() async throws {
+    func testCustomGetTest() async throws {
         let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
@@ -163,7 +163,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
     }
 
     /// allow post method for a custom path with minimal parameters
-    func testCustomPostTest0() async throws {
+    func testCustomPostTest() async throws {
         let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
@@ -639,7 +639,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
     }
 
     /// allow put method for a custom path with minimal parameters
-    func testCustomPutTest0() async throws {
+    func testCustomPutTest() async throws {
         let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
@@ -703,7 +703,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
     }
 
     /// getClusterIncidents
-    func testGetClusterIncidentsTest0() async throws {
+    func testGetClusterIncidentsTest() async throws {
         let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
@@ -724,7 +724,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
     }
 
     /// getClusterStatus
-    func testGetClusterStatusTest0() async throws {
+    func testGetClusterStatusTest() async throws {
         let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
@@ -745,7 +745,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
     }
 
     /// getIncidents
-    func testGetIncidentsTest0() async throws {
+    func testGetIncidentsTest() async throws {
         let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
@@ -766,7 +766,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
     }
 
     /// getIndexingTime
-    func testGetIndexingTimeTest0() async throws {
+    func testGetIndexingTimeTest() async throws {
         let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
@@ -787,7 +787,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
     }
 
     /// getLatency
-    func testGetLatencyTest0() async throws {
+    func testGetLatencyTest() async throws {
         let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
@@ -808,7 +808,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
     }
 
     /// getMetrics
-    func testGetMetricsTest0() async throws {
+    func testGetMetricsTest() async throws {
         let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
@@ -829,7 +829,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
     }
 
     /// getReachability
-    func testGetReachabilityTest0() async throws {
+    func testGetReachabilityTest() async throws {
         let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
@@ -850,7 +850,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
     }
 
     /// getInventory
-    func testGetServersTest0() async throws {
+    func testGetServersTest() async throws {
         let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY
@@ -871,7 +871,7 @@ final class MonitoringClientRequestsTests: XCTestCase {
     }
 
     /// getStatus
-    func testGetStatusTest0() async throws {
+    func testGetStatusTest() async throws {
         let configuration = try MonitoringClientConfiguration(
             appID: MonitoringClientRequestsTests.APPLICATION_ID,
             apiKey: MonitoringClientRequestsTests.API_KEY

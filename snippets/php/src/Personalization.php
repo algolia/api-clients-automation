@@ -4,6 +4,11 @@
 
 namespace Algolia\AlgoliaSearch\Snippets;
 
+// >IMPORT
+use Algolia\AlgoliaSearch\Api\PersonalizationClient;
+
+// IMPORT<
+
 class SnippetPersonalizationClient
 {
     /**
@@ -13,9 +18,9 @@ class SnippetPersonalizationClient
      */
     public function snippetForCustomDelete()
     {
-        // >SEPARATOR customDelete
+        // >SEPARATOR customDelete default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->customDelete(
@@ -34,9 +39,9 @@ class SnippetPersonalizationClient
      */
     public function snippetForCustomGet()
     {
-        // >SEPARATOR customGet
+        // >SEPARATOR customGet default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->customGet(
@@ -55,9 +60,9 @@ class SnippetPersonalizationClient
      */
     public function snippetForCustomPost()
     {
-        // >SEPARATOR customPost
+        // >SEPARATOR customPost default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->customPost(
@@ -76,9 +81,9 @@ class SnippetPersonalizationClient
      */
     public function snippetForCustomPut()
     {
-        // >SEPARATOR customPut
+        // >SEPARATOR customPut default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->customPut(
@@ -97,9 +102,9 @@ class SnippetPersonalizationClient
      */
     public function snippetForDeleteUserProfile()
     {
-        // >SEPARATOR deleteUserProfile
+        // >SEPARATOR deleteUserProfile default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->deleteUserProfile(
@@ -118,9 +123,9 @@ class SnippetPersonalizationClient
      */
     public function snippetForGetPersonalizationStrategy()
     {
-        // >SEPARATOR getPersonalizationStrategy
+        // >SEPARATOR getPersonalizationStrategy default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getPersonalizationStrategy();
@@ -137,9 +142,9 @@ class SnippetPersonalizationClient
      */
     public function snippetForGetUserTokenProfile()
     {
-        // >SEPARATOR getUserTokenProfile
+        // >SEPARATOR getUserTokenProfile default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getUserTokenProfile(
@@ -158,9 +163,9 @@ class SnippetPersonalizationClient
      */
     public function snippetForSetPersonalizationStrategy()
     {
-        // >SEPARATOR setPersonalizationStrategy
+        // >SEPARATOR setPersonalizationStrategy default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = PersonalizationClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->setPersonalizationStrategy(

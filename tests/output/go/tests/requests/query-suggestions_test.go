@@ -56,7 +56,7 @@ func TestSuggestions_CreateConfig(t *testing.T) {
 	client, echo := createSuggestionsClient(t)
 	_ = echo
 
-	t.Run("createConfig0", func(t *testing.T) {
+	t.Run("createConfig", func(t *testing.T) {
 		_, err := client.CreateConfig(client.NewApiCreateConfigRequest(
 
 			suggestions.NewEmptyQuerySuggestionsConfigurationWithIndex().SetIndexName("theIndexName").SetSourceIndices(
@@ -440,7 +440,7 @@ func TestSuggestions_DeleteConfig(t *testing.T) {
 	client, echo := createSuggestionsClient(t)
 	_ = echo
 
-	t.Run("deleteConfig0", func(t *testing.T) {
+	t.Run("deleteConfig", func(t *testing.T) {
 		_, err := client.DeleteConfig(client.NewApiDeleteConfigRequest(
 			"theIndexName",
 		))
@@ -457,7 +457,7 @@ func TestSuggestions_GetAllConfigs(t *testing.T) {
 	client, echo := createSuggestionsClient(t)
 	_ = echo
 
-	t.Run("getAllConfigs0", func(t *testing.T) {
+	t.Run("getAllConfigs", func(t *testing.T) {
 		_, err := client.GetAllConfigs()
 		require.NoError(t, err)
 
@@ -514,7 +514,7 @@ func TestSuggestions_GetConfigStatus(t *testing.T) {
 	client, echo := createSuggestionsClient(t)
 	_ = echo
 
-	t.Run("getConfigStatus0", func(t *testing.T) {
+	t.Run("getConfigStatus", func(t *testing.T) {
 		_, err := client.GetConfigStatus(client.NewApiGetConfigStatusRequest(
 			"theIndexName",
 		))
@@ -531,7 +531,7 @@ func TestSuggestions_GetLogFile(t *testing.T) {
 	client, echo := createSuggestionsClient(t)
 	_ = echo
 
-	t.Run("getLogFile0", func(t *testing.T) {
+	t.Run("getLogFile", func(t *testing.T) {
 		_, err := client.GetLogFile(client.NewApiGetLogFileRequest(
 			"theIndexName",
 		))
@@ -548,7 +548,7 @@ func TestSuggestions_UpdateConfig(t *testing.T) {
 	client, echo := createSuggestionsClient(t)
 	_ = echo
 
-	t.Run("updateConfig0", func(t *testing.T) {
+	t.Run("updateConfig", func(t *testing.T) {
 		_, err := client.UpdateConfig(client.NewApiUpdateConfigRequest(
 			"theIndexName",
 			suggestions.NewEmptyQuerySuggestionsConfiguration().SetSourceIndices(

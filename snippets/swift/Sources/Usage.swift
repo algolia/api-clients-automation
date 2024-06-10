@@ -1,19 +1,22 @@
 #if canImport(Core)
     import Core
 #endif
+// >IMPORT
 import Usage
+
+// IMPORT<
 
 final class UsageClientSnippet {
     /// Snippet for the customDelete method.
     ///
     /// allow del method for a custom path with minimal parameters
     func snippetForCustomDelete() async throws {
-        // >SEPARATOR customDelete
+        // >SEPARATOR customDelete default
         // Initialize the client
         let client = try UsageClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customDelete(path: "test/minimal")
+        let response = try await client.customDelete(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -21,12 +24,12 @@ final class UsageClientSnippet {
     ///
     /// allow get method for a custom path with minimal parameters
     func snippetForCustomGet() async throws {
-        // >SEPARATOR customGet
+        // >SEPARATOR customGet default
         // Initialize the client
         let client = try UsageClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customGet(path: "test/minimal")
+        let response = try await client.customGet(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -34,12 +37,12 @@ final class UsageClientSnippet {
     ///
     /// allow post method for a custom path with minimal parameters
     func snippetForCustomPost() async throws {
-        // >SEPARATOR customPost
+        // >SEPARATOR customPost default
         // Initialize the client
         let client = try UsageClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customPost(path: "test/minimal")
+        let response = try await client.customPost(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -47,12 +50,12 @@ final class UsageClientSnippet {
     ///
     /// allow put method for a custom path with minimal parameters
     func snippetForCustomPut() async throws {
-        // >SEPARATOR customPut
+        // >SEPARATOR customPut default
         // Initialize the client
         let client = try UsageClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customPut(path: "test/minimal")
+        let response = try await client.customPut(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -60,12 +63,12 @@ final class UsageClientSnippet {
     ///
     /// getIndexUsage with minimal parameters
     func snippetForGetIndexUsage() async throws {
-        // >SEPARATOR getIndexUsage
+        // >SEPARATOR getIndexUsage default
         // Initialize the client
         let client = try UsageClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getIndexUsage(
+        let response = try await client.getIndexUsage(
             statistic: Statistic.queriesOperations,
             indexName: "myIndexName",
             startDate: "2024-04-03T12:46:43Z",
@@ -78,12 +81,12 @@ final class UsageClientSnippet {
     ///
     /// getUsage with minimal parameters
     func snippetForGetUsage() async throws {
-        // >SEPARATOR getUsage
+        // >SEPARATOR getUsage default
         // Initialize the client
         let client = try UsageClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getUsage(
+        let response = try await client.getUsage(
             statistic: Statistic.queriesOperations,
             startDate: "2024-04-03T12:46:43Z",
             endDate: "2024-04-05T12:46:43Z"

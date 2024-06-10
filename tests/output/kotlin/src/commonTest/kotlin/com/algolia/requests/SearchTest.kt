@@ -21,7 +21,7 @@ class SearchTest {
   // addApiKey
 
   @Test
-  fun `addApiKey0`() = runTest {
+  fun `addApiKey`() = runTest {
     client.runTest(
       call = {
         addApiKey(
@@ -45,7 +45,7 @@ class SearchTest {
   // addOrUpdateObject
 
   @Test
-  fun `addOrUpdateObject0`() = runTest {
+  fun `addOrUpdateObject`() = runTest {
     client.runTest(
       call = {
         addOrUpdateObject(
@@ -70,7 +70,7 @@ class SearchTest {
   // appendSource
 
   @Test
-  fun `appendSource0`() = runTest {
+  fun `appendSource`() = runTest {
     client.runTest(
       call = {
         appendSource(
@@ -91,7 +91,7 @@ class SearchTest {
   // assignUserId
 
   @Test
-  fun `assignUserId0`() = runTest {
+  fun `assignUserId`() = runTest {
     client.runTest(
       call = {
         assignUserId(
@@ -111,7 +111,7 @@ class SearchTest {
   }
 
   @Test
-  fun `it should not encode the userID`() = runTest {
+  fun `it should not encode the userID1`() = runTest {
     client.runTest(
       call = {
         assignUserId(
@@ -133,11 +133,11 @@ class SearchTest {
   // batch
 
   @Test
-  fun `allows batch method with 'addObject' action`() = runTest {
+  fun `addObject`() = runTest {
     client.runTest(
       call = {
         batch(
-          indexName = "theIndexName",
+          indexName = "<YOUR_INDEX_NAME>",
           batchWriteParams = BatchWriteParams(
             requests = listOf(
               BatchRequest(
@@ -145,7 +145,24 @@ class SearchTest {
                 body = buildJsonObject {
                   put(
                     "key",
-                    JsonPrimitive("value"),
+                    JsonPrimitive("bar"),
+                  )
+                  put(
+                    "foo",
+                    JsonPrimitive("1"),
+                  )
+                },
+              ),
+              BatchRequest(
+                action = Action.entries.first { it.value == "addObject" },
+                body = buildJsonObject {
+                  put(
+                    "key",
+                    JsonPrimitive("baz"),
+                  )
+                  put(
+                    "foo",
+                    JsonPrimitive("2"),
                   )
                 },
               ),
@@ -154,19 +171,19 @@ class SearchTest {
         )
       },
       intercept = {
-        assertEquals("/1/indexes/theIndexName/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"requests":[{"action":"addObject","body":{"key":"value"}}]}""", it.body)
+        assertJsonBody("""{"requests":[{"action":"addObject","body":{"key":"bar","foo":"1"}},{"action":"addObject","body":{"key":"baz","foo":"2"}}]}""", it.body)
       },
     )
   }
 
   @Test
-  fun `allows batch method with 'clear' action`() = runTest {
+  fun `clear1`() = runTest {
     client.runTest(
       call = {
         batch(
-          indexName = "theIndexName",
+          indexName = "<YOUR_INDEX_NAME>",
           batchWriteParams = BatchWriteParams(
             requests = listOf(
               BatchRequest(
@@ -183,7 +200,7 @@ class SearchTest {
         )
       },
       intercept = {
-        assertEquals("/1/indexes/theIndexName/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{"requests":[{"action":"clear","body":{"key":"value"}}]}""", it.body)
       },
@@ -191,11 +208,11 @@ class SearchTest {
   }
 
   @Test
-  fun `allows batch method with 'delete' action`() = runTest {
+  fun `delete2`() = runTest {
     client.runTest(
       call = {
         batch(
-          indexName = "theIndexName",
+          indexName = "<YOUR_INDEX_NAME>",
           batchWriteParams = BatchWriteParams(
             requests = listOf(
               BatchRequest(
@@ -212,7 +229,7 @@ class SearchTest {
         )
       },
       intercept = {
-        assertEquals("/1/indexes/theIndexName/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{"requests":[{"action":"delete","body":{"key":"value"}}]}""", it.body)
       },
@@ -220,11 +237,11 @@ class SearchTest {
   }
 
   @Test
-  fun `allows batch method with 'deleteObject' action`() = runTest {
+  fun `deleteObject3`() = runTest {
     client.runTest(
       call = {
         batch(
-          indexName = "theIndexName",
+          indexName = "<YOUR_INDEX_NAME>",
           batchWriteParams = BatchWriteParams(
             requests = listOf(
               BatchRequest(
@@ -241,7 +258,7 @@ class SearchTest {
         )
       },
       intercept = {
-        assertEquals("/1/indexes/theIndexName/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{"requests":[{"action":"deleteObject","body":{"key":"value"}}]}""", it.body)
       },
@@ -249,11 +266,11 @@ class SearchTest {
   }
 
   @Test
-  fun `allows batch method with 'partialUpdateObject' action`() = runTest {
+  fun `partialUpdateObject4`() = runTest {
     client.runTest(
       call = {
         batch(
-          indexName = "theIndexName",
+          indexName = "<YOUR_INDEX_NAME>",
           batchWriteParams = BatchWriteParams(
             requests = listOf(
               BatchRequest(
@@ -270,7 +287,7 @@ class SearchTest {
         )
       },
       intercept = {
-        assertEquals("/1/indexes/theIndexName/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{"requests":[{"action":"partialUpdateObject","body":{"key":"value"}}]}""", it.body)
       },
@@ -278,11 +295,11 @@ class SearchTest {
   }
 
   @Test
-  fun `allows batch method with 'partialUpdateObjectNoCreate' action`() = runTest {
+  fun `partialUpdateObjectNoCreate5`() = runTest {
     client.runTest(
       call = {
         batch(
-          indexName = "theIndexName",
+          indexName = "<YOUR_INDEX_NAME>",
           batchWriteParams = BatchWriteParams(
             requests = listOf(
               BatchRequest(
@@ -299,7 +316,7 @@ class SearchTest {
         )
       },
       intercept = {
-        assertEquals("/1/indexes/theIndexName/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{"requests":[{"action":"partialUpdateObjectNoCreate","body":{"key":"value"}}]}""", it.body)
       },
@@ -307,11 +324,11 @@ class SearchTest {
   }
 
   @Test
-  fun `allows batch method with 'updateObject' action`() = runTest {
+  fun `updateObject6`() = runTest {
     client.runTest(
       call = {
         batch(
-          indexName = "theIndexName",
+          indexName = "<YOUR_INDEX_NAME>",
           batchWriteParams = BatchWriteParams(
             requests = listOf(
               BatchRequest(
@@ -328,7 +345,7 @@ class SearchTest {
         )
       },
       intercept = {
-        assertEquals("/1/indexes/theIndexName/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{"requests":[{"action":"updateObject","body":{"key":"value"}}]}""", it.body)
       },
@@ -338,7 +355,7 @@ class SearchTest {
   // batchAssignUserIds
 
   @Test
-  fun `batchAssignUserIds0`() = runTest {
+  fun `batchAssignUserIds`() = runTest {
     client.runTest(
       call = {
         batchAssignUserIds(
@@ -361,47 +378,13 @@ class SearchTest {
   // batchDictionaryEntries
 
   @Test
-  fun `get batchDictionaryEntries results with minimal parameters`() = runTest {
+  fun `replace`() = runTest {
     client.runTest(
       call = {
         batchDictionaryEntries(
-          dictionaryName = DictionaryType.entries.first { it.value == "compounds" },
+          dictionaryName = DictionaryType.entries.first { it.value == "plurals" },
           batchDictionaryEntriesParams = BatchDictionaryEntriesParams(
-            requests = listOf(
-              BatchDictionaryEntriesRequest(
-                action = DictionaryAction.entries.first { it.value == "addEntry" },
-                body = DictionaryEntry(
-                  objectID = "1",
-                  language = SupportedLanguage.entries.first { it.value == "en" },
-                ),
-              ),
-              BatchDictionaryEntriesRequest(
-                action = DictionaryAction.entries.first { it.value == "deleteEntry" },
-                body = DictionaryEntry(
-                  objectID = "2",
-                  language = SupportedLanguage.entries.first { it.value == "fr" },
-                ),
-              ),
-            ),
-          ),
-        )
-      },
-      intercept = {
-        assertEquals("/1/dictionaries/compounds/batch".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr"}}]}""", it.body)
-      },
-    )
-  }
-
-  @Test
-  fun `get batchDictionaryEntries results with all parameters`() = runTest {
-    client.runTest(
-      call = {
-        batchDictionaryEntries(
-          dictionaryName = DictionaryType.entries.first { it.value == "compounds" },
-          batchDictionaryEntriesParams = BatchDictionaryEntriesParams(
-            clearExistingDictionaryEntries = false,
+            clearExistingDictionaryEntries = true,
             requests = listOf(
               BatchDictionaryEntriesRequest(
                 action = DictionaryAction.entries.first { it.value == "addEntry" },
@@ -414,14 +397,35 @@ class SearchTest {
                   state = DictionaryEntryState.entries.first { it.value == "enabled" },
                 ),
               ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/dictionaries/plurals/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"clearExistingDictionaryEntries":true,"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `delete1`() = runTest {
+    client.runTest(
+      call = {
+        batchDictionaryEntries(
+          dictionaryName = DictionaryType.entries.first { it.value == "plurals" },
+          batchDictionaryEntriesParams = BatchDictionaryEntriesParams(
+            clearExistingDictionaryEntries = true,
+            requests = listOf(
               BatchDictionaryEntriesRequest(
                 action = DictionaryAction.entries.first { it.value == "deleteEntry" },
                 body = DictionaryEntry(
-                  objectID = "2",
-                  language = SupportedLanguage.entries.first { it.value == "fr" },
-                  word = "humility",
-                  words = listOf("candor", "algolia"),
-                  decomposition = listOf("grit", "algolia"),
+                  objectID = "1",
+                  language = SupportedLanguage.entries.first { it.value == "en" },
+                  word = "fancy",
+                  words = listOf("believe", "algolia"),
+                  decomposition = listOf("trust", "algolia"),
                   state = DictionaryEntryState.entries.first { it.value == "enabled" },
                 ),
               ),
@@ -430,19 +434,19 @@ class SearchTest {
         )
       },
       intercept = {
-        assertEquals("/1/dictionaries/compounds/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/dictionaries/plurals/batch".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"clearExistingDictionaryEntries":false,"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr","word":"humility","words":["candor","algolia"],"decomposition":["grit","algolia"],"state":"enabled"}}]}""", it.body)
+        assertJsonBody("""{"clearExistingDictionaryEntries":true,"requests":[{"action":"deleteEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}}]}""", it.body)
       },
     )
   }
 
   @Test
-  fun `get batchDictionaryEntries results additional properties`() = runTest {
+  fun `append2`() = runTest {
     client.runTest(
       call = {
         batchDictionaryEntries(
-          dictionaryName = DictionaryType.entries.first { it.value == "compounds" },
+          dictionaryName = DictionaryType.entries.first { it.value == "stopwords" },
           batchDictionaryEntriesParams = BatchDictionaryEntriesParams(
             requests = listOf(
               BatchDictionaryEntriesRequest(
@@ -460,7 +464,7 @@ class SearchTest {
         )
       },
       intercept = {
-        assertEquals("/1/dictionaries/compounds/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/dictionaries/stopwords/batch".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","additional":"try me"}}]}""", it.body)
       },
@@ -486,7 +490,7 @@ class SearchTest {
   }
 
   @Test
-  fun `browse with search parameters`() = runTest {
+  fun `browse with search parameters1`() = runTest {
     client.runTest(
       call = {
         browse(
@@ -506,7 +510,7 @@ class SearchTest {
   }
 
   @Test
-  fun `browse allow a cursor in parameters`() = runTest {
+  fun `browse allow a cursor in parameters2`() = runTest {
     client.runTest(
       call = {
         browse(
@@ -527,7 +531,7 @@ class SearchTest {
   // clearObjects
 
   @Test
-  fun `clearObjects0`() = runTest {
+  fun `clearObjects`() = runTest {
     client.runTest(
       call = {
         clearObjects(
@@ -545,7 +549,7 @@ class SearchTest {
   // clearRules
 
   @Test
-  fun `clearRules0`() = runTest {
+  fun `clearRules`() = runTest {
     client.runTest(
       call = {
         clearRules(
@@ -563,7 +567,7 @@ class SearchTest {
   // clearSynonyms
 
   @Test
-  fun `clearSynonyms0`() = runTest {
+  fun `clearSynonyms`() = runTest {
     client.runTest(
       call = {
         clearSynonyms(
@@ -597,7 +601,7 @@ class SearchTest {
   }
 
   @Test
-  fun `allow del method for a custom path with all parameters`() = runTest {
+  fun `allow del method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
         customDelete(
@@ -633,7 +637,7 @@ class SearchTest {
   }
 
   @Test
-  fun `allow get method for a custom path with all parameters`() = runTest {
+  fun `allow get method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
         customGet(
@@ -651,7 +655,7 @@ class SearchTest {
   }
 
   @Test
-  fun `requestOptions should be escaped too`() = runTest {
+  fun `requestOptions should be escaped too2`() = runTest {
     client.runTest(
       call = {
         customGet(
@@ -697,7 +701,7 @@ class SearchTest {
   }
 
   @Test
-  fun `allow post method for a custom path with all parameters`() = runTest {
+  fun `allow post method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -721,7 +725,7 @@ class SearchTest {
   }
 
   @Test
-  fun `requestOptions can override default query parameters`() = runTest {
+  fun `requestOptions can override default query parameters2`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -750,7 +754,7 @@ class SearchTest {
   }
 
   @Test
-  fun `requestOptions merges query parameters with default ones`() = runTest {
+  fun `requestOptions merges query parameters with default ones3`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -779,7 +783,7 @@ class SearchTest {
   }
 
   @Test
-  fun `requestOptions can override default headers`() = runTest {
+  fun `requestOptions can override default headers4`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -809,7 +813,7 @@ class SearchTest {
   }
 
   @Test
-  fun `requestOptions merges headers with default ones`() = runTest {
+  fun `requestOptions merges headers with default ones5`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -839,7 +843,7 @@ class SearchTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts booleans`() = runTest {
+  fun `requestOptions queryParameters accepts booleans6`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -868,7 +872,7 @@ class SearchTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts integers`() = runTest {
+  fun `requestOptions queryParameters accepts integers7`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -897,7 +901,7 @@ class SearchTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts list of string`() = runTest {
+  fun `requestOptions queryParameters accepts list of string8`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -926,7 +930,7 @@ class SearchTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts list of booleans`() = runTest {
+  fun `requestOptions queryParameters accepts list of booleans9`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -955,7 +959,7 @@ class SearchTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts list of integers`() = runTest {
+  fun `requestOptions queryParameters accepts list of integers10`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -1002,7 +1006,7 @@ class SearchTest {
   }
 
   @Test
-  fun `allow put method for a custom path with all parameters`() = runTest {
+  fun `allow put method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
         customPut(
@@ -1028,7 +1032,7 @@ class SearchTest {
   // deleteApiKey
 
   @Test
-  fun `deleteApiKey0`() = runTest {
+  fun `deleteApiKey`() = runTest {
     client.runTest(
       call = {
         deleteApiKey(
@@ -1046,7 +1050,7 @@ class SearchTest {
   // deleteBy
 
   @Test
-  fun `deleteBy0`() = runTest {
+  fun `deleteBy`() = runTest {
     client.runTest(
       call = {
         deleteBy(
@@ -1067,7 +1071,7 @@ class SearchTest {
   // deleteIndex
 
   @Test
-  fun `deleteIndex0`() = runTest {
+  fun `deleteIndex`() = runTest {
     client.runTest(
       call = {
         deleteIndex(
@@ -1085,16 +1089,16 @@ class SearchTest {
   // deleteObject
 
   @Test
-  fun `deleteObject0`() = runTest {
+  fun `deleteObject`() = runTest {
     client.runTest(
       call = {
         deleteObject(
-          indexName = "theIndexName",
+          indexName = "<YOUR_INDEX_NAME>",
           objectID = "uniqueID",
         )
       },
       intercept = {
-        assertEquals("/1/indexes/theIndexName/uniqueID".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/uniqueID".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("DELETE"), it.method)
         assertNoBody(it.body)
       },
@@ -1121,7 +1125,7 @@ class SearchTest {
   }
 
   @Test
-  fun `delete rule with simple characters to encode in objectID`() = runTest {
+  fun `delete rule with simple characters to encode in objectID1`() = runTest {
     client.runTest(
       call = {
         deleteRule(
@@ -1140,7 +1144,7 @@ class SearchTest {
   // deleteSource
 
   @Test
-  fun `deleteSource0`() = runTest {
+  fun `deleteSource`() = runTest {
     client.runTest(
       call = {
         deleteSource(
@@ -1158,7 +1162,7 @@ class SearchTest {
   // deleteSynonym
 
   @Test
-  fun `deleteSynonym0`() = runTest {
+  fun `deleteSynonym`() = runTest {
     client.runTest(
       call = {
         deleteSynonym(
@@ -1177,7 +1181,7 @@ class SearchTest {
   // getApiKey
 
   @Test
-  fun `getApiKey0`() = runTest {
+  fun `getApiKey`() = runTest {
     client.runTest(
       call = {
         getApiKey(
@@ -1241,7 +1245,7 @@ class SearchTest {
   }
 
   @Test
-  fun `getLogs with parameters`() = runTest {
+  fun `getLogs with parameters1`() = runTest {
     client.runTest(
       call = {
         getLogs(
@@ -1263,7 +1267,7 @@ class SearchTest {
   // getObject
 
   @Test
-  fun `getObject0`() = runTest {
+  fun `getObject`() = runTest {
     client.runTest(
       call = {
         getObject(
@@ -1284,7 +1288,7 @@ class SearchTest {
   // getObjects
 
   @Test
-  fun `getObjects0`() = runTest {
+  fun `getObjects`() = runTest {
     client.runTest(
       call = {
         getObjects(
@@ -1310,7 +1314,7 @@ class SearchTest {
   // getRule
 
   @Test
-  fun `getRule0`() = runTest {
+  fun `getRule`() = runTest {
     client.runTest(
       call = {
         getRule(
@@ -1329,7 +1333,7 @@ class SearchTest {
   // getSettings
 
   @Test
-  fun `getSettings0`() = runTest {
+  fun `getSettings`() = runTest {
     client.runTest(
       call = {
         getSettings(
@@ -1347,7 +1351,7 @@ class SearchTest {
   // getSources
 
   @Test
-  fun `getSources0`() = runTest {
+  fun `getSources`() = runTest {
     client.runTest(
       call = {
         getSources()
@@ -1363,7 +1367,7 @@ class SearchTest {
   // getSynonym
 
   @Test
-  fun `getSynonym0`() = runTest {
+  fun `getSynonym`() = runTest {
     client.runTest(
       call = {
         getSynonym(
@@ -1382,7 +1386,7 @@ class SearchTest {
   // getTask
 
   @Test
-  fun `getTask0`() = runTest {
+  fun `getTask`() = runTest {
     client.runTest(
       call = {
         getTask(
@@ -1401,7 +1405,7 @@ class SearchTest {
   // getTopUserIds
 
   @Test
-  fun `getTopUserIds0`() = runTest {
+  fun `getTopUserIds`() = runTest {
     client.runTest(
       call = {
         getTopUserIds()
@@ -1417,7 +1421,7 @@ class SearchTest {
   // getUserId
 
   @Test
-  fun `getUserId0`() = runTest {
+  fun `getUserId`() = runTest {
     client.runTest(
       call = {
         getUserId(
@@ -1449,7 +1453,7 @@ class SearchTest {
   }
 
   @Test
-  fun `hasPendingMappings with parameters`() = runTest {
+  fun `hasPendingMappings with parameters1`() = runTest {
     client.runTest(
       call = {
         hasPendingMappings(
@@ -1468,7 +1472,7 @@ class SearchTest {
   // listApiKeys
 
   @Test
-  fun `listApiKeys0`() = runTest {
+  fun `listApiKeys`() = runTest {
     client.runTest(
       call = {
         listApiKeys()
@@ -1484,7 +1488,7 @@ class SearchTest {
   // listClusters
 
   @Test
-  fun `listClusters0`() = runTest {
+  fun `listClusters`() = runTest {
     client.runTest(
       call = {
         listClusters()
@@ -1514,7 +1518,7 @@ class SearchTest {
   }
 
   @Test
-  fun `listIndices with parameters`() = runTest {
+  fun `listIndices with parameters1`() = runTest {
     client.runTest(
       call = {
         listIndices(
@@ -1548,7 +1552,7 @@ class SearchTest {
   }
 
   @Test
-  fun `listUserIds with parameters`() = runTest {
+  fun `listUserIds with parameters1`() = runTest {
     client.runTest(
       call = {
         listUserIds(
@@ -1568,7 +1572,7 @@ class SearchTest {
   // multipleBatch
 
   @Test
-  fun `multipleBatch0`() = runTest {
+  fun `multipleBatch`() = runTest {
     client.runTest(
       call = {
         multipleBatch(
@@ -1599,22 +1603,62 @@ class SearchTest {
   // operationIndex
 
   @Test
-  fun `operationIndex0`() = runTest {
+  fun `scopes`() = runTest {
     client.runTest(
       call = {
         operationIndex(
-          indexName = "theIndexName",
+          indexName = "<SOURCE_INDEX_NAME>",
           operationIndexParams = OperationIndexParams(
-            operation = OperationType.entries.first { it.value == "copy" },
-            destination = "dest",
+            operation = OperationType.entries.first { it.value == "move" },
+            destination = "<DESTINATION_INDEX_NAME>",
             scope = listOf(ScopeType.entries.first { it.value == "rules" }, ScopeType.entries.first { it.value == "settings" }),
           ),
         )
       },
       intercept = {
-        assertEquals("/1/indexes/theIndexName/operation".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertJsonBody("""{"operation":"copy","destination":"dest","scope":["rules","settings"]}""", it.body)
+        assertJsonBody("""{"operation":"move","destination":"<DESTINATION_INDEX_NAME>","scope":["rules","settings"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `copy1`() = runTest {
+    client.runTest(
+      call = {
+        operationIndex(
+          indexName = "<SOURCE_INDEX_NAME>",
+          operationIndexParams = OperationIndexParams(
+            operation = OperationType.entries.first { it.value == "copy" },
+            destination = "<DESTINATION_INDEX_NAME>",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"operation":"copy","destination":"<DESTINATION_INDEX_NAME>"}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `move2`() = runTest {
+    client.runTest(
+      call = {
+        operationIndex(
+          indexName = "<SOURCE_INDEX_NAME>",
+          operationIndexParams = OperationIndexParams(
+            operation = OperationType.entries.first { it.value == "move" },
+            destination = "<DESTINATION_INDEX_NAME>",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"operation":"move","destination":"<DESTINATION_INDEX_NAME>"}""", it.body)
       },
     )
   }
@@ -1622,7 +1666,7 @@ class SearchTest {
   // partialUpdateObject
 
   @Test
-  fun `partialUpdateObject0`() = runTest {
+  fun `partialUpdateObject`() = runTest {
     client.runTest(
       call = {
         partialUpdateObject(
@@ -1650,7 +1694,7 @@ class SearchTest {
   // removeUserId
 
   @Test
-  fun `removeUserId0`() = runTest {
+  fun `removeUserId`() = runTest {
     client.runTest(
       call = {
         removeUserId(
@@ -1668,7 +1712,7 @@ class SearchTest {
   // replaceSources
 
   @Test
-  fun `replaceSources0`() = runTest {
+  fun `replaceSources`() = runTest {
     client.runTest(
       call = {
         replaceSources(
@@ -1691,7 +1735,7 @@ class SearchTest {
   // restoreApiKey
 
   @Test
-  fun `restoreApiKey0`() = runTest {
+  fun `restoreApiKey`() = runTest {
     client.runTest(
       call = {
         restoreApiKey(
@@ -1709,11 +1753,11 @@ class SearchTest {
   // saveObject
 
   @Test
-  fun `saveObject0`() = runTest {
+  fun `saveObject`() = runTest {
     client.runTest(
       call = {
         saveObject(
-          indexName = "theIndexName",
+          indexName = "<YOUR_INDEX_NAME>",
           body = buildJsonObject {
             put(
               "objectID",
@@ -1727,7 +1771,7 @@ class SearchTest {
         )
       },
       intercept = {
-        assertEquals("/1/indexes/theIndexName".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertJsonBody("""{"objectID":"id","test":"val"}""", it.body)
       },
@@ -1763,7 +1807,7 @@ class SearchTest {
   }
 
   @Test
-  fun `saveRule with all parameters`() = runTest {
+  fun `saveRule with all parameters1`() = runTest {
     client.runTest(
       call = {
         saveRule(
@@ -1846,7 +1890,7 @@ class SearchTest {
     client.runTest(
       call = {
         saveRules(
-          indexName = "indexName",
+          indexName = "<YOUR_INDEX_NAME>",
           rules = listOf(
             Rule(
               objectID = "a-rule-id",
@@ -1867,22 +1911,25 @@ class SearchTest {
               ),
             ),
           ),
+          forwardToReplicas = false,
+          clearExistingRules = true,
         )
       },
       intercept = {
-        assertEquals("/1/indexes/indexName/rules/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
+        assertQueryParams("""{"forwardToReplicas":"false","clearExistingRules":"true"}""", it.url.encodedParameters)
         assertJsonBody("""[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}]},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}]}]""", it.body)
       },
     )
   }
 
   @Test
-  fun `saveRules with all parameters`() = runTest {
+  fun `saveRules with all parameters1`() = runTest {
     client.runTest(
       call = {
         saveRules(
-          indexName = "indexName",
+          indexName = "<YOUR_INDEX_NAME>",
           rules = listOf(
             Rule(
               objectID = "id1",
@@ -1948,7 +1995,7 @@ class SearchTest {
         )
       },
       intercept = {
-        assertEquals("/1/indexes/indexName/rules/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertQueryParams("""{"forwardToReplicas":"true","clearExistingRules":"true"}""", it.url.encodedParameters)
         assertJsonBody("""[{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}]""", it.body)
@@ -1959,7 +2006,7 @@ class SearchTest {
   // saveSynonym
 
   @Test
-  fun `saveSynonym0`() = runTest {
+  fun `saveSynonym`() = runTest {
     client.runTest(
       call = {
         saveSynonym(
@@ -1985,11 +2032,11 @@ class SearchTest {
   // saveSynonyms
 
   @Test
-  fun `saveSynonyms0`() = runTest {
+  fun `saveSynonyms`() = runTest {
     client.runTest(
       call = {
         saveSynonyms(
-          indexName = "indexName",
+          indexName = "<YOUR_INDEX_NAME>",
           synonymHit = listOf(
             SynonymHit(
               objectID = "id1",
@@ -2004,13 +2051,13 @@ class SearchTest {
             ),
           ),
           forwardToReplicas = true,
-          replaceExistingSynonyms = false,
+          replaceExistingSynonyms = true,
         )
       },
       intercept = {
-        assertEquals("/1/indexes/indexName/synonyms/batch".toPathSegments(), it.url.pathSegments)
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/synonyms/batch".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
-        assertQueryParams("""{"forwardToReplicas":"true","replaceExistingSynonyms":"false"}""", it.url.encodedParameters)
+        assertQueryParams("""{"forwardToReplicas":"true","replaceExistingSynonyms":"true"}""", it.url.encodedParameters)
         assertJsonBody("""[{"objectID":"id1","type":"synonym","synonyms":["car","vehicule","auto"]},{"objectID":"id2","type":"onewaysynonym","input":"iphone","synonyms":["ephone","aphone","yphone"]}]""", it.body)
       },
     )
@@ -2019,7 +2066,103 @@ class SearchTest {
   // search
 
   @Test
-  fun `search for a single hits request with minimal parameters`() = runTest {
+  fun `withHitsPerPage`() = runTest {
+    client.runTest(
+      call = {
+        search(
+          searchMethodParams = SearchMethodParams(
+            requests = listOf(
+              SearchForHits(
+                indexName = "<YOUR_INDEX_NAME>",
+                query = "<YOUR_QUERY>",
+                hitsPerPage = 50,
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/*/queries".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","hitsPerPage":50}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `filterOnly1`() = runTest {
+    client.runTest(
+      call = {
+        search(
+          searchMethodParams = SearchMethodParams(
+            requests = listOf(
+              SearchForHits(
+                indexName = "<YOUR_INDEX_NAME>",
+                query = "<YOUR_QUERY>",
+                filters = "actor:Scarlett Johansson",
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/*/queries".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"actor:Scarlett Johansson"}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `filterOr2`() = runTest {
+    client.runTest(
+      call = {
+        search(
+          searchMethodParams = SearchMethodParams(
+            requests = listOf(
+              SearchForHits(
+                indexName = "<YOUR_INDEX_NAME>",
+                query = "<YOUR_QUERY>",
+                filters = "actor:Tom Cruise OR actor:Scarlett Johansson",
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/*/queries".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"actor:Tom Cruise OR actor:Scarlett Johansson"}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `filterNot3`() = runTest {
+    client.runTest(
+      call = {
+        search(
+          searchMethodParams = SearchMethodParams(
+            requests = listOf(
+              SearchForHits(
+                indexName = "<YOUR_INDEX_NAME>",
+                query = "<YOUR_QUERY>",
+                filters = "NOT actor:Nicolas Cage",
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/*/queries".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"NOT actor:Nicolas Cage"}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `search for a single hits request with minimal parameters4`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2041,7 +2184,55 @@ class SearchTest {
   }
 
   @Test
-  fun `search for a single facet request with minimal parameters`() = runTest {
+  fun `retrieveFacets5`() = runTest {
+    client.runTest(
+      call = {
+        search(
+          searchMethodParams = SearchMethodParams(
+            requests = listOf(
+              SearchForHits(
+                indexName = "<YOUR_INDEX_NAME>",
+                query = "<YOUR_QUERY>",
+                facets = listOf("author", "genre"),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/*/queries".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["author","genre"]}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `retrieveFacetsWildcard6`() = runTest {
+    client.runTest(
+      call = {
+        search(
+          searchMethodParams = SearchMethodParams(
+            requests = listOf(
+              SearchForHits(
+                indexName = "<YOUR_INDEX_NAME>",
+                query = "<YOUR_QUERY>",
+                facets = listOf("*"),
+              ),
+            ),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/*/queries".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["*"]}]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `search for a single facet request with minimal parameters7`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2066,7 +2257,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search for a single hits request with all parameters`() = runTest {
+  fun `search for a single hits request with all parameters8`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2091,7 +2282,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search for a single facet request with all parameters`() = runTest {
+  fun `search for a single facet request with all parameters9`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2119,7 +2310,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search for multiple mixed requests in multiple indices with minimal parameters`() = runTest {
+  fun `search for multiple mixed requests in multiple indices with minimal parameters10`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2151,7 +2342,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search for multiple mixed requests in multiple indices with all parameters`() = runTest {
+  fun `search for multiple mixed requests in multiple indices with all parameters11`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2185,7 +2376,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search filters accept all of the possible shapes`() = runTest {
+  fun `search filters accept all of the possible shapes12`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2220,7 +2411,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search filters end to end`() = runTest {
+  fun `search filters end to end13`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2255,7 +2446,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search with all search parameters`() = runTest {
+  fun `search with all search parameters14`() = runTest {
     client.runTest(
       call = {
         search(
@@ -2384,7 +2575,7 @@ class SearchTest {
   }
 
   @Test
-  fun `get searchDictionaryEntries results with all parameters`() = runTest {
+  fun `get searchDictionaryEntries results with all parameters1`() = runTest {
     client.runTest(
       call = {
         searchDictionaryEntries(
@@ -2425,7 +2616,7 @@ class SearchTest {
   }
 
   @Test
-  fun `get searchForFacetValues results with all parameters`() = runTest {
+  fun `get searchForFacetValues results with all parameters1`() = runTest {
     client.runTest(
       call = {
         searchForFacetValues(
@@ -2449,7 +2640,7 @@ class SearchTest {
   // searchRules
 
   @Test
-  fun `searchRules0`() = runTest {
+  fun `searchRules`() = runTest {
     client.runTest(
       call = {
         searchRules(
@@ -2486,7 +2677,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search with special characters in indexName`() = runTest {
+  fun `search with special characters in indexName1`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -2502,7 +2693,7 @@ class SearchTest {
   }
 
   @Test
-  fun `search with searchParams`() = runTest {
+  fun `search with searchParams2`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -2522,7 +2713,7 @@ class SearchTest {
   }
 
   @Test
-  fun `single search retrieve snippets`() = runTest {
+  fun `single search retrieve snippets3`() = runTest {
     client.runTest(
       call = {
         searchSingleIndex(
@@ -2561,7 +2752,7 @@ class SearchTest {
   }
 
   @Test
-  fun `searchSynonyms with all parameters`() = runTest {
+  fun `searchSynonyms with all parameters1`() = runTest {
     client.runTest(
       call = {
         searchSynonyms(
@@ -2585,7 +2776,7 @@ class SearchTest {
   // searchUserIds
 
   @Test
-  fun `searchUserIds0`() = runTest {
+  fun `searchUserIds`() = runTest {
     client.runTest(
       call = {
         searchUserIds(
@@ -2628,7 +2819,7 @@ class SearchTest {
   }
 
   @Test
-  fun `get setDictionarySettings results with all parameters`() = runTest {
+  fun `get setDictionarySettings results with all parameters1`() = runTest {
     client.runTest(
       call = {
         setDictionarySettings(
@@ -2652,7 +2843,26 @@ class SearchTest {
   // setSettings
 
   @Test
-  fun `setSettings with minimal parameters`() = runTest {
+  fun `setSettingsAttributesForFaceting`() = runTest {
+    client.runTest(
+      call = {
+        setSettings(
+          indexName = "<YOUR_INDEX_NAME>",
+          indexSettings = IndexSettings(
+            attributesForFaceting = listOf("actor", "filterOnly(category)", "searchable(publisher)"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"attributesForFaceting":["actor","filterOnly(category)","searchable(publisher)"]}""", it.body)
+      },
+    )
+  }
+
+  @Test
+  fun `setSettings with minimal parameters1`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -2673,7 +2883,7 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings allow boolean 'typoTolerance'`() = runTest {
+  fun `setSettings allow boolean 'typoTolerance'2`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -2694,7 +2904,7 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings allow enum 'typoTolerance'`() = runTest {
+  fun `setSettings allow enum 'typoTolerance'3`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -2715,7 +2925,7 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings allow boolean 'ignorePlurals'`() = runTest {
+  fun `setSettings allow boolean 'ignorePlurals'4`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -2736,7 +2946,7 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings allow list of string 'ignorePlurals'`() = runTest {
+  fun `setSettings allow list of string 'ignorePlurals'5`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -2757,7 +2967,7 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings allow boolean 'removeStopWords'`() = runTest {
+  fun `setSettings allow boolean 'removeStopWords'6`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -2778,7 +2988,7 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings allow list of string 'removeStopWords'`() = runTest {
+  fun `setSettings allow list of string 'removeStopWords'7`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -2799,7 +3009,7 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings allow boolean 'distinct'`() = runTest {
+  fun `setSettings allow boolean 'distinct'8`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -2820,7 +3030,7 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings allow integers for 'distinct'`() = runTest {
+  fun `setSettings allow integers for 'distinct'9`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -2841,7 +3051,7 @@ class SearchTest {
   }
 
   @Test
-  fun `setSettings allow all 'indexSettings'`() = runTest {
+  fun `setSettings allow all 'indexSettings'10`() = runTest {
     client.runTest(
       call = {
         setSettings(
@@ -2946,7 +3156,7 @@ class SearchTest {
   // updateApiKey
 
   @Test
-  fun `updateApiKey0`() = runTest {
+  fun `updateApiKey`() = runTest {
     client.runTest(
       call = {
         updateApiKey(

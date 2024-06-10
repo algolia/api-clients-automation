@@ -24,7 +24,7 @@ class TestInsightsClient < Test::Unit::TestCase
   end
 
   # allow del method for a custom path with minimal parameters
-  def test_custom_delete0
+  def test_custom_delete
     req = @client.custom_delete_with_http_info("test/minimal")
 
     assert_equal(:delete, req.method)
@@ -48,7 +48,7 @@ class TestInsightsClient < Test::Unit::TestCase
   end
 
   # allow get method for a custom path with minimal parameters
-  def test_custom_get0
+  def test_custom_get
     req = @client.custom_get_with_http_info("test/minimal")
 
     assert_equal(:get, req.method)
@@ -105,7 +105,7 @@ class TestInsightsClient < Test::Unit::TestCase
   end
 
   # allow post method for a custom path with minimal parameters
-  def test_custom_post0
+  def test_custom_post
     req = @client.custom_post_with_http_info("test/minimal")
 
     assert_equal(:post, req.method)
@@ -288,7 +288,7 @@ class TestInsightsClient < Test::Unit::TestCase
   end
 
   # allow put method for a custom path with minimal parameters
-  def test_custom_put0
+  def test_custom_put
     req = @client.custom_put_with_http_info("test/minimal")
 
     assert_equal(:put, req.method)
@@ -313,8 +313,8 @@ class TestInsightsClient < Test::Unit::TestCase
     assert_equal(JSON.parse('{"body":"parameters"}'), JSON.parse(req.body))
   end
 
-  # deleteUserToken0
-  def test_delete_user_token0
+  # deleteUserToken
+  def test_delete_user_token
     req = @client.delete_user_token_with_http_info("test-user-1")
 
     assert_equal(:delete, req.method)
@@ -325,8 +325,8 @@ class TestInsightsClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # pushEvents0
-  def test_push_events0
+  # pushEvents
+  def test_push_events
     req = @client.push_events_with_http_info(
       InsightsEvents.new(
         events: [ClickedObjectIDsAfterSearch.new(

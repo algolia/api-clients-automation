@@ -344,7 +344,7 @@ describe('customPut', () => {
 });
 
 describe('deleteRecommendRule', () => {
-  test('deleteRecommendRule0', async () => {
+  test('deleteRecommendRule', async () => {
     const req = (await client.deleteRecommendRule({
       indexName: 'indexName',
       model: 'related-products',
@@ -361,7 +361,7 @@ describe('deleteRecommendRule', () => {
 });
 
 describe('getRecommendRule', () => {
-  test('getRecommendRule0', async () => {
+  test('getRecommendRule', async () => {
     const req = (await client.getRecommendRule({
       indexName: 'indexName',
       model: 'related-products',
@@ -378,7 +378,7 @@ describe('getRecommendRule', () => {
 });
 
 describe('getRecommendStatus', () => {
-  test('getRecommendStatus0', async () => {
+  test('getRecommendStatus', async () => {
     const req = (await client.getRecommendStatus({
       indexName: 'indexName',
       model: 'related-products',
@@ -638,7 +638,7 @@ describe('getRecommendations', () => {
 });
 
 describe('searchRecommendRules', () => {
-  test('searchRecommendRules0', async () => {
+  test('searchRecommendRules', async () => {
     const req = (await client.searchRecommendRules({
       indexName: 'indexName',
       model: 'related-products',

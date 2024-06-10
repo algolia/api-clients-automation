@@ -47,9 +47,9 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for CreateConfig
-     * createConfig0.
+     * createConfig.
      */
-    public function testCreateConfig0()
+    public function testCreateConfig()
     {
         $client = $this->getClient();
         $client->createConfig(
@@ -95,7 +95,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
      * Test case for CustomDelete
      * allow del method for a custom path with minimal parameters.
      */
-    public function testCustomDelete0()
+    public function testCustomDelete()
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -138,7 +138,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
      * Test case for CustomGet
      * allow get method for a custom path with minimal parameters.
      */
-    public function testCustomGet0()
+    public function testCustomGet()
     {
         $client = $this->getClient();
         $client->customGet(
@@ -216,7 +216,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
      * Test case for CustomPost
      * allow post method for a custom path with minimal parameters.
      */
-    public function testCustomPost0()
+    public function testCustomPost()
     {
         $client = $this->getClient();
         $client->customPost(
@@ -563,7 +563,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
      * Test case for CustomPut
      * allow put method for a custom path with minimal parameters.
      */
-    public function testCustomPut0()
+    public function testCustomPut()
     {
         $client = $this->getClient();
         $client->customPut(
@@ -606,9 +606,9 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for DeleteConfig
-     * deleteConfig0.
+     * deleteConfig.
      */
-    public function testDeleteConfig0()
+    public function testDeleteConfig()
     {
         $client = $this->getClient();
         $client->deleteConfig(
@@ -626,9 +626,9 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetAllConfigs
-     * getAllConfigs0.
+     * getAllConfigs.
      */
-    public function testGetAllConfigs0()
+    public function testGetAllConfigs()
     {
         $client = $this->getClient();
         $client->getAllConfigs();
@@ -646,7 +646,7 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
      * Test case for GetConfig
      * Retrieve QS config e2e.
      */
-    public function testGetConfig0()
+    public function testGetConfig()
     {
         $client = $this->getClient();
         $client->getConfig(
@@ -673,9 +673,9 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetConfigStatus
-     * getConfigStatus0.
+     * getConfigStatus.
      */
-    public function testGetConfigStatus0()
+    public function testGetConfigStatus()
     {
         $client = $this->getClient();
         $client->getConfigStatus(
@@ -693,9 +693,9 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetLogFile
-     * getLogFile0.
+     * getLogFile.
      */
-    public function testGetLogFile0()
+    public function testGetLogFile()
     {
         $client = $this->getClient();
         $client->getLogFile(
@@ -713,9 +713,9 @@ class QuerySuggestionsTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for UpdateConfig
-     * updateConfig0.
+     * updateConfig.
      */
-    public function testUpdateConfig0()
+    public function testUpdateConfig()
     {
         $client = $this->getClient();
         $client->updateConfig(

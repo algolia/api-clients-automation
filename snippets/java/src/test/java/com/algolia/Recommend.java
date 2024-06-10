@@ -1,7 +1,10 @@
 package com.algolia.methods.snippets;
 
+// >IMPORT
 import com.algolia.api.RecommendClient;
 import com.algolia.model.recommend.*;
+
+// IMPORT<
 
 class SnippetRecommendClient {
 
@@ -9,7 +12,7 @@ class SnippetRecommendClient {
   //
   // allow del method for a custom path with minimal parameters
   void snippetForCustomDelete() {
-    // >SEPARATOR customDelete
+    // >SEPARATOR customDelete default
     // Initialize the client
     RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -22,7 +25,7 @@ class SnippetRecommendClient {
   //
   // allow get method for a custom path with minimal parameters
   void snippetForCustomGet() {
-    // >SEPARATOR customGet
+    // >SEPARATOR customGet default
     // Initialize the client
     RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -35,7 +38,7 @@ class SnippetRecommendClient {
   //
   // allow post method for a custom path with minimal parameters
   void snippetForCustomPost() {
-    // >SEPARATOR customPost
+    // >SEPARATOR customPost default
     // Initialize the client
     RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -48,7 +51,7 @@ class SnippetRecommendClient {
   //
   // allow put method for a custom path with minimal parameters
   void snippetForCustomPut() {
-    // >SEPARATOR customPut
+    // >SEPARATOR customPut default
     // Initialize the client
     RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -59,9 +62,9 @@ class SnippetRecommendClient {
 
   // Snippet for the deleteRecommendRule method.
   //
-  // deleteRecommendRule0
+  // deleteRecommendRule
   void snippetForDeleteRecommendRule() {
-    // >SEPARATOR deleteRecommendRule
+    // >SEPARATOR deleteRecommendRule default
     // Initialize the client
     RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -72,9 +75,9 @@ class SnippetRecommendClient {
 
   // Snippet for the getRecommendRule method.
   //
-  // getRecommendRule0
+  // getRecommendRule
   void snippetForGetRecommendRule() {
-    // >SEPARATOR getRecommendRule
+    // >SEPARATOR getRecommendRule default
     // Initialize the client
     RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -85,9 +88,9 @@ class SnippetRecommendClient {
 
   // Snippet for the getRecommendStatus method.
   //
-  // getRecommendStatus0
+  // getRecommendStatus
   void snippetForGetRecommendStatus() {
-    // >SEPARATOR getRecommendStatus
+    // >SEPARATOR getRecommendStatus default
     // Initialize the client
     RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -100,7 +103,7 @@ class SnippetRecommendClient {
   //
   // get recommendations for recommend model with minimal parameters
   void snippetForGetRecommendations() {
-    // >SEPARATOR getRecommendations
+    // >SEPARATOR getRecommendations default
     // Initialize the client
     RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -122,9 +125,9 @@ class SnippetRecommendClient {
 
   // Snippet for the searchRecommendRules method.
   //
-  // searchRecommendRules0
+  // searchRecommendRules
   void snippetForSearchRecommendRules() {
-    // >SEPARATOR searchRecommendRules
+    // >SEPARATOR searchRecommendRules default
     // Initialize the client
     RecommendClient client = new RecommendClient("YOUR_APP_ID", "YOUR_API_KEY");
 

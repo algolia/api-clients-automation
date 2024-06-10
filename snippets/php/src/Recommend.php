@@ -4,6 +4,11 @@
 
 namespace Algolia\AlgoliaSearch\Snippets;
 
+// >IMPORT
+use Algolia\AlgoliaSearch\Api\RecommendClient;
+
+// IMPORT<
+
 class SnippetRecommendClient
 {
     /**
@@ -13,9 +18,9 @@ class SnippetRecommendClient
      */
     public function snippetForCustomDelete()
     {
-        // >SEPARATOR customDelete
+        // >SEPARATOR customDelete default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->customDelete(
@@ -34,9 +39,9 @@ class SnippetRecommendClient
      */
     public function snippetForCustomGet()
     {
-        // >SEPARATOR customGet
+        // >SEPARATOR customGet default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->customGet(
@@ -55,9 +60,9 @@ class SnippetRecommendClient
      */
     public function snippetForCustomPost()
     {
-        // >SEPARATOR customPost
+        // >SEPARATOR customPost default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->customPost(
@@ -76,9 +81,9 @@ class SnippetRecommendClient
      */
     public function snippetForCustomPut()
     {
-        // >SEPARATOR customPut
+        // >SEPARATOR customPut default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->customPut(
@@ -93,13 +98,13 @@ class SnippetRecommendClient
     /**
      * Snippet for the DeleteRecommendRule method.
      *
-     * deleteRecommendRule0
+     * deleteRecommendRule
      */
     public function snippetForDeleteRecommendRule()
     {
-        // >SEPARATOR deleteRecommendRule
+        // >SEPARATOR deleteRecommendRule default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->deleteRecommendRule(
@@ -116,13 +121,13 @@ class SnippetRecommendClient
     /**
      * Snippet for the GetRecommendRule method.
      *
-     * getRecommendRule0
+     * getRecommendRule
      */
     public function snippetForGetRecommendRule()
     {
-        // >SEPARATOR getRecommendRule
+        // >SEPARATOR getRecommendRule default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->getRecommendRule(
@@ -139,13 +144,13 @@ class SnippetRecommendClient
     /**
      * Snippet for the GetRecommendStatus method.
      *
-     * getRecommendStatus0
+     * getRecommendStatus
      */
     public function snippetForGetRecommendStatus()
     {
-        // >SEPARATOR getRecommendStatus
+        // >SEPARATOR getRecommendStatus default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->getRecommendStatus(
@@ -166,9 +171,9 @@ class SnippetRecommendClient
      */
     public function snippetForGetRecommendations()
     {
-        // >SEPARATOR getRecommendations
+        // >SEPARATOR getRecommendations default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->getRecommendations(
@@ -190,13 +195,13 @@ class SnippetRecommendClient
     /**
      * Snippet for the SearchRecommendRules method.
      *
-     * searchRecommendRules0
+     * searchRecommendRules
      */
     public function snippetForSearchRecommendRules()
     {
-        // >SEPARATOR searchRecommendRules
+        // >SEPARATOR searchRecommendRules default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = RecommendClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->searchRecommendRules(

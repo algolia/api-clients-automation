@@ -1,19 +1,22 @@
 #if canImport(Core)
     import Core
 #endif
+// >IMPORT
 import Insights
+
+// IMPORT<
 
 final class InsightsClientSnippet {
     /// Snippet for the customDelete method.
     ///
     /// allow del method for a custom path with minimal parameters
     func snippetForCustomDelete() async throws {
-        // >SEPARATOR customDelete
+        // >SEPARATOR customDelete default
         // Initialize the client
         let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customDelete(path: "test/minimal")
+        let response = try await client.customDelete(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -21,12 +24,12 @@ final class InsightsClientSnippet {
     ///
     /// allow get method for a custom path with minimal parameters
     func snippetForCustomGet() async throws {
-        // >SEPARATOR customGet
+        // >SEPARATOR customGet default
         // Initialize the client
         let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customGet(path: "test/minimal")
+        let response = try await client.customGet(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -34,12 +37,12 @@ final class InsightsClientSnippet {
     ///
     /// allow post method for a custom path with minimal parameters
     func snippetForCustomPost() async throws {
-        // >SEPARATOR customPost
+        // >SEPARATOR customPost default
         // Initialize the client
         let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPost(path: "test/minimal")
+        let response = try await client.customPost(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -47,38 +50,38 @@ final class InsightsClientSnippet {
     ///
     /// allow put method for a custom path with minimal parameters
     func snippetForCustomPut() async throws {
-        // >SEPARATOR customPut
+        // >SEPARATOR customPut default
         // Initialize the client
         let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPut(path: "test/minimal")
+        let response = try await client.customPut(path: "test/minimal")
         // SEPARATOR<
     }
 
     /// Snippet for the deleteUserToken method.
     ///
-    /// deleteUserToken0
+    /// deleteUserToken
     func snippetForDeleteUserToken() async throws {
-        // >SEPARATOR deleteUserToken
+        // >SEPARATOR deleteUserToken default
         // Initialize the client
         let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.deleteUserToken(userToken: "test-user-1")
+        let response = try await client.deleteUserToken(userToken: "test-user-1")
         // SEPARATOR<
     }
 
     /// Snippet for the pushEvents method.
     ///
-    /// pushEvents0
+    /// pushEvents
     func snippetForPushEvents() async throws {
-        // >SEPARATOR pushEvents
+        // >SEPARATOR pushEvents default
         // Initialize the client
         let client = try InsightsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client
+        let response = try await client
             .pushEvents(insightsEvents: InsightsEvents(events: [
                 EventsItems
                     .clickedObjectIDsAfterSearch(ClickedObjectIDsAfterSearch(

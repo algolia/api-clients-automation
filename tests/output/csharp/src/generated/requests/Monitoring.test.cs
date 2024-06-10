@@ -25,7 +25,7 @@ public class MonitoringClientRequestTests
   public void Dispose() { }
 
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
-  public async Task CustomDeleteTest0()
+  public async Task CustomDeleteTest()
   {
     await _client.CustomDeleteAsync("test/minimal");
 
@@ -63,7 +63,7 @@ public class MonitoringClientRequestTests
   }
 
   [Fact(DisplayName = "allow get method for a custom path with minimal parameters")]
-  public async Task CustomGetTest0()
+  public async Task CustomGetTest()
   {
     await _client.CustomGetAsync("test/minimal");
 
@@ -143,7 +143,7 @@ public class MonitoringClientRequestTests
   }
 
   [Fact(DisplayName = "allow post method for a custom path with minimal parameters")]
-  public async Task CustomPostTest0()
+  public async Task CustomPostTest()
   {
     await _client.CustomPostAsync("test/minimal");
 
@@ -473,7 +473,7 @@ public class MonitoringClientRequestTests
   }
 
   [Fact(DisplayName = "allow put method for a custom path with minimal parameters")]
-  public async Task CustomPutTest0()
+  public async Task CustomPutTest()
   {
     await _client.CustomPutAsync("test/minimal");
 
@@ -516,7 +516,7 @@ public class MonitoringClientRequestTests
   }
 
   [Fact(DisplayName = "getClusterIncidents")]
-  public async Task GetClusterIncidentsTest0()
+  public async Task GetClusterIncidentsTest()
   {
     await _client.GetClusterIncidentsAsync("c1-de");
 
@@ -527,7 +527,7 @@ public class MonitoringClientRequestTests
   }
 
   [Fact(DisplayName = "getClusterStatus")]
-  public async Task GetClusterStatusTest0()
+  public async Task GetClusterStatusTest()
   {
     await _client.GetClusterStatusAsync("c1-de");
 
@@ -538,7 +538,7 @@ public class MonitoringClientRequestTests
   }
 
   [Fact(DisplayName = "getIncidents")]
-  public async Task GetIncidentsTest0()
+  public async Task GetIncidentsTest()
   {
     await _client.GetIncidentsAsync();
 
@@ -549,7 +549,7 @@ public class MonitoringClientRequestTests
   }
 
   [Fact(DisplayName = "getIndexingTime")]
-  public async Task GetIndexingTimeTest0()
+  public async Task GetIndexingTimeTest()
   {
     await _client.GetIndexingTimeAsync("c1-de");
 
@@ -560,7 +560,7 @@ public class MonitoringClientRequestTests
   }
 
   [Fact(DisplayName = "getLatency")]
-  public async Task GetLatencyTest0()
+  public async Task GetLatencyTest()
   {
     await _client.GetLatencyAsync("c1-de");
 
@@ -571,7 +571,7 @@ public class MonitoringClientRequestTests
   }
 
   [Fact(DisplayName = "getMetrics")]
-  public async Task GetMetricsTest0()
+  public async Task GetMetricsTest()
   {
     await _client.GetMetricsAsync(Enum.Parse<Metric>("AvgBuildTime"), Enum.Parse<Period>("Minute"));
 
@@ -582,7 +582,7 @@ public class MonitoringClientRequestTests
   }
 
   [Fact(DisplayName = "getReachability")]
-  public async Task GetReachabilityTest0()
+  public async Task GetReachabilityTest()
   {
     await _client.GetReachabilityAsync("c1-de");
 
@@ -593,7 +593,7 @@ public class MonitoringClientRequestTests
   }
 
   [Fact(DisplayName = "getInventory")]
-  public async Task GetServersTest0()
+  public async Task GetServersTest()
   {
     await _client.GetServersAsync();
 
@@ -604,7 +604,7 @@ public class MonitoringClientRequestTests
   }
 
   [Fact(DisplayName = "getStatus")]
-  public async Task GetStatusTest0()
+  public async Task GetStatusTest()
   {
     await _client.GetStatusAsync();
 

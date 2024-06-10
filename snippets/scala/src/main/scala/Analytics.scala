@@ -3,7 +3,9 @@ package algoliasearch.methods.snippets
 
 import scala.concurrent.duration.Duration
 
+// >IMPORT
 import algoliasearch.api.AnalyticsClient
+// IMPORT<
 import algoliasearch.analytics.*
 
 import org.json4s.*
@@ -19,17 +21,17 @@ class SnippetAnalyticsClient {
     * allow del method for a custom path with minimal parameters
     */
   def snippetForAnalyticsClientCustomDelete(): Unit = {
-    // >SEPARATOR customDelete
+    // >SEPARATOR customDelete default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.customDelete[JObject](
+    val response = client.customDelete[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -38,17 +40,17 @@ class SnippetAnalyticsClient {
     * allow get method for a custom path with minimal parameters
     */
   def snippetForAnalyticsClientCustomGet(): Unit = {
-    // >SEPARATOR customGet
+    // >SEPARATOR customGet default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.customGet[JObject](
+    val response = client.customGet[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -57,17 +59,17 @@ class SnippetAnalyticsClient {
     * allow post method for a custom path with minimal parameters
     */
   def snippetForAnalyticsClientCustomPost(): Unit = {
-    // >SEPARATOR customPost
+    // >SEPARATOR customPost default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.customPost[JObject](
+    val response = client.customPost[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -76,17 +78,17 @@ class SnippetAnalyticsClient {
     * allow put method for a custom path with minimal parameters
     */
   def snippetForAnalyticsClientCustomPut(): Unit = {
-    // >SEPARATOR customPut
+    // >SEPARATOR customPut default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.customPut[JObject](
+    val response = client.customPut[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -95,17 +97,17 @@ class SnippetAnalyticsClient {
     * get getAddToCartRate with minimal parameters
     */
   def snippetForAnalyticsClientGetAddToCartRate(): Unit = {
-    // >SEPARATOR getAddToCartRate
+    // >SEPARATOR getAddToCartRate default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getAddToCartRate(
+    val response = client.getAddToCartRate(
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -114,17 +116,17 @@ class SnippetAnalyticsClient {
     * get getAverageClickPosition with minimal parameters
     */
   def snippetForAnalyticsClientGetAverageClickPosition(): Unit = {
-    // >SEPARATOR getAverageClickPosition
+    // >SEPARATOR getAverageClickPosition default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getAverageClickPosition(
+    val response = client.getAverageClickPosition(
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -133,17 +135,17 @@ class SnippetAnalyticsClient {
     * get getClickPositions with minimal parameters
     */
   def snippetForAnalyticsClientGetClickPositions(): Unit = {
-    // >SEPARATOR getClickPositions
+    // >SEPARATOR getClickPositions default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getClickPositions(
+    val response = client.getClickPositions(
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -152,17 +154,17 @@ class SnippetAnalyticsClient {
     * get getClickThroughRate with minimal parameters
     */
   def snippetForAnalyticsClientGetClickThroughRate(): Unit = {
-    // >SEPARATOR getClickThroughRate
+    // >SEPARATOR getClickThroughRate default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getClickThroughRate(
+    val response = client.getClickThroughRate(
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -171,17 +173,17 @@ class SnippetAnalyticsClient {
     * get getConversationRate with minimal parameters
     */
   def snippetForAnalyticsClientGetConversionRate(): Unit = {
-    // >SEPARATOR getConversionRate
+    // >SEPARATOR getConversionRate default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getConversionRate(
+    val response = client.getConversionRate(
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -190,17 +192,17 @@ class SnippetAnalyticsClient {
     * get getNoClickRate with minimal parameters
     */
   def snippetForAnalyticsClientGetNoClickRate(): Unit = {
-    // >SEPARATOR getNoClickRate
+    // >SEPARATOR getNoClickRate default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getNoClickRate(
+    val response = client.getNoClickRate(
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -209,17 +211,17 @@ class SnippetAnalyticsClient {
     * get getNoResultsRate with minimal parameters
     */
   def snippetForAnalyticsClientGetNoResultsRate(): Unit = {
-    // >SEPARATOR getNoResultsRate
+    // >SEPARATOR getNoResultsRate default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getNoResultsRate(
+    val response = client.getNoResultsRate(
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -228,17 +230,17 @@ class SnippetAnalyticsClient {
     * get getPurchaseRate with minimal parameters
     */
   def snippetForAnalyticsClientGetPurchaseRate(): Unit = {
-    // >SEPARATOR getPurchaseRate
+    // >SEPARATOR getPurchaseRate default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getPurchaseRate(
+    val response = client.getPurchaseRate(
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -247,17 +249,17 @@ class SnippetAnalyticsClient {
     * get getRevenue with minimal parameters
     */
   def snippetForAnalyticsClientGetRevenue(): Unit = {
-    // >SEPARATOR getRevenue
+    // >SEPARATOR getRevenue default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getRevenue(
+    val response = client.getRevenue(
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -266,17 +268,17 @@ class SnippetAnalyticsClient {
     * get getSearchesCount with minimal parameters
     */
   def snippetForAnalyticsClientGetSearchesCount(): Unit = {
-    // >SEPARATOR getSearchesCount
+    // >SEPARATOR getSearchesCount default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getSearchesCount(
+    val response = client.getSearchesCount(
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -285,17 +287,17 @@ class SnippetAnalyticsClient {
     * get getSearchesNoClicks with minimal parameters
     */
   def snippetForAnalyticsClientGetSearchesNoClicks(): Unit = {
-    // >SEPARATOR getSearchesNoClicks
+    // >SEPARATOR getSearchesNoClicks default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getSearchesNoClicks(
+    val response = client.getSearchesNoClicks(
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -304,17 +306,17 @@ class SnippetAnalyticsClient {
     * get getSearchesNoResults with minimal parameters
     */
   def snippetForAnalyticsClientGetSearchesNoResults(): Unit = {
-    // >SEPARATOR getSearchesNoResults
+    // >SEPARATOR getSearchesNoResults default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getSearchesNoResults(
+    val response = client.getSearchesNoResults(
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -323,17 +325,17 @@ class SnippetAnalyticsClient {
     * get getStatus with minimal parameters
     */
   def snippetForAnalyticsClientGetStatus(): Unit = {
-    // >SEPARATOR getStatus
+    // >SEPARATOR getStatus default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getStatus(
+    val response = client.getStatus(
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -342,17 +344,17 @@ class SnippetAnalyticsClient {
     * get getTopCountries with minimal parameters
     */
   def snippetForAnalyticsClientGetTopCountries(): Unit = {
-    // >SEPARATOR getTopCountries
+    // >SEPARATOR getTopCountries default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getTopCountries(
+    val response = client.getTopCountries(
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -361,17 +363,17 @@ class SnippetAnalyticsClient {
     * get getTopFilterAttributes with minimal parameters
     */
   def snippetForAnalyticsClientGetTopFilterAttributes(): Unit = {
-    // >SEPARATOR getTopFilterAttributes
+    // >SEPARATOR getTopFilterAttributes default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getTopFilterAttributes(
+    val response = client.getTopFilterAttributes(
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -380,18 +382,18 @@ class SnippetAnalyticsClient {
     * get getTopFilterForAttribute with minimal parameters
     */
   def snippetForAnalyticsClientGetTopFilterForAttribute(): Unit = {
-    // >SEPARATOR getTopFilterForAttribute
+    // >SEPARATOR getTopFilterForAttribute default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getTopFilterForAttribute(
+    val response = client.getTopFilterForAttribute(
       attribute = "myAttribute",
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -400,17 +402,17 @@ class SnippetAnalyticsClient {
     * get getTopFiltersNoResults with minimal parameters
     */
   def snippetForAnalyticsClientGetTopFiltersNoResults(): Unit = {
-    // >SEPARATOR getTopFiltersNoResults
+    // >SEPARATOR getTopFiltersNoResults default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getTopFiltersNoResults(
+    val response = client.getTopFiltersNoResults(
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -419,17 +421,17 @@ class SnippetAnalyticsClient {
     * get getTopHits with minimal parameters
     */
   def snippetForAnalyticsClientGetTopHits(): Unit = {
-    // >SEPARATOR getTopHits
+    // >SEPARATOR getTopHits default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getTopHits(
+    val response = client.getTopHits(
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -438,17 +440,17 @@ class SnippetAnalyticsClient {
     * get getTopSearches with minimal parameters
     */
   def snippetForAnalyticsClientGetTopSearches(): Unit = {
-    // >SEPARATOR getTopSearches
+    // >SEPARATOR getTopSearches default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getTopSearches(
+    val response = client.getTopSearches(
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -457,17 +459,17 @@ class SnippetAnalyticsClient {
     * get getUsersCount with minimal parameters
     */
   def snippetForAnalyticsClientGetUsersCount(): Unit = {
-    // >SEPARATOR getUsersCount
+    // >SEPARATOR getUsersCount default
     // Initialize the client
     val client = AnalyticsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.getUsersCount(
+    val response = client.getUsersCount(
       index = "index"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 

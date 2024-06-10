@@ -1,19 +1,22 @@
 #if canImport(Core)
     import Core
 #endif
+// >IMPORT
 import Monitoring
+
+// IMPORT<
 
 final class MonitoringClientSnippet {
     /// Snippet for the customDelete method.
     ///
     /// allow del method for a custom path with minimal parameters
     func snippetForCustomDelete() async throws {
-        // >SEPARATOR customDelete
+        // >SEPARATOR customDelete default
         // Initialize the client
         let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customDelete(path: "test/minimal")
+        let response = try await client.customDelete(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -21,12 +24,12 @@ final class MonitoringClientSnippet {
     ///
     /// allow get method for a custom path with minimal parameters
     func snippetForCustomGet() async throws {
-        // >SEPARATOR customGet
+        // >SEPARATOR customGet default
         // Initialize the client
         let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customGet(path: "test/minimal")
+        let response = try await client.customGet(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -34,12 +37,12 @@ final class MonitoringClientSnippet {
     ///
     /// allow post method for a custom path with minimal parameters
     func snippetForCustomPost() async throws {
-        // >SEPARATOR customPost
+        // >SEPARATOR customPost default
         // Initialize the client
         let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customPost(path: "test/minimal")
+        let response = try await client.customPost(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -47,12 +50,12 @@ final class MonitoringClientSnippet {
     ///
     /// allow put method for a custom path with minimal parameters
     func snippetForCustomPut() async throws {
-        // >SEPARATOR customPut
+        // >SEPARATOR customPut default
         // Initialize the client
         let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customPut(path: "test/minimal")
+        let response = try await client.customPut(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -60,12 +63,12 @@ final class MonitoringClientSnippet {
     ///
     /// getClusterIncidents
     func snippetForGetClusterIncidents() async throws {
-        // >SEPARATOR getClusterIncidents
+        // >SEPARATOR getClusterIncidents default
         // Initialize the client
         let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getClusterIncidents(clusters: "c1-de")
+        let response = try await client.getClusterIncidents(clusters: "c1-de")
         // SEPARATOR<
     }
 
@@ -73,12 +76,12 @@ final class MonitoringClientSnippet {
     ///
     /// getClusterStatus
     func snippetForGetClusterStatus() async throws {
-        // >SEPARATOR getClusterStatus
+        // >SEPARATOR getClusterStatus default
         // Initialize the client
         let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getClusterStatus(clusters: "c1-de")
+        let response = try await client.getClusterStatus(clusters: "c1-de")
         // SEPARATOR<
     }
 
@@ -86,12 +89,12 @@ final class MonitoringClientSnippet {
     ///
     /// getIncidents
     func snippetForGetIncidents() async throws {
-        // >SEPARATOR getIncidents
+        // >SEPARATOR getIncidents default
         // Initialize the client
         let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getIncidents()
+        let response = try await client.getIncidents()
         // SEPARATOR<
     }
 
@@ -99,12 +102,12 @@ final class MonitoringClientSnippet {
     ///
     /// getIndexingTime
     func snippetForGetIndexingTime() async throws {
-        // >SEPARATOR getIndexingTime
+        // >SEPARATOR getIndexingTime default
         // Initialize the client
         let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getIndexingTime(clusters: "c1-de")
+        let response = try await client.getIndexingTime(clusters: "c1-de")
         // SEPARATOR<
     }
 
@@ -112,12 +115,12 @@ final class MonitoringClientSnippet {
     ///
     /// getLatency
     func snippetForGetLatency() async throws {
-        // >SEPARATOR getLatency
+        // >SEPARATOR getLatency default
         // Initialize the client
         let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getLatency(clusters: "c1-de")
+        let response = try await client.getLatency(clusters: "c1-de")
         // SEPARATOR<
     }
 
@@ -125,12 +128,12 @@ final class MonitoringClientSnippet {
     ///
     /// getMetrics
     func snippetForGetMetrics() async throws {
-        // >SEPARATOR getMetrics
+        // >SEPARATOR getMetrics default
         // Initialize the client
         let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getMetrics(metric: Metric.avgBuildTime, period: Period.minute)
+        let response = try await client.getMetrics(metric: Metric.avgBuildTime, period: Period.minute)
         // SEPARATOR<
     }
 
@@ -138,12 +141,12 @@ final class MonitoringClientSnippet {
     ///
     /// getReachability
     func snippetForGetReachability() async throws {
-        // >SEPARATOR getReachability
+        // >SEPARATOR getReachability default
         // Initialize the client
         let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getReachability(clusters: "c1-de")
+        let response = try await client.getReachability(clusters: "c1-de")
         // SEPARATOR<
     }
 
@@ -151,12 +154,12 @@ final class MonitoringClientSnippet {
     ///
     /// getInventory
     func snippetForGetServers() async throws {
-        // >SEPARATOR getServers
+        // >SEPARATOR getServers default
         // Initialize the client
         let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getServers()
+        let response = try await client.getServers()
         // SEPARATOR<
     }
 
@@ -164,12 +167,12 @@ final class MonitoringClientSnippet {
     ///
     /// getStatus
     func snippetForGetStatus() async throws {
-        // >SEPARATOR getStatus
+        // >SEPARATOR getStatus default
         // Initialize the client
         let client = try MonitoringClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getStatus()
+        let response = try await client.getStatus()
         // SEPARATOR<
     }
 }

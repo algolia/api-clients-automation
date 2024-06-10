@@ -1,7 +1,10 @@
 package com.algolia.methods.snippets;
 
+// >IMPORT
 import com.algolia.api.IngestionClient;
 import com.algolia.model.ingestion.*;
+
+// IMPORT<
 
 class SnippetIngestionClient {
 
@@ -9,7 +12,7 @@ class SnippetIngestionClient {
   //
   // createAuthenticationOAuth
   void snippetForCreateAuthentication() {
-    // >SEPARATOR createAuthentication
+    // >SEPARATOR createAuthentication default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -27,7 +30,7 @@ class SnippetIngestionClient {
   //
   // createDestination
   void snippetForCreateDestination() {
-    // >SEPARATOR createDestination
+    // >SEPARATOR createDestination default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -46,7 +49,7 @@ class SnippetIngestionClient {
   //
   // createSource
   void snippetForCreateSource() {
-    // >SEPARATOR createSource
+    // >SEPARATOR createSource default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -71,7 +74,7 @@ class SnippetIngestionClient {
   //
   // createTaskOnDemand
   void snippetForCreateTask() {
-    // >SEPARATOR createTask
+    // >SEPARATOR createTask default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -90,7 +93,7 @@ class SnippetIngestionClient {
   //
   // allow del method for a custom path with minimal parameters
   void snippetForCustomDelete() {
-    // >SEPARATOR customDelete
+    // >SEPARATOR customDelete default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -103,7 +106,7 @@ class SnippetIngestionClient {
   //
   // allow get method for a custom path with minimal parameters
   void snippetForCustomGet() {
-    // >SEPARATOR customGet
+    // >SEPARATOR customGet default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -116,7 +119,7 @@ class SnippetIngestionClient {
   //
   // allow post method for a custom path with minimal parameters
   void snippetForCustomPost() {
-    // >SEPARATOR customPost
+    // >SEPARATOR customPost default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -129,7 +132,7 @@ class SnippetIngestionClient {
   //
   // allow put method for a custom path with minimal parameters
   void snippetForCustomPut() {
-    // >SEPARATOR customPut
+    // >SEPARATOR customPut default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -142,7 +145,7 @@ class SnippetIngestionClient {
   //
   // deleteAuthentication
   void snippetForDeleteAuthentication() {
-    // >SEPARATOR deleteAuthentication
+    // >SEPARATOR deleteAuthentication default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -155,7 +158,7 @@ class SnippetIngestionClient {
   //
   // deleteDestination
   void snippetForDeleteDestination() {
-    // >SEPARATOR deleteDestination
+    // >SEPARATOR deleteDestination default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -168,7 +171,7 @@ class SnippetIngestionClient {
   //
   // deleteSource
   void snippetForDeleteSource() {
-    // >SEPARATOR deleteSource
+    // >SEPARATOR deleteSource default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -181,7 +184,7 @@ class SnippetIngestionClient {
   //
   // deleteTask
   void snippetForDeleteTask() {
-    // >SEPARATOR deleteTask
+    // >SEPARATOR deleteTask default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -194,7 +197,7 @@ class SnippetIngestionClient {
   //
   // disableTask
   void snippetForDisableTask() {
-    // >SEPARATOR disableTask
+    // >SEPARATOR disableTask default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -207,7 +210,7 @@ class SnippetIngestionClient {
   //
   // enable task e2e
   void snippetForEnableTask() {
-    // >SEPARATOR enableTask
+    // >SEPARATOR enableTask default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -220,7 +223,7 @@ class SnippetIngestionClient {
   //
   // getAuthentication
   void snippetForGetAuthentication() {
-    // >SEPARATOR getAuthentication
+    // >SEPARATOR getAuthentication default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -233,7 +236,7 @@ class SnippetIngestionClient {
   //
   // getAuthentications
   void snippetForGetAuthentications() {
-    // >SEPARATOR getAuthentications
+    // >SEPARATOR getAuthentications default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -246,7 +249,7 @@ class SnippetIngestionClient {
   //
   // getDestination
   void snippetForGetDestination() {
-    // >SEPARATOR getDestination
+    // >SEPARATOR getDestination default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -259,7 +262,7 @@ class SnippetIngestionClient {
   //
   // getDestinations
   void snippetForGetDestinations() {
-    // >SEPARATOR getDestinations
+    // >SEPARATOR getDestinations default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -272,7 +275,7 @@ class SnippetIngestionClient {
   //
   // getDockerSourceStreams
   void snippetForGetDockerSourceStreams() {
-    // >SEPARATOR getDockerSourceStreams
+    // >SEPARATOR getDockerSourceStreams default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -285,7 +288,7 @@ class SnippetIngestionClient {
   //
   // getEvent
   void snippetForGetEvent() {
-    // >SEPARATOR getEvent
+    // >SEPARATOR getEvent default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -298,7 +301,7 @@ class SnippetIngestionClient {
   //
   // getEvents
   void snippetForGetEvents() {
-    // >SEPARATOR getEvents
+    // >SEPARATOR getEvents default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -311,7 +314,7 @@ class SnippetIngestionClient {
   //
   // getRun
   void snippetForGetRun() {
-    // >SEPARATOR getRun
+    // >SEPARATOR getRun default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -324,7 +327,7 @@ class SnippetIngestionClient {
   //
   // getRuns
   void snippetForGetRuns() {
-    // >SEPARATOR getRuns
+    // >SEPARATOR getRuns default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -337,7 +340,7 @@ class SnippetIngestionClient {
   //
   // getSource
   void snippetForGetSource() {
-    // >SEPARATOR getSource
+    // >SEPARATOR getSource default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -350,7 +353,7 @@ class SnippetIngestionClient {
   //
   // getSources
   void snippetForGetSources() {
-    // >SEPARATOR getSources
+    // >SEPARATOR getSources default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -363,7 +366,7 @@ class SnippetIngestionClient {
   //
   // getTask
   void snippetForGetTask() {
-    // >SEPARATOR getTask
+    // >SEPARATOR getTask default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -376,7 +379,7 @@ class SnippetIngestionClient {
   //
   // getTasks
   void snippetForGetTasks() {
-    // >SEPARATOR getTasks
+    // >SEPARATOR getTasks default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -389,7 +392,7 @@ class SnippetIngestionClient {
   //
   // runTask
   void snippetForRunTask() {
-    // >SEPARATOR runTask
+    // >SEPARATOR runTask default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -402,7 +405,7 @@ class SnippetIngestionClient {
   //
   // searchAuthentications
   void snippetForSearchAuthentications() {
-    // >SEPARATOR searchAuthentications
+    // >SEPARATOR searchAuthentications default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -418,7 +421,7 @@ class SnippetIngestionClient {
   //
   // searchDestinations
   void snippetForSearchDestinations() {
-    // >SEPARATOR searchDestinations
+    // >SEPARATOR searchDestinations default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -433,7 +436,7 @@ class SnippetIngestionClient {
   //
   // searchSources
   void snippetForSearchSources() {
-    // >SEPARATOR searchSources
+    // >SEPARATOR searchSources default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -448,7 +451,7 @@ class SnippetIngestionClient {
   //
   // searchTasks
   void snippetForSearchTasks() {
-    // >SEPARATOR searchTasks
+    // >SEPARATOR searchTasks default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -466,7 +469,7 @@ class SnippetIngestionClient {
   //
   // triggerDockerSourceDiscover
   void snippetForTriggerDockerSourceDiscover() {
-    // >SEPARATOR triggerDockerSourceDiscover
+    // >SEPARATOR triggerDockerSourceDiscover default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -479,7 +482,7 @@ class SnippetIngestionClient {
   //
   // updateAuthentication
   void snippetForUpdateAuthentication() {
-    // >SEPARATOR updateAuthentication
+    // >SEPARATOR updateAuthentication default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -492,7 +495,7 @@ class SnippetIngestionClient {
   //
   // updateDestination
   void snippetForUpdateDestination() {
-    // >SEPARATOR updateDestination
+    // >SEPARATOR updateDestination default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -505,7 +508,7 @@ class SnippetIngestionClient {
   //
   // updateSource
   void snippetForUpdateSource() {
-    // >SEPARATOR updateSource
+    // >SEPARATOR updateSource default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -518,7 +521,7 @@ class SnippetIngestionClient {
   //
   // updateTask
   void snippetForUpdateTask() {
-    // >SEPARATOR updateTask
+    // >SEPARATOR updateTask default
     // Initialize the client
     IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 

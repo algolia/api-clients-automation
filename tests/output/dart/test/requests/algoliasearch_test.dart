@@ -360,6 +360,122 @@ void main() {
 
   // search
   test(
+    'withHitsPerPage',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        searchMethodParams: SearchMethodParams(
+          requests: [
+            SearchForHits(
+              indexName: "<YOUR_INDEX_NAME>",
+              query: "<YOUR_QUERY>",
+              hitsPerPage: 50,
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/queries');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","hitsPerPage":50}]}""");
+      },
+    ),
+  );
+
+  // search
+  test(
+    'filterOnly',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        searchMethodParams: SearchMethodParams(
+          requests: [
+            SearchForHits(
+              indexName: "<YOUR_INDEX_NAME>",
+              query: "<YOUR_QUERY>",
+              filters: "actor:Scarlett Johansson",
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/queries');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"actor:Scarlett Johansson"}]}""");
+      },
+    ),
+  );
+
+  // search
+  test(
+    'filterOr',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        searchMethodParams: SearchMethodParams(
+          requests: [
+            SearchForHits(
+              indexName: "<YOUR_INDEX_NAME>",
+              query: "<YOUR_QUERY>",
+              filters: "actor:Tom Cruise OR actor:Scarlett Johansson",
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/queries');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"actor:Tom Cruise OR actor:Scarlett Johansson"}]}""");
+      },
+    ),
+  );
+
+  // search
+  test(
+    'filterNot',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        searchMethodParams: SearchMethodParams(
+          requests: [
+            SearchForHits(
+              indexName: "<YOUR_INDEX_NAME>",
+              query: "<YOUR_QUERY>",
+              filters: "NOT actor:Nicolas Cage",
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/queries');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"NOT actor:Nicolas Cage"}]}""");
+      },
+    ),
+  );
+
+  // search
+  test(
     'search for a single hits request with minimal parameters',
     () => runTest(
       builder: (requester) => SearchClient(
@@ -381,6 +497,69 @@ void main() {
         expect(request.method, 'post');
         expectBody(request.body,
             """{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}""");
+      },
+    ),
+  );
+
+  // search
+  test(
+    'retrieveFacets',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        searchMethodParams: SearchMethodParams(
+          requests: [
+            SearchForHits(
+              indexName: "<YOUR_INDEX_NAME>",
+              query: "<YOUR_QUERY>",
+              facets: [
+                "author",
+                "genre",
+              ],
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/queries');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["author","genre"]}]}""");
+      },
+    ),
+  );
+
+  // search
+  test(
+    'retrieveFacetsWildcard',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        searchMethodParams: SearchMethodParams(
+          requests: [
+            SearchForHits(
+              indexName: "<YOUR_INDEX_NAME>",
+              query: "<YOUR_QUERY>",
+              facets: [
+                "*",
+              ],
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/queries');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["*"]}]}""");
       },
     ),
   );

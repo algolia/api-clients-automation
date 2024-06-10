@@ -12,7 +12,7 @@ final class RecommendClientRequestsTests: XCTestCase {
     static let API_KEY = "my_api_key"
 
     /// allow del method for a custom path with minimal parameters
-    func testCustomDeleteTest0() async throws {
+    func testCustomDeleteTest() async throws {
         let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
@@ -63,7 +63,7 @@ final class RecommendClientRequestsTests: XCTestCase {
     }
 
     /// allow get method for a custom path with minimal parameters
-    func testCustomGetTest0() async throws {
+    func testCustomGetTest() async throws {
         let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
@@ -163,7 +163,7 @@ final class RecommendClientRequestsTests: XCTestCase {
     }
 
     /// allow post method for a custom path with minimal parameters
-    func testCustomPostTest0() async throws {
+    func testCustomPostTest() async throws {
         let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
@@ -639,7 +639,7 @@ final class RecommendClientRequestsTests: XCTestCase {
     }
 
     /// allow put method for a custom path with minimal parameters
-    func testCustomPutTest0() async throws {
+    func testCustomPutTest() async throws {
         let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
@@ -702,8 +702,8 @@ final class RecommendClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// deleteRecommendRule0
-    func testDeleteRecommendRuleTest0() async throws {
+    /// deleteRecommendRule
+    func testDeleteRecommendRuleTest() async throws {
         let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
@@ -727,8 +727,8 @@ final class RecommendClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getRecommendRule0
-    func testGetRecommendRuleTest0() async throws {
+    /// getRecommendRule
+    func testGetRecommendRuleTest() async throws {
         let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
@@ -752,8 +752,8 @@ final class RecommendClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// getRecommendStatus0
-    func testGetRecommendStatusTest0() async throws {
+    /// getRecommendStatus
+    func testGetRecommendStatusTest() async throws {
         let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
@@ -778,7 +778,7 @@ final class RecommendClientRequestsTests: XCTestCase {
     }
 
     /// get recommendations for recommend model with minimal parameters
-    func testGetRecommendationsTest0() async throws {
+    func testGetRecommendationsTest() async throws {
         let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY
@@ -1109,8 +1109,8 @@ final class RecommendClientRequestsTests: XCTestCase {
         XCTAssertNil(echoResponse.queryParameters)
     }
 
-    /// searchRecommendRules0
-    func testSearchRecommendRulesTest0() async throws {
+    /// searchRecommendRules
+    func testSearchRecommendRulesTest() async throws {
         let configuration = try RecommendClientConfiguration(
             appID: RecommendClientRequestsTests.APPLICATION_ID,
             apiKey: RecommendClientRequestsTests.API_KEY

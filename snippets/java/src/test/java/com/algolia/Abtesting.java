@@ -1,7 +1,10 @@
 package com.algolia.methods.snippets;
 
+// >IMPORT
 import com.algolia.api.AbtestingClient;
 import com.algolia.model.abtesting.*;
+
+// IMPORT<
 
 class SnippetAbtestingClient {
 
@@ -9,7 +12,7 @@ class SnippetAbtestingClient {
   //
   // addABTests with minimal parameters
   void snippetForAddABTests() {
-    // >SEPARATOR addABTests
+    // >SEPARATOR addABTests default
     // Initialize the client
     AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -32,7 +35,7 @@ class SnippetAbtestingClient {
   //
   // allow del method for a custom path with minimal parameters
   void snippetForCustomDelete() {
-    // >SEPARATOR customDelete
+    // >SEPARATOR customDelete default
     // Initialize the client
     AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -45,7 +48,7 @@ class SnippetAbtestingClient {
   //
   // allow get method for a custom path with minimal parameters
   void snippetForCustomGet() {
-    // >SEPARATOR customGet
+    // >SEPARATOR customGet default
     // Initialize the client
     AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -58,7 +61,7 @@ class SnippetAbtestingClient {
   //
   // allow post method for a custom path with minimal parameters
   void snippetForCustomPost() {
-    // >SEPARATOR customPost
+    // >SEPARATOR customPost default
     // Initialize the client
     AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -71,7 +74,7 @@ class SnippetAbtestingClient {
   //
   // allow put method for a custom path with minimal parameters
   void snippetForCustomPut() {
-    // >SEPARATOR customPut
+    // >SEPARATOR customPut default
     // Initialize the client
     AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -84,7 +87,7 @@ class SnippetAbtestingClient {
   //
   // deleteABTest
   void snippetForDeleteABTest() {
-    // >SEPARATOR deleteABTest
+    // >SEPARATOR deleteABTest default
     // Initialize the client
     AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -97,7 +100,7 @@ class SnippetAbtestingClient {
   //
   // getABTest
   void snippetForGetABTest() {
-    // >SEPARATOR getABTest
+    // >SEPARATOR getABTest default
     // Initialize the client
     AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -110,7 +113,7 @@ class SnippetAbtestingClient {
   //
   // listABTests with minimal parameters
   void snippetForListABTests() {
-    // >SEPARATOR listABTests
+    // >SEPARATOR listABTests default
     // Initialize the client
     AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -123,7 +126,7 @@ class SnippetAbtestingClient {
   //
   // stopABTest
   void snippetForStopABTest() {
-    // >SEPARATOR stopABTest
+    // >SEPARATOR stopABTest default
     // Initialize the client
     AbtestingClient client = new AbtestingClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 

@@ -4,6 +4,11 @@
 
 namespace Algolia\AlgoliaSearch\Snippets;
 
+// >IMPORT
+use Algolia\AlgoliaSearch\Api\AbtestingClient;
+
+// IMPORT<
+
 class SnippetAbtestingClient
 {
     /**
@@ -13,9 +18,9 @@ class SnippetAbtestingClient
      */
     public function snippetForAddABTests()
     {
-        // >SEPARATOR addABTests
+        // >SEPARATOR addABTests default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->addABTests(
@@ -45,9 +50,9 @@ class SnippetAbtestingClient
      */
     public function snippetForCustomDelete()
     {
-        // >SEPARATOR customDelete
+        // >SEPARATOR customDelete default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->customDelete(
@@ -66,9 +71,9 @@ class SnippetAbtestingClient
      */
     public function snippetForCustomGet()
     {
-        // >SEPARATOR customGet
+        // >SEPARATOR customGet default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->customGet(
@@ -87,9 +92,9 @@ class SnippetAbtestingClient
      */
     public function snippetForCustomPost()
     {
-        // >SEPARATOR customPost
+        // >SEPARATOR customPost default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->customPost(
@@ -108,9 +113,9 @@ class SnippetAbtestingClient
      */
     public function snippetForCustomPut()
     {
-        // >SEPARATOR customPut
+        // >SEPARATOR customPut default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->customPut(
@@ -129,9 +134,9 @@ class SnippetAbtestingClient
      */
     public function snippetForDeleteABTest()
     {
-        // >SEPARATOR deleteABTest
+        // >SEPARATOR deleteABTest default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->deleteABTest(
@@ -150,9 +155,9 @@ class SnippetAbtestingClient
      */
     public function snippetForGetABTest()
     {
-        // >SEPARATOR getABTest
+        // >SEPARATOR getABTest default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getABTest(
@@ -171,9 +176,9 @@ class SnippetAbtestingClient
      */
     public function snippetForListABTests()
     {
-        // >SEPARATOR listABTests
+        // >SEPARATOR listABTests default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->listABTests();
@@ -190,9 +195,9 @@ class SnippetAbtestingClient
      */
     public function snippetForStopABTest()
     {
-        // >SEPARATOR stopABTest
+        // >SEPARATOR stopABTest default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->stopABTest(

@@ -51,7 +51,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("createAuthenticationOAuth")
-  void createAuthenticationTest0() {
+  void createAuthenticationTest() {
     assertDoesNotThrow(() -> {
       client.createAuthentication(
         new AuthenticationCreate()
@@ -97,7 +97,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("createDestination")
-  void createDestinationTest0() {
+  void createDestinationTest() {
     assertDoesNotThrow(() -> {
       client.createDestination(
         new DestinationCreate()
@@ -121,7 +121,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("createSource")
-  void createSourceTest0() {
+  void createSourceTest() {
     assertDoesNotThrow(() -> {
       client.createSource(
         new SourceCreate()
@@ -151,7 +151,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("createTaskOnDemand")
-  void createTaskTest0() {
+  void createTaskTest() {
     assertDoesNotThrow(() -> {
       client.createTask(
         new TaskCreate()
@@ -224,7 +224,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
-  void customDeleteTest0() {
+  void customDeleteTest() {
     assertDoesNotThrow(() -> {
       client.customDelete("test/minimal");
     });
@@ -260,7 +260,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("allow get method for a custom path with minimal parameters")
-  void customGetTest0() {
+  void customGetTest() {
     assertDoesNotThrow(() -> {
       client.customGet("test/minimal");
     });
@@ -347,7 +347,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("allow post method for a custom path with minimal parameters")
-  void customPostTest0() {
+  void customPostTest() {
     assertDoesNotThrow(() -> {
       client.customPost("test/minimal");
     });
@@ -693,7 +693,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("allow put method for a custom path with minimal parameters")
-  void customPutTest0() {
+  void customPutTest() {
     assertDoesNotThrow(() -> {
       client.customPut("test/minimal");
     });
@@ -729,7 +729,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("deleteAuthentication")
-  void deleteAuthenticationTest0() {
+  void deleteAuthenticationTest() {
     assertDoesNotThrow(() -> {
       client.deleteAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
@@ -741,7 +741,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("deleteDestination")
-  void deleteDestinationTest0() {
+  void deleteDestinationTest() {
     assertDoesNotThrow(() -> {
       client.deleteDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
@@ -753,7 +753,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("deleteSource")
-  void deleteSourceTest0() {
+  void deleteSourceTest() {
     assertDoesNotThrow(() -> {
       client.deleteSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
@@ -765,7 +765,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("deleteTask")
-  void deleteTaskTest0() {
+  void deleteTaskTest() {
     assertDoesNotThrow(() -> {
       client.deleteTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
@@ -777,7 +777,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("disableTask")
-  void disableTaskTest0() {
+  void disableTaskTest() {
     assertDoesNotThrow(() -> {
       client.disableTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
@@ -789,7 +789,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("enable task e2e")
-  void enableTaskTest0() {
+  void enableTaskTest() {
     assertDoesNotThrow(() -> {
       client.enableTask("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
     });
@@ -810,7 +810,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("getAuthentication")
-  void getAuthenticationTest0() {
+  void getAuthenticationTest() {
     assertDoesNotThrow(() -> {
       client.getAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
@@ -822,7 +822,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("getAuthentications")
-  void getAuthenticationsTest0() {
+  void getAuthenticationsTest() {
     assertDoesNotThrow(() -> {
       client.getAuthentications();
     });
@@ -884,7 +884,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("getDestination")
-  void getDestinationTest0() {
+  void getDestinationTest() {
     assertDoesNotThrow(() -> {
       client.getDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
@@ -896,7 +896,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("getDestinations")
-  void getDestinationsTest0() {
+  void getDestinationsTest() {
     assertDoesNotThrow(() -> {
       client.getDestinations();
     });
@@ -908,7 +908,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("getDockerSourceStreams")
-  void getDockerSourceStreamsTest0() {
+  void getDockerSourceStreamsTest() {
     assertDoesNotThrow(() -> {
       client.getDockerSourceStreams("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
@@ -920,7 +920,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("getEvent")
-  void getEventTest0() {
+  void getEventTest() {
     assertDoesNotThrow(() -> {
       client.getEvent("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "6c02aeb1-775e-418e-870b-1faccd4b2c0c");
     });
@@ -932,7 +932,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("getEvents")
-  void getEventsTest0() {
+  void getEventsTest() {
     assertDoesNotThrow(() -> {
       client.getEvents("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
@@ -944,7 +944,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("getRun")
-  void getRunTest0() {
+  void getRunTest() {
     assertDoesNotThrow(() -> {
       client.getRun("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
@@ -956,7 +956,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("getRuns")
-  void getRunsTest0() {
+  void getRunsTest() {
     assertDoesNotThrow(() -> {
       client.getRuns();
     });
@@ -968,7 +968,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("getSource")
-  void getSourceTest0() {
+  void getSourceTest() {
     assertDoesNotThrow(() -> {
       client.getSource("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
     });
@@ -989,7 +989,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("getSources")
-  void getSourcesTest0() {
+  void getSourcesTest() {
     assertDoesNotThrow(() -> {
       client.getSources();
     });
@@ -1001,7 +1001,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("getTask")
-  void getTaskTest0() {
+  void getTaskTest() {
     assertDoesNotThrow(() -> {
       client.getTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
@@ -1013,7 +1013,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("getTasks")
-  void getTasksTest0() {
+  void getTasksTest() {
     assertDoesNotThrow(() -> {
       client.getTasks();
     });
@@ -1025,7 +1025,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("runTask")
-  void runTaskTest0() {
+  void runTaskTest() {
     assertDoesNotThrow(() -> {
       client.runTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
@@ -1037,7 +1037,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("searchAuthentications")
-  void searchAuthenticationsTest0() {
+  void searchAuthenticationsTest() {
     assertDoesNotThrow(() -> {
       client.searchAuthentications(
         new AuthenticationSearch()
@@ -1058,7 +1058,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("searchDestinations")
-  void searchDestinationsTest0() {
+  void searchDestinationsTest() {
     assertDoesNotThrow(() -> {
       client.searchDestinations(
         new DestinationSearch().setDestinationIDs(List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
@@ -1078,7 +1078,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("searchSources")
-  void searchSourcesTest0() {
+  void searchSourcesTest() {
     assertDoesNotThrow(() -> {
       client.searchSources(
         new SourceSearch().setSourceIDs(List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"))
@@ -1098,7 +1098,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("searchTasks")
-  void searchTasksTest0() {
+  void searchTasksTest() {
     assertDoesNotThrow(() -> {
       client.searchTasks(
         new TaskSearch()
@@ -1135,7 +1135,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("triggerDockerSourceDiscover")
-  void triggerDockerSourceDiscoverTest0() {
+  void triggerDockerSourceDiscoverTest() {
     assertDoesNotThrow(() -> {
       client.triggerDockerSourceDiscover("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     });
@@ -1147,7 +1147,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("updateAuthentication")
-  void updateAuthenticationTest0() {
+  void updateAuthenticationTest() {
     assertDoesNotThrow(() -> {
       client.updateAuthentication("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new AuthenticationUpdate().setName("newName"));
     });
@@ -1159,7 +1159,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("updateDestination")
-  void updateDestinationTest0() {
+  void updateDestinationTest() {
     assertDoesNotThrow(() -> {
       client.updateDestination("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new DestinationUpdate().setName("newName"));
     });
@@ -1171,7 +1171,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("updateSource")
-  void updateSourceTest0() {
+  void updateSourceTest() {
     assertDoesNotThrow(() -> {
       client.updateSource("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new SourceUpdate().setName("newName"));
     });
@@ -1183,7 +1183,7 @@ class IngestionClientRequestsTests {
 
   @Test
   @DisplayName("updateTask")
-  void updateTaskTest0() {
+  void updateTaskTest() {
     assertDoesNotThrow(() -> {
       client.updateTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new TaskUpdate().setEnabled(false));
     });

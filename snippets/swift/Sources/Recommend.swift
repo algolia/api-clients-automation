@@ -1,19 +1,22 @@
 #if canImport(Core)
     import Core
 #endif
+// >IMPORT
 import Recommend
+
+// IMPORT<
 
 final class RecommendClientSnippet {
     /// Snippet for the customDelete method.
     ///
     /// allow del method for a custom path with minimal parameters
     func snippetForCustomDelete() async throws {
-        // >SEPARATOR customDelete
+        // >SEPARATOR customDelete default
         // Initialize the client
         let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customDelete(path: "test/minimal")
+        let response = try await client.customDelete(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -21,12 +24,12 @@ final class RecommendClientSnippet {
     ///
     /// allow get method for a custom path with minimal parameters
     func snippetForCustomGet() async throws {
-        // >SEPARATOR customGet
+        // >SEPARATOR customGet default
         // Initialize the client
         let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customGet(path: "test/minimal")
+        let response = try await client.customGet(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -34,12 +37,12 @@ final class RecommendClientSnippet {
     ///
     /// allow post method for a custom path with minimal parameters
     func snippetForCustomPost() async throws {
-        // >SEPARATOR customPost
+        // >SEPARATOR customPost default
         // Initialize the client
         let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customPost(path: "test/minimal")
+        let response = try await client.customPost(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -47,25 +50,25 @@ final class RecommendClientSnippet {
     ///
     /// allow put method for a custom path with minimal parameters
     func snippetForCustomPut() async throws {
-        // >SEPARATOR customPut
+        // >SEPARATOR customPut default
         // Initialize the client
         let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.customPut(path: "test/minimal")
+        let response = try await client.customPut(path: "test/minimal")
         // SEPARATOR<
     }
 
     /// Snippet for the deleteRecommendRule method.
     ///
-    /// deleteRecommendRule0
+    /// deleteRecommendRule
     func snippetForDeleteRecommendRule() async throws {
-        // >SEPARATOR deleteRecommendRule
+        // >SEPARATOR deleteRecommendRule default
         // Initialize the client
         let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.deleteRecommendRule(
+        let response = try await client.deleteRecommendRule(
             indexName: "indexName",
             model: RecommendModels.relatedProducts,
             objectID: "objectID"
@@ -75,14 +78,14 @@ final class RecommendClientSnippet {
 
     /// Snippet for the getRecommendRule method.
     ///
-    /// getRecommendRule0
+    /// getRecommendRule
     func snippetForGetRecommendRule() async throws {
-        // >SEPARATOR getRecommendRule
+        // >SEPARATOR getRecommendRule default
         // Initialize the client
         let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getRecommendRule(
+        let response = try await client.getRecommendRule(
             indexName: "indexName",
             model: RecommendModels.relatedProducts,
             objectID: "objectID"
@@ -92,14 +95,14 @@ final class RecommendClientSnippet {
 
     /// Snippet for the getRecommendStatus method.
     ///
-    /// getRecommendStatus0
+    /// getRecommendStatus
     func snippetForGetRecommendStatus() async throws {
-        // >SEPARATOR getRecommendStatus
+        // >SEPARATOR getRecommendStatus default
         // Initialize the client
         let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.getRecommendStatus(
+        let response = try await client.getRecommendStatus(
             indexName: "indexName",
             model: RecommendModels.relatedProducts,
             taskID: Int64(12345)
@@ -111,12 +114,12 @@ final class RecommendClientSnippet {
     ///
     /// get recommendations for recommend model with minimal parameters
     func snippetForGetRecommendations() async throws {
-        // >SEPARATOR getRecommendations
+        // >SEPARATOR getRecommendations default
         // Initialize the client
         let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client
+        let response = try await client
             .getRecommendations(getRecommendationsParams: GetRecommendationsParams(requests: [
                 RecommendationsRequest
                     .relatedQuery(RelatedQuery(
@@ -131,14 +134,17 @@ final class RecommendClientSnippet {
 
     /// Snippet for the searchRecommendRules method.
     ///
-    /// searchRecommendRules0
+    /// searchRecommendRules
     func snippetForSearchRecommendRules() async throws {
-        // >SEPARATOR searchRecommendRules
+        // >SEPARATOR searchRecommendRules default
         // Initialize the client
         let client = try RecommendClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
 
         // Call the API
-        _ = try await client.searchRecommendRules(indexName: "indexName", model: RecommendModels.relatedProducts)
+        let response = try await client.searchRecommendRules(
+            indexName: "indexName",
+            model: RecommendModels.relatedProducts
+        )
         // SEPARATOR<
     }
 }

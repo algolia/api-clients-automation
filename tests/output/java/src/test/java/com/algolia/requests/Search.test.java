@@ -50,8 +50,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("addApiKey0")
-  void addApiKeyTest0() {
+  @DisplayName("addApiKey")
+  void addApiKeyTest() {
     assertDoesNotThrow(() -> {
       client.addApiKey(
         new ApiKey()
@@ -76,8 +76,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("addOrUpdateObject0")
-  void addOrUpdateObjectTest0() {
+  @DisplayName("addOrUpdateObject")
+  void addOrUpdateObjectTest() {
     assertDoesNotThrow(() -> {
       client.addOrUpdateObject("indexName", "uniqueID", Map.of("key", "value"));
     });
@@ -88,8 +88,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("appendSource0")
-  void appendSourceTest0() {
+  @DisplayName("appendSource")
+  void appendSourceTest() {
     assertDoesNotThrow(() -> {
       client.appendSource(new Source().setSource("theSource").setDescription("theDescription"));
     });
@@ -102,8 +102,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("assignUserId0")
-  void assignUserIdTest0() {
+  @DisplayName("assignUserId")
+  void assignUserIdTest() {
     assertDoesNotThrow(() -> {
       client.assignUserId("userID", new AssignUserIdParams().setCluster("theCluster"));
     });
@@ -154,34 +154,43 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("allows batch method with `addObject` action")
-  void batchTest0() {
+  @DisplayName("addObject")
+  void batchTest() {
     assertDoesNotThrow(() -> {
       client.batch(
-        "theIndexName",
+        "<YOUR_INDEX_NAME>",
         new BatchWriteParams()
-          .setRequests(List.of(new BatchRequest().setAction(Action.fromValue("addObject")).setBody(Map.of("key", "value"))))
+          .setRequests(
+            List.of(
+              new BatchRequest().setAction(Action.fromValue("addObject")).setBody(Map.of("key", "bar", "foo", "1")),
+              new BatchRequest().setAction(Action.fromValue("addObject")).setBody(Map.of("key", "baz", "foo", "2"))
+            )
+          )
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/theIndexName/batch", req.path);
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
-      JSONAssert.assertEquals("{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"value\"}}]}", req.body, JSONCompareMode.STRICT)
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"bar\",\"foo\":\"1\"}},{\"action\":\"addObject\",\"body\":{\"key\":\"baz\",\"foo\":\"2\"}}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
     );
   }
 
   @Test
-  @DisplayName("allows batch method with `clear` action")
+  @DisplayName("clear")
   void batchTest1() {
     assertDoesNotThrow(() -> {
       client.batch(
-        "theIndexName",
+        "<YOUR_INDEX_NAME>",
         new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.fromValue("clear")).setBody(Map.of("key", "value"))))
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/theIndexName/batch", req.path);
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals("{\"requests\":[{\"action\":\"clear\",\"body\":{\"key\":\"value\"}}]}", req.body, JSONCompareMode.STRICT)
@@ -189,17 +198,17 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("allows batch method with `delete` action")
+  @DisplayName("delete")
   void batchTest2() {
     assertDoesNotThrow(() -> {
       client.batch(
-        "theIndexName",
+        "<YOUR_INDEX_NAME>",
         new BatchWriteParams()
           .setRequests(List.of(new BatchRequest().setAction(Action.fromValue("delete")).setBody(Map.of("key", "value"))))
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/theIndexName/batch", req.path);
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals("{\"requests\":[{\"action\":\"delete\",\"body\":{\"key\":\"value\"}}]}", req.body, JSONCompareMode.STRICT)
@@ -207,17 +216,17 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("allows batch method with `deleteObject` action")
+  @DisplayName("deleteObject")
   void batchTest3() {
     assertDoesNotThrow(() -> {
       client.batch(
-        "theIndexName",
+        "<YOUR_INDEX_NAME>",
         new BatchWriteParams()
           .setRequests(List.of(new BatchRequest().setAction(Action.fromValue("deleteObject")).setBody(Map.of("key", "value"))))
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/theIndexName/batch", req.path);
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
@@ -229,17 +238,17 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("allows batch method with `partialUpdateObject` action")
+  @DisplayName("partialUpdateObject")
   void batchTest4() {
     assertDoesNotThrow(() -> {
       client.batch(
-        "theIndexName",
+        "<YOUR_INDEX_NAME>",
         new BatchWriteParams()
           .setRequests(List.of(new BatchRequest().setAction(Action.fromValue("partialUpdateObject")).setBody(Map.of("key", "value"))))
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/theIndexName/batch", req.path);
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
@@ -251,11 +260,11 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("allows batch method with `partialUpdateObjectNoCreate` action")
+  @DisplayName("partialUpdateObjectNoCreate")
   void batchTest5() {
     assertDoesNotThrow(() -> {
       client.batch(
-        "theIndexName",
+        "<YOUR_INDEX_NAME>",
         new BatchWriteParams()
           .setRequests(
             List.of(new BatchRequest().setAction(Action.fromValue("partialUpdateObjectNoCreate")).setBody(Map.of("key", "value")))
@@ -263,7 +272,7 @@ class SearchClientRequestsTests {
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/theIndexName/batch", req.path);
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
@@ -275,17 +284,17 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("allows batch method with `updateObject` action")
+  @DisplayName("updateObject")
   void batchTest6() {
     assertDoesNotThrow(() -> {
       client.batch(
-        "theIndexName",
+        "<YOUR_INDEX_NAME>",
         new BatchWriteParams()
           .setRequests(List.of(new BatchRequest().setAction(Action.fromValue("updateObject")).setBody(Map.of("key", "value"))))
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/theIndexName/batch", req.path);
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
@@ -297,8 +306,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("batchAssignUserIds0")
-  void batchAssignUserIdsTest0() {
+  @DisplayName("batchAssignUserIds")
+  void batchAssignUserIdsTest() {
     assertDoesNotThrow(() -> {
       client.batchAssignUserIds("userID", new BatchAssignUserIdsParams().setCluster("theCluster").setUsers(List.of("user1", "user2")));
     });
@@ -325,44 +334,13 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("get batchDictionaryEntries results with minimal parameters")
-  void batchDictionaryEntriesTest0() {
+  @DisplayName("replace")
+  void batchDictionaryEntriesTest() {
     assertDoesNotThrow(() -> {
       client.batchDictionaryEntries(
-        DictionaryType.fromValue("compounds"),
+        DictionaryType.fromValue("plurals"),
         new BatchDictionaryEntriesParams()
-          .setRequests(
-            List.of(
-              new BatchDictionaryEntriesRequest()
-                .setAction(DictionaryAction.fromValue("addEntry"))
-                .setBody(new DictionaryEntry().setObjectID("1").setLanguage(SupportedLanguage.fromValue("en"))),
-              new BatchDictionaryEntriesRequest()
-                .setAction(DictionaryAction.fromValue("deleteEntry"))
-                .setBody(new DictionaryEntry().setObjectID("2").setLanguage(SupportedLanguage.fromValue("fr")))
-            )
-          )
-      );
-    });
-    EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/dictionaries/compounds/batch", req.path);
-    assertEquals("POST", req.method);
-    assertDoesNotThrow(() ->
-      JSONAssert.assertEquals(
-        "{\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\"}},{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"2\",\"language\":\"fr\"}}]}",
-        req.body,
-        JSONCompareMode.STRICT
-      )
-    );
-  }
-
-  @Test
-  @DisplayName("get batchDictionaryEntries results with all parameters")
-  void batchDictionaryEntriesTest1() {
-    assertDoesNotThrow(() -> {
-      client.batchDictionaryEntries(
-        DictionaryType.fromValue("compounds"),
-        new BatchDictionaryEntriesParams()
-          .setClearExistingDictionaryEntries(false)
+          .setClearExistingDictionaryEntries(true)
           .setRequests(
             List.of(
               new BatchDictionaryEntriesRequest()
@@ -375,28 +353,17 @@ class SearchClientRequestsTests {
                     .setWords(List.of("believe", "algolia"))
                     .setDecomposition(List.of("trust", "algolia"))
                     .setState(DictionaryEntryState.fromValue("enabled"))
-                ),
-              new BatchDictionaryEntriesRequest()
-                .setAction(DictionaryAction.fromValue("deleteEntry"))
-                .setBody(
-                  new DictionaryEntry()
-                    .setObjectID("2")
-                    .setLanguage(SupportedLanguage.fromValue("fr"))
-                    .setWord("humility")
-                    .setWords(List.of("candor", "algolia"))
-                    .setDecomposition(List.of("grit", "algolia"))
-                    .setState(DictionaryEntryState.fromValue("enabled"))
                 )
             )
           )
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/dictionaries/compounds/batch", req.path);
+    assertEquals("/1/dictionaries/plurals/batch", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"clearExistingDictionaryEntries\":false,\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"word\":\"fancy\",\"words\":[\"believe\",\"algolia\"],\"decomposition\":[\"trust\",\"algolia\"],\"state\":\"enabled\"}},{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"2\",\"language\":\"fr\",\"word\":\"humility\",\"words\":[\"candor\",\"algolia\"],\"decomposition\":[\"grit\",\"algolia\"],\"state\":\"enabled\"}}]}",
+        "{\"clearExistingDictionaryEntries\":true,\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"word\":\"fancy\",\"words\":[\"believe\",\"algolia\"],\"decomposition\":[\"trust\",\"algolia\"],\"state\":\"enabled\"}}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -404,11 +371,48 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("get batchDictionaryEntries results additional properties")
+  @DisplayName("delete")
+  void batchDictionaryEntriesTest1() {
+    assertDoesNotThrow(() -> {
+      client.batchDictionaryEntries(
+        DictionaryType.fromValue("plurals"),
+        new BatchDictionaryEntriesParams()
+          .setClearExistingDictionaryEntries(true)
+          .setRequests(
+            List.of(
+              new BatchDictionaryEntriesRequest()
+                .setAction(DictionaryAction.fromValue("deleteEntry"))
+                .setBody(
+                  new DictionaryEntry()
+                    .setObjectID("1")
+                    .setLanguage(SupportedLanguage.fromValue("en"))
+                    .setWord("fancy")
+                    .setWords(List.of("believe", "algolia"))
+                    .setDecomposition(List.of("trust", "algolia"))
+                    .setState(DictionaryEntryState.fromValue("enabled"))
+                )
+            )
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/dictionaries/plurals/batch", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"clearExistingDictionaryEntries\":true,\"requests\":[{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"word\":\"fancy\",\"words\":[\"believe\",\"algolia\"],\"decomposition\":[\"trust\",\"algolia\"],\"state\":\"enabled\"}}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("append")
   void batchDictionaryEntriesTest2() {
     assertDoesNotThrow(() -> {
       client.batchDictionaryEntries(
-        DictionaryType.fromValue("compounds"),
+        DictionaryType.fromValue("stopwords"),
         new BatchDictionaryEntriesParams()
           .setRequests(
             List.of(
@@ -425,7 +429,7 @@ class SearchClientRequestsTests {
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/dictionaries/compounds/batch", req.path);
+    assertEquals("/1/dictionaries/stopwords/batch", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
@@ -438,7 +442,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("browse with minimal parameters")
-  void browseTest0() {
+  void browseTest() {
     assertDoesNotThrow(() -> {
       client.browse("cts_e2e_browse", Hit.class);
     });
@@ -488,8 +492,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("clearObjects0")
-  void clearObjectsTest0() {
+  @DisplayName("clearObjects")
+  void clearObjectsTest() {
     assertDoesNotThrow(() -> {
       client.clearObjects("theIndexName");
     });
@@ -500,8 +504,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("clearRules0")
-  void clearRulesTest0() {
+  @DisplayName("clearRules")
+  void clearRulesTest() {
     assertDoesNotThrow(() -> {
       client.clearRules("indexName");
     });
@@ -512,8 +516,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("clearSynonyms0")
-  void clearSynonymsTest0() {
+  @DisplayName("clearSynonyms")
+  void clearSynonymsTest() {
     assertDoesNotThrow(() -> {
       client.clearSynonyms("indexName");
     });
@@ -525,7 +529,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
-  void customDeleteTest0() {
+  void customDeleteTest() {
     assertDoesNotThrow(() -> {
       client.customDelete("test/minimal");
     });
@@ -561,7 +565,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("allow get method for a custom path with minimal parameters")
-  void customGetTest0() {
+  void customGetTest() {
     assertDoesNotThrow(() -> {
       client.customGet("test/minimal");
     });
@@ -648,7 +652,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("allow post method for a custom path with minimal parameters")
-  void customPostTest0() {
+  void customPostTest() {
     assertDoesNotThrow(() -> {
       client.customPost("test/minimal");
     });
@@ -994,7 +998,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("allow put method for a custom path with minimal parameters")
-  void customPutTest0() {
+  void customPutTest() {
     assertDoesNotThrow(() -> {
       client.customPut("test/minimal");
     });
@@ -1029,8 +1033,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteApiKey0")
-  void deleteApiKeyTest0() {
+  @DisplayName("deleteApiKey")
+  void deleteApiKeyTest() {
     assertDoesNotThrow(() -> {
       client.deleteApiKey("myTestApiKey");
     });
@@ -1041,8 +1045,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteBy0")
-  void deleteByTest0() {
+  @DisplayName("deleteBy")
+  void deleteByTest() {
     assertDoesNotThrow(() -> {
       client.deleteBy("theIndexName", new DeleteByParams().setFilters("brand:brandName"));
     });
@@ -1053,8 +1057,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteIndex0")
-  void deleteIndexTest0() {
+  @DisplayName("deleteIndex")
+  void deleteIndexTest() {
     assertDoesNotThrow(() -> {
       client.deleteIndex("theIndexName");
     });
@@ -1065,20 +1069,20 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteObject0")
-  void deleteObjectTest0() {
+  @DisplayName("deleteObject")
+  void deleteObjectTest() {
     assertDoesNotThrow(() -> {
-      client.deleteObject("theIndexName", "uniqueID");
+      client.deleteObject("<YOUR_INDEX_NAME>", "uniqueID");
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/theIndexName/uniqueID", req.path);
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/uniqueID", req.path);
     assertEquals("DELETE", req.method);
     assertNull(req.body);
   }
 
   @Test
   @DisplayName("delete rule simple case")
-  void deleteRuleTest0() {
+  void deleteRuleTest() {
     assertDoesNotThrow(() -> {
       client.deleteRule("indexName", "id1");
     });
@@ -1101,8 +1105,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteSource0")
-  void deleteSourceTest0() {
+  @DisplayName("deleteSource")
+  void deleteSourceTest() {
     assertDoesNotThrow(() -> {
       client.deleteSource("theSource");
     });
@@ -1113,8 +1117,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteSynonym0")
-  void deleteSynonymTest0() {
+  @DisplayName("deleteSynonym")
+  void deleteSynonymTest() {
     assertDoesNotThrow(() -> {
       client.deleteSynonym("indexName", "id1");
     });
@@ -1125,8 +1129,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getApiKey0")
-  void getApiKeyTest0() {
+  @DisplayName("getApiKey")
+  void getApiKeyTest() {
     assertDoesNotThrow(() -> {
       client.getApiKey("myTestApiKey");
     });
@@ -1138,7 +1142,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("get getDictionaryLanguages")
-  void getDictionaryLanguagesTest0() {
+  void getDictionaryLanguagesTest() {
     assertDoesNotThrow(() -> {
       client.getDictionaryLanguages();
     });
@@ -1150,7 +1154,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("get getDictionarySettings results")
-  void getDictionarySettingsTest0() {
+  void getDictionarySettingsTest() {
     assertDoesNotThrow(() -> {
       client.getDictionarySettings();
     });
@@ -1162,7 +1166,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("getLogs with minimal parameters")
-  void getLogsTest0() {
+  void getLogsTest() {
     assertDoesNotThrow(() -> {
       client.getLogs();
     });
@@ -1200,8 +1204,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getObject0")
-  void getObjectTest0() {
+  @DisplayName("getObject")
+  void getObjectTest() {
     assertDoesNotThrow(() -> {
       client.getObject("theIndexName", "uniqueID", List.of("attr1", "attr2"));
     });
@@ -1227,8 +1231,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getObjects0")
-  void getObjectsTest0() {
+  @DisplayName("getObjects")
+  void getObjectsTest() {
     assertDoesNotThrow(() -> {
       client.getObjects(
         new GetObjectsParams()
@@ -1256,8 +1260,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getRule0")
-  void getRuleTest0() {
+  @DisplayName("getRule")
+  void getRuleTest() {
     assertDoesNotThrow(() -> {
       client.getRule("indexName", "id1");
     });
@@ -1268,8 +1272,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getSettings0")
-  void getSettingsTest0() {
+  @DisplayName("getSettings")
+  void getSettingsTest() {
     assertDoesNotThrow(() -> {
       client.getSettings("cts_e2e_settings");
     });
@@ -1289,8 +1293,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getSources0")
-  void getSourcesTest0() {
+  @DisplayName("getSources")
+  void getSourcesTest() {
     assertDoesNotThrow(() -> {
       client.getSources();
     });
@@ -1301,8 +1305,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getSynonym0")
-  void getSynonymTest0() {
+  @DisplayName("getSynonym")
+  void getSynonymTest() {
     assertDoesNotThrow(() -> {
       client.getSynonym("indexName", "id1");
     });
@@ -1313,8 +1317,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getTask0")
-  void getTaskTest0() {
+  @DisplayName("getTask")
+  void getTaskTest() {
     assertDoesNotThrow(() -> {
       client.getTask("theIndexName", 123L);
     });
@@ -1325,8 +1329,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getTopUserIds0")
-  void getTopUserIdsTest0() {
+  @DisplayName("getTopUserIds")
+  void getTopUserIdsTest() {
     assertDoesNotThrow(() -> {
       client.getTopUserIds();
     });
@@ -1337,8 +1341,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getUserId0")
-  void getUserIdTest0() {
+  @DisplayName("getUserId")
+  void getUserIdTest() {
     assertDoesNotThrow(() -> {
       client.getUserId("uniqueID");
     });
@@ -1350,7 +1354,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("hasPendingMappings with minimal parameters")
-  void hasPendingMappingsTest0() {
+  void hasPendingMappingsTest() {
     assertDoesNotThrow(() -> {
       client.hasPendingMappings();
     });
@@ -1385,8 +1389,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("listApiKeys0")
-  void listApiKeysTest0() {
+  @DisplayName("listApiKeys")
+  void listApiKeysTest() {
     assertDoesNotThrow(() -> {
       client.listApiKeys();
     });
@@ -1397,8 +1401,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("listClusters0")
-  void listClustersTest0() {
+  @DisplayName("listClusters")
+  void listClustersTest() {
     assertDoesNotThrow(() -> {
       client.listClusters();
     });
@@ -1410,7 +1414,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("listIndices with minimal parameters")
-  void listIndicesTest0() {
+  void listIndicesTest() {
     assertDoesNotThrow(() -> {
       client.listIndices();
     });
@@ -1449,7 +1453,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("listUserIds with minimal parameters")
-  void listUserIdsTest0() {
+  void listUserIdsTest() {
     assertDoesNotThrow(() -> {
       client.listUserIds();
     });
@@ -1487,8 +1491,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("multipleBatch0")
-  void multipleBatchTest0() {
+  @DisplayName("multipleBatch")
+  void multipleBatchTest() {
     assertDoesNotThrow(() -> {
       client.multipleBatch(
         new BatchParams()
@@ -1515,23 +1519,23 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("operationIndex0")
-  void operationIndexTest0() {
+  @DisplayName("scopes")
+  void operationIndexTest() {
     assertDoesNotThrow(() -> {
       client.operationIndex(
-        "theIndexName",
+        "<SOURCE_INDEX_NAME>",
         new OperationIndexParams()
-          .setOperation(OperationType.fromValue("copy"))
-          .setDestination("dest")
+          .setOperation(OperationType.fromValue("move"))
+          .setDestination("<DESTINATION_INDEX_NAME>")
           .setScope(List.of(ScopeType.fromValue("rules"), ScopeType.fromValue("settings")))
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/theIndexName/operation", req.path);
+    assertEquals("/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
-        "{\"operation\":\"copy\",\"destination\":\"dest\",\"scope\":[\"rules\",\"settings\"]}",
+        "{\"operation\":\"move\",\"destination\":\"<DESTINATION_INDEX_NAME>\",\"scope\":[\"rules\",\"settings\"]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -1539,8 +1543,42 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("partialUpdateObject0")
-  void partialUpdateObjectTest0() {
+  @DisplayName("copy")
+  void operationIndexTest1() {
+    assertDoesNotThrow(() -> {
+      client.operationIndex(
+        "<SOURCE_INDEX_NAME>",
+        new OperationIndexParams().setOperation(OperationType.fromValue("copy")).setDestination("<DESTINATION_INDEX_NAME>")
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"operation\":\"copy\",\"destination\":\"<DESTINATION_INDEX_NAME>\"}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("move")
+  void operationIndexTest2() {
+    assertDoesNotThrow(() -> {
+      client.operationIndex(
+        "<SOURCE_INDEX_NAME>",
+        new OperationIndexParams().setOperation(OperationType.fromValue("move")).setDestination("<DESTINATION_INDEX_NAME>")
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"operation\":\"move\",\"destination\":\"<DESTINATION_INDEX_NAME>\"}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
+  @DisplayName("partialUpdateObject")
+  void partialUpdateObjectTest() {
     assertDoesNotThrow(() -> {
       client.partialUpdateObject(
         "theIndexName",
@@ -1582,8 +1620,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("removeUserId0")
-  void removeUserIdTest0() {
+  @DisplayName("removeUserId")
+  void removeUserIdTest() {
     assertDoesNotThrow(() -> {
       client.removeUserId("uniqueID");
     });
@@ -1594,8 +1632,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("replaceSources0")
-  void replaceSourcesTest0() {
+  @DisplayName("replaceSources")
+  void replaceSourcesTest() {
     assertDoesNotThrow(() -> {
       client.replaceSources(List.of(new Source().setSource("theSource").setDescription("theDescription")));
     });
@@ -1608,8 +1646,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("restoreApiKey0")
-  void restoreApiKeyTest0() {
+  @DisplayName("restoreApiKey")
+  void restoreApiKeyTest() {
     assertDoesNotThrow(() -> {
       client.restoreApiKey("myApiKey");
     });
@@ -1620,20 +1658,20 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("saveObject0")
-  void saveObjectTest0() {
+  @DisplayName("saveObject")
+  void saveObjectTest() {
     assertDoesNotThrow(() -> {
-      client.saveObject("theIndexName", Map.of("objectID", "id", "test", "val"));
+      client.saveObject("<YOUR_INDEX_NAME>", Map.of("objectID", "id", "test", "val"));
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/theIndexName", req.path);
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"objectID\":\"id\",\"test\":\"val\"}", req.body, JSONCompareMode.STRICT));
   }
 
   @Test
   @DisplayName("saveRule with minimal parameters")
-  void saveRuleTest0() {
+  void saveRuleTest() {
     assertDoesNotThrow(() -> {
       client.saveRule(
         "indexName",
@@ -1730,10 +1768,10 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("saveRules with minimal parameters")
-  void saveRulesTest0() {
+  void saveRulesTest() {
     assertDoesNotThrow(() -> {
       client.saveRules(
-        "indexName",
+        "<YOUR_INDEX_NAME>",
         List.of(
           new Rule()
             .setObjectID("a-rule-id")
@@ -1741,11 +1779,13 @@ class SearchClientRequestsTests {
           new Rule()
             .setObjectID("a-second-rule-id")
             .setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.fromValue("contains"))))
-        )
+        ),
+        false,
+        true
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/indexName/rules/batch", req.path);
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
@@ -1754,6 +1794,21 @@ class SearchClientRequestsTests {
         JSONCompareMode.STRICT
       )
     );
+
+    try {
+      Map<String, String> expectedQuery = json.readValue(
+        "{\"forwardToReplicas\":\"false\",\"clearExistingRules\":\"true\"}",
+        new TypeReference<HashMap<String, String>>() {}
+      );
+      Map<String, Object> actualQuery = req.queryParameters;
+
+      assertEquals(expectedQuery.size(), actualQuery.size());
+      for (Map.Entry<String, Object> p : actualQuery.entrySet()) {
+        assertEquals(expectedQuery.get(p.getKey()), p.getValue());
+      }
+    } catch (JsonProcessingException e) {
+      fail("failed to parse queryParameters json");
+    }
   }
 
   @Test
@@ -1761,7 +1816,7 @@ class SearchClientRequestsTests {
   void saveRulesTest1() {
     assertDoesNotThrow(() -> {
       client.saveRules(
-        "indexName",
+        "<YOUR_INDEX_NAME>",
         List.of(
           new Rule()
             .setObjectID("id1")
@@ -1809,7 +1864,7 @@ class SearchClientRequestsTests {
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/indexName/rules/batch", req.path);
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
@@ -1836,8 +1891,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("saveSynonym0")
-  void saveSynonymTest0() {
+  @DisplayName("saveSynonym")
+  void saveSynonymTest() {
     assertDoesNotThrow(() -> {
       client.saveSynonym(
         "indexName",
@@ -1874,11 +1929,11 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("saveSynonyms0")
-  void saveSynonymsTest0() {
+  @DisplayName("saveSynonyms")
+  void saveSynonymsTest() {
     assertDoesNotThrow(() -> {
       client.saveSynonyms(
-        "indexName",
+        "<YOUR_INDEX_NAME>",
         List.of(
           new SynonymHit().setObjectID("id1").setType(SynonymType.fromValue("synonym")).setSynonyms(List.of("car", "vehicule", "auto")),
           new SynonymHit()
@@ -1888,11 +1943,11 @@ class SearchClientRequestsTests {
             .setSynonyms(List.of("ephone", "aphone", "yphone"))
         ),
         true,
-        false
+        true
       );
     });
     EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/indexes/indexName/synonyms/batch", req.path);
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/synonyms/batch", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
@@ -1904,7 +1959,7 @@ class SearchClientRequestsTests {
 
     try {
       Map<String, String> expectedQuery = json.readValue(
-        "{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"false\"}",
+        "{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"true\"}",
         new TypeReference<HashMap<String, String>>() {}
       );
       Map<String, Object> actualQuery = req.queryParameters;
@@ -1919,8 +1974,108 @@ class SearchClientRequestsTests {
   }
 
   @Test
+  @DisplayName("withHitsPerPage")
+  void searchTest() {
+    assertDoesNotThrow(() -> {
+      client.search(
+        new SearchMethodParams()
+          .setRequests(List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setHitsPerPage(50))),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/*/queries", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"hitsPerPage\":50}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("filterOnly")
+  void searchTest1() {
+    assertDoesNotThrow(() -> {
+      client.search(
+        new SearchMethodParams()
+          .setRequests(
+            List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFilters("actor:Scarlett Johansson"))
+          ),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/*/queries", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"filters\":\"actor:Scarlett" + " Johansson\"}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("filterOr")
+  void searchTest2() {
+    assertDoesNotThrow(() -> {
+      client.search(
+        new SearchMethodParams()
+          .setRequests(
+            List.of(
+              new SearchForHits()
+                .setIndexName("<YOUR_INDEX_NAME>")
+                .setQuery("<YOUR_QUERY>")
+                .setFilters("actor:Tom Cruise OR actor:Scarlett Johansson")
+            )
+          ),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/*/queries", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"filters\":\"actor:Tom" +
+        " Cruise OR actor:Scarlett Johansson\"}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("filterNot")
+  void searchTest3() {
+    assertDoesNotThrow(() -> {
+      client.search(
+        new SearchMethodParams()
+          .setRequests(
+            List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFilters("NOT actor:Nicolas Cage"))
+          ),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/*/queries", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"filters\":\"NOT" + " actor:Nicolas Cage\"}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("search for a single hits request with minimal parameters")
-  void searchTest0() {
+  void searchTest4() {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams().setRequests(List.of(new SearchForHits().setIndexName("cts_e2e_search_empty_index"))),
@@ -1948,8 +2103,54 @@ class SearchClientRequestsTests {
   }
 
   @Test
+  @DisplayName("retrieveFacets")
+  void searchTest5() {
+    assertDoesNotThrow(() -> {
+      client.search(
+        new SearchMethodParams()
+          .setRequests(
+            List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFacets(List.of("author", "genre")))
+          ),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/*/queries", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"facets\":[\"author\",\"genre\"]}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("retrieveFacetsWildcard")
+  void searchTest6() {
+    assertDoesNotThrow(() -> {
+      client.search(
+        new SearchMethodParams()
+          .setRequests(List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFacets(List.of("*")))),
+        Hit.class
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/*/queries", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"facets\":[\"*\"]}]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("search for a single facet request with minimal parameters")
-  void searchTest1() {
+  void searchTest7() {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()
@@ -1994,7 +2195,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("search for a single hits request with all parameters")
-  void searchTest2() {
+  void searchTest8() {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()
@@ -2024,7 +2225,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("search for a single facet request with all parameters")
-  void searchTest3() {
+  void searchTest9() {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()
@@ -2057,7 +2258,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("search for multiple mixed requests in multiple indices with minimal parameters")
-  void searchTest4() {
+  void searchTest10() {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()
@@ -2086,7 +2287,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("search for multiple mixed requests in multiple indices with all parameters")
-  void searchTest5() {
+  void searchTest11() {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()
@@ -2124,7 +2325,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("search filters accept all of the possible shapes")
-  void searchTest6() {
+  void searchTest12() {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()
@@ -2189,7 +2390,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("search filters end to end")
-  void searchTest7() {
+  void searchTest13() {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()
@@ -2279,7 +2480,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("search with all search parameters")
-  void searchTest8() {
+  void searchTest14() {
     assertDoesNotThrow(() -> {
       client.search(
         new SearchMethodParams()
@@ -2389,7 +2590,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("get searchDictionaryEntries results with minimal parameters")
-  void searchDictionaryEntriesTest0() {
+  void searchDictionaryEntriesTest() {
     assertDoesNotThrow(() -> {
       client.searchDictionaryEntries(DictionaryType.fromValue("stopwords"), new SearchDictionaryEntriesParams().setQuery("about"));
     });
@@ -2430,7 +2631,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("get searchForFacetValues results with minimal parameters")
-  void searchForFacetValuesTest0() {
+  void searchForFacetValuesTest() {
     assertDoesNotThrow(() -> {
       client.searchForFacetValues("indexName", "facetName");
     });
@@ -2463,8 +2664,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("searchRules0")
-  void searchRulesTest0() {
+  @DisplayName("searchRules")
+  void searchRulesTest() {
     assertDoesNotThrow(() -> {
       client.searchRules("indexName", new SearchRulesParams().setQuery("something"));
     });
@@ -2476,7 +2677,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("search with minimal parameters")
-  void searchSingleIndexTest0() {
+  void searchSingleIndexTest() {
     assertDoesNotThrow(() -> {
       client.searchSingleIndex("indexName", Hit.class);
     });
@@ -2561,7 +2762,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("searchSynonyms with minimal parameters")
-  void searchSynonymsTest0() {
+  void searchSynonymsTest() {
     assertDoesNotThrow(() -> {
       client.searchSynonyms("indexName");
     });
@@ -2593,8 +2794,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("searchUserIds0")
-  void searchUserIdsTest0() {
+  @DisplayName("searchUserIds")
+  void searchUserIdsTest() {
     assertDoesNotThrow(() -> {
       client.searchUserIds(new SearchUserIdsParams().setQuery("test").setClusterName("theClusterName").setPage(5).setHitsPerPage(10));
     });
@@ -2612,7 +2813,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("get setDictionarySettings results with minimal parameters")
-  void setDictionarySettingsTest0() {
+  void setDictionarySettingsTest() {
     assertDoesNotThrow(() -> {
       client.setDictionarySettings(
         new DictionarySettingsParams()
@@ -2658,8 +2859,29 @@ class SearchClientRequestsTests {
   }
 
   @Test
+  @DisplayName("setSettingsAttributesForFaceting")
+  void setSettingsTest() {
+    assertDoesNotThrow(() -> {
+      client.setSettings(
+        "<YOUR_INDEX_NAME>",
+        new IndexSettings().setAttributesForFaceting(List.of("actor", "filterOnly(category)", "searchable(publisher)"))
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"attributesForFaceting\":[\"actor\",\"filterOnly(category)\",\"searchable(publisher)\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("setSettings with minimal parameters")
-  void setSettingsTest0() {
+  void setSettingsTest1() {
     assertDoesNotThrow(() -> {
       client.setSettings("cts_e2e_settings", new IndexSettings().setPaginationLimitedTo(10), true);
     });
@@ -2688,7 +2910,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("setSettings allow boolean `typoTolerance`")
-  void setSettingsTest1() {
+  void setSettingsTest2() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setTypoTolerance(TypoTolerance.of(true)), true);
     });
@@ -2715,7 +2937,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("setSettings allow enum `typoTolerance`")
-  void setSettingsTest2() {
+  void setSettingsTest3() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setTypoTolerance(TypoToleranceEnum.fromValue("min")), true);
     });
@@ -2742,7 +2964,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("setSettings allow boolean `ignorePlurals`")
-  void setSettingsTest3() {
+  void setSettingsTest4() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setIgnorePlurals(IgnorePlurals.of(true)), true);
     });
@@ -2769,7 +2991,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("setSettings allow list of string `ignorePlurals`")
-  void setSettingsTest4() {
+  void setSettingsTest5() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -2800,7 +3022,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("setSettings allow boolean `removeStopWords`")
-  void setSettingsTest5() {
+  void setSettingsTest6() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setRemoveStopWords(RemoveStopWords.of(true)), true);
     });
@@ -2827,7 +3049,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("setSettings allow list of string `removeStopWords`")
-  void setSettingsTest6() {
+  void setSettingsTest7() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -2858,7 +3080,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("setSettings allow boolean `distinct`")
-  void setSettingsTest7() {
+  void setSettingsTest8() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setDistinct(Distinct.of(true)), true);
     });
@@ -2885,7 +3107,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("setSettings allow integers for `distinct`")
-  void setSettingsTest8() {
+  void setSettingsTest9() {
     assertDoesNotThrow(() -> {
       client.setSettings("theIndexName", new IndexSettings().setDistinct(Distinct.of(1)), true);
     });
@@ -2912,7 +3134,7 @@ class SearchClientRequestsTests {
 
   @Test
   @DisplayName("setSettings allow all `indexSettings`")
-  void setSettingsTest9() {
+  void setSettingsTest10() {
     assertDoesNotThrow(() -> {
       client.setSettings(
         "theIndexName",
@@ -3000,8 +3222,8 @@ class SearchClientRequestsTests {
   }
 
   @Test
-  @DisplayName("updateApiKey0")
-  void updateApiKeyTest0() {
+  @DisplayName("updateApiKey")
+  void updateApiKeyTest() {
     assertDoesNotThrow(() -> {
       client.updateApiKey(
         "myApiKey",
