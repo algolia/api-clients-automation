@@ -3,6 +3,7 @@
   */
 package algoliasearch.api
 
+import algoliasearch.search.Action._
 import algoliasearch.search.AddApiKeyResponse
 import algoliasearch.search.ApiKey
 import algoliasearch.search.ApiKeyOperation._
@@ -41,6 +42,7 @@ import algoliasearch.search.LogType._
 import algoliasearch.search.MultipleBatchResponse
 import algoliasearch.search.OperationIndexParams
 import algoliasearch.search.RemoveUserIdResponse
+import algoliasearch.search.ReplaceAllObjectsResponse
 import algoliasearch.search.ReplaceSourceResponse
 import algoliasearch.search.Rule
 import algoliasearch.search.SaveObjectResponse

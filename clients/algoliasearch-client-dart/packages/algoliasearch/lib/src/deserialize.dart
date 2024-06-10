@@ -14,6 +14,7 @@ import 'package:algoliasearch/src/model/base_index_settings.dart';
 import 'package:algoliasearch/src/model/base_search_params.dart';
 import 'package:algoliasearch/src/model/base_search_params_without_query.dart';
 import 'package:algoliasearch/src/model/base_search_response.dart';
+import 'package:algoliasearch/src/model/batch_response.dart';
 import 'package:algoliasearch/src/model/browse_params_object.dart';
 import 'package:algoliasearch/src/model/browse_response.dart';
 import 'package:algoliasearch/src/model/built_in_operation.dart';
@@ -63,6 +64,7 @@ import 'package:algoliasearch/src/model/redirect_rule_index_metadata.dart';
 import 'package:algoliasearch/src/model/redirect_rule_index_metadata_data.dart';
 import 'package:algoliasearch/src/model/remove_words_if_no_results.dart';
 import 'package:algoliasearch/src/model/rendering_content.dart';
+import 'package:algoliasearch/src/model/replace_all_objects_response.dart';
 import 'package:algoliasearch/src/model/rule.dart';
 import 'package:algoliasearch/src/model/scope_type.dart';
 import 'package:algoliasearch/src/model/search_dictionary_entries_response.dart';
@@ -94,6 +96,7 @@ import 'package:algoliasearch/src/model/synonym_type.dart';
 import 'package:algoliasearch/src/model/task_status.dart';
 import 'package:algoliasearch/src/model/time_range.dart';
 import 'package:algoliasearch/src/model/typo_tolerance_enum.dart';
+import 'package:algoliasearch/src/model/updated_at_response.dart';
 import 'package:algoliasearch/src/model/updated_rule_response.dart';
 import 'package:algoliasearch/src/model/user_id.dart';
 import 'package:algoliasearch/src/model/value.dart';
@@ -156,6 +159,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           value as Map<String, dynamic>) as ReturnType;
     case 'BaseSearchResponse':
       return BaseSearchResponse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'BatchResponse':
+      return BatchResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'BrowseParamsObject':
       return BrowseParamsObject.fromJson(value as Map<String, dynamic>)
@@ -277,6 +283,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'RenderingContent':
       return RenderingContent.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ReplaceAllObjectsResponse':
+      return ReplaceAllObjectsResponse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'Rule':
       return Rule.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'ScopeType':
@@ -356,6 +365,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return TimeRange.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'TypoToleranceEnum':
       return TypoToleranceEnum.fromJson(value) as ReturnType;
+    case 'UpdatedAtResponse':
+      return UpdatedAtResponse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'UpdatedRuleResponse':
       return UpdatedRuleResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;

@@ -6136,4 +6136,105 @@ public class SearchClient extends ApiClient {
         searchResponses.getResults().stream().map(res -> (SearchForFacetValuesResponse) res).collect(Collectors.toList())
       );
   }
+
+  /**
+   * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit
+   * in `batch` requests.
+   *
+   * @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to
+   *     make it fit in `batch` requests.
+   * @param indexName - The `indexName` to replace `objects` in.
+   * @param objects - The array of `objects` to store in the given Algolia `indexName`.
+   * @param action - The `batch` `action` to perform on the given array of `objects`.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   * @param batchSize - The size of the chunk of `objects`. The number of `batch` calls will be
+   *     equal to `length(objects) / batchSize`. Defaults to 1000.
+   * @param requestOptions - The requestOptions to send along with the query, they will be forwarded
+   *     to the `getTask` method and merged with the transporter requestOptions.
+   */
+  public <T> List<BatchResponse> chunkedBatch(
+    String indexName,
+    Iterable<T> objects,
+    Action action,
+    boolean waitForTasks,
+    int batchSize,
+    RequestOptions requestOptions
+  ) {
+    List<BatchResponse> responses = new ArrayList<>();
+    List<BatchRequest> requests = new ArrayList<>();
+
+    for (T item : objects) {
+      if (requests.size() == batchSize) {
+        BatchResponse batch = batch(indexName, new BatchWriteParams().setRequests(requests), requestOptions);
+        responses.add(batch);
+        requests.clear();
+      }
+
+      requests.add(new BatchRequest().setAction(action).setBody(item));
+    }
+
+    if (requests.size() > 0) {
+      BatchResponse batch = batch(indexName, new BatchWriteParams().setRequests(requests), requestOptions);
+      responses.add(batch);
+    }
+
+    if (waitForTasks) {
+      responses.forEach(response -> waitForTask(indexName, response.getTaskID(), requestOptions));
+    }
+
+    return responses;
+  }
+
+  /**
+   * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
+   * untouched. Replace all records in an index without any downtime.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @throws AlgoliaRetryException When the retry has failed on all hosts
+   * @throws AlgoliaApiException When the API sends an http error code
+   * @throws AlgoliaRuntimeException When an error occurred during the serialization
+   */
+  public <T> ReplaceAllObjectsResponse replaceAllObjects(
+    String indexName,
+    Iterable<T> objects,
+    int batchSize,
+    RequestOptions requestOptions
+  ) {
+    Random rnd = new Random();
+    String tmpIndexName = indexName + "_tmp_" + rnd.nextInt(100);
+
+    // Copy settings, synonyms and rules
+    UpdatedAtResponse copyOperationResponse = operationIndex(
+      indexName,
+      new OperationIndexParams()
+        .setOperation(OperationType.COPY)
+        .setDestination(tmpIndexName)
+        .addScope(ScopeType.SETTINGS)
+        .addScope(ScopeType.RULES)
+        .addScope(ScopeType.SYNONYMS),
+      requestOptions
+    );
+    waitForTask(indexName, copyOperationResponse.getTaskID(), requestOptions);
+
+    // Save new objects
+    List<BatchResponse> batchResponses = chunkedBatch(tmpIndexName, objects, Action.ADD_OBJECT, true, batchSize, requestOptions);
+
+    // Move temporary index to source index
+    UpdatedAtResponse moveOperationResponse = operationIndex(
+      tmpIndexName,
+      new OperationIndexParams().setOperation(OperationType.MOVE).setDestination(indexName),
+      requestOptions
+    );
+    waitForTask(indexName, moveOperationResponse.getTaskID(), requestOptions);
+
+    return new ReplaceAllObjectsResponse()
+      .setCopyOperationResponse(copyOperationResponse)
+      .setBatchResponses(batchResponses)
+      .setMoveOperationResponse(moveOperationResponse);
+  }
 }
