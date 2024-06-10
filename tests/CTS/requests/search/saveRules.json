@@ -23,7 +23,7 @@
           ]
         }
       ],
-      "forwardToReplicas": null,
+      "forwardToReplicas": false,
       "clearExistingRules": true
     },
     "request": {
@@ -50,6 +50,7 @@
         }
       ],
       "queryParameters": {
+        "forwardToReplicas": "false",
         "clearExistingRules": "true"
       }
     }

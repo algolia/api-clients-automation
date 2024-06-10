@@ -13,6 +13,7 @@
       "path": "/1/dictionaries/compounds/batch",
       "method": "POST",
       "body": {
+        "clearExistingDictionaryEntries": true,
         "requests": []
       }
     }
@@ -107,7 +108,7 @@
         "clearExistingDictionaryEntries": true,
         "requests": [
           {
-            "action": "addEntry",
+            "action": "deleteEntry",
             "body": {
               "objectID": "1",
               "language": "en",
