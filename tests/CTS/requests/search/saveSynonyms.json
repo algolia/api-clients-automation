@@ -1,7 +1,7 @@
 [
   {
     "parameters": {
-      "indexName": "indexName",
+      "indexName": "YOUR_INDEX_NAME",
       "synonymHit": [
         {
           "objectID": "id1",
@@ -24,10 +24,10 @@
         }
       ],
       "forwardToReplicas": true,
-      "replaceExistingSynonyms": false
+      "replaceExistingSynonyms": true
     },
     "request": {
-      "path": "/1/indexes/indexName/synonyms/batch",
+      "path": "/1/indexes/YOUR_INDEX_NAME/synonyms/batch",
       "method": "POST",
       "body": [
         {
@@ -52,7 +52,7 @@
       ],
       "queryParameters": {
         "forwardToReplicas": "true",
-        "replaceExistingSynonyms": "false"
+        "replaceExistingSynonyms": "true"
       }
     }
   }

@@ -4,6 +4,8 @@ title: Replace All Rules and Synonyms
 
 import { TabsLanguage } from '../../../src/components/TabsLanguage';
 import TabItem from '@theme/TabItem';
+import { CodeBlockLanguage } from '../../../src/components/CodeBlockLanguage';
+import { getSnippet, waitForTaskSnippet } from '../../../src/snippets';
 
 In Algolia, you can replace all existing rules and synonyms by leveraging the appropriate methods. This guide will show you how to use `saveRules` and `saveSynonyms` methods to achieve this.
 
@@ -11,114 +13,15 @@ In Algolia, you can replace all existing rules and synonyms by leveraging the ap
 
 To replace all existing rules in Algolia, you can use the `saveRules` method with the `clearExistingRules` parameter set to `true`.
 
-<TabsLanguage>
-<TabItem value="javascript">
+<CodeBlockLanguage snippet={(language) => (
+`${getSnippet(language, 'search', 'import')}
 
-```javascript
-await client.saveRules({
-  indexName,
-  rules,
-  clearExistingRules: true,
-});
-```
+${getSnippet(language, 'search', 'init')}
 
-</TabItem>
-<TabItem value="php">
+${getSnippet(language, 'search', 'saveRules')}
 
-php
-
-// TODO
-
-</TabItem>
-<TabItem value="java">
-
-```java
-client.saveRulesAsync(
-  indexName,
-  rules,
-  false, // forwardToReplicas (defaults to false)
-  true // clearExistingRules
-);
-```
-
-</TabItem>
-
-<TabItem value="kotlin">
-
-```kotlin
-client.saveRules(
-    indexName = indexName,
-    rules = rules,
-    forwardToReplicas = false,
-    clearExistingRules = true
-)
-```
-
-</TabItem>
-
-<TabItem value="dart">
-
-```dart
-await client.saveRules(
-  indexName: indexName,
-  rules: rules,
-  forwardToReplicas: false,
-  clearExistingRules: true,
-);
-```
-
-</TabItem>
-
-<TabItem value="go">
-
-```go
-import (
-  "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
-)
-
-indexName := "<INDEX_NAME>"
-appID := "<APPLICATION_ID>"
-apiKey := "<API_KEY>"
-
-searchClient, _ := search.NewClient(appID, apiKey)
-
-response, err := searchClient.SaveRules(
-  searchClient.NewApiSaveRulesRequest(
-    indexName,
-    []search.Rule{/* ... */},
-  ).WithClearExistingRules(true),
-)
-if err != nil {
-  return 0
-}
-
-taskResponse, err := searchClient.WaitForTask(
-  indexName,
-  response.TaskID,
-  nil,
-  nil,
-  nil,
-)
-if err != nil {
-  panic(err)
-}
-```
-
-</TabItem>
-
-<TabItem value="csharp">
-
-```csharp
-using Algolia.Search.Clients;
-
-var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
-await client.SaveRulesAsync("<YOUR_INDEX_NAME>", rules, forwardToReplicas: false, clearExistingRules: true);
-```
-
-</TabItem>
-
-
-</TabsLanguage>
+${waitForTaskSnippet(language)}
+`)}/>
 
 The rules parameter should contain the array of rules you want to save.
 By executing the above code, all existing rules will be removed, and the new rules provided will be saved to your Algolia index.
@@ -127,114 +30,15 @@ By executing the above code, all existing rules will be removed, and the new rul
 
 To replace all existing synonyms in Algolia, you can use the `saveSynonyms` method with the `replaceExistingSynonyms` parameter set to `true`.
 
-<TabsLanguage>
-<TabItem value="javascript">
+<CodeBlockLanguage snippet={(language) => (
+`${getSnippet(language, 'search', 'import')}
 
-```javascript
-await client.saveSynonyms({
-  indexName,
-  synonymHit,
-  replaceExistingSynonyms: true,
-});
-```
+${getSnippet(language, 'search', 'init')}
 
-</TabItem>
-<TabItem value="php">
+${getSnippet(language, 'search', 'saveSynonyms')}
 
-php
-
-// TODO
-
-</TabItem>
-<TabItem value="java">
-
-```java
-client.saveSynonymsAsync(
-  indexName,
-  synonymHits,
-  false, // forwardToReplicas (defaults to false)
-  true // replaceExistingSynonyms
-);
-```
-
-</TabItem>
-
-<TabItem value="kotlin">
-
-```kotlin
-client.saveSynonyms(
-    indexName = indexName,
-    synonymHit = synonymHits,
-    forwardToReplicas = false,
-    replaceExistingSynonyms = true
-)
-```
-
-</TabItem>
-
-<TabItem value="dart">
-
-```dart
-await client.saveSynonyms(
-  indexName: indexName,
-  synonymHit: synonymHits,
-  forwardToReplicas: false,
-  replaceExistingSynonyms: true,
-);
-```
-
-</TabItem>
-
-<TabItem value="go">
-
-```go
-import (
-  "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
-)
-
-indexName := "<INDEX_NAME>"
-appID := "<APPLICATION_ID>"
-apiKey := "<API_KEY>"
-
-searchClient, _ := search.NewClient(appID, apiKey)
-
-response, err := searchClient.SaveSynonyms(
-  searchClient.NewApiSaveSynonymsRequest(
-    indexName,
-    []search.SynonymHit{ /* ... */ },
-  ).WithReplaceExistingSynonyms(true),
-)
-if err != nil {
-  return 0
-}
-
-taskResponse, err := searchClient.WaitForTask(
-  indexName,
-  response.TaskID,
-  nil,
-  nil,
-  nil,
-)
-if err != nil {
-  panic(err)
-}
-```
-
-</TabItem>
-
-<TabItem value="csharp">
-
-```csharp
-using Algolia.Search.Clients;
-
-var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
-await client.SaveSynonymsAsync("<YOUR_INDEX_NAME>", synonyms, forwardToReplicas: false, replaceExistingSynonyms: true);
-```
-
-</TabItem>
-
-</TabsLanguage>
-
+${waitForTaskSnippet(language)}
+`)}/>
 The `synonymHit`parameter should contain the synonyms you want to save.
 By executing the above code, all existing synonyms will be replaced with the new synonyms provided.
 
