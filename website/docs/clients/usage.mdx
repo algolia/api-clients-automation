@@ -16,7 +16,6 @@ import TabItem from '@theme/TabItem';
 import { CodeBlockLanguage } from '../../src/components/CodeBlockLanguage';
 import { TabsLanguage } from '../../src/components/TabsLanguage';
 import { versions } from '../../src/generated/variables';
-import { getSnippet, waitForTaskSnippet } from '../../src/snippets';
 
 <TabsLanguage>
 <TabItem value="javascript">
@@ -157,16 +156,16 @@ Or directly in your `.csproj` file:
 
 You can now import the Algolia API client in your project and play with it.
 
-<CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'search', 'import')}
+<CodeBlockLanguage client='search' snippet={({getSnippet, addComment, waitForTaskSnippet, language}) => (
+`${getSnippet('import')}
 
-${getSnippet(language, 'search', 'init')}
+${getSnippet('init')}
 
-${getSnippet(language, 'search','saveObject')}
-// Poll the task status to know when it has been indexed
-${waitForTaskSnippet(language)}
+${getSnippet('saveObject')}
+${addComment('Poll the task status to know when it has been indexed')}
+${waitForTaskSnippet()}
 
-${getSnippet(language, 'search', 'search')}
+${getSnippet('search')}
 `)}/>
 
 ## Advanced use cases
