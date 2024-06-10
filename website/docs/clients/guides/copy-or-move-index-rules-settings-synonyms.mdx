@@ -30,11 +30,7 @@ ${waitForTaskSnippet(language, 'SOURCE_INDEX_NAME')}
 Changing the name of an index doesn’t change the name of the index’s analytics. The new name references new analytics; the old and new analytics aren’t merged. If you want to preserve an index’s analytics history, you need to keep using the old name.
 
 <CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'search', 'import')}
-
-${getSnippet(language, 'search', 'init')}
-
-${getSnippet(language, 'search', 'operationIndex', 'move')}
+`${getSnippet(language, 'search', 'operationIndex', 'move')}
 
 ${waitForTaskSnippet(language, 'SOURCE_INDEX_NAME')}
 `)}/>
@@ -46,11 +42,7 @@ When the scope is absent from the request, the index will be fully copied, but y
 The available scopes are: `rules`, `settings`, `synonyms`. You can provide one or many.
 
 <CodeBlockLanguage snippet={(language) => (
-`${getSnippet(language, 'search', 'import')}
-
-${getSnippet(language, 'search', 'init')}
-
-${getSnippet(language, 'search', 'operationIndex', 'scopes')}
+`${getSnippet(language, 'search', 'operationIndex', 'scopes')}
 
 ${waitForTaskSnippet(language, 'SOURCE_INDEX_NAME')}
 `)}/>

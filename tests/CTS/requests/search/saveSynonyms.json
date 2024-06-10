@@ -1,7 +1,7 @@
 [
   {
     "parameters": {
-      "indexName": "YOUR_INDEX_NAME",
+      "indexName": "<YOUR_INDEX_NAME>",
       "synonymHit": [
         {
           "objectID": "id1",
@@ -27,7 +27,7 @@
       "replaceExistingSynonyms": true
     },
     "request": {
-      "path": "/1/indexes/YOUR_INDEX_NAME/synonyms/batch",
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/synonyms/batch",
       "method": "POST",
       "body": [
         {

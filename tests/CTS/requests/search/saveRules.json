@@ -2,7 +2,7 @@
   {
     "testName": "saveRules with minimal parameters",
     "parameters": {
-      "indexName": "YOUR_INDEX_NAME",
+      "indexName": "<YOUR_INDEX_NAME>",
       "rules": [
         {
           "objectID": "a-rule-id",
@@ -27,7 +27,7 @@
       "clearExistingRules": true
     },
     "request": {
-      "path": "/1/indexes/YOUR_INDEX_NAME/rules/batch",
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch",
       "method": "POST",
       "body": [
         {
@@ -57,7 +57,7 @@
   {
     "testName": "saveRules with all parameters",
     "parameters": {
-      "indexName": "YOUR_INDEX_NAME",
+      "indexName": "<YOUR_INDEX_NAME>",
       "rules": [
         {
           "objectID": "id1",
@@ -127,7 +127,7 @@
       "clearExistingRules": true
     },
     "request": {
-      "path": "/1/indexes/YOUR_INDEX_NAME/rules/batch",
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch",
       "method": "POST",
       "body": [
         {

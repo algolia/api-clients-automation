@@ -35,21 +35,21 @@ export function waitForApiKeySnippet(language, operation) {
       'update': `await client.WaitForApiKeyAsync(ApiKeyOperation.Update, response.Key);`,
       'delete': `await client.WaitForApiKeyAsync(ApiKeyOperation.Delete, response.Key);`,
     },
-    'dart':{
+    'dart': {
       'add': ``,
       'update': ``,
       'delete': ``,
     },
-    'go':{
-    'add': `waitResponse, err := client.WaitForApiKey(search.APIKEYOPERATION_ADD, response.Key, nil)
+    'go': {
+      'add': `waitResponse, err := client.WaitForApiKey(search.APIKEYOPERATION_ADD, response.Key, nil)
 if err != nil {
   panic(err)
 }`,
-    'update': `waitResponse, err := client.WaitForApiKey(search.APIKEYOPERATION_UPDATE, response.Key, nil)
+      'update': `waitResponse, err := client.WaitForApiKey(search.APIKEYOPERATION_UPDATE, response.Key, nil)
 if err != nil {
   panic(err)
 }`,
-    'delete': `waitResponse, err := client.WaitForApiKey(search.APIKEYOPERATION_DELETE, response.Key, nil)
+      'delete': `waitResponse, err := client.WaitForApiKey(search.APIKEYOPERATION_DELETE, response.Key, nil)
 if err != nil {
   panic(err)
 }`,
@@ -124,4 +124,20 @@ function getSnippetsForClient(client) {
 
 export function getSnippet(language, client, operationID, name = 'default') {
   return getSnippetsForClient(client)?.[language]?.[operationID]?.[name] || `${client}.${operationID} is not implemented in ${language}`;
+}
+
+export function addComment(language, comment) {
+  return {
+    'csharp': `// ${comment}`,
+    'dart': `// ${comment}`,
+    'go': `// ${comment}`,
+    'java': `// ${comment}`,
+    'javascript': `// ${comment}`,
+    'kotlin': `// ${comment}`,
+    'php': `// ${comment}`,
+    'python': `# ${comment}`,
+    'ruby': `# ${comment}`,
+    'scala': `// ${comment}`,
+    'swift': `// ${comment}`,
+  }[language];
 }

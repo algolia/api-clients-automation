@@ -1,5 +1,83 @@
 [
   {
+    "testName": "filterOnly",
+    "isSnippet": true,
+    "parameters": {
+      "requests": [
+        {
+          "indexName": "<YOUR_INDEX_NAME>",
+          "query": "<YOUR_QUERY>",
+          "filters": "actor:Scarlett Johansson"
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/indexes/*/queries",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "indexName": "<YOUR_INDEX_NAME>",
+            "query": "<YOUR_QUERY>",
+            "filters": "actor:Scarlett Johansson"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "testName": "filterOr",
+    "isSnippet": true,
+    "parameters": {
+      "requests": [
+        {
+          "indexName": "<YOUR_INDEX_NAME>",
+          "query": "<YOUR_QUERY>",
+          "filters": "actor:Tom Cruise OR actor:Scarlett Johansson"
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/indexes/*/queries",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "indexName": "<YOUR_INDEX_NAME>",
+            "query": "<YOUR_QUERY>",
+            "filters": "actor:Tom Cruise OR actor:Scarlett Johansson"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "testName": "filterNot",
+    "isSnippet": true,
+    "parameters": {
+      "requests": [
+        {
+          "indexName": "<YOUR_INDEX_NAME>",
+          "query": "<YOUR_QUERY>",
+          "filters": "NOT actor:Nicolas Cage"
+        }
+      ]
+    },
+    "request": {
+      "path": "/1/indexes/*/queries",
+      "method": "POST",
+      "body": {
+        "requests": [
+          {
+            "indexName": "<YOUR_INDEX_NAME>",
+            "query": "<YOUR_QUERY>",
+            "filters": "NOT actor:Nicolas Cage"
+          }
+        ]
+      }
+    }
+  },
+  {
     "testName": "search for a single hits request with minimal parameters",
     "parameters": {
       "requests": [
