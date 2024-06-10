@@ -1,6 +1,7 @@
 [
   {
-    "testName": "allows batch method with `addObject` action",
+    "testName": "addObject",
+    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "batchWriteParams": {
@@ -30,7 +31,8 @@
     }
   },
   {
-    "testName": "allows batch method with `clear` action",
+    "testName": "clear",
+    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "batchWriteParams": {
@@ -60,7 +62,8 @@
     }
   },
   {
-    "testName": "allows batch method with `delete` action",
+    "testName": "delete",
+    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "batchWriteParams": {
@@ -90,7 +93,8 @@
     }
   },
   {
-    "testName": "allows batch method with `deleteObject` action",
+    "testName": "deleteObject",
+    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "batchWriteParams": {
@@ -120,7 +124,8 @@
     }
   },
   {
-    "testName": "allows batch method with `partialUpdateObject` action",
+    "testName": "partialUpdateObject",
+    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "batchWriteParams": {
@@ -150,7 +155,8 @@
     }
   },
   {
-    "testName": "allows batch method with `partialUpdateObjectNoCreate` action",
+    "testName": "partialUpdateObjectNoCreate",
+    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "batchWriteParams": {
@@ -180,7 +186,8 @@
     }
   },
   {
-    "testName": "allows batch method with `updateObject` action",
+    "testName": "updateObject",
+    "isSnippet": true,
     "parameters": {
       "indexName": "theIndexName",
       "batchWriteParams": {
