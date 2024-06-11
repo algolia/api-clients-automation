@@ -92,10 +92,12 @@ public class TestsClient extends TestsGenerator {
                 throw new CTSException("Cannot find operation for method: " + step.path, test.testName);
               }
               stepOut.put("stepTemplate", "tests/client/method.mustache");
-              stepOut.put("isMethod", true); // TODO: remove once dart and kotlin are converted
-              stepOut.put("isHelper", (boolean) ope.vendorExtensions.getOrDefault("x-helper", false));
-              stepOut.put("isAsync", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true)); // default to true because most api calls are asynchronous
+              stepOut.put("isMethod", true); // TODO: remove once kotlin is converted
               stepOut.put("hasOperationParams", ope.hasParams);
+
+              // set on testOut because we need to wrap everything for java.
+              testOut.put("isHelper", (boolean) ope.vendorExtensions.getOrDefault("x-helper", false));
+              testOut.put("isAsync", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true)); // default to true because most api calls are asynchronous
             }
 
             stepOut.put("object", step.object);
