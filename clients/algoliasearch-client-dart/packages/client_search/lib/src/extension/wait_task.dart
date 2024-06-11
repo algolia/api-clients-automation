@@ -28,7 +28,7 @@ extension WaitTask on SearchClient {
     );
   }
 
-  /// Wait for an application-leve [taskID] to complete before executing the next line of code.
+  /// Wait for an application-level [taskID] to complete before executing the next line of code.
   Future<void> waitAppTask({
     required int taskID,
     WaitParams params = const WaitParams(),

@@ -83,7 +83,7 @@ public extension SearchClient {
             },
             timeout: {
                 timeout(retryCount)
-            },
+            }
             error: IterableError(
                 validate: { _ in
                     retryCount >= maxRetries

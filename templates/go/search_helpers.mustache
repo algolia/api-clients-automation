@@ -82,7 +82,7 @@ func (c *APIClient) WaitForTaskWithContext(
 }
 
 /*
-WaitForAppTask waits for a task to be published.
+WaitForAppTask waits for an application-level task to be published.
 Wraps WaitForAppTask with context.Background().
 It returns the task response if the operation was successful.
 It returns an error if the operation failed.
@@ -117,7 +117,7 @@ func (c *APIClient) WaitForAppTask(
 }
 
 /*
-WaitForAppTaskWithContext waits for a task to be published.
+WaitForAppTaskWithContext waits for an application-level task to be published.
 It returns the task response if the operation was successful.
 It returns an error if the operation failed.
 
