@@ -22,7 +22,7 @@
   <a href="https://discourse.algolia.com" target="_blank">Community Forum</a>  •
   <a href="https://stackoverflow.com/questions/tagged/algolia" target="_blank">Stack Overflow</a>  •
   <a href="https://github.com/algolia/algoliasearch-client-dart/issues" target="_blank">Report a Bug</a>  •
-  <a href="https://www.algolia.com/support" target="_blank">Support</a>
+  <a href="https://alg.li/support" target="_blank">Support</a>
 </p>
 
 ## 📚 Description
