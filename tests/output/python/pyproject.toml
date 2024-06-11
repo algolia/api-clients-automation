@@ -2,7 +2,7 @@
 name = "tests"
 version = "0.0.1"
 description = "common test suite for the Python API client"
-authors = ["Algolia Team <https://alg.li/support>"]
+authors = ["Algolia Team"]
 license = "MIT"
 homepage = "https://www.algolia.com"
 repository = "https://github.com/algolia/api-clients-automation"
