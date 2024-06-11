@@ -50,7 +50,7 @@ waitForAppTask(
     maxRetries = 50,
     timeout = (retryCount: number): number =>
       Math.min(retryCount * 200, 5000),
-  }: waitForAppTaskOptions,
+  }: WaitForAppTaskOptions,
   requestOptions?: RequestOptions
 ): Promise<GetTaskResponse> {
   let retryCount = 0;
