@@ -56,7 +56,7 @@ package algoliasearch.recommend
   *   Whether the record is re-ranked.
   */
 case class RankingInfo(
-    filters: Int,
+    filters: Option[Int] = scala.None,
     firstMatchedWord: Int,
     geoDistance: Int,
     geoPrecision: Option[Int] = scala.None,
@@ -64,9 +64,9 @@ case class RankingInfo(
     personalization: Option[Personalization] = scala.None,
     nbExactWords: Int,
     nbTypos: Int,
-    promoted: Boolean,
+    promoted: Option[Boolean] = scala.None,
     proximityDistance: Option[Int] = scala.None,
     userScore: Int,
-    words: Int,
+    words: Option[Int] = scala.None,
     promotedByReRanking: Option[Boolean] = scala.None
 )
