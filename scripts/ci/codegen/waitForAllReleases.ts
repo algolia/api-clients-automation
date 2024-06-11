@@ -80,7 +80,7 @@ async function waitForAllReleases(languages: Language[]): Promise<void> {
 
   const start = Date.now();
   // kotlin release can take a long time
-  while (Date.now() - start < 1000 * 60 * 10) {
+  while (Date.now() - start < 1000 * 60 * 12) {
     const runs = await getAllRuns(languages, workflowIDs);
     for (let i = 0; i < languages.length; i++) {
       if (runs[i] === null) {
