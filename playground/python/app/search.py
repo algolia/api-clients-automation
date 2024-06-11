@@ -16,8 +16,9 @@ async def main():
 
     try:
         resp = await client.replace_all_objects(
-            index_name="test-flag",
-            objects=[{"name": f"John Doe{i}", "objectID": f"fff2bd4d-bb17-4e21-a0c4-0a8ea5e363f2{i}" } for i in range(1001)],
+            index_name="test_replace_all_objects",
+            objects=[{"name": f"John Doe{i}", "objectID": f"fff2bd4d-bb17-4e21-a0c4-0a8ea5e363f2{i}" } for i in range(33)],
+            batch_size=10
         )
 
         print(resp)
