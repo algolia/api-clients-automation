@@ -733,6 +733,25 @@ class SnippetSearchClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the getAppTask method.
+    *
+    * getAppTask
+    */
+  def snippetForSearchClientGetAppTask(): Unit = {
+    // >SEPARATOR getAppTask default
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    val response = client.getAppTask(
+      taskID = 123L
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
   /** Snippet for the getDictionaryLanguages method.
     *
     * get getDictionaryLanguages

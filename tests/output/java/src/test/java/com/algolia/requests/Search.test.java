@@ -1141,6 +1141,18 @@ class SearchClientRequestsTests {
   }
 
   @Test
+  @DisplayName("getAppTask")
+  void getAppTaskTest() {
+    assertDoesNotThrow(() -> {
+      client.getAppTask(123L);
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/task/123", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
   @DisplayName("get getDictionaryLanguages")
   void getDictionaryLanguagesTest() {
     assertDoesNotThrow(() -> {

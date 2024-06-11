@@ -1196,6 +1196,24 @@ class SearchTest {
     )
   }
 
+  // getAppTask
+
+  @Test
+  fun `getAppTask`() = runTest {
+    client.runTest(
+      call = {
+        getAppTask(
+          taskID = 123L,
+        )
+      },
+      intercept = {
+        assertEquals("/1/task/123".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // getDictionaryLanguages
 
   @Test

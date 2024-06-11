@@ -634,6 +634,21 @@ void snippetForgetApiKey() async {
   // SEPARATOR<
 }
 
+// Snippet for the getAppTask method.
+//
+// getAppTask
+void snippetForgetAppTask() async {
+  // >SEPARATOR getAppTask default
+  // Initialize the client
+  final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+  // Call the API
+  final response = await client.getAppTask(
+    taskID: 123,
+  );
+  // SEPARATOR<
+}
+
 // Snippet for the getDictionaryLanguages method.
 //
 // get getDictionaryLanguages

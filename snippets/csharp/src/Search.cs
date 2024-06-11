@@ -691,6 +691,22 @@ public class SnippetSearchClient
   }
 
   /// <summary>
+  /// Snippet for the GetAppTask method.
+  ///
+  /// getAppTask
+  /// </summary>
+  public async Task SnippetForSearchClientGetAppTask()
+  {
+    // >SEPARATOR getAppTask default
+    // Initialize the client
+    var client = new SearchClient(new SearchConfig("YOUR_APP_ID", "YOUR_API_KEY"));
+
+    // Call the API
+    var response = await client.GetAppTaskAsync(123L);
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the GetDictionaryLanguages method.
   ///
   /// get getDictionaryLanguages

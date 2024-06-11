@@ -701,6 +701,25 @@ def snippet_for_get_api_key
   # SEPARATOR<
 end
 
+# Snippet for the getAppTask method.
+#
+# getAppTask
+def snippet_for_get_app_task
+  # >SEPARATOR getAppTask default
+  # Initialize the client
+  client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+  # Call the API
+  response = client.get_app_task(123)
+
+  # use the class directly
+  puts response
+
+  # print the JSON response
+  puts response.to_json
+  # SEPARATOR<
+end
+
 # Snippet for the getDictionaryLanguages method.
 #
 # get getDictionaryLanguages

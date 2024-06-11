@@ -1351,6 +1351,26 @@ void main() {
     ),
   );
 
+  // getAppTask
+  test(
+    'getAppTask',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.getAppTask(
+        taskID: 123,
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/task/123');
+        expect(request.method, 'get');
+        expect(request.body, null);
+      },
+    ),
+  );
+
   // getDictionaryLanguages
   test(
     'get getDictionaryLanguages',

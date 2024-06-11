@@ -798,6 +798,27 @@ class SnippetSearchClient
     }
 
     /**
+     * Snippet for the GetAppTask method.
+     *
+     * getAppTask
+     */
+    public function snippetForGetAppTask()
+    {
+        // >SEPARATOR getAppTask default
+        // Initialize the client
+        $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+        // Call the API
+        $response = $client->getAppTask(
+            123,
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the GetDictionaryLanguages method.
      *
      * get getDictionaryLanguages

@@ -14618,6 +14618,209 @@ paths:
             // Call the API
 
             let response = try await client.getLogs()
+  /1/task/{taskID}:
+    get:
+      tags:
+        - Advanced
+      operationId: getAppTask
+      x-acl:
+        - editSettings
+      description: |
+        Checks the status of a given application task.
+      summary: Check application task status
+      parameters:
+        - name: taskID
+          in: path
+          description: Unique task identifier.
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1506303845001
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: getTaskResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  status:
+                    $ref: '#/components/schemas/taskStatus'
+                required:
+                  - status
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: >
+            // Initialize the client
+
+            var client = new SearchClient(new SearchConfig("YOUR_APP_ID",
+            "YOUR_API_KEY"));
+
+
+            // Call the API
+
+            var response = await client.GetAppTaskAsync(123L);
+        - lang: dart
+          label: Dart
+          source: >
+            // Initialize the client
+
+            final client = SearchClient(appId: 'YOUR_APP_ID', apiKey:
+            'YOUR_API_KEY');
+
+
+            // Call the API
+
+            final response = await client.getAppTask(
+              taskID: 123,
+            );
+        - lang: go
+          label: Go
+          source: |
+            // Initialize the client
+            client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+            // Call the API
+            response, err := client.GetAppTask(client.NewApiGetAppTaskRequest(
+              123,
+            ))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+            // use the model directly
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            SearchClient client = new SearchClient("YOUR_APP_ID",
+            "YOUR_API_KEY");
+
+
+            // Call the API
+
+            client.getAppTask(123L);
+        - lang: javascript
+          label: JavaScript
+          source: |
+            // Initialize the client
+            const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+            // Call the API
+            const response = await client.getAppTask({ taskID: 123 });
+
+            // use typed response
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            var response = client.getAppTask(
+              taskID = 123L,
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: |
+            // Initialize the client
+            $client = SearchClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+
+            // Call the API
+            $response = $client->getAppTask(
+                123,
+            );
+
+            // play with the response
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: |
+            # Initialize the client
+            _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+            # Call the API
+            response = await _client.get_app_task(
+                task_id=123,
+            )
+
+            # use the class directly
+            print(response)
+
+            # print the JSON response
+            print(response.to_json())
+        - lang: ruby
+          label: Ruby
+          source: |
+            # Initialize the client
+            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+            # Call the API
+            response = client.get_app_task(123)
+
+            # use the class directly
+            puts response
+
+            # print the JSON response
+            puts response.to_json
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = SearchClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            val response = client.getAppTask(
+              taskID = 123L
+            )
+
+
+            // Use the response
+
+            val value = Await.result(response, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try SearchClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY")
+
+
+            // Call the API
+
+            let response = try await client.getAppTask(taskID: Int64(123))
   /1/indexes/{indexName}/task/{taskID}:
     get:
       tags:

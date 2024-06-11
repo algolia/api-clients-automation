@@ -2032,6 +2032,55 @@ public class SearchClient extends ApiClient {
   }
 
   /**
+   * Checks the status of a given application task.
+   *
+   * @param taskID Unique task identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public GetTaskResponse getAppTask(@Nonnull Long taskID, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getAppTaskAsync(taskID, requestOptions));
+  }
+
+  /**
+   * Checks the status of a given application task.
+   *
+   * @param taskID Unique task identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public GetTaskResponse getAppTask(@Nonnull Long taskID) throws AlgoliaRuntimeException {
+    return this.getAppTask(taskID, null);
+  }
+
+  /**
+   * (asynchronously) Checks the status of a given application task.
+   *
+   * @param taskID Unique task identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<GetTaskResponse> getAppTaskAsync(@Nonnull Long taskID, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getAppTask`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/task/{taskID}", taskID).setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<GetTaskResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Checks the status of a given application task.
+   *
+   * @param taskID Unique task identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<GetTaskResponse> getAppTaskAsync(@Nonnull Long taskID) throws AlgoliaRuntimeException {
+    return this.getAppTaskAsync(taskID, null);
+  }
+
+  /**
    * Lists supported languages with their supported dictionary types and number of custom entries.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
