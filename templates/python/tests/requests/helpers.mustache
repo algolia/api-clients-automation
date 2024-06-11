@@ -48,7 +48,7 @@ def test_generate_secured_api_key_0(self):
             self._client.get_secured_api_key_remaining_validity(_resp)
             assert False
         except Exception as e:
-            assert str(e) == "valid_until not found in api key."
+            assert str(e) == "validUntil not found in api key."
 
     def test_generate_secured_api_key_and_validity_2(self):
         """
