@@ -1,3 +1,7 @@
+## [1.10.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.10.0...1.10.1)
+
+- [cdc866549](https://github.com/algolia/api-clients-automation/commit/cdc866549) fix(specs): dont mention index api keys ([#3117](https://github.com/algolia/api-clients-automation/pull/3117)) by [@kai687](https://github.com/kai687/)
+
 ## [1.10.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.9.0...1.10.0)
 
 - [73d0d5a98](https://github.com/algolia/api-clients-automation/commit/73d0d5a98) feat(dart): add dio interceptors to client options ([#3054](https://github.com/algolia/api-clients-automation/pull/3054)) by [@aallam](https://github.com/aallam/)

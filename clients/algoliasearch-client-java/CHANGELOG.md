@@ -1,3 +1,8 @@
+## [4.0.0-beta.33](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.32...4.0.0-beta.33)
+
+- [53ef92dad](https://github.com/algolia/api-clients-automation/commit/53ef92dad) feat(java): add replaceAllObjects helper ([#3150](https://github.com/algolia/api-clients-automation/pull/3150)) by [@millotp](https://github.com/millotp/)
+- [cdc866549](https://github.com/algolia/api-clients-automation/commit/cdc866549) fix(specs): dont mention index api keys ([#3117](https://github.com/algolia/api-clients-automation/pull/3117)) by [@kai687](https://github.com/kai687/)
+
 ## [4.0.0-beta.32](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.31...4.0.0-beta.32)
 
 - [2b70d9ea5](https://github.com/algolia/api-clients-automation/commit/2b70d9ea5) fix(specs): exhaustiveFacetsCount is not deprecated for sffv ([#3089](https://github.com/algolia/api-clients-automation/pull/3089)) by [@kai687](https://github.com/kai687/)
