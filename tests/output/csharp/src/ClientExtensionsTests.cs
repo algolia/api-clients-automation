@@ -620,24 +620,28 @@ public class ClientExtensionsTests
             )
           }
         )
+      )
+      .Returns(
+        Task.FromResult(
+          new AlgoliaHttpResponse
+          {
+            HttpStatusCode = 200,
+            Body = new MemoryStream(
+              Encoding.UTF8.GetBytes(
+                serializer.Serialize(new UpdatedAtResponse(5, "2021-01-01T00:00:00Z"))
+              )
+            )
+          }
+        )
       );
 
     httpMock
       .Setup(c =>
         c.SendRequestAsync(
           It.Is<Request>(r =>
-            r.Uri.AbsolutePath.EndsWith("/1/indexes/my-test-index/task/1")
-            || Regex.IsMatch(
+            Regex.IsMatch(
               r.Uri.AbsolutePath,
-              "1\\/indexes\\/my-test-index_tmp_[0-9]+\\/task\\/2"
-            )
-            || Regex.IsMatch(
-              r.Uri.AbsolutePath,
-              "1\\/indexes\\/my-test-index_tmp_[0-9]+\\/task\\/3"
-            )
-            || Regex.IsMatch(
-              r.Uri.AbsolutePath,
-              "1\\/indexes\\/my-test-index_tmp_[0-9]+\\/task\\/4"
+              "1\\/indexes\\/my-test-index_tmp_[0-9]+\\/task\\/[0-5]"
             )
           ),
           It.IsAny<TimeSpan>(),
@@ -702,8 +706,8 @@ public class ClientExtensionsTests
 
     httpMock.VerifyAll();
 
-    Assert.Equal(1, results.CopyOperationResponse.TaskID);
+    Assert.Equal(4, results.CopyOperationResponse.TaskID);
     Assert.Equal([2, 3], results.BatchResponses.Select(r => r.TaskID));
-    Assert.Equal(4, results.MoveOperationResponse.TaskID);
+    Assert.Equal(5, results.MoveOperationResponse.TaskID);
   }
 }
