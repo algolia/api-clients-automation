@@ -94,6 +94,7 @@ public class TestsClient extends TestsGenerator {
               stepOut.put("stepTemplate", "tests/client/method.mustache");
               stepOut.put("isMethod", true); // TODO: remove once dart and kotlin are converted
               stepOut.put("isHelper", (boolean) ope.vendorExtensions.getOrDefault("x-helper", false));
+              stepOut.put("isAsync", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true)); // default to true because most api calls are asynchronous
               stepOut.put("hasOperationParams", ope.hasParams);
             }
 

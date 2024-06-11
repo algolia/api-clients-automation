@@ -23,7 +23,9 @@ class QueryParametersSerializer:
             return str(value)
 
     def encoded(self) -> str:
-        return urlencode(dict(sorted(self.query_parameters.items(), key=lambda val: val[0]))).replace("+", "%20")
+        return urlencode(
+            dict(sorted(self.query_parameters.items(), key=lambda val: val[0]))
+        ).replace("+", "%20")
 
     def __init__(self, query_parameters: Dict[str, Any]) -> None:
         self.query_parameters = {}

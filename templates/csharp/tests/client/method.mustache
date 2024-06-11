@@ -1,4 +1,4 @@
-{{^useEchoRequester}}var res = {{/useEchoRequester}}await client.{{#lambda.pascalcase}}{{#path}}.{{.}}{{/path}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
+{{^useEchoRequester}}var res = {{/useEchoRequester}}{{#isAsync}}await {{/isAsync}}client.{{#lambda.pascalcase}}{{#path}}.{{.}}{{/path}}{{/lambda.pascalcase}}{{#isAsync}}Async{{/isAsync}}{{#isGeneric}}<Object>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
 {{#requestOptions.queryParameters}}
   QueryParameters = new Dictionary<string, object>(){ {{#parametersWithDataType}} {"{{{key}}}", {{> tests/requests/requestOptionsParams}} } {{^-last}},{{/-last}}{{/parametersWithDataType}} },
 {{/requestOptions.queryParameters}}

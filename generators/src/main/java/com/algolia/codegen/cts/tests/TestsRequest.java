@@ -69,7 +69,7 @@ public class TestsRequest extends TestsGenerator {
       boolean isHelper = (boolean) ope.vendorExtensions.getOrDefault("x-helper", false);
       if (!cts.containsKey(operationId)) {
         if (isHelper) {
-          continue;
+          continue; // some helpers don't have tests
         }
 
         throw new CTSException(

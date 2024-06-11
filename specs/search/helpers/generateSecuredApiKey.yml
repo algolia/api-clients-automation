@@ -1,6 +1,7 @@
 method:
   get:
     x-helper: true
+    x-asynchronous-helper: false
     tags:
       - Api Keys
     operationId: generateSecuredApiKey
