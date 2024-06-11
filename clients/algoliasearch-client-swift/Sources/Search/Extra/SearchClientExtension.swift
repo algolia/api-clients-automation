@@ -472,7 +472,7 @@ public extension SearchClient {
     ) async throws -> ReplaceAllObjectsResponse {
         let tmpIndexName = try "\(indexName)_tmp_\(randomString())"
 
-        let copyOperationResponse = try await operationIndex(
+        var copyOperationResponse = try await operationIndex(
             indexName: indexName,
             operationIndexParams: OperationIndexParams(
                 operation: .copy,
