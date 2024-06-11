@@ -62,7 +62,7 @@ public void waitForTask(String indexName, Long taskID) {
 */
 public void waitForAppTask(Long taskID, int maxRetries, IntUnaryOperator timeout, RequestOptions requestOptions) {
 TaskUtils.retryUntil(
-  () -> this.getTask(taskID, requestOptions),
+  () -> this.getAppTask(taskID, requestOptions),
   (GetTaskResponse task) -> task.getStatus() == TaskStatus.PUBLISHED,
   maxRetries,
   timeout
