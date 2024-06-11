@@ -75,13 +75,10 @@ rankingInfo:
       type: boolean
       description: Whether the record is re-ranked.
   required:
-    - promoted
     - nbTypos
     - firstMatchedWord
     - geoDistance
     - nbExactWords
-    - words
-    - filters
     - userScore
 
 matchedGeoLocation:
