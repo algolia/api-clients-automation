@@ -367,7 +367,7 @@ async replaceAllObjects(
   );
 
   await this.waitForTask({
-    indexName,
+    indexName: tmpIndexName,
     taskID: copyOperationResponse.taskID,
   });
 
@@ -383,7 +383,7 @@ async replaceAllObjects(
       requestOptions
     );
   await this.waitForTask({
-    indexName,
+    indexName: tmpIndexName,
     taskID: copyOperationResponse.taskID,
   });
 
