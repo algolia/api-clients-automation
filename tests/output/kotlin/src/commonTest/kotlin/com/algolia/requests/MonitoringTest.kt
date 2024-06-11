@@ -37,7 +37,7 @@ class MonitoringTest {
   }
 
   @Test
-  fun `allow del method for a custom path with all parameters`() = runTest {
+  fun `allow del method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
         customDelete(
@@ -73,7 +73,7 @@ class MonitoringTest {
   }
 
   @Test
-  fun `allow get method for a custom path with all parameters`() = runTest {
+  fun `allow get method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
         customGet(
@@ -91,7 +91,7 @@ class MonitoringTest {
   }
 
   @Test
-  fun `requestOptions should be escaped too`() = runTest {
+  fun `requestOptions should be escaped too2`() = runTest {
     client.runTest(
       call = {
         customGet(
@@ -137,7 +137,7 @@ class MonitoringTest {
   }
 
   @Test
-  fun `allow post method for a custom path with all parameters`() = runTest {
+  fun `allow post method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -161,7 +161,7 @@ class MonitoringTest {
   }
 
   @Test
-  fun `requestOptions can override default query parameters`() = runTest {
+  fun `requestOptions can override default query parameters2`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -190,7 +190,7 @@ class MonitoringTest {
   }
 
   @Test
-  fun `requestOptions merges query parameters with default ones`() = runTest {
+  fun `requestOptions merges query parameters with default ones3`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -219,7 +219,7 @@ class MonitoringTest {
   }
 
   @Test
-  fun `requestOptions can override default headers`() = runTest {
+  fun `requestOptions can override default headers4`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -249,7 +249,7 @@ class MonitoringTest {
   }
 
   @Test
-  fun `requestOptions merges headers with default ones`() = runTest {
+  fun `requestOptions merges headers with default ones5`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -279,7 +279,7 @@ class MonitoringTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts booleans`() = runTest {
+  fun `requestOptions queryParameters accepts booleans6`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -308,7 +308,7 @@ class MonitoringTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts integers`() = runTest {
+  fun `requestOptions queryParameters accepts integers7`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -337,7 +337,7 @@ class MonitoringTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts list of string`() = runTest {
+  fun `requestOptions queryParameters accepts list of string8`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -366,7 +366,7 @@ class MonitoringTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts list of booleans`() = runTest {
+  fun `requestOptions queryParameters accepts list of booleans9`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -395,7 +395,7 @@ class MonitoringTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts list of integers`() = runTest {
+  fun `requestOptions queryParameters accepts list of integers10`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -442,7 +442,7 @@ class MonitoringTest {
   }
 
   @Test
-  fun `allow put method for a custom path with all parameters`() = runTest {
+  fun `allow put method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
         customPut(

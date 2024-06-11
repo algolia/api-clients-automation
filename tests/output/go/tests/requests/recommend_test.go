@@ -393,7 +393,7 @@ func TestRecommend_DeleteRecommendRule(t *testing.T) {
 	client, echo := createRecommendClient(t)
 	_ = echo
 
-	t.Run("deleteRecommendRule0", func(t *testing.T) {
+	t.Run("deleteRecommendRule", func(t *testing.T) {
 		_, err := client.DeleteRecommendRule(client.NewApiDeleteRecommendRuleRequest(
 			"indexName", recommend.RecommendModels("related-products"), "objectID",
 		))
@@ -410,7 +410,7 @@ func TestRecommend_GetRecommendRule(t *testing.T) {
 	client, echo := createRecommendClient(t)
 	_ = echo
 
-	t.Run("getRecommendRule0", func(t *testing.T) {
+	t.Run("getRecommendRule", func(t *testing.T) {
 		_, err := client.GetRecommendRule(client.NewApiGetRecommendRuleRequest(
 			"indexName", recommend.RecommendModels("related-products"), "objectID",
 		))
@@ -427,7 +427,7 @@ func TestRecommend_GetRecommendStatus(t *testing.T) {
 	client, echo := createRecommendClient(t)
 	_ = echo
 
-	t.Run("getRecommendStatus0", func(t *testing.T) {
+	t.Run("getRecommendStatus", func(t *testing.T) {
 		_, err := client.GetRecommendStatus(client.NewApiGetRecommendStatusRequest(
 			"indexName", recommend.RecommendModels("related-products"), 12345,
 		))
@@ -573,7 +573,7 @@ func TestRecommend_SearchRecommendRules(t *testing.T) {
 	client, echo := createRecommendClient(t)
 	_ = echo
 
-	t.Run("searchRecommendRules0", func(t *testing.T) {
+	t.Run("searchRecommendRules", func(t *testing.T) {
 		_, err := client.SearchRecommendRules(client.NewApiSearchRecommendRulesRequest(
 			"indexName", recommend.RecommendModels("related-products"),
 		))

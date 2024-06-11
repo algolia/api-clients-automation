@@ -4,18 +4,23 @@
 
 namespace Algolia\AlgoliaSearch\Snippets;
 
+// >IMPORT
+use Algolia\AlgoliaSearch\Api\QuerySuggestionsClient;
+
+// IMPORT<
+
 class SnippetQuerySuggestionsClient
 {
     /**
      * Snippet for the CreateConfig method.
      *
-     * createConfig0
+     * createConfig
      */
     public function snippetForCreateConfig()
     {
-        // >SEPARATOR createConfig
+        // >SEPARATOR createConfig default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->createConfig(
@@ -60,9 +65,9 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForCustomDelete()
     {
-        // >SEPARATOR customDelete
+        // >SEPARATOR customDelete default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->customDelete(
@@ -81,9 +86,9 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForCustomGet()
     {
-        // >SEPARATOR customGet
+        // >SEPARATOR customGet default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->customGet(
@@ -102,9 +107,9 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForCustomPost()
     {
-        // >SEPARATOR customPost
+        // >SEPARATOR customPost default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->customPost(
@@ -123,9 +128,9 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForCustomPut()
     {
-        // >SEPARATOR customPut
+        // >SEPARATOR customPut default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->customPut(
@@ -140,13 +145,13 @@ class SnippetQuerySuggestionsClient
     /**
      * Snippet for the DeleteConfig method.
      *
-     * deleteConfig0
+     * deleteConfig
      */
     public function snippetForDeleteConfig()
     {
-        // >SEPARATOR deleteConfig
+        // >SEPARATOR deleteConfig default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->deleteConfig(
@@ -161,13 +166,13 @@ class SnippetQuerySuggestionsClient
     /**
      * Snippet for the GetAllConfigs method.
      *
-     * getAllConfigs0
+     * getAllConfigs
      */
     public function snippetForGetAllConfigs()
     {
-        // >SEPARATOR getAllConfigs
+        // >SEPARATOR getAllConfigs default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getAllConfigs();
@@ -184,9 +189,9 @@ class SnippetQuerySuggestionsClient
      */
     public function snippetForGetConfig()
     {
-        // >SEPARATOR getConfig
+        // >SEPARATOR getConfig default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getConfig(
@@ -201,13 +206,13 @@ class SnippetQuerySuggestionsClient
     /**
      * Snippet for the GetConfigStatus method.
      *
-     * getConfigStatus0
+     * getConfigStatus
      */
     public function snippetForGetConfigStatus()
     {
-        // >SEPARATOR getConfigStatus
+        // >SEPARATOR getConfigStatus default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getConfigStatus(
@@ -222,13 +227,13 @@ class SnippetQuerySuggestionsClient
     /**
      * Snippet for the GetLogFile method.
      *
-     * getLogFile0
+     * getLogFile
      */
     public function snippetForGetLogFile()
     {
-        // >SEPARATOR getLogFile
+        // >SEPARATOR getLogFile default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getLogFile(
@@ -243,13 +248,13 @@ class SnippetQuerySuggestionsClient
     /**
      * Snippet for the UpdateConfig method.
      *
-     * updateConfig0
+     * updateConfig
      */
     public function snippetForUpdateConfig()
     {
-        // >SEPARATOR updateConfig
+        // >SEPARATOR updateConfig default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = QuerySuggestionsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->updateConfig(

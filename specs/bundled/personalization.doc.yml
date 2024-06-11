@@ -151,7 +151,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomGet(client.NewApiCustomGetRequest(
+            response, err := client.CustomGet(client.NewApiCustomGetRequest(
               "test/minimal",
             ))
 
@@ -163,7 +163,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -216,8 +216,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>',
+            $client = PersonalizationClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
 
@@ -242,19 +241,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.custom_get(
+            response = await _client.custom_get(
                 path="test/minimal",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -266,13 +265,13 @@ paths:
             )
 
             # Call the API
-            resp = client.custom_get("test/minimal")
+            response = client.custom_get("test/minimal")
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -284,14 +283,14 @@ paths:
 
             // Call the API
 
-            val res = client.customGet[JObject](
+            val response = client.customGet[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -303,7 +302,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customGet(path: "test/minimal")
+            let response = try await client.customGet(path: "test/minimal")
     post:
       operationId: customPost
       requestBody:
@@ -360,7 +359,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomPost(client.NewApiCustomPostRequest(
+            response, err := client.CustomPost(client.NewApiCustomPostRequest(
               "test/minimal",
             ))
 
@@ -372,7 +371,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -425,8 +424,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>',
+            $client = PersonalizationClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
 
@@ -451,19 +449,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.custom_post(
+            response = await _client.custom_post(
                 path="test/minimal",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -475,13 +473,13 @@ paths:
             )
 
             # Call the API
-            resp = client.custom_post("test/minimal")
+            response = client.custom_post("test/minimal")
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -493,14 +491,14 @@ paths:
 
             // Call the API
 
-            val res = client.customPost[JObject](
+            val response = client.customPost[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -512,7 +510,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPost(path: "test/minimal")
+            let response = try await client.customPost(path: "test/minimal")
     put:
       operationId: customPut
       requestBody:
@@ -569,7 +567,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomPut(client.NewApiCustomPutRequest(
+            response, err := client.CustomPut(client.NewApiCustomPutRequest(
               "test/minimal",
             ))
 
@@ -581,7 +579,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -634,8 +632,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>',
+            $client = PersonalizationClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
 
@@ -660,19 +657,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.custom_put(
+            response = await _client.custom_put(
                 path="test/minimal",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -684,13 +681,13 @@ paths:
             )
 
             # Call the API
-            resp = client.custom_put("test/minimal")
+            response = client.custom_put("test/minimal")
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -702,14 +699,14 @@ paths:
 
             // Call the API
 
-            val res = client.customPut[JObject](
+            val response = client.customPut[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -721,7 +718,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPut(path: "test/minimal")
+            let response = try await client.customPut(path: "test/minimal")
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -772,7 +769,8 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+            response, err :=
+            client.CustomDelete(client.NewApiCustomDeleteRequest(
               "test/minimal",
             ))
 
@@ -784,7 +782,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -843,8 +841,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>',
+            $client = PersonalizationClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
 
@@ -869,19 +866,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.custom_delete(
+            response = await _client.custom_delete(
                 path="test/minimal",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -893,13 +890,13 @@ paths:
             )
 
             # Call the API
-            resp = client.custom_delete("test/minimal")
+            response = client.custom_delete("test/minimal")
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -911,14 +908,14 @@ paths:
 
             // Call the API
 
-            val res = client.customDelete[JObject](
+            val response = client.customDelete[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -930,7 +927,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customDelete(path: "test/minimal")
+            let response = try await client.customDelete(path: "test/minimal")
   /1/profiles/personalization/{userToken}:
     get:
       tags:
@@ -1009,7 +1006,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetUserTokenProfile(client.NewApiGetUserTokenProfileRequest(
               "UserToken",
             ))
@@ -1022,7 +1019,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1081,8 +1078,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>',
+            $client = PersonalizationClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
 
@@ -1107,19 +1103,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_user_token_profile(
+            response = await _client.get_user_token_profile(
                 user_token="UserToken",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -1131,13 +1127,13 @@ paths:
             )
 
             # Call the API
-            resp = client.get_user_token_profile("UserToken")
+            response = client.get_user_token_profile("UserToken")
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1149,14 +1145,14 @@ paths:
 
             // Call the API
 
-            val res = client.getUserTokenProfile(
+            val response = client.getUserTokenProfile(
               userToken = "UserToken"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1168,7 +1164,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.getUserTokenProfile(userToken: "UserToken")
+            let response = try await client.getUserTokenProfile(userToken:
+            "UserToken")
   /1/profiles/{userToken}:
     delete:
       tags:
@@ -1244,7 +1241,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.DeleteUserProfile(client.NewApiDeleteUserProfileRequest(
               "UserToken",
             ))
@@ -1257,7 +1254,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1316,8 +1313,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>',
+            $client = PersonalizationClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
 
@@ -1342,19 +1338,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.delete_user_profile(
+            response = await _client.delete_user_profile(
                 user_token="UserToken",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -1366,13 +1362,13 @@ paths:
             )
 
             # Call the API
-            resp = client.delete_user_profile("UserToken")
+            response = client.delete_user_profile("UserToken")
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1384,14 +1380,14 @@ paths:
 
             // Call the API
 
-            val res = client.deleteUserProfile(
+            val response = client.deleteUserProfile(
               userToken = "UserToken"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1403,7 +1399,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.deleteUserProfile(userToken: "UserToken")
+            let response = try await client.deleteUserProfile(userToken:
+            "UserToken")
   /1/strategies/personalization:
     get:
       tags:
@@ -1456,7 +1453,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.GetPersonalizationStrategy()
+            response, err := client.GetPersonalizationStrategy()
 
             if err != nil {
               // handle the eventual error
@@ -1466,7 +1463,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1517,8 +1514,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>',
+            $client = PersonalizationClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
 
@@ -1541,17 +1537,17 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_personalization_strategy()
+            response = await _client.get_personalization_strategy()
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -1563,13 +1559,13 @@ paths:
             )
 
             # Call the API
-            resp = client.get_personalization_strategy
+            response = client.get_personalization_strategy
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1581,14 +1577,14 @@ paths:
 
             // Call the API
 
-            val res = client.getPersonalizationStrategy(
+            val response = client.getPersonalizationStrategy(
 
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1600,7 +1596,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getPersonalizationStrategy()
+            let response = try await client.getPersonalizationStrategy()
     post:
       tags:
         - strategies
@@ -1685,7 +1681,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.SetPersonalizationStrategy(client.NewApiSetPersonalizationStrategyRequest(
 
               personalization.NewEmptyPersonalizationStrategyParams().SetEventScoring(
@@ -1701,7 +1697,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1778,8 +1774,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\PersonalizationClient::create('<YOUR_APP_ID>',
+            $client = PersonalizationClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
 
@@ -1816,7 +1811,7 @@ paths:
 
             # Call the API
 
-            resp = await _client.set_personalization_strategy(
+            response = await _client.set_personalization_strategy(
                 personalization_strategy_params={
                     "eventScoring": [
                         {
@@ -1838,12 +1833,12 @@ paths:
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -1855,7 +1850,7 @@ paths:
             )
 
             # Call the API
-            resp = client.set_personalization_strategy(
+            response = client.set_personalization_strategy(
               PersonalizationStrategyParams.new(
                 event_scoring: [EventScoring.new(
                   score: 42,
@@ -1868,10 +1863,10 @@ paths:
             )
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1883,7 +1878,7 @@ paths:
 
             // Call the API
 
-            val res = client.setPersonalizationStrategy(
+            val response = client.setPersonalizationStrategy(
               personalizationStrategyParams = PersonalizationStrategyParams(
                 eventScoring = Seq(
                   EventScoring(
@@ -1905,7 +1900,7 @@ paths:
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1917,13 +1912,16 @@ paths:
 
             // Call the API
 
-            _ = try await
-            client.setPersonalizationStrategy(personalizationStrategyParams:
-            PersonalizationStrategyParams(
-                eventScoring: [EventScoring(score: 42, eventName: "Algolia", eventType: PersonalizationEventType.click)],
-                facetScoring: [FacetScoring(score: 42, facetName: "Event")],
-                personalizationImpact: 42
-            ))
+            let response = try await client
+                .setPersonalizationStrategy(personalizationStrategyParams: PersonalizationStrategyParams(
+                    eventScoring: [EventScoring(
+                        score: 42,
+                        eventName: "Algolia",
+                        eventType: PersonalizationEventType.click
+                    )],
+                    facetScoring: [FacetScoring(score: 42, facetName: "Event")],
+                    personalizationImpact: 42
+                ))
 components:
   securitySchemes:
     appId:

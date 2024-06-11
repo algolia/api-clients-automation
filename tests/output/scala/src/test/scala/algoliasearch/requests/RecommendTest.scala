@@ -45,7 +45,7 @@ class RecommendTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("allow del method for a custom path with all parameters") {
+  test("allow del method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customDelete[JObject](
       path = "test/all",
@@ -81,7 +81,7 @@ class RecommendTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("allow get method for a custom path with all parameters") {
+  test("allow get method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customGet[JObject](
       path = "test/all",
@@ -103,7 +103,7 @@ class RecommendTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions should be escaped too") {
+  test("requestOptions should be escaped too2") {
     val (client, echo) = testClient()
     val future = client.customGet[JObject](
       path = "test/all",
@@ -158,7 +158,7 @@ class RecommendTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("allow post method for a custom path with all parameters") {
+  test("allow post method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/all",
@@ -183,7 +183,7 @@ class RecommendTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions can override default query parameters") {
+  test("requestOptions can override default query parameters2") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -214,7 +214,7 @@ class RecommendTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions merges query parameters with default ones") {
+  test("requestOptions merges query parameters with default ones3") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -245,7 +245,7 @@ class RecommendTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions can override default headers") {
+  test("requestOptions can override default headers4") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -282,7 +282,7 @@ class RecommendTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions merges headers with default ones") {
+  test("requestOptions merges headers with default ones5") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -319,7 +319,7 @@ class RecommendTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts booleans") {
+  test("requestOptions queryParameters accepts booleans6") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -350,7 +350,7 @@ class RecommendTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts integers") {
+  test("requestOptions queryParameters accepts integers7") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -381,7 +381,7 @@ class RecommendTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts list of string") {
+  test("requestOptions queryParameters accepts list of string8") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -412,7 +412,7 @@ class RecommendTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts list of booleans") {
+  test("requestOptions queryParameters accepts list of booleans9") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -444,7 +444,7 @@ class RecommendTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts list of integers") {
+  test("requestOptions queryParameters accepts list of integers10") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -491,7 +491,7 @@ class RecommendTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("allow put method for a custom path with all parameters") {
+  test("allow put method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customPut[JObject](
       path = "test/all",
@@ -516,7 +516,7 @@ class RecommendTest extends AnyFunSuite {
     }
   }
 
-  test("deleteRecommendRule0") {
+  test("deleteRecommendRule") {
     val (client, echo) = testClient()
     val future = client.deleteRecommendRule(
       indexName = "indexName",
@@ -532,7 +532,7 @@ class RecommendTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getRecommendRule0") {
+  test("getRecommendRule") {
     val (client, echo) = testClient()
     val future = client.getRecommendRule(
       indexName = "indexName",
@@ -548,7 +548,7 @@ class RecommendTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getRecommendStatus0") {
+  test("getRecommendStatus") {
     val (client, echo) = testClient()
     val future = client.getRecommendStatus(
       indexName = "indexName",
@@ -591,7 +591,7 @@ class RecommendTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("get recommendations for recommend model with all parameters") {
+  test("get recommendations for recommend model with all parameters1") {
     val (client, echo) = testClient()
     val future = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(
@@ -631,7 +631,7 @@ class RecommendTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("get recommendations for trending model with minimal parameters") {
+  test("get recommendations for trending model with minimal parameters2") {
     val (client, echo) = testClient()
     val future = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(
@@ -659,7 +659,7 @@ class RecommendTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("get recommendations for trending model with all parameters") {
+  test("get recommendations for trending model with all parameters3") {
     val (client, echo) = testClient()
     val future = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(
@@ -700,7 +700,7 @@ class RecommendTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("get multiple recommendations with minimal parameters") {
+  test("get multiple recommendations with minimal parameters4") {
     val (client, echo) = testClient()
     val future = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(
@@ -733,7 +733,7 @@ class RecommendTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("get multiple recommendations with all parameters") {
+  test("get multiple recommendations with all parameters5") {
     val (client, echo) = testClient()
     val future = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(
@@ -792,7 +792,7 @@ class RecommendTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("get frequently bought together recommendations") {
+  test("get frequently bought together recommendations6") {
     val (client, echo) = testClient()
     val future = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(
@@ -819,7 +819,7 @@ class RecommendTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("searchRecommendRules0") {
+  test("searchRecommendRules") {
     val (client, echo) = testClient()
     val future = client.searchRecommendRules(
       indexName = "indexName",

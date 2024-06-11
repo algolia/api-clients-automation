@@ -17,7 +17,7 @@ class TestMonitoringClient < Test::Unit::TestCase
   end
 
   # allow del method for a custom path with minimal parameters
-  def test_custom_delete0
+  def test_custom_delete
     req = @client.custom_delete_with_http_info("test/minimal")
 
     assert_equal(:delete, req.method)
@@ -41,7 +41,7 @@ class TestMonitoringClient < Test::Unit::TestCase
   end
 
   # allow get method for a custom path with minimal parameters
-  def test_custom_get0
+  def test_custom_get
     req = @client.custom_get_with_http_info("test/minimal")
 
     assert_equal(:get, req.method)
@@ -98,7 +98,7 @@ class TestMonitoringClient < Test::Unit::TestCase
   end
 
   # allow post method for a custom path with minimal parameters
-  def test_custom_post0
+  def test_custom_post
     req = @client.custom_post_with_http_info("test/minimal")
 
     assert_equal(:post, req.method)
@@ -281,7 +281,7 @@ class TestMonitoringClient < Test::Unit::TestCase
   end
 
   # allow put method for a custom path with minimal parameters
-  def test_custom_put0
+  def test_custom_put
     req = @client.custom_put_with_http_info("test/minimal")
 
     assert_equal(:put, req.method)
@@ -307,7 +307,7 @@ class TestMonitoringClient < Test::Unit::TestCase
   end
 
   # getClusterIncidents
-  def test_get_cluster_incidents0
+  def test_get_cluster_incidents
     req = @client.get_cluster_incidents_with_http_info("c1-de")
 
     assert_equal(:get, req.method)
@@ -319,7 +319,7 @@ class TestMonitoringClient < Test::Unit::TestCase
   end
 
   # getClusterStatus
-  def test_get_cluster_status0
+  def test_get_cluster_status
     req = @client.get_cluster_status_with_http_info("c1-de")
 
     assert_equal(:get, req.method)
@@ -331,7 +331,7 @@ class TestMonitoringClient < Test::Unit::TestCase
   end
 
   # getIncidents
-  def test_get_incidents0
+  def test_get_incidents
     req = @client.get_incidents_with_http_info
 
     assert_equal(:get, req.method)
@@ -343,7 +343,7 @@ class TestMonitoringClient < Test::Unit::TestCase
   end
 
   # getIndexingTime
-  def test_get_indexing_time0
+  def test_get_indexing_time
     req = @client.get_indexing_time_with_http_info("c1-de")
 
     assert_equal(:get, req.method)
@@ -355,7 +355,7 @@ class TestMonitoringClient < Test::Unit::TestCase
   end
 
   # getLatency
-  def test_get_latency0
+  def test_get_latency
     req = @client.get_latency_with_http_info("c1-de")
 
     assert_equal(:get, req.method)
@@ -367,7 +367,7 @@ class TestMonitoringClient < Test::Unit::TestCase
   end
 
   # getMetrics
-  def test_get_metrics0
+  def test_get_metrics
     req = @client.get_metrics_with_http_info('avg_build_time', 'minute')
 
     assert_equal(:get, req.method)
@@ -379,7 +379,7 @@ class TestMonitoringClient < Test::Unit::TestCase
   end
 
   # getReachability
-  def test_get_reachability0
+  def test_get_reachability
     req = @client.get_reachability_with_http_info("c1-de")
 
     assert_equal(:get, req.method)
@@ -391,7 +391,7 @@ class TestMonitoringClient < Test::Unit::TestCase
   end
 
   # getInventory
-  def test_get_servers0
+  def test_get_servers
     req = @client.get_servers_with_http_info
 
     assert_equal(:get, req.method)
@@ -403,7 +403,7 @@ class TestMonitoringClient < Test::Unit::TestCase
   end
 
   # getStatus
-  def test_get_status0
+  def test_get_status
     req = @client.get_status_with_http_info
 
     assert_equal(:get, req.method)

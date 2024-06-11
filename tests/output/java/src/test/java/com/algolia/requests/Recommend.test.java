@@ -43,7 +43,7 @@ class RecommendClientRequestsTests {
 
   @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
-  void customDeleteTest0() {
+  void customDeleteTest() {
     assertDoesNotThrow(() -> {
       client.customDelete("test/minimal");
     });
@@ -79,7 +79,7 @@ class RecommendClientRequestsTests {
 
   @Test
   @DisplayName("allow get method for a custom path with minimal parameters")
-  void customGetTest0() {
+  void customGetTest() {
     assertDoesNotThrow(() -> {
       client.customGet("test/minimal");
     });
@@ -166,7 +166,7 @@ class RecommendClientRequestsTests {
 
   @Test
   @DisplayName("allow post method for a custom path with minimal parameters")
-  void customPostTest0() {
+  void customPostTest() {
     assertDoesNotThrow(() -> {
       client.customPost("test/minimal");
     });
@@ -512,7 +512,7 @@ class RecommendClientRequestsTests {
 
   @Test
   @DisplayName("allow put method for a custom path with minimal parameters")
-  void customPutTest0() {
+  void customPutTest() {
     assertDoesNotThrow(() -> {
       client.customPut("test/minimal");
     });
@@ -547,8 +547,8 @@ class RecommendClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteRecommendRule0")
-  void deleteRecommendRuleTest0() {
+  @DisplayName("deleteRecommendRule")
+  void deleteRecommendRuleTest() {
     assertDoesNotThrow(() -> {
       client.deleteRecommendRule("indexName", RecommendModels.fromValue("related-products"), "objectID");
     });
@@ -559,8 +559,8 @@ class RecommendClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getRecommendRule0")
-  void getRecommendRuleTest0() {
+  @DisplayName("getRecommendRule")
+  void getRecommendRuleTest() {
     assertDoesNotThrow(() -> {
       client.getRecommendRule("indexName", RecommendModels.fromValue("related-products"), "objectID");
     });
@@ -571,8 +571,8 @@ class RecommendClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getRecommendStatus0")
-  void getRecommendStatusTest0() {
+  @DisplayName("getRecommendStatus")
+  void getRecommendStatusTest() {
     assertDoesNotThrow(() -> {
       client.getRecommendStatus("indexName", RecommendModels.fromValue("related-products"), 12345L);
     });
@@ -584,7 +584,7 @@ class RecommendClientRequestsTests {
 
   @Test
   @DisplayName("get recommendations for recommend model with minimal parameters")
-  void getRecommendationsTest0() {
+  void getRecommendationsTest() {
     assertDoesNotThrow(() -> {
       client.getRecommendations(
         new GetRecommendationsParams()
@@ -826,8 +826,8 @@ class RecommendClientRequestsTests {
   }
 
   @Test
-  @DisplayName("searchRecommendRules0")
-  void searchRecommendRulesTest0() {
+  @DisplayName("searchRecommendRules")
+  void searchRecommendRulesTest() {
     assertDoesNotThrow(() -> {
       client.searchRecommendRules("indexName", RecommendModels.fromValue("related-products"));
     });

@@ -163,7 +163,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomGet(client.NewApiCustomGetRequest(
+            response, err := client.CustomGet(client.NewApiCustomGetRequest(
               "test/minimal",
             ))
 
@@ -175,7 +175,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -227,9 +227,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -253,19 +252,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.custom_get(
+            response = await _client.custom_get(
                 path="test/minimal",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -277,17 +276,17 @@ paths:
 
             # Call the API
 
-            resp = client.custom_get("test/minimal")
+            response = client.custom_get("test/minimal")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -299,14 +298,14 @@ paths:
 
             // Call the API
 
-            val res = client.customGet[JObject](
+            val response = client.customGet[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -318,7 +317,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customGet(path: "test/minimal")
+            let response = try await client.customGet(path: "test/minimal")
     post:
       operationId: customPost
       requestBody:
@@ -375,7 +374,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomPost(client.NewApiCustomPostRequest(
+            response, err := client.CustomPost(client.NewApiCustomPostRequest(
               "test/minimal",
             ))
 
@@ -387,7 +386,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -439,9 +438,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -465,19 +463,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.custom_post(
+            response = await _client.custom_post(
                 path="test/minimal",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -489,17 +487,17 @@ paths:
 
             # Call the API
 
-            resp = client.custom_post("test/minimal")
+            response = client.custom_post("test/minimal")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -511,14 +509,14 @@ paths:
 
             // Call the API
 
-            val res = client.customPost[JObject](
+            val response = client.customPost[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -530,7 +528,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPost(path: "test/minimal")
+            let response = try await client.customPost(path: "test/minimal")
     put:
       operationId: customPut
       requestBody:
@@ -587,7 +585,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomPut(client.NewApiCustomPutRequest(
+            response, err := client.CustomPut(client.NewApiCustomPutRequest(
               "test/minimal",
             ))
 
@@ -599,7 +597,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -651,9 +649,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -677,19 +674,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.custom_put(
+            response = await _client.custom_put(
                 path="test/minimal",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -701,17 +698,17 @@ paths:
 
             # Call the API
 
-            resp = client.custom_put("test/minimal")
+            response = client.custom_put("test/minimal")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -723,14 +720,14 @@ paths:
 
             // Call the API
 
-            val res = client.customPut[JObject](
+            val response = client.customPut[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -742,7 +739,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPut(path: "test/minimal")
+            let response = try await client.customPut(path: "test/minimal")
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -793,7 +790,8 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+            response, err :=
+            client.CustomDelete(client.NewApiCustomDeleteRequest(
               "test/minimal",
             ))
 
@@ -805,7 +803,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -863,9 +861,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -889,19 +886,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.custom_delete(
+            response = await _client.custom_delete(
                 path="test/minimal",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -913,17 +910,17 @@ paths:
 
             # Call the API
 
-            resp = client.custom_delete("test/minimal")
+            response = client.custom_delete("test/minimal")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -935,14 +932,14 @@ paths:
 
             // Call the API
 
-            val res = client.customDelete[JObject](
+            val response = client.customDelete[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -954,7 +951,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customDelete(path: "test/minimal")
+            let response = try await client.customDelete(path: "test/minimal")
   /2/abtests:
     post:
       tags:
@@ -1051,7 +1048,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.AddABTests(client.NewApiAddABTestsRequest(
+            response, err := client.AddABTests(client.NewApiAddABTestsRequest(
 
               abtesting.NewEmptyAddABTestsRequest().SetEndAt("2022-12-31T00:00:00.000Z").SetName("myABTest").SetVariants(
                 []abtesting.AddABTestsVariant{*abtesting.AbTestsVariantAsAddABTestsVariant(
@@ -1067,7 +1064,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1149,9 +1146,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -1186,7 +1182,7 @@ paths:
 
             # Call the API
 
-            resp = await _client.add_ab_tests(
+            response = await _client.add_ab_tests(
                 add_ab_tests_request={
                     "endAt": "2022-12-31T00:00:00.000Z",
                     "name": "myABTest",
@@ -1206,12 +1202,12 @@ paths:
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1223,7 +1219,7 @@ paths:
 
             # Call the API
 
-            resp = client.add_ab_tests(
+            response = client.add_ab_tests(
               AddABTestsRequest.new(
                 end_at: "2022-12-31T00:00:00.000Z",
                 name: "myABTest",
@@ -1235,12 +1231,12 @@ paths:
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1252,7 +1248,7 @@ paths:
 
             // Call the API
 
-            val res = client.addABTests(
+            val response = client.addABTests(
               addABTestsRequest = AddABTestsRequest(
                 endAt = "2022-12-31T00:00:00.000Z",
                 name = "myABTest",
@@ -1272,7 +1268,7 @@ paths:
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1284,7 +1280,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.addABTests(addABTestsRequest:
+            let response = try await client.addABTests(addABTestsRequest:
             AddABTestsRequest(
                 name: "myABTest",
                 variants: [
@@ -1387,7 +1383,8 @@ paths:
 
             // Call the API
 
-            resp, err := client.ListABTests(client.NewApiListABTestsRequest())
+            response, err :=
+            client.ListABTests(client.NewApiListABTestsRequest())
 
             if err != nil {
               // handle the eventual error
@@ -1397,7 +1394,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1447,9 +1444,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -1471,17 +1467,17 @@ paths:
 
             # Call the API
 
-            resp = await _client.list_ab_tests()
+            response = await _client.list_ab_tests()
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1493,17 +1489,17 @@ paths:
 
             # Call the API
 
-            resp = client.list_ab_tests
+            response = client.list_ab_tests
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1515,14 +1511,14 @@ paths:
 
             // Call the API
 
-            val res = client.listABTests(
+            val response = client.listABTests(
 
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1534,7 +1530,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.listABTests()
+            let response = try await client.listABTests()
   /2/abtests/{id}:
     get:
       tags:
@@ -1596,7 +1592,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.GetABTest(client.NewApiGetABTestRequest(
+            response, err := client.GetABTest(client.NewApiGetABTestRequest(
               42,
             ))
 
@@ -1608,7 +1604,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1660,9 +1656,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -1686,19 +1681,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.get_ab_test(
+            response = await _client.get_ab_test(
                 id=42,
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1710,17 +1705,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_ab_test(42)
+            response = client.get_ab_test(42)
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1732,14 +1727,14 @@ paths:
 
             // Call the API
 
-            val res = client.getABTest(
+            val response = client.getABTest(
               id = 42
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1751,7 +1746,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getABTest(id: 42)
+            let response = try await client.getABTest(id: 42)
     delete:
       tags:
         - abtest
@@ -1812,7 +1807,8 @@ paths:
 
             // Call the API
 
-            resp, err := client.DeleteABTest(client.NewApiDeleteABTestRequest(
+            response, err :=
+            client.DeleteABTest(client.NewApiDeleteABTestRequest(
               42,
             ))
 
@@ -1824,7 +1820,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1876,9 +1872,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -1902,19 +1897,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.delete_ab_test(
+            response = await _client.delete_ab_test(
                 id=42,
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1926,17 +1921,17 @@ paths:
 
             # Call the API
 
-            resp = client.delete_ab_test(42)
+            response = client.delete_ab_test(42)
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1948,14 +1943,14 @@ paths:
 
             // Call the API
 
-            val res = client.deleteABTest(
+            val response = client.deleteABTest(
               id = 42
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1967,7 +1962,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.deleteABTest(id: 42)
+            let response = try await client.deleteABTest(id: 42)
   /2/abtests/{id}/stop:
     post:
       tags:
@@ -2032,7 +2027,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.StopABTest(client.NewApiStopABTestRequest(
+            response, err := client.StopABTest(client.NewApiStopABTestRequest(
               42,
             ))
 
@@ -2044,7 +2039,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -2096,9 +2091,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\AbtestingClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = AbtestingClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -2122,19 +2116,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.stop_ab_test(
+            response = await _client.stop_ab_test(
                 id=42,
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2146,17 +2140,17 @@ paths:
 
             # Call the API
 
-            resp = client.stop_ab_test(42)
+            response = client.stop_ab_test(42)
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -2168,14 +2162,14 @@ paths:
 
             // Call the API
 
-            val res = client.stopABTest(
+            val response = client.stopABTest(
               id = 42
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2187,7 +2181,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.stopABTest(id: 42)
+            let response = try await client.stopABTest(id: 42)
 components:
   securitySchemes:
     appId:
@@ -2227,6 +2221,7 @@ components:
       in: query
       name: offset
       description: Position of the first item to return.
+      required: false
       schema:
         type: integer
         default: 0
@@ -2235,6 +2230,7 @@ components:
       in: query
       name: limit
       description: Number of items to return.
+      required: false
       schema:
         type: integer
         default: 10

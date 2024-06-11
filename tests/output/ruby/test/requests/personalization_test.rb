@@ -18,7 +18,7 @@ class TestPersonalizationClient < Test::Unit::TestCase
   end
 
   # allow del method for a custom path with minimal parameters
-  def test_custom_delete0
+  def test_custom_delete
     req = @client.custom_delete_with_http_info("test/minimal")
 
     assert_equal(:delete, req.method)
@@ -42,7 +42,7 @@ class TestPersonalizationClient < Test::Unit::TestCase
   end
 
   # allow get method for a custom path with minimal parameters
-  def test_custom_get0
+  def test_custom_get
     req = @client.custom_get_with_http_info("test/minimal")
 
     assert_equal(:get, req.method)
@@ -99,7 +99,7 @@ class TestPersonalizationClient < Test::Unit::TestCase
   end
 
   # allow post method for a custom path with minimal parameters
-  def test_custom_post0
+  def test_custom_post
     req = @client.custom_post_with_http_info("test/minimal")
 
     assert_equal(:post, req.method)
@@ -282,7 +282,7 @@ class TestPersonalizationClient < Test::Unit::TestCase
   end
 
   # allow put method for a custom path with minimal parameters
-  def test_custom_put0
+  def test_custom_put
     req = @client.custom_put_with_http_info("test/minimal")
 
     assert_equal(:put, req.method)
@@ -308,7 +308,7 @@ class TestPersonalizationClient < Test::Unit::TestCase
   end
 
   # delete deleteUserProfile
-  def test_delete_user_profile0
+  def test_delete_user_profile
     req = @client.delete_user_profile_with_http_info("UserToken")
 
     assert_equal(:delete, req.method)
@@ -320,7 +320,7 @@ class TestPersonalizationClient < Test::Unit::TestCase
   end
 
   # get getPersonalizationStrategy
-  def test_get_personalization_strategy0
+  def test_get_personalization_strategy
     req = @client.get_personalization_strategy_with_http_info
 
     assert_equal(:get, req.method)
@@ -332,7 +332,7 @@ class TestPersonalizationClient < Test::Unit::TestCase
   end
 
   # get getUserTokenProfile
-  def test_get_user_token_profile0
+  def test_get_user_token_profile
     req = @client.get_user_token_profile_with_http_info("UserToken")
 
     assert_equal(:get, req.method)
@@ -344,7 +344,7 @@ class TestPersonalizationClient < Test::Unit::TestCase
   end
 
   # set setPersonalizationStrategy
-  def test_set_personalization_strategy0
+  def test_set_personalization_strategy
     req = @client.set_personalization_strategy_with_http_info(
       PersonalizationStrategyParams.new(
         event_scoring: [EventScoring.new(

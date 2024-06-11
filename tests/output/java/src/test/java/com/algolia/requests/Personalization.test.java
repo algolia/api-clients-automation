@@ -43,7 +43,7 @@ class PersonalizationClientRequestsTests {
 
   @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
-  void customDeleteTest0() {
+  void customDeleteTest() {
     assertDoesNotThrow(() -> {
       client.customDelete("test/minimal");
     });
@@ -79,7 +79,7 @@ class PersonalizationClientRequestsTests {
 
   @Test
   @DisplayName("allow get method for a custom path with minimal parameters")
-  void customGetTest0() {
+  void customGetTest() {
     assertDoesNotThrow(() -> {
       client.customGet("test/minimal");
     });
@@ -166,7 +166,7 @@ class PersonalizationClientRequestsTests {
 
   @Test
   @DisplayName("allow post method for a custom path with minimal parameters")
-  void customPostTest0() {
+  void customPostTest() {
     assertDoesNotThrow(() -> {
       client.customPost("test/minimal");
     });
@@ -512,7 +512,7 @@ class PersonalizationClientRequestsTests {
 
   @Test
   @DisplayName("allow put method for a custom path with minimal parameters")
-  void customPutTest0() {
+  void customPutTest() {
     assertDoesNotThrow(() -> {
       client.customPut("test/minimal");
     });
@@ -548,7 +548,7 @@ class PersonalizationClientRequestsTests {
 
   @Test
   @DisplayName("delete deleteUserProfile")
-  void deleteUserProfileTest0() {
+  void deleteUserProfileTest() {
     assertDoesNotThrow(() -> {
       client.deleteUserProfile("UserToken");
     });
@@ -560,7 +560,7 @@ class PersonalizationClientRequestsTests {
 
   @Test
   @DisplayName("get getPersonalizationStrategy")
-  void getPersonalizationStrategyTest0() {
+  void getPersonalizationStrategyTest() {
     assertDoesNotThrow(() -> {
       client.getPersonalizationStrategy();
     });
@@ -572,7 +572,7 @@ class PersonalizationClientRequestsTests {
 
   @Test
   @DisplayName("get getUserTokenProfile")
-  void getUserTokenProfileTest0() {
+  void getUserTokenProfileTest() {
     assertDoesNotThrow(() -> {
       client.getUserTokenProfile("UserToken");
     });
@@ -584,7 +584,7 @@ class PersonalizationClientRequestsTests {
 
   @Test
   @DisplayName("set setPersonalizationStrategy")
-  void setPersonalizationStrategyTest0() {
+  void setPersonalizationStrategyTest() {
     assertDoesNotThrow(() -> {
       client.setPersonalizationStrategy(
         new PersonalizationStrategyParams()

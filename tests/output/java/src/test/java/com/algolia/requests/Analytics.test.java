@@ -51,7 +51,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
-  void customDeleteTest0() {
+  void customDeleteTest() {
     assertDoesNotThrow(() -> {
       client.customDelete("test/minimal");
     });
@@ -87,7 +87,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("allow get method for a custom path with minimal parameters")
-  void customGetTest0() {
+  void customGetTest() {
     assertDoesNotThrow(() -> {
       client.customGet("test/minimal");
     });
@@ -174,7 +174,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("allow post method for a custom path with minimal parameters")
-  void customPostTest0() {
+  void customPostTest() {
     assertDoesNotThrow(() -> {
       client.customPost("test/minimal");
     });
@@ -520,7 +520,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("allow put method for a custom path with minimal parameters")
-  void customPutTest0() {
+  void customPutTest() {
     assertDoesNotThrow(() -> {
       client.customPut("test/minimal");
     });
@@ -556,7 +556,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getAddToCartRate with minimal parameters")
-  void getAddToCartRateTest0() {
+  void getAddToCartRateTest() {
     assertDoesNotThrow(() -> {
       client.getAddToCartRate("index");
     });
@@ -607,7 +607,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getAverageClickPosition with minimal parameters")
-  void getAverageClickPositionTest0() {
+  void getAverageClickPositionTest() {
     assertDoesNotThrow(() -> {
       client.getAverageClickPosition("index");
     });
@@ -658,7 +658,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getClickPositions with minimal parameters")
-  void getClickPositionsTest0() {
+  void getClickPositionsTest() {
     assertDoesNotThrow(() -> {
       client.getClickPositions("index");
     });
@@ -709,7 +709,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getClickThroughRate with minimal parameters")
-  void getClickThroughRateTest0() {
+  void getClickThroughRateTest() {
     assertDoesNotThrow(() -> {
       client.getClickThroughRate("index");
     });
@@ -760,7 +760,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getConversationRate with minimal parameters")
-  void getConversionRateTest0() {
+  void getConversionRateTest() {
     assertDoesNotThrow(() -> {
       client.getConversionRate("index");
     });
@@ -811,7 +811,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getNoClickRate with minimal parameters")
-  void getNoClickRateTest0() {
+  void getNoClickRateTest() {
     assertDoesNotThrow(() -> {
       client.getNoClickRate("index");
     });
@@ -862,7 +862,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getNoResultsRate with minimal parameters")
-  void getNoResultsRateTest0() {
+  void getNoResultsRateTest() {
     assertDoesNotThrow(() -> {
       client.getNoResultsRate("index");
     });
@@ -913,7 +913,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getPurchaseRate with minimal parameters")
-  void getPurchaseRateTest0() {
+  void getPurchaseRateTest() {
     assertDoesNotThrow(() -> {
       client.getPurchaseRate("index");
     });
@@ -964,7 +964,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getRevenue with minimal parameters")
-  void getRevenueTest0() {
+  void getRevenueTest() {
     assertDoesNotThrow(() -> {
       client.getRevenue("index");
     });
@@ -1015,7 +1015,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getSearchesCount with minimal parameters")
-  void getSearchesCountTest0() {
+  void getSearchesCountTest() {
     assertDoesNotThrow(() -> {
       client.getSearchesCount("index");
     });
@@ -1066,7 +1066,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getSearchesNoClicks with minimal parameters")
-  void getSearchesNoClicksTest0() {
+  void getSearchesNoClicksTest() {
     assertDoesNotThrow(() -> {
       client.getSearchesNoClicks("index");
     });
@@ -1117,7 +1117,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getSearchesNoResults with minimal parameters")
-  void getSearchesNoResultsTest0() {
+  void getSearchesNoResultsTest() {
     assertDoesNotThrow(() -> {
       client.getSearchesNoResults("index");
     });
@@ -1168,7 +1168,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getStatus with minimal parameters")
-  void getStatusTest0() {
+  void getStatusTest() {
     assertDoesNotThrow(() -> {
       client.getStatus("index");
     });
@@ -1192,7 +1192,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getTopCountries with minimal parameters")
-  void getTopCountriesTest0() {
+  void getTopCountriesTest() {
     assertDoesNotThrow(() -> {
       client.getTopCountries("index");
     });
@@ -1243,7 +1243,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getTopFilterAttributes with minimal parameters")
-  void getTopFilterAttributesTest0() {
+  void getTopFilterAttributesTest() {
     assertDoesNotThrow(() -> {
       client.getTopFilterAttributes("index");
     });
@@ -1294,7 +1294,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getTopFilterForAttribute with minimal parameters")
-  void getTopFilterForAttributeTest0() {
+  void getTopFilterForAttributeTest() {
     assertDoesNotThrow(() -> {
       client.getTopFilterForAttribute("myAttribute", "index");
     });
@@ -1396,7 +1396,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getTopFiltersNoResults with minimal parameters")
-  void getTopFiltersNoResultsTest0() {
+  void getTopFiltersNoResultsTest() {
     assertDoesNotThrow(() -> {
       client.getTopFiltersNoResults("index");
     });
@@ -1447,7 +1447,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getTopHits with minimal parameters")
-  void getTopHitsTest0() {
+  void getTopHitsTest() {
     assertDoesNotThrow(() -> {
       client.getTopHits("index");
     });
@@ -1498,7 +1498,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getTopSearches with minimal parameters")
-  void getTopSearchesTest0() {
+  void getTopSearchesTest() {
     assertDoesNotThrow(() -> {
       client.getTopSearches("index");
     });
@@ -1592,7 +1592,7 @@ class AnalyticsClientRequestsTests {
 
   @Test
   @DisplayName("get getUsersCount with minimal parameters")
-  void getUsersCountTest0() {
+  void getUsersCountTest() {
     assertDoesNotThrow(() -> {
       client.getUsersCount("index");
     });

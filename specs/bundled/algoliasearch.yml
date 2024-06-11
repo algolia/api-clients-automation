@@ -420,6 +420,7 @@ components:
     ForwardToReplicas:
       in: query
       name: forwardToReplicas
+      required: false
       description: Whether changes are applied to replica indices.
       schema:
         type: boolean
@@ -474,6 +475,7 @@ components:
       description: |
         Requested page of the API response.
         If `null`, the API response is not paginated.
+      required: false
       schema:
         oneOf:
           - type: integer
@@ -484,6 +486,7 @@ components:
       in: query
       name: hitsPerPage
       description: Number of hits per page.
+      required: false
       schema:
         type: integer
         default: 100

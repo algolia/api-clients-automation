@@ -3,7 +3,9 @@ package algoliasearch.methods.snippets
 
 import scala.concurrent.duration.Duration
 
+// >IMPORT
 import algoliasearch.api.UsageClient
+// IMPORT<
 import algoliasearch.usage.*
 
 import org.json4s.*
@@ -19,17 +21,17 @@ class SnippetUsageClient {
     * allow del method for a custom path with minimal parameters
     */
   def snippetForUsageClientCustomDelete(): Unit = {
-    // >SEPARATOR customDelete
+    // >SEPARATOR customDelete default
     // Initialize the client
     val client = UsageClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.customDelete[JObject](
+    val response = client.customDelete[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -38,17 +40,17 @@ class SnippetUsageClient {
     * allow get method for a custom path with minimal parameters
     */
   def snippetForUsageClientCustomGet(): Unit = {
-    // >SEPARATOR customGet
+    // >SEPARATOR customGet default
     // Initialize the client
     val client = UsageClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.customGet[JObject](
+    val response = client.customGet[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -57,17 +59,17 @@ class SnippetUsageClient {
     * allow post method for a custom path with minimal parameters
     */
   def snippetForUsageClientCustomPost(): Unit = {
-    // >SEPARATOR customPost
+    // >SEPARATOR customPost default
     // Initialize the client
     val client = UsageClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.customPost[JObject](
+    val response = client.customPost[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -76,17 +78,17 @@ class SnippetUsageClient {
     * allow put method for a custom path with minimal parameters
     */
   def snippetForUsageClientCustomPut(): Unit = {
-    // >SEPARATOR customPut
+    // >SEPARATOR customPut default
     // Initialize the client
     val client = UsageClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.customPut[JObject](
+    val response = client.customPut[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -95,12 +97,12 @@ class SnippetUsageClient {
     * getIndexUsage with minimal parameters
     */
   def snippetForUsageClientGetIndexUsage(): Unit = {
-    // >SEPARATOR getIndexUsage
+    // >SEPARATOR getIndexUsage default
     // Initialize the client
     val client = UsageClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.getIndexUsage(
+    val response = client.getIndexUsage(
       statistic = Statistic.withName("queries_operations"),
       indexName = "myIndexName",
       startDate = "2024-04-03T12:46:43Z",
@@ -108,7 +110,7 @@ class SnippetUsageClient {
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -117,19 +119,19 @@ class SnippetUsageClient {
     * getUsage with minimal parameters
     */
   def snippetForUsageClientGetUsage(): Unit = {
-    // >SEPARATOR getUsage
+    // >SEPARATOR getUsage default
     // Initialize the client
     val client = UsageClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.getUsage(
+    val response = client.getUsage(
       statistic = Statistic.withName("queries_operations"),
       startDate = "2024-04-03T12:46:43Z",
       endDate = "2024-04-05T12:46:43Z"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 

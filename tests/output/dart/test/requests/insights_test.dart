@@ -553,7 +553,7 @@ void main() {
 
   // deleteUserToken
   test(
-    'deleteUserToken0',
+    'deleteUserToken',
     () => runTest(
       builder: (requester) => InsightsClient(
         appId: 'appId',
@@ -574,7 +574,7 @@ void main() {
 
   // pushEvents
   test(
-    'pushEvents0',
+    'pushEvents',
     () => runTest(
       builder: (requester) => InsightsClient(
         appId: 'appId',

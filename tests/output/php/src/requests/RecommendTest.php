@@ -40,7 +40,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
      * Test case for CustomDelete
      * allow del method for a custom path with minimal parameters.
      */
-    public function testCustomDelete0()
+    public function testCustomDelete()
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -83,7 +83,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
      * Test case for CustomGet
      * allow get method for a custom path with minimal parameters.
      */
-    public function testCustomGet0()
+    public function testCustomGet()
     {
         $client = $this->getClient();
         $client->customGet(
@@ -161,7 +161,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
      * Test case for CustomPost
      * allow post method for a custom path with minimal parameters.
      */
-    public function testCustomPost0()
+    public function testCustomPost()
     {
         $client = $this->getClient();
         $client->customPost(
@@ -508,7 +508,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
      * Test case for CustomPut
      * allow put method for a custom path with minimal parameters.
      */
-    public function testCustomPut0()
+    public function testCustomPut()
     {
         $client = $this->getClient();
         $client->customPut(
@@ -551,9 +551,9 @@ class RecommendTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for DeleteRecommendRule
-     * deleteRecommendRule0.
+     * deleteRecommendRule.
      */
-    public function testDeleteRecommendRule0()
+    public function testDeleteRecommendRule()
     {
         $client = $this->getClient();
         $client->deleteRecommendRule(
@@ -573,9 +573,9 @@ class RecommendTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetRecommendRule
-     * getRecommendRule0.
+     * getRecommendRule.
      */
-    public function testGetRecommendRule0()
+    public function testGetRecommendRule()
     {
         $client = $this->getClient();
         $client->getRecommendRule(
@@ -595,9 +595,9 @@ class RecommendTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for GetRecommendStatus
-     * getRecommendStatus0.
+     * getRecommendStatus.
      */
-    public function testGetRecommendStatus0()
+    public function testGetRecommendStatus()
     {
         $client = $this->getClient();
         $client->getRecommendStatus(
@@ -619,7 +619,7 @@ class RecommendTest extends TestCase implements HttpClientInterface
      * Test case for GetRecommendations
      * get recommendations for recommend model with minimal parameters.
      */
-    public function testGetRecommendations0()
+    public function testGetRecommendations()
     {
         $client = $this->getClient();
         $client->getRecommendations(
@@ -864,9 +864,9 @@ class RecommendTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for SearchRecommendRules
-     * searchRecommendRules0.
+     * searchRecommendRules.
      */
-    public function testSearchRecommendRules0()
+    public function testSearchRecommendRules()
     {
         $client = $this->getClient();
         $client->searchRecommendRules(

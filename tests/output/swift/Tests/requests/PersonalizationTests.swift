@@ -12,7 +12,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
     static let API_KEY = "my_api_key"
 
     /// allow del method for a custom path with minimal parameters
-    func testCustomDeleteTest0() async throws {
+    func testCustomDeleteTest() async throws {
         let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
@@ -65,7 +65,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
     }
 
     /// allow get method for a custom path with minimal parameters
-    func testCustomGetTest0() async throws {
+    func testCustomGetTest() async throws {
         let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
@@ -168,7 +168,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
     }
 
     /// allow post method for a custom path with minimal parameters
-    func testCustomPostTest0() async throws {
+    func testCustomPostTest() async throws {
         let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
@@ -655,7 +655,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
     }
 
     /// allow put method for a custom path with minimal parameters
-    func testCustomPutTest0() async throws {
+    func testCustomPutTest() async throws {
         let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
@@ -721,7 +721,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
     }
 
     /// delete deleteUserProfile
-    func testDeleteUserProfileTest0() async throws {
+    func testDeleteUserProfileTest() async throws {
         let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
@@ -743,7 +743,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
     }
 
     /// get getPersonalizationStrategy
-    func testGetPersonalizationStrategyTest0() async throws {
+    func testGetPersonalizationStrategyTest() async throws {
         let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
@@ -765,7 +765,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
     }
 
     /// get getUserTokenProfile
-    func testGetUserTokenProfileTest0() async throws {
+    func testGetUserTokenProfileTest() async throws {
         let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,
@@ -787,7 +787,7 @@ final class PersonalizationClientRequestsTests: XCTestCase {
     }
 
     /// set setPersonalizationStrategy
-    func testSetPersonalizationStrategyTest0() async throws {
+    func testSetPersonalizationStrategyTest() async throws {
         let configuration = try PersonalizationClientConfiguration(
             appID: PersonalizationClientRequestsTests.APPLICATION_ID,
             apiKey: PersonalizationClientRequestsTests.API_KEY,

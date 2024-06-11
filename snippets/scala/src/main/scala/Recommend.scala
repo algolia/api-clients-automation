@@ -3,7 +3,9 @@ package algoliasearch.methods.snippets
 
 import scala.concurrent.duration.Duration
 
+// >IMPORT
 import algoliasearch.api.RecommendClient
+// IMPORT<
 import algoliasearch.recommend.*
 
 import org.json4s.*
@@ -19,17 +21,17 @@ class SnippetRecommendClient {
     * allow del method for a custom path with minimal parameters
     */
   def snippetForRecommendClientCustomDelete(): Unit = {
-    // >SEPARATOR customDelete
+    // >SEPARATOR customDelete default
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.customDelete[JObject](
+    val response = client.customDelete[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -38,17 +40,17 @@ class SnippetRecommendClient {
     * allow get method for a custom path with minimal parameters
     */
   def snippetForRecommendClientCustomGet(): Unit = {
-    // >SEPARATOR customGet
+    // >SEPARATOR customGet default
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.customGet[JObject](
+    val response = client.customGet[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -57,17 +59,17 @@ class SnippetRecommendClient {
     * allow post method for a custom path with minimal parameters
     */
   def snippetForRecommendClientCustomPost(): Unit = {
-    // >SEPARATOR customPost
+    // >SEPARATOR customPost default
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.customPost[JObject](
+    val response = client.customPost[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -76,80 +78,80 @@ class SnippetRecommendClient {
     * allow put method for a custom path with minimal parameters
     */
   def snippetForRecommendClientCustomPut(): Unit = {
-    // >SEPARATOR customPut
+    // >SEPARATOR customPut default
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.customPut[JObject](
+    val response = client.customPut[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
   /** Snippet for the deleteRecommendRule method.
     *
-    * deleteRecommendRule0
+    * deleteRecommendRule
     */
   def snippetForRecommendClientDeleteRecommendRule(): Unit = {
-    // >SEPARATOR deleteRecommendRule
+    // >SEPARATOR deleteRecommendRule default
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.deleteRecommendRule(
+    val response = client.deleteRecommendRule(
       indexName = "indexName",
       model = RecommendModels.withName("related-products"),
       objectID = "objectID"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
   /** Snippet for the getRecommendRule method.
     *
-    * getRecommendRule0
+    * getRecommendRule
     */
   def snippetForRecommendClientGetRecommendRule(): Unit = {
-    // >SEPARATOR getRecommendRule
+    // >SEPARATOR getRecommendRule default
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.getRecommendRule(
+    val response = client.getRecommendRule(
       indexName = "indexName",
       model = RecommendModels.withName("related-products"),
       objectID = "objectID"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
   /** Snippet for the getRecommendStatus method.
     *
-    * getRecommendStatus0
+    * getRecommendStatus
     */
   def snippetForRecommendClientGetRecommendStatus(): Unit = {
-    // >SEPARATOR getRecommendStatus
+    // >SEPARATOR getRecommendStatus default
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.getRecommendStatus(
+    val response = client.getRecommendStatus(
       indexName = "indexName",
       model = RecommendModels.withName("related-products"),
       taskID = 12345L
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -158,12 +160,12 @@ class SnippetRecommendClient {
     * get recommendations for recommend model with minimal parameters
     */
   def snippetForRecommendClientGetRecommendations(): Unit = {
-    // >SEPARATOR getRecommendations
+    // >SEPARATOR getRecommendations default
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.getRecommendations(
+    val response = client.getRecommendations(
       getRecommendationsParams = GetRecommendationsParams(
         requests = Seq(
           RelatedQuery(
@@ -177,27 +179,27 @@ class SnippetRecommendClient {
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
   /** Snippet for the searchRecommendRules method.
     *
-    * searchRecommendRules0
+    * searchRecommendRules
     */
   def snippetForRecommendClientSearchRecommendRules(): Unit = {
-    // >SEPARATOR searchRecommendRules
+    // >SEPARATOR searchRecommendRules default
     // Initialize the client
     val client = RecommendClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
     // Call the API
-    val res = client.searchRecommendRules(
+    val response = client.searchRecommendRules(
       indexName = "indexName",
       model = RecommendModels.withName("related-products")
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 

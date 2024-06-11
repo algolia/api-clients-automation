@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 void main() {
   // addApiKey
   test(
-    'addApiKey0',
+    'addApiKey',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -36,7 +36,7 @@ void main() {
 
   // addOrUpdateObject
   test(
-    'addOrUpdateObject0',
+    'addOrUpdateObject',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -60,7 +60,7 @@ void main() {
 
   // appendSource
   test(
-    'appendSource0',
+    'appendSource',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -84,7 +84,7 @@ void main() {
 
   // assignUserId
   test(
-    'assignUserId0',
+    'assignUserId',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -133,7 +133,7 @@ void main() {
 
   // batch
   test(
-    'allows batch method with `addObject` action',
+    'addObject',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -141,30 +141,38 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.batch(
-        indexName: "theIndexName",
+        indexName: "<YOUR_INDEX_NAME>",
         batchWriteParams: BatchWriteParams(
           requests: [
             BatchRequest(
               action: Action.fromJson("addObject"),
               body: {
-                'key': "value",
+                'key': "bar",
+                'foo': "1",
+              },
+            ),
+            BatchRequest(
+              action: Action.fromJson("addObject"),
+              body: {
+                'key': "baz",
+                'foo': "2",
               },
             ),
           ],
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/indexes/theIndexName/batch');
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"requests":[{"action":"addObject","body":{"key":"value"}}]}""");
+            """{"requests":[{"action":"addObject","body":{"key":"bar","foo":"1"}},{"action":"addObject","body":{"key":"baz","foo":"2"}}]}""");
       },
     ),
   );
 
   // batch
   test(
-    'allows batch method with `clear` action',
+    'clear',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -172,7 +180,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.batch(
-        indexName: "theIndexName",
+        indexName: "<YOUR_INDEX_NAME>",
         batchWriteParams: BatchWriteParams(
           requests: [
             BatchRequest(
@@ -185,7 +193,7 @@ void main() {
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/indexes/theIndexName/batch');
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
         expect(request.method, 'post');
         expectBody(request.body,
             """{"requests":[{"action":"clear","body":{"key":"value"}}]}""");
@@ -195,7 +203,7 @@ void main() {
 
   // batch
   test(
-    'allows batch method with `delete` action',
+    'delete',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -203,7 +211,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.batch(
-        indexName: "theIndexName",
+        indexName: "<YOUR_INDEX_NAME>",
         batchWriteParams: BatchWriteParams(
           requests: [
             BatchRequest(
@@ -216,7 +224,7 @@ void main() {
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/indexes/theIndexName/batch');
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
         expect(request.method, 'post');
         expectBody(request.body,
             """{"requests":[{"action":"delete","body":{"key":"value"}}]}""");
@@ -226,7 +234,7 @@ void main() {
 
   // batch
   test(
-    'allows batch method with `deleteObject` action',
+    'deleteObject',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -234,7 +242,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.batch(
-        indexName: "theIndexName",
+        indexName: "<YOUR_INDEX_NAME>",
         batchWriteParams: BatchWriteParams(
           requests: [
             BatchRequest(
@@ -247,7 +255,7 @@ void main() {
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/indexes/theIndexName/batch');
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
         expect(request.method, 'post');
         expectBody(request.body,
             """{"requests":[{"action":"deleteObject","body":{"key":"value"}}]}""");
@@ -257,7 +265,7 @@ void main() {
 
   // batch
   test(
-    'allows batch method with `partialUpdateObject` action',
+    'partialUpdateObject',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -265,7 +273,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.batch(
-        indexName: "theIndexName",
+        indexName: "<YOUR_INDEX_NAME>",
         batchWriteParams: BatchWriteParams(
           requests: [
             BatchRequest(
@@ -278,7 +286,7 @@ void main() {
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/indexes/theIndexName/batch');
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
         expect(request.method, 'post');
         expectBody(request.body,
             """{"requests":[{"action":"partialUpdateObject","body":{"key":"value"}}]}""");
@@ -288,7 +296,7 @@ void main() {
 
   // batch
   test(
-    'allows batch method with `partialUpdateObjectNoCreate` action',
+    'partialUpdateObjectNoCreate',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -296,7 +304,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.batch(
-        indexName: "theIndexName",
+        indexName: "<YOUR_INDEX_NAME>",
         batchWriteParams: BatchWriteParams(
           requests: [
             BatchRequest(
@@ -309,7 +317,7 @@ void main() {
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/indexes/theIndexName/batch');
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
         expect(request.method, 'post');
         expectBody(request.body,
             """{"requests":[{"action":"partialUpdateObjectNoCreate","body":{"key":"value"}}]}""");
@@ -319,7 +327,7 @@ void main() {
 
   // batch
   test(
-    'allows batch method with `updateObject` action',
+    'updateObject',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -327,7 +335,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.batch(
-        indexName: "theIndexName",
+        indexName: "<YOUR_INDEX_NAME>",
         batchWriteParams: BatchWriteParams(
           requests: [
             BatchRequest(
@@ -340,7 +348,7 @@ void main() {
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/indexes/theIndexName/batch');
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
         expect(request.method, 'post');
         expectBody(request.body,
             """{"requests":[{"action":"updateObject","body":{"key":"value"}}]}""");
@@ -350,7 +358,7 @@ void main() {
 
   // batchAssignUserIds
   test(
-    'batchAssignUserIds0',
+    'batchAssignUserIds',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -379,7 +387,7 @@ void main() {
 
   // batchDictionaryEntries
   test(
-    'get batchDictionaryEntries results with minimal parameters',
+    'replace',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -387,48 +395,9 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.batchDictionaryEntries(
-        dictionaryName: DictionaryType.fromJson("compounds"),
+        dictionaryName: DictionaryType.fromJson("plurals"),
         batchDictionaryEntriesParams: BatchDictionaryEntriesParams(
-          requests: [
-            BatchDictionaryEntriesRequest(
-              action: DictionaryAction.fromJson("addEntry"),
-              body: DictionaryEntry(
-                objectID: "1",
-                language: SupportedLanguage.fromJson("en"),
-              ),
-            ),
-            BatchDictionaryEntriesRequest(
-              action: DictionaryAction.fromJson("deleteEntry"),
-              body: DictionaryEntry(
-                objectID: "2",
-                language: SupportedLanguage.fromJson("fr"),
-              ),
-            ),
-          ],
-        ),
-      ),
-      intercept: (request) {
-        expectPath(request.path, '/1/dictionaries/compounds/batch');
-        expect(request.method, 'post');
-        expectBody(request.body,
-            """{"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr"}}]}""");
-      },
-    ),
-  );
-
-  // batchDictionaryEntries
-  test(
-    'get batchDictionaryEntries results with all parameters',
-    () => runTest(
-      builder: (requester) => SearchClient(
-        appId: 'appId',
-        apiKey: 'apiKey',
-        options: ClientOptions(requester: requester),
-      ),
-      call: (client) => client.batchDictionaryEntries(
-        dictionaryName: DictionaryType.fromJson("compounds"),
-        batchDictionaryEntriesParams: BatchDictionaryEntriesParams(
-          clearExistingDictionaryEntries: false,
+          clearExistingDictionaryEntries: true,
           requests: [
             BatchDictionaryEntriesRequest(
               action: DictionaryAction.fromJson("addEntry"),
@@ -447,18 +416,44 @@ void main() {
                 state: DictionaryEntryState.fromJson("enabled"),
               ),
             ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/dictionaries/plurals/batch');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"clearExistingDictionaryEntries":true,"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}}]}""");
+      },
+    ),
+  );
+
+  // batchDictionaryEntries
+  test(
+    'delete',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.batchDictionaryEntries(
+        dictionaryName: DictionaryType.fromJson("plurals"),
+        batchDictionaryEntriesParams: BatchDictionaryEntriesParams(
+          clearExistingDictionaryEntries: true,
+          requests: [
             BatchDictionaryEntriesRequest(
               action: DictionaryAction.fromJson("deleteEntry"),
               body: DictionaryEntry(
-                objectID: "2",
-                language: SupportedLanguage.fromJson("fr"),
-                word: "humility",
+                objectID: "1",
+                language: SupportedLanguage.fromJson("en"),
+                word: "fancy",
                 words: [
-                  "candor",
+                  "believe",
                   "algolia",
                 ],
                 decomposition: [
-                  "grit",
+                  "trust",
                   "algolia",
                 ],
                 state: DictionaryEntryState.fromJson("enabled"),
@@ -468,17 +463,17 @@ void main() {
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/dictionaries/compounds/batch');
+        expectPath(request.path, '/1/dictionaries/plurals/batch');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"clearExistingDictionaryEntries":false,"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr","word":"humility","words":["candor","algolia"],"decomposition":["grit","algolia"],"state":"enabled"}}]}""");
+            """{"clearExistingDictionaryEntries":true,"requests":[{"action":"deleteEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}}]}""");
       },
     ),
   );
 
   // batchDictionaryEntries
   test(
-    'get batchDictionaryEntries results additional properties',
+    'append',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -486,7 +481,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.batchDictionaryEntries(
-        dictionaryName: DictionaryType.fromJson("compounds"),
+        dictionaryName: DictionaryType.fromJson("stopwords"),
         batchDictionaryEntriesParams: BatchDictionaryEntriesParams(
           requests: [
             BatchDictionaryEntriesRequest(
@@ -501,7 +496,7 @@ void main() {
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/dictionaries/compounds/batch');
+        expectPath(request.path, '/1/dictionaries/stopwords/batch');
         expect(request.method, 'post');
         expectBody(request.body,
             """{"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","additional":"try me"}}]}""");
@@ -581,7 +576,7 @@ void main() {
 
   // clearObjects
   test(
-    'clearObjects0',
+    'clearObjects',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -601,7 +596,7 @@ void main() {
 
   // clearRules
   test(
-    'clearRules0',
+    'clearRules',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -621,7 +616,7 @@ void main() {
 
   // clearSynonyms
   test(
-    'clearSynonyms0',
+    'clearSynonyms',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1170,7 +1165,7 @@ void main() {
 
   // deleteApiKey
   test(
-    'deleteApiKey0',
+    'deleteApiKey',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1190,7 +1185,7 @@ void main() {
 
   // deleteBy
   test(
-    'deleteBy0',
+    'deleteBy',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1213,7 +1208,7 @@ void main() {
 
   // deleteIndex
   test(
-    'deleteIndex0',
+    'deleteIndex',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1233,7 +1228,7 @@ void main() {
 
   // deleteObject
   test(
-    'deleteObject0',
+    'deleteObject',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1241,11 +1236,11 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.deleteObject(
-        indexName: "theIndexName",
+        indexName: "<YOUR_INDEX_NAME>",
         objectID: "uniqueID",
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/indexes/theIndexName/uniqueID');
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/uniqueID');
         expect(request.method, 'delete');
         expect(request.body, null);
       },
@@ -1297,7 +1292,7 @@ void main() {
 
   // deleteSource
   test(
-    'deleteSource0',
+    'deleteSource',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1317,7 +1312,7 @@ void main() {
 
   // deleteSynonym
   test(
-    'deleteSynonym0',
+    'deleteSynonym',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1338,7 +1333,7 @@ void main() {
 
   // getApiKey
   test(
-    'getApiKey0',
+    'getApiKey',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1437,7 +1432,7 @@ void main() {
 
   // getObject
   test(
-    'getObject0',
+    'getObject',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1464,7 +1459,7 @@ void main() {
 
   // getObjects
   test(
-    'getObjects0',
+    'getObjects',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1496,7 +1491,7 @@ void main() {
 
   // getRule
   test(
-    'getRule0',
+    'getRule',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1517,7 +1512,7 @@ void main() {
 
   // getSettings
   test(
-    'getSettings0',
+    'getSettings',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1537,7 +1532,7 @@ void main() {
 
   // getSources
   test(
-    'getSources0',
+    'getSources',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1555,7 +1550,7 @@ void main() {
 
   // getSynonym
   test(
-    'getSynonym0',
+    'getSynonym',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1576,7 +1571,7 @@ void main() {
 
   // getTask
   test(
-    'getTask0',
+    'getTask',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1597,7 +1592,7 @@ void main() {
 
   // getTopUserIds
   test(
-    'getTopUserIds0',
+    'getTopUserIds',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1615,7 +1610,7 @@ void main() {
 
   // getUserId
   test(
-    'getUserId0',
+    'getUserId',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1674,7 +1669,7 @@ void main() {
 
   // listApiKeys
   test(
-    'listApiKeys0',
+    'listApiKeys',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1692,7 +1687,7 @@ void main() {
 
   // listClusters
   test(
-    'listClusters0',
+    'listClusters',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1792,7 +1787,7 @@ void main() {
 
   // multipleBatch
   test(
-    'multipleBatch0',
+    'multipleBatch',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1823,7 +1818,7 @@ void main() {
 
   // operationIndex
   test(
-    'operationIndex0',
+    'scopes',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1831,10 +1826,10 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.operationIndex(
-        indexName: "theIndexName",
+        indexName: "<SOURCE_INDEX_NAME>",
         operationIndexParams: OperationIndexParams(
-          operation: OperationType.fromJson("copy"),
-          destination: "dest",
+          operation: OperationType.fromJson("move"),
+          destination: "<DESTINATION_INDEX_NAME>",
           scope: [
             ScopeType.fromJson("rules"),
             ScopeType.fromJson("settings"),
@@ -1842,17 +1837,70 @@ void main() {
         ),
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/indexes/theIndexName/operation');
+        expectPath(
+            request.path, '/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation');
         expect(request.method, 'post');
         expectBody(request.body,
-            """{"operation":"copy","destination":"dest","scope":["rules","settings"]}""");
+            """{"operation":"move","destination":"<DESTINATION_INDEX_NAME>","scope":["rules","settings"]}""");
+      },
+    ),
+  );
+
+  // operationIndex
+  test(
+    'copy',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.operationIndex(
+        indexName: "<SOURCE_INDEX_NAME>",
+        operationIndexParams: OperationIndexParams(
+          operation: OperationType.fromJson("copy"),
+          destination: "<DESTINATION_INDEX_NAME>",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(
+            request.path, '/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"operation":"copy","destination":"<DESTINATION_INDEX_NAME>"}""");
+      },
+    ),
+  );
+
+  // operationIndex
+  test(
+    'move',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.operationIndex(
+        indexName: "<SOURCE_INDEX_NAME>",
+        operationIndexParams: OperationIndexParams(
+          operation: OperationType.fromJson("move"),
+          destination: "<DESTINATION_INDEX_NAME>",
+        ),
+      ),
+      intercept: (request) {
+        expectPath(
+            request.path, '/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"operation":"move","destination":"<DESTINATION_INDEX_NAME>"}""");
       },
     ),
   );
 
   // partialUpdateObject
   test(
-    'partialUpdateObject0',
+    'partialUpdateObject',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1884,7 +1932,7 @@ void main() {
 
   // removeUserId
   test(
-    'removeUserId0',
+    'removeUserId',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1904,7 +1952,7 @@ void main() {
 
   // replaceSources
   test(
-    'replaceSources0',
+    'replaceSources',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1930,7 +1978,7 @@ void main() {
 
   // restoreApiKey
   test(
-    'restoreApiKey0',
+    'restoreApiKey',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1950,7 +1998,7 @@ void main() {
 
   // saveObject
   test(
-    'saveObject0',
+    'saveObject',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -1958,14 +2006,14 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.saveObject(
-        indexName: "theIndexName",
+        indexName: "<YOUR_INDEX_NAME>",
         body: {
           'objectID': "id",
           'test': "val",
         },
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/indexes/theIndexName');
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E');
         expect(request.method, 'post');
         expectBody(request.body, """{"objectID":"id","test":"val"}""");
       },
@@ -2101,7 +2149,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.saveRules(
-        indexName: "indexName",
+        indexName: "<YOUR_INDEX_NAME>",
         rules: [
           Rule(
             objectID: "a-rule-id",
@@ -2122,10 +2170,15 @@ void main() {
             ],
           ),
         ],
+        forwardToReplicas: false,
+        clearExistingRules: true,
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/indexes/indexName/rules/batch');
+        expectPath(
+            request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch');
         expect(request.method, 'post');
+        expectParams(request.queryParameters,
+            """{"forwardToReplicas":"false","clearExistingRules":"true"}""");
         expectBody(request.body,
             """[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}]},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}]}]""");
       },
@@ -2142,7 +2195,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.saveRules(
-        indexName: "indexName",
+        indexName: "<YOUR_INDEX_NAME>",
         rules: [
           Rule(
             objectID: "id1",
@@ -2212,7 +2265,8 @@ void main() {
         clearExistingRules: true,
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/indexes/indexName/rules/batch');
+        expectPath(
+            request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch');
         expect(request.method, 'post');
         expectParams(request.queryParameters,
             """{"forwardToReplicas":"true","clearExistingRules":"true"}""");
@@ -2224,7 +2278,7 @@ void main() {
 
   // saveSynonym
   test(
-    'saveSynonym0',
+    'saveSynonym',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -2258,7 +2312,7 @@ void main() {
 
   // saveSynonyms
   test(
-    'saveSynonyms0',
+    'saveSynonyms',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -2266,7 +2320,7 @@ void main() {
         options: ClientOptions(requester: requester),
       ),
       call: (client) => client.saveSynonyms(
-        indexName: "indexName",
+        indexName: "<YOUR_INDEX_NAME>",
         synonymHit: [
           SynonymHit(
             objectID: "id1",
@@ -2289,15 +2343,132 @@ void main() {
           ),
         ],
         forwardToReplicas: true,
-        replaceExistingSynonyms: false,
+        replaceExistingSynonyms: true,
       ),
       intercept: (request) {
-        expectPath(request.path, '/1/indexes/indexName/synonyms/batch');
+        expectPath(
+            request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/synonyms/batch');
         expect(request.method, 'post');
         expectParams(request.queryParameters,
-            """{"forwardToReplicas":"true","replaceExistingSynonyms":"false"}""");
+            """{"forwardToReplicas":"true","replaceExistingSynonyms":"true"}""");
         expectBody(request.body,
             """[{"objectID":"id1","type":"synonym","synonyms":["car","vehicule","auto"]},{"objectID":"id2","type":"onewaysynonym","input":"iphone","synonyms":["ephone","aphone","yphone"]}]""");
+      },
+    ),
+  );
+
+  // search
+  test(
+    'withHitsPerPage',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        searchMethodParams: SearchMethodParams(
+          requests: [
+            SearchForHits(
+              indexName: "<YOUR_INDEX_NAME>",
+              query: "<YOUR_QUERY>",
+              hitsPerPage: 50,
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/queries');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","hitsPerPage":50}]}""");
+      },
+    ),
+  );
+
+  // search
+  test(
+    'filterOnly',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        searchMethodParams: SearchMethodParams(
+          requests: [
+            SearchForHits(
+              indexName: "<YOUR_INDEX_NAME>",
+              query: "<YOUR_QUERY>",
+              filters: "actor:Scarlett Johansson",
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/queries');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"actor:Scarlett Johansson"}]}""");
+      },
+    ),
+  );
+
+  // search
+  test(
+    'filterOr',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        searchMethodParams: SearchMethodParams(
+          requests: [
+            SearchForHits(
+              indexName: "<YOUR_INDEX_NAME>",
+              query: "<YOUR_QUERY>",
+              filters: "actor:Tom Cruise OR actor:Scarlett Johansson",
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/queries');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"actor:Tom Cruise OR actor:Scarlett Johansson"}]}""");
+      },
+    ),
+  );
+
+  // search
+  test(
+    'filterNot',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        searchMethodParams: SearchMethodParams(
+          requests: [
+            SearchForHits(
+              indexName: "<YOUR_INDEX_NAME>",
+              query: "<YOUR_QUERY>",
+              filters: "NOT actor:Nicolas Cage",
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/queries');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"NOT actor:Nicolas Cage"}]}""");
       },
     ),
   );
@@ -2325,6 +2496,69 @@ void main() {
         expect(request.method, 'post');
         expectBody(request.body,
             """{"requests":[{"indexName":"cts_e2e_search_empty_index"}]}""");
+      },
+    ),
+  );
+
+  // search
+  test(
+    'retrieveFacets',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        searchMethodParams: SearchMethodParams(
+          requests: [
+            SearchForHits(
+              indexName: "<YOUR_INDEX_NAME>",
+              query: "<YOUR_QUERY>",
+              facets: [
+                "author",
+                "genre",
+              ],
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/queries');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["author","genre"]}]}""");
+      },
+    ),
+  );
+
+  // search
+  test(
+    'retrieveFacetsWildcard',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.search(
+        searchMethodParams: SearchMethodParams(
+          requests: [
+            SearchForHits(
+              indexName: "<YOUR_INDEX_NAME>",
+              query: "<YOUR_QUERY>",
+              facets: [
+                "*",
+              ],
+            ),
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/*/queries');
+        expect(request.method, 'post');
+        expectBody(request.body,
+            """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["*"]}]}""");
       },
     ),
   );
@@ -2916,7 +3150,7 @@ void main() {
 
   // searchRules
   test(
-    'searchRules0',
+    'searchRules',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -3083,7 +3317,7 @@ void main() {
 
   // searchUserIds
   test(
-    'searchUserIds0',
+    'searchUserIds',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',
@@ -3167,6 +3401,34 @@ void main() {
         expect(request.method, 'put');
         expectBody(request.body,
             """{"disableStandardEntries":{"plurals":{"fr":false,"en":false,"ru":true},"stopwords":{"fr":false},"compounds":{"ru":true}}}""");
+      },
+    ),
+  );
+
+  // setSettings
+  test(
+    'setSettingsAttributesForFaceting',
+    () => runTest(
+      builder: (requester) => SearchClient(
+        appId: 'appId',
+        apiKey: 'apiKey',
+        options: ClientOptions(requester: requester),
+      ),
+      call: (client) => client.setSettings(
+        indexName: "<YOUR_INDEX_NAME>",
+        indexSettings: IndexSettings(
+          attributesForFaceting: [
+            "actor",
+            "filterOnly(category)",
+            "searchable(publisher)",
+          ],
+        ),
+      ),
+      intercept: (request) {
+        expectPath(request.path, '/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+        expect(request.method, 'put');
+        expectBody(request.body,
+            """{"attributesForFaceting":["actor","filterOnly(category)","searchable(publisher)"]}""");
       },
     ),
   );
@@ -3568,7 +3830,7 @@ void main() {
 
   // updateApiKey
   test(
-    'updateApiKey0',
+    'updateApiKey',
     () => runTest(
       builder: (requester) => SearchClient(
         appId: 'appId',

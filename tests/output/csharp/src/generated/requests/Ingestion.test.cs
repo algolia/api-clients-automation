@@ -49,7 +49,7 @@ public class IngestionClientRequestTests
   public void Dispose() { }
 
   [Fact(DisplayName = "createAuthenticationOAuth")]
-  public async Task CreateAuthenticationTest0()
+  public async Task CreateAuthenticationTest()
   {
     await _client.CreateAuthenticationAsync(
       new AuthenticationCreate
@@ -100,7 +100,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "createDestination")]
-  public async Task CreateDestinationTest0()
+  public async Task CreateDestinationTest()
   {
     await _client.CreateDestinationAsync(
       new DestinationCreate
@@ -123,7 +123,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "createSource")]
-  public async Task CreateSourceTest0()
+  public async Task CreateSourceTest()
   {
     await _client.CreateSourceAsync(
       new SourceCreate
@@ -154,7 +154,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "createTaskOnDemand")]
-  public async Task CreateTaskTest0()
+  public async Task CreateTaskTest()
   {
     await _client.CreateTaskAsync(
       new TaskCreate
@@ -233,7 +233,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
-  public async Task CustomDeleteTest0()
+  public async Task CustomDeleteTest()
   {
     await _client.CustomDeleteAsync("test/minimal");
 
@@ -271,7 +271,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "allow get method for a custom path with minimal parameters")]
-  public async Task CustomGetTest0()
+  public async Task CustomGetTest()
   {
     await _client.CustomGetAsync("test/minimal");
 
@@ -351,7 +351,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "allow post method for a custom path with minimal parameters")]
-  public async Task CustomPostTest0()
+  public async Task CustomPostTest()
   {
     await _client.CustomPostAsync("test/minimal");
 
@@ -681,7 +681,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "allow put method for a custom path with minimal parameters")]
-  public async Task CustomPutTest0()
+  public async Task CustomPutTest()
   {
     await _client.CustomPutAsync("test/minimal");
 
@@ -724,7 +724,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "deleteAuthentication")]
-  public async Task DeleteAuthenticationTest0()
+  public async Task DeleteAuthenticationTest()
   {
     await _client.DeleteAuthenticationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
@@ -735,7 +735,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "deleteDestination")]
-  public async Task DeleteDestinationTest0()
+  public async Task DeleteDestinationTest()
   {
     await _client.DeleteDestinationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
@@ -746,7 +746,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "deleteSource")]
-  public async Task DeleteSourceTest0()
+  public async Task DeleteSourceTest()
   {
     await _client.DeleteSourceAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
@@ -757,7 +757,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "deleteTask")]
-  public async Task DeleteTaskTest0()
+  public async Task DeleteTaskTest()
   {
     await _client.DeleteTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
@@ -768,7 +768,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "disableTask")]
-  public async Task DisableTaskTest0()
+  public async Task DisableTaskTest()
   {
     await _client.DisableTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
@@ -779,7 +779,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "enable task e2e")]
-  public async Task EnableTaskTest0()
+  public async Task EnableTaskTest()
   {
     await _client.EnableTaskAsync("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
 
@@ -808,7 +808,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "getAuthentication")]
-  public async Task GetAuthenticationTest0()
+  public async Task GetAuthenticationTest()
   {
     await _client.GetAuthenticationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
@@ -819,7 +819,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "getAuthentications")]
-  public async Task GetAuthenticationsTest0()
+  public async Task GetAuthenticationsTest()
   {
     await _client.GetAuthenticationsAsync();
 
@@ -894,7 +894,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "getDestination")]
-  public async Task GetDestinationTest0()
+  public async Task GetDestinationTest()
   {
     await _client.GetDestinationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
@@ -905,7 +905,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "getDestinations")]
-  public async Task GetDestinationsTest0()
+  public async Task GetDestinationsTest()
   {
     await _client.GetDestinationsAsync();
 
@@ -916,7 +916,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "getDockerSourceStreams")]
-  public async Task GetDockerSourceStreamsTest0()
+  public async Task GetDockerSourceStreamsTest()
   {
     await _client.GetDockerSourceStreamsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
@@ -927,7 +927,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "getEvent")]
-  public async Task GetEventTest0()
+  public async Task GetEventTest()
   {
     await _client.GetEventAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -944,7 +944,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "getEvents")]
-  public async Task GetEventsTest0()
+  public async Task GetEventsTest()
   {
     await _client.GetEventsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
@@ -955,7 +955,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "getRun")]
-  public async Task GetRunTest0()
+  public async Task GetRunTest()
   {
     await _client.GetRunAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
@@ -966,7 +966,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "getRuns")]
-  public async Task GetRunsTest0()
+  public async Task GetRunsTest()
   {
     await _client.GetRunsAsync();
 
@@ -977,7 +977,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "getSource")]
-  public async Task GetSourceTest0()
+  public async Task GetSourceTest()
   {
     await _client.GetSourceAsync("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
 
@@ -1006,7 +1006,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "getSources")]
-  public async Task GetSourcesTest0()
+  public async Task GetSourcesTest()
   {
     await _client.GetSourcesAsync();
 
@@ -1017,7 +1017,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "getTask")]
-  public async Task GetTaskTest0()
+  public async Task GetTaskTest()
   {
     await _client.GetTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
@@ -1028,7 +1028,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "getTasks")]
-  public async Task GetTasksTest0()
+  public async Task GetTasksTest()
   {
     await _client.GetTasksAsync();
 
@@ -1039,7 +1039,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "runTask")]
-  public async Task RunTaskTest0()
+  public async Task RunTaskTest()
   {
     await _client.RunTaskAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
@@ -1050,7 +1050,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "searchAuthentications")]
-  public async Task SearchAuthenticationsTest0()
+  public async Task SearchAuthenticationsTest()
   {
     await _client.SearchAuthenticationsAsync(
       new AuthenticationSearch
@@ -1074,7 +1074,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "searchDestinations")]
-  public async Task SearchDestinationsTest0()
+  public async Task SearchDestinationsTest()
   {
     await _client.SearchDestinationsAsync(
       new DestinationSearch
@@ -1098,7 +1098,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "searchSources")]
-  public async Task SearchSourcesTest0()
+  public async Task SearchSourcesTest()
   {
     await _client.SearchSourcesAsync(
       new SourceSearch
@@ -1122,7 +1122,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "searchTasks")]
-  public async Task SearchTasksTest0()
+  public async Task SearchTasksTest()
   {
     await _client.SearchTasksAsync(
       new TaskSearch
@@ -1175,7 +1175,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "triggerDockerSourceDiscover")]
-  public async Task TriggerDockerSourceDiscoverTest0()
+  public async Task TriggerDockerSourceDiscoverTest()
   {
     await _client.TriggerDockerSourceDiscoverAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
 
@@ -1186,7 +1186,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "updateAuthentication")]
-  public async Task UpdateAuthenticationTest0()
+  public async Task UpdateAuthenticationTest()
   {
     await _client.UpdateAuthenticationAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -1200,7 +1200,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "updateDestination")]
-  public async Task UpdateDestinationTest0()
+  public async Task UpdateDestinationTest()
   {
     await _client.UpdateDestinationAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -1214,7 +1214,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "updateSource")]
-  public async Task UpdateSourceTest0()
+  public async Task UpdateSourceTest()
   {
     await _client.UpdateSourceAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
@@ -1228,7 +1228,7 @@ public class IngestionClientRequestTests
   }
 
   [Fact(DisplayName = "updateTask")]
-  public async Task UpdateTaskTest0()
+  public async Task UpdateTaskTest()
   {
     await _client.UpdateTaskAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",

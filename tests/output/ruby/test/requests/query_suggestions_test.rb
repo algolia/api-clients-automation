@@ -23,8 +23,8 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
     )
   end
 
-  # createConfig0
-  def test_create_config0
+  # createConfig
+  def test_create_config
     req = @client.create_config_with_http_info(
       QuerySuggestionsConfigurationWithIndex.new(
         index_name: "theIndexName",
@@ -48,7 +48,7 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
   end
 
   # allow del method for a custom path with minimal parameters
-  def test_custom_delete0
+  def test_custom_delete
     req = @client.custom_delete_with_http_info("test/minimal")
 
     assert_equal(:delete, req.method)
@@ -72,7 +72,7 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
   end
 
   # allow get method for a custom path with minimal parameters
-  def test_custom_get0
+  def test_custom_get
     req = @client.custom_get_with_http_info("test/minimal")
 
     assert_equal(:get, req.method)
@@ -129,7 +129,7 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
   end
 
   # allow post method for a custom path with minimal parameters
-  def test_custom_post0
+  def test_custom_post
     req = @client.custom_post_with_http_info("test/minimal")
 
     assert_equal(:post, req.method)
@@ -312,7 +312,7 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
   end
 
   # allow put method for a custom path with minimal parameters
-  def test_custom_put0
+  def test_custom_put
     req = @client.custom_put_with_http_info("test/minimal")
 
     assert_equal(:put, req.method)
@@ -337,8 +337,8 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
     assert_equal(JSON.parse('{"body":"parameters"}'), JSON.parse(req.body))
   end
 
-  # deleteConfig0
-  def test_delete_config0
+  # deleteConfig
+  def test_delete_config
     req = @client.delete_config_with_http_info("theIndexName")
 
     assert_equal(:delete, req.method)
@@ -349,8 +349,8 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # getAllConfigs0
-  def test_get_all_configs0
+  # getAllConfigs
+  def test_get_all_configs
     req = @client.get_all_configs_with_http_info
 
     assert_equal(:get, req.method)
@@ -362,7 +362,7 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
   end
 
   # Retrieve QS config e2e
-  def test_get_config0
+  def test_get_config
     req = @client.get_config_with_http_info("cts_e2e_browse_query_suggestions")
 
     assert_equal(:get, req.method)
@@ -380,8 +380,8 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
-  # getConfigStatus0
-  def test_get_config_status0
+  # getConfigStatus
+  def test_get_config_status
     req = @client.get_config_status_with_http_info("theIndexName")
 
     assert_equal(:get, req.method)
@@ -392,8 +392,8 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # getLogFile0
-  def test_get_log_file0
+  # getLogFile
+  def test_get_log_file
     req = @client.get_log_file_with_http_info("theIndexName")
 
     assert_equal(:get, req.method)
@@ -404,8 +404,8 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # updateConfig0
-  def test_update_config0
+  # updateConfig
+  def test_update_config
     req = @client.update_config_with_http_info(
       "theIndexName",
       QuerySuggestionsConfiguration.new(

@@ -1,7 +1,10 @@
 package com.algolia.methods.snippets;
 
+// >IMPORT
 import com.algolia.api.InsightsClient;
 import com.algolia.model.insights.*;
+
+// IMPORT<
 
 class SnippetInsightsClient {
 
@@ -9,7 +12,7 @@ class SnippetInsightsClient {
   //
   // allow del method for a custom path with minimal parameters
   void snippetForCustomDelete() {
-    // >SEPARATOR customDelete
+    // >SEPARATOR customDelete default
     // Initialize the client
     InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -22,7 +25,7 @@ class SnippetInsightsClient {
   //
   // allow get method for a custom path with minimal parameters
   void snippetForCustomGet() {
-    // >SEPARATOR customGet
+    // >SEPARATOR customGet default
     // Initialize the client
     InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -35,7 +38,7 @@ class SnippetInsightsClient {
   //
   // allow post method for a custom path with minimal parameters
   void snippetForCustomPost() {
-    // >SEPARATOR customPost
+    // >SEPARATOR customPost default
     // Initialize the client
     InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -48,7 +51,7 @@ class SnippetInsightsClient {
   //
   // allow put method for a custom path with minimal parameters
   void snippetForCustomPut() {
-    // >SEPARATOR customPut
+    // >SEPARATOR customPut default
     // Initialize the client
     InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -59,9 +62,9 @@ class SnippetInsightsClient {
 
   // Snippet for the deleteUserToken method.
   //
-  // deleteUserToken0
+  // deleteUserToken
   void snippetForDeleteUserToken() {
-    // >SEPARATOR deleteUserToken
+    // >SEPARATOR deleteUserToken default
     // Initialize the client
     InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -72,9 +75,9 @@ class SnippetInsightsClient {
 
   // Snippet for the pushEvents method.
   //
-  // pushEvents0
+  // pushEvents
   void snippetForPushEvents() {
-    // >SEPARATOR pushEvents
+    // >SEPARATOR pushEvents default
     // Initialize the client
     InsightsClient client = new InsightsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 

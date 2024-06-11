@@ -31,7 +31,7 @@ class TestAnalyticsClient:
     if _e2e_api_key is None:
         raise Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
 
-    async def test_custom_delete_0(self):
+    async def test_custom_delete_(self):
         """
         allow del method for a custom path with minimal parameters
         """
@@ -62,7 +62,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_custom_get_0(self):
+    async def test_custom_get_(self):
         """
         allow get method for a custom path with minimal parameters
         """
@@ -125,7 +125,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {"x-header-1": "spaces are left alone"}.items()
         assert _req.data is None
 
-    async def test_custom_post_0(self):
+    async def test_custom_post_(self):
         """
         allow post method for a custom path with minimal parameters
         """
@@ -384,7 +384,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
-    async def test_custom_put_0(self):
+    async def test_custom_put_(self):
         """
         allow put method for a custom path with minimal parameters
         """
@@ -418,7 +418,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
-    async def test_get_add_to_cart_rate_0(self):
+    async def test_get_add_to_cart_rate_(self):
         """
         get getAddToCartRate with minimal parameters
         """
@@ -457,7 +457,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_average_click_position_0(self):
+    async def test_get_average_click_position_(self):
         """
         get getAverageClickPosition with minimal parameters
         """
@@ -496,7 +496,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_click_positions_0(self):
+    async def test_get_click_positions_(self):
         """
         get getClickPositions with minimal parameters
         """
@@ -535,7 +535,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_click_through_rate_0(self):
+    async def test_get_click_through_rate_(self):
         """
         get getClickThroughRate with minimal parameters
         """
@@ -574,7 +574,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_conversion_rate_0(self):
+    async def test_get_conversion_rate_(self):
         """
         get getConversationRate with minimal parameters
         """
@@ -613,7 +613,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_no_click_rate_0(self):
+    async def test_get_no_click_rate_(self):
         """
         get getNoClickRate with minimal parameters
         """
@@ -652,7 +652,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_no_results_rate_0(self):
+    async def test_get_no_results_rate_(self):
         """
         get getNoResultsRate with minimal parameters
         """
@@ -691,7 +691,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_purchase_rate_0(self):
+    async def test_get_purchase_rate_(self):
         """
         get getPurchaseRate with minimal parameters
         """
@@ -730,7 +730,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_revenue_0(self):
+    async def test_get_revenue_(self):
         """
         get getRevenue with minimal parameters
         """
@@ -769,7 +769,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_searches_count_0(self):
+    async def test_get_searches_count_(self):
         """
         get getSearchesCount with minimal parameters
         """
@@ -808,7 +808,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_searches_no_clicks_0(self):
+    async def test_get_searches_no_clicks_(self):
         """
         get getSearchesNoClicks with minimal parameters
         """
@@ -851,7 +851,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_searches_no_results_0(self):
+    async def test_get_searches_no_results_(self):
         """
         get getSearchesNoResults with minimal parameters
         """
@@ -894,7 +894,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_status_0(self):
+    async def test_get_status_(self):
         """
         get getStatus with minimal parameters
         """
@@ -908,7 +908,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_top_countries_0(self):
+    async def test_get_top_countries_(self):
         """
         get getTopCountries with minimal parameters
         """
@@ -951,7 +951,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_top_filter_attributes_0(self):
+    async def test_get_top_filter_attributes_(self):
         """
         get getTopFilterAttributes with minimal parameters
         """
@@ -996,7 +996,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_top_filter_for_attribute_0(self):
+    async def test_get_top_filter_for_attribute_(self):
         """
         get getTopFilterForAttribute with minimal parameters
         """
@@ -1090,7 +1090,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_top_filters_no_results_0(self):
+    async def test_get_top_filters_no_results_(self):
         """
         get getTopFiltersNoResults with minimal parameters
         """
@@ -1135,7 +1135,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_top_hits_0(self):
+    async def test_get_top_hits_(self):
         """
         get getTopHits with minimal parameters
         """
@@ -1184,7 +1184,7 @@ class TestAnalyticsClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_top_searches_0(self):
+    async def test_get_top_searches_(self):
         """
         get getTopSearches with minimal parameters
         """
@@ -1267,7 +1267,7 @@ class TestAnalyticsClient:
         _expected_body = loads("""{"searches":[{"search":"","nbHits":0}]}""")
         assert self._helpers.union(_expected_body, resp) == _expected_body
 
-    async def test_get_users_count_0(self):
+    async def test_get_users_count_(self):
         """
         get getUsersCount with minimal parameters
         """

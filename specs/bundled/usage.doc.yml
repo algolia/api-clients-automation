@@ -116,7 +116,7 @@ paths:
             }
 
             // Call the API
-            resp, err := client.CustomGet(client.NewApiCustomGetRequest(
+            response, err := client.CustomGet(client.NewApiCustomGetRequest(
               "test/minimal",
             ))
             if err != nil {
@@ -125,7 +125,7 @@ paths:
             }
 
             // use the model directly
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: |
@@ -166,23 +166,16 @@ paths:
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: |
             // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
-
+            $client = UsageClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
             // Call the API
-
             $response = $client->customGet(
                 'test/minimal',
             );
 
-
             // play with the response
-
             var_dump($response);
         - lang: python
           label: Python
@@ -191,15 +184,15 @@ paths:
             _client = UsageClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.custom_get(
+            response = await _client.custom_get(
                 path="test/minimal",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -207,13 +200,13 @@ paths:
             client = Algolia::UsageClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
             # Call the API
-            resp = client.custom_get("test/minimal")
+            response = client.custom_get("test/minimal")
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -225,14 +218,14 @@ paths:
 
             // Call the API
 
-            val res = client.customGet[JObject](
+            val response = client.customGet[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -244,7 +237,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customGet(path: "test/minimal")
+            let response = try await client.customGet(path: "test/minimal")
     post:
       operationId: customPost
       requestBody:
@@ -297,7 +290,7 @@ paths:
             }
 
             // Call the API
-            resp, err := client.CustomPost(client.NewApiCustomPostRequest(
+            response, err := client.CustomPost(client.NewApiCustomPostRequest(
               "test/minimal",
             ))
             if err != nil {
@@ -306,7 +299,7 @@ paths:
             }
 
             // use the model directly
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: |
@@ -347,23 +340,16 @@ paths:
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: |
             // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
-
+            $client = UsageClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
             // Call the API
-
             $response = $client->customPost(
                 'test/minimal',
             );
 
-
             // play with the response
-
             var_dump($response);
         - lang: python
           label: Python
@@ -372,15 +358,15 @@ paths:
             _client = UsageClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.custom_post(
+            response = await _client.custom_post(
                 path="test/minimal",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -388,13 +374,13 @@ paths:
             client = Algolia::UsageClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
             # Call the API
-            resp = client.custom_post("test/minimal")
+            response = client.custom_post("test/minimal")
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -406,14 +392,14 @@ paths:
 
             // Call the API
 
-            val res = client.customPost[JObject](
+            val response = client.customPost[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -425,7 +411,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPost(path: "test/minimal")
+            let response = try await client.customPost(path: "test/minimal")
     put:
       operationId: customPut
       requestBody:
@@ -478,7 +464,7 @@ paths:
             }
 
             // Call the API
-            resp, err := client.CustomPut(client.NewApiCustomPutRequest(
+            response, err := client.CustomPut(client.NewApiCustomPutRequest(
               "test/minimal",
             ))
             if err != nil {
@@ -487,7 +473,7 @@ paths:
             }
 
             // use the model directly
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: |
@@ -528,23 +514,16 @@ paths:
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: |
             // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
-
+            $client = UsageClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
             // Call the API
-
             $response = $client->customPut(
                 'test/minimal',
             );
 
-
             // play with the response
-
             var_dump($response);
         - lang: python
           label: Python
@@ -553,15 +532,15 @@ paths:
             _client = UsageClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.custom_put(
+            response = await _client.custom_put(
                 path="test/minimal",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -569,13 +548,13 @@ paths:
             client = Algolia::UsageClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
             # Call the API
-            resp = client.custom_put("test/minimal")
+            response = client.custom_put("test/minimal")
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -587,14 +566,14 @@ paths:
 
             // Call the API
 
-            val res = client.customPut[JObject](
+            val response = client.customPut[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -606,7 +585,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPut(path: "test/minimal")
+            let response = try await client.customPut(path: "test/minimal")
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -644,25 +623,33 @@ paths:
             var response = await client.CustomDeleteAsync("test/minimal");
         - lang: go
           label: Go
-          source: |
+          source: >
             // Initialize the client
+
             client, err := usage.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
               panic(err)
             }
 
+
             // Call the API
-            resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+
+            response, err :=
+            client.CustomDelete(client.NewApiCustomDeleteRequest(
               "test/minimal",
             ))
+
             if err != nil {
               // handle the eventual error
               panic(err)
             }
 
+
             // use the model directly
-            print(resp)
+
+            print(response)
         - lang: java
           label: Java
           source: |
@@ -709,23 +696,16 @@ paths:
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: |
             // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
-
+            $client = UsageClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
             // Call the API
-
             $response = $client->customDelete(
                 'test/minimal',
             );
 
-
             // play with the response
-
             var_dump($response);
         - lang: python
           label: Python
@@ -734,15 +714,15 @@ paths:
             _client = UsageClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.custom_delete(
+            response = await _client.custom_delete(
                 path="test/minimal",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -750,13 +730,13 @@ paths:
             client = Algolia::UsageClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
             # Call the API
-            resp = client.custom_delete("test/minimal")
+            response = client.custom_delete("test/minimal")
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -768,14 +748,14 @@ paths:
 
             // Call the API
 
-            val res = client.customDelete[JObject](
+            val response = client.customDelete[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -787,7 +767,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customDelete(path: "test/minimal")
+            let response = try await client.customDelete(path: "test/minimal")
   /1/usage/{statistic}:
     get:
       operationId: getUsage
@@ -840,7 +820,7 @@ paths:
             }
 
             // Call the API
-            resp, err := client.GetUsage(client.NewApiGetUsageRequest(
+            response, err := client.GetUsage(client.NewApiGetUsageRequest(
               usage.Statistic("queries_operations"), "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z",
             ))
             if err != nil {
@@ -849,7 +829,7 @@ paths:
             }
 
             // use the model directly
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -900,25 +880,18 @@ paths:
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: |
             // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
-
+            $client = UsageClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
             // Call the API
-
             $response = $client->getUsage(
                 'queries_operations',
                 '2024-04-03T12:46:43Z',
                 '2024-04-05T12:46:43Z',
             );
 
-
             // play with the response
-
             var_dump($response);
         - lang: python
           label: Python
@@ -927,39 +900,35 @@ paths:
             _client = UsageClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.get_usage(
+            response = await _client.get_usage(
                 statistic="queries_operations",
                 start_date="2024-04-03T12:46:43Z",
                 end_date="2024-04-05T12:46:43Z",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: >
+          source: |
             # Initialize the client
-
             client = Algolia::UsageClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
-
             # Call the API
-
-            resp = client.get_usage('queries_operations',
-            "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z")
-
+            response = client.get_usage(
+              'queries_operations',
+              "2024-04-03T12:46:43Z",
+              "2024-04-05T12:46:43Z"
+            )
 
             # use the class directly
-
-            puts resp
-
+            puts response
 
             # print the JSON response
-
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -971,7 +940,7 @@ paths:
 
             // Call the API
 
-            val res = client.getUsage(
+            val response = client.getUsage(
               statistic = Statistic.withName("queries_operations"),
               startDate = "2024-04-03T12:46:43Z",
               endDate = "2024-04-05T12:46:43Z"
@@ -980,7 +949,7 @@ paths:
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -992,7 +961,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getUsage(
+            let response = try await client.getUsage(
                 statistic: Statistic.queriesOperations,
                 startDate: "2024-04-03T12:46:43Z",
                 endDate: "2024-04-05T12:46:43Z"
@@ -1042,25 +1011,33 @@ paths:
             );
         - lang: go
           label: Go
-          source: |
+          source: >
             // Initialize the client
+
             client, err := usage.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
               panic(err)
             }
 
+
             // Call the API
-            resp, err := client.GetIndexUsage(client.NewApiGetIndexUsageRequest(
+
+            response, err :=
+            client.GetIndexUsage(client.NewApiGetIndexUsageRequest(
               usage.Statistic("queries_operations"), "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z",
             ))
+
             if err != nil {
               // handle the eventual error
               panic(err)
             }
 
+
             // use the model directly
-            print(resp)
+
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1113,16 +1090,11 @@ paths:
             println(response)
         - lang: php
           label: PHP
-          source: >
+          source: |
             // Initialize the client
-
-            $client =
-            Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>');
-
+            $client = UsageClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
             // Call the API
-
             $response = $client->getIndexUsage(
                 'queries_operations',
                 'myIndexName',
@@ -1130,9 +1102,7 @@ paths:
                 '2024-04-05T12:46:43Z',
             );
 
-
             // play with the response
-
             var_dump($response);
         - lang: python
           label: Python
@@ -1141,7 +1111,7 @@ paths:
             _client = UsageClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.get_index_usage(
+            response = await _client.get_index_usage(
                 statistic="queries_operations",
                 index_name="myIndexName",
                 start_date="2024-04-03T12:46:43Z",
@@ -1149,10 +1119,10 @@ paths:
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -1160,7 +1130,7 @@ paths:
             client = Algolia::UsageClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
 
             # Call the API
-            resp = client.get_index_usage(
+            response = client.get_index_usage(
               'queries_operations',
               "myIndexName",
               "2024-04-03T12:46:43Z",
@@ -1168,10 +1138,10 @@ paths:
             )
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1183,7 +1153,7 @@ paths:
 
             // Call the API
 
-            val res = client.getIndexUsage(
+            val response = client.getIndexUsage(
               statistic = Statistic.withName("queries_operations"),
               indexName = "myIndexName",
               startDate = "2024-04-03T12:46:43Z",
@@ -1193,7 +1163,7 @@ paths:
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1205,7 +1175,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getIndexUsage(
+            let response = try await client.getIndexUsage(
                 statistic: Statistic.queriesOperations,
                 indexName: "myIndexName",
                 startDate: "2024-04-03T12:46:43Z",

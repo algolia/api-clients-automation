@@ -49,7 +49,7 @@ public class AnalyticsClientRequestTests
   public void Dispose() { }
 
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
-  public async Task CustomDeleteTest0()
+  public async Task CustomDeleteTest()
   {
     await _client.CustomDeleteAsync("test/minimal");
 
@@ -87,7 +87,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "allow get method for a custom path with minimal parameters")]
-  public async Task CustomGetTest0()
+  public async Task CustomGetTest()
   {
     await _client.CustomGetAsync("test/minimal");
 
@@ -167,7 +167,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "allow post method for a custom path with minimal parameters")]
-  public async Task CustomPostTest0()
+  public async Task CustomPostTest()
   {
     await _client.CustomPostAsync("test/minimal");
 
@@ -497,7 +497,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "allow put method for a custom path with minimal parameters")]
-  public async Task CustomPutTest0()
+  public async Task CustomPutTest()
   {
     await _client.CustomPutAsync("test/minimal");
 
@@ -540,7 +540,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getAddToCartRate with minimal parameters")]
-  public async Task GetAddToCartRateTest0()
+  public async Task GetAddToCartRateTest()
   {
     await _client.GetAddToCartRateAsync("index");
 
@@ -588,7 +588,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getAverageClickPosition with minimal parameters")]
-  public async Task GetAverageClickPositionTest0()
+  public async Task GetAverageClickPositionTest()
   {
     await _client.GetAverageClickPositionAsync("index");
 
@@ -636,7 +636,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getClickPositions with minimal parameters")]
-  public async Task GetClickPositionsTest0()
+  public async Task GetClickPositionsTest()
   {
     await _client.GetClickPositionsAsync("index");
 
@@ -684,7 +684,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getClickThroughRate with minimal parameters")]
-  public async Task GetClickThroughRateTest0()
+  public async Task GetClickThroughRateTest()
   {
     await _client.GetClickThroughRateAsync("index");
 
@@ -732,7 +732,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getConversationRate with minimal parameters")]
-  public async Task GetConversionRateTest0()
+  public async Task GetConversionRateTest()
   {
     await _client.GetConversionRateAsync("index");
 
@@ -780,7 +780,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getNoClickRate with minimal parameters")]
-  public async Task GetNoClickRateTest0()
+  public async Task GetNoClickRateTest()
   {
     await _client.GetNoClickRateAsync("index");
 
@@ -828,7 +828,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getNoResultsRate with minimal parameters")]
-  public async Task GetNoResultsRateTest0()
+  public async Task GetNoResultsRateTest()
   {
     await _client.GetNoResultsRateAsync("index");
 
@@ -876,7 +876,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getPurchaseRate with minimal parameters")]
-  public async Task GetPurchaseRateTest0()
+  public async Task GetPurchaseRateTest()
   {
     await _client.GetPurchaseRateAsync("index");
 
@@ -924,7 +924,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getRevenue with minimal parameters")]
-  public async Task GetRevenueTest0()
+  public async Task GetRevenueTest()
   {
     await _client.GetRevenueAsync("index");
 
@@ -972,7 +972,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getSearchesCount with minimal parameters")]
-  public async Task GetSearchesCountTest0()
+  public async Task GetSearchesCountTest()
   {
     await _client.GetSearchesCountAsync("index");
 
@@ -1020,7 +1020,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getSearchesNoClicks with minimal parameters")]
-  public async Task GetSearchesNoClicksTest0()
+  public async Task GetSearchesNoClicksTest()
   {
     await _client.GetSearchesNoClicksAsync("index");
 
@@ -1068,7 +1068,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getSearchesNoResults with minimal parameters")]
-  public async Task GetSearchesNoResultsTest0()
+  public async Task GetSearchesNoResultsTest()
   {
     await _client.GetSearchesNoResultsAsync("index");
 
@@ -1116,7 +1116,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getStatus with minimal parameters")]
-  public async Task GetStatusTest0()
+  public async Task GetStatusTest()
   {
     await _client.GetStatusAsync("index");
 
@@ -1140,7 +1140,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getTopCountries with minimal parameters")]
-  public async Task GetTopCountriesTest0()
+  public async Task GetTopCountriesTest()
   {
     await _client.GetTopCountriesAsync("index");
 
@@ -1188,7 +1188,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getTopFilterAttributes with minimal parameters")]
-  public async Task GetTopFilterAttributesTest0()
+  public async Task GetTopFilterAttributesTest()
   {
     await _client.GetTopFilterAttributesAsync("index");
 
@@ -1244,7 +1244,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getTopFilterForAttribute with minimal parameters")]
-  public async Task GetTopFilterForAttributeTest0()
+  public async Task GetTopFilterForAttributeTest()
   {
     await _client.GetTopFilterForAttributeAsync("myAttribute", "index");
 
@@ -1360,7 +1360,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getTopFiltersNoResults with minimal parameters")]
-  public async Task GetTopFiltersNoResultsTest0()
+  public async Task GetTopFiltersNoResultsTest()
   {
     await _client.GetTopFiltersNoResultsAsync("index");
 
@@ -1416,7 +1416,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getTopHits with minimal parameters")]
-  public async Task GetTopHitsTest0()
+  public async Task GetTopHitsTest()
   {
     await _client.GetTopHitsAsync("index");
 
@@ -1474,7 +1474,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getTopSearches with minimal parameters")]
-  public async Task GetTopSearchesTest0()
+  public async Task GetTopSearchesTest()
   {
     await _client.GetTopSearchesAsync("index");
 
@@ -1575,7 +1575,7 @@ public class AnalyticsClientRequestTests
   }
 
   [Fact(DisplayName = "get getUsersCount with minimal parameters")]
-  public async Task GetUsersCountTest0()
+  public async Task GetUsersCountTest()
   {
     await _client.GetUsersCountAsync("index");
 

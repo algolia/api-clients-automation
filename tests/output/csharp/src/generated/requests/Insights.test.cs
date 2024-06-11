@@ -49,7 +49,7 @@ public class InsightsClientRequestTests
   public void Dispose() { }
 
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
-  public async Task CustomDeleteTest0()
+  public async Task CustomDeleteTest()
   {
     await _client.CustomDeleteAsync("test/minimal");
 
@@ -87,7 +87,7 @@ public class InsightsClientRequestTests
   }
 
   [Fact(DisplayName = "allow get method for a custom path with minimal parameters")]
-  public async Task CustomGetTest0()
+  public async Task CustomGetTest()
   {
     await _client.CustomGetAsync("test/minimal");
 
@@ -167,7 +167,7 @@ public class InsightsClientRequestTests
   }
 
   [Fact(DisplayName = "allow post method for a custom path with minimal parameters")]
-  public async Task CustomPostTest0()
+  public async Task CustomPostTest()
   {
     await _client.CustomPostAsync("test/minimal");
 
@@ -497,7 +497,7 @@ public class InsightsClientRequestTests
   }
 
   [Fact(DisplayName = "allow put method for a custom path with minimal parameters")]
-  public async Task CustomPutTest0()
+  public async Task CustomPutTest()
   {
     await _client.CustomPutAsync("test/minimal");
 
@@ -539,8 +539,8 @@ public class InsightsClientRequestTests
     }
   }
 
-  [Fact(DisplayName = "deleteUserToken0")]
-  public async Task DeleteUserTokenTest0()
+  [Fact(DisplayName = "deleteUserToken")]
+  public async Task DeleteUserTokenTest()
   {
     await _client.DeleteUserTokenAsync("test-user-1");
 
@@ -550,8 +550,8 @@ public class InsightsClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "pushEvents0")]
-  public async Task PushEventsTest0()
+  [Fact(DisplayName = "pushEvents")]
+  public async Task PushEventsTest()
   {
     await _client.PushEventsAsync(
       new InsightsEvents

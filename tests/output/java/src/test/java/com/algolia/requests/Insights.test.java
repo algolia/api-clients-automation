@@ -51,7 +51,7 @@ class InsightsClientRequestsTests {
 
   @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
-  void customDeleteTest0() {
+  void customDeleteTest() {
     assertDoesNotThrow(() -> {
       client.customDelete("test/minimal");
     });
@@ -87,7 +87,7 @@ class InsightsClientRequestsTests {
 
   @Test
   @DisplayName("allow get method for a custom path with minimal parameters")
-  void customGetTest0() {
+  void customGetTest() {
     assertDoesNotThrow(() -> {
       client.customGet("test/minimal");
     });
@@ -174,7 +174,7 @@ class InsightsClientRequestsTests {
 
   @Test
   @DisplayName("allow post method for a custom path with minimal parameters")
-  void customPostTest0() {
+  void customPostTest() {
     assertDoesNotThrow(() -> {
       client.customPost("test/minimal");
     });
@@ -520,7 +520,7 @@ class InsightsClientRequestsTests {
 
   @Test
   @DisplayName("allow put method for a custom path with minimal parameters")
-  void customPutTest0() {
+  void customPutTest() {
     assertDoesNotThrow(() -> {
       client.customPut("test/minimal");
     });
@@ -555,8 +555,8 @@ class InsightsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteUserToken0")
-  void deleteUserTokenTest0() {
+  @DisplayName("deleteUserToken")
+  void deleteUserTokenTest() {
     assertDoesNotThrow(() -> {
       client.deleteUserToken("test-user-1");
     });
@@ -567,8 +567,8 @@ class InsightsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("pushEvents0")
-  void pushEventsTest0() {
+  @DisplayName("pushEvents")
+  void pushEventsTest() {
     assertDoesNotThrow(() -> {
       client.pushEvents(
         new InsightsEvents()

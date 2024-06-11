@@ -17,7 +17,7 @@ class TestUsageClient < Test::Unit::TestCase
   end
 
   # allow del method for a custom path with minimal parameters
-  def test_custom_delete0
+  def test_custom_delete
     req = @client.custom_delete_with_http_info("test/minimal")
 
     assert_equal(:delete, req.method)
@@ -41,7 +41,7 @@ class TestUsageClient < Test::Unit::TestCase
   end
 
   # allow get method for a custom path with minimal parameters
-  def test_custom_get0
+  def test_custom_get
     req = @client.custom_get_with_http_info("test/minimal")
 
     assert_equal(:get, req.method)
@@ -98,7 +98,7 @@ class TestUsageClient < Test::Unit::TestCase
   end
 
   # allow post method for a custom path with minimal parameters
-  def test_custom_post0
+  def test_custom_post
     req = @client.custom_post_with_http_info("test/minimal")
 
     assert_equal(:post, req.method)
@@ -281,7 +281,7 @@ class TestUsageClient < Test::Unit::TestCase
   end
 
   # allow put method for a custom path with minimal parameters
-  def test_custom_put0
+  def test_custom_put
     req = @client.custom_put_with_http_info("test/minimal")
 
     assert_equal(:put, req.method)
@@ -307,7 +307,7 @@ class TestUsageClient < Test::Unit::TestCase
   end
 
   # getIndexUsage with minimal parameters
-  def test_get_index_usage0
+  def test_get_index_usage
     req = @client.get_index_usage_with_http_info(
       'queries_operations',
       "myIndexName",
@@ -328,7 +328,7 @@ class TestUsageClient < Test::Unit::TestCase
   end
 
   # getUsage with minimal parameters
-  def test_get_usage0
+  def test_get_usage
     req = @client.get_usage_with_http_info(
       'queries_operations',
       "2024-04-03T12:46:43Z",

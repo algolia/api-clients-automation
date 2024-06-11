@@ -25,7 +25,7 @@ public class PersonalizationClientRequestTests
   public void Dispose() { }
 
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
-  public async Task CustomDeleteTest0()
+  public async Task CustomDeleteTest()
   {
     await _client.CustomDeleteAsync("test/minimal");
 
@@ -63,7 +63,7 @@ public class PersonalizationClientRequestTests
   }
 
   [Fact(DisplayName = "allow get method for a custom path with minimal parameters")]
-  public async Task CustomGetTest0()
+  public async Task CustomGetTest()
   {
     await _client.CustomGetAsync("test/minimal");
 
@@ -143,7 +143,7 @@ public class PersonalizationClientRequestTests
   }
 
   [Fact(DisplayName = "allow post method for a custom path with minimal parameters")]
-  public async Task CustomPostTest0()
+  public async Task CustomPostTest()
   {
     await _client.CustomPostAsync("test/minimal");
 
@@ -473,7 +473,7 @@ public class PersonalizationClientRequestTests
   }
 
   [Fact(DisplayName = "allow put method for a custom path with minimal parameters")]
-  public async Task CustomPutTest0()
+  public async Task CustomPutTest()
   {
     await _client.CustomPutAsync("test/minimal");
 
@@ -516,7 +516,7 @@ public class PersonalizationClientRequestTests
   }
 
   [Fact(DisplayName = "delete deleteUserProfile")]
-  public async Task DeleteUserProfileTest0()
+  public async Task DeleteUserProfileTest()
   {
     await _client.DeleteUserProfileAsync("UserToken");
 
@@ -527,7 +527,7 @@ public class PersonalizationClientRequestTests
   }
 
   [Fact(DisplayName = "get getPersonalizationStrategy")]
-  public async Task GetPersonalizationStrategyTest0()
+  public async Task GetPersonalizationStrategyTest()
   {
     await _client.GetPersonalizationStrategyAsync();
 
@@ -538,7 +538,7 @@ public class PersonalizationClientRequestTests
   }
 
   [Fact(DisplayName = "get getUserTokenProfile")]
-  public async Task GetUserTokenProfileTest0()
+  public async Task GetUserTokenProfileTest()
   {
     await _client.GetUserTokenProfileAsync("UserToken");
 
@@ -549,7 +549,7 @@ public class PersonalizationClientRequestTests
   }
 
   [Fact(DisplayName = "set setPersonalizationStrategy")]
-  public async Task SetPersonalizationStrategyTest0()
+  public async Task SetPersonalizationStrategyTest()
   {
     await _client.SetPersonalizationStrategyAsync(
       new PersonalizationStrategyParams

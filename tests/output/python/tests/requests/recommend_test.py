@@ -14,7 +14,7 @@ class TestRecommendClient:
         config=_config, transporter=EchoTransporter(_config)
     )
 
-    async def test_custom_delete_0(self):
+    async def test_custom_delete_(self):
         """
         allow del method for a custom path with minimal parameters
         """
@@ -45,7 +45,7 @@ class TestRecommendClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_custom_get_0(self):
+    async def test_custom_get_(self):
         """
         allow get method for a custom path with minimal parameters
         """
@@ -108,7 +108,7 @@ class TestRecommendClient:
         assert _req.headers.items() >= {"x-header-1": "spaces are left alone"}.items()
         assert _req.data is None
 
-    async def test_custom_post_0(self):
+    async def test_custom_post_(self):
         """
         allow post method for a custom path with minimal parameters
         """
@@ -367,7 +367,7 @@ class TestRecommendClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"facet":"filters"}""")
 
-    async def test_custom_put_0(self):
+    async def test_custom_put_(self):
         """
         allow put method for a custom path with minimal parameters
         """
@@ -401,9 +401,9 @@ class TestRecommendClient:
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"body":"parameters"}""")
 
-    async def test_delete_recommend_rule_0(self):
+    async def test_delete_recommend_rule_(self):
         """
-        deleteRecommendRule0
+        deleteRecommendRule
         """
         _req = await self._client.delete_recommend_rule_with_http_info(
             index_name="indexName",
@@ -420,9 +420,9 @@ class TestRecommendClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_recommend_rule_0(self):
+    async def test_get_recommend_rule_(self):
         """
-        getRecommendRule0
+        getRecommendRule
         """
         _req = await self._client.get_recommend_rule_with_http_info(
             index_name="indexName",
@@ -439,9 +439,9 @@ class TestRecommendClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_recommend_status_0(self):
+    async def test_get_recommend_status_(self):
         """
-        getRecommendStatus0
+        getRecommendStatus
         """
         _req = await self._client.get_recommend_status_with_http_info(
             index_name="indexName",
@@ -455,7 +455,7 @@ class TestRecommendClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_recommendations_0(self):
+    async def test_get_recommendations_(self):
         """
         get recommendations for recommend model with minimal parameters
         """
@@ -696,9 +696,9 @@ class TestRecommendClient:
             """{"requests":[{"indexName":"indexName1","objectID":"objectID1","model":"bought-together","threshold":42.7}]}"""
         )
 
-    async def test_search_recommend_rules_0(self):
+    async def test_search_recommend_rules_(self):
         """
-        searchRecommendRules0
+        searchRecommendRules
         """
         _req = await self._client.search_recommend_rules_with_http_info(
             index_name="indexName",

@@ -40,7 +40,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
      * Test case for CustomDelete
      * allow del method for a custom path with minimal parameters.
      */
-    public function testCustomDelete0()
+    public function testCustomDelete()
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -83,7 +83,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
      * Test case for CustomGet
      * allow get method for a custom path with minimal parameters.
      */
-    public function testCustomGet0()
+    public function testCustomGet()
     {
         $client = $this->getClient();
         $client->customGet(
@@ -161,7 +161,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
      * Test case for CustomPost
      * allow post method for a custom path with minimal parameters.
      */
-    public function testCustomPost0()
+    public function testCustomPost()
     {
         $client = $this->getClient();
         $client->customPost(
@@ -508,7 +508,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
      * Test case for CustomPut
      * allow put method for a custom path with minimal parameters.
      */
-    public function testCustomPut0()
+    public function testCustomPut()
     {
         $client = $this->getClient();
         $client->customPut(
@@ -553,7 +553,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
      * Test case for GetClusterIncidents
      * getClusterIncidents.
      */
-    public function testGetClusterIncidents0()
+    public function testGetClusterIncidents()
     {
         $client = $this->getClient();
         $client->getClusterIncidents(
@@ -573,7 +573,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
      * Test case for GetClusterStatus
      * getClusterStatus.
      */
-    public function testGetClusterStatus0()
+    public function testGetClusterStatus()
     {
         $client = $this->getClient();
         $client->getClusterStatus(
@@ -593,7 +593,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
      * Test case for GetIncidents
      * getIncidents.
      */
-    public function testGetIncidents0()
+    public function testGetIncidents()
     {
         $client = $this->getClient();
         $client->getIncidents();
@@ -611,7 +611,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
      * Test case for GetIndexingTime
      * getIndexingTime.
      */
-    public function testGetIndexingTime0()
+    public function testGetIndexingTime()
     {
         $client = $this->getClient();
         $client->getIndexingTime(
@@ -631,7 +631,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
      * Test case for GetLatency
      * getLatency.
      */
-    public function testGetLatency0()
+    public function testGetLatency()
     {
         $client = $this->getClient();
         $client->getLatency(
@@ -651,7 +651,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
      * Test case for GetMetrics
      * getMetrics.
      */
-    public function testGetMetrics0()
+    public function testGetMetrics()
     {
         $client = $this->getClient();
         $client->getMetrics(
@@ -672,7 +672,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
      * Test case for GetReachability
      * getReachability.
      */
-    public function testGetReachability0()
+    public function testGetReachability()
     {
         $client = $this->getClient();
         $client->getReachability(
@@ -692,7 +692,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
      * Test case for GetServers
      * getInventory.
      */
-    public function testGetServers0()
+    public function testGetServers()
     {
         $client = $this->getClient();
         $client->getServers();
@@ -710,7 +710,7 @@ class MonitoringTest extends TestCase implements HttpClientInterface
      * Test case for GetStatus
      * getStatus.
      */
-    public function testGetStatus0()
+    public function testGetStatus()
     {
         $client = $this->getClient();
         $client->getStatus();

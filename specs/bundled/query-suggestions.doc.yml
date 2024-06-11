@@ -151,7 +151,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomGet(client.NewApiCustomGetRequest(
+            response, err := client.CustomGet(client.NewApiCustomGetRequest(
               "test/minimal",
             ))
 
@@ -163,7 +163,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -216,8 +216,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            $client = QuerySuggestionsClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
 
@@ -240,15 +239,15 @@ paths:
             )
 
             # Call the API
-            resp = await _client.custom_get(
+            response = await _client.custom_get(
                 path="test/minimal",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -260,13 +259,13 @@ paths:
             )
 
             # Call the API
-            resp = client.custom_get("test/minimal")
+            response = client.custom_get("test/minimal")
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -278,14 +277,14 @@ paths:
 
             // Call the API
 
-            val res = client.customGet[JObject](
+            val response = client.customGet[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -297,7 +296,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customGet(path: "test/minimal")
+            let response = try await client.customGet(path: "test/minimal")
     post:
       operationId: customPost
       requestBody:
@@ -354,7 +353,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomPost(client.NewApiCustomPostRequest(
+            response, err := client.CustomPost(client.NewApiCustomPostRequest(
               "test/minimal",
             ))
 
@@ -366,7 +365,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -419,8 +418,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            $client = QuerySuggestionsClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
 
@@ -443,15 +441,15 @@ paths:
             )
 
             # Call the API
-            resp = await _client.custom_post(
+            response = await _client.custom_post(
                 path="test/minimal",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -463,13 +461,13 @@ paths:
             )
 
             # Call the API
-            resp = client.custom_post("test/minimal")
+            response = client.custom_post("test/minimal")
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -481,14 +479,14 @@ paths:
 
             // Call the API
 
-            val res = client.customPost[JObject](
+            val response = client.customPost[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -500,7 +498,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPost(path: "test/minimal")
+            let response = try await client.customPost(path: "test/minimal")
     put:
       operationId: customPut
       requestBody:
@@ -557,7 +555,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomPut(client.NewApiCustomPutRequest(
+            response, err := client.CustomPut(client.NewApiCustomPutRequest(
               "test/minimal",
             ))
 
@@ -569,7 +567,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -622,8 +620,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            $client = QuerySuggestionsClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
 
@@ -646,15 +643,15 @@ paths:
             )
 
             # Call the API
-            resp = await _client.custom_put(
+            response = await _client.custom_put(
                 path="test/minimal",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -666,13 +663,13 @@ paths:
             )
 
             # Call the API
-            resp = client.custom_put("test/minimal")
+            response = client.custom_put("test/minimal")
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -684,14 +681,14 @@ paths:
 
             // Call the API
 
-            val res = client.customPut[JObject](
+            val response = client.customPut[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -703,7 +700,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPut(path: "test/minimal")
+            let response = try await client.customPut(path: "test/minimal")
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -754,7 +751,8 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+            response, err :=
+            client.CustomDelete(client.NewApiCustomDeleteRequest(
               "test/minimal",
             ))
 
@@ -766,7 +764,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -825,8 +823,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            $client = QuerySuggestionsClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
 
@@ -849,15 +846,15 @@ paths:
             )
 
             # Call the API
-            resp = await _client.custom_delete(
+            response = await _client.custom_delete(
                 path="test/minimal",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -869,13 +866,13 @@ paths:
             )
 
             # Call the API
-            resp = client.custom_delete("test/minimal")
+            response = client.custom_delete("test/minimal")
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -887,14 +884,14 @@ paths:
 
             // Call the API
 
-            val res = client.customDelete[JObject](
+            val response = client.customDelete[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -906,7 +903,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customDelete(path: "test/minimal")
+            let response = try await client.customDelete(path: "test/minimal")
   /1/configs:
     get:
       tags:
@@ -957,7 +954,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.GetAllConfigs()
+            response, err := client.GetAllConfigs()
 
             if err != nil {
               // handle the eventual error
@@ -967,7 +964,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1018,8 +1015,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            $client = QuerySuggestionsClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
 
@@ -1040,13 +1036,13 @@ paths:
             )
 
             # Call the API
-            resp = await _client.get_all_configs()
+            response = await _client.get_all_configs()
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -1058,13 +1054,13 @@ paths:
             )
 
             # Call the API
-            resp = client.get_all_configs
+            response = client.get_all_configs
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1076,14 +1072,14 @@ paths:
 
             // Call the API
 
-            val res = client.getAllConfigs(
+            val response = client.getAllConfigs(
 
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1095,7 +1091,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getAllConfigs()
+            let response = try await client.getAllConfigs()
     post:
       tags:
         - configurations
@@ -1184,7 +1180,8 @@ paths:
 
             // Call the API
 
-            resp, err := client.CreateConfig(client.NewApiCreateConfigRequest(
+            response, err :=
+            client.CreateConfig(client.NewApiCreateConfigRequest(
 
               suggestions.NewEmptyQuerySuggestionsConfigurationWithIndex().SetIndexName("theIndexName").SetSourceIndices(
                 []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("testIndex").SetFacets(
@@ -1204,7 +1201,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1296,8 +1293,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            $client = QuerySuggestionsClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
 
@@ -1346,7 +1342,7 @@ paths:
             )
 
             # Call the API
-            resp = await _client.create_config(
+            response = await _client.create_config(
                 query_suggestions_configuration_with_index={
                     "indexName": "theIndexName",
                     "sourceIndices": [
@@ -1378,10 +1374,10 @@ paths:
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -1393,7 +1389,7 @@ paths:
             )
 
             # Call the API
-            resp = client.create_config(
+            response = client.create_config(
               QuerySuggestionsConfigurationWithIndex.new(
                 index_name: "theIndexName",
                 source_indices: [SourceIndex.new(
@@ -1407,10 +1403,10 @@ paths:
             )
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1422,7 +1418,7 @@ paths:
 
             // Call the API
 
-            val res = client.createConfig(
+            val response = client.createConfig(
               querySuggestionsConfigurationWithIndex = QuerySuggestionsConfigurationWithIndex(
                 indexName = "theIndexName",
                 sourceIndices = Seq(
@@ -1446,7 +1442,7 @@ paths:
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1458,7 +1454,7 @@ paths:
 
             // Call the API
 
-            _ = try await client
+            let response = try await client
                 .createConfig(querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex(
                     sourceIndices: [SourceIndex(
                         indexName: "testIndex",
@@ -1525,7 +1521,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.GetConfig(client.NewApiGetConfigRequest(
+            response, err := client.GetConfig(client.NewApiGetConfigRequest(
               "cts_e2e_browse_query_suggestions",
             ))
 
@@ -1537,7 +1533,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1592,8 +1588,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            $client = QuerySuggestionsClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
 
@@ -1616,15 +1611,15 @@ paths:
             )
 
             # Call the API
-            resp = await _client.get_config(
+            response = await _client.get_config(
                 index_name="cts_e2e_browse_query_suggestions",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -1636,13 +1631,13 @@ paths:
             )
 
             # Call the API
-            resp = client.get_config("cts_e2e_browse_query_suggestions")
+            response = client.get_config("cts_e2e_browse_query_suggestions")
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1654,14 +1649,14 @@ paths:
 
             // Call the API
 
-            val res = client.getConfig(
+            val response = client.getConfig(
               indexName = "cts_e2e_browse_query_suggestions"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1673,7 +1668,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getConfig(indexName:
+            let response = try await client.getConfig(indexName:
             "cts_e2e_browse_query_suggestions")
     put:
       tags:
@@ -1758,7 +1753,8 @@ paths:
 
             // Call the API
 
-            resp, err := client.UpdateConfig(client.NewApiUpdateConfigRequest(
+            response, err :=
+            client.UpdateConfig(client.NewApiUpdateConfigRequest(
               "theIndexName",
               suggestions.NewEmptyQuerySuggestionsConfiguration().SetSourceIndices(
                 []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("testIndex").SetFacets(
@@ -1778,7 +1774,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1872,8 +1868,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            $client = QuerySuggestionsClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
 
@@ -1922,7 +1917,7 @@ paths:
             )
 
             # Call the API
-            resp = await _client.update_config(
+            response = await _client.update_config(
                 index_name="theIndexName",
                 query_suggestions_configuration={
                     "sourceIndices": [
@@ -1954,10 +1949,10 @@ paths:
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -1969,7 +1964,7 @@ paths:
             )
 
             # Call the API
-            resp = client.update_config(
+            response = client.update_config(
               "theIndexName",
               QuerySuggestionsConfiguration.new(
                 source_indices: [SourceIndex.new(
@@ -1983,10 +1978,10 @@ paths:
             )
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1998,7 +1993,7 @@ paths:
 
             // Call the API
 
-            val res = client.updateConfig(
+            val response = client.updateConfig(
               indexName = "theIndexName",
               querySuggestionsConfiguration = QuerySuggestionsConfiguration(
                 sourceIndices = Seq(
@@ -2022,7 +2017,7 @@ paths:
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2034,7 +2029,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.updateConfig(
+            let response = try await client.updateConfig(
                 indexName: "theIndexName",
                 configuration: QuerySuggestionsConfiguration(
                     sourceIndices: [SourceIndex(
@@ -2110,7 +2105,8 @@ paths:
 
             // Call the API
 
-            resp, err := client.DeleteConfig(client.NewApiDeleteConfigRequest(
+            response, err :=
+            client.DeleteConfig(client.NewApiDeleteConfigRequest(
               "theIndexName",
             ))
 
@@ -2122,7 +2118,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -2181,8 +2177,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            $client = QuerySuggestionsClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
 
@@ -2205,15 +2200,15 @@ paths:
             )
 
             # Call the API
-            resp = await _client.delete_config(
+            response = await _client.delete_config(
                 index_name="theIndexName",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -2225,13 +2220,13 @@ paths:
             )
 
             # Call the API
-            resp = client.delete_config("theIndexName")
+            response = client.delete_config("theIndexName")
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -2243,14 +2238,14 @@ paths:
 
             // Call the API
 
-            val res = client.deleteConfig(
+            val response = client.deleteConfig(
               indexName = "theIndexName"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2262,7 +2257,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.deleteConfig(indexName: "theIndexName")
+            let response = try await client.deleteConfig(indexName:
+            "theIndexName")
   /1/configs/{indexName}/status:
     get:
       tags:
@@ -2339,7 +2335,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetConfigStatus(client.NewApiGetConfigStatusRequest(
               "theIndexName",
             ))
@@ -2352,7 +2348,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -2411,8 +2407,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            $client = QuerySuggestionsClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
 
@@ -2435,15 +2430,15 @@ paths:
             )
 
             # Call the API
-            resp = await _client.get_config_status(
+            response = await _client.get_config_status(
                 index_name="theIndexName",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -2455,13 +2450,13 @@ paths:
             )
 
             # Call the API
-            resp = client.get_config_status("theIndexName")
+            response = client.get_config_status("theIndexName")
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -2473,14 +2468,14 @@ paths:
 
             // Call the API
 
-            val res = client.getConfigStatus(
+            val response = client.getConfigStatus(
               indexName = "theIndexName"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2492,7 +2487,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.getConfigStatus(indexName: "theIndexName")
+            let response = try await client.getConfigStatus(indexName:
+            "theIndexName")
   /1/logs/{indexName}:
     get:
       tags:
@@ -2568,7 +2564,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.GetLogFile(client.NewApiGetLogFileRequest(
+            response, err := client.GetLogFile(client.NewApiGetLogFileRequest(
               "theIndexName",
             ))
 
@@ -2580,7 +2576,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -2639,8 +2635,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\QuerySuggestionsClient::create('<YOUR_APP_ID>',
+            $client = QuerySuggestionsClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
 
@@ -2663,15 +2658,15 @@ paths:
             )
 
             # Call the API
-            resp = await _client.get_log_file(
+            response = await _client.get_log_file(
                 index_name="theIndexName",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: |
@@ -2683,13 +2678,13 @@ paths:
             )
 
             # Call the API
-            resp = client.get_log_file("theIndexName")
+            response = client.get_log_file("theIndexName")
 
             # use the class directly
-            puts resp
+            puts response
 
             # print the JSON response
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -2701,14 +2696,14 @@ paths:
 
             // Call the API
 
-            val res = client.getLogFile(
+            val response = client.getLogFile(
               indexName = "theIndexName"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2720,7 +2715,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.getLogFile(indexName: "theIndexName")
+            let response = try await client.getLogFile(indexName:
+            "theIndexName")
 components:
   securitySchemes:
     appId:

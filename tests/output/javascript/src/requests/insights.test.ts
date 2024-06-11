@@ -369,7 +369,7 @@ describe('customPut', () => {
 });
 
 describe('deleteUserToken', () => {
-  test('deleteUserToken0', async () => {
+  test('deleteUserToken', async () => {
     const req = (await client.deleteUserToken({
       userToken: 'test-user-1',
     })) as unknown as EchoResponse;
@@ -382,7 +382,7 @@ describe('deleteUserToken', () => {
 });
 
 describe('pushEvents', () => {
-  test('pushEvents0', async () => {
+  test('pushEvents', async () => {
     const req = (await client.pushEvents({
       events: [
         {

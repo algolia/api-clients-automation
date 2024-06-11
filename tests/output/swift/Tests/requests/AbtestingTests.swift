@@ -50,7 +50,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
     }
 
     /// addABTests with minimal parameters
-    func testAddABTestsTest0() async throws {
+    func testAddABTestsTest() async throws {
         let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
@@ -87,7 +87,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
     }
 
     /// allow del method for a custom path with minimal parameters
-    func testCustomDeleteTest0() async throws {
+    func testCustomDeleteTest() async throws {
         let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
@@ -140,7 +140,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
     }
 
     /// allow get method for a custom path with minimal parameters
-    func testCustomGetTest0() async throws {
+    func testCustomGetTest() async throws {
         let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
@@ -243,7 +243,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
     }
 
     /// allow post method for a custom path with minimal parameters
-    func testCustomPostTest0() async throws {
+    func testCustomPostTest() async throws {
         let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
@@ -730,7 +730,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
     }
 
     /// allow put method for a custom path with minimal parameters
-    func testCustomPutTest0() async throws {
+    func testCustomPutTest() async throws {
         let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
@@ -796,7 +796,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
     }
 
     /// deleteABTest
-    func testDeleteABTestTest0() async throws {
+    func testDeleteABTestTest() async throws {
         let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
@@ -818,7 +818,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
     }
 
     /// getABTest
-    func testGetABTestTest0() async throws {
+    func testGetABTestTest() async throws {
         let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
@@ -840,7 +840,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
     }
 
     /// listABTests with minimal parameters
-    func testListABTestsTest0() async throws {
+    func testListABTestsTest() async throws {
         let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,
@@ -923,7 +923,7 @@ final class AbtestingClientRequestsTests: XCTestCase {
     }
 
     /// stopABTest
-    func testStopABTestTest0() async throws {
+    func testStopABTestTest() async throws {
         let configuration = try AbtestingClientConfiguration(
             appID: AbtestingClientRequestsTests.APPLICATION_ID,
             apiKey: AbtestingClientRequestsTests.API_KEY,

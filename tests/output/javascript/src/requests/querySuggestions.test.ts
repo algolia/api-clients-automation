@@ -35,7 +35,7 @@ const e2eClient = querySuggestionsClient(
 );
 
 describe('createConfig', () => {
-  test('createConfig0', async () => {
+  test('createConfig', async () => {
     const req = (await client.createConfig({
       indexName: 'theIndexName',
       sourceIndices: [
@@ -402,7 +402,7 @@ describe('customPut', () => {
 });
 
 describe('deleteConfig', () => {
-  test('deleteConfig0', async () => {
+  test('deleteConfig', async () => {
     const req = (await client.deleteConfig({
       indexName: 'theIndexName',
     })) as unknown as EchoResponse;
@@ -415,7 +415,7 @@ describe('deleteConfig', () => {
 });
 
 describe('getAllConfigs', () => {
-  test('getAllConfigs0', async () => {
+  test('getAllConfigs', async () => {
     const req = (await client.getAllConfigs()) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/configs');
@@ -464,7 +464,7 @@ describe('getConfig', () => {
 });
 
 describe('getConfigStatus', () => {
-  test('getConfigStatus0', async () => {
+  test('getConfigStatus', async () => {
     const req = (await client.getConfigStatus({
       indexName: 'theIndexName',
     })) as unknown as EchoResponse;
@@ -477,7 +477,7 @@ describe('getConfigStatus', () => {
 });
 
 describe('getLogFile', () => {
-  test('getLogFile0', async () => {
+  test('getLogFile', async () => {
     const req = (await client.getLogFile({
       indexName: 'theIndexName',
     })) as unknown as EchoResponse;
@@ -490,7 +490,7 @@ describe('getLogFile', () => {
 });
 
 describe('updateConfig', () => {
-  test('updateConfig0', async () => {
+  test('updateConfig', async () => {
     const req = (await client.updateConfig({
       indexName: 'theIndexName',
       querySuggestionsConfiguration: {
