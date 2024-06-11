@@ -31,7 +31,7 @@ method:
         description: Restrictions to add to the API key.
         required: true
         schema:
-          $ref: '#/securedAPIKeyRestrictions'
+          $ref: '#/securedApiKeyRestrictions'
     responses:
       '200':
         description: OK
@@ -42,7 +42,7 @@ method:
       '400':
         $ref: '../../common/responses/IndexNotFound.yml'
 
-securedAPIKeyRestrictions:
+securedApiKeyRestrictions:
   type: object
   additionalProperties: false
   properties:

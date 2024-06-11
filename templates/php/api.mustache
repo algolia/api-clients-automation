@@ -529,7 +529,7 @@ use {{invokerPackage}}\Support\Helpers;
     }
 
     /**
-    * Helper: Generate a secured API Key
+    * Helper: Generate a secured API Key.
     *
     * @param string $parentApiKey Parent API Key
     * @param array  $restrictions API Key's restrictions
@@ -538,7 +538,25 @@ use {{invokerPackage}}\Support\Helpers;
     */
     public static function generateSecuredApiKey($parentApiKey, $restrictions)
     {
-        $urlEncodedRestrictions = Helpers::buildQuery($restrictions);
+        $formattedRestrictions = [];
+
+        foreach($restrictions as $key => $restriction) {
+            if (is_array($restriction)) {
+                if (array_is_list($restriction)) {
+                    $formattedRestrictions[$key] = implode(',', $restriction);
+                } else {
+                    foreach($restriction as $k => $v) {
+                        $formattedRestrictions[$k] = $v;
+                    }
+                }
+            } else {
+                $formattedRestrictions[$key] = $restriction;
+            }
+        }
+
+        ksort($formattedRestrictions);
+        $urlEncodedRestrictions = http_build_query($formattedRestrictions, encoding_type: PHP_QUERY_RFC3986);
+
 
         $content = hash_hmac('sha256', $urlEncodedRestrictions, $parentApiKey).$urlEncodedRestrictions;
 

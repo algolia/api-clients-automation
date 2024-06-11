@@ -1,5 +1,5 @@
 //
-//  SecuredAPIKeyHelpers.swift
+//  SecuredApiKeyHelpers.swift
 //
 //
 //  Created by Algolia on 23/02/2024.

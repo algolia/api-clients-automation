@@ -3,7 +3,7 @@ def test_generate_secured_api_key_0(self):
         allow generating a secured api key without restrictions
         """
         _resp = self._client.generate_secured_api_key(parent_api_key="foo")
-        assert _resp == "Yzc2MzU2ZWZhMTlkMjE5ZDFkN2UwOGNjYjIwYjFkMjZkYjUzYjE0MzE1NmY0MDZjOTlkY2I4ZTA4NzZkNmM1NXt9"
+        assert _resp == "NjgzNzE2ZDlkN2Y4MmVlZDE3NGM2Y2FlYmUwODZlZTkzMzc2Yzc5ZDdjNjFkZDY3MGVhMDBmN2Y4ZDZlYjBhOA=="
 
     def test_generate_secured_api_key_1(self):
         """
@@ -16,13 +16,13 @@ def test_generate_secured_api_key_0(self):
             "restrict_sources": "baz",
             "user_token": "foobarbaz",
         })
-        assert _resp == "OGM3YTUyNjI5MTExNjEwNWQ5ZTJhYzBlMWFmY2VjNTg3MmRlZTM4MjZmNzk2MjVmOTJkZGUyNjFhZTQzNDJlNXsic2VhcmNoX3BhcmFtcyI6ICJ7XCJxdWVyeVwiOiBcImZvb1wifSIsICJ2YWxpZF91bnRpbCI6ICIxMDAiLCAicmVzdHJpY3RfaW5kaWNlcyI6ICJiYXIiLCAicmVzdHJpY3Rfc291cmNlcyI6ICJiYXoiLCAidXNlcl90b2tlbiI6ICJmb29iYXJiYXoifQ=="
+        assert _resp == "ZDhjY2YwNTJlMTY0ZmM2ZDM1NmRjMWRlYTg2N2ZhNzgyYWE4YzM0NjY0MzU2MDY0OTAxOThhNjkxMzgzYjlkMXF1ZXJ5PWZvbyZyZXN0cmljdF9pbmRpY2VzPWJhciZyZXN0cmljdF9zb3VyY2VzPWJheiZ1c2VyX3Rva2VuPWZvb2JhcmJheiZ2YWxpZF91bnRpbD0xMDA="
 
     def test_generate_secured_api_key_2(self):
         """
         allow generating a secured api key with the model
         """
-        _resp = self._client.generate_secured_api_key(parent_api_key="bar", restrictions=SecuredAPIKeyRestrictions(
+        _resp = self._client.generate_secured_api_key(parent_api_key="bar", restrictions=SecuredApiKeyRestrictions(
               search_params={"query": "bar", "page": 3},
               valid_until=42,
               restrict_indices=["baz"],
