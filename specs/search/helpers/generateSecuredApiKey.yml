@@ -21,7 +21,7 @@ method:
       The generated API key can have the same restrictions as the parent API key, or be more restrictive.
     parameters:
       - in: query
-        name: apiKey
+        name: parentApiKey
         description: API key from which the secured API key will inherit its restrictions.
         required: true
         schema:

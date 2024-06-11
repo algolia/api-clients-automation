@@ -564,17 +564,17 @@ use {{invokerPackage}}\Support\Helpers;
     }
 
     /**
-    * Helper: Returns the time the given securedAPIKey remains valid in seconds.
+    * Helper: Returns the time the given securedApiKey remains valid in seconds.
     *
-    * @param string $securedAPIKey the key to check
+    * @param string $securedApiKey the key to check
     *
     * @return int remaining validity in seconds
     *
     * @throws ValidUntilNotFoundException
     */
-    public static function getSecuredApiKeyRemainingValidity($securedAPIKey)
+    public static function getSecuredApiKeyRemainingValidity($securedApiKey)
     {
-        $decodedKey = base64_decode($securedAPIKey);
+        $decodedKey = base64_decode($securedApiKey);
         $regex = '/validUntil=(\d+)/';
         preg_match($regex, $decodedKey, $matches);
 
