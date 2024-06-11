@@ -339,6 +339,8 @@ paths:
   # ##########################
   /1/logs:
     $ref: 'paths/advanced/getLogs.yml'
+  /1/task/{taskID}:
+    $ref: 'paths/advanced/getAppTask.yml'
   /1/indexes/{indexName}/task/{taskID}:
     $ref: 'paths/advanced/getTask.yml'
 
