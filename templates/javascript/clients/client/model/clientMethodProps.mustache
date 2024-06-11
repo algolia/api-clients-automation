@@ -63,7 +63,7 @@ type WaitForOptions = Partial<{
   timeout: (retryCount: number) => number;
 }>;
 
-export type waitForAppTaskOptions = WaitForOptions & {
+export type WaitForAppTaskOptions = WaitForOptions & {
   /**
    * The `taskID` returned by the method response.
    */
