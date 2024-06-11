@@ -12,32 +12,32 @@ A `dictionaryName` can be either `stopwords`, `plurals` or `compounds`.
 
 > Useful when you have new data to add to a dictionary and don't want to impact existing entries.
 
-<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+<CodeBlockLanguage snippet={({getSnippet, waitForAppTaskSnippet}) => (
 `${getSnippet('import')}
 
 ${getSnippet('init')}
 
 ${getSnippet('batchDictionaryEntries', 'append')}
 
-${waitForTaskSnippet()}
+${waitForAppTaskSnippet()}
 `)}/>
 
 ## Replace dictionary entries
 
 > Useful when you want to clear every entries of a dictionary and add new ones at the same time.
 
-<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+<CodeBlockLanguage snippet={({getSnippet, waitForAppTaskSnippet}) => (
 `${getSnippet('batchDictionaryEntries', 'replace')}
 
-${waitForTaskSnippet()}
+${waitForAppTaskSnippet()}
 `)}/>
 
 ## Delete entries in the dictionary
 
 > Useful when deleting one or many entries from a dictionary.
 
-<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+<CodeBlockLanguage snippet={({getSnippet, waitForAppTaskSnippet}) => (
 `${getSnippet('batchDictionaryEntries', 'delete')}
 
-${waitForTaskSnippet()}
+${waitForAppTaskSnippet()}
 `)}/>
