@@ -333,6 +333,7 @@ async chunkedBatch({ indexName, objects, action = 'addObject', waitForTasks, bat
 
 /**
  * Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
+ * See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
  *
  * @summary Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
  * @param replaceAllObjects - The `replaceAllObjects` object.
@@ -348,8 +349,7 @@ async replaceAllObjects(
   const randomSuffix = Math.random().toString(36).substring(7);
   const tmpIndexName = `${indexName}_tmp_${randomSuffix}`;
 
-  async function _copy(): Promise<UpdatedAtResponse> {
-    return await this.operationIndex(
+  let copyOperationResponse = await this.operationIndex(
       {
         indexName,
         operationIndexParams: {
@@ -361,19 +361,31 @@ async replaceAllObjects(
       requestOptions
     );
 
-  }
-
-  let copyOperationResponse = await _copy();
-
   const batchResponses = await this.chunkedBatch(
     { indexName: tmpIndexName, objects, waitForTasks: true, batchSize },
     requestOptions
   );
 
-  await this.waitForTask({ indexName, taskID: copyOperationResponse.taskID });
+  await this.waitForTask({
+    indexName,
+    taskID: copyOperationResponse.taskID,
+  });
 
-  copyOperationResponse = await _copy();
-  await this.waitForTask({ indexName, taskID: copyOperationResponse.taskID });
+  copyOperationResponse = await this.operationIndex(
+      {
+        indexName,
+        operationIndexParams: {
+          operation: 'copy',
+          destination: tmpIndexName,
+          scope: ['settings', 'rules', 'synonyms'],
+        },
+      },
+      requestOptions
+    );
+  await this.waitForTask({
+    indexName,
+    taskID: copyOperationResponse.taskID,
+  });
 
   const moveOperationResponse = await this.operationIndex(
     {

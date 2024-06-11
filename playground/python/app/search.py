@@ -16,7 +16,7 @@ async def main():
 
     try:
         resp = await client.replace_all_objects(
-            index_name="baazing",
+            index_name="newoneeverytime",
             objects=[{"name": f"John Doe{i}", "objectID": f"fff2bd4d-bb17-4e21-a0c4-0a8ea5e363f2{i}" } for i in range(33)],
             batch_size=10
         )
