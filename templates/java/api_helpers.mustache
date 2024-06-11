@@ -503,14 +503,19 @@ RequestOptions requestOptions
 List<BatchResponse> responses = new ArrayList<>();
 List<BatchRequest> requests = new ArrayList<>();
 
-for(int i = 0; i < objects.size(); i++) {
-  if (requests.size() == batchSize || (i == objects.size()-1 && requests.size() > 0)) {
+for (T item : objects) {
+  if (requests.size() == batchSize) {
     BatchResponse batch = batch(indexName, new BatchWriteParams().setRequests(requests), requestOptions);
     responses.add(batch);
     requests.clear();
   }
 
   requests.add(new BatchRequest().setAction(action).setBody(item));
+}
+
+if (requests.size() > 0) {
+  BatchResponse batch = batch(indexName, new BatchWriteParams().setRequests(requests), requestOptions);
+  responses.add(batch);
 }
 
 if (waitForTasks) {
