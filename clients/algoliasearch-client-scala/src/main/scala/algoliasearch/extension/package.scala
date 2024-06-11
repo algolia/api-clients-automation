@@ -73,6 +73,29 @@ package object extension {
       )
     }
 
+    /** Wait for an application-level taskID to complete before executing the next line of code.
+      *
+      * @param taskID
+      *   The ID of the task to wait for.
+      * @param maxRetries
+      *   maximum number of retry attempts.
+      * @param requestOptions
+      *   additional request configuration.
+      */
+    def waitAppTask(
+        taskID: Long,
+        delay: Long => Long = DEFAULT_DELAY,
+        maxRetries: Int = 50,
+        requestOptions: Option[RequestOptions] = None
+    )(implicit ec: ExecutionContext): Future[TaskStatus] = {
+      retryUntil(
+        retry = () => client.getAppTask(taskID, requestOptions).map(_.status),
+        until = (status: TaskStatus) => status == TaskStatus.Published,
+        maxRetries = maxRetries,
+        delay = delay
+      )
+    }
+
     /** Wait on an API key update operation.
       *
       * @param key

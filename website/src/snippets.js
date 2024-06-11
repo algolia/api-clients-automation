@@ -28,6 +28,26 @@ if err != nil {
   }[language];
 }
 
+
+export function waitForAppTaskSnippet(language) {
+  return {
+    'csharp': `await client.WaitForAppTaskAsync(response.TaskID);`,
+    'dart': `await client.waitAppTask(response.taskID);`,
+    'go': `taskResponse, err := searchClient.WaitForAppTask(response.TaskID, nil, nil, nil)
+if err != nil {
+  panic(err)
+}`,
+    'java': `client.waitForAppTask(response.getTaskID());`,
+    'javascript': `await client.waitForAppTask({ taskID: response.taskID });`,
+    'kotlin': `client.waitAppTask(response.taskID)`,
+    'php': `$client->waitForAppTask($response['taskID']);`,
+    'python': `await client.wait_for_app_task(task_id=response.task_id)`,
+    'ruby': `client.wait_for_app_task(response.task_id)`,
+    'scala': `client.waitAppTask(response.getTaskID())`,
+    'swift': `try await client.waitForAppTask(with: response.taskID)`,
+  }[language];
+}
+
 export function waitForApiKeySnippet(language, operation) {
   return {
     'csharp': {
