@@ -28,6 +28,22 @@ extension WaitTask on SearchClient {
     );
   }
 
+  /// Wait for an application-level [taskID] to complete before executing the next line of code.
+  Future<void> waitAppTask({
+    required int taskID,
+    WaitParams params = const WaitParams(),
+    RequestOptions? requestOptions,
+  }) async {
+    await _waitUntil(
+      params: params,
+      retry: () => getAppTask(
+        taskID: taskID,
+        requestOptions: requestOptions,
+      ),
+      until: (response) => response.status == TaskStatus.published,
+    );
+  }
+
   ///  Wait on an API key creation operation.
   Future<void> waitKeyCreation({
     required String key,

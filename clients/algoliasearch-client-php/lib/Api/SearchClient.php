@@ -24,7 +24,7 @@ use Algolia\AlgoliaSearch\Support\Helpers;
  */
 class SearchClient
 {
-    public const VERSION = '4.0.0-beta.2';
+    public const VERSION = '4.0.0-beta.3';
 
     /**
      * @var ApiWrapperInterface
@@ -2755,6 +2755,36 @@ class SearchClient
             $this,
             'getTask',
             [$indexName, $taskId, $requestOptions],
+            function ($res) {return 'published' === $res['status']; },
+            $maxRetries,
+            $timeout
+        );
+    }
+
+    /**
+     * Wait for an application-level task to complete with `taskID`.
+     *
+     * @param int      $taskId         Task Id
+     * @param array    $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     * @param null|int $maxRetries     Maximum number of retries
+     * @param null|int $timeout        Timeout
+     *
+     * @throws ExceededRetriesException
+     */
+    public function waitForAppTask($taskId, $requestOptions = [], $maxRetries = null, $timeout = null)
+    {
+        if (null === $timeout) {
+            $timeout = $this->config->getWaitTaskTimeBeforeRetry();
+        }
+
+        if (null === $maxRetries) {
+            $maxRetries = $this->config->getDefaultMaxRetries();
+        }
+
+        Helpers::retryUntil(
+            $this,
+            'getAppTask',
+            [$taskId, $requestOptions],
             function ($res) {return 'published' === $res['status']; },
             $maxRetries,
             $timeout

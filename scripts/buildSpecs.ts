@@ -272,6 +272,11 @@ async function buildLiteSpec({
 
   await fsp.writeFile(bundledPath, yaml.dump(parsed));
 
+  // remove unused components for the outputted light spec
+  await run(
+    `yarn openapi bundle ${bundledPath} -o ${bundledPath} --ext yml --remove-unused-components`,
+  );
+
   await transformBundle({
     bundledPath,
     clientName: spec,

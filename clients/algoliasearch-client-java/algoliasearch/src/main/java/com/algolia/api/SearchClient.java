@@ -5723,6 +5723,57 @@ public class SearchClient extends ApiClient {
   }
 
   /**
+   * Helper: Wait for a application-level task to complete with `taskID`.
+   *
+   * @param taskID The `taskID` returned in the method response.
+   * @param maxRetries The maximum number of retry. 50 by default. (optional)
+   * @param timeout The function to decide how long to wait between retries. min(retries * 200,
+   *     5000) by default. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public void waitForAppTask(Long taskID, int maxRetries, IntUnaryOperator timeout, RequestOptions requestOptions) {
+    TaskUtils.retryUntil(
+      () -> this.getAppTask(taskID, requestOptions),
+      (GetTaskResponse task) -> task.getStatus() == TaskStatus.PUBLISHED,
+      maxRetries,
+      timeout
+    );
+  }
+
+  /**
+   * Helper: Wait for an application-level task to complete with `taskID`.
+   *
+   * @param taskID The `taskID` returned in the method response.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public void waitForAppTask(Long taskID, RequestOptions requestOptions) {
+    this.waitForAppTask(taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
+  }
+
+  /**
+   * Helper: Wait for an application-level task to complete with `taskID`.
+   *
+   * @param taskID The `taskID` returned in the method response.
+   * @param maxRetries The maximum number of retry. 50 by default. (optional)
+   * @param timeout The function to decide how long to wait between retries. min(retries * 200,
+   *     5000) by default. (optional)
+   */
+  public void waitForAppTask(Long taskID, int maxRetries, IntUnaryOperator timeout) {
+    this.waitForAppTask(taskID, maxRetries, timeout, null);
+  }
+
+  /**
+   * Helper: Wait for an application-level task to complete with `taskID`.
+   *
+   * @param taskID The `taskID` returned in the method response.
+   */
+  public void waitForAppTask(Long taskID) {
+    this.waitForAppTask(taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
+  }
+
+  /**
    * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
    *
    * @param operation The `operation` that was done on a `key`.

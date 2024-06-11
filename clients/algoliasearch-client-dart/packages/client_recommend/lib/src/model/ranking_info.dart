@@ -11,7 +11,7 @@ part 'ranking_info.g.dart';
 final class RankingInfo {
   /// Returns a new [RankingInfo] instance.
   const RankingInfo({
-    required this.filters,
+    this.filters,
     required this.firstMatchedWord,
     required this.geoDistance,
     this.geoPrecision,
@@ -19,17 +19,17 @@ final class RankingInfo {
     this.personalization,
     required this.nbExactWords,
     required this.nbTypos,
-    required this.promoted,
+    this.promoted,
     this.proximityDistance,
     required this.userScore,
-    required this.words,
+    this.words,
     this.promotedByReRanking,
   });
 
   /// Whether a filter matched the query.
   // minimum: 0
   @JsonKey(name: r'filters')
-  final int filters;
+  final int? filters;
 
   /// Position of the first matched word in the best matching attribute of the record.
   // minimum: 0
@@ -64,7 +64,7 @@ final class RankingInfo {
 
   /// Whether the record was promoted by a rule.
   @JsonKey(name: r'promoted')
-  final bool promoted;
+  final bool? promoted;
 
   /// Number of words between multiple matches in the query plus 1. For single word queries, `proximityDistance` is 0.
   // minimum: 0
@@ -78,7 +78,7 @@ final class RankingInfo {
   /// Number of matched words.
   // minimum: 1
   @JsonKey(name: r'words')
-  final int words;
+  final int? words;
 
   /// Whether the record is re-ranked.
   @JsonKey(name: r'promotedByReRanking')
