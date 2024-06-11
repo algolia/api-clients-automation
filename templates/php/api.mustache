@@ -477,7 +477,7 @@ use {{invokerPackage}}\Support\Helpers;
                 'body' => $object,
             ];
 
-            if (sizeof($requests) === $batchSize || ($count === sizeof($objects)-1 && sizeof($requests) > 0)) {
+            if (sizeof($requests) === $batchSize || $count === sizeof($objects)-1) {
                 $responses[] = $this->batch($indexName, ['requests' => $requests], $requestOptions);
                 $requests = [];
             }

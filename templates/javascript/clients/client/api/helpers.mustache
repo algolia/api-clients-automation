@@ -282,7 +282,7 @@ async chunkedBatch({ indexName, objects, action = 'addObject', waitForTasks, bat
   const objectEntries = objects.entries();
   for (const [i, obj] of objectEntries) {
     requests.push({action, body: obj});
-    if (requests.length === batchSize || (i === objects.length-1 && requests.length > 0)) {
+    if (requests.length === batchSize || i === objects.length-1) {
       responses.push(await this.batch({indexName, batchWriteParams: {requests}}, requestOptions));
       requests = [];
     }
