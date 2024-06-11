@@ -708,6 +708,27 @@ class SearchClient(
     execute[GetApiKeyResponse](request, requestOptions)
   }
 
+  /** Checks the status of a given application task.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param taskID
+    *   Unique task identifier.
+    */
+  def getAppTask(taskID: Long, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[GetTaskResponse] = Future {
+    requireNotNull(taskID, "Parameter `taskID` is required when calling `getAppTask`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/1/task/${escape(taskID)}")
+      .build()
+    execute[GetTaskResponse](request, requestOptions)
+  }
+
   /** Lists supported languages with their supported dictionary types and number of custom entries.
     *
     * Required API Key ACLs:

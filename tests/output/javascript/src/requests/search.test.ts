@@ -923,6 +923,19 @@ describe('getApiKey', () => {
   });
 });
 
+describe('getAppTask', () => {
+  test('getAppTask', async () => {
+    const req = (await client.getAppTask({
+      taskID: 123,
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/task/123');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('getDictionaryLanguages', () => {
   test('get getDictionaryLanguages', async () => {
     const req =

@@ -1081,6 +1081,20 @@ class TestSearchClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    async def test_get_app_task_(self):
+        """
+        getAppTask
+        """
+        _req = await self._client.get_app_task_with_http_info(
+            task_id=123,
+        )
+
+        assert _req.path == "/1/task/123"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     async def test_get_dictionary_languages_(self):
         """
         get getDictionaryLanguages

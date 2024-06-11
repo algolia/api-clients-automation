@@ -1336,6 +1336,26 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     /**
+     * Test case for GetAppTask
+     * getAppTask.
+     */
+    public function testGetAppTask()
+    {
+        $client = $this->getClient();
+        $client->getAppTask(
+            123,
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/task/123',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    /**
      * Test case for GetDictionaryLanguages
      * get getDictionaryLanguages.
      */

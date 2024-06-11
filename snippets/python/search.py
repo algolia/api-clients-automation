@@ -884,6 +884,29 @@ async def snippet_for_get_api_key():
     # SEPARATOR<
 
 
+async def snippet_for_get_app_task():
+    """
+    Snippet for the getAppTask method.
+
+    getAppTask
+    """
+    # >SEPARATOR getAppTask default
+    # Initialize the client
+    _client = SearchClient("YOUR_APP_ID", "YOUR_API_KEY")
+
+    # Call the API
+    response = await _client.get_app_task(
+        task_id=123,
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
 async def snippet_for_get_dictionary_languages():
     """
     Snippet for the getDictionaryLanguages method.

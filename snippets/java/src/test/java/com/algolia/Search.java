@@ -502,6 +502,19 @@ class SnippetSearchClient {
     // SEPARATOR<
   }
 
+  // Snippet for the getAppTask method.
+  //
+  // getAppTask
+  void snippetForGetAppTask() {
+    // >SEPARATOR getAppTask default
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.getAppTask(123L);
+    // SEPARATOR<
+  }
+
   // Snippet for the getDictionaryLanguages method.
   //
   // get getDictionaryLanguages

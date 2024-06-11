@@ -963,6 +963,23 @@ func TestSearch_GetApiKey(t *testing.T) {
 	})
 }
 
+func TestSearch_GetAppTask(t *testing.T) {
+	client, echo := createSearchClient(t)
+	_ = echo
+
+	t.Run("getAppTask", func(t *testing.T) {
+		_, err := client.GetAppTask(client.NewApiGetAppTaskRequest(
+			123,
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/task/123", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+	})
+}
+
 func TestSearch_GetDictionaryLanguages(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo

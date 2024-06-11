@@ -922,6 +922,34 @@ final class SearchClient implements ApiClient {
     );
   }
 
+  /// Checks the status of a given application task.
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  ///
+  /// Parameters:
+  /// * [taskID] Unique task identifier.
+  /// * [requestOptions] additional request configuration.
+  Future<GetTaskResponse> getAppTask({
+    required int taskID,
+    RequestOptions? requestOptions,
+  }) async {
+    final request = ApiRequest(
+      method: RequestMethod.get,
+      path: r'/1/task/{taskID}'.replaceAll(
+          '{' r'taskID' '}', Uri.encodeComponent(taskID.toString())),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<GetTaskResponse, GetTaskResponse>(
+      response,
+      'GetTaskResponse',
+      growable: true,
+    );
+  }
+
   /// Lists supported languages with their supported dictionary types and number of custom entries.
   ///
   /// Required API Key ACLs:

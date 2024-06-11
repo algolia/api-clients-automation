@@ -1191,6 +1191,20 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
+  test("getAppTask") {
+    val (client, echo) = testClient()
+    val future = client.getAppTask(
+      taskID = 123L
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/task/123")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
   test("get getDictionaryLanguages") {
     val (client, echo) = testClient()
     val future = client.getDictionaryLanguages(

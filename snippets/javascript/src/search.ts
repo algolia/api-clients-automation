@@ -621,6 +621,22 @@ export async function snippetForGetApiKey(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the getAppTask method.
+//
+// getAppTask
+export async function snippetForGetAppTask(): Promise<void> {
+  // >SEPARATOR getAppTask default
+  // Initialize the client
+  const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.getAppTask({ taskID: 123 });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the getDictionaryLanguages method.
 //
 // get getDictionaryLanguages

@@ -908,6 +908,34 @@ func SnippetForGetApiKeyOfSearch() {
 	print(response)
 	// SEPARATOR<
 }
+func SnippetForGetAppTaskOfSearch() {
+	/*
+	   Snippet for the getAppTask method.
+
+	   getAppTask
+	*/
+
+	// >SEPARATOR getAppTask default
+	// Initialize the client
+	client, err := search.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.GetAppTask(client.NewApiGetAppTaskRequest(
+		123,
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
 func SnippetForGetDictionaryLanguagesOfSearch() {
 	/*
 	   Snippet for the getDictionaryLanguages method.

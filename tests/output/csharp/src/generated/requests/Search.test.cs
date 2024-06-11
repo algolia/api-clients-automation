@@ -1196,6 +1196,17 @@ public class SearchClientRequestTests
     Assert.Null(req.Body);
   }
 
+  [Fact(DisplayName = "getAppTask")]
+  public async Task GetAppTaskTest()
+  {
+    await _client.GetAppTaskAsync(123L);
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/task/123", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
   [Fact(DisplayName = "get getDictionaryLanguages")]
   public async Task GetDictionaryLanguagesTest()
   {

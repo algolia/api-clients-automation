@@ -829,6 +829,18 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
+  # getAppTask
+  def test_get_app_task
+    req = @client.get_app_task_with_http_info(123)
+
+    assert_equal(:get, req.method)
+    assert_equal('/1/task/123', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, 'body is not nil')
+  end
+
   # get getDictionaryLanguages
   def test_get_dictionary_languages
     req = @client.get_dictionary_languages_with_http_info

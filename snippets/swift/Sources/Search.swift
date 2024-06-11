@@ -510,6 +510,19 @@ final class SearchClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the getAppTask method.
+    ///
+    /// getAppTask
+    func snippetForGetAppTask() async throws {
+        // >SEPARATOR getAppTask default
+        // Initialize the client
+        let client = try SearchClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
+
+        // Call the API
+        let response = try await client.getAppTask(taskID: Int64(123))
+        // SEPARATOR<
+    }
+
     /// Snippet for the getDictionaryLanguages method.
     ///
     /// get getDictionaryLanguages

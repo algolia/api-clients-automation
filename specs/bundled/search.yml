@@ -2917,6 +2917,45 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+  /1/task/{taskID}:
+    get:
+      tags:
+        - search
+      operationId: getAppTask
+      x-acl:
+        - editSettings
+      description: |
+        Checks the status of a given application task.
+      summary: Check application task status
+      parameters:
+        - name: taskID
+          in: path
+          description: Unique task identifier.
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1506303845001
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: getTaskResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  status:
+                    $ref: '#/components/schemas/taskStatus'
+                required:
+                  - status
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
   /1/indexes/{indexName}/task/{taskID}:
     get:
       tags:

@@ -720,6 +720,23 @@ class SnippetSearchClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetAppTask() {
+    // >SEPARATOR getAppTask default
+    // Initialize the client
+    val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+    // Call the API
+    var response = client.getAppTask(
+      taskID = 123L,
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForGetDictionaryLanguages() {
     // >SEPARATOR getDictionaryLanguages default
     // Initialize the client
