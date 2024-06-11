@@ -314,26 +314,32 @@ async replaceAllObjects(
   const randomSuffix = Math.random().toString(36).substring(7);
   const tmpIndexName = `${indexName}_tmp_${randomSuffix}`;
 
-  const copyOperationResponse = await this.operationIndex(
-    {
-      indexName,
-      operationIndexParams: {
-        operation: 'copy',
-        destination: tmpIndexName,
-        scope: ['settings', 'rules', 'synonyms'],
+  async function _copy(): Promise<UpdatedAtResponse> {
+    return await this.operationIndex(
+      {
+        indexName,
+        operationIndexParams: {
+          operation: 'copy',
+          destination: tmpIndexName,
+          scope: ['settings', 'rules', 'synonyms'],
+        },
       },
-    },
-    requestOptions
-  );
-  await this.waitForTask({
-    indexName,
-    taskID: copyOperationResponse.taskID,
-  });
+      requestOptions
+    );
+
+  }
+
+  let copyOperationResponse = await _copy();
 
   const batchResponses = await this.chunkedBatch(
     { indexName: tmpIndexName, objects, waitForTasks: true, batchSize },
     requestOptions
   );
+
+  await this.waitForTask({ indexName, taskID: copyOperationResponse.taskID });
+
+  copyOperationResponse = await _copy();
+  await this.waitForTask({ indexName, taskID: copyOperationResponse.taskID });
 
   const moveOperationResponse = await this.operationIndex(
     {
@@ -343,7 +349,7 @@ async replaceAllObjects(
     requestOptions
   );
   await this.waitForTask({
-    indexName,
+    indexName: tmpIndexName,
     taskID: moveOperationResponse.taskID,
   });
 
