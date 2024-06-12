@@ -412,17 +412,12 @@ async function updateLTS(versions: Versions, withGraphs?: boolean): Promise<void
     }
 
     if (current in supportedVersions) {
-      if (versions[lang].releaseType === 'major') {
-        supportedVersions[current].maintenance = end.toISOString().split('T')[0];
-        supportedVersions[current].end = end.toISOString().split('T')[0];
-
-        break;
+      if (versions[lang].releaseType !== 'major') {
+        // In the same major, the current version enters in maintenance mode, and the next become the new active
+        delete supportedVersions[current].active;
       }
 
-      // In the same major, the current version enters in maintenance mode, we drop the active one
-      delete supportedVersions[current].active;
-
-      supportedVersions[current].maintenance = start.toISOString().split('T')[0];
+      supportedVersions[current].maintenance = end.toISOString().split('T')[0];
     }
 
     supportedVersions[next] = {
