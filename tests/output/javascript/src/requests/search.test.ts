@@ -3129,7 +3129,7 @@ describe('replaceAllObjects', () => {
     });
 
     expect(client.batch).toHaveBeenCalledTimes(1);
-    expect(client.operationIndex).toHaveBeenCalledTimes(2);
+    expect(client.operationIndex).toHaveBeenCalledTimes(3);
     expect(resp).toEqual({
       copyOperationResponse: { taskID: 21, updatedAt: 'foobar' },
       batchResponses: [
@@ -3155,7 +3155,7 @@ describe('replaceAllObjects', () => {
     });
 
     expect(client.batch).toHaveBeenCalledTimes(4);
-    expect(client.operationIndex).toHaveBeenCalledTimes(2);
+    expect(client.operationIndex).toHaveBeenCalledTimes(3);
     expect(resp).toEqual({
       copyOperationResponse: { taskID: 21, updatedAt: 'foobar' },
       batchResponses: [
@@ -3189,7 +3189,7 @@ describe('replaceAllObjects', () => {
     const resp = await client.replaceAllObjects({ indexName: 'foo', objects });
 
     expect(client.batch).toHaveBeenCalledTimes(2);
-    expect(client.operationIndex).toHaveBeenCalledTimes(2);
+    expect(client.operationIndex).toHaveBeenCalledTimes(3);
     expect(resp).toEqual({
       copyOperationResponse: { taskID: 21, updatedAt: 'foobar' },
       batchResponses: [
