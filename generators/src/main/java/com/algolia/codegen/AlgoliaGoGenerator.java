@@ -1,9 +1,12 @@
 package com.algolia.codegen;
 
 import com.algolia.codegen.exceptions.*;
+import com.algolia.codegen.lambda.ScreamingSnakeCaseLambda;
 import com.algolia.codegen.utils.*;
 import com.algolia.codegen.utils.OneOf;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
+import com.samskivert.mustache.Mustache;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.servers.Server;
@@ -53,6 +56,11 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
       e.printStackTrace();
       System.exit(1);
     }
+  }
+
+  @Override
+  protected ImmutableMap.Builder<String, Mustache.Lambda> addMustacheLambdas() {
+    return super.addMustacheLambdas().put("screamingSnakeCase", new ScreamingSnakeCaseLambda());
   }
 
   @Override
