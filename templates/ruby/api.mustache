@@ -1,5 +1,10 @@
 # {{{generationBanner}}}
 
+{{#isSearchClient}}
+require 'openssl'
+require 'base64'
+{{/isSearchClient}}
+
 module {{moduleName}}
 {{#operations}}
   class {{classname}}
