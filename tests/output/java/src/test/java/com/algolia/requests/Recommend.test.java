@@ -550,7 +550,7 @@ class RecommendClientRequestsTests {
   @DisplayName("deleteRecommendRule")
   void deleteRecommendRuleTest() {
     assertDoesNotThrow(() -> {
-      client.deleteRecommendRule("indexName", RecommendModels.fromValue("related-products"), "objectID");
+      client.deleteRecommendRule("indexName", RecommendModels.RELATED_PRODUCTS, "objectID");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/related-products/recommend/rules/objectID", req.path);
@@ -562,7 +562,7 @@ class RecommendClientRequestsTests {
   @DisplayName("getRecommendRule")
   void getRecommendRuleTest() {
     assertDoesNotThrow(() -> {
-      client.getRecommendRule("indexName", RecommendModels.fromValue("related-products"), "objectID");
+      client.getRecommendRule("indexName", RecommendModels.RELATED_PRODUCTS, "objectID");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/related-products/recommend/rules/objectID", req.path);
@@ -574,7 +574,7 @@ class RecommendClientRequestsTests {
   @DisplayName("getRecommendStatus")
   void getRecommendStatusTest() {
     assertDoesNotThrow(() -> {
-      client.getRecommendStatus("indexName", RecommendModels.fromValue("related-products"), 12345L);
+      client.getRecommendStatus("indexName", RecommendModels.RELATED_PRODUCTS, 12345L);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/related-products/task/12345", req.path);
@@ -593,7 +593,7 @@ class RecommendClientRequestsTests {
               new RelatedQuery()
                 .setIndexName("indexName")
                 .setObjectID("objectID")
-                .setModel(RelatedModel.fromValue("related-products"))
+                .setModel(RelatedModel.RELATED_PRODUCTS)
                 .setThreshold(42.1)
             )
           )
@@ -622,7 +622,7 @@ class RecommendClientRequestsTests {
               new RelatedQuery()
                 .setIndexName("indexName")
                 .setObjectID("objectID")
-                .setModel(RelatedModel.fromValue("related-products"))
+                .setModel(RelatedModel.RELATED_PRODUCTS)
                 .setThreshold(42.1)
                 .setMaxRecommendations(10)
                 .setQueryParameters(
@@ -657,7 +657,7 @@ class RecommendClientRequestsTests {
             List.of(
               new TrendingItemsQuery()
                 .setIndexName("indexName")
-                .setModel(TrendingItemsModel.fromValue("trending-items"))
+                .setModel(TrendingItemsModel.TRENDING_ITEMS)
                 .setThreshold(42.1)
                 .setFacetName("facet")
                 .setFacetValue("value")
@@ -687,7 +687,7 @@ class RecommendClientRequestsTests {
             List.of(
               new TrendingItemsQuery()
                 .setIndexName("indexName")
-                .setModel(TrendingItemsModel.fromValue("trending-items"))
+                .setModel(TrendingItemsModel.TRENDING_ITEMS)
                 .setThreshold(42.1)
                 .setMaxRecommendations(10)
                 .setFacetName("myFacetName")
@@ -725,12 +725,12 @@ class RecommendClientRequestsTests {
               new RelatedQuery()
                 .setIndexName("indexName1")
                 .setObjectID("objectID1")
-                .setModel(RelatedModel.fromValue("related-products"))
+                .setModel(RelatedModel.RELATED_PRODUCTS)
                 .setThreshold(21.7),
               new RelatedQuery()
                 .setIndexName("indexName2")
                 .setObjectID("objectID2")
-                .setModel(RelatedModel.fromValue("related-products"))
+                .setModel(RelatedModel.RELATED_PRODUCTS)
                 .setThreshold(21.7)
             )
           )
@@ -759,7 +759,7 @@ class RecommendClientRequestsTests {
               new RelatedQuery()
                 .setIndexName("indexName1")
                 .setObjectID("objectID1")
-                .setModel(RelatedModel.fromValue("related-products"))
+                .setModel(RelatedModel.RELATED_PRODUCTS)
                 .setThreshold(21.7)
                 .setMaxRecommendations(10)
                 .setQueryParameters(
@@ -771,7 +771,7 @@ class RecommendClientRequestsTests {
               new RelatedQuery()
                 .setIndexName("indexName2")
                 .setObjectID("objectID2")
-                .setModel(RelatedModel.fromValue("related-products"))
+                .setModel(RelatedModel.RELATED_PRODUCTS)
                 .setThreshold(21.7)
                 .setMaxRecommendations(10)
                 .setQueryParameters(
@@ -807,7 +807,7 @@ class RecommendClientRequestsTests {
               new BoughtTogetherQuery()
                 .setIndexName("indexName1")
                 .setObjectID("objectID1")
-                .setModel(FbtModel.fromValue("bought-together"))
+                .setModel(FbtModel.BOUGHT_TOGETHER)
                 .setThreshold(42.7)
             )
           )
@@ -829,7 +829,7 @@ class RecommendClientRequestsTests {
   @DisplayName("searchRecommendRules")
   void searchRecommendRulesTest() {
     assertDoesNotThrow(() -> {
-      client.searchRecommendRules("indexName", RecommendModels.fromValue("related-products"));
+      client.searchRecommendRules("indexName", RecommendModels.RELATED_PRODUCTS);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/indexName/related-products/recommend/rules/search", req.path);

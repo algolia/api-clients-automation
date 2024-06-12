@@ -575,7 +575,7 @@ class InsightsClientRequestsTests {
           .setEvents(
             List.of(
               new ClickedObjectIDsAfterSearch()
-                .setEventType(ClickEvent.fromValue("click"))
+                .setEventType(ClickEvent.CLICK)
                 .setEventName("Product Clicked")
                 .setIndex("products")
                 .setUserToken("user-123456")
@@ -610,7 +610,7 @@ class InsightsClientRequestsTests {
           .setEvents(
             List.of(
               new ConvertedObjectIDsAfterSearch()
-                .setEventType(ConversionEvent.fromValue("conversion"))
+                .setEventType(ConversionEvent.CONVERSION)
                 .setEventName("Product Purchased")
                 .setIndex("products")
                 .setUserToken("user-123456")
@@ -619,7 +619,7 @@ class InsightsClientRequestsTests {
                 .setObjectIDs(List.of("9780545139700", "9780439784542"))
                 .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
               new ViewedObjectIDs()
-                .setEventType(ViewEvent.fromValue("view"))
+                .setEventType(ViewEvent.VIEW)
                 .setEventName("Product Detail Page Viewed")
                 .setIndex("products")
                 .setUserToken("user-123456")
@@ -649,7 +649,7 @@ class InsightsClientRequestsTests {
         .setEvents(
           List.of(
             new ConvertedObjectIDsAfterSearch()
-              .setEventType(ConversionEvent.fromValue("conversion"))
+              .setEventType(ConversionEvent.CONVERSION)
               .setEventName("Product Purchased")
               .setIndex("products")
               .setUserToken("user-123456")
@@ -658,7 +658,7 @@ class InsightsClientRequestsTests {
               .setObjectIDs(List.of("9780545139700", "9780439784542"))
               .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
             new ViewedObjectIDs()
-              .setEventType(ViewEvent.fromValue("view"))
+              .setEventType(ViewEvent.VIEW)
               .setEventName("Product Detail Page Viewed")
               .setIndex("products")
               .setUserToken("user-123456")
@@ -682,7 +682,7 @@ class InsightsClientRequestsTests {
           .setEvents(
             List.of(
               new ConvertedObjectIDsAfterSearch()
-                .setEventType(ConversionEvent.fromValue("conversion"))
+                .setEventType(ConversionEvent.CONVERSION)
                 .setEventName("Product Purchased")
                 .setIndex("products")
                 .setUserToken("user-123456")
@@ -716,7 +716,7 @@ class InsightsClientRequestsTests {
           .setEvents(
             List.of(
               new ViewedObjectIDs()
-                .setEventType(ViewEvent.fromValue("view"))
+                .setEventType(ViewEvent.VIEW)
                 .setEventName("Product Detail Page Viewed")
                 .setIndex("products")
                 .setUserToken("user-123456")
@@ -749,8 +749,8 @@ class InsightsClientRequestsTests {
           .setEvents(
             List.of(
               new AddedToCartObjectIDsAfterSearch()
-                .setEventType(ConversionEvent.fromValue("conversion"))
-                .setEventSubtype(AddToCartEvent.fromValue("addToCart"))
+                .setEventType(ConversionEvent.CONVERSION)
+                .setEventSubtype(AddToCartEvent.ADD_TO_CART)
                 .setEventName("Product Added To Cart")
                 .setIndex("products")
                 .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")

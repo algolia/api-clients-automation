@@ -1434,7 +1434,7 @@ paths:
 
             // Call the API
 
-            client.getUsage(Statistic.fromValue("queries_operations"),
+            client.getUsage(Statistic.QUERIES_OPERATIONS,
             "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
         - lang: javascript
           label: JavaScript
@@ -1607,7 +1607,7 @@ paths:
 
             // Call the API
 
-            client.getUsage(Statistic.fromValue("queries_operations"),
+            client.getUsage(Statistic.QUERIES_OPERATIONS,
             "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
         - lang: javascript
           label: JavaScript
@@ -1815,8 +1815,8 @@ paths:
 
             // Call the API
 
-            client.getIndexUsage(Statistic.fromValue("queries_operations"),
-            "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+            client.getIndexUsage(Statistic.QUERIES_OPERATIONS, "myIndexName",
+            "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
         - lang: javascript
           label: JavaScript
           source: |
@@ -2004,8 +2004,8 @@ paths:
 
             // Call the API
 
-            client.getIndexUsage(Statistic.fromValue("queries_operations"),
-            "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+            client.getIndexUsage(Statistic.QUERIES_OPERATIONS, "myIndexName",
+            "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
         - lang: javascript
           label: JavaScript
           source: |
