@@ -12,43 +12,6 @@ namespace Algolia.Search.Tests;
 public class SecuredApiKeysTests
 {
   [Fact]
-  public void ShouldGenerateSecuredApiKey()
-  {
-    var client = new SearchClient(new SearchConfig("test-app-id", "test-api-key"));
-    var securedApiKey = client.GenerateSecuredApiKey(
-      "parent-api-key",
-      new SecuredApiKeyRestrictions
-      {
-        SearchParams = new SearchParamsObject
-        {
-          Mode = Mode.NeuralSearch,
-          HitsPerPage = 10,
-          OptionalWords = ["one", "two"],
-          QueryType = QueryType.PrefixNone,
-          EnableRules = true,
-          AlternativesAsExact =
-          [
-            AlternativesAsExact.IgnorePlurals,
-            AlternativesAsExact.SingleWordSynonym
-          ],
-          AttributeCriteriaComputedByMinProximity = false
-        },
-        RestrictIndices = ["index1", "index2"],
-        RestrictSources = "192.168.1.0/24",
-        UserToken = "my-user-token",
-        ValidUntil = 1
-      }
-    );
-
-    const string expectedQueryParams =
-      "queryType=prefixNone&mode=neuralSearch&hitsPerPage=10&enableRules=true&optionalWords=one%2Ctwo&alternativesAsExact=ignorePlurals%2CsingleWordSynonym&attributeCriteriaComputedByMinProximity=false&validUntil=1&restrictIndices=index1%2Cindex2&restrictSources=192.168.1.0%2F24&userToken=my-user-token";
-    var hash = HmacShaHelper.GetHash("parent-api-key", expectedQueryParams);
-    var expectedKey = HmacShaHelper.Base64Encode($"{hash}{expectedQueryParams}");
-
-    Assert.Equal(expectedKey, securedApiKey);
-  }
-
-  [Fact]
   public void ShouldDetectExpiredKey()
   {
     // Test an expired key
