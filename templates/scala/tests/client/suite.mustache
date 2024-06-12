@@ -39,6 +39,7 @@ class {{clientPrefix}}Test extends AnyFunSuite {
 
   {{#blocksClient}}
   {{#tests}}
+  {{^isHelper}} {{! Helper tests are not supported yet}}
 
   test("{{{testName}}}") {
     {{#autoCreateClient}}
@@ -79,6 +80,7 @@ class {{clientPrefix}}Test extends AnyFunSuite {
     {{/isError}}
     {{/steps}}
   }
+  {{/isHelper}}
   {{/tests}}
   {{/blocksClient}}
 }

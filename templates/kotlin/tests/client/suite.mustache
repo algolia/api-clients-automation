@@ -16,7 +16,6 @@ class {{clientPrefix}}Test {
 
     {{#blocksClient}}
     {{#tests}}
-    {{^isHelper}} {{! Helper tests are not supported yet}}
     @Test
     fun `{{#lambda.replaceBacktick}}{{{testName}}}{{/lambda.replaceBacktick}}`() = runTest {
         {{#autoCreateClient}}
@@ -71,7 +70,6 @@ class {{clientPrefix}}Test {
         {{/isError}}
         {{/steps}}
     }
-    {{/isHelper}}
     {{/tests}}
     {{/blocksClient}}
 }
