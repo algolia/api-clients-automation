@@ -198,6 +198,9 @@ package object extension {
       * settings, synonyms and query rules and indexes all passed objects. Finally, the temporary one replaces the
       * existing index.
       *
+      * See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation
+      * details.
+      *
       * @param indexName
       *   The index in which to perform the request.
       * @param records
@@ -215,31 +218,44 @@ package object extension {
       val requests = records.map { record =>
         BatchRequest(action = Action.AddObject, body = record)
       }
-      val destinationIndex = s"${indexName}_tmp_${scala.util.Random.nextInt(100)}"
+      val tmpIndexName = s"${indexName}_tmp_${scala.util.Random.nextInt(100)}"
 
       for {
         copy <- client.operationIndex(
           indexName = indexName,
           operationIndexParams = OperationIndexParams(
             operation = OperationType.Copy,
-            destination = destinationIndex,
+            destination = tmpIndexName,
             scope = Some(Seq(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms))
           ),
           requestOptions = requestOptions
         )
-        _ <- client.waitTask(indexName = destinationIndex, taskID = copy.taskID, requestOptions = requestOptions)
+
         batch <- client.batch(
-          indexName = destinationIndex,
+          indexName = tmpIndexName,
           batchWriteParams = BatchWriteParams(requests),
           requestOptions = requestOptions
-        ) // 3. update the copy
-        _ <- client.waitTask(indexName = destinationIndex, taskID = batch.taskID, requestOptions = requestOptions)
+        )
+        _ <- client.waitTask(indexName = tmpIndexName, taskID = batch.taskID, requestOptions = requestOptions)
+        _ <- client.waitTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
+
+        copy <- client.operationIndex(
+          indexName = indexName,
+          operationIndexParams = OperationIndexParams(
+            operation = OperationType.Copy,
+            destination = tmpIndexName,
+            scope = Some(Seq(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms))
+          ),
+          requestOptions = requestOptions
+        )
+        _ <- client.waitTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
+
         replace <- client.operationIndex(
-          indexName = destinationIndex,
+          indexName = tmpIndexName,
           operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
           requestOptions = requestOptions
         )
-        _ <- client.waitTask(indexName = indexName, taskID = replace.taskID, requestOptions = requestOptions)
+        _ <- client.waitTask(indexName = tmpIndexName, taskID = replace.taskID, requestOptions = requestOptions)
       } yield Seq(copy.taskID, batch.taskID, replace.taskID)
     }
   }

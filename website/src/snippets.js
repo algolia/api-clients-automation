@@ -82,7 +82,7 @@ if err != nil {
     'java': {
       'add': `client.waitForApiKey(ApiKeyOperation.ADD, response.Key, null)`,
       'update': `client.waitForApiKey(ApiKeyOperation.UPDATE, response.Key, new ApiKey()
-        .setAcl(List.of(Acl.fromValue("search"), Acl.fromValue("addObject")))
+        .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT))
         .setValidity(300)
         .setMaxQueriesPerIPPerHour(100)
         .setMaxHitsPerQuery(20))`,

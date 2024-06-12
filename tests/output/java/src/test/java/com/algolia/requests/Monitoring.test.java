@@ -610,7 +610,7 @@ class MonitoringClientRequestsTests {
   @DisplayName("getMetrics")
   void getMetricsTest() {
     assertDoesNotThrow(() -> {
-      client.getMetrics(Metric.fromValue("avg_build_time"), Period.fromValue("minute"));
+      client.getMetrics(Metric.AVG_BUILD_TIME, Period.MINUTE);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/infrastructure/avg_build_time/period/minute", req.path);

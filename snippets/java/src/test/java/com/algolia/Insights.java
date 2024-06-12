@@ -87,7 +87,7 @@ class SnippetInsightsClient {
         .setEvents(
           List.of(
             new ClickedObjectIDsAfterSearch()
-              .setEventType(ClickEvent.fromValue("click"))
+              .setEventType(ClickEvent.CLICK)
               .setEventName("Product Clicked")
               .setIndex("products")
               .setUserToken("user-123456")

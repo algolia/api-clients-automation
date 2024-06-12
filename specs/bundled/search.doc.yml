@@ -3827,7 +3827,7 @@ paths:
                 "id1",
                 AttributeToUpdate.of("test"),
                 "id2",
-                new BuiltInOperation().setOperation(BuiltInOperationType.fromValue("AddUnique")).setValue("test2")
+                new BuiltInOperation().setOperation(BuiltInOperationType.ADD_UNIQUE).setValue("test2")
               ),
               true
             );
@@ -4174,8 +4174,8 @@ paths:
               new BatchWriteParams()
                 .setRequests(
                   List.of(
-                    new BatchRequest().setAction(Action.fromValue("addObject")).setBody(Map.of("key", "bar", "foo", "1")),
-                    new BatchRequest().setAction(Action.fromValue("addObject")).setBody(Map.of("key", "baz", "foo", "2"))
+                    new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "bar", "foo", "1")),
+                    new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "baz", "foo", "2"))
                   )
                 )
             );
@@ -4568,9 +4568,7 @@ paths:
             client.multipleBatch(
               new BatchParams()
                 .setRequests(
-                  List.of(
-                    new MultipleBatchRequest().setAction(Action.fromValue("addObject")).setBody(Map.of("key", "value")).setIndexName("theIndexName")
-                  )
+                  List.of(new MultipleBatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "value")).setIndexName("theIndexName"))
                 )
             );
         - lang: javascript
@@ -5885,7 +5883,7 @@ paths:
             client.saveSynonym(
               "indexName",
               "id1",
-              new SynonymHit().setObjectID("id1").setType(SynonymType.fromValue("synonym")).setSynonyms(List.of("car", "vehicule", "auto")),
+              new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(List.of("car", "vehicule", "auto")),
               true
             );
         - lang: javascript
@@ -6404,10 +6402,10 @@ paths:
             client.saveSynonyms(
               "<YOUR_INDEX_NAME>",
               List.of(
-                new SynonymHit().setObjectID("id1").setType(SynonymType.fromValue("synonym")).setSynonyms(List.of("car", "vehicule", "auto")),
+                new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(List.of("car", "vehicule", "auto")),
                 new SynonymHit()
                   .setObjectID("id2")
-                  .setType(SynonymType.fromValue("onewaysynonym"))
+                  .setType(SynonymType.ONEWAYSYNONYM)
                   .setInput("iphone")
                   .setSynonyms(List.of("ephone", "aphone", "yphone"))
               ),
@@ -7364,7 +7362,7 @@ paths:
 
             client.addApiKey(
               new ApiKey()
-                .setAcl(List.of(Acl.fromValue("search"), Acl.fromValue("addObject")))
+                .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT))
                 .setDescription("my new api key")
                 .setValidity(300)
                 .setMaxQueriesPerIPPerHour(100)
@@ -7853,11 +7851,7 @@ paths:
 
             client.updateApiKey(
               "myApiKey",
-              new ApiKey()
-                .setAcl(List.of(Acl.fromValue("search"), Acl.fromValue("addObject")))
-                .setValidity(300)
-                .setMaxQueriesPerIPPerHour(100)
-                .setMaxHitsPerQuery(20)
+              new ApiKey().setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)
             );
         - lang: javascript
           label: JavaScript
@@ -8758,9 +8752,7 @@ paths:
             client.saveRule(
               "indexName",
               "id1",
-              new Rule()
-                .setObjectID("id1")
-                .setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.fromValue("contains"))))
+              new Rule().setObjectID("id1").setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
             );
         - lang: javascript
           label: JavaScript
@@ -9279,10 +9271,10 @@ paths:
               List.of(
                 new Rule()
                   .setObjectID("a-rule-id")
-                  .setConditions(List.of(new Condition().setPattern("smartphone").setAnchoring(Anchoring.fromValue("contains")))),
+                  .setConditions(List.of(new Condition().setPattern("smartphone").setAnchoring(Anchoring.CONTAINS))),
                 new Rule()
                   .setObjectID("a-second-rule-id")
-                  .setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.fromValue("contains"))))
+                  .setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
               ),
               false,
               true
@@ -10171,21 +10163,21 @@ paths:
             // Call the API
 
             client.batchDictionaryEntries(
-              DictionaryType.fromValue("plurals"),
+              DictionaryType.PLURALS,
               new BatchDictionaryEntriesParams()
                 .setClearExistingDictionaryEntries(true)
                 .setRequests(
                   List.of(
                     new BatchDictionaryEntriesRequest()
-                      .setAction(DictionaryAction.fromValue("addEntry"))
+                      .setAction(DictionaryAction.ADD_ENTRY)
                       .setBody(
                         new DictionaryEntry()
                           .setObjectID("1")
-                          .setLanguage(SupportedLanguage.fromValue("en"))
+                          .setLanguage(SupportedLanguage.EN)
                           .setWord("fancy")
                           .setWords(List.of("believe", "algolia"))
                           .setDecomposition(List.of("trust", "algolia"))
-                          .setState(DictionaryEntryState.fromValue("enabled"))
+                          .setState(DictionaryEntryState.ENABLED)
                       )
                   )
                 )
@@ -10541,8 +10533,8 @@ paths:
 
             // Call the API
 
-            client.searchDictionaryEntries(DictionaryType.fromValue("stopwords"),
-            new SearchDictionaryEntriesParams().setQuery("about"));
+            client.searchDictionaryEntries(DictionaryType.STOPWORDS, new
+            SearchDictionaryEntriesParams().setQuery("about"));
         - lang: javascript
           label: JavaScript
           source: |
@@ -15234,9 +15226,9 @@ paths:
             client.operationIndex(
               "<SOURCE_INDEX_NAME>",
               new OperationIndexParams()
-                .setOperation(OperationType.fromValue("move"))
+                .setOperation(OperationType.MOVE)
                 .setDestination("<DESTINATION_INDEX_NAME>")
-                .setScope(List.of(ScopeType.fromValue("rules"), ScopeType.fromValue("settings")))
+                .setScope(List.of(ScopeType.RULES, ScopeType.SETTINGS))
             );
         - lang: javascript
           label: JavaScript
