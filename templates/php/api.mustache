@@ -548,25 +548,14 @@ use {{invokerPackage}}\Support\Helpers;
     */
     public static function generateSecuredApiKey($parentApiKey, $restrictions)
     {
-        $formattedRestrictions = [];
-
-        foreach($restrictions as $key => $restriction) {
-            if (is_array($restriction)) {
-                if (array_is_list($restriction)) {
-                    $formattedRestrictions[$key] = implode(',', $restriction);
-                } else {
-                    foreach($restriction as $k => $v) {
-                        $formattedRestrictions[$k] = $v;
-                    }
-                }
-            } else {
-                $formattedRestrictions[$key] = $restriction;
-            }
+        $formattedRestrictions = $restrictions;
+        if (isset($restrictions['searchParams'])) {
+            $formattedRestrictions = array_merge($restrictions, $restrictions['searchParams']);
+            unset($formattedRestrictions['searchParams']);
         }
 
         ksort($formattedRestrictions);
-        $urlEncodedRestrictions = http_build_query($formattedRestrictions, encoding_type: PHP_QUERY_RFC3986);
-
+        $urlEncodedRestrictions = Helpers::buildQuery($formattedRestrictions);
 
         $content = hash_hmac('sha256', $urlEncodedRestrictions, $parentApiKey).$urlEncodedRestrictions;
 
