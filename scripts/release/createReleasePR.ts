@@ -476,7 +476,6 @@ async function createReleasePR(): Promise<void> {
     commits: validCommits,
   });
 
-  await updateLTS(versions, true);
   const versionChanges = getVersionChangesText(versions);
 
   console.log('Creating changelogs for all languages...');
@@ -513,6 +512,8 @@ async function createReleasePR(): Promise<void> {
 
   console.log('Updating config files...');
   await updateAPIVersions(versions, changelog);
+
+  await updateLTS(versions, true);
 
   const headBranch = `chore/prepare-release-${TODAY}`;
   console.log(`Switching to branch: ${headBranch}`);
