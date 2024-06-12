@@ -395,9 +395,9 @@ async function prepareGitEnvironment(): Promise<void> {
 
 // updates the release.config.json file for the lts field, which contains a release history of start and end date support
 // inspired by node: https://github.com/nodejs/Release/blob/main/schedule.json, following https://github.com/nodejs/release#release-schedule, leveraging https://github.com/nodejs/lts-schedule
-async function updateLTS(versions: Versions): Promise<void> {
+async function updateLTS(versions: Versions, withGraphs?: boolean): Promise<void> {
   const start = new Date();
-  const end = new Date(new Date().setMonth(new Date().getMonth() + 6));
+  const end = new Date(new Date().setMonth(new Date().getMonth() + 12));
 
   let queryStart = start;
   let queryEnd = end;
@@ -411,39 +411,57 @@ async function updateLTS(versions: Versions): Promise<void> {
       continue;
     }
 
-    if (current in supportedVersions && versions[lang].releaseType === 'major') {
-      supportedVersions[current].maintenance = end.toISOString().split('T')[0];
-      supportedVersions[current].end = end.toISOString().split('T')[0];
-    } else {
-      // in the same major, we only support the latest patch version
-      delete supportedVersions[current];
+    if (current in supportedVersions) {
+      if (versions[lang].releaseType === 'major') {
+        supportedVersions[current].maintenance = end.toISOString().split('T')[0];
+        supportedVersions[current].end = end.toISOString().split('T')[0];
+
+        break;
+      }
+
+      // In the same major, the current version enters in maintenance mode, we drop the active one
+      delete supportedVersions[current].active;
+
+      supportedVersions[current].maintenance = start.toISOString().split('T')[0];
     }
 
     supportedVersions[next] = {
       start: start.toISOString().split('T')[0],
+      active: start.toISOString().split('T')[0],
       end: end.toISOString().split('T')[0],
     };
 
-    for (const dates of Object.values(supportedVersions)) {
+    for (const [supportedVersion, dates] of Object.entries(supportedVersions)) {
+      // The support has expired, we can drop it
+      if ('maintenance' in dates && new Date(dates.maintenance as string) < start) {
+        delete supportedVersions[supportedVersion];
+
+        continue;
+      }
+
+      // Used to define the start of the rendered graph timeline
       const versionStart = new Date(dates.start);
       if (versionStart < queryStart) {
         queryStart = versionStart;
       }
 
+      // Used to define the end of the rendered graph timeline
       const versionEnd = new Date(dates.end);
       if (versionEnd > queryEnd) {
         queryEnd = versionEnd;
       }
     }
 
-    lts.create({
-      queryStart,
-      queryEnd,
-      png: toAbsolutePath(`config/${lang}-lts.png`),
-      data: supportedVersions,
-      projectName: `${lang} API client`,
-      excludeMaster: true,
-    });
+    if (withGraphs) {
+      lts.create({
+        queryStart,
+        queryEnd,
+        png: toAbsolutePath(`config/${lang}-lts.png`),
+        data: supportedVersions,
+        projectName: '',
+        excludeMaster: true,
+      });
+    }
   }
 
   await fsp.writeFile(
@@ -463,7 +481,7 @@ async function createReleasePR(): Promise<void> {
     commits: validCommits,
   });
 
-  await updateLTS(versions);
+  await updateLTS(versions, true);
   const versionChanges = getVersionChangesText(versions);
 
   console.log('Creating changelogs for all languages...');
