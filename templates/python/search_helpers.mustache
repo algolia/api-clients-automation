@@ -187,7 +187,7 @@
             aggregator=aggregator,
         )
 
-    def generate_secured_api_key(
+     def generate_secured_api_key(
         self,
         parent_api_key: str,
         restrictions: Optional[SecuredApiKeyRestrictions] = SecuredApiKeyRestrictions(),
@@ -195,11 +195,17 @@
         """
         Helper: Generates a secured API key based on the given `parent_api_key` and given `restrictions`.
         """
-        query_parameters = QueryParametersSerializer(
-                restrictions.to_dict()
-                if isinstance(restrictions, SecuredApiKeyRestrictions)
-                else restrictions
-            ).encoded()
+        if not isinstance(restrictions, SecuredApiKeyRestrictions):
+            restrictions = SecuredApiKeyRestrictions.from_dict(restrictions)
+
+        restrictions = restrictions.to_dict()
+        if "searchParams" in restrictions:
+            restrictions = {**restrictions, **restrictions["searchParams"]}
+            del restrictions["searchParams"]
+
+        query_parameters = QueryParametersSerializer(dict(sorted(restrictions.items()))).encoded()
+
+        print(query_parameters)
 
         secured_key = hmac.new(
             parent_api_key.encode(encoding="utf-8"),
@@ -218,7 +224,7 @@
         Helper: Retrieves the remaining validity of the previous generated `secured_api_key`, the `validUntil` parameter must have been provided.
         """
         validity = search(
-            r'"validUntil": "(\d+)"', str(base64.b64decode(secured_api_key))
+            r'validUntil=(\d+)', str(base64.b64decode(secured_api_key))
         )
 
         if validity is None:

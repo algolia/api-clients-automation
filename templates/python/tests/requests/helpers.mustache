@@ -10,32 +10,32 @@ def test_generate_secured_api_key_0(self):
         allow generating a secured api key with a dict of restrictions
         """
         _resp = self._client.generate_secured_api_key(parent_api_key="foo", restrictions={
-            "search_params": {"query": "foo"},
-            "valid_until": 100,
-            "restrict_indices": ["bar"],
-            "restrict_sources": "baz",
-            "user_token": "foobarbaz",
+            "searchParams": {"query": "foo"},
+            "validUntil": 100,
+            "restrictIndices": ["bar"],
+            "restrictSources": "baz",
+            "userToken": "foobarbaz",
         })
-        assert _resp == "ZDhjY2YwNTJlMTY0ZmM2ZDM1NmRjMWRlYTg2N2ZhNzgyYWE4YzM0NjY0MzU2MDY0OTAxOThhNjkxMzgzYjlkMXF1ZXJ5PWZvbyZyZXN0cmljdF9pbmRpY2VzPWJhciZyZXN0cmljdF9zb3VyY2VzPWJheiZ1c2VyX3Rva2VuPWZvb2JhcmJheiZ2YWxpZF91bnRpbD0xMDA="
+        assert _resp == "NDNjMzVmODEzY2YyYzI1YTNkNzQ4YWZmZGM1YTdiMTE3MDBjNzc3YzU0ZWM3ODcyZjAwMGEwYTk1YTdhN2MzY3F1ZXJ5PWZvbyZyZXN0cmljdEluZGljZXM9YmFyJnJlc3RyaWN0U291cmNlcz1iYXomdXNlclRva2VuPWZvb2JhcmJheiZ2YWxpZFVudGlsPTEwMA=="
 
     def test_generate_secured_api_key_2(self):
         """
         allow generating a secured api key with the model
         """
         _resp = self._client.generate_secured_api_key(parent_api_key="bar", restrictions=SecuredApiKeyRestrictions(
-              search_params={"query": "bar", "page": 3},
-              valid_until=42,
-              restrict_indices=["baz"],
-              restrict_sources="foo",
-              user_token="bazbarfoo",
+              searchParams={"query": "bar", "page": 3},
+              validUntil=42,
+              restrictIndices=["baz"],
+              restrictSources="foo",
+              userToken="bazbarfoo",
         ))
-        assert _resp == "NmIzMWY4NjlmOGJlZTQxZmI2MjRhZDkwZTY0NWRiY2E3Yzk0NWNhNDMyMjI5NWZiNDk2YzliZjM1YTA1M2Y3Y3sic2VhcmNoUGFyYW1zIjogIntcInF1ZXJ5XCI6IFwiYmFyXCIsIFwic2ltaWxhclF1ZXJ5XCI6IFwiXCIsIFwic3VtT3JGaWx0ZXJzU2NvcmVzXCI6IGZhbHNlLCBcImZhY2V0aW5nQWZ0ZXJEaXN0aW5jdFwiOiBmYWxzZSwgXCJwYWdlXCI6IDMsIFwiYXJvdW5kTGF0TG5nXCI6IFwiXCIsIFwiYXJvdW5kTGF0TG5nVmlhSVBcIjogZmFsc2UsIFwicGVyc29uYWxpemF0aW9uSW1wYWN0XCI6IDEwMCwgXCJnZXRSYW5raW5nSW5mb1wiOiBmYWxzZSwgXCJzeW5vbnltc1wiOiB0cnVlLCBcImNsaWNrQW5hbHl0aWNzXCI6IGZhbHNlLCBcImFuYWx5dGljc1wiOiB0cnVlLCBcInBlcmNlbnRpbGVDb21wdXRhdGlvblwiOiB0cnVlLCBcImVuYWJsZUFCVGVzdFwiOiB0cnVlLCBcInJlbGV2YW5jeVN0cmljdG5lc3NcIjogMTAwLCBcImhpZ2hsaWdodFByZVRhZ1wiOiBcIjxlbT5cIiwgXCJoaWdobGlnaHRQb3N0VGFnXCI6IFwiPC9lbT5cIiwgXCJzbmlwcGV0RWxsaXBzaXNUZXh0XCI6IFwiXFx1MjAyNlwiLCBcInJlc3RyaWN0SGlnaGxpZ2h0QW5kU25pcHBldEFycmF5c1wiOiBmYWxzZSwgXCJoaXRzUGVyUGFnZVwiOiAyMCwgXCJtaW5Xb3JkU2l6ZWZvcjFUeXBvXCI6IDQsIFwibWluV29yZFNpemVmb3IyVHlwb3NcIjogOCwgXCJhbGxvd1R5cG9zT25OdW1lcmljVG9rZW5zXCI6IHRydWUsIFwia2VlcERpYWNyaXRpY3NPbkNoYXJhY3RlcnNcIjogXCJcIiwgXCJkZWNvbXBvdW5kUXVlcnlcIjogdHJ1ZSwgXCJlbmFibGVSdWxlc1wiOiB0cnVlLCBcImVuYWJsZVBlcnNvbmFsaXphdGlvblwiOiBmYWxzZSwgXCJhZHZhbmNlZFN5bnRheFwiOiBmYWxzZSwgXCJyZXBsYWNlU3lub255bXNJbkhpZ2hsaWdodFwiOiBmYWxzZSwgXCJtaW5Qcm94aW1pdHlcIjogMSwgXCJtYXhGYWNldEhpdHNcIjogMTAsIFwibWF4VmFsdWVzUGVyRmFjZXRcIjogMTAwLCBcInNvcnRGYWNldFZhbHVlc0J5XCI6IFwiY291bnRcIiwgXCJhdHRyaWJ1dGVDcml0ZXJpYUNvbXB1dGVkQnlNaW5Qcm94aW1pdHlcIjogZmFsc2UsIFwiZW5hYmxlUmVSYW5raW5nXCI6IHRydWV9IiwgInZhbGlkVW50aWwiOiAiNDIiLCAicmVzdHJpY3RJbmRpY2VzIjogImJheiIsICJyZXN0cmljdFNvdXJjZXMiOiAiZm9vIiwgInVzZXJUb2tlbiI6ICJiYXpiYXJmb28ifQ=="
+        assert _resp == "OGYyNWMxZjI2YjkxOWNjY2U1ZjcxOWQ0OTQ0ZDY0ZDdlNGZlN2Y2NGI2YTkyZDFhZDMxYzNiNDRkZDMyOGNiMGFkdmFuY2VkU3ludGF4PWZhbHNlJmFsbG93VHlwb3NPbk51bWVyaWNUb2tlbnM9dHJ1ZSZhbmFseXRpY3M9dHJ1ZSZhcm91bmRMYXRMbmc9JmFyb3VuZExhdExuZ1ZpYUlQPWZhbHNlJmF0dHJpYnV0ZUNyaXRlcmlhQ29tcHV0ZWRCeU1pblByb3hpbWl0eT1mYWxzZSZjbGlja0FuYWx5dGljcz1mYWxzZSZkZWNvbXBvdW5kUXVlcnk9dHJ1ZSZlbmFibGVBQlRlc3Q9dHJ1ZSZlbmFibGVQZXJzb25hbGl6YXRpb249ZmFsc2UmZW5hYmxlUmVSYW5raW5nPXRydWUmZW5hYmxlUnVsZXM9dHJ1ZSZmYWNldGluZ0FmdGVyRGlzdGluY3Q9ZmFsc2UmZ2V0UmFua2luZ0luZm89ZmFsc2UmaGlnaGxpZ2h0UG9zdFRhZz0lM0MlMkZlbSUzRSZoaWdobGlnaHRQcmVUYWc9JTNDZW0lM0UmaGl0c1BlclBhZ2U9MjAma2VlcERpYWNyaXRpY3NPbkNoYXJhY3RlcnM9Jm1heEZhY2V0SGl0cz0xMCZtYXhWYWx1ZXNQZXJGYWNldD0xMDAmbWluUHJveGltaXR5PTEmbWluV29yZFNpemVmb3IxVHlwbz00Jm1pbldvcmRTaXplZm9yMlR5cG9zPTgmcGFnZT0zJnBlcmNlbnRpbGVDb21wdXRhdGlvbj10cnVlJnBlcnNvbmFsaXphdGlvbkltcGFjdD0xMDAmcXVlcnk9YmFyJnJlbGV2YW5jeVN0cmljdG5lc3M9MTAwJnJlcGxhY2VTeW5vbnltc0luSGlnaGxpZ2h0PWZhbHNlJnJlc3RyaWN0SGlnaGxpZ2h0QW5kU25pcHBldEFycmF5cz1mYWxzZSZyZXN0cmljdEluZGljZXM9YmF6JnJlc3RyaWN0U291cmNlcz1mb28mc2ltaWxhclF1ZXJ5PSZzbmlwcGV0RWxsaXBzaXNUZXh0PSVFMiU4MCVBNiZzb3J0RmFjZXRWYWx1ZXNCeT1jb3VudCZzdW1PckZpbHRlcnNTY29yZXM9ZmFsc2Umc3lub255bXM9dHJ1ZSZ1c2VyVG9rZW49YmF6YmFyZm9vJnZhbGlkVW50aWw9NDI="
 
     def test_generate_secured_api_key_and_validity_0(self):
         """
         is able to check the remaining validity of a key
         """
-        _resp = self._client.generate_secured_api_key(parent_api_key="foo", restrictions={"valid_until": 0})
+        _resp = self._client.generate_secured_api_key(parent_api_key="foo", restrictions={"validUntil": 0})
         _validity = self._client.get_secured_api_key_remaining_validity(_resp)
         assert abs(_validity) == int(round(time()))
 
@@ -44,7 +44,7 @@ def test_generate_secured_api_key_0(self):
         throws when the validity field is not found
         """
         try:
-            _resp = self._client.generate_secured_api_key("foo", {"valid_until": None})
+            _resp = self._client.generate_secured_api_key("foo", {"validUntil": None})
             self._client.get_secured_api_key_remaining_validity(_resp)
             assert False
         except Exception as e:
