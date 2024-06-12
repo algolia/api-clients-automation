@@ -6289,7 +6289,9 @@ public class SearchClient extends ApiClient {
 
   /**
    * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
-   * untouched. Replace all records in an index without any downtime.
+   * untouched. Replace all records in an index without any downtime. See
+   * https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for
+   * implementation details.
    *
    * @param indexName The `indexName` to replace `objects` in.
    * @param objects The array of `objects` to store in the given Algolia `indexName`.
@@ -6319,10 +6321,24 @@ public class SearchClient extends ApiClient {
         .addScope(ScopeType.SYNONYMS),
       requestOptions
     );
-    waitForTask(indexName, copyOperationResponse.getTaskID(), requestOptions);
 
     // Save new objects
     List<BatchResponse> batchResponses = chunkedBatch(tmpIndexName, objects, Action.ADD_OBJECT, true, batchSize, requestOptions);
+
+    waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
+
+    copyOperationResponse =
+      operationIndex(
+        indexName,
+        new OperationIndexParams()
+          .setOperation(OperationType.COPY)
+          .setDestination(tmpIndexName)
+          .addScope(ScopeType.SETTINGS)
+          .addScope(ScopeType.RULES)
+          .addScope(ScopeType.SYNONYMS),
+        requestOptions
+      );
+    waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
 
     // Move temporary index to source index
     UpdatedAtResponse moveOperationResponse = operationIndex(
@@ -6330,7 +6346,7 @@ public class SearchClient extends ApiClient {
       new OperationIndexParams().setOperation(OperationType.MOVE).setDestination(indexName),
       requestOptions
     );
-    waitForTask(indexName, moveOperationResponse.getTaskID(), requestOptions);
+    waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), requestOptions);
 
     return new ReplaceAllObjectsResponse()
       .setCopyOperationResponse(copyOperationResponse)
