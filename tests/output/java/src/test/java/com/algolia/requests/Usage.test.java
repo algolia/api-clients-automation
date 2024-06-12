@@ -550,7 +550,7 @@ class UsageClientRequestsTests {
   @DisplayName("getIndexUsage with minimal parameters")
   void getIndexUsageTest() {
     assertDoesNotThrow(() -> {
-      client.getIndexUsage(Statistic.fromValue("queries_operations"), "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+      client.getIndexUsage(Statistic.QUERIES_OPERATIONS, "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/usage/queries_operations/myIndexName", req.path);
@@ -577,7 +577,7 @@ class UsageClientRequestsTests {
   @DisplayName("getUsage with minimal parameters")
   void getUsageTest() {
     assertDoesNotThrow(() -> {
-      client.getUsage(Statistic.fromValue("queries_operations"), "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+      client.getUsage(Statistic.QUERIES_OPERATIONS, "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/usage/queries_operations", req.path);

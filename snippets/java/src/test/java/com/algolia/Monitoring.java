@@ -134,7 +134,7 @@ class SnippetMonitoringClient {
     MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.getMetrics(Metric.fromValue("avg_build_time"), Period.fromValue("minute"));
+    client.getMetrics(Metric.AVG_BUILD_TIME, Period.MINUTE);
     // SEPARATOR<
   }
 

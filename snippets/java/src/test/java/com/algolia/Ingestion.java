@@ -19,7 +19,7 @@ class SnippetIngestionClient {
     // Call the API
     client.createAuthentication(
       new AuthenticationCreate()
-        .setType(AuthenticationType.fromValue("oauth"))
+        .setType(AuthenticationType.OAUTH)
         .setName("authName")
         .setInput(new AuthOAuth().setUrl("http://test.oauth").setClientId("myID").setClientSecret("mySecret"))
     );
@@ -37,7 +37,7 @@ class SnippetIngestionClient {
     // Call the API
     client.createDestination(
       new DestinationCreate()
-        .setType(DestinationType.fromValue("search"))
+        .setType(DestinationType.SEARCH)
         .setName("destinationName")
         .setInput(new DestinationIndexPrefix().setIndexPrefix("prefix_"))
         .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -56,7 +56,7 @@ class SnippetIngestionClient {
     // Call the API
     client.createSource(
       new SourceCreate()
-        .setType(SourceType.fromValue("commercetools"))
+        .setType(SourceType.COMMERCETOOLS)
         .setName("sourceName")
         .setInput(
           new SourceCommercetools()
@@ -83,8 +83,8 @@ class SnippetIngestionClient {
       new TaskCreate()
         .setSourceID("search")
         .setDestinationID("destinationName")
-        .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.fromValue("onDemand")))
-        .setAction(ActionType.fromValue("replace"))
+        .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))
+        .setAction(ActionType.REPLACE)
     );
     // SEPARATOR<
   }

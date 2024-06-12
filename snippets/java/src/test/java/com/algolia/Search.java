@@ -19,7 +19,7 @@ class SnippetSearchClient {
     // Call the API
     client.addApiKey(
       new ApiKey()
-        .setAcl(List.of(Acl.fromValue("search"), Acl.fromValue("addObject")))
+        .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT))
         .setDescription("my new api key")
         .setValidity(300)
         .setMaxQueriesPerIPPerHour(100)
@@ -81,8 +81,8 @@ class SnippetSearchClient {
       new BatchWriteParams()
         .setRequests(
           List.of(
-            new BatchRequest().setAction(Action.fromValue("addObject")).setBody(Map.of("key", "bar", "foo", "1")),
-            new BatchRequest().setAction(Action.fromValue("addObject")).setBody(Map.of("key", "baz", "foo", "2"))
+            new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "bar", "foo", "1")),
+            new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "baz", "foo", "2"))
           )
         )
     );
@@ -100,7 +100,7 @@ class SnippetSearchClient {
     // Call the API
     client.batch(
       "<YOUR_INDEX_NAME>",
-      new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.fromValue("clear")).setBody(Map.of("key", "value"))))
+      new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.CLEAR).setBody(Map.of("key", "value"))))
     );
     // SEPARATOR<
   }
@@ -116,7 +116,7 @@ class SnippetSearchClient {
     // Call the API
     client.batch(
       "<YOUR_INDEX_NAME>",
-      new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.fromValue("delete")).setBody(Map.of("key", "value"))))
+      new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.DELETE).setBody(Map.of("key", "value"))))
     );
     // SEPARATOR<
   }
@@ -132,8 +132,7 @@ class SnippetSearchClient {
     // Call the API
     client.batch(
       "<YOUR_INDEX_NAME>",
-      new BatchWriteParams()
-        .setRequests(List.of(new BatchRequest().setAction(Action.fromValue("deleteObject")).setBody(Map.of("key", "value"))))
+      new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.DELETE_OBJECT).setBody(Map.of("key", "value"))))
     );
     // SEPARATOR<
   }
@@ -150,7 +149,7 @@ class SnippetSearchClient {
     client.batch(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams()
-        .setRequests(List.of(new BatchRequest().setAction(Action.fromValue("partialUpdateObject")).setBody(Map.of("key", "value"))))
+        .setRequests(List.of(new BatchRequest().setAction(Action.PARTIAL_UPDATE_OBJECT).setBody(Map.of("key", "value"))))
     );
     // SEPARATOR<
   }
@@ -167,7 +166,7 @@ class SnippetSearchClient {
     client.batch(
       "<YOUR_INDEX_NAME>",
       new BatchWriteParams()
-        .setRequests(List.of(new BatchRequest().setAction(Action.fromValue("partialUpdateObjectNoCreate")).setBody(Map.of("key", "value"))))
+        .setRequests(List.of(new BatchRequest().setAction(Action.PARTIAL_UPDATE_OBJECT_NO_CREATE).setBody(Map.of("key", "value"))))
     );
     // SEPARATOR<
   }
@@ -183,8 +182,7 @@ class SnippetSearchClient {
     // Call the API
     client.batch(
       "<YOUR_INDEX_NAME>",
-      new BatchWriteParams()
-        .setRequests(List.of(new BatchRequest().setAction(Action.fromValue("updateObject")).setBody(Map.of("key", "value"))))
+      new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.UPDATE_OBJECT).setBody(Map.of("key", "value"))))
     );
     // SEPARATOR<
   }
@@ -212,21 +210,21 @@ class SnippetSearchClient {
 
     // Call the API
     client.batchDictionaryEntries(
-      DictionaryType.fromValue("plurals"),
+      DictionaryType.PLURALS,
       new BatchDictionaryEntriesParams()
         .setClearExistingDictionaryEntries(true)
         .setRequests(
           List.of(
             new BatchDictionaryEntriesRequest()
-              .setAction(DictionaryAction.fromValue("addEntry"))
+              .setAction(DictionaryAction.ADD_ENTRY)
               .setBody(
                 new DictionaryEntry()
                   .setObjectID("1")
-                  .setLanguage(SupportedLanguage.fromValue("en"))
+                  .setLanguage(SupportedLanguage.EN)
                   .setWord("fancy")
                   .setWords(List.of("believe", "algolia"))
                   .setDecomposition(List.of("trust", "algolia"))
-                  .setState(DictionaryEntryState.fromValue("enabled"))
+                  .setState(DictionaryEntryState.ENABLED)
               )
           )
         )
@@ -244,21 +242,21 @@ class SnippetSearchClient {
 
     // Call the API
     client.batchDictionaryEntries(
-      DictionaryType.fromValue("plurals"),
+      DictionaryType.PLURALS,
       new BatchDictionaryEntriesParams()
         .setClearExistingDictionaryEntries(true)
         .setRequests(
           List.of(
             new BatchDictionaryEntriesRequest()
-              .setAction(DictionaryAction.fromValue("deleteEntry"))
+              .setAction(DictionaryAction.DELETE_ENTRY)
               .setBody(
                 new DictionaryEntry()
                   .setObjectID("1")
-                  .setLanguage(SupportedLanguage.fromValue("en"))
+                  .setLanguage(SupportedLanguage.EN)
                   .setWord("fancy")
                   .setWords(List.of("believe", "algolia"))
                   .setDecomposition(List.of("trust", "algolia"))
-                  .setState(DictionaryEntryState.fromValue("enabled"))
+                  .setState(DictionaryEntryState.ENABLED)
               )
           )
         )
@@ -276,17 +274,14 @@ class SnippetSearchClient {
 
     // Call the API
     client.batchDictionaryEntries(
-      DictionaryType.fromValue("stopwords"),
+      DictionaryType.STOPWORDS,
       new BatchDictionaryEntriesParams()
         .setRequests(
           List.of(
             new BatchDictionaryEntriesRequest()
-              .setAction(DictionaryAction.fromValue("addEntry"))
+              .setAction(DictionaryAction.ADD_ENTRY)
               .setBody(
-                new DictionaryEntry()
-                  .setObjectID("1")
-                  .setLanguage(SupportedLanguage.fromValue("en"))
-                  .setAdditionalProperty("additional", "try me")
+                new DictionaryEntry().setObjectID("1").setLanguage(SupportedLanguage.EN).setAdditionalProperty("additional", "try me")
               )
           )
         )
@@ -756,9 +751,7 @@ class SnippetSearchClient {
     client.multipleBatch(
       new BatchParams()
         .setRequests(
-          List.of(
-            new MultipleBatchRequest().setAction(Action.fromValue("addObject")).setBody(Map.of("key", "value")).setIndexName("theIndexName")
-          )
+          List.of(new MultipleBatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "value")).setIndexName("theIndexName"))
         )
     );
     // SEPARATOR<
@@ -776,9 +769,9 @@ class SnippetSearchClient {
     client.operationIndex(
       "<SOURCE_INDEX_NAME>",
       new OperationIndexParams()
-        .setOperation(OperationType.fromValue("move"))
+        .setOperation(OperationType.MOVE)
         .setDestination("<DESTINATION_INDEX_NAME>")
-        .setScope(List.of(ScopeType.fromValue("rules"), ScopeType.fromValue("settings")))
+        .setScope(List.of(ScopeType.RULES, ScopeType.SETTINGS))
     );
     // SEPARATOR<
   }
@@ -794,7 +787,7 @@ class SnippetSearchClient {
     // Call the API
     client.operationIndex(
       "<SOURCE_INDEX_NAME>",
-      new OperationIndexParams().setOperation(OperationType.fromValue("copy")).setDestination("<DESTINATION_INDEX_NAME>")
+      new OperationIndexParams().setOperation(OperationType.COPY).setDestination("<DESTINATION_INDEX_NAME>")
     );
     // SEPARATOR<
   }
@@ -810,7 +803,7 @@ class SnippetSearchClient {
     // Call the API
     client.operationIndex(
       "<SOURCE_INDEX_NAME>",
-      new OperationIndexParams().setOperation(OperationType.fromValue("move")).setDestination("<DESTINATION_INDEX_NAME>")
+      new OperationIndexParams().setOperation(OperationType.MOVE).setDestination("<DESTINATION_INDEX_NAME>")
     );
     // SEPARATOR<
   }
@@ -831,7 +824,7 @@ class SnippetSearchClient {
         "id1",
         AttributeToUpdate.of("test"),
         "id2",
-        new BuiltInOperation().setOperation(BuiltInOperationType.fromValue("AddUnique")).setValue("test2")
+        new BuiltInOperation().setOperation(BuiltInOperationType.ADD_UNIQUE).setValue("test2")
       ),
       true
     );
@@ -902,9 +895,7 @@ class SnippetSearchClient {
     client.saveRule(
       "indexName",
       "id1",
-      new Rule()
-        .setObjectID("id1")
-        .setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.fromValue("contains"))))
+      new Rule().setObjectID("id1").setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
     );
     // SEPARATOR<
   }
@@ -923,10 +914,10 @@ class SnippetSearchClient {
       List.of(
         new Rule()
           .setObjectID("a-rule-id")
-          .setConditions(List.of(new Condition().setPattern("smartphone").setAnchoring(Anchoring.fromValue("contains")))),
+          .setConditions(List.of(new Condition().setPattern("smartphone").setAnchoring(Anchoring.CONTAINS))),
         new Rule()
           .setObjectID("a-second-rule-id")
-          .setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.fromValue("contains"))))
+          .setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
       ),
       false,
       true
@@ -946,7 +937,7 @@ class SnippetSearchClient {
     client.saveSynonym(
       "indexName",
       "id1",
-      new SynonymHit().setObjectID("id1").setType(SynonymType.fromValue("synonym")).setSynonyms(List.of("car", "vehicule", "auto")),
+      new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(List.of("car", "vehicule", "auto")),
       true
     );
     // SEPARATOR<
@@ -964,10 +955,10 @@ class SnippetSearchClient {
     client.saveSynonyms(
       "<YOUR_INDEX_NAME>",
       List.of(
-        new SynonymHit().setObjectID("id1").setType(SynonymType.fromValue("synonym")).setSynonyms(List.of("car", "vehicule", "auto")),
+        new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(List.of("car", "vehicule", "auto")),
         new SynonymHit()
           .setObjectID("id2")
-          .setType(SynonymType.fromValue("onewaysynonym"))
+          .setType(SynonymType.ONEWAYSYNONYM)
           .setInput("iphone")
           .setSynonyms(List.of("ephone", "aphone", "yphone"))
       ),
@@ -1101,7 +1092,7 @@ class SnippetSearchClient {
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.searchDictionaryEntries(DictionaryType.fromValue("stopwords"), new SearchDictionaryEntriesParams().setQuery("about"));
+    client.searchDictionaryEntries(DictionaryType.STOPWORDS, new SearchDictionaryEntriesParams().setQuery("about"));
     // SEPARATOR<
   }
 
@@ -1213,11 +1204,7 @@ class SnippetSearchClient {
     // Call the API
     client.updateApiKey(
       "myApiKey",
-      new ApiKey()
-        .setAcl(List.of(Acl.fromValue("search"), Acl.fromValue("addObject")))
-        .setValidity(300)
-        .setMaxQueriesPerIPPerHour(100)
-        .setMaxHitsPerQuery(20)
+      new ApiKey().setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)
     );
     // SEPARATOR<
   }
