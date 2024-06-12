@@ -18,6 +18,21 @@ import javax.annotation.Nonnull;
  */
 public final class JsonSerializer {
 
+  private static final ObjectMapper DEFAULT_OBJECT_MAPPER = new ObjectMapper()
+    .enable(JsonGenerator.Feature.AUTO_CLOSE_JSON_CONTENT)
+    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+    .disable(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS)
+    .enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+    .disable(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS)
+    .disable(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS)
+    .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+    .setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
+  public static ObjectMapper getObjectMapper() {
+    return DEFAULT_OBJECT_MAPPER;
+  }
+
   private final ObjectMapper mapper;
 
   public static Builder builder() {
