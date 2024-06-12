@@ -17,6 +17,8 @@ import { getGitAuthor } from './release/common.js';
 import { createSpinner } from './spinners.js';
 import type { Generator, GeneratorMode, Language, RunOptions } from './types.js';
 
+export const fullReleaseConfig = releaseConfig;
+
 export const MAIN_BRANCH = releaseConfig.mainBranch;
 export const OWNER = releaseConfig.owner;
 export const REPO = releaseConfig.repo;

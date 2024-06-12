@@ -1,6 +1,9 @@
 /* eslint-disable no-console */
+import fsp from 'fs/promises';
+
 import chalk from 'chalk';
 import dotenv from 'dotenv';
+import lts from 'lts';
 import semver from 'semver';
 
 import generationCommitText from '../ci/codegen/text.js';
@@ -19,6 +22,8 @@ import {
   gitBranchExists,
   setVerbose,
   configureGitHubAuthor,
+  fullReleaseConfig,
+  toAbsolutePath,
 } from '../common.js';
 import { getLanguageFolder, getPackageVersionDefault } from '../config.js';
 import type { Language } from '../types.js';
@@ -388,6 +393,65 @@ async function prepareGitEnvironment(): Promise<void> {
   await run('git pull origin $(git branch --show-current)');
 }
 
+// updates the release.config.json file for the lts field, which contains a release history of start and end date support
+// inspired by node: https://github.com/nodejs/Release/blob/main/schedule.json, following https://github.com/nodejs/release#release-schedule, leveraging https://github.com/nodejs/lts-schedule
+async function updateLTS(versions: Versions): Promise<void> {
+  const start = new Date();
+  const end = new Date(new Date().setMonth(new Date().getMonth() + 6));
+
+  let queryStart = start;
+  let queryEnd = end;
+
+  for (const [lang, supportedVersions] of Object.entries(fullReleaseConfig.lts)) {
+    const next = versions[lang].next;
+    const current = versions[lang].current;
+
+    // no ongoing release for this client, nothing changes
+    if (!next || next === current) {
+      continue;
+    }
+
+    if (current in supportedVersions && versions[lang].releaseType === 'major') {
+      supportedVersions[current].maintenance = end.toISOString().split('T')[0];
+      supportedVersions[current].end = end.toISOString().split('T')[0];
+    } else {
+      // in the same major, we only support the latest patch version
+      delete supportedVersions[current];
+    }
+
+    supportedVersions[next] = {
+      start: start.toISOString().split('T')[0],
+      end: end.toISOString().split('T')[0],
+    };
+
+    for (const dates of Object.values(supportedVersions)) {
+      const versionStart = new Date(dates.start);
+      if (versionStart < queryStart) {
+        queryStart = versionStart;
+      }
+
+      const versionEnd = new Date(dates.end);
+      if (versionEnd > queryEnd) {
+        queryEnd = versionEnd;
+      }
+    }
+
+    lts.create({
+      queryStart,
+      queryEnd,
+      png: toAbsolutePath(`config/${lang}-lts.png`),
+      data: supportedVersions,
+      projectName: `${lang} API client`,
+      excludeMaster: true,
+    });
+  }
+
+  await fsp.writeFile(
+    toAbsolutePath('config/release.config.json'),
+    JSON.stringify(fullReleaseConfig, null, 2),
+  );
+}
+
 async function createReleasePR(): Promise<void> {
   await prepareGitEnvironment();
 
@@ -398,6 +462,8 @@ async function createReleasePR(): Promise<void> {
     versions: readVersions(),
     commits: validCommits,
   });
+
+  await updateLTS(versions);
   const versionChanges = getVersionChangesText(versions);
 
   console.log('Creating changelogs for all languages...');
