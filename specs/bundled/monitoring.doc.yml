@@ -2399,8 +2399,7 @@ paths:
 
             // Call the API
 
-            client.getMetrics(Metric.fromValue("avg_build_time"),
-            Period.fromValue("minute"));
+            client.getMetrics(Metric.AVG_BUILD_TIME, Period.MINUTE);
         - lang: javascript
           label: JavaScript
           source: |

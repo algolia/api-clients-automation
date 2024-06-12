@@ -69,7 +69,7 @@ class SnippetUsageClient {
     UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.getIndexUsage(Statistic.fromValue("queries_operations"), "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+    client.getIndexUsage(Statistic.QUERIES_OPERATIONS, "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
     // SEPARATOR<
   }
 
@@ -82,7 +82,7 @@ class SnippetUsageClient {
     UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.getUsage(Statistic.fromValue("queries_operations"), "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+    client.getUsage(Statistic.QUERIES_OPERATIONS, "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
     // SEPARATOR<
   }
 }

@@ -1126,11 +1126,7 @@ paths:
               new GetRecommendationsParams()
                 .setRequests(
                   List.of(
-                    new RelatedQuery()
-                      .setIndexName("indexName")
-                      .setObjectID("objectID")
-                      .setModel(RelatedModel.fromValue("related-products"))
-                      .setThreshold(42.1)
+                    new RelatedQuery().setIndexName("indexName").setObjectID("objectID").setModel(RelatedModel.RELATED_PRODUCTS).setThreshold(42.1)
                   )
                 )
             );
@@ -1414,7 +1410,7 @@ paths:
             // Call the API
 
             client.getRecommendRule("indexName",
-            RecommendModels.fromValue("related-products"), "objectID");
+            RecommendModels.RELATED_PRODUCTS, "objectID");
         - lang: javascript
           label: JavaScript
           source: |
@@ -1647,7 +1643,7 @@ paths:
             // Call the API
 
             client.deleteRecommendRule("indexName",
-            RecommendModels.fromValue("related-products"), "objectID");
+            RecommendModels.RELATED_PRODUCTS, "objectID");
         - lang: javascript
           label: JavaScript
           source: |
@@ -1907,7 +1903,7 @@ paths:
             // Call the API
 
             client.getRecommendStatus("indexName",
-            RecommendModels.fromValue("related-products"), 12345L);
+            RecommendModels.RELATED_PRODUCTS, 12345L);
         - lang: javascript
           label: JavaScript
           source: |
@@ -2215,7 +2211,7 @@ paths:
             // Call the API
 
             client.searchRecommendRules("indexName",
-            RecommendModels.fromValue("related-products"));
+            RecommendModels.RELATED_PRODUCTS);
         - lang: javascript
           label: JavaScript
           source: |

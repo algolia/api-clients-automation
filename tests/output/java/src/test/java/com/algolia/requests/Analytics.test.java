@@ -1524,18 +1524,7 @@ class AnalyticsClientRequestsTests {
   @DisplayName("get getTopSearches with all parameters")
   void getTopSearchesTest1() {
     assertDoesNotThrow(() -> {
-      client.getTopSearches(
-        "index",
-        true,
-        true,
-        "1999-09-19",
-        "2001-01-01",
-        OrderBy.fromValue("searchCount"),
-        Direction.fromValue("asc"),
-        21,
-        42,
-        "tag"
-      );
+      client.getTopSearches("index", true, true, "1999-09-19", "2001-01-01", OrderBy.SEARCH_COUNT, Direction.ASC, 21, 42, "tag");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/2/searches", req.path);

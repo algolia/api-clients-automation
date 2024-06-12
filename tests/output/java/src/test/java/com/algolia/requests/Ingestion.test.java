@@ -55,7 +55,7 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.createAuthentication(
         new AuthenticationCreate()
-          .setType(AuthenticationType.fromValue("oauth"))
+          .setType(AuthenticationType.OAUTH)
           .setName("authName")
           .setInput(new AuthOAuth().setUrl("http://test.oauth").setClientId("myID").setClientSecret("mySecret"))
       );
@@ -78,7 +78,7 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.createAuthentication(
         new AuthenticationCreate()
-          .setType(AuthenticationType.fromValue("algolia"))
+          .setType(AuthenticationType.ALGOLIA)
           .setName("authName")
           .setInput(new AuthAlgolia().setAppID("myappID").setApiKey("randomApiKey"))
       );
@@ -101,7 +101,7 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.createDestination(
         new DestinationCreate()
-          .setType(DestinationType.fromValue("search"))
+          .setType(DestinationType.SEARCH)
           .setName("destinationName")
           .setInput(new DestinationIndexPrefix().setIndexPrefix("prefix_"))
           .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -125,7 +125,7 @@ class IngestionClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.createSource(
         new SourceCreate()
-          .setType(SourceType.fromValue("commercetools"))
+          .setType(SourceType.COMMERCETOOLS)
           .setName("sourceName")
           .setInput(
             new SourceCommercetools()
@@ -157,8 +157,8 @@ class IngestionClientRequestsTests {
         new TaskCreate()
           .setSourceID("search")
           .setDestinationID("destinationName")
-          .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.fromValue("onDemand")))
-          .setAction(ActionType.fromValue("replace"))
+          .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))
+          .setAction(ActionType.REPLACE)
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -181,8 +181,8 @@ class IngestionClientRequestsTests {
         new TaskCreate()
           .setSourceID("search")
           .setDestinationID("destinationName")
-          .setTrigger(new ScheduleTriggerInput().setType(ScheduleTriggerType.fromValue("schedule")).setCron("* * * * *"))
-          .setAction(ActionType.fromValue("replace"))
+          .setTrigger(new ScheduleTriggerInput().setType(ScheduleTriggerType.SCHEDULE).setCron("* * * * *"))
+          .setAction(ActionType.REPLACE)
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -206,8 +206,8 @@ class IngestionClientRequestsTests {
         new TaskCreate()
           .setSourceID("search")
           .setDestinationID("destinationName")
-          .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.fromValue("onDemand")))
-          .setAction(ActionType.fromValue("replace"))
+          .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))
+          .setAction(ActionType.REPLACE)
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -839,10 +839,10 @@ class IngestionClientRequestsTests {
       client.getAuthentications(
         2,
         1,
-        List.of(AuthenticationType.fromValue("basic"), AuthenticationType.fromValue("algolia")),
-        List.of(PlatformNone.fromValue("none")),
-        AuthenticationSortKeys.fromValue("createdAt"),
-        OrderKeys.fromValue("asc")
+        List.of(AuthenticationType.BASIC, AuthenticationType.ALGOLIA),
+        List.of(PlatformNone.NONE),
+        AuthenticationSortKeys.CREATED_AT,
+        OrderKeys.ASC
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -868,10 +868,10 @@ class IngestionClientRequestsTests {
     var res = clientE2E.getAuthentications(
       2,
       1,
-      List.of(AuthenticationType.fromValue("basic"), AuthenticationType.fromValue("algolia")),
-      List.of(PlatformNone.fromValue("none")),
-      AuthenticationSortKeys.fromValue("createdAt"),
-      OrderKeys.fromValue("asc")
+      List.of(AuthenticationType.BASIC, AuthenticationType.ALGOLIA),
+      List.of(PlatformNone.NONE),
+      AuthenticationSortKeys.CREATED_AT,
+      OrderKeys.ASC
     );
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(

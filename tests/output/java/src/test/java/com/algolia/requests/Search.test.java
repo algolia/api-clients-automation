@@ -55,7 +55,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.addApiKey(
         new ApiKey()
-          .setAcl(List.of(Acl.fromValue("search"), Acl.fromValue("addObject")))
+          .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT))
           .setDescription("my new api key")
           .setValidity(300)
           .setMaxQueriesPerIPPerHour(100)
@@ -162,8 +162,8 @@ class SearchClientRequestsTests {
         new BatchWriteParams()
           .setRequests(
             List.of(
-              new BatchRequest().setAction(Action.fromValue("addObject")).setBody(Map.of("key", "bar", "foo", "1")),
-              new BatchRequest().setAction(Action.fromValue("addObject")).setBody(Map.of("key", "baz", "foo", "2"))
+              new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "bar", "foo", "1")),
+              new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "baz", "foo", "2"))
             )
           )
       );
@@ -186,7 +186,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.batch(
         "<YOUR_INDEX_NAME>",
-        new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.fromValue("clear")).setBody(Map.of("key", "value"))))
+        new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.CLEAR).setBody(Map.of("key", "value"))))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -203,8 +203,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.batch(
         "<YOUR_INDEX_NAME>",
-        new BatchWriteParams()
-          .setRequests(List.of(new BatchRequest().setAction(Action.fromValue("delete")).setBody(Map.of("key", "value"))))
+        new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.DELETE).setBody(Map.of("key", "value"))))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -221,8 +220,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.batch(
         "<YOUR_INDEX_NAME>",
-        new BatchWriteParams()
-          .setRequests(List.of(new BatchRequest().setAction(Action.fromValue("deleteObject")).setBody(Map.of("key", "value"))))
+        new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.DELETE_OBJECT).setBody(Map.of("key", "value"))))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -244,7 +242,7 @@ class SearchClientRequestsTests {
       client.batch(
         "<YOUR_INDEX_NAME>",
         new BatchWriteParams()
-          .setRequests(List.of(new BatchRequest().setAction(Action.fromValue("partialUpdateObject")).setBody(Map.of("key", "value"))))
+          .setRequests(List.of(new BatchRequest().setAction(Action.PARTIAL_UPDATE_OBJECT).setBody(Map.of("key", "value"))))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -266,9 +264,7 @@ class SearchClientRequestsTests {
       client.batch(
         "<YOUR_INDEX_NAME>",
         new BatchWriteParams()
-          .setRequests(
-            List.of(new BatchRequest().setAction(Action.fromValue("partialUpdateObjectNoCreate")).setBody(Map.of("key", "value")))
-          )
+          .setRequests(List.of(new BatchRequest().setAction(Action.PARTIAL_UPDATE_OBJECT_NO_CREATE).setBody(Map.of("key", "value"))))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -289,8 +285,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.batch(
         "<YOUR_INDEX_NAME>",
-        new BatchWriteParams()
-          .setRequests(List.of(new BatchRequest().setAction(Action.fromValue("updateObject")).setBody(Map.of("key", "value"))))
+        new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.UPDATE_OBJECT).setBody(Map.of("key", "value"))))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -338,21 +333,21 @@ class SearchClientRequestsTests {
   void batchDictionaryEntriesTest() {
     assertDoesNotThrow(() -> {
       client.batchDictionaryEntries(
-        DictionaryType.fromValue("plurals"),
+        DictionaryType.PLURALS,
         new BatchDictionaryEntriesParams()
           .setClearExistingDictionaryEntries(true)
           .setRequests(
             List.of(
               new BatchDictionaryEntriesRequest()
-                .setAction(DictionaryAction.fromValue("addEntry"))
+                .setAction(DictionaryAction.ADD_ENTRY)
                 .setBody(
                   new DictionaryEntry()
                     .setObjectID("1")
-                    .setLanguage(SupportedLanguage.fromValue("en"))
+                    .setLanguage(SupportedLanguage.EN)
                     .setWord("fancy")
                     .setWords(List.of("believe", "algolia"))
                     .setDecomposition(List.of("trust", "algolia"))
-                    .setState(DictionaryEntryState.fromValue("enabled"))
+                    .setState(DictionaryEntryState.ENABLED)
                 )
             )
           )
@@ -375,21 +370,21 @@ class SearchClientRequestsTests {
   void batchDictionaryEntriesTest1() {
     assertDoesNotThrow(() -> {
       client.batchDictionaryEntries(
-        DictionaryType.fromValue("plurals"),
+        DictionaryType.PLURALS,
         new BatchDictionaryEntriesParams()
           .setClearExistingDictionaryEntries(true)
           .setRequests(
             List.of(
               new BatchDictionaryEntriesRequest()
-                .setAction(DictionaryAction.fromValue("deleteEntry"))
+                .setAction(DictionaryAction.DELETE_ENTRY)
                 .setBody(
                   new DictionaryEntry()
                     .setObjectID("1")
-                    .setLanguage(SupportedLanguage.fromValue("en"))
+                    .setLanguage(SupportedLanguage.EN)
                     .setWord("fancy")
                     .setWords(List.of("believe", "algolia"))
                     .setDecomposition(List.of("trust", "algolia"))
-                    .setState(DictionaryEntryState.fromValue("enabled"))
+                    .setState(DictionaryEntryState.ENABLED)
                 )
             )
           )
@@ -412,17 +407,14 @@ class SearchClientRequestsTests {
   void batchDictionaryEntriesTest2() {
     assertDoesNotThrow(() -> {
       client.batchDictionaryEntries(
-        DictionaryType.fromValue("stopwords"),
+        DictionaryType.STOPWORDS,
         new BatchDictionaryEntriesParams()
           .setRequests(
             List.of(
               new BatchDictionaryEntriesRequest()
-                .setAction(DictionaryAction.fromValue("addEntry"))
+                .setAction(DictionaryAction.ADD_ENTRY)
                 .setBody(
-                  new DictionaryEntry()
-                    .setObjectID("1")
-                    .setLanguage(SupportedLanguage.fromValue("en"))
-                    .setAdditionalProperty("additional", "try me")
+                  new DictionaryEntry().setObjectID("1").setLanguage(SupportedLanguage.EN).setAdditionalProperty("additional", "try me")
                 )
             )
           )
@@ -1192,7 +1184,7 @@ class SearchClientRequestsTests {
   @DisplayName("getLogs with parameters")
   void getLogsTest1() {
     assertDoesNotThrow(() -> {
-      client.getLogs(5, 10, "theIndexName", LogType.fromValue("all"));
+      client.getLogs(5, 10, "theIndexName", LogType.ALL);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/logs", req.path);
@@ -1509,12 +1501,7 @@ class SearchClientRequestsTests {
       client.multipleBatch(
         new BatchParams()
           .setRequests(
-            List.of(
-              new MultipleBatchRequest()
-                .setAction(Action.fromValue("addObject"))
-                .setBody(Map.of("key", "value"))
-                .setIndexName("theIndexName")
-            )
+            List.of(new MultipleBatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "value")).setIndexName("theIndexName"))
           )
       );
     });
@@ -1537,9 +1524,9 @@ class SearchClientRequestsTests {
       client.operationIndex(
         "<SOURCE_INDEX_NAME>",
         new OperationIndexParams()
-          .setOperation(OperationType.fromValue("move"))
+          .setOperation(OperationType.MOVE)
           .setDestination("<DESTINATION_INDEX_NAME>")
-          .setScope(List.of(ScopeType.fromValue("rules"), ScopeType.fromValue("settings")))
+          .setScope(List.of(ScopeType.RULES, ScopeType.SETTINGS))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1560,7 +1547,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.operationIndex(
         "<SOURCE_INDEX_NAME>",
-        new OperationIndexParams().setOperation(OperationType.fromValue("copy")).setDestination("<DESTINATION_INDEX_NAME>")
+        new OperationIndexParams().setOperation(OperationType.COPY).setDestination("<DESTINATION_INDEX_NAME>")
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1577,7 +1564,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.operationIndex(
         "<SOURCE_INDEX_NAME>",
-        new OperationIndexParams().setOperation(OperationType.fromValue("move")).setDestination("<DESTINATION_INDEX_NAME>")
+        new OperationIndexParams().setOperation(OperationType.MOVE).setDestination("<DESTINATION_INDEX_NAME>")
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1599,7 +1586,7 @@ class SearchClientRequestsTests {
           "id1",
           AttributeToUpdate.of("test"),
           "id2",
-          new BuiltInOperation().setOperation(BuiltInOperationType.fromValue("AddUnique")).setValue("test2")
+          new BuiltInOperation().setOperation(BuiltInOperationType.ADD_UNIQUE).setValue("test2")
         ),
         true
       );
@@ -1688,9 +1675,7 @@ class SearchClientRequestsTests {
       client.saveRule(
         "indexName",
         "id1",
-        new Rule()
-          .setObjectID("id1")
-          .setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.fromValue("contains"))))
+        new Rule().setObjectID("id1").setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -1715,9 +1700,7 @@ class SearchClientRequestsTests {
         new Rule()
           .setObjectID("id1")
           .setConditions(
-            List.of(
-              new Condition().setPattern("apple").setAnchoring(Anchoring.fromValue("contains")).setAlternatives(false).setContext("search")
-            )
+            List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS).setAlternatives(false).setContext("search"))
           )
           .setConsequence(
             new Consequence()
@@ -1729,8 +1712,8 @@ class SearchClientRequestsTests {
                       .setRemove(List.of("algolia"))
                       .setEdits(
                         List.of(
-                          new Edit().setType(EditType.fromValue("remove")).setDelete("abc").setInsert("cde"),
-                          new Edit().setType(EditType.fromValue("replace")).setDelete("abc").setInsert("cde")
+                          new Edit().setType(EditType.REMOVE).setDelete("abc").setInsert("cde"),
+                          new Edit().setType(EditType.REPLACE).setDelete("abc").setInsert("cde")
                         )
                       )
                   )
@@ -1787,10 +1770,10 @@ class SearchClientRequestsTests {
         List.of(
           new Rule()
             .setObjectID("a-rule-id")
-            .setConditions(List.of(new Condition().setPattern("smartphone").setAnchoring(Anchoring.fromValue("contains")))),
+            .setConditions(List.of(new Condition().setPattern("smartphone").setAnchoring(Anchoring.CONTAINS))),
           new Rule()
             .setObjectID("a-second-rule-id")
-            .setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.fromValue("contains"))))
+            .setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
         ),
         false,
         true
@@ -1833,13 +1816,7 @@ class SearchClientRequestsTests {
           new Rule()
             .setObjectID("id1")
             .setConditions(
-              List.of(
-                new Condition()
-                  .setPattern("apple")
-                  .setAnchoring(Anchoring.fromValue("contains"))
-                  .setAlternatives(false)
-                  .setContext("search")
-              )
+              List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS).setAlternatives(false).setContext("search"))
             )
             .setConsequence(
               new Consequence()
@@ -1851,8 +1828,8 @@ class SearchClientRequestsTests {
                         .setRemove(List.of("algolia"))
                         .setEdits(
                           List.of(
-                            new Edit().setType(EditType.fromValue("remove")).setDelete("abc").setInsert("cde"),
-                            new Edit().setType(EditType.fromValue("replace")).setDelete("abc").setInsert("cde")
+                            new Edit().setType(EditType.REMOVE).setDelete("abc").setInsert("cde"),
+                            new Edit().setType(EditType.REPLACE).setDelete("abc").setInsert("cde")
                           )
                         )
                     )
@@ -1909,7 +1886,7 @@ class SearchClientRequestsTests {
       client.saveSynonym(
         "indexName",
         "id1",
-        new SynonymHit().setObjectID("id1").setType(SynonymType.fromValue("synonym")).setSynonyms(List.of("car", "vehicule", "auto")),
+        new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(List.of("car", "vehicule", "auto")),
         true
       );
     });
@@ -1947,10 +1924,10 @@ class SearchClientRequestsTests {
       client.saveSynonyms(
         "<YOUR_INDEX_NAME>",
         List.of(
-          new SynonymHit().setObjectID("id1").setType(SynonymType.fromValue("synonym")).setSynonyms(List.of("car", "vehicule", "auto")),
+          new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(List.of("car", "vehicule", "auto")),
           new SynonymHit()
             .setObjectID("id2")
-            .setType(SynonymType.fromValue("onewaysynonym"))
+            .setType(SynonymType.ONEWAYSYNONYM)
             .setInput("iphone")
             .setSynonyms(List.of("ephone", "aphone", "yphone"))
         ),
@@ -2167,11 +2144,9 @@ class SearchClientRequestsTests {
       client.search(
         new SearchMethodParams()
           .setRequests(
-            List.of(
-              new SearchForFacets().setIndexName("cts_e2e_search_facet").setType(SearchTypeFacet.fromValue("facet")).setFacet("editor")
-            )
+            List.of(new SearchForFacets().setIndexName("cts_e2e_search_facet").setType(SearchTypeFacet.FACET).setFacet("editor"))
           )
-          .setStrategy(SearchStrategy.fromValue("stopIfEnoughMatches")),
+          .setStrategy(SearchStrategy.STOP_IF_ENOUGH_MATCHES),
         Hit.class
       );
     });
@@ -2188,10 +2163,8 @@ class SearchClientRequestsTests {
 
     var res = clientE2E.search(
       new SearchMethodParams()
-        .setRequests(
-          List.of(new SearchForFacets().setIndexName("cts_e2e_search_facet").setType(SearchTypeFacet.fromValue("facet")).setFacet("editor"))
-        )
-        .setStrategy(SearchStrategy.fromValue("stopIfEnoughMatches")),
+        .setRequests(List.of(new SearchForFacets().setIndexName("cts_e2e_search_facet").setType(SearchTypeFacet.FACET).setFacet("editor")))
+        .setStrategy(SearchStrategy.STOP_IF_ENOUGH_MATCHES),
       Hit.class
     );
     assertDoesNotThrow(() ->
@@ -2213,11 +2186,7 @@ class SearchClientRequestsTests {
         new SearchMethodParams()
           .setRequests(
             List.of(
-              new SearchForHits()
-                .setIndexName("theIndexName")
-                .setQuery("myQuery")
-                .setHitsPerPage(50)
-                .setType(SearchTypeDefault.fromValue("default"))
+              new SearchForHits().setIndexName("theIndexName").setQuery("myQuery").setHitsPerPage(50).setType(SearchTypeDefault.DEFAULT)
             )
           ),
         Hit.class
@@ -2245,14 +2214,14 @@ class SearchClientRequestsTests {
             List.of(
               new SearchForFacets()
                 .setIndexName("theIndexName")
-                .setType(SearchTypeFacet.fromValue("facet"))
+                .setType(SearchTypeFacet.FACET)
                 .setFacet("theFacet")
                 .setFacetQuery("theFacetQuery")
                 .setQuery("theQuery")
                 .setMaxFacetHits(50)
             )
           )
-          .setStrategy(SearchStrategy.fromValue("stopIfEnoughMatches")),
+          .setStrategy(SearchStrategy.STOP_IF_ENOUGH_MATCHES),
         Hit.class
       );
     });
@@ -2277,11 +2246,11 @@ class SearchClientRequestsTests {
           .setRequests(
             List.of(
               new SearchForHits().setIndexName("theIndexName"),
-              new SearchForFacets().setIndexName("theIndexName2").setType(SearchTypeFacet.fromValue("facet")).setFacet("theFacet"),
-              new SearchForHits().setIndexName("theIndexName").setType(SearchTypeDefault.fromValue("default"))
+              new SearchForFacets().setIndexName("theIndexName2").setType(SearchTypeFacet.FACET).setFacet("theFacet"),
+              new SearchForHits().setIndexName("theIndexName").setType(SearchTypeDefault.DEFAULT)
             )
           )
-          .setStrategy(SearchStrategy.fromValue("stopIfEnoughMatches")),
+          .setStrategy(SearchStrategy.STOP_IF_ENOUGH_MATCHES),
         Hit.class
       );
     });
@@ -2307,19 +2276,15 @@ class SearchClientRequestsTests {
             List.of(
               new SearchForFacets()
                 .setIndexName("theIndexName")
-                .setType(SearchTypeFacet.fromValue("facet"))
+                .setType(SearchTypeFacet.FACET)
                 .setFacet("theFacet")
                 .setFacetQuery("theFacetQuery")
                 .setQuery("theQuery")
                 .setMaxFacetHits(50),
-              new SearchForHits()
-                .setIndexName("theIndexName")
-                .setQuery("myQuery")
-                .setHitsPerPage(50)
-                .setType(SearchTypeDefault.fromValue("default"))
+              new SearchForHits().setIndexName("theIndexName").setQuery("myQuery").setHitsPerPage(50).setType(SearchTypeDefault.DEFAULT)
             )
           )
-          .setStrategy(SearchStrategy.fromValue("stopIfEnoughMatches")),
+          .setStrategy(SearchStrategy.STOP_IF_ENOUGH_MATCHES),
         Hit.class
       );
     });
@@ -2500,15 +2465,15 @@ class SearchClientRequestsTests {
             List.of(
               new SearchForHits()
                 .setAdvancedSyntax(true)
-                .setAdvancedSyntaxFeatures(List.of(AdvancedSyntaxFeatures.fromValue("exactPhrase")))
+                .setAdvancedSyntaxFeatures(List.of(AdvancedSyntaxFeatures.EXACT_PHRASE))
                 .setAllowTyposOnNumericTokens(true)
-                .setAlternativesAsExact(List.of(AlternativesAsExact.fromValue("multiWordsSynonym")))
+                .setAlternativesAsExact(List.of(AlternativesAsExact.MULTI_WORDS_SYNONYM))
                 .setAnalytics(true)
                 .setAnalyticsTags(List.of(""))
                 .setAroundLatLng("")
                 .setAroundLatLngViaIP(true)
                 .setAroundPrecision(AroundPrecision.of(0))
-                .setAroundRadius(AroundRadiusAll.fromValue("all"))
+                .setAroundRadius(AroundRadiusAll.ALL)
                 .setAttributeCriteriaComputedByMinProximity(true)
                 .setAttributesToHighlight(List.of(""))
                 .setAttributesToRetrieve(List.of(""))
@@ -2523,7 +2488,7 @@ class SearchClientRequestsTests {
                 .setEnablePersonalization(true)
                 .setEnableReRanking(true)
                 .setEnableRules(true)
-                .setExactOnSingleWordQuery(ExactOnSingleWordQuery.fromValue("attribute"))
+                .setExactOnSingleWordQuery(ExactOnSingleWordQuery.ATTRIBUTE)
                 .setFacetFilters(FacetFilters.of(List.of(FacetFilters.of(""))))
                 .setFacetingAfterDistinct(true)
                 .setFacets(List.of(""))
@@ -2545,7 +2510,7 @@ class SearchClientRequestsTests {
                 .setMinWordSizefor1Typo(0)
                 .setMinWordSizefor2Typos(0)
                 .setMinimumAroundRadius(1)
-                .setNaturalLanguages(List.of(SupportedLanguage.fromValue("fr")))
+                .setNaturalLanguages(List.of(SupportedLanguage.FR))
                 .setNumericFilters(NumericFilters.of(List.of(NumericFilters.of(""))))
                 .setOffset(0)
                 .setOptionalFilters(OptionalFilters.of(List.of(OptionalFilters.of(""))))
@@ -2554,19 +2519,19 @@ class SearchClientRequestsTests {
                 .setPercentileComputation(true)
                 .setPersonalizationImpact(0)
                 .setQuery("")
-                .setQueryLanguages(List.of(SupportedLanguage.fromValue("fr")))
-                .setQueryType(QueryType.fromValue("prefixAll"))
+                .setQueryLanguages(List.of(SupportedLanguage.FR))
+                .setQueryType(QueryType.PREFIX_ALL)
                 .setRanking(List.of(""))
                 .setReRankingApplyFilter(ReRankingApplyFilter.of(List.of(ReRankingApplyFilter.of(""))))
                 .setRelevancyStrictness(0)
                 .setRemoveStopWords(RemoveStopWords.of(true))
-                .setRemoveWordsIfNoResults(RemoveWordsIfNoResults.fromValue("allOptional"))
+                .setRemoveWordsIfNoResults(RemoveWordsIfNoResults.ALL_OPTIONAL)
                 .setRenderingContent(
                   new RenderingContent()
                     .setFacetOrdering(
                       new FacetOrdering()
                         .setFacets(new Facets().setOrder(List.of("a", "b")))
-                        .setValues(Map.of("a", new Value().setOrder(List.of("b")).setSortRemainingBy(SortRemainingBy.fromValue("count"))))
+                        .setValues(Map.of("a", new Value().setOrder(List.of("b")).setSortRemainingBy(SortRemainingBy.COUNT)))
                     )
                 )
                 .setReplaceSynonymsInHighlight(true)
@@ -2580,8 +2545,8 @@ class SearchClientRequestsTests {
                 .setSumOrFiltersScores(true)
                 .setSynonyms(true)
                 .setTagFilters(TagFilters.of(List.of(TagFilters.of(""))))
-                .setType(SearchTypeDefault.fromValue("default"))
-                .setTypoTolerance(TypoToleranceEnum.fromValue("min"))
+                .setType(SearchTypeDefault.DEFAULT)
+                .setTypoTolerance(TypoToleranceEnum.MIN)
                 .setUserToken("")
             )
           ),
@@ -2604,17 +2569,14 @@ class SearchClientRequestsTests {
   @DisplayName("get searchDictionaryEntries results with minimal parameters")
   void searchDictionaryEntriesTest() {
     assertDoesNotThrow(() -> {
-      client.searchDictionaryEntries(DictionaryType.fromValue("stopwords"), new SearchDictionaryEntriesParams().setQuery("about"));
+      client.searchDictionaryEntries(DictionaryType.STOPWORDS, new SearchDictionaryEntriesParams().setQuery("about"));
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/dictionaries/stopwords/search", req.path);
     assertEquals("POST", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"query\":\"about\"}", req.body, JSONCompareMode.STRICT));
 
-    var res = clientE2E.searchDictionaryEntries(
-      DictionaryType.fromValue("stopwords"),
-      new SearchDictionaryEntriesParams().setQuery("about")
-    );
+    var res = clientE2E.searchDictionaryEntries(DictionaryType.STOPWORDS, new SearchDictionaryEntriesParams().setQuery("about"));
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"hits\":[{\"objectID\":\"86ef58032f47d976ca7130a896086783\",\"language\":\"en\",\"word\":\"about\"}],\"page\":0,\"nbHits\":1,\"nbPages\":1}",
@@ -2629,8 +2591,8 @@ class SearchClientRequestsTests {
   void searchDictionaryEntriesTest1() {
     assertDoesNotThrow(() -> {
       client.searchDictionaryEntries(
-        DictionaryType.fromValue("compounds"),
-        new SearchDictionaryEntriesParams().setQuery("foo").setPage(4).setHitsPerPage(2).setLanguage(SupportedLanguage.fromValue("fr"))
+        DictionaryType.COMPOUNDS,
+        new SearchDictionaryEntriesParams().setQuery("foo").setPage(4).setHitsPerPage(2).setLanguage(SupportedLanguage.FR)
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -2790,7 +2752,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.searchSynonyms(
         "indexName",
-        new SearchSynonymsParams().setQuery("myQuery").setType(SynonymType.fromValue("altcorrection1")).setPage(10).setHitsPerPage(10)
+        new SearchSynonymsParams().setQuery("myQuery").setType(SynonymType.ALTCORRECTION_1).setPage(10).setHitsPerPage(10)
       );
     });
     EchoResponse req = echo.getLastResponse();
@@ -2951,7 +2913,7 @@ class SearchClientRequestsTests {
   @DisplayName("setSettings allow enum `typoTolerance`")
   void setSettingsTest3() {
     assertDoesNotThrow(() -> {
-      client.setSettings("theIndexName", new IndexSettings().setTypoTolerance(TypoToleranceEnum.fromValue("min")), true);
+      client.setSettings("theIndexName", new IndexSettings().setTypoTolerance(TypoToleranceEnum.MIN), true);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/theIndexName/settings", req.path);
@@ -3005,11 +2967,7 @@ class SearchClientRequestsTests {
   @DisplayName("setSettings allow list of string `ignorePlurals`")
   void setSettingsTest5() {
     assertDoesNotThrow(() -> {
-      client.setSettings(
-        "theIndexName",
-        new IndexSettings().setIgnorePlurals(IgnorePlurals.of(List.of(SupportedLanguage.fromValue("fr")))),
-        true
-      );
+      client.setSettings("theIndexName", new IndexSettings().setIgnorePlurals(IgnorePlurals.of(List.of(SupportedLanguage.FR))), true);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/theIndexName/settings", req.path);
@@ -3063,11 +3021,7 @@ class SearchClientRequestsTests {
   @DisplayName("setSettings allow list of string `removeStopWords`")
   void setSettingsTest7() {
     assertDoesNotThrow(() -> {
-      client.setSettings(
-        "theIndexName",
-        new IndexSettings().setRemoveStopWords(RemoveStopWords.of(List.of(SupportedLanguage.fromValue("fr")))),
-        true
-      );
+      client.setSettings("theIndexName", new IndexSettings().setRemoveStopWords(RemoveStopWords.of(List.of(SupportedLanguage.FR))), true);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/indexes/theIndexName/settings", req.path);
@@ -3152,10 +3106,10 @@ class SearchClientRequestsTests {
         "theIndexName",
         new IndexSettings()
           .setAdvancedSyntax(true)
-          .setAdvancedSyntaxFeatures(List.of(AdvancedSyntaxFeatures.fromValue("exactPhrase")))
+          .setAdvancedSyntaxFeatures(List.of(AdvancedSyntaxFeatures.EXACT_PHRASE))
           .setAllowCompressionOfIntegerArray(true)
           .setAllowTyposOnNumericTokens(true)
-          .setAlternativesAsExact(List.of(AlternativesAsExact.fromValue("singleWordSynonym")))
+          .setAlternativesAsExact(List.of(AlternativesAsExact.SINGLE_WORD_SYNONYM))
           .setAttributeCriteriaComputedByMinProximity(true)
           .setAttributeForDistinct("test")
           .setAttributesForFaceting(List.of("algolia"))
@@ -3176,35 +3130,35 @@ class SearchClientRequestsTests {
           .setEnablePersonalization(true)
           .setEnableReRanking(false)
           .setEnableRules(true)
-          .setExactOnSingleWordQuery(ExactOnSingleWordQuery.fromValue("attribute"))
+          .setExactOnSingleWordQuery(ExactOnSingleWordQuery.ATTRIBUTE)
           .setHighlightPreTag("<span>")
           .setHighlightPostTag("</span>")
           .setHitsPerPage(10)
           .setIgnorePlurals(IgnorePlurals.of(false))
-          .setIndexLanguages(List.of(SupportedLanguage.fromValue("fr")))
+          .setIndexLanguages(List.of(SupportedLanguage.FR))
           .setKeepDiacriticsOnCharacters("abc")
           .setMaxFacetHits(20)
           .setMaxValuesPerFacet(30)
           .setMinProximity(6)
           .setMinWordSizefor1Typo(5)
           .setMinWordSizefor2Typos(11)
-          .setMode(Mode.fromValue("neuralSearch"))
+          .setMode(Mode.NEURAL_SEARCH)
           .setNumericAttributesForFiltering(List.of("algolia"))
           .setOptionalWords(List.of("myspace"))
           .setPaginationLimitedTo(0)
-          .setQueryLanguages(List.of(SupportedLanguage.fromValue("fr")))
-          .setQueryType(QueryType.fromValue("prefixLast"))
+          .setQueryLanguages(List.of(SupportedLanguage.FR))
+          .setQueryType(QueryType.PREFIX_LAST)
           .setRanking(List.of("geo"))
           .setReRankingApplyFilter(ReRankingApplyFilter.of("mySearch:filters"))
           .setRelevancyStrictness(10)
           .setRemoveStopWords(RemoveStopWords.of(false))
-          .setRemoveWordsIfNoResults(RemoveWordsIfNoResults.fromValue("lastWords"))
+          .setRemoveWordsIfNoResults(RemoveWordsIfNoResults.LAST_WORDS)
           .setRenderingContent(
             new RenderingContent()
               .setFacetOrdering(
                 new FacetOrdering()
                   .setFacets(new Facets().setOrder(List.of("a", "b")))
-                  .setValues(Map.of("a", new Value().setOrder(List.of("b")).setSortRemainingBy(SortRemainingBy.fromValue("count"))))
+                  .setValues(Map.of("a", new Value().setOrder(List.of("b")).setSortRemainingBy(SortRemainingBy.COUNT)))
               )
           )
           .setReplaceSynonymsInHighlight(true)
@@ -3239,11 +3193,7 @@ class SearchClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.updateApiKey(
         "myApiKey",
-        new ApiKey()
-          .setAcl(List.of(Acl.fromValue("search"), Acl.fromValue("addObject")))
-          .setValidity(300)
-          .setMaxQueriesPerIPPerHour(100)
-          .setMaxHitsPerQuery(20)
+        new ApiKey().setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)
       );
     });
     EchoResponse req = echo.getLastResponse();

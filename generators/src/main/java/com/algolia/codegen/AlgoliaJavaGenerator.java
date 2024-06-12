@@ -20,6 +20,9 @@ import org.openapitools.codegen.model.OperationsMap;
 @SuppressWarnings("unchecked")
 public class AlgoliaJavaGenerator extends JavaClientCodegen {
 
+  // This is used for the CTS generation
+  private static final AlgoliaJavaGenerator INSTANCE = new AlgoliaJavaGenerator();
+
   @Override
   public String getName() {
     return "algolia-java";
@@ -95,13 +98,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     return operations;
   }
 
-  @Override
-  public String toEnumVarName(String value, String datatype) {
-    // when it's not a string, we don't want to change the name of the variable generated
-    if (!"String".equals(datatype)) {
-      return super.toEnumVarName(value, datatype);
-    }
-
+  public static String toEnum(String value) {
     // In some cases, the API might accept characters instead of the textual notation, we will
     // replace it internally so that it doesn't output the character itself.
     switch (value) {
@@ -134,7 +131,17 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
       return value.replaceAll("-", "_").replaceAll("(.+?)([A-Z]|[0-9])", "$1_$2").toUpperCase(Locale.ROOT);
     }
 
-    return super.toEnumVarName(value, datatype);
+    return value;
+  }
+
+  @Override
+  public String toEnumVarName(String value, String datatype) {
+    // when it's not a string, we don't want to change the name of the variable generated
+    if (!"String".equals(datatype)) {
+      return super.toEnumVarName(value, datatype);
+    }
+
+    return super.toEnumVarName(toEnum(value), datatype);
   }
 
   /** Convert a Seq type to a valid class name. */

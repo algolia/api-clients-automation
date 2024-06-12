@@ -17,7 +17,7 @@
   {{{value}}}
 {{/isBoolean}}
 {{#isEnum}}
-  {{{objectName}}}.fromValue("{{{value}}}")
+  {{{objectName}}}.{{#lambda.javaEnum}}{{{value}}}{{/lambda.javaEnum}}
 {{/isEnum}}
 {{#isArray}}
   List.of({{#value}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/value}})
