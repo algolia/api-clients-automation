@@ -66,15 +66,15 @@ export function waitForApiKeySnippet(language, operation) {
       'delete': ``,
     },
     'go': {
-      'add': `waitResponse, err := client.WaitForApiKey(search.APIKEYOPERATION_ADD, response.Key, nil)
+      'add': `waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_ADD, response.Key, nil)
 if err != nil {
   panic(err)
 }`,
-      'update': `waitResponse, err := client.WaitForApiKey(search.APIKEYOPERATION_UPDATE, response.Key, search.NewEmptyApiKey().SetAcl([]search.Acl{search.Acl("search"), search.Acl("addObject")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20))
+      'update': `waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_UPDATE, response.Key, search.NewEmptyApiKey().SetAcl([]search.Acl{search.Acl("search"), search.Acl("addObject")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20))
 if err != nil {
   panic(err)
 }`,
-      'delete': `waitResponse, err := client.WaitForApiKey(search.APIKEYOPERATION_DELETE, response.Key, nil)
+      'delete': `waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_DELETE, response.Key, nil)
 if err != nil {
   panic(err)
 }`,
