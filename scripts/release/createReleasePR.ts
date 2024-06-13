@@ -44,6 +44,9 @@ dotenv.config({ path: ROOT_ENV_PATH });
 
 export const COMMON_SCOPES = ['specs', 'clients'];
 
+// python pre-releases have a pattern like `X.Y.ZaN` for alpha or `X.Y.ZbN` for beta
+// see https://peps.python.org/pep-0440/
+// It also support ruby pre-releases like `X.Y.Z.alpha.N` for alpha or `X.Y.Z.beta.N` for beta
 const preReleaseRegExp = new RegExp(/\d\.\d\.\d(\.?a(lpha\.)?\d+|\.?b(eta\.)?\d+)$/);
 
 // Prevent fetching the same user multiple times
@@ -183,9 +186,6 @@ export function getNextVersion(current: string, releaseType: semver.ReleaseType 
 
   let nextVersion: string | null = current;
 
-  // python pre-releases have a pattern like `X.Y.ZaN` for alpha or `X.Y.ZbN` for beta
-  // see https://peps.python.org/pep-0440/
-  // It also support ruby pre-releases like `X.Y.Z.alpha.N` for alpha or `X.Y.Z.beta.N` for beta
   const preReleaseVersion = current.match(preReleaseRegExp);
   if (preReleaseVersion?.length) {
     if (releaseType === 'major') {

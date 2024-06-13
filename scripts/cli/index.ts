@@ -201,7 +201,7 @@ program
   .addArgument(args.languages)
   .option(flags.verbose.flag, flags.verbose.description)
   .option('-m, --major', 'triggers a major release for the given language list')
-  .option('-d, --dryRun', 'does not push anything to GitHub')
+  .option('-d, --dry-run', 'does not push anything to GitHub')
   .action(async (langArgs: LangArg[], { verbose, major, dryRun }) => {
     setVerbose(Boolean(verbose));
 

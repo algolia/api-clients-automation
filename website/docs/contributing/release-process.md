@@ -18,7 +18,7 @@ Once setup, you can run:
 apic release
 
 # or if you just want to see what it does without pushing the releases
-apic release --dryRun
+apic release --dry-run
 ```
 
 It will create [a release PR](https://github.com/algolia/api-clients-automation/pull/545).
