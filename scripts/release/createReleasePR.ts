@@ -208,18 +208,37 @@ export function getNextVersion(current: string, releaseType: semver.ReleaseType 
 export async function decideReleaseStrategy({
   versions,
   commits,
+  languages,
+  major,
 }: {
   versions: VersionsBeforeBump;
   commits: PassedCommit[];
+  languages: Language[];
+  major?: boolean;
 }): Promise<Versions> {
   const versionsToPublish: Versions = {};
 
   for (const [lang, version] of Object.entries(versions)) {
+    const currentVersion = versions[lang].current;
+
+    if (!languages.includes(lang as Language)) {
+      console.log(`${lang} is not in the given language list, skipping release`);
+
+      versionsToPublish[lang] = {
+        ...version,
+        noCommit: true,
+        releaseType: null,
+        skipRelease: true,
+        next: getNextVersion(currentVersion, null),
+      };
+
+      continue;
+    }
+
     const commitsPerLang = commits.filter(
       (commit) => commit.scope === lang || COMMON_SCOPES.includes(commit.scope),
     );
 
-    const currentVersion = versions[lang].current;
     let nbGitDiff = await getNbGitDiff({
       branch: await getLastReleasedTag(),
       head: null,
@@ -233,7 +252,7 @@ export async function decideReleaseStrategy({
       nbGitDiff = 1;
     }
 
-    if (nbGitDiff === 0 || commitsPerLang.length === 0) {
+    if (!major && (nbGitDiff === 0 || commitsPerLang.length === 0)) {
       versionsToPublish[lang] = {
         ...version,
         noCommit: true,
@@ -253,47 +272,33 @@ export async function decideReleaseStrategy({
       continue;
     }
 
-    // snapshots should not be bumped as prerelease
-    if (semver.prerelease(currentVersion) && !currentVersion.endsWith('-SNAPSHOT')) {
-      // if version is like 0.1.2-beta.1, it increases to 0.1.2-beta.2, even if there's a breaking change.
-      versionsToPublish[lang] = {
-        ...version,
-        releaseType: 'prerelease',
-        next: getNextVersion(currentVersion, 'prerelease'),
-      };
-
-      continue;
-    }
-
-    if (commitsPerLang.some((commit) => commit.message.includes('BREAKING CHANGE'))) {
-      versionsToPublish[lang] = {
-        ...version,
-        releaseType: 'major',
-        next: getNextVersion(currentVersion, 'major'),
-      };
-
-      continue;
-    }
-
+    let releaseType: semver.ReleaseType = 'patch';
+    let skipRelease = false;
     const commitTypes = new Set(commitsPerLang.map(({ type }) => type));
-    if (commitTypes.has('feat')) {
-      versionsToPublish[lang] = {
-        ...version,
-        releaseType: 'minor',
-        next: getNextVersion(currentVersion, 'minor'),
-      };
 
-      continue;
+    switch (true) {
+      case major || commitsPerLang.some((commit) => commit.message.includes('BREAKING CHANGE')):
+        releaseType = 'major';
+        break;
+      case semver.prerelease(currentVersion) && !currentVersion.endsWith('-SNAPSHOT'):
+        releaseType = 'prerelease';
+        break;
+      case commitTypes.has('feat'):
+        releaseType = 'minor';
+        break;
+      case !commitTypes.has('fix'):
+        skipRelease = true;
+        break;
+      default:
+        releaseType = 'patch';
     }
 
     versionsToPublish[lang] = {
       ...version,
-      releaseType: 'patch',
-      ...(commitTypes.has('fix') ? undefined : { skipRelease: true }),
-      next: getNextVersion(currentVersion, 'patch'),
+      releaseType,
+      skipRelease,
+      next: getNextVersion(currentVersion, releaseType),
     };
-
-    continue;
   }
 
   return versionsToPublish;
@@ -407,17 +412,27 @@ async function updateLTS(versions: Versions, withGraphs?: boolean): Promise<void
     const current = versions[lang].current;
 
     // no ongoing release for this client, nothing changes
-    if (!next || next === current) {
+    if (!next || current === next) {
       continue;
     }
 
     if (current in supportedVersions) {
-      if (versions[lang].releaseType !== 'major') {
-        // In the same major, the current version enters in maintenance mode, and the next become the new active
-        delete supportedVersions[current].active;
+      // when we release a new patch, the current version isn't maintained anymore, as we only provide SLA for the latest minor/previous major
+      const nextMinor = next.match(/.+\.(.+)\..*/);
+      const currentMinor = current.match(/.+\.(.+)\..*/);
+
+      if (!currentMinor || !nextMinor) {
+        throw new Error(`unable to determine minor versions: ${currentMinor}, ${nextMinor}`);
       }
 
-      supportedVersions[current].maintenance = end.toISOString().split('T')[0];
+      if (versions[lang].releaseType !== 'major' && currentMinor[1] === nextMinor[1]) {
+        delete supportedVersions[current];
+      } else {
+        delete supportedVersions[current].active;
+
+        // any other release cases make the previous version enter in maintenance
+        supportedVersions[current].maintenance = start.toISOString().split('T')[0];
+      }
     }
 
     supportedVersions[next] = {
@@ -428,7 +443,7 @@ async function updateLTS(versions: Versions, withGraphs?: boolean): Promise<void
 
     for (const [supportedVersion, dates] of Object.entries(supportedVersions)) {
       // The support has expired, we can drop it
-      if ('maintenance' in dates && new Date(dates.maintenance as string) < start) {
+      if ('maintenance' in dates && new Date(dates.end as string) < start) {
         delete supportedVersions[supportedVersion];
 
         continue;
@@ -465,7 +480,13 @@ async function updateLTS(versions: Versions, withGraphs?: boolean): Promise<void
   );
 }
 
-async function createReleasePR(): Promise<void> {
+export async function createReleasePR({
+  languages,
+  major,
+}: {
+  languages: Language[];
+  major?: boolean;
+}): Promise<void> {
   await prepareGitEnvironment();
 
   console.log('Searching for commits since last release...');
@@ -474,12 +495,13 @@ async function createReleasePR(): Promise<void> {
   const versions = await decideReleaseStrategy({
     versions: readVersions(),
     commits: validCommits,
+    languages,
+    major,
   });
 
-  await updateLTS(versions, true);
   const versionChanges = getVersionChangesText(versions);
 
-  console.log('Creating changelogs for all languages...');
+  console.log(`Creating changelogs for languages: ${languages}...`);
   const changelog: Changelog = LANGUAGES.reduce((newChangelog, lang) => {
     if (versions[lang].noCommit) {
       return newChangelog;
@@ -513,6 +535,8 @@ async function createReleasePR(): Promise<void> {
 
   console.log('Updating config files...');
   await updateAPIVersions(versions, changelog);
+
+  await updateLTS(versions, true);
 
   const headBranch = `chore/prepare-release-${TODAY}`;
   console.log(`Switching to branch: ${headBranch}`);
@@ -559,9 +583,4 @@ async function createReleasePR(): Promise<void> {
 
   console.log(`Release PR #${data.number} is ready for review.`);
   console.log(`  > ${data.html_url}`);
-}
-
-if (import.meta.url.endsWith(process.argv[1])) {
-  setVerbose(false);
-  createReleasePR();
 }

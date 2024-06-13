@@ -8,7 +8,6 @@
     "build:cli": "tsc && tsc-alias",
     "cleanGeneratedBranch": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/cleanGeneratedBranch.js",
     "createMatrix": "NODE_NO_WARNINGS=1 node dist/scripts/ci/githubActions/createMatrix.js",
-    "createReleasePR": "NODE_NO_WARNINGS=1 RELEASE=true node dist/scripts/release/createReleasePR.js",
     "lint": "eslint --ext=ts,js,mjs,cjs .",
     "lint:deadcode": "knip",
     "pre-commit": "node ./ci/husky/pre-commit.mjs",

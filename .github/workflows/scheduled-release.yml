@@ -26,6 +26,6 @@ jobs:
           type: minimal
           language: dart # we need the dart deps because we use melos to bump dependencies for its client
 
-      - run: yarn release
+      - run: yarn cli release
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
