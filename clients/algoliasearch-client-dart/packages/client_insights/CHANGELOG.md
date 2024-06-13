@@ -1,3 +1,8 @@
+## [1.12.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.11.0...1.12.0)
+
+- [b2a464a2b](https://github.com/algolia/api-clients-automation/commit/b2a464a2b) feat(clients): add generate_secured_api_key to ruby ([#3166](https://github.com/algolia/api-clients-automation/pull/3166)) by [@millotp](https://github.com/millotp/)
+- [de4090789](https://github.com/algolia/api-clients-automation/commit/de4090789) fix(clients): safer replaceAllObjects + metis compliant ([#3164](https://github.com/algolia/api-clients-automation/pull/3164)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [1.11.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.10.0...1.11.0)
 
 - [072c38b9a](https://github.com/algolia/api-clients-automation/commit/072c38b9a) fix(clients): remove unused models from lite clients ([#3159](https://github.com/algolia/api-clients-automation/pull/3159)) by [@shortcuts](https://github.com/shortcuts/)
