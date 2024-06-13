@@ -1,6 +1,9 @@
 /* eslint-disable no-console */
+import fsp from 'fs/promises';
+
 import chalk from 'chalk';
 import dotenv from 'dotenv';
+import lts from 'lts';
 import semver from 'semver';
 
 import generationCommitText from '../ci/codegen/text.js';
@@ -19,6 +22,8 @@ import {
   gitBranchExists,
   setVerbose,
   configureGitHubAuthor,
+  fullReleaseConfig,
+  toAbsolutePath,
 } from '../common.js';
 import { getLanguageFolder, getPackageVersionDefault } from '../config.js';
 import type { Language } from '../types.js';
@@ -388,6 +393,88 @@ async function prepareGitEnvironment(): Promise<void> {
   await run('git pull origin $(git branch --show-current)');
 }
 
+// updates the release.config.json file for the lts field, which contains a release history of start and end date support
+// inspired by node: https://github.com/nodejs/Release/blob/main/schedule.json, following https://github.com/nodejs/release#release-schedule, leveraging https://github.com/nodejs/lts-schedule
+async function updateLTS(versions: Versions, withGraphs?: boolean): Promise<void> {
+  const start = new Date();
+  const end = new Date(new Date().setMonth(new Date().getMonth() + 12));
+
+  let queryStart = start;
+  let queryEnd = end;
+
+  for (const [lang, supportedVersions] of Object.entries(fullReleaseConfig.lts)) {
+    const next = versions[lang].next;
+    const current = versions[lang].current;
+
+    // no ongoing release for this client, nothing changes
+    if (!next || current === next) {
+      continue;
+    }
+
+    if (current in supportedVersions) {
+      // when we release a new patch, the current version isn't maintained anymore, as we only provide SLA for the latest minor/previous major
+      const nextMinor = next.match(/.+\.(.+)\..*/);
+      const currentMinor = current.match(/.+\.(.+)\..*/);
+
+      if (!currentMinor || !nextMinor) {
+        throw new Error(`unable to determine minor versions: ${currentMinor}, ${nextMinor}`);
+      }
+
+      if (versions[lang].releaseType !== 'major' && currentMinor[1] === nextMinor[1]) {
+        delete supportedVersions[current];
+      } else {
+        delete supportedVersions[current].active;
+
+        // any other release cases make the previous version enter in maintenance
+        supportedVersions[current].maintenance = start.toISOString().split('T')[0];
+      }
+    }
+
+    supportedVersions[next] = {
+      start: start.toISOString().split('T')[0],
+      active: start.toISOString().split('T')[0],
+      end: end.toISOString().split('T')[0],
+    };
+
+    for (const [supportedVersion, dates] of Object.entries(supportedVersions)) {
+      // The support has expired, we can drop it
+      if ('maintenance' in dates && new Date(dates.end as string) < start) {
+        delete supportedVersions[supportedVersion];
+
+        continue;
+      }
+
+      // Used to define the start of the rendered graph timeline
+      const versionStart = new Date(dates.start);
+      if (versionStart < queryStart) {
+        queryStart = versionStart;
+      }
+
+      // Used to define the end of the rendered graph timeline
+      const versionEnd = new Date(dates.end);
+      if (versionEnd > queryEnd) {
+        queryEnd = versionEnd;
+      }
+    }
+
+    if (withGraphs) {
+      lts.create({
+        queryStart,
+        queryEnd,
+        png: toAbsolutePath(`config/${lang}-lts.png`),
+        data: supportedVersions,
+        projectName: '',
+        excludeMaster: true,
+      });
+    }
+  }
+
+  await fsp.writeFile(
+    toAbsolutePath('config/release.config.json'),
+    JSON.stringify(fullReleaseConfig, null, 2),
+  );
+}
+
 async function createReleasePR(): Promise<void> {
   await prepareGitEnvironment();
 
@@ -398,6 +485,7 @@ async function createReleasePR(): Promise<void> {
     versions: readVersions(),
     commits: validCommits,
   });
+
   const versionChanges = getVersionChangesText(versions);
 
   console.log('Creating changelogs for all languages...');
@@ -434,6 +522,8 @@ async function createReleasePR(): Promise<void> {
 
   console.log('Updating config files...');
   await updateAPIVersions(versions, changelog);
+
+  await updateLTS(versions, true);
 
   const headBranch = `chore/prepare-release-${TODAY}`;
   console.log(`Switching to branch: ${headBranch}`);
