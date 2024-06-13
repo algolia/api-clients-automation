@@ -39,18 +39,6 @@ const flags = {
     flag: '-s, --skip-cache',
     description: 'skip cache checking to force building specs',
   },
-  outputType: {
-    flag: '-json, --output-json',
-    description: 'outputs the spec in JSON instead of yml',
-  },
-  docs: {
-    flag: '-d, --docs',
-    description: 'generates the doc specs with the code snippets',
-  },
-  major: {
-    flag: '-m, --major',
-    description: 'triggers a major release for the given language list',
-  },
 };
 
 program.name('cli');
@@ -97,8 +85,8 @@ buildCommand
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
   .option(flags.skipCache.flag, flags.skipCache.description)
-  .option(flags.outputType.flag, flags.outputType.description)
-  .option(flags.docs.flag, flags.docs.description)
+  .option('-json, --output-json', 'outputs the spec in JSON instead of yml')
+  .option('-d, --docs', 'generates the doc specs with the code snippets')
   .action(async (clientArg: string[], { verbose, skipCache, outputJson, docs }) => {
     const { client, clientList } = transformSelection({
       langArg: ALL,
@@ -212,8 +200,9 @@ program
   .description('Releases the client')
   .addArgument(args.languages)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option(flags.major.flag, flags.major.description)
-  .action(async (langArgs: LangArg[], { verbose, major }) => {
+  .option('-m, --major', 'triggers a major release for the given language list')
+  .option('-d, --dryRun', 'does not push anything to GitHub')
+  .action(async (langArgs: LangArg[], { verbose, major, dryRun }) => {
     setVerbose(Boolean(verbose));
 
     if (langArgs.length === 0) {
@@ -223,6 +212,7 @@ program
     await createReleasePR({
       languages: langArgs.includes(ALL) ? LANGUAGES : (langArgs as Language[]),
       major,
+      dryRun,
     });
   });
 

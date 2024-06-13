@@ -44,6 +44,8 @@ dotenv.config({ path: ROOT_ENV_PATH });
 
 export const COMMON_SCOPES = ['specs', 'clients'];
 
+const preReleaseRegExp = new RegExp(/\d\.\d\.\d(\.?a(lpha\.)?\d+|\.?b(eta\.)?\d+)$/);
+
 // Prevent fetching the same user multiple times
 const fetchedUsers: Record<string, string> = {};
 
@@ -184,11 +186,13 @@ export function getNextVersion(current: string, releaseType: semver.ReleaseType 
   // python pre-releases have a pattern like `X.Y.ZaN` for alpha or `X.Y.ZbN` for beta
   // see https://peps.python.org/pep-0440/
   // It also support ruby pre-releases like `X.Y.Z.alpha.N` for alpha or `X.Y.Z.beta.N` for beta
-  if (
-    releaseType !== 'major' &&
-    (/\d\.\d\.\d\.?a(lpha\.)?\d+$/.test(current) || /\d\.\d\.\d\.?b(eta\.)?\d+$/.test(current))
-  ) {
-    nextVersion = current.replace(/\d+$/, (match) => `${parseInt(match, 10) + 1}`);
+  const preReleaseVersion = current.match(preReleaseRegExp);
+  if (preReleaseVersion?.length) {
+    if (releaseType === 'major') {
+      nextVersion = current.replace(preReleaseVersion[1], '');
+    } else {
+      nextVersion = current.replace(/\d+$/, (match) => `${parseInt(match, 10) + 1}`);
+    }
   } else if (current.endsWith('-SNAPSHOT')) {
     // snapshots should not be bumped
     nextVersion = current;
@@ -210,11 +214,13 @@ export async function decideReleaseStrategy({
   commits,
   languages,
   major,
+  dryRun,
 }: {
   versions: VersionsBeforeBump;
   commits: PassedCommit[];
   languages: Language[];
   major?: boolean;
+  dryRun?: boolean;
 }): Promise<Versions> {
   const versionsToPublish: Versions = {};
 
@@ -247,8 +253,7 @@ export async function decideReleaseStrategy({
 
     console.log(`Deciding next version bump for ${lang}.`);
 
-    // allows forcing a client release
-    if (process.env.LOCAL_TEST_DEV) {
+    if (dryRun) {
       nbGitDiff = 1;
     }
 
@@ -362,8 +367,6 @@ async function getCommits(): Promise<{
 
 /**
  * Ensure the release environment is correct before triggering.
- *
- * You can bypass blocking checks by setting LOCAL_TEST_DEV to true.
  */
 async function prepareGitEnvironment(): Promise<void> {
   ensureGitHubToken();
@@ -372,19 +375,11 @@ async function prepareGitEnvironment(): Promise<void> {
     await configureGitHubAuthor();
   }
 
-  if (
-    !process.env.LOCAL_TEST_DEV &&
-    (await run('git rev-parse --abbrev-ref HEAD')) !== MAIN_BRANCH
-  ) {
+  if ((await run('git rev-parse --abbrev-ref HEAD')) !== MAIN_BRANCH) {
     throw new Error(`You can run this script only from \`${MAIN_BRANCH}\` branch.`);
   }
 
-  if (
-    !process.env.LOCAL_TEST_DEV &&
-    (await getNbGitDiff({
-      head: null,
-    })) !== 0
-  ) {
+  if ((await getNbGitDiff({ head: null })) !== 0) {
     throw new Error('Working directory is not clean. Commit all the changes first.');
   }
 
@@ -483,11 +478,15 @@ async function updateLTS(versions: Versions, withGraphs?: boolean): Promise<void
 export async function createReleasePR({
   languages,
   major,
+  dryRun,
 }: {
   languages: Language[];
   major?: boolean;
+  dryRun?: boolean;
 }): Promise<void> {
-  await prepareGitEnvironment();
+  if (!dryRun) {
+    await prepareGitEnvironment();
+  }
 
   console.log('Searching for commits since last release...');
   const { validCommits, skippedCommits } = await getCommits();
@@ -538,6 +537,12 @@ export async function createReleasePR({
 
   await updateLTS(versions, true);
 
+  if (dryRun) {
+    console.log('  > asked for a dryrun, stopping here');
+
+    return;
+  }
+
   const headBranch = `chore/prepare-release-${TODAY}`;
   console.log(`Switching to branch: ${headBranch}`);
   if (await gitBranchExists(headBranch)) {
@@ -551,11 +556,7 @@ export async function createReleasePR({
   console.log(`Pushing updated changes to: ${headBranch}`);
   const commitMessage = generationCommitText.commitPrepareReleaseMessage;
   await run('git add .');
-  if (process.env.LOCAL_TEST_DEV) {
-    await run(`git commit -m "${commitMessage} [skip ci]"`);
-  } else {
-    await run(`CI=false git commit -m "${commitMessage}"`);
-  }
+  await run(`CI=false git commit -m "${commitMessage}"`);
 
   // cleanup all the changes to the generated files (the ones not commited because of the pre-commit hook)
   await run(`git checkout .`);
