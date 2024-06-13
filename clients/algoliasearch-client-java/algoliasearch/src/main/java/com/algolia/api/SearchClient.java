@@ -7,20 +7,31 @@ import com.algolia.ApiClient;
 import com.algolia.config.*;
 import com.algolia.config.ClientOptions;
 import com.algolia.exceptions.*;
+import com.algolia.internal.JsonSerializer;
 import com.algolia.model.search.*;
 import com.algolia.utils.*;
 import com.fasterxml.jackson.core.type.TypeReference;
+import java.nio.charset.Charset;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.IntUnaryOperator;
+import java.util.regex.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 
 public class SearchClient extends ApiClient {
 
@@ -5856,10 +5867,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
+   * Helper: Wait for an API key to be added or deleted based on a given `operation`.
    *
    * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
-   * @param key The `key` that has been added, deleted or updated.
+   * @param key The `key` that has been added or deleted.
    * @param maxRetries The maximum number of retry. 50 by default. (optional)
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
@@ -5891,10 +5902,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
+   * Helper: Wait for an API key to be added or deleted based on a given `operation`.
    *
    * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
-   * @param key The `key` that has been added, deleted or updated.
+   * @param key The `key` that has been added or deleted.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
@@ -5918,10 +5929,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
+   * Helper: Wait for an API key to be added or deleted based on a given `operation`.
    *
    * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
-   * @param key The `key` that has been added, deleted or updated.
+   * @param key The `key` that has been added or deleted.
    * @param maxRetries The maximum number of retry. 50 by default. (optional)
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
@@ -5943,10 +5954,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
+   * Helper: Wait for an API key to be added or deleted based on a given `operation`.
    *
    * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
-   * @param key The `key` that has been added, deleted or updated.
+   * @param key The `key` that has been added or deleted.
    */
   public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key) {
     return this.waitForApiKey(operation, key, null, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
@@ -6352,5 +6363,90 @@ public class SearchClient extends ApiClient {
       .setCopyOperationResponse(copyOperationResponse)
       .setBatchResponses(batchResponses)
       .setMoveOperationResponse(moveOperationResponse);
+  }
+
+  /**
+   * Helper: Generates a secured API key based on the given `parent_api_key` and given
+   * `restrictions`.
+   *
+   * @param parentApiKey API key to generate from.
+   * @param restrictions Restrictions to add the key
+   * @throws Exception if an error occurs during the encoding
+   * @throws AlgoliaRetryException When the retry has failed on all hosts
+   * @throws AlgoliaApiException When the API sends an http error code
+   * @throws AlgoliaRuntimeException When an error occurred during the serialization
+   */
+  public String generateSecuredApiKey(@Nonnull String parentApiKey, @Nonnull SecuredAPIKeyRestrictions restrictions) throws Exception {
+    Map<String, String> restrictionsMap = new HashMap<>();
+    if (restrictions.getFilters() != null) restrictionsMap.put("filters", StringUtils.paramToString(restrictions.getFilters()));
+    if (restrictions.getValidUntil() != 0) restrictionsMap.put("validUntil", StringUtils.paramToString(restrictions.getValidUntil()));
+    if (restrictions.getRestrictIndices() != null) restrictionsMap.put(
+      "restrictIndices",
+      StringUtils.paramToString(restrictions.getRestrictIndices())
+    );
+    if (restrictions.getRestrictSources() != null) restrictionsMap.put(
+      "restrictSources",
+      StringUtils.paramToString(restrictions.getRestrictSources())
+    );
+    if (restrictions.getUserToken() != null) restrictionsMap.put("userToken", StringUtils.paramToString(restrictions.getUserToken()));
+
+    if (restrictions.getSearchParams() != null) {
+      Map<String, Object> searchParamsMap = JsonSerializer
+        .getObjectMapper()
+        .convertValue(restrictions.getSearchParams(), new TypeReference<Map<String, Object>>() {});
+      searchParamsMap.forEach((key, value) -> restrictionsMap.put(key, StringUtils.paramToString(value)));
+    }
+
+    String queryStr = restrictionsMap
+      .entrySet()
+      .stream()
+      .sorted(Map.Entry.comparingByKey())
+      .map(entry -> String.format("%s=%s", entry.getKey(), entry.getValue()))
+      .collect(Collectors.joining("&"));
+
+    String key = hmac(parentApiKey, queryStr);
+
+    return new String(Base64.getEncoder().encode(String.format("%s%s", key, queryStr).getBytes(Charset.forName("UTF8"))));
+  }
+
+  private String hmac(String key, String msg) throws NoSuchAlgorithmException, InvalidKeyException {
+    Mac hmac = Mac.getInstance("HmacSHA256");
+    hmac.init(new SecretKeySpec(key.getBytes(), "HmacSHA256"));
+    byte[] rawHmac = hmac.doFinal(msg.getBytes());
+    StringBuilder sb = new StringBuilder(rawHmac.length * 2);
+    for (byte b : rawHmac) {
+      sb.append(String.format("%02x", b & 0xff));
+    }
+    return sb.toString();
+  }
+
+  /**
+   * Helper: Retrieves the remaining validity of the previous generated `secured_api_key`, the
+   * `validUntil` parameter must have been provided.
+   *
+   * @param securedApiKey The secured API Key to check
+   * @throws AlgoliaRuntimeException if <code>securedApiKey</code> is null, empty or whitespaces.
+   * @throws AlgoliaRuntimeException if <code>securedApiKey</code> doesn't have a <code>validUntil
+   *     </code> parameter.
+   */
+  public Duration getSecuredApiKeyRemainingValidity(@Nonnull String securedApiKey) {
+    if (securedApiKey == null || securedApiKey.trim().isEmpty()) {
+      throw new AlgoliaRuntimeException("securedAPIKey must not be empty, null or whitespaces");
+    }
+
+    byte[] decodedBytes = Base64.getDecoder().decode(securedApiKey);
+    String decodedString = new String(decodedBytes);
+
+    Pattern pattern = Pattern.compile("validUntil=\\d+");
+    Matcher matcher = pattern.matcher(decodedString);
+
+    if (!matcher.find()) {
+      throw new AlgoliaRuntimeException("The Secured API Key doesn't have a validUntil parameter.");
+    }
+
+    String validUntilMatch = matcher.group(0);
+    long timeStamp = Long.parseLong(validUntilMatch.replace("validUntil=", ""));
+
+    return Duration.ofSeconds(timeStamp - Instant.now().getEpochSecond());
   }
 }
