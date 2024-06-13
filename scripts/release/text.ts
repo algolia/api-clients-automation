@@ -1,7 +1,7 @@
 export default {
   header: `## Summary`,
   summary:
-    'This PR has been created using the `yarn release` script. Once merged, the clients will try to release their new version if their version has changed.',
+    'This PR has been created using the `apic release` script. Once merged, the clients will try to release their new version if their version has changed.',
 
   versionChangeHeader: `## Version Changes`,
   skippedCommitsHeader: `### Skipped Commits`,

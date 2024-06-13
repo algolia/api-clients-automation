@@ -2,6 +2,7 @@ import { afterAll, describe, expect, it, vi } from "vitest";
 
 import releaseConfig from '../../../config/release.config.json' assert { type: 'json' };
 import type { PassedCommit } from '../types.js';
+import { LANGUAGES } from "../../common.js";
 
 const gitAuthor = releaseConfig.gitAuthor;
 
@@ -450,10 +451,85 @@ describe('createReleasePR', () => {
             })
           )) as PassedCommit,
         ],
+        languages: LANGUAGES,
       });
 
       expect(versions.javascript.releaseType).toEqual('major');
       expect(versions.javascript.next).toEqual('1.0.0');
+    });
+
+    it('allows forcing major releases', async () => {
+      const versions = await decideReleaseStrategy({
+        versions: {
+          javascript: {
+            current: '0.0.1',
+          },
+          java: {
+            current: '0.0.1',
+          },
+          php: {
+            current: '0.0.1',
+          },
+        },
+        commits: [],
+        languages: LANGUAGES,
+        major: true
+      });
+
+      expect(versions.javascript.releaseType).toEqual('major');
+      expect(versions.javascript.next).toEqual('1.0.0');
+
+      expect(versions.php.releaseType).toEqual('major');
+      expect(versions.php.next).toEqual('1.0.0');
+
+      expect(versions.java.releaseType).toEqual('major');
+      expect(versions.java.next).toEqual('1.0.0');
+    });
+
+    it('allows releasing subset of clients', async () => {
+      const versions = await decideReleaseStrategy({
+        versions: {
+          javascript: {
+            current: '0.0.1',
+          },
+          java: {
+            current: '0.0.1',
+          },
+          php: {
+            current: '0.0.1',
+          },
+        },
+        commits: [
+          (await parseCommit(
+            buildTestCommit({
+              type: 'feat',
+              scope: 'javascript',
+              message: 'update the API',
+            })
+          )) as PassedCommit,
+          (await parseCommit(
+            buildTestCommit({
+              type: 'feat',
+              scope: 'java',
+              message: 'update the API',
+            })
+          )) as PassedCommit,
+          (await parseCommit(
+            buildTestCommit({
+              type: 'feat',
+              scope: 'php',
+              message: 'update the API',
+            })
+          )) as PassedCommit,
+        ],
+        languages: ['php'],
+      });
+
+      expect(versions.javascript.skipRelease).toEqual(true);
+      expect(versions.java.skipRelease).toEqual(true);
+      expect(versions.php.skipRelease).toEqual(false);
+      expect(versions.php.releaseType).toEqual('minor');
+      expect(versions.php.next).toEqual('0.1.0');
     });
 
     it('bumps minor version for feat', async () => {
@@ -478,6 +554,7 @@ describe('createReleasePR', () => {
             })
           )) as PassedCommit,
         ],
+        languages: LANGUAGES,
       });
 
       expect(versions.php.releaseType).toEqual('minor');
@@ -506,6 +583,7 @@ describe('createReleasePR', () => {
             })
           )) as PassedCommit,
         ],
+        languages: LANGUAGES,
       });
 
       expect(versions.java.releaseType).toEqual('patch');
@@ -534,6 +612,7 @@ describe('createReleasePR', () => {
             })
           )) as PassedCommit,
         ],
+        languages: LANGUAGES,
       });
 
       expect(versions.javascript.noCommit).toEqual(true);
@@ -565,6 +644,7 @@ describe('createReleasePR', () => {
             })
           )) as PassedCommit,
         ],
+        languages: LANGUAGES,
       });
 
       expect(versions.javascript.noCommit).toBeUndefined();
@@ -600,6 +680,7 @@ describe('createReleasePR', () => {
             })
           )) as PassedCommit,
         ],
+        languages: LANGUAGES,
       });
 
       expect(versions.javascript.noCommit).toBeUndefined();
@@ -642,6 +723,7 @@ describe('createReleasePR', () => {
             })
           )) as PassedCommit,
         ],
+        languages: LANGUAGES,
       });
 
       expect(versions.javascript.noCommit).toBeUndefined();
@@ -677,6 +759,7 @@ describe('createReleasePR', () => {
             })
           )) as PassedCommit,
         ],
+        languages: LANGUAGES,
       });
       expect(versions.javascript.skipRelease).toEqual(true);
       expect(versions.java.skipRelease).toBeUndefined();
@@ -705,6 +788,7 @@ describe('createReleasePR', () => {
             })
           )) as PassedCommit,
         ],
+        languages: LANGUAGES,
       });
 
       expect(versions.javascript.noCommit).toBeUndefined();
@@ -740,6 +824,7 @@ describe('createReleasePR', () => {
             })
           )) as PassedCommit,
         ],
+        languages: LANGUAGES,
       });
 
       expect(versions.javascript.noCommit).toBeUndefined();

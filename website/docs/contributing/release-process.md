@@ -15,7 +15,7 @@ GITHUB_TOKEN=<YOUR-PERSONAL-ACCESS-TOKEN>
 Once setup, you can run:
 
 ```bash
-yarn release
+apic release
 ```
 
 It will create [a release PR](https://github.com/algolia/api-clients-automation/pull/545).
