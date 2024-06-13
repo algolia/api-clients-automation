@@ -143,58 +143,11 @@ jobs:
           name: specs
           path: ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).bundledPath }}
 
-  client_javascript_utils:
-    timeout-minutes: 10
-    runs-on: ubuntu-22.04
-    needs: setup
-    if: ${{ needs.setup.outputs.RUN_GEN_JAVASCRIPT == 'true' }}
-    strategy:
-      matrix:
-        client:
-          - client-common
-          - requester-browser-xhr
-          - requester-node-http
-          - requester-fetch
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Cache '${{ matrix.client }}' client folder
-        if: ${{ github.ref != 'refs/heads/main' }}
-        id: cache
-        uses: actions/cache@v4
-        with:
-          key: |
-            ${{ matrix.client }}-${{ hashFiles(
-              format('clients/algoliasearch-client-javascript/packages/{0}/**', matrix.client),
-              'clients/algoliasearch-client-javascript/yarn.lock'
-            )}}
-          path: clients/algoliasearch-client-javascript/packages/${{ matrix.client }}
-
-      - name: Remove generated clients
-        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: cd clients/algoliasearch-client-javascript/packages && ls | grep -v -E "(client-common|requester-*)" | xargs rm -rf
-
-      - name: Setup
-        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        uses: ./.github/actions/setup
-        with:
-          type: minimal
-          language: javascript
-
-      - name: Build '${{ matrix.client }}' client
-        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: cd clients/algoliasearch-client-javascript && yarn build:many @algolia/${{ matrix.client }}
-
-      - name: Run tests for '${{ matrix.client }}'
-        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
-        run: cd clients/algoliasearch-client-javascript && yarn workspace @algolia/${{ matrix.client }} test
-
   client_gen_javascript:
     timeout-minutes: 10
     runs-on: ubuntu-22.04
     needs:
       - setup
-      - client_javascript_utils
       - specs
       - scripts
     if: |
@@ -236,13 +189,12 @@ jobs:
       - name: Build clients
         run: ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).buildCommand }}
 
+      - name: Run common and requester tests
+        run: cd clients/algoliasearch-client-javascript && yarn test
+
       - name: Test JavaScript bundle size
         if: ${{ startsWith(env.head_ref, 'chore/prepare-release-') }}
         run: cd clients/algoliasearch-client-javascript && yarn test:size
-
-      - name: Run JavaScript 'algoliasearch' client tests
-        if: ${{ contains(fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun,'algoliasearch') }}
-        run: cd clients/algoliasearch-client-javascript && yarn workspace algoliasearch test
 
       - name: Remove previous CTS output
         run: rm -rf ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).testsToDelete }}
