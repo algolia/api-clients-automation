@@ -9,7 +9,9 @@ import { startTestServer } from '../cts/testServer';
 import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
 import { playground } from '../playground.js';
+import { createReleasePR } from '../release/createReleasePR.js';
 import { snippetsGenerateMany } from '../snippets/generate.js';
+import type { Language } from '../types.js';
 
 import type { LangArg } from './utils.js';
 import {
@@ -23,6 +25,7 @@ import {
 
 const args = {
   language: new Argument('[language]', 'The language').choices(PROMPT_LANGUAGES),
+  languages: new Argument('[language...]', 'The language').choices(PROMPT_LANGUAGES),
   clients: new Argument('[client...]', 'The client').choices(getClientChoices('all')),
   client: new Argument('[client]', 'The client').choices(PROMPT_CLIENTS),
 };
@@ -43,6 +46,10 @@ const flags = {
   docs: {
     flag: '-d, --docs',
     description: 'generates the doc specs with the code snippets',
+  },
+  major: {
+    flag: '-m, --major',
+    description: 'triggers a major release for the given language list',
   },
 };
 
@@ -198,6 +205,25 @@ program
     setVerbose(Boolean(verbose));
 
     await snippetsGenerateMany(generatorList({ language, client, clientList }));
+  });
+
+program
+  .command('release')
+  .description('Releases the client')
+  .addArgument(args.languages)
+  .option(flags.verbose.flag, flags.verbose.description)
+  .option(flags.major.flag, flags.major.description)
+  .action(async (langArgs: LangArg[], { verbose, major }) => {
+    setVerbose(Boolean(verbose));
+
+    if (langArgs.length === 0) {
+      langArgs = [ALL];
+    }
+
+    await createReleasePR({
+      languages: langArgs.includes(ALL) ? LANGUAGES : (langArgs as Language[]),
+      major,
+    });
   });
 
 program.parse();

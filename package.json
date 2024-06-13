@@ -18,7 +18,6 @@
     "github-actions:lint": "eslint --ext=yml .github/",
     "postinstall": "husky && yarn workspace eslint-plugin-automation-custom build && yarn workspace scripts build:cli",
     "playground:browser": "yarn workspace javascript-browser-playground start",
-    "release": "yarn workspace scripts createReleasePR",
     "scripts:build": "yarn workspace scripts build",
     "scripts:lint": "yarn workspace scripts lint",
     "scripts:test": "yarn workspace scripts test",
