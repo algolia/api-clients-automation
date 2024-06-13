@@ -407,17 +407,27 @@ async function updateLTS(versions: Versions, withGraphs?: boolean): Promise<void
     const current = versions[lang].current;
 
     // no ongoing release for this client, nothing changes
-    if (!next || next === current) {
+    if (!next || current === next) {
       continue;
     }
 
     if (current in supportedVersions) {
-      if (versions[lang].releaseType !== 'major') {
-        // In the same major, the current version enters in maintenance mode, and the next become the new active
-        delete supportedVersions[current].active;
+      // when we release a new patch, the current version isn't maintained anymore, as we only provide SLA for the latest minor/previous major
+      const nextMinor = next.match(/.+\.(.+)\..*/);
+      const currentMinor = current.match(/.+\.(.+)\..*/);
+
+      if (!currentMinor || !nextMinor) {
+        throw new Error(`unable to determine minor versions: ${currentMinor}, ${nextMinor}`);
       }
 
-      supportedVersions[current].maintenance = end.toISOString().split('T')[0];
+      if (versions[lang].releaseType !== 'major' && currentMinor[1] === nextMinor[1]) {
+        delete supportedVersions[current];
+      } else {
+        delete supportedVersions[current].active;
+
+        // any other release cases make the previous version enter in maintenance
+        supportedVersions[current].maintenance = start.toISOString().split('T')[0];
+      }
     }
 
     supportedVersions[next] = {
@@ -428,7 +438,7 @@ async function updateLTS(versions: Versions, withGraphs?: boolean): Promise<void
 
     for (const [supportedVersion, dates] of Object.entries(supportedVersions)) {
       // The support has expired, we can drop it
-      if ('maintenance' in dates && new Date(dates.maintenance as string) < start) {
+      if ('maintenance' in dates && new Date(dates.end as string) < start) {
         delete supportedVersions[supportedVersion];
 
         continue;
@@ -476,7 +486,6 @@ async function createReleasePR(): Promise<void> {
     commits: validCommits,
   });
 
-  await updateLTS(versions, true);
   const versionChanges = getVersionChangesText(versions);
 
   console.log('Creating changelogs for all languages...');
@@ -513,6 +522,8 @@ async function createReleasePR(): Promise<void> {
 
   console.log('Updating config files...');
   await updateAPIVersions(versions, changelog);
+
+  await updateLTS(versions, true);
 
   const headBranch = `chore/prepare-release-${TODAY}`;
   console.log(`Switching to branch: ${headBranch}`);
