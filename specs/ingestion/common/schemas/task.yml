@@ -188,7 +188,7 @@ TriggerType:
 # schedule trigger
 
 LastRun:
-  description: The last time the scheduled task ran in RFC3339 format.
+  description: The last time the scheduled task ran in RFC 3339 format.
   type: string
 
 Cron:
@@ -227,7 +227,7 @@ ScheduleTrigger:
     lastRun:
       $ref: '#/LastRun'
     nextRun:
-      description: The next scheduled run of the task in RFC3339 format.
+      description: The next scheduled run of the task in RFC 3339 format.
       type: string
   required:
     - type
@@ -368,10 +368,10 @@ OnDemandDateUtilsInput:
   description: Input for a manually-triggered task whose source is of type `bigquery` and for which extracted data spans a given time range.
   properties:
     startDate:
-      description: Earliest date in RFC3339 format of the extracted data from Big Query.
+      description: Earliest date in RFC 3339 format of the extracted data from Big Query.
       type: string
     endDate:
-      description: Latest date in RFC3339 format of the extracted data from Big Query.
+      description: Latest date in RFC 3339 format of the extracted data from Big Query.
       type: string
     mapping:
       $ref: '#/MappingInput'

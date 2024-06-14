@@ -1053,14 +1053,14 @@ paths:
         - name: startDate
           in: query
           description: >-
-            Date in RFC3339 format for the earliest run to retrieve. By default,
-            the current day minus seven days is used.
+            Date in RFC 3339 format for the earliest run to retrieve. By
+            default, the current day minus seven days is used.
           schema:
             type: string
         - name: endDate
           in: query
           description: >-
-            Date in RFC3339 format for the latest run to retrieve. By default,
+            Date in RFC 3339 format for the latest run to retrieve. By default,
             the current day is used.
           schema:
             type: string
@@ -1117,14 +1117,14 @@ paths:
         - name: startDate
           in: query
           description: >-
-            Date and time in RFC3339 format for the earliest events to retrieve.
-            By default, the current time minus three hours is used.
+            Date and time in RFC 3339 format for the earliest events to
+            retrieve. By default, the current time minus three hours is used.
           schema:
             type: string
         - name: endDate
           in: query
           description: >-
-            Date and time in RFC3339 format for the latest events to retrieve.
+            Date and time in RFC 3339 format for the latest events to retrieve.
             By default, the current time is used.
           schema:
             type: string
@@ -1650,10 +1650,10 @@ components:
         - $ref: '#/components/schemas/AuthAlgoliaInsightsPartial'
     createdAt:
       type: string
-      description: Date of creation in RFC3339 format.
+      description: Date of creation in RFC 3339 format.
     updatedAt:
       type: string
-      description: Date of last update in RFC3339 format.
+      description: Date of last update in RFC 3339 format.
     Authentication:
       type: object
       description: >-
@@ -1864,7 +1864,7 @@ components:
       properties:
         deletedAt:
           type: string
-          description: Date of deletion in RFC3339 format.
+          description: Date of deletion in RFC 3339 format.
       required:
         - deletedAt
     AuthenticationUpdate:
@@ -2677,7 +2677,7 @@ components:
       enum:
         - onDemand
     LastRun:
-      description: The last time the scheduled task ran in RFC3339 format.
+      description: The last time the scheduled task ran in RFC 3339 format.
       type: string
     OnDemandTrigger:
       type: object
@@ -2711,7 +2711,7 @@ components:
         lastRun:
           $ref: '#/components/schemas/LastRun'
         nextRun:
-          description: The next scheduled run of the task in RFC3339 format.
+          description: The next scheduled run of the task in RFC 3339 format.
           type: string
       required:
         - type
@@ -2827,11 +2827,11 @@ components:
       properties:
         startDate:
           description: >-
-            Earliest date in RFC3339 format of the extracted data from Big
+            Earliest date in RFC 3339 format of the extracted data from Big
             Query.
           type: string
         endDate:
-          description: Latest date in RFC3339 format of the extracted data from Big Query.
+          description: Latest date in RFC 3339 format of the extracted data from Big Query.
           type: string
         mapping:
           $ref: '#/components/schemas/MappingInput'
@@ -3141,10 +3141,10 @@ components:
         - discover
     startedAt:
       type: string
-      description: Date of start in RFC3339 format.
+      description: Date of start in RFC 3339 format.
     finishedAt:
       type: string
-      description: Date of finish in RFC3339 format.
+      description: Date of finish in RFC 3339 format.
     Run:
       type: object
       additionalProperties: false
@@ -3197,12 +3197,12 @@ components:
         startDate:
           type: string
           description: >-
-            Date in RFC3339 format representing the oldest data in the time
+            Date in RFC 3339 format representing the oldest data in the time
             window.
         endDate:
           type: string
           description: >-
-            Date in RFC3339 format representing the newest data in the time
+            Date in RFC 3339 format representing the newest data in the time
             window.
       required:
         - startDate
@@ -3252,7 +3252,7 @@ components:
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     publishedAt:
       type: string
-      description: Date of publish RFC3339 format.
+      description: Date of publish RFC 3339 format.
     Event:
       type: object
       description: An event describe a step of the task execution flow..

@@ -50,7 +50,7 @@ public class ScheduleTrigger implements Trigger {
     return this;
   }
 
-  /** The last time the scheduled task ran in RFC3339 format. */
+  /** The last time the scheduled task ran in RFC 3339 format. */
   @javax.annotation.Nullable
   public String getLastRun() {
     return lastRun;
@@ -61,7 +61,7 @@ public class ScheduleTrigger implements Trigger {
     return this;
   }
 
-  /** The next scheduled run of the task in RFC3339 format. */
+  /** The next scheduled run of the task in RFC 3339 format. */
   @javax.annotation.Nonnull
   public String getNextRun() {
     return nextRun;

@@ -26,9 +26,9 @@ package algoliasearch.ingestion
 /** Time window by which to filter the observability data.
   *
   * @param startDate
-  *   Date in RFC3339 format representing the oldest data in the time window.
+  *   Date in RFC 3339 format representing the oldest data in the time window.
   * @param endDate
-  *   Date in RFC3339 format representing the newest data in the time window.
+  *   Date in RFC 3339 format representing the newest data in the time window.
   */
 case class Window(
     startDate: String,

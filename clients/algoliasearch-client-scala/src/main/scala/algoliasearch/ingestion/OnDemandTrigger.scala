@@ -28,7 +28,7 @@ import algoliasearch.ingestion.OnDemandTriggerType._
 /** Trigger information for manually-triggered tasks.
   *
   * @param lastRun
-  *   The last time the scheduled task ran in RFC3339 format.
+  *   The last time the scheduled task ran in RFC 3339 format.
   */
 case class OnDemandTrigger(
     `type`: OnDemandTriggerType,

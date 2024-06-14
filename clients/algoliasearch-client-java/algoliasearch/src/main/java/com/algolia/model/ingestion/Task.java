@@ -136,7 +136,7 @@ public class Task {
     return this;
   }
 
-  /** Date of creation in RFC3339 format. */
+  /** Date of creation in RFC 3339 format. */
   @javax.annotation.Nonnull
   public String getCreatedAt() {
     return createdAt;
@@ -147,7 +147,7 @@ public class Task {
     return this;
   }
 
-  /** Date of last update in RFC3339 format. */
+  /** Date of last update in RFC 3339 format. */
   @javax.annotation.Nullable
   public String getUpdatedAt() {
     return updatedAt;

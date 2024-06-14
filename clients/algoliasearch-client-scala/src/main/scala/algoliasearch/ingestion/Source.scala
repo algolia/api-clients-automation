@@ -32,9 +32,9 @@ import algoliasearch.ingestion.SourceType._
   * @param authenticationID
   *   Universally unique identifier (UUID) of an authentication resource.
   * @param createdAt
-  *   Date of creation in RFC3339 format.
+  *   Date of creation in RFC 3339 format.
   * @param updatedAt
-  *   Date of last update in RFC3339 format.
+  *   Date of last update in RFC 3339 format.
   */
 case class Source(
     sourceID: String,

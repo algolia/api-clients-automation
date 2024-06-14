@@ -30,9 +30,9 @@ import algoliasearch.ingestion.ScheduleTriggerType._
   * @param cron
   *   Cron expression for the task's schedule.
   * @param lastRun
-  *   The last time the scheduled task ran in RFC3339 format.
+  *   The last time the scheduled task ran in RFC 3339 format.
   * @param nextRun
-  *   The next scheduled run of the task in RFC3339 format.
+  *   The next scheduled run of the task in RFC 3339 format.
   */
 case class ScheduleTrigger(
     `type`: ScheduleTriggerType,

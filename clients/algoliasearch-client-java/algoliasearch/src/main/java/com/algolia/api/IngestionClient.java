@@ -1488,9 +1488,9 @@ public class IngestionClient extends ApiClient {
    * @param type Event type for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task run events. (optional)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date and time in RFC3339 format for the earliest events to retrieve. By
+   * @param startDate Date and time in RFC 3339 format for the earliest events to retrieve. By
    *     default, the current time minus three hours is used. (optional)
-   * @param endDate Date and time in RFC3339 format for the latest events to retrieve. By default,
+   * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default,
    *     the current time is used. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1521,9 +1521,9 @@ public class IngestionClient extends ApiClient {
    * @param type Event type for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task run events. (optional)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date and time in RFC3339 format for the earliest events to retrieve. By
+   * @param startDate Date and time in RFC 3339 format for the earliest events to retrieve. By
    *     default, the current time minus three hours is used. (optional)
-   * @param endDate Date and time in RFC3339 format for the latest events to retrieve. By default,
+   * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default,
    *     the current time is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1573,9 +1573,9 @@ public class IngestionClient extends ApiClient {
    * @param type Event type for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task run events. (optional)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date and time in RFC3339 format for the earliest events to retrieve. By
+   * @param startDate Date and time in RFC 3339 format for the earliest events to retrieve. By
    *     default, the current time minus three hours is used. (optional)
-   * @param endDate Date and time in RFC3339 format for the latest events to retrieve. By default,
+   * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default,
    *     the current time is used. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1621,9 +1621,9 @@ public class IngestionClient extends ApiClient {
    * @param type Event type for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task run events. (optional)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date and time in RFC3339 format for the earliest events to retrieve. By
+   * @param startDate Date and time in RFC 3339 format for the earliest events to retrieve. By
    *     default, the current time minus three hours is used. (optional)
-   * @param endDate Date and time in RFC3339 format for the latest events to retrieve. By default,
+   * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default,
    *     the current time is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1721,9 +1721,9 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC3339 format for the earliest run to retrieve. By default, the
+   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
    *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC3339 format for the latest run to retrieve. By default, the current
+   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
    *     day is used. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1752,9 +1752,9 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC3339 format for the earliest run to retrieve. By default, the
+   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
    *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC3339 format for the latest run to retrieve. By default, the current
+   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
    *     day is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
@@ -1800,9 +1800,9 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC3339 format for the earliest run to retrieve. By default, the
+   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
    *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC3339 format for the latest run to retrieve. By default, the current
+   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
    *     day is used. (optional)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
@@ -1844,9 +1844,9 @@ public class IngestionClient extends ApiClient {
    * @param taskID Task ID for filtering the list of task runs. (optional)
    * @param sort Property by which to sort the list of task runs. (optional, default to createdAt)
    * @param order Sort order of the response, ascending or descending. (optional, default to desc)
-   * @param startDate Date in RFC3339 format for the earliest run to retrieve. By default, the
+   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the
    *     current day minus seven days is used. (optional)
-   * @param endDate Date in RFC3339 format for the latest run to retrieve. By default, the current
+   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current
    *     day is used. (optional)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
