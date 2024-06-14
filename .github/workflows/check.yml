@@ -325,6 +325,8 @@ jobs:
     runs-on: macos-latest
     needs:
       - setup
+      - specs
+      - scripts
     if: |
       always() &&
       startsWith(github.head_ref, 'chore/prepare-release-') &&
