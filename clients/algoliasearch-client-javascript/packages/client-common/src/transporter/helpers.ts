@@ -42,14 +42,16 @@ export function serializeUrl(
 }
 
 export function serializeQueryParameters(parameters: QueryParameters): string {
+  const isObjectOrArray = (value: any): boolean =>
+    Object.prototype.toString.call(value) === '[object Object]' ||
+    Object.prototype.toString.call(value) === '[object Array]';
+
   return Object.keys(parameters)
-    .filter((key) => parameters[key] !== undefined)
-    .sort()
     .map(
       (key) =>
         `${key}=${encodeURIComponent(
-          Object.prototype.toString.call(parameters[key]) === '[object Array]'
-            ? parameters[key].join(',')
+          isObjectOrArray(parameters[key])
+            ? JSON.stringify(parameters[key])
             : parameters[key]
         ).replaceAll('+', '%20')}`
     )
