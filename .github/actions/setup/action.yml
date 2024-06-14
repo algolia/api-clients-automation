@@ -23,7 +23,7 @@ runs:
 
     - name: Validate gradle wrapper
       if: inputs.type != 'minimal'
-      uses: gradle/wrapper-validation-action@v3
+      uses: gradle/actions/wrapper-validation@v3
 
     - name: Setup gradle
       if: inputs.type != 'minimal'
