@@ -27,9 +27,9 @@ package algoliasearch.ingestion
   * time range.
   *
   * @param startDate
-  *   Earliest date in RFC3339 format of the extracted data from Big Query.
+  *   Earliest date in RFC 3339 format of the extracted data from Big Query.
   * @param endDate
-  *   Latest date in RFC3339 format of the extracted data from Big Query.
+  *   Latest date in RFC 3339 format of the extracted data from Big Query.
   */
 case class OnDemandDateUtilsInput(
     startDate: String,

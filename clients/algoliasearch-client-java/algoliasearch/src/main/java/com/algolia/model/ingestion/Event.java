@@ -126,7 +126,7 @@ public class Event {
     return this;
   }
 
-  /** Date of publish RFC3339 format. */
+  /** Date of publish RFC 3339 format. */
   @javax.annotation.Nonnull
   public String getPublishedAt() {
     return publishedAt;

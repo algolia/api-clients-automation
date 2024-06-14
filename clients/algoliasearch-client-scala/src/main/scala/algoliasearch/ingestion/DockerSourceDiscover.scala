@@ -28,7 +28,7 @@ package algoliasearch.ingestion
   * @param runID
   *   Universally unique identifier (UUID) of a task run.
   * @param createdAt
-  *   Date of creation in RFC3339 format.
+  *   Date of creation in RFC 3339 format.
   */
 case class DockerSourceDiscover(
     runID: String,

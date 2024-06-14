@@ -33,7 +33,7 @@ public class OnDemandTrigger implements Trigger {
     return this;
   }
 
-  /** The last time the scheduled task ran in RFC3339 format. */
+  /** The last time the scheduled task ran in RFC 3339 format. */
   @javax.annotation.Nullable
   public String getLastRun() {
     return lastRun;

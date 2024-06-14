@@ -37,7 +37,7 @@ import algoliasearch.ingestion.EventType._
   * @param batchSize
   *   The extracted record batch size.
   * @param publishedAt
-  *   Date of publish RFC3339 format.
+  *   Date of publish RFC 3339 format.
   */
 case class Event(
     eventID: String,
