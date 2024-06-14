@@ -1,0 +1,41 @@
+method:
+  post:
+    x-helper: true
+    tags:
+      - Records
+    operationId: partialUpdateObjects
+    summary: Replaces object content of all the given objects according to their respective `objectID` field
+    description: |
+      Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+    parameters:
+      - in: query
+        name: indexName
+        description: The `indexName` to delete `objectIDs` from.
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: objectIDs
+        description: The objectIDs to delete.
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      - in: query
+        name: createIfNotExists
+        description: To be provided if non-existing objects are passed, otherwise, the call will fail.
+        required: false
+        schema:
+          type: boolean
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../paths/objects/common/schemas.yml#/batchResponse'
+      '400':
+        $ref: '../../common/responses/IndexNotFound.yml'
