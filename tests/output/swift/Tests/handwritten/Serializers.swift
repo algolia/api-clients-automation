@@ -1,14 +1,14 @@
 //
 //  Serializers.swift
-//
+//  
 //
 //  Created by Algolia on 27/03/2024.
 //
 
 import Foundation
-import Insights
 import XCTest
 @testable import Core
+import Insights
 
 class SerializersTests: XCTestCase {
     func testEventItemsClickedObjectIDsAfterSearch() async throws {
@@ -19,8 +19,7 @@ class SerializersTests: XCTestCase {
         let queryID = try randomString()
         let userToken = try randomString()
         let data =
-            "{\"eventName\":\"\(eventName)\",\"eventType\":\"click\",\"index\":\"\(indexName)\",\"objectIDs\":[\(objectIDs.map { "\"\($0)\"" }.joined(separator: ","))],\"positions\":[\(positions.map { "\($0)" }.joined(separator: ","))],\"queryID\":\"\(queryID)\",\"userToken\":\"\(userToken)\"}"
-                .data(using: .utf8)
+            "{\"eventName\":\"\(eventName)\",\"eventType\":\"click\",\"index\":\"\(indexName)\",\"objectIDs\":[\(objectIDs.map { "\"\($0)\"" }.joined(separator: ","))],\"positions\":[\(positions.map { "\($0)" }.joined(separator: ","))],\"queryID\":\"\(queryID)\",\"userToken\":\"\(userToken)\"}".data(using: .utf8)
         let expectedResult: EventsItems = .clickedObjectIDsAfterSearch(
             ClickedObjectIDsAfterSearch(
                 eventName: eventName,
@@ -32,10 +31,10 @@ class SerializersTests: XCTestCase {
                 userToken: userToken
             )
         )
-
+        
         let jsonData = try XCTUnwrap(data)
         let serializedObject = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
-
+        
         XCTAssertEqual(expectedResult, serializedObject)
     }
 
@@ -45,9 +44,7 @@ class SerializersTests: XCTestCase {
         let queryID = try randomString()
         let objectIDs = try Array(repeating: "", count: 3).map { _ in try randomString() }
         let userToken = try randomString()
-        let data =
-            "{\"eventName\":\"\(eventName)\",\"eventType\":\"conversion\",\"eventSubtype\":\"addToCart\",\"index\":\"\(indexName)\",\"queryID\":\"\(queryID)\",\"objectIDs\":[\(objectIDs.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\"}"
-                .data(using: .utf8)
+        let data = "{\"eventName\":\"\(eventName)\",\"eventType\":\"conversion\",\"eventSubtype\":\"addToCart\",\"index\":\"\(indexName)\",\"queryID\":\"\(queryID)\",\"objectIDs\":[\(objectIDs.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\"}".data(using: .utf8)
         let expectedResult: EventsItems = .addedToCartObjectIDsAfterSearch(
             AddedToCartObjectIDsAfterSearch(
                 eventName: eventName,
@@ -59,10 +56,10 @@ class SerializersTests: XCTestCase {
                 userToken: userToken
             )
         )
-
+        
         let jsonData = try XCTUnwrap(data)
         let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
-
+        
         XCTAssertEqual(expectedResult, serializedObject)
     }
 
@@ -73,8 +70,7 @@ class SerializersTests: XCTestCase {
         let userToken = try randomString()
         let objectData = try Array(repeating: "", count: 3).map { _ in try randomString() }
         let data =
-            "{\"eventName\":\"\(eventName)\",\"eventType\":\"conversion\",\"eventSubtype\":\"purchase\",\"index\":\"\(indexName)\",\"objectIDs\":[\(objectIDs.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\",\"objectData\":[\(objectData.map { "{\"queryID\":\"\($0)\"}" }.joined(separator: ","))]}"
-                .data(using: .utf8)
+            "{\"eventName\":\"\(eventName)\",\"eventType\":\"conversion\",\"eventSubtype\":\"purchase\",\"index\":\"\(indexName)\",\"objectIDs\":[\(objectIDs.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\",\"objectData\":[\(objectData.map { "{\"queryID\":\"\($0)\"}" }.joined(separator: ","))]}".data(using: .utf8)
         let expectedResult: EventsItems = .purchasedObjectIDsAfterSearch(
             PurchasedObjectIDsAfterSearch(
                 eventName: eventName,
@@ -86,10 +82,10 @@ class SerializersTests: XCTestCase {
                 objectData: objectData.map { ObjectDataAfterSearch(queryID: $0) }
             )
         )
-
+        
         let jsonData = try XCTUnwrap(data)
         let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
-
+        
         XCTAssertEqual(expectedResult, serializedObject)
     }
 
@@ -100,8 +96,7 @@ class SerializersTests: XCTestCase {
         let objectIDs = try Array(repeating: "", count: 3).map { _ in try randomString() }
         let userToken = try randomString()
         let data =
-            "{\"eventName\":\"\(eventName)\",\"eventType\":\"conversion\",\"index\":\"\(indexName)\",\"objectIDs\":[\(objectIDs.map { "\"\($0)\"" }.joined(separator: ","))],\"queryID\":\"\(queryID)\",\"userToken\":\"\(userToken)\"}"
-                .data(using: .utf8)
+            "{\"eventName\":\"\(eventName)\",\"eventType\":\"conversion\",\"index\":\"\(indexName)\",\"objectIDs\":[\(objectIDs.map { "\"\($0)\"" }.joined(separator: ","))],\"queryID\":\"\(queryID)\",\"userToken\":\"\(userToken)\"}".data(using: .utf8)
         let expectedResult: EventsItems = .convertedObjectIDsAfterSearch(
             ConvertedObjectIDsAfterSearch(
                 eventName: eventName,
@@ -112,10 +107,10 @@ class SerializersTests: XCTestCase {
                 userToken: userToken
             )
         )
-
+        
         let jsonData = try XCTUnwrap(data)
         let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
-
+        
         XCTAssertEqual(expectedResult, serializedObject)
     }
 
@@ -125,8 +120,7 @@ class SerializersTests: XCTestCase {
         let objectIDs = try Array(repeating: "", count: 3).map { _ in try randomString() }
         let userToken = try randomString()
         let data =
-            "{\"eventName\":\"\(eventName)\",\"eventType\":\"click\",\"index\":\"\(indexName)\",\"objectIDs\":[\(objectIDs.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\"}"
-                .data(using: .utf8)
+            "{\"eventName\":\"\(eventName)\",\"eventType\":\"click\",\"index\":\"\(indexName)\",\"objectIDs\":[\(objectIDs.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\"}".data(using: .utf8)
         let expectedResult: EventsItems = .clickedObjectIDs(
             ClickedObjectIDs(
                 eventName: eventName,
@@ -136,10 +130,10 @@ class SerializersTests: XCTestCase {
                 userToken: userToken
             )
         )
-
+        
         let jsonData = try XCTUnwrap(data)
         let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
-
+        
         XCTAssertEqual(expectedResult, serializedObject)
     }
 
@@ -149,8 +143,7 @@ class SerializersTests: XCTestCase {
         let objectIDs = try Array(repeating: "", count: 3).map { _ in try randomString() }
         let userToken = try randomString()
         let data =
-            "{\"eventName\":\"\(eventName)\",\"eventType\":\"conversion\",\"eventSubtype\":\"purchase\",\"index\":\"\(indexName)\",\"objectIDs\":[\(objectIDs.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\"}"
-                .data(using: .utf8)
+            "{\"eventName\":\"\(eventName)\",\"eventType\":\"conversion\",\"eventSubtype\":\"purchase\",\"index\":\"\(indexName)\",\"objectIDs\":[\(objectIDs.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\"}".data(using: .utf8)
         let expectedResult: EventsItems = .purchasedObjectIDs(
             PurchasedObjectIDs(
                 eventName: eventName,
@@ -161,10 +154,10 @@ class SerializersTests: XCTestCase {
                 userToken: userToken
             )
         )
-
+        
         let jsonData = try XCTUnwrap(data)
         let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
-
+        
         XCTAssertEqual(expectedResult, serializedObject)
     }
 
@@ -174,8 +167,7 @@ class SerializersTests: XCTestCase {
         let objectIDs = try Array(repeating: "", count: 3).map { _ in try randomString() }
         let userToken = try randomString()
         let data =
-            "{\"eventName\":\"\(eventName)\",\"eventType\":\"conversion\",\"eventSubtype\":\"addToCart\",\"index\":\"\(indexName)\",\"objectIDs\":[\(objectIDs.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\"}"
-                .data(using: .utf8)
+            "{\"eventName\":\"\(eventName)\",\"eventType\":\"conversion\",\"eventSubtype\":\"addToCart\",\"index\":\"\(indexName)\",\"objectIDs\":[\(objectIDs.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\"}".data(using: .utf8)
         let expectedResult: EventsItems = .addedToCartObjectIDs(
             AddedToCartObjectIDs(
                 eventName: eventName,
@@ -186,10 +178,10 @@ class SerializersTests: XCTestCase {
                 userToken: userToken
             )
         )
-
+        
         let jsonData = try XCTUnwrap(data)
         let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
-
+        
         XCTAssertEqual(expectedResult, serializedObject)
     }
 
@@ -199,8 +191,7 @@ class SerializersTests: XCTestCase {
         let objectIDs = try Array(repeating: "", count: 3).map { _ in try randomString() }
         let userToken = try randomString()
         let data =
-            "{\"eventName\":\"\(eventName)\",\"eventType\":\"conversion\",\"index\":\"\(indexName)\",\"objectIDs\":[\(objectIDs.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\"}"
-                .data(using: .utf8)
+            "{\"eventName\":\"\(eventName)\",\"eventType\":\"conversion\",\"index\":\"\(indexName)\",\"objectIDs\":[\(objectIDs.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\"}".data(using: .utf8)
         let expectedResult: EventsItems = .convertedObjectIDs(
             ConvertedObjectIDs(
                 eventName: eventName,
@@ -210,10 +201,10 @@ class SerializersTests: XCTestCase {
                 userToken: userToken
             )
         )
-
+        
         let jsonData = try XCTUnwrap(data)
         let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
-
+        
         XCTAssertEqual(expectedResult, serializedObject)
     }
 
@@ -223,8 +214,7 @@ class SerializersTests: XCTestCase {
         let filters = try Array(repeating: "", count: 3).map { _ in try randomString() }
         let userToken = try randomString()
         let data =
-            "{\"eventName\":\"\(eventName)\",\"eventType\":\"click\",\"index\":\"\(indexName)\",\"filters\":[\(filters.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\"}"
-                .data(using: .utf8)
+            "{\"eventName\":\"\(eventName)\",\"eventType\":\"click\",\"index\":\"\(indexName)\",\"filters\":[\(filters.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\"}".data(using: .utf8)
         let expectedResult: EventsItems = .clickedFilters(
             ClickedFilters(
                 eventName: eventName,
@@ -234,10 +224,10 @@ class SerializersTests: XCTestCase {
                 userToken: userToken
             )
         )
-
+        
         let jsonData = try XCTUnwrap(data)
         let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
-
+        
         XCTAssertEqual(expectedResult, serializedObject)
     }
 
@@ -247,8 +237,7 @@ class SerializersTests: XCTestCase {
         let filters = try Array(repeating: "", count: 3).map { _ in try randomString() }
         let userToken = try randomString()
         let data =
-            "{\"eventName\":\"\(eventName)\",\"eventType\":\"conversion\",\"index\":\"\(indexName)\",\"filters\":[\(filters.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\"}"
-                .data(using: .utf8)
+            "{\"eventName\":\"\(eventName)\",\"eventType\":\"conversion\",\"index\":\"\(indexName)\",\"filters\":[\(filters.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\"}".data(using: .utf8)
         let expectedResult: EventsItems = .convertedFilters(
             ConvertedFilters(
                 eventName: eventName,
@@ -258,10 +247,10 @@ class SerializersTests: XCTestCase {
                 userToken: userToken
             )
         )
-
+        
         let jsonData = try XCTUnwrap(data)
         let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
-
+        
         XCTAssertEqual(expectedResult, serializedObject)
     }
 
@@ -271,8 +260,7 @@ class SerializersTests: XCTestCase {
         let objectIDs = try Array(repeating: "", count: 3).map { _ in try randomString() }
         let userToken = try randomString()
         let data =
-            "{\"eventName\":\"\(eventName)\",\"eventType\":\"view\",\"index\":\"\(indexName)\",\"objectIDs\":[\(objectIDs.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\"}"
-                .data(using: .utf8)
+            "{\"eventName\":\"\(eventName)\",\"eventType\":\"view\",\"index\":\"\(indexName)\",\"objectIDs\":[\(objectIDs.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\"}".data(using: .utf8)
         let expectedResult: EventsItems = .viewedObjectIDs(
             ViewedObjectIDs(
                 eventName: eventName,
@@ -282,10 +270,10 @@ class SerializersTests: XCTestCase {
                 userToken: userToken
             )
         )
-
+        
         let jsonData = try XCTUnwrap(data)
         let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
-
+        
         XCTAssertEqual(expectedResult, serializedObject)
     }
 
@@ -295,8 +283,7 @@ class SerializersTests: XCTestCase {
         let filters = try Array(repeating: "", count: 3).map { _ in try randomString() }
         let userToken = try randomString()
         let data =
-            "{\"eventName\":\"\(eventName)\",\"eventType\":\"view\",\"index\":\"\(indexName)\",\"filters\":[\(filters.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\"}"
-                .data(using: .utf8)
+            "{\"eventName\":\"\(eventName)\",\"eventType\":\"view\",\"index\":\"\(indexName)\",\"filters\":[\(filters.map { "\"\($0)\"" }.joined(separator: ","))],\"userToken\":\"\(userToken)\"}".data(using: .utf8)
         let expectedResult: EventsItems = .viewedFilters(
             ViewedFilters(
                 eventName: eventName,
@@ -306,10 +293,10 @@ class SerializersTests: XCTestCase {
                 userToken: userToken
             )
         )
-
+        
         let jsonData = try XCTUnwrap(data)
         let serializedObject: EventsItems = try CodableHelper.jsonDecoder.decode(EventsItems.self, from: jsonData)
-
+        
         XCTAssertEqual(expectedResult, serializedObject)
     }
 }
