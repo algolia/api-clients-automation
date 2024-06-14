@@ -227,7 +227,7 @@ Instead, include the expected format in the description and provide examples.
 To help users distinguish between dates (strings) and timestamps (integers),
 use the following terms consistently:
 
-- Use **Date and time** for dates in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) (ISO 8601) format.
+- Use **Date and time** for dates in [RFC3339](https://datatracker.ietf.org/doc/html/rfc3339) (ISO 8601) format.
 - Use **Timestamp** for timestamps in seconds or milliseconds since the [Unix epoch](https://en.wikipedia.org/wiki/Unix_time).
 
 #### Example: date and time
@@ -244,18 +244,18 @@ createdAt:
 ```
 
 <details>
-<summary>RFC 3339 vs ISO 8601</summary>
+<summary>RFC3339 vs ISO 8601</summary>
 
-RFC 3339 is slightly less ambiguous than ISO 8601 and leads to more readable dates.
-Since RFC 3339 is a _profile_ of ISO 8601,
-every RFC 3339 date also complies with ISO 8601,
-but not every ISO 8601 date complies with RFC 3339.
+RFC3339 is slightly less ambiguous than ISO 8601 and leads to more readable dates.
+Since RFC3339 is a _profile_ of ISO 8601,
+every RFC3339 date also complies with ISO 8601,
+but not every ISO 8601 date complies with RFC3339.
 
-For example, `2024-04-06T00:00:00` conforms to both RFC 3339 and ISO 8601.
+For example, `2024-04-06T00:00:00` conforms to both RFC3339 and ISO 8601.
 But `20240406T000000` only conforms to ISO 8601, which allows omitting the `-` and `:` separators.
 
 **Exception:** ISO 8601 requires date and time to be separated by `T`,
-whereas RFC 3339 permits a space character for the sake of readability.
+whereas RFC3339 permits a space character for the sake of readability.
 It's best to avoid this ambiguity.
 
 </details>
