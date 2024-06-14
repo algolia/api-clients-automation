@@ -26,7 +26,7 @@ package algoliasearch.ingestion
 /** DeleteResponse
   *
   * @param deletedAt
-  *   Date of deletion in RFC3339 format.
+  *   Date of deletion in RFC 3339 format.
   */
 case class DeleteResponse(
     deletedAt: String
