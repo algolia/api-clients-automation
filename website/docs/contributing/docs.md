@@ -19,7 +19,7 @@ see [Add a new API client](./add-new-api-client.md).
 ## Prefer plain text
 
 The `description` properties of OpenAPI objects support [CommonMark](https://commonmark.org/),
-the specs are used in contexts where Markdown isn't supported.
+but the specs are used in contexts where Markdown isn't supported.
 
 To make using the specs in these contexts easier, follow these guidelines:
 
@@ -232,14 +232,14 @@ use the following terms consistently:
 
 #### Example: date and time
 
-Use _Date and time ..., in RFC3339 format_.
+Use _Date and time ..., in RFC 3339 format_.
 Don't link to the RFC, and don't use ISO 8601.
 Don't use _timestamp_ for dates and times.
 
 ```
 createdAt:
   type: string
-  description: Date and time when the object was created, in RFC3339 format.
+  description: Date and time when the object was created, in RFC 3339 format.
   example: 2024-04-06T08:08:08Z
 ```
 
@@ -249,7 +249,7 @@ createdAt:
 RFC 3339 is slightly less ambiguous than ISO 8601 and leads to more readable dates.
 Since RFC 3339 is a _profile_ of ISO 8601,
 every RFC 3339 date also complies with ISO 8601,
-but not every ISO 8601 date complies with ISO 8601.
+but not every ISO 8601 date complies with RFC 3339.
 
 For example, `2024-04-06T00:00:00` conforms to both RFC 3339 and ISO 8601.
 But `20240406T000000` only conforms to ISO 8601, which allows omitting the `-` and `:` separators.
