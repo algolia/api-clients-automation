@@ -73,11 +73,7 @@ export const GENERATORS = Object.entries(clientsConfig).reduce(
 
 export const LANGUAGES = [...new Set(Object.values(GENERATORS).map((gen) => gen.language))];
 
-export const CLIENTS = [
-  ...new Set(Object.values(GENERATORS).map((gen) => gen.client)),
-  'usage',
-  'crawler',
-];
+export const CLIENTS = [...new Set(Object.values(GENERATORS).map((gen) => gen.client)), 'crawler'];
 
 export async function run(
   command: string,
