@@ -1,22 +1,24 @@
-// {{classname}} - {{{description}}}{{^description}}struct for {{{classname}}}{{/description}}
-type {{classname}} struct {
-	{{#oneOf}}
-	{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}} *{{{.}}}
-	{{/oneOf}}
+// {{classname}} - {{{description}}}{{^description}}struct for {{{classname}}}{{/description}}.
+type {{classname}}{{> generic_init}} struct {
+	{{#composedSchemas.oneOf}}
+	{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}} *{{datatypeWithEnum}}{{> generic_param}}
+	{{/composedSchemas.oneOf}}
 }
 
+{{#vendorExtensions}}
 {{#composedSchemas.oneOf}}
-// {{{datatypeWithEnum}}}As{{classname}} is a convenience function that returns {{{datatypeWithEnum}}} wrapped in {{classname}}
-func {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}As{{classname}}(v {{#isModel}}*{{/isModel}}{{{datatypeWithEnum}}}) *{{classname}} {
-	return &{{classname}}{
+// {{{datatypeWithEnum}}}As{{classname}} is a convenience function that returns {{{datatypeWithEnum}}} wrapped in {{classname}}.
+func {{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}As{{classname}}{{#x-has-child-generic}}[T any]{{/x-has-child-generic}}(v {{#isModel}}*{{/isModel}}{{datatypeWithEnum}}{{> generic_param}}) *{{classname}}{{#x-has-child-generic}}[T]{{/x-has-child-generic}} {
+	return &{{classname}}{{#x-has-child-generic}}[T]{{/x-has-child-generic}}{
 		{{#lambda.type-to-name}}{{{datatypeWithEnum}}}{{/lambda.type-to-name}}: {{^isModel}}&{{/isModel}}v,
 	}
 }
 
 {{/composedSchemas.oneOf}}
+{{/vendorExtensions}}
 
-// Unmarshal JSON data into one of the pointers in the struct
-func (dst *{{classname}}) UnmarshalJSON(data []byte) error {
+// Unmarshal JSON data into one of the pointers in the struct.
+func (dst *{{classname}}{{> generic_param}}) UnmarshalJSON(data []byte) error {
 	var err error
 	{{#isNullable}}
 	// this object is nullable so check if the payload is null or empty string
@@ -167,8 +169,8 @@ func (dst *{{classname}}) UnmarshalJSON(data []byte) error {
 	{{/useOneOfDiscriminatorLookup}}
 }
 
-// Marshal data from the first non-nil pointers in the struct to JSON
-func (src {{classname}}) MarshalJSON() ([]byte, error) {
+// Marshal data from the first non-nil pointers in the struct to JSON.
+func (src {{classname}}{{> generic_param}}) MarshalJSON() ([]byte, error) {
 {{#oneOf}}
 	if src.{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}} != nil {
 		serialized, err := json.Marshal(&src.{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}})
@@ -183,8 +185,8 @@ func (src {{classname}}) MarshalJSON() ([]byte, error) {
 	return nil, nil // no data in oneOf schemas
 }
 
-// Get the actual instance
-func (obj {{classname}}) GetActualInstance() (any) {
+// Get the actual instance.
+func (obj {{classname}}{{> generic_param}}) GetActualInstance() (any) {
 {{#oneOf}}
 	if obj.{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}} != nil {
 		return *obj.{{#lambda.type-to-name}}{{{.}}}{{/lambda.type-to-name}}

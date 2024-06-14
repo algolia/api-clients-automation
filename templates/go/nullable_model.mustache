@@ -1,35 +1,35 @@
-type Nullable{{{classname}}} struct {
-	value {{^isArray}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/isArray}}{{{classname}}}
+type Nullable{{classname}}{{> generic_init}} struct {
+	value {{^isArray}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/isArray}}{{classname}}{{> generic_param}}
 	isSet bool
 }
 
-func (v Nullable{{classname}}) Get() {{^isArray}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/isArray}}{{classname}} {
+func (v Nullable{{classname}}{{> generic_param}}) Get() {{^isArray}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/isArray}}{{classname}}{{> generic_param}} {
 	return v.value
 }
 
-func (v *Nullable{{classname}}) Set(val {{^isArray}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/isArray}}{{classname}}) {
+func (v *Nullable{{classname}}{{> generic_param}}) Set(val {{^isArray}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/isArray}}{{classname}}{{> generic_param}}) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v Nullable{{classname}}) IsSet() bool {
+func (v Nullable{{classname}}{{> generic_param}}) IsSet() bool {
 	return v.isSet
 }
 
-func (v *Nullable{{classname}}) Unset() {
+func (v *Nullable{{classname}}{{> generic_param}}) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullable{{classname}}(val {{^isArray}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/isArray}}{{classname}}) *Nullable{{classname}} {
-	return &Nullable{{classname}}{value: val, isSet: true}
+func NewNullable{{classname}}{{> generic_init}}(val {{^isArray}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/isArray}}{{classname}}{{> generic_param}}) *Nullable{{classname}}{{> generic_param}} {
+	return &Nullable{{classname}}{{> generic_param}}{value: val, isSet: true}
 }
 
-func (v Nullable{{{classname}}}) MarshalJSON() ([]byte, error) {
+func (v Nullable{{classname}}{{> generic_param}}) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value) //nolint:wrapcheck
 }
 
-func (v *Nullable{{{classname}}}) UnmarshalJSON(src []byte) error {
+func (v *Nullable{{classname}}{{> generic_param}}) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value) //nolint:wrapcheck
 }

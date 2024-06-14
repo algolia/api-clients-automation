@@ -1,7 +1,7 @@
 // {{{classname}}} {{{description}}}{{^description}}the model '{{{classname}}}'{{/description}}
 type {{{classname}}} {{{format}}}{{^format}}{{dataType}}{{/format}}
 
-// List of {{{name}}}
+// List of {{{name}}}.
 const (
 	{{#allowableValues}}
 	{{#enumVars}}
@@ -12,7 +12,7 @@ const (
 	{{/allowableValues}}
 )
 
-// All allowed values of {{{classname}}} enum
+// All allowed values of {{{classname}}} enum.
 var Allowed{{{classname}}}EnumValues = []{{{classname}}}{
 	{{#allowableValues}}
 	{{#enumVars}}
@@ -39,7 +39,7 @@ func (v *{{{classname}}}) UnmarshalJSON(src []byte) error {
 }
 
 // New{{{classname}}}FromValue returns a pointer to a valid {{{classname}}}
-// for the value passed as argument, or an error if the value passed is not allowed by the enum
+// for the value passed as argument, or an error if the value passed is not allowed by the enum.
 func New{{{classname}}}FromValue(v {{{format}}}{{^format}}{{dataType}}{{/format}}) (*{{{classname}}}, error) {
 	ev := {{{classname}}}(v)
 	if ev.IsValid() {
@@ -59,7 +59,7 @@ func (v {{{classname}}}) IsValid() bool {
 	return false
 }
 
-// Ptr returns reference to {{{name}}} value
+// Ptr returns reference to {{{name}}} value.
 func (v {{{classname}}}) Ptr() *{{{classname}}} {
 	return &v
 }
