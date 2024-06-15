@@ -45,7 +45,7 @@
     "folder-hash": "4.0.4",
     "fs-extra": "11.2.0",
     "js-yaml": "4.1.0",
-    "knip": "5.18.2",
+    "knip": "5.19.0",
     "lts": "1.2.0",
     "micromatch": "4.0.7",
     "semver": "7.6.2",
