@@ -4,6 +4,11 @@
 # You can install this by running `source scripts/install.sh` or by adding this to your .bashrc/.zshrc:
 # [[ -s "$HOME/<path to api-clients-automation>/scripts/install.sh" ]] && source "$HOME/<path to api-clients-automation>/scripts/install.sh"
 
+# for extra DX you could also add the following shortcuts to your .bashrc/.zshrc:
+# alias ag="apic generate"
+# alias acg="apic cts generate"
+# alias acr="apic cts run"
+
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 
 apic() {
