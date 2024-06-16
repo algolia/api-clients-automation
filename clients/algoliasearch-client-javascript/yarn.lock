@@ -41,7 +41,7 @@ __metadata:
     "@types/node": "npm:20.14.2"
     jest: "npm:29.7.0"
     jest-environment-jsdom: "npm:29.7.0"
-    ts-jest: "npm:29.1.4"
+    ts-jest: "npm:29.1.5"
     typescript: "npm:5.4.5"
   languageName: unknown
   linkType: soft
@@ -161,7 +161,7 @@ __metadata:
     "@types/node": "npm:20.14.2"
     jest: "npm:29.7.0"
     jest-environment-jsdom: "npm:29.7.0"
-    ts-jest: "npm:29.1.4"
+    ts-jest: "npm:29.1.5"
     typescript: "npm:5.4.5"
     xhr-mock: "npm:2.5.1"
   languageName: unknown
@@ -179,7 +179,7 @@ __metadata:
     cross-fetch: "npm:4.0.0"
     jest: "npm:29.7.0"
     nock: "npm:13.5.4"
-    ts-jest: "npm:29.1.4"
+    ts-jest: "npm:29.1.5"
     typescript: "npm:5.4.5"
   languageName: unknown
   linkType: soft
@@ -195,7 +195,7 @@ __metadata:
     "@types/node": "npm:20.14.2"
     jest: "npm:29.7.0"
     nock: "npm:13.5.4"
-    ts-jest: "npm:29.1.4"
+    ts-jest: "npm:29.1.5"
     typescript: "npm:5.4.5"
   languageName: unknown
   linkType: soft
@@ -9642,9 +9642,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-jest@npm:29.1.4":
-  version: 29.1.4
-  resolution: "ts-jest@npm:29.1.4"
+"ts-jest@npm:29.1.5":
+  version: 29.1.5
+  resolution: "ts-jest@npm:29.1.5"
   dependencies:
     bs-logger: "npm:0.x"
     fast-json-stable-stringify: "npm:2.x"
@@ -9674,7 +9674,7 @@ __metadata:
       optional: true
   bin:
     ts-jest: cli.js
-  checksum: 10/3103c0e2f9937ae6bb51918105883565bb2d11cae1121ae20aedd1c4374f843341463a4a1986e02a958d119be0d3a9b996d761bc4aac85152a29385e609fed3c
+  checksum: 10/11a29a49130f1c9bef5aebe8007f6be3e630af6c2dea6b00ff5a86d649321854a43966b4990a43960d77a3f98d7a753b9b7e19c20c42a2d38341d6e67a3e48d1
   languageName: node
   linkType: hard
 
