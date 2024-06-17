@@ -393,11 +393,11 @@ jobs:
         run: yarn cli build specs ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).toRun }} --docs
 
       - name: Build website
-        if: ${{ github.ref == 'refs/heads/main' || github.head_ref == 'refs/head/main' }}
+        if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' }}
         run: yarn website:build
 
       - name: Deploy documentation
-        if: ${{ github.ref == 'refs/heads/main' || github.head_ref == 'refs/head/main' }}
+        if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' }}
         uses: nwtgck/actions-netlify@v3.0
         with:
           publish-dir: 'website/build'
