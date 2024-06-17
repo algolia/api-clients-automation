@@ -53,6 +53,7 @@ class {{client}}ClientTests {
       {{client}} client = createClient();
     {{/autoCreateClient}}
 
+    {{#isHelper}}assertDoesNotThrow(() -> { {{/isHelper}}
     {{#steps}}
       {{#isError}}
        {
@@ -77,11 +78,17 @@ class {{client}}ClientTests {
             assertEquals("{{{match}}}", result.host);
           {{/testHost}}
           {{#testResponse}}
+            {{#matchIsObject}}
             assertDoesNotThrow(() -> JSONAssert.assertEquals("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}", json.writeValueAsString(res), JSONCompareMode.STRICT));
+            {{/matchIsObject}}
+            {{^matchIsObject}}
+            assertEquals("{{{match}}}", res);
+            {{/matchIsObject}}
           {{/testResponse}}
         {{/match}}
       {{/isError}}
     {{/steps}}
+    {{#isHelper}} });{{/isHelper}}
   }
   {{/tests}}
   {{/blocksClient}}

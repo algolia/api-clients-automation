@@ -92,15 +92,22 @@ public class TestsClient extends TestsGenerator {
                 throw new CTSException("Cannot find operation for method: " + step.path, test.testName);
               }
               stepOut.put("stepTemplate", "tests/client/method.mustache");
-              stepOut.put("isMethod", true); // TODO: remove once dart and kotlin are converted
+              stepOut.put("isMethod", true); // TODO: remove once kotlin is converted
+              stepOut.put("hasOperationParams", ope.hasParams);
+
+              // set on testOut because we need to wrap everything for java.
+              testOut.put("isHelper", (boolean) ope.vendorExtensions.getOrDefault("x-helper", false));
+              testOut.put("isAsync", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true)); // default to true because most api calls are asynchronous
             }
 
             stepOut.put("object", step.object);
             stepOut.put("path", step.path);
 
-            Map<String, Object> requestOptions = new HashMap<>();
-            paramsType.enhanceParameters(step.requestOptions, requestOptions);
-            stepOut.put("requestOptions", requestOptions);
+            if (step.requestOptions != null) {
+              Map<String, Object> requestOptions = new HashMap<>();
+              paramsType.enhanceParameters(step.requestOptions, requestOptions);
+              stepOut.put("requestOptions", requestOptions);
+            }
 
             if (step.path != null && CUSTOM_METHODS.contains(step.path)) {
               stepOut.put("isCustom", true);
@@ -148,10 +155,11 @@ public class TestsClient extends TestsGenerator {
                 stepOut.put("expectedError", step.expected.error.replace(step.path, Helpers.toPascalCase(step.path)));
               }
             } else if (step.expected.match != null) {
-              if (step.expected.match instanceof Map) {
-                Map<String, Object> match = new HashMap<>();
-                paramsType.enhanceParameters((Map<String, Object>) step.expected.match, match);
-                stepOut.put("match", match);
+              Map<String, Object> matchMap = new HashMap<>();
+              if (step.expected.match instanceof Map match) {
+                paramsType.enhanceParameters(match, matchMap);
+                stepOut.put("match", matchMap);
+                stepOut.put("matchIsObject", true);
               } else {
                 stepOut.put("match", step.expected.match);
               }
