@@ -9,7 +9,8 @@ import { startTestServer } from '../cts/testServer';
 import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
 import { playground } from '../playground.js';
-import { createReleasePR } from '../release/createReleasePR.js';
+import { createReleasePR, updateSLA } from '../release/createReleasePR.js';
+import type { Versions } from '../release/types.js';
 import { snippetsGenerateMany } from '../snippets/generate.js';
 import type { Language } from '../types.js';
 
@@ -202,8 +203,15 @@ program
   .option(flags.verbose.flag, flags.verbose.description)
   .option('-m, --major', 'triggers a major release for the given language list')
   .option('-d, --dry-run', 'does not push anything to GitHub')
-  .action(async (langArgs: LangArg[], { verbose, major, dryRun }) => {
+  .option('-gg, --generate-graph', 'only generates the graph')
+  .action(async (langArgs: LangArg[], { verbose, major, dryRun, generateGraph }) => {
     setVerbose(Boolean(verbose));
+
+    if (generateGraph) {
+      await updateSLA({} as Versions, true);
+
+      return;
+    }
 
     if (langArgs.length === 0) {
       langArgs = [ALL];
