@@ -9,7 +9,7 @@ import { startTestServer } from '../cts/testServer';
 import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
 import { playground } from '../playground.js';
-import { createReleasePR, updateLTS } from '../release/createReleasePR.js';
+import { createReleasePR, updateSLA } from '../release/createReleasePR.js';
 import type { Versions } from '../release/types.js';
 import { snippetsGenerateMany } from '../snippets/generate.js';
 import type { Language } from '../types.js';
@@ -208,7 +208,7 @@ program
     setVerbose(Boolean(verbose));
 
     if (generateGraph) {
-      await updateLTS({} as Versions, true);
+      await updateSLA({} as Versions, true);
 
       return;
     }

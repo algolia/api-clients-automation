@@ -393,16 +393,16 @@ async function prepareGitEnvironment(): Promise<void> {
   await run('git pull origin $(git branch --show-current)');
 }
 
-// updates the release.config.json file for the lts field, which contains a release history of start and end date support
+// updates the release.config.json file for the sla field, which contains a release history of start and end date support
 // inspired by node: https://github.com/nodejs/Release/blob/main/schedule.json, following https://github.com/nodejs/release#release-schedule, leveraging https://github.com/nodejs/lts-schedule
-export async function updateLTS(versions: Versions, graphOnly?: boolean): Promise<void> {
+export async function updateSLA(versions: Versions, graphOnly?: boolean): Promise<void> {
   const start = new Date();
   const end = new Date(new Date().setMonth(new Date().getMonth() + 24));
 
   let queryStart = start;
   let queryEnd = end;
 
-  for (const [lang, supportedVersions] of Object.entries(fullReleaseConfig.lts)) {
+  for (const [lang, supportedVersions] of Object.entries(fullReleaseConfig.sla)) {
     if (!graphOnly) {
       const next = versions[lang].next;
       const current = versions[lang].current;
@@ -425,8 +425,8 @@ export async function updateLTS(versions: Versions, graphOnly?: boolean): Promis
         // patch because we support SLA at minor level
         if (versions[lang].releaseType !== 'major' && currentMinor[1] === nextMinor[1]) {
           delete supportedVersions[current];
-          // if it's a major or not the same minor, it means we release a new latest versions, so the current lts go
-          // in maintenance mode
+          // if it's a major or not the same minor, it means we release a new latest versions, so the
+          // current SLA goes in maintenance mode
         } else {
           delete supportedVersions[current].lts;
 
@@ -472,7 +472,7 @@ export async function updateLTS(versions: Versions, graphOnly?: boolean): Promis
     lts.create({
       queryStart,
       queryEnd,
-      png: toAbsolutePath(`website/static/img/${lang}-lts.png`),
+      png: toAbsolutePath(`website/static/img/${lang}-sla.png`),
       data: supportedVersions,
       projectName: '',
     });
@@ -507,7 +507,7 @@ export async function createReleasePR({
     major,
   });
 
-  await updateLTS(versions, false);
+  await updateSLA(versions, false);
 
   const versionChanges = getVersionChangesText(versions);
 

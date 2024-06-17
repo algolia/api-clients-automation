@@ -22,7 +22,7 @@
     "name": "algolia-bot",
     "email": "accounts+algolia-api-client-bot@algolia.com"
   },
-  "lts": {
+  "sla": {
     "csharp": {
       "6.1.17": {
         "start": "2024-01-01",

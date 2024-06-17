@@ -10,7 +10,7 @@ export function SLAMapping() {
       {languagesTabValues.map((languageTabValues) => (
         <div>
           <h2>{languageTabValues.label}</h2>
-          <img src={useBaseUrl(`/img/${languageTabValues.value}-lts.png`)} />
+          <img src={useBaseUrl(`/img/${languageTabValues.value}-sla.png`)} />
         </div>
       ))}
     </>
