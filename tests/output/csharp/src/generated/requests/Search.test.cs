@@ -1790,7 +1790,7 @@ public class SearchClientRequestTests
         },
         Consequence = new Consequence
         {
-          VarParams = new ConsequenceParams
+          Params = new ConsequenceParams
           {
             Filters = "brand:apple",
             Query = new ConsequenceQuery(
@@ -1936,7 +1936,7 @@ public class SearchClientRequestTests
           },
           Consequence = new Consequence
           {
-            VarParams = new ConsequenceParams
+            Params = new ConsequenceParams
             {
               Filters = "brand:apple",
               Query = new ConsequenceQuery(
@@ -3004,7 +3004,7 @@ public class SearchClientRequestTests
       "facetName",
       new SearchForFacetValuesRequest
       {
-        VarParams = "query=foo&facetFilters=['bar']",
+        Params = "query=foo&facetFilters=['bar']",
         FacetQuery = "foo",
         MaxFacetHits = 42,
       }

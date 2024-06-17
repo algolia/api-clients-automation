@@ -86,7 +86,7 @@ final class BaseIndexSettings {
   @JsonKey(name: r'searchableAttributes')
   final List<String>? searchableAttributes;
 
-  /// An object with custom data.  You can store up to 32&nbsp;kB as custom data.
+  /// An object with custom data.  You can store up to 32kB as custom data.
   @JsonKey(name: r'userData')
   final Object? userData;
 
@@ -138,7 +138,7 @@ final class BaseIndexSettings {
       numericAttributesForFiltering.hashCode +
       separatorsToIndex.hashCode +
       searchableAttributes.hashCode +
-      (userData == null ? 0 : userData.hashCode) +
+      userData.hashCode +
       customNormalization.hashCode +
       attributeForDistinct.hashCode;
 
