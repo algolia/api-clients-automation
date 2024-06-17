@@ -56,9 +56,9 @@ final class SearchClientClientTests: XCTestCase {
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
+
         let comparableData = "{\"message\":\"ok test server response\"}".data(using: .utf8)
         let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
-
         XCTAssertEqual(comparableJSON, responseBodyJSON)
     }
 
@@ -79,11 +79,11 @@ final class SearchClientClientTests: XCTestCase {
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
+
         let comparableData =
             "{\"message\":\"ok compression test server response\",\"body\":{\"message\":\"this is a compressed body\"}}"
                 .data(using: .utf8)
         let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
-
         XCTAssertEqual(comparableJSON, responseBodyJSON)
     }
 

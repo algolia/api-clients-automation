@@ -90,6 +90,48 @@ describe('commonApi', () => {
   });
 });
 
+describe('helpers', () => {
+  test('generate secured api key basic', async () => {
+    const $client = createClient();
+
+    const result = $client.generateSecuredApiKey({
+      parentApiKey: '2640659426d5107b6e47d75db9cbaef8',
+      restrictions: { validUntil: 2524604400, restrictIndices: ['Movies'] },
+    });
+
+    expect(result).toEqual(
+      'NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw'
+    );
+  });
+
+  test('generate secured api key with searchParams', async () => {
+    const $client = createClient();
+
+    const result = $client.generateSecuredApiKey({
+      parentApiKey: '2640659426d5107b6e47d75db9cbaef8',
+      restrictions: {
+        validUntil: 2524604400,
+        restrictIndices: ['Movies', 'cts_e2e_settings'],
+        restrictSources: '192.168.1.0/24',
+        filters: 'category:Book OR category:Ebook AND _tags:published',
+        userToken: 'user123',
+        searchParams: {
+          query: 'batman',
+          typoTolerance: 'strict',
+          aroundRadius: 'all',
+          mode: 'neuralSearch',
+          hitsPerPage: 10,
+          optionalWords: ['one', 'two'],
+        },
+      },
+    });
+
+    expect(result).toEqual(
+      'MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw'
+    );
+  });
+});
+
 describe('parameters', () => {
   test('client throws with invalid parameters', async () => {
     try {

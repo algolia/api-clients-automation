@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** SecuredAPIKeyRestrictions */
-public class SecuredAPIKeyRestrictions {
+/** SecuredApiKeyRestrictions */
+public class SecuredApiKeyRestrictions {
 
   @JsonProperty("searchParams")
   private SearchParamsObject searchParams;
@@ -30,7 +30,7 @@ public class SecuredAPIKeyRestrictions {
   @JsonProperty("userToken")
   private String userToken;
 
-  public SecuredAPIKeyRestrictions setSearchParams(SearchParamsObject searchParams) {
+  public SecuredApiKeyRestrictions setSearchParams(SearchParamsObject searchParams) {
     this.searchParams = searchParams;
     return this;
   }
@@ -41,7 +41,7 @@ public class SecuredAPIKeyRestrictions {
     return searchParams;
   }
 
-  public SecuredAPIKeyRestrictions setFilters(String filters) {
+  public SecuredApiKeyRestrictions setFilters(String filters) {
     this.filters = filters;
     return this;
   }
@@ -57,7 +57,7 @@ public class SecuredAPIKeyRestrictions {
     return filters;
   }
 
-  public SecuredAPIKeyRestrictions setValidUntil(Long validUntil) {
+  public SecuredApiKeyRestrictions setValidUntil(Long validUntil) {
     this.validUntil = validUntil;
     return this;
   }
@@ -68,12 +68,12 @@ public class SecuredAPIKeyRestrictions {
     return validUntil;
   }
 
-  public SecuredAPIKeyRestrictions setRestrictIndices(List<String> restrictIndices) {
+  public SecuredApiKeyRestrictions setRestrictIndices(List<String> restrictIndices) {
     this.restrictIndices = restrictIndices;
     return this;
   }
 
-  public SecuredAPIKeyRestrictions addRestrictIndices(String restrictIndicesItem) {
+  public SecuredApiKeyRestrictions addRestrictIndices(String restrictIndicesItem) {
     if (this.restrictIndices == null) {
       this.restrictIndices = new ArrayList<>();
     }
@@ -92,7 +92,7 @@ public class SecuredAPIKeyRestrictions {
     return restrictIndices;
   }
 
-  public SecuredAPIKeyRestrictions setRestrictSources(String restrictSources) {
+  public SecuredApiKeyRestrictions setRestrictSources(String restrictSources) {
     this.restrictSources = restrictSources;
     return this;
   }
@@ -106,7 +106,7 @@ public class SecuredAPIKeyRestrictions {
     return restrictSources;
   }
 
-  public SecuredAPIKeyRestrictions setUserToken(String userToken) {
+  public SecuredApiKeyRestrictions setUserToken(String userToken) {
     this.userToken = userToken;
     return this;
   }
@@ -129,14 +129,14 @@ public class SecuredAPIKeyRestrictions {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SecuredAPIKeyRestrictions securedAPIKeyRestrictions = (SecuredAPIKeyRestrictions) o;
+    SecuredApiKeyRestrictions securedApiKeyRestrictions = (SecuredApiKeyRestrictions) o;
     return (
-      Objects.equals(this.searchParams, securedAPIKeyRestrictions.searchParams) &&
-      Objects.equals(this.filters, securedAPIKeyRestrictions.filters) &&
-      Objects.equals(this.validUntil, securedAPIKeyRestrictions.validUntil) &&
-      Objects.equals(this.restrictIndices, securedAPIKeyRestrictions.restrictIndices) &&
-      Objects.equals(this.restrictSources, securedAPIKeyRestrictions.restrictSources) &&
-      Objects.equals(this.userToken, securedAPIKeyRestrictions.userToken)
+      Objects.equals(this.searchParams, securedApiKeyRestrictions.searchParams) &&
+      Objects.equals(this.filters, securedApiKeyRestrictions.filters) &&
+      Objects.equals(this.validUntil, securedApiKeyRestrictions.validUntil) &&
+      Objects.equals(this.restrictIndices, securedApiKeyRestrictions.restrictIndices) &&
+      Objects.equals(this.restrictSources, securedApiKeyRestrictions.restrictSources) &&
+      Objects.equals(this.userToken, securedApiKeyRestrictions.userToken)
     );
   }
 
@@ -148,7 +148,7 @@ public class SecuredAPIKeyRestrictions {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SecuredAPIKeyRestrictions {\n");
+    sb.append("class SecuredApiKeyRestrictions {\n");
     sb.append("    searchParams: ").append(toIndentedString(searchParams)).append("\n");
     sb.append("    filters: ").append(toIndentedString(filters)).append("\n");
     sb.append("    validUntil: ").append(toIndentedString(validUntil)).append("\n");

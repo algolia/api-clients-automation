@@ -7,9 +7,9 @@ import 'package:json_annotation/json_annotation.dart';
 part 'secured_api_key_restrictions.g.dart';
 
 @JsonSerializable()
-final class SecuredAPIKeyRestrictions {
-  /// Returns a new [SecuredAPIKeyRestrictions] instance.
-  const SecuredAPIKeyRestrictions({
+final class SecuredApiKeyRestrictions {
+  /// Returns a new [SecuredApiKeyRestrictions] instance.
+  const SecuredApiKeyRestrictions({
     this.searchParams,
     this.filters,
     this.validUntil,
@@ -44,7 +44,7 @@ final class SecuredAPIKeyRestrictions {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is SecuredAPIKeyRestrictions &&
+      other is SecuredApiKeyRestrictions &&
           other.searchParams == searchParams &&
           other.filters == filters &&
           other.validUntil == validUntil &&
@@ -61,10 +61,10 @@ final class SecuredAPIKeyRestrictions {
       restrictSources.hashCode +
       userToken.hashCode;
 
-  factory SecuredAPIKeyRestrictions.fromJson(Map<String, dynamic> json) =>
-      _$SecuredAPIKeyRestrictionsFromJson(json);
+  factory SecuredApiKeyRestrictions.fromJson(Map<String, dynamic> json) =>
+      _$SecuredApiKeyRestrictionsFromJson(json);
 
-  Map<String, dynamic> toJson() => _$SecuredAPIKeyRestrictionsToJson(this);
+  Map<String, dynamic> toJson() => _$SecuredApiKeyRestrictionsToJson(this);
 
   @override
   String toString() {
