@@ -35,8 +35,7 @@ func TestMonitoringcommonApi0(t *testing.T) {
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
-	),
-	)
+	))
 	require.NoError(t, err)
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Monitoring (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
@@ -48,8 +47,7 @@ func TestMonitoringcommonApi1(t *testing.T) {
 	_ = echo
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test",
-	),
-	)
+	))
 	require.NoError(t, err)
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(5000), echo.Timeout.Milliseconds())
@@ -62,8 +60,7 @@ func TestMonitoringcommonApi2(t *testing.T) {
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
-	),
-	)
+	))
 	require.NoError(t, err)
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(30000), echo.Timeout.Milliseconds())
@@ -88,8 +85,7 @@ func TestMonitoringparameters0(t *testing.T) {
 	require.NoError(t, err)
 	_, err = client.CustomDelete(client.NewApiCustomDeleteRequest(
 		"test",
-	),
-	)
+	))
 	require.NoError(t, err)
 	require.Equal(t, "status.algolia.com", echo.Host)
 }

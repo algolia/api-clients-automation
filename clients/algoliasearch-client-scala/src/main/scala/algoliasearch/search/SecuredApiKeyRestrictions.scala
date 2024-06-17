@@ -33,7 +33,7 @@
   */
 package algoliasearch.search
 
-/** SecuredAPIKeyRestrictions
+/** SecuredApiKeyRestrictions
   *
   * @param filters
   *   Filters that apply to every search made with the secured API key. Extra filters added at search time will be
@@ -54,7 +54,7 @@ package algoliasearch.search
   *   based on IP addresses. This can be an issue if many users search from the same IP address. To avoid this, add a
   *   user token to each generated API key.
   */
-case class SecuredAPIKeyRestrictions(
+case class SecuredApiKeyRestrictions(
     searchParams: Option[SearchParamsObject] = scala.None,
     filters: Option[String] = scala.None,
     validUntil: Option[Long] = scala.None,

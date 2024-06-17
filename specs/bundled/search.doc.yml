@@ -19582,7 +19582,7 @@ components:
         - add
         - delete
         - update
-    securedAPIKeyRestrictions:
+    securedApiKeyRestrictions:
       type: object
       additionalProperties: false
       properties:

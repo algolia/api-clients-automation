@@ -2613,7 +2613,7 @@ func TestSearch_GenerateSecuredApiKey(t *testing.T) {
 	})
 
 	t.Run("generates a key with restrictions", func(t *testing.T) {
-		key, err := client.GenerateSecuredApiKey("foo", search.NewSecuredAPIKeyRestrictions().SetValidUntil(100).SetRestrictIndices([]string{"bar"}).SetRestrictSources("192,168.1.0/24").SetUserToken("foobarbaz").SetSearchParams(search.NewSearchParamsObject().SetQuery("foo")))
+		key, err := client.GenerateSecuredApiKey("foo", search.NewSecuredApiKeyRestrictions().SetValidUntil(100).SetRestrictIndices([]string{"bar"}).SetRestrictSources("192,168.1.0/24").SetUserToken("foobarbaz").SetSearchParams(search.NewSearchParamsObject().SetQuery("foo")))
 		require.NoError(t, err)
 
 		require.Equal(t, "NGMxODk0MjViNjM3ODcxNjc4NWU4Y2I5NGIxNDAzMTg4MjU5Mjc4YTEwMzU4Mjk2YjBiMmVjOWViYTIyOTBiY3F1ZXJ5PWZvbyZyZXN0cmljdEluZGljZXM9YmFyJnJlc3RyaWN0U291cmNlcz0xOTIlMkMxNjguMS4wJTJGMjQmdXNlclRva2VuPWZvb2JhcmJheiZ2YWxpZFVudGlsPTEwMA==", key)
@@ -2625,7 +2625,7 @@ func TestSearch_GetSecuredApiKeyRemainingVaildity(t *testing.T) {
 	_ = echo
 
 	t.Run("is able to check the remaining validity of a key", func(t *testing.T) {
-		key, err := client.GenerateSecuredApiKey("foo", search.NewSecuredAPIKeyRestrictions().SetValidUntil(42))
+		key, err := client.GenerateSecuredApiKey("foo", search.NewSecuredApiKeyRestrictions().SetValidUntil(42))
 		require.NoError(t, err)
 
 		require.Equal(t, "NDI5ZjRkMTRiNTBlZmExZWIyN2I3NzczOGUwMzE0NjYwMDU1M2M3NjYyY2IxODZhMDAxMWEwOWJmZjE5MzY0NnZhbGlkVW50aWw9NDI=", key)

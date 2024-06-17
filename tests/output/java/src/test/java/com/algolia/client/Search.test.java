@@ -149,6 +149,56 @@ class SearchClientClientTests {
   }
 
   @Test
+  @DisplayName("generate secured api key basic")
+  void helpersTest0() {
+    SearchClient client = createClient();
+
+    assertDoesNotThrow(() -> {
+      var res = client.generateSecuredApiKey(
+        "2640659426d5107b6e47d75db9cbaef8",
+        new SecuredApiKeyRestrictions().setValidUntil(2524604400L).setRestrictIndices(List.of("Movies"))
+      );
+
+      assertEquals(
+        "NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
+        res
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("generate secured api key with searchParams")
+  void helpersTest1() {
+    SearchClient client = createClient();
+
+    assertDoesNotThrow(() -> {
+      var res = client.generateSecuredApiKey(
+        "2640659426d5107b6e47d75db9cbaef8",
+        new SecuredApiKeyRestrictions()
+          .setValidUntil(2524604400L)
+          .setRestrictIndices(List.of("Movies", "cts_e2e_settings"))
+          .setRestrictSources("192.168.1.0/24")
+          .setFilters("category:Book OR category:Ebook AND _tags:published")
+          .setUserToken("user123")
+          .setSearchParams(
+            new SearchParamsObject()
+              .setQuery("batman")
+              .setTypoTolerance(TypoToleranceEnum.STRICT)
+              .setAroundRadius(AroundRadiusAll.ALL)
+              .setMode(Mode.NEURAL_SEARCH)
+              .setHitsPerPage(10)
+              .setOptionalWords(List.of("one", "two"))
+          )
+      );
+
+      assertEquals(
+        "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
+        res
+      );
+    });
+  }
+
+  @Test
   @DisplayName("client throws with invalid parameters")
   void parametersTest0() {
     {
