@@ -395,46 +395,52 @@ async function prepareGitEnvironment(): Promise<void> {
 
 // updates the release.config.json file for the lts field, which contains a release history of start and end date support
 // inspired by node: https://github.com/nodejs/Release/blob/main/schedule.json, following https://github.com/nodejs/release#release-schedule, leveraging https://github.com/nodejs/lts-schedule
-async function updateLTS(versions: Versions, withGraphs?: boolean): Promise<void> {
+export async function updateLTS(versions: Versions, graphOnly?: boolean): Promise<void> {
   const start = new Date();
-  const end = new Date(new Date().setMonth(new Date().getMonth() + 12));
+  const end = new Date(new Date().setMonth(new Date().getMonth() + 24));
 
   let queryStart = start;
   let queryEnd = end;
 
   for (const [lang, supportedVersions] of Object.entries(fullReleaseConfig.lts)) {
-    const next = versions[lang].next;
-    const current = versions[lang].current;
+    if (!graphOnly) {
+      const next = versions[lang].next;
+      const current = versions[lang].current;
 
-    // no ongoing release for this client, nothing changes
-    if (!next || current === next) {
-      continue;
-    }
-
-    if (current in supportedVersions) {
-      // when we release a new patch, the current version isn't maintained anymore, as we only provide SLA for the latest minor/previous major
-      const nextMinor = next.match(/.+\.(.+)\..*/);
-      const currentMinor = current.match(/.+\.(.+)\..*/);
-
-      if (!currentMinor || !nextMinor) {
-        throw new Error(`unable to determine minor versions: ${currentMinor}, ${nextMinor}`);
+      // no ongoing release for this client, nothing changes
+      if (!next || current === next) {
+        continue;
       }
 
-      if (versions[lang].releaseType !== 'major' && currentMinor[1] === nextMinor[1]) {
-        delete supportedVersions[current];
-      } else {
-        delete supportedVersions[current].active;
+      if (current in supportedVersions) {
+        // when we release a new patch, the current version isn't maintained anymore, as we only provide SLA for the latest minor/previous major
+        const nextMinor = next.match(/.+\.(.+)\..*/);
+        const currentMinor = current.match(/.+\.(.+)\..*/);
 
-        // any other release cases make the previous version enter in maintenance
-        supportedVersions[current].maintenance = start.toISOString().split('T')[0];
+        if (!currentMinor || !nextMinor) {
+          throw new Error(`unable to determine minor versions: ${currentMinor}, ${nextMinor}`);
+        }
+
+        if (versions[lang].releaseType !== 'major' && currentMinor[1] === nextMinor[1]) {
+          delete supportedVersions[current];
+        } else {
+          delete supportedVersions[current].active;
+
+          // any other release cases make the previous version enter in maintenance
+          supportedVersions[current].maintenance = start.toISOString().split('T')[0];
+        }
       }
-    }
 
-    supportedVersions[next] = {
-      start: start.toISOString().split('T')[0],
-      active: start.toISOString().split('T')[0],
-      end: end.toISOString().split('T')[0],
-    };
+      // if we are publishing a new pre-release, we remove support for it
+      const isPreRelease = next.match(preReleaseRegExp) !== null;
+
+      supportedVersions[next] = {
+        start: start.toISOString().split('T')[0],
+        active: isPreRelease ? undefined : start.toISOString().split('T')[0],
+        end: end.toISOString().split('T')[0],
+        unstable: isPreRelease,
+      };
+    }
 
     for (const [supportedVersion, dates] of Object.entries(supportedVersions)) {
       // The support has expired, we can drop it
@@ -457,16 +463,13 @@ async function updateLTS(versions: Versions, withGraphs?: boolean): Promise<void
       }
     }
 
-    if (withGraphs) {
-      lts.create({
-        queryStart,
-        queryEnd,
-        png: toAbsolutePath(`config/${lang}-lts.png`),
-        data: supportedVersions,
-        projectName: '',
-        excludeMaster: true,
-      });
-    }
+    lts.create({
+      queryStart,
+      queryEnd,
+      png: toAbsolutePath(`website/static/img/${lang}-lts.png`),
+      data: supportedVersions,
+      projectName: '',
+    });
   }
 
   await fsp.writeFile(
@@ -497,6 +500,8 @@ export async function createReleasePR({
     languages,
     major,
   });
+
+  await updateLTS(versions, false);
 
   const versionChanges = getVersionChangesText(versions);
 
@@ -534,8 +539,6 @@ export async function createReleasePR({
 
   console.log('Updating config files...');
   await updateAPIVersions(versions, changelog);
-
-  await updateLTS(versions, true);
 
   if (dryRun) {
     console.log('  > asked for a dryrun, stopping here');

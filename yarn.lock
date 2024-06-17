@@ -11662,6 +11662,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lts@patch:lts@npm%3A1.2.0#~/.yarn/patches/lts-npm-1.2.0-e55f0a54f7.patch":
+  version: 1.2.0
+  resolution: "lts@patch:lts@npm%3A1.2.0#~/.yarn/patches/lts-npm-1.2.0-e55f0a54f7.patch::version=1.2.0&hash=600ec2"
+  dependencies:
+    bossy: "npm:3.0.4"
+    d3: "npm:4.7.4"
+    d3-node: "npm:1.0.1"
+    svg2png: "npm:4.1.1"
+  bin:
+    lts: ./bin/lts.js
+  checksum: 10/35a4e533f2478195c22c6a10540147b70aac47fb3d075a1708e7090b8c86f74d7e090a6f119d479c34ea184cabacabfa50c857d89b6e8b4a678214fca1e57f3f
+  languageName: node
+  linkType: hard
+
 "lunr@npm:^2.3.9":
   version: 2.3.9
   resolution: "lunr@npm:2.3.9"
@@ -14033,7 +14047,7 @@ __metadata:
     fs-extra: "npm:11.2.0"
     js-yaml: "npm:4.1.0"
     knip: "npm:5.18.2"
-    lts: "npm:1.2.0"
+    lts: "patch:lts@npm%3A1.2.0#~/.yarn/patches/lts-npm-1.2.0-e55f0a54f7.patch"
     micromatch: "npm:4.0.7"
     semver: "npm:7.6.2"
     spinnies: "npm:0.5.1"
