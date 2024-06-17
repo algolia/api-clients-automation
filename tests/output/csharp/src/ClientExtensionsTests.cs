@@ -164,7 +164,7 @@ public class ClientExtensionsTests
                     Page = 0,
                     ProcessingTimeMS = 1,
                     Query = "",
-                    VarParams = ""
+                    Params = ""
                   }
                 )
               )
@@ -191,7 +191,7 @@ public class ClientExtensionsTests
                     Page = 0,
                     ProcessingTimeMS = 1,
                     Query = "",
-                    VarParams = ""
+                    Params = ""
                   }
                 )
               )
@@ -218,7 +218,7 @@ public class ClientExtensionsTests
                     Page = 0,
                     ProcessingTimeMS = 1,
                     Query = "",
-                    VarParams = ""
+                    Params = ""
                   }
                 )
               )

@@ -41,6 +41,9 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     // Generation notice, added on every generated files
     Helpers.setGenerationBanner(additionalProperties);
 
+    typeMapping.put("object", "map[string]any");
+    typeMapping.put("AnyType", "any");
+
     apiTestTemplateFiles.clear();
     modelTestTemplateFiles.clear();
     apiDocTemplateFiles.clear();

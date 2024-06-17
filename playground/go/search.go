@@ -17,7 +17,7 @@ func testSearch(appID, apiKey string) int {
 		searchClient.NewApiAddOrUpdateObjectRequest(
 			indexName,
 			"1",
-			map[string]interface{}{
+			map[string]any{
 				"name": "Foo",
 				"age":  42,
 				"city": "Paris",
