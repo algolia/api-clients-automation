@@ -149,6 +149,10 @@ async function transformBundle({
       toAbsolutePath(`website/src/generated/${clientName}-snippets.js`),
       `export const snippets = ${transformCodeSamplesToGuideMethods(JSON.parse(JSON.stringify(snippetSamples)))}`,
     );
+    await fsp.writeFile(
+      toAbsolutePath(`website/src/generated/${clientName}-snippets.json`),
+      transformCodeSamplesToGuideMethods(JSON.parse(JSON.stringify(snippetSamples))),
+    );
   }
 
   for (const [pathKey, pathMethods] of Object.entries(bundledSpec.paths)) {

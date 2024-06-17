@@ -28,7 +28,7 @@ async function pushToAlgoliaDoc(): Promise<void> {
     .map((coAuthor) => coAuthor.trim())
     .filter(Boolean);
 
-  if (!lastCommitMessage.startsWith(commitStartRelease)) {
+  if (!process.env.DRY_RUN && !lastCommitMessage.startsWith(commitStartRelease)) {
     return;
   }
 
@@ -48,7 +48,7 @@ async function pushToAlgoliaDoc(): Promise<void> {
   await emptyDirExceptForDotGit(dest);
   await run(`cp ${toAbsolutePath('specs/bundled/*.doc.yml')} ${dest}`);
   await run(`cp ${toAbsolutePath('config/release.config.json')} ${dest}`);
-  await run(`cp ${toAbsolutePath('website/src/generated/*.js')} ${dest}`);
+  await run(`cp ${toAbsolutePath('website/src/generated/*.json')} ${dest}`);
   await run(`cp ${toAbsolutePath('website/static/img/*-sla.png')} ${dest}`);
 
   if ((await getNbGitDiff({ head: null, cwd: tempGitDir })) === 0) {
