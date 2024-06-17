@@ -126,13 +126,13 @@
         /// </summary>
         {{#readWriteVars}}
         {{#required}}
-        /// <param name="{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}">{{description}}{{^description}}{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}{{/description}}{{#required}} (required){{/required}}{{#defaultValue}} (default to {{.}}){{/defaultValue}}.</param>
+        /// <param name="{{#lambda.camelcase_sanitize_param}}{{name}}{{/lambda.camelcase_sanitize_param}}">{{description}}{{^description}}{{nameInCamelCase}}{{/description}}{{#required}} (required){{/required}}{{#defaultValue}} (default to {{.}}){{/defaultValue}}.</param>
         {{/required}}
         {{/readWriteVars}}
     {{#hasOnlyReadOnly}}
         [JsonConstructor]
     {{/hasOnlyReadOnly}}
-        public {{classname}}({{#requiredVars}}{{> generic_type}} {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}{{^-last}}, {{/-last}}{{/requiredVars}}){{#parent}} : base({{#parentVars}}{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}{{^-last}}, {{/-last}}{{/parentVars}}){{/parent}}
+        public {{classname}}({{#requiredVars}}{{> generic_type}} {{#lambda.camelcase_sanitize_param}}{{name}}{{/lambda.camelcase_sanitize_param}}{{^-last}}, {{/-last}}{{/requiredVars}}){{#parent}} : base({{#parentVars}}{{nameInCamelCase}}{{^-last}}, {{/-last}}{{/parentVars}}){{/parent}}
         {
             {{#vars}}
             {{^isInherited}}
@@ -140,22 +140,22 @@
             {{#required}}
             {{^conditionalSerialization}}
             {{^vendorExtensions.x-csharp-value-type}}
-            {{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} ?? throw new ArgumentNullException(nameof({{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}));
+            {{name}} = {{#lambda.camelcase_sanitize_param}}{{name}}{{/lambda.camelcase_sanitize_param}} ?? throw new ArgumentNullException(nameof({{#lambda.camelcase_sanitize_param}}{{name}}{{/lambda.camelcase_sanitize_param}}));
             {{/vendorExtensions.x-csharp-value-type}}
             {{#vendorExtensions.x-csharp-value-type}}
-            {{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
+            {{name}} = {{#lambda.camelcase_sanitize_param}}{{name}}{{/lambda.camelcase_sanitize_param}};
             {{/vendorExtensions.x-csharp-value-type}}
             {{/conditionalSerialization}}
             {{#conditionalSerialization}}
             {{^vendorExtensions.x-csharp-value-type}}
-            if ({{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} == null)
+            if ({{#lambda.camelcase_sanitize_param}}{{name}}{{/lambda.camelcase_sanitize_param}} == null)
             {
-                throw new ArgumentNullException(nameof({{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}));
+                throw new ArgumentNullException(nameof({{#lambda.camelcase_sanitize_param}}{{name}}{{/lambda.camelcase_sanitize_param}}));
             }
-            _{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
+            _{{name}} = {{#lambda.camelcase_sanitize_param}}{{name}}{{/lambda.camelcase_sanitize_param}};
             {{/vendorExtensions.x-csharp-value-type}}
             {{#vendorExtensions.x-csharp-value-type}}
-            _{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
+            _{{name}} = {{#lambda.camelcase_sanitize_param}}{{name}}{{/lambda.camelcase_sanitize_param}};
             {{/vendorExtensions.x-csharp-value-type}}
             {{/conditionalSerialization}}
             {{/required}}
