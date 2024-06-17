@@ -431,14 +431,15 @@ export async function updateLTS(versions: Versions, graphOnly?: boolean): Promis
         }
       }
 
-      // if we are publishing a new pre-release, we remove support for it
-      const isPreRelease = next.match(preReleaseRegExp) !== null;
+      // we mark pre-releases as unstable as we don't offer SLA for it
+      const isPreRelease =
+        next.match(preReleaseRegExp) !== null || semver.prerelease(next) !== null;
 
       supportedVersions[next] = {
         start: start.toISOString().split('T')[0],
         active: isPreRelease ? undefined : start.toISOString().split('T')[0],
         end: end.toISOString().split('T')[0],
-        unstable: isPreRelease,
+        prerelease: isPreRelease,
       };
     }
 
