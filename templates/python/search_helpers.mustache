@@ -205,8 +205,6 @@
 
         query_parameters = QueryParametersSerializer(dict(sorted(restrictions.items()))).encoded()
 
-        print(query_parameters)
-
         secured_key = hmac.new(
             parent_api_key.encode(encoding="utf-8"),
             query_parameters.encode(encoding="utf-8"),
