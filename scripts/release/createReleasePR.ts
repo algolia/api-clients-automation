@@ -412,8 +412,8 @@ export async function updateLTS(versions: Versions, graphOnly?: boolean): Promis
         continue;
       }
 
+      // update the previously supported SLA version fields
       if (current in supportedVersions) {
-        // when we release a new patch, the current version isn't maintained anymore, as we only provide SLA for the latest minor/previous major
         const nextMinor = next.match(/.+\.(.+)\..*/);
         const currentMinor = current.match(/.+\.(.+)\..*/);
 
@@ -421,8 +421,12 @@ export async function updateLTS(versions: Versions, graphOnly?: boolean): Promis
           throw new Error(`unable to determine minor versions: ${currentMinor}, ${nextMinor}`);
         }
 
+        // if it's not a major release, and we are on the same minor, we remove the current
+        // patch because we support SLA at minor level
         if (versions[lang].releaseType !== 'major' && currentMinor[1] === nextMinor[1]) {
           delete supportedVersions[current];
+          // if it's a major or not the same minor, it means we release a new latest versions, so the current lts go
+          // in maintenance mode
         } else {
           delete supportedVersions[current].lts;
 
@@ -431,7 +435,9 @@ export async function updateLTS(versions: Versions, graphOnly?: boolean): Promis
         }
       }
 
-      // we mark pre-releases as unstable as we don't offer SLA for it
+      // we don't support SLA for pre-releases, so we will:
+      // - set them as `prerelease`
+      // - not the set `lts` field, the gen script will set the as `unstable`
       const isPreRelease =
         next.match(preReleaseRegExp) !== null || semver.prerelease(next) !== null;
 
@@ -443,21 +449,20 @@ export async function updateLTS(versions: Versions, graphOnly?: boolean): Promis
       };
     }
 
+    // define the boundaries of the graph by searching for older and newest dates
     for (const [supportedVersion, dates] of Object.entries(supportedVersions)) {
-      // The support has expired, we can drop it
+      // delete maintenance versions that are not supported anymore
       if ('maintenance' in dates && new Date(dates.end as string) < start) {
         delete supportedVersions[supportedVersion];
 
         continue;
       }
 
-      // Used to define the start of the rendered graph timeline
       const versionStart = new Date(dates.start);
       if (versionStart < queryStart) {
         queryStart = versionStart;
       }
 
-      // Used to define the end of the rendered graph timeline
       const versionEnd = new Date(dates.end);
       if (versionEnd > queryEnd) {
         queryEnd = versionEnd;
