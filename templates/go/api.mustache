@@ -11,14 +11,14 @@ import (
 	"net/url"
   "strings"
   {{#isSearchClient}}
-  "slices"
-  "time"
-  "sort"
   "github.com/algolia/algoliasearch-client-go/v4/algolia/errs"
   "crypto/hmac"
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/hex"
+  "slices"
+  "sort"
+  "time"
   {{/isSearchClient}}
 
   "github.com/algolia/algoliasearch-client-go/v4/algolia/utils"

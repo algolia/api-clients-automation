@@ -1,5 +1,5 @@
 //
-//  SecuredAPIKeyHelpers.swift
+//  SecuredApiKeyHelpers.swift
 //
 //
 //  Created by Algolia on 23/02/2024.
@@ -36,7 +36,7 @@ class SecuredApiKeyHelpersTests: XCTestCase {
 
         let securedApiKey = try client.generateSecuredApiKey(
             parentApiKey: "parent-api-key",
-            with: SecuredAPIKeyRestrictions(
+            with: SecuredApiKeyRestrictions(
                 searchParams: SearchSearchParamsObject(hitsPerPage: 2),
                 validUntil: Int64(now + .seconds(13)),
                 restrictIndices: ["index1", "index2"]

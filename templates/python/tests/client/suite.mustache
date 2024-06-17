@@ -20,7 +20,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
     {{#tests}}
     async def test_{{#lambda.snakecase}}{{testType}}{{/lambda.snakecase}}_{{testIndex}}(self):
         """
-        {{testName}}
+        {{{testName}}}
         """
         {{#autoCreateClient}}
         self.create_client()
@@ -49,7 +49,12 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
         assert _req.host == "{{{match}}}"
         {{/testHost}}
         {{#testResponse}}
+        {{#matchIsObject}}
         assert _req == """{{{match.parameters}}}"""
+        {{/matchIsObject}}
+        {{^matchIsObject}}
+        assert _req == """{{{match}}}"""
+        {{/matchIsObject}}
         {{/testResponse}}
         {{/match}}
         {{/isError}}
