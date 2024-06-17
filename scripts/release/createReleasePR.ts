@@ -424,7 +424,7 @@ export async function updateLTS(versions: Versions, graphOnly?: boolean): Promis
         if (versions[lang].releaseType !== 'major' && currentMinor[1] === nextMinor[1]) {
           delete supportedVersions[current];
         } else {
-          delete supportedVersions[current].active;
+          delete supportedVersions[current].lts;
 
           // any other release cases make the previous version enter in maintenance
           supportedVersions[current].maintenance = start.toISOString().split('T')[0];
@@ -437,7 +437,7 @@ export async function updateLTS(versions: Versions, graphOnly?: boolean): Promis
 
       supportedVersions[next] = {
         start: start.toISOString().split('T')[0],
-        active: isPreRelease ? undefined : start.toISOString().split('T')[0],
+        lts: isPreRelease ? undefined : start.toISOString().split('T')[0],
         end: end.toISOString().split('T')[0],
         prerelease: isPreRelease,
       };
