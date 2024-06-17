@@ -14,11 +14,12 @@ GITHUB_TOKEN=<YOUR-PERSONAL-ACCESS-TOKEN>
 
 Once setup, you can run:
 
+:::info
+See [Use CLI release commands](/docs/contributing/CLI/release-commands) for the detailed release commands
+:::
+
 ```bash
 apic release
-
-# or if you just want to see what it does without pushing the releases
-apic release --dry-run
 ```
 
 It will create [a release PR](https://github.com/algolia/api-clients-automation/pull/545).
