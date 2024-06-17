@@ -87,7 +87,7 @@ import org.json4s.{Extraction, Formats, JField, JObject, JValue, Serializer, Typ
   * @param serverUsed
   *   Host name of the server that processed the request.
   * @param userData
-  *   An object with custom data. You can store up to 32&nbsp;kB as custom data.
+  *   An object with custom data. You can store up to 32kB as custom data.
   * @param queryID
   *   Unique identifier for the query. This is used for [click
   *   analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).

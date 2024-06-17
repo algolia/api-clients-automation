@@ -4404,13 +4404,14 @@ components:
         - dest
         - source
     userData:
+      type: object
       example:
         settingID: f2a7b51e3503acc6a39b3784ffb84300
         pluginVersion: 1.6.0
       description: |
         An object with custom data.
 
-        You can store up to 32&nbsp;kB as custom data.
+        You can store up to 32kB as custom data.
       default: {}
       x-categories:
         - Advanced

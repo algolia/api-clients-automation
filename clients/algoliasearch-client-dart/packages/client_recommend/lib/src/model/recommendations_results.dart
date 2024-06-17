@@ -152,7 +152,7 @@ final class RecommendationsResults {
   @JsonKey(name: r'serverUsed')
   final String? serverUsed;
 
-  /// An object with custom data.  You can store up to 32&nbsp;kB as custom data.
+  /// An object with custom data.  You can store up to 32kB as custom data.
   @JsonKey(name: r'userData')
   final Object? userData;
 

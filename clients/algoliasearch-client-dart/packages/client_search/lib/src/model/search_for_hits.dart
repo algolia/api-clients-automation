@@ -613,7 +613,7 @@ final class SearchForHits {
       attributeCriteriaComputedByMinProximity.hashCode +
       renderingContent.hashCode +
       enableReRanking.hashCode +
-      reRankingApplyFilter.hashCode +
+      (reRankingApplyFilter == null ? 0 : reRankingApplyFilter.hashCode) +
       indexName.hashCode +
       type.hashCode;
 
