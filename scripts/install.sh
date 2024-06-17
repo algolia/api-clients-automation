@@ -84,7 +84,7 @@ _apic_format_complete() {
   if [[ COMP_CWORD -eq 2 ]]; then
     COMPREPLY=($(compgen -W "$(_list_languages)" -- "$cur"))
   elif [[ COMP_CWORD -eq 3 ]]; then
-    COMPREPLY=($(compgen -d -- "$cur"))
+    COMPREPLY=($(compgen -d -S / -- "$cur"))
   fi
 }
 
