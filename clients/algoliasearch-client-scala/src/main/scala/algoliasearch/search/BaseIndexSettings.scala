@@ -124,7 +124,7 @@ import algoliasearch.search.SupportedLanguage._
   *   **Modifier** - `unordered(\"ATTRIBUTE\")`. Ignore the position of a match within the attribute. Without modifier,
   *   matches at the beginning of an attribute rank higer than matches at the end.
   * @param userData
-  *   An object with custom data. You can store up to 32&nbsp;kB as custom data.
+  *   An object with custom data. You can store up to 32kB as custom data.
   * @param customNormalization
   *   Characters and their normalized replacements. This overrides Algolia's default
   *   [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).

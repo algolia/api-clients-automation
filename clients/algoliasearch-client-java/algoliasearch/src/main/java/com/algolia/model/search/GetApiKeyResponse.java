@@ -6,7 +6,6 @@ package com.algolia.model.search;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,7 +19,7 @@ public class GetApiKeyResponse {
   private Long createdAt;
 
   @JsonProperty("acl")
-  private List<Acl> acl = new ArrayList<>(Arrays.asList());
+  private List<Acl> acl = new ArrayList<>();
 
   @JsonProperty("description")
   private String description;

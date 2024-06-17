@@ -594,7 +594,7 @@ final class SearchParamsObject {
       attributeCriteriaComputedByMinProximity.hashCode +
       renderingContent.hashCode +
       enableReRanking.hashCode +
-      reRankingApplyFilter.hashCode;
+      (reRankingApplyFilter == null ? 0 : reRankingApplyFilter.hashCode);
 
   factory SearchParamsObject.fromJson(Map<String, dynamic> json) =>
       _$SearchParamsObjectFromJson(json);

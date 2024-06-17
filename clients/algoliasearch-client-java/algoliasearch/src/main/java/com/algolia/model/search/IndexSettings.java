@@ -532,7 +532,7 @@ public class IndexSettings {
     return this;
   }
 
-  /** An object with custom data. You can store up to 32&nbsp;kB as custom data. */
+  /** An object with custom data. You can store up to 32kB as custom data. */
   @javax.annotation.Nullable
   public Object getUserData() {
     return userData;
