@@ -1,3 +1,7 @@
+## [5.0.0-beta.5](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.4...5.0.0-beta.5)
+
+- [a58e88322](https://github.com/algolia/api-clients-automation/commit/a58e88322) feat(clients): add generateSecuredApiKey to java ([#3167](https://github.com/algolia/api-clients-automation/pull/3167)) by [@millotp](https://github.com/millotp/)
+
 ## [5.0.0-beta.4](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.3...5.0.0-beta.4)
 
 - [b2a464a2b](https://github.com/algolia/api-clients-automation/commit/b2a464a2b) feat(clients): add generate_secured_api_key to ruby ([#3166](https://github.com/algolia/api-clients-automation/pull/3166)) by [@millotp](https://github.com/millotp/)
