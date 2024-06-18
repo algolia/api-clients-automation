@@ -102,13 +102,13 @@ export const patterns = [
 
   // Python
   '!snippets/python/pyproject.toml',
+  '!snippets/python/poetry.lock',
   'clients/algoliasearch-client-python/**',
   '!clients/algoliasearch-client-python/algoliasearch/http/**',
   '!clients/algoliasearch-client-python/algoliasearch/py.typed',
   'clients/algoliasearch-client-python/algoliasearch/http/__init__.py',
   '!clients/algoliasearch-client-python/*',
   'clients/algoliasearch-client-python/pyproject.toml',
-  'clients/algoliasearch-client-python/poetry.lock',
   'clients/algoliasearch-client-python/requirements.txt',
   'clients/algoliasearch-client-python/.gitignore',
 
