@@ -171,6 +171,18 @@
       ],
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "php/php-src"
+    },
+    {
+      "description": "Update swiftformat version",
+      "fileMatch": [
+        "Dockerfile",
+        ".github/actions/setup/action.yml"
+      ],
+      "matchStrings": [
+        "SWIFTFORMAT_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ],
+      "depNameTemplate": "nicklockwood/SwiftFormat",
+      "datasourceTemplate": "github-releases"
     }
   ],
   "github-actions": {
