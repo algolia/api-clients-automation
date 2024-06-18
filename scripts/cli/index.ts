@@ -1,7 +1,6 @@
 import { Argument, program } from 'commander';
 
 import { buildClients } from '../buildClients.js';
-import { buildSpecs } from '../buildSpecs.js';
 import { LANGUAGES, setVerbose } from '../common.js';
 import { ctsGenerateMany } from '../cts/generate.js';
 import { runCts } from '../cts/runCts.js';
@@ -12,6 +11,7 @@ import { playground } from '../playground.js';
 import { createReleasePR, updateSLA } from '../release/createReleasePR.js';
 import type { Versions } from '../release/types.js';
 import { snippetsGenerateMany } from '../snippets/generate.js';
+import { buildSpecs } from '../specs';
 import type { Language } from '../types.js';
 
 import type { LangArg } from './utils.js';
