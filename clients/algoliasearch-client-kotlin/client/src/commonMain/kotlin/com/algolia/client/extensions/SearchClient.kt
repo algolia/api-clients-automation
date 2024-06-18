@@ -303,7 +303,7 @@ public suspend fun <T> SearchClient.chunkedBatch(
     val requests = chunk.map {
       BatchRequest(
         action = action,
-        body = options.json.encodeToJsonElement(serializer, it).jsonObject
+        body = options.json.encodeToJsonElement(serializer, it).jsonObject,
       )
     }
     val batch = batch(
