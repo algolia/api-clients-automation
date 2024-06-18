@@ -202,12 +202,18 @@ runs:
       with:
         swift-version: ${{ steps.versions.outputs.SWIFT_VERSION }}
 
+    - name: Set swiftformat version
+      if: ${{ inputs.language == 'swift' }}
+      id: swiftformat-version
+      shell: bash
+      run: echo "SWIFTFORMAT_VERSION=0.54.0" >> $GITHUB_OUTPUT
+
     - name: Checkout swiftformat
       if: ${{ inputs.language == 'swift' }}
       uses: actions/checkout@v4
       with:
         repository: nicklockwood/SwiftFormat
-        ref: 0.53.0
+        ref: ${{ steps.swiftformat-version.outputs.SWIFTFORMAT_VERSION }}
         path: swiftformat
 
     - name: Cache the build folder
@@ -216,7 +222,7 @@ runs:
       uses: actions/cache@v4
       with:
         path: swiftformat/.build
-        key: swiftformat-build-0.53.0-${{ runner.os }}
+        key: swiftformat-build-${{ steps.swiftformat-version.outputs.SWIFTFORMAT_VERSION }}-${{ runner.os }}
 
     - name: Build swiftformat
       if: ${{ inputs.language == 'swift' && steps.cache-swiftformat.outputs.cache-hit != 'true' }}
