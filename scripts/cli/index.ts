@@ -61,7 +61,7 @@ program
     await generate(generatorList({ language, client, clientList }));
   });
 
-const buildCommand = program.command('build');
+const buildCommand = program.command('build').description('Build the clients or specs');
 
 buildCommand
   .command('clients')
@@ -104,7 +104,7 @@ buildCommand
     });
   });
 
-const ctsCommand = program.command('cts');
+const ctsCommand = program.command('cts').description('Generate and run the CTS tests');
 
 ctsCommand
   .command('generate')
