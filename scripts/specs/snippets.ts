@@ -49,23 +49,17 @@ export function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSample
     }
 
     // add specific helper snippets to the current language
-    if (!('waitForAppTask' in snippetSamples[language])) {
-      snippetSamples[language].waitForAppTask = {
-        default: waitForAppTask[language],
-      };
-    }
+    snippetSamples[language].waitForAppTask = {
+      default: waitForAppTask[language],
+    };
 
-    if (!('waitForApiKey' in snippetSamples[language])) {
-      snippetSamples[language].waitForApiKey = {
-        default: waitForApiKey[language],
-      };
-    }
+    snippetSamples[language].waitForApiKey = {
+      default: waitForApiKey[language],
+    };
 
-    if (!('waitForTask' in snippetSamples[language])) {
-      snippetSamples[language].waitForTask = {
-        default: waitForTask[language],
-      };
-    }
+    snippetSamples[language].waitForTask = {
+      default: waitForTask[language],
+    };
   }
 
   return JSON.stringify(snippetSamples, null, 2);
