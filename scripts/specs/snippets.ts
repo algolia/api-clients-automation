@@ -1,9 +1,10 @@
 import fsp from 'fs/promises';
 
 import { GENERATORS, capitalize, createClientName, toAbsolutePath } from '../common.js';
-import type { CodeSamples, Language, SnippetForMethod, SnippetSamples } from '../types.js';
+import type { Language } from '../types.js';
 
 import { waitForTask, waitForAppTask, waitForApiKey } from './helper-snippets.js';
+import type { CodeSamples, SnippetForMethod, SnippetSamples } from './types.js';
 
 export function getCodeSampleLabel(language: Language): CodeSamples['label'] {
   switch (language) {
@@ -43,26 +44,27 @@ export function transformCodeSamplesToGuideMethods(snippetSamples: SnippetSample
           };
         }
 
-        if (!('waitForAppTask' in snippetSamples[language])) {
-          snippetSamples[language].waitForAppTask = {
-            default: waitForAppTask[language],
-          };
-        }
-
-        if (!('waitForApiKey' in snippetSamples[language])) {
-          snippetSamples[language].waitForApiKey = {
-            default: waitForApiKey[language],
-          };
-        }
-
-        if (!('waitForTask' in snippetSamples[language])) {
-          snippetSamples[language].waitForTask = {
-            default: waitForTask[language],
-          };
-        }
-
         snippetSamples[language][operation][sampleName] = callLine.replace(/\n$/, '');
       }
+    }
+
+    // add specific helper snippets to the current language
+    if (!('waitForAppTask' in snippetSamples[language])) {
+      snippetSamples[language].waitForAppTask = {
+        default: waitForAppTask[language],
+      };
+    }
+
+    if (!('waitForApiKey' in snippetSamples[language])) {
+      snippetSamples[language].waitForApiKey = {
+        default: waitForApiKey[language],
+      };
+    }
+
+    if (!('waitForTask' in snippetSamples[language])) {
+      snippetSamples[language].waitForTask = {
+        default: waitForTask[language],
+      };
     }
   }
 

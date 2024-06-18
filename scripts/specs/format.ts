@@ -5,13 +5,14 @@ import yaml from 'js-yaml';
 import { Cache } from '../cache.js';
 import { GENERATORS, exists, run, toAbsolutePath } from '../common.js';
 import { createSpinner } from '../spinners.js';
-import type { SnippetSamples, Spec } from '../types.js';
+import type { Spec } from '../types.js';
 
 import {
   getCodeSampleLabel,
   transformSnippetsToCodeSamples,
   transformCodeSamplesToGuideMethods,
 } from './snippets.js';
+import type { SnippetSamples } from './types.js';
 
 export async function lintCommon(useCache: boolean): Promise<void> {
   const spinner = createSpinner('linting common spec');
