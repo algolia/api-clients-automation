@@ -190,7 +190,7 @@ jobs:
         run: ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).buildCommand }}
 
       - name: Run common and requester tests
-        run: cd clients/algoliasearch-client-javascript && yarn test ${{ !contains(fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun, "algoliasearch") && '--ignore algoliasearch' }}
+        run: cd clients/algoliasearch-client-javascript && yarn test ${{ !contains(fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun, 'algoliasearch') && '--ignore algoliasearch' || '' }}
 
       - name: Test JavaScript bundle size
         if: ${{ startsWith(env.head_ref, 'chore/prepare-release-') }}
