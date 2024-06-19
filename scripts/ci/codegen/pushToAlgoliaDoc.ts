@@ -3,7 +3,6 @@ import fsp from 'fs/promises';
 import { resolve } from 'path';
 
 import {
-  emptyDirExceptForDotGit,
   gitCommit,
   run,
   toAbsolutePath,
@@ -44,12 +43,14 @@ async function pushToAlgoliaDoc(): Promise<void> {
   await run(`git clone --depth 1 ${githubURL} ${tempGitDir}`);
   await run(`git checkout -B ${targetBranch}`, { cwd: tempGitDir });
 
-  const dest = toAbsolutePath(`${tempGitDir}/app_data/api/specs`);
-  await emptyDirExceptForDotGit(dest);
-  await run(`cp ${toAbsolutePath('specs/bundled/*.doc.yml')} ${dest}`);
-  await run(`cp ${toAbsolutePath('config/release.config.json')} ${dest}`);
-  await run(`cp ${toAbsolutePath('website/src/generated/*.json')} ${dest}`);
-  await run(`cp ${toAbsolutePath('website/static/img/*-sla.png')} ${dest}`);
+  const pathToSpecs = toAbsolutePath(`${tempGitDir}/app_data/api/specs`);
+  const pathToImages = toAbsolutePath(`${tempGitDir}/assets/images/api`);
+  await run(`cp ${toAbsolutePath('specs/bundled/*.doc.yml')} ${pathToSpecs}`);
+  await run(`cp ${toAbsolutePath('config/release.config.json')} ${pathToSpecs}`);
+  await run(`cp ${toAbsolutePath('website/src/generated/*.json')} ${pathToSpecs}`);
+  await run(
+    `mkdir -p ${pathToImages} && cp ${toAbsolutePath('website/static/img/*-sla.png')} ${pathToImages}`,
+  );
 
   if ((await getNbGitDiff({ head: null, cwd: tempGitDir })) === 0) {
     console.log(`❎ Skipping push docs because there is no change.`);
