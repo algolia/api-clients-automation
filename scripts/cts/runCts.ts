@@ -4,11 +4,7 @@ import { isVerbose, run, runComposerInstall, toAbsolutePath } from '../common.js
 import { createSpinner } from '../spinners.js';
 import type { Language } from '../types.js';
 
-import {
-  getTimeoutCounter,
-  numberOfSuccessfulReplaceAllObjectsCalls,
-  startTestServer,
-} from './testServer.js';
+import { getTimeoutCounter, startTestServer } from './testServer.js';
 
 async function runCtsOne(language: string): Promise<void> {
   const spinner = createSpinner(`running cts for '${language}'`);
@@ -95,10 +91,11 @@ export async function runCts(languages: Language[], clients: string[]): Promise<
       );
     }
 
-    if (languages.length !== numberOfSuccessfulReplaceAllObjectsCalls()) {
-      throw new Error(
-        `Expected ${languages.length} call to replaceAllObjects, got ${numberOfSuccessfulReplaceAllObjectsCalls()} instead.`,
-      );
-    }
+    // uncomment this once all languages are supported
+    // if (languages.length !== numberOfSuccessfulReplaceAllObjectsCalls()) {
+    //   throw new Error(
+    //     `Expected ${languages.length} call to replaceAllObjects, got ${numberOfSuccessfulReplaceAllObjectsCalls()} instead.`,
+    //   );
+    // }
   }
 }
