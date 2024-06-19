@@ -193,6 +193,57 @@ package object extension {
       Future.successful(true)
     }
 
+    /** Helper: Chunks the given `objects` list in subset of 1000 elements max to make it fit in `batch` requests.
+      *
+      * @param indexName
+      *   The index in which to perform the request.
+      * @param records
+      *   The list of records to replace.
+      * @param action
+      *   The action to perform on the records.
+      * @param waitForTasks
+      *   Whether to wait for the tasks to complete.
+      * @param batchSize
+      *   The size of the batch. Default is 1000.
+      * @param requestOptions
+      *   Additional request configuration.
+      * @return
+      *   A future containing the response of the batch operations.
+      */
+    def chunkedBatch(
+        indexName: String,
+        records: Seq[Any],
+        action: Action = Action.AddObject,
+        waitForTasks: Boolean,
+        batchSize: Int = 1000,
+        requestOptions: Option[RequestOptions] = None
+    )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
+      var futures = Seq.empty[Future[BatchResponse]]
+      records.grouped(batchSize).foreach { chunk =>
+        val requests = chunk.map { record =>
+          BatchRequest(action = action, body = record)
+        }
+        val future = client.batch(
+          indexName = indexName,
+          batchWriteParams = BatchWriteParams(requests),
+          requestOptions = requestOptions
+        )
+        futures = futures :+ future
+      }
+
+      val responses = Future.sequence(futures)
+
+      if (waitForTasks) {
+        responses.foreach { tasks =>
+          tasks.foreach { task =>
+            client.waitTask(indexName, task.taskID, requestOptions = requestOptions)
+          }
+        }
+      }
+
+      responses
+    }
+
     /** Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are untouched.
       * Replace all objects in an index without any downtime. Internally, this method copies the existing index
       * settings, synonyms and query rules and indexes all passed objects. Finally, the temporary one replaces the
@@ -205,16 +256,19 @@ package object extension {
       *   The index in which to perform the request.
       * @param records
       *   The list of records to replace.
+      * @param batchSize
+      *   The size of the batch. Default is 1000.
+      * @param requestOptions
+      *   Additional request configuration.
       * @return
-      *   intermediate operations (task IDs).
+      *   A future containing the response of the three-step operations: copy, batch and move.
       */
     def replaceAllObjects(
         indexName: String,
         records: Seq[Any],
+        batchSize: Int = 1000,
         requestOptions: Option[RequestOptions] = None
-    )(implicit ec: ExecutionContext): Future[Seq[Long]] = {
-      if (records.isEmpty) return Future.successful(Seq.empty)
-
+    )(implicit ec: ExecutionContext): Future[ReplaceAllObjectsResponse] = {
       val requests = records.map { record =>
         BatchRequest(action = Action.AddObject, body = record)
       }
@@ -231,12 +285,15 @@ package object extension {
           requestOptions = requestOptions
         )
 
-        batch <- client.batch(
+        batchResponses <- chunkedBatch(
           indexName = tmpIndexName,
-          batchWriteParams = BatchWriteParams(requests),
+          records = records,
+          action = Action.AddObject,
+          waitForTasks = true,
+          batchSize = batchSize,
           requestOptions = requestOptions
         )
-        _ <- client.waitTask(indexName = tmpIndexName, taskID = batch.taskID, requestOptions = requestOptions)
+
         _ <- client.waitTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
 
         copy <- client.operationIndex(
@@ -250,13 +307,17 @@ package object extension {
         )
         _ <- client.waitTask(indexName = tmpIndexName, taskID = copy.taskID, requestOptions = requestOptions)
 
-        replace <- client.operationIndex(
+        move <- client.operationIndex(
           indexName = tmpIndexName,
           operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
           requestOptions = requestOptions
         )
-        _ <- client.waitTask(indexName = tmpIndexName, taskID = replace.taskID, requestOptions = requestOptions)
-      } yield Seq(copy.taskID, batch.taskID, replace.taskID)
+        _ <- client.waitTask(indexName = tmpIndexName, taskID = move.taskID, requestOptions = requestOptions)
+      } yield ReplaceAllObjectsResponse(
+        copyOperationResponse = copy,
+        batchResponses = batchResponses,
+        moveOperationResponse = move
+      )
     }
   }
 }
