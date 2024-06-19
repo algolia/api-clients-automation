@@ -1152,3 +1152,50 @@ class TestIngestionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"enabled":false}""")
+
+    async def test_validate_source_(self):
+        """
+        validateSource
+        """
+        _req = await self._client.validate_source_with_http_info(
+            source_create={
+                "type": "commercetools",
+                "name": "sourceName",
+                "input": {
+                    "storeKeys": [
+                        "myStore",
+                    ],
+                    "locales": [
+                        "de",
+                    ],
+                    "url": "http://commercetools.com",
+                    "projectKey": "keyID",
+                },
+                "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            },
+        )
+
+        assert _req.path == "/1/sources/validate"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}"""
+        )
+
+    async def test_validate_source_before_update_(self):
+        """
+        validateSourceBeforeUpdate
+        """
+        _req = await self._client.validate_source_before_update_with_http_info(
+            source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            source_update={
+                "name": "newName",
+            },
+        )
+
+        assert _req.path == "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads("""{"name":"newName"}""")

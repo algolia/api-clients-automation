@@ -913,3 +913,66 @@ async def snippet_for_update_task():
     # print the JSON response
     print(response.to_json())
     # SEPARATOR<
+
+
+async def snippet_for_validate_source():
+    """
+    Snippet for the validateSource method.
+
+    validateSource
+    """
+    # >SEPARATOR validateSource default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.validate_source(
+        source_create={
+            "type": "commercetools",
+            "name": "sourceName",
+            "input": {
+                "storeKeys": [
+                    "myStore",
+                ],
+                "locales": [
+                    "de",
+                ],
+                "url": "http://commercetools.com",
+                "projectKey": "keyID",
+            },
+            "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        },
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_validate_source_before_update():
+    """
+    Snippet for the validateSourceBeforeUpdate method.
+
+    validateSourceBeforeUpdate
+    """
+    # >SEPARATOR validateSourceBeforeUpdate default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.validate_source_before_update(
+        source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        source_update={
+            "name": "newName",
+        },
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<

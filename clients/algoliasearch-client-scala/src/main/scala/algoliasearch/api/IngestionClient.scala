@@ -48,6 +48,7 @@ import algoliasearch.ingestion.SourceSortKeys._
 import algoliasearch.ingestion.SourceType._
 import algoliasearch.ingestion.SourceUpdate
 import algoliasearch.ingestion.SourceUpdateResponse
+import algoliasearch.ingestion.SourceValidateResponse
 import algoliasearch.ingestion.Task
 import algoliasearch.ingestion.TaskCreate
 import algoliasearch.ingestion.TaskCreateResponse
@@ -1137,6 +1138,56 @@ class IngestionClient(
       .withBody(taskUpdate)
       .build()
     execute[TaskUpdateResponse](request, requestOptions)
+  }
+
+  /** Validates a source payload to ensure it can be created and that the data source can be reached by Algolia.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param sourceCreate
+    */
+  def validateSource(sourceCreate: Option[SourceCreate] = None, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[SourceValidateResponse] = Future {
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1/sources/validate")
+      .withBody(sourceCreate)
+      .build()
+    execute[SourceValidateResponse](request, requestOptions)
+  }
+
+  /** Validates an update of a source payload to ensure it can be created and that the data source can be reached by
+    * Algolia.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param sourceID
+    *   Unique identifier of a source.
+    */
+  def validateSourceBeforeUpdate(
+      sourceID: String,
+      sourceUpdate: SourceUpdate,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[SourceValidateResponse] = Future {
+    requireNotNull(sourceID, "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.")
+    requireNotNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `validateSourceBeforeUpdate`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1/sources/${escape(sourceID)}/validate")
+      .withBody(sourceUpdate)
+      .build()
+    execute[SourceValidateResponse](request, requestOptions)
   }
 
 }

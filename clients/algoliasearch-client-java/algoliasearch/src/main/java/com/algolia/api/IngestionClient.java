@@ -2869,4 +2869,172 @@ public class IngestionClient extends ApiClient {
     throws AlgoliaRuntimeException {
     return this.updateTaskAsync(taskID, taskUpdate, null);
   }
+
+  /**
+   * Validates a source payload to ensure it can be created and that the data source can be reached
+   * by Algolia.
+   *
+   * @param sourceCreate (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SourceValidateResponse validateSource(SourceCreate sourceCreate, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(validateSourceAsync(sourceCreate, requestOptions));
+  }
+
+  /**
+   * Validates a source payload to ensure it can be created and that the data source can be reached
+   * by Algolia.
+   *
+   * @param sourceCreate (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SourceValidateResponse validateSource(SourceCreate sourceCreate) throws AlgoliaRuntimeException {
+    return this.validateSource(sourceCreate, null);
+  }
+
+  /**
+   * Validates a source payload to ensure it can be created and that the data source can be reached
+   * by Algolia.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SourceValidateResponse validateSource(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.validateSource(null, requestOptions);
+  }
+
+  /**
+   * Validates a source payload to ensure it can be created and that the data source can be reached
+   * by Algolia.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SourceValidateResponse validateSource() throws AlgoliaRuntimeException {
+    return this.validateSource(null, null);
+  }
+
+  /**
+   * (asynchronously) Validates a source payload to ensure it can be created and that the data
+   * source can be reached by Algolia.
+   *
+   * @param sourceCreate (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SourceValidateResponse> validateSourceAsync(SourceCreate sourceCreate, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder().setPath("/1/sources/validate").setMethod("POST").setBody(sourceCreate).build();
+    return executeAsync(request, requestOptions, new TypeReference<SourceValidateResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Validates a source payload to ensure it can be created and that the data
+   * source can be reached by Algolia.
+   *
+   * @param sourceCreate (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SourceValidateResponse> validateSourceAsync(SourceCreate sourceCreate) throws AlgoliaRuntimeException {
+    return this.validateSourceAsync(sourceCreate, null);
+  }
+
+  /**
+   * (asynchronously) Validates a source payload to ensure it can be created and that the data
+   * source can be reached by Algolia.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SourceValidateResponse> validateSourceAsync(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.validateSourceAsync(null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Validates a source payload to ensure it can be created and that the data
+   * source can be reached by Algolia.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SourceValidateResponse> validateSourceAsync() throws AlgoliaRuntimeException {
+    return this.validateSourceAsync(null, null);
+  }
+
+  /**
+   * Validates an update of a source payload to ensure it can be created and that the data source
+   * can be reached by Algolia.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param sourceUpdate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SourceValidateResponse validateSourceBeforeUpdate(
+    @Nonnull String sourceID,
+    @Nonnull SourceUpdate sourceUpdate,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(validateSourceBeforeUpdateAsync(sourceID, sourceUpdate, requestOptions));
+  }
+
+  /**
+   * Validates an update of a source payload to ensure it can be created and that the data source
+   * can be reached by Algolia.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param sourceUpdate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SourceValidateResponse validateSourceBeforeUpdate(@Nonnull String sourceID, @Nonnull SourceUpdate sourceUpdate)
+    throws AlgoliaRuntimeException {
+    return this.validateSourceBeforeUpdate(sourceID, sourceUpdate, null);
+  }
+
+  /**
+   * (asynchronously) Validates an update of a source payload to ensure it can be created and that
+   * the data source can be reached by Algolia.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param sourceUpdate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SourceValidateResponse> validateSourceBeforeUpdateAsync(
+    @Nonnull String sourceID,
+    @Nonnull SourceUpdate sourceUpdate,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.");
+
+    Parameters.requireNonNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `validateSourceBeforeUpdate`.");
+
+    HttpRequest request = HttpRequest
+      .builder()
+      .setPath("/1/sources/{sourceID}/validate", sourceID)
+      .setMethod("POST")
+      .setBody(sourceUpdate)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<SourceValidateResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Validates an update of a source payload to ensure it can be created and that
+   * the data source can be reached by Algolia.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param sourceUpdate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SourceValidateResponse> validateSourceBeforeUpdateAsync(
+    @Nonnull String sourceID,
+    @Nonnull SourceUpdate sourceUpdate
+  ) throws AlgoliaRuntimeException {
+    return this.validateSourceBeforeUpdateAsync(sourceID, sourceUpdate, null);
+  }
 }
