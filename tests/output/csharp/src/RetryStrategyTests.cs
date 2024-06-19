@@ -160,7 +160,7 @@ public class RetryStrategyTests
                     ProcessingTimeMS = 1,
                     Hits = new List<object>(),
                     Query = "",
-                    VarParams = ""
+                    Params = ""
                   },
                   JsonConfig.Options
                 )

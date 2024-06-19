@@ -3,6 +3,7 @@
   */
 package algoliasearch.api
 
+import algoliasearch.search.Action._
 import algoliasearch.search.AddApiKeyResponse
 import algoliasearch.search.ApiKey
 import algoliasearch.search.ApiKeyOperation._
@@ -41,6 +42,7 @@ import algoliasearch.search.LogType._
 import algoliasearch.search.MultipleBatchResponse
 import algoliasearch.search.OperationIndexParams
 import algoliasearch.search.RemoveUserIdResponse
+import algoliasearch.search.ReplaceAllObjectsResponse
 import algoliasearch.search.ReplaceSourceResponse
 import algoliasearch.search.Rule
 import algoliasearch.search.SaveObjectResponse
@@ -59,7 +61,7 @@ import algoliasearch.search.SearchSynonymsParams
 import algoliasearch.search.SearchSynonymsResponse
 import algoliasearch.search.SearchUserIdsParams
 import algoliasearch.search.SearchUserIdsResponse
-import algoliasearch.search.SecuredAPIKeyRestrictions
+import algoliasearch.search.SecuredApiKeyRestrictions
 import algoliasearch.search.Source
 import algoliasearch.search.SynonymHit
 import algoliasearch.search.UpdateApiKeyResponse
@@ -706,6 +708,27 @@ class SearchClient(
     execute[GetApiKeyResponse](request, requestOptions)
   }
 
+  /** Checks the status of a given application task.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    *
+    * @param taskID
+    *   Unique task identifier.
+    */
+  def getAppTask(taskID: Long, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[GetTaskResponse] = Future {
+    requireNotNull(taskID, "Parameter `taskID` is required when calling `getAppTask`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/1/task/${escape(taskID)}")
+      .build()
+    execute[GetTaskResponse](request, requestOptions)
+  }
+
   /** Lists supported languages with their supported dictionary types and number of custom entries.
     *
     * Required API Key ACLs:
@@ -1116,11 +1139,11 @@ class SearchClient(
   }
 
   /** Copies or moves (renames) an index within the same Algolia application. - Existing destination indices are
-    * overwritten, except for index-specific API keys and analytics data. - If the destination index doesn't exist yet,
-    * it'll be created. **Copy** - Copying a source index that doesn't exist creates a new index with 0 records and
-    * default settings. - The API keys of the source index are merged with the existing keys in the destination index. -
-    * You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index
-    * that already has replicas. - Be aware of the [size
+    * overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created.
+    * **Copy** - Copying a source index that doesn't exist creates a new index with 0 records and default settings. -
+    * The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the
+    * `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has
+    * replicas. - Be aware of the [size
     * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). -
     * Related guide: [Copy
     * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)

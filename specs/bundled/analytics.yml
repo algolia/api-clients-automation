@@ -1571,6 +1571,7 @@ components:
       in: query
       name: limit
       description: Number of items to return.
+      required: false
       schema:
         type: integer
         default: 10
@@ -1578,6 +1579,7 @@ components:
       in: query
       name: offset
       description: Position of the first item to return.
+      required: false
       schema:
         type: integer
         default: 0

@@ -3,7 +3,9 @@ package algoliasearch.methods.snippets
 
 import scala.concurrent.duration.Duration
 
+// >IMPORT
 import algoliasearch.api.PersonalizationClient
+// IMPORT<
 import algoliasearch.personalization.*
 
 import org.json4s.*
@@ -19,17 +21,17 @@ class SnippetPersonalizationClient {
     * allow del method for a custom path with minimal parameters
     */
   def snippetForPersonalizationClientCustomDelete(): Unit = {
-    // >SEPARATOR customDelete
+    // >SEPARATOR customDelete default
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val res = client.customDelete[JObject](
+    val response = client.customDelete[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -38,17 +40,17 @@ class SnippetPersonalizationClient {
     * allow get method for a custom path with minimal parameters
     */
   def snippetForPersonalizationClientCustomGet(): Unit = {
-    // >SEPARATOR customGet
+    // >SEPARATOR customGet default
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val res = client.customGet[JObject](
+    val response = client.customGet[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -57,17 +59,17 @@ class SnippetPersonalizationClient {
     * allow post method for a custom path with minimal parameters
     */
   def snippetForPersonalizationClientCustomPost(): Unit = {
-    // >SEPARATOR customPost
+    // >SEPARATOR customPost default
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val res = client.customPost[JObject](
+    val response = client.customPost[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -76,17 +78,17 @@ class SnippetPersonalizationClient {
     * allow put method for a custom path with minimal parameters
     */
   def snippetForPersonalizationClientCustomPut(): Unit = {
-    // >SEPARATOR customPut
+    // >SEPARATOR customPut default
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val res = client.customPut[JObject](
+    val response = client.customPut[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -95,17 +97,17 @@ class SnippetPersonalizationClient {
     * delete deleteUserProfile
     */
   def snippetForPersonalizationClientDeleteUserProfile(): Unit = {
-    // >SEPARATOR deleteUserProfile
+    // >SEPARATOR deleteUserProfile default
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val res = client.deleteUserProfile(
+    val response = client.deleteUserProfile(
       userToken = "UserToken"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -114,16 +116,16 @@ class SnippetPersonalizationClient {
     * get getPersonalizationStrategy
     */
   def snippetForPersonalizationClientGetPersonalizationStrategy(): Unit = {
-    // >SEPARATOR getPersonalizationStrategy
+    // >SEPARATOR getPersonalizationStrategy default
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val res = client.getPersonalizationStrategy(
+    val response = client.getPersonalizationStrategy(
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -132,17 +134,17 @@ class SnippetPersonalizationClient {
     * get getUserTokenProfile
     */
   def snippetForPersonalizationClientGetUserTokenProfile(): Unit = {
-    // >SEPARATOR getUserTokenProfile
+    // >SEPARATOR getUserTokenProfile default
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val res = client.getUserTokenProfile(
+    val response = client.getUserTokenProfile(
       userToken = "UserToken"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -151,12 +153,12 @@ class SnippetPersonalizationClient {
     * set setPersonalizationStrategy
     */
   def snippetForPersonalizationClientSetPersonalizationStrategy(): Unit = {
-    // >SEPARATOR setPersonalizationStrategy
+    // >SEPARATOR setPersonalizationStrategy default
     // Initialize the client
     val client = PersonalizationClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val res = client.setPersonalizationStrategy(
+    val response = client.setPersonalizationStrategy(
       personalizationStrategyParams = PersonalizationStrategyParams(
         eventScoring = Seq(
           EventScoring(
@@ -176,7 +178,7 @@ class SnippetPersonalizationClient {
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 

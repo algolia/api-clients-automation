@@ -1,3 +1,22 @@
+## [3.0.0.beta.4](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.beta.3...3.0.0.beta.4)
+
+- [b2a464a2b](https://github.com/algolia/api-clients-automation/commit/b2a464a2b) feat(clients): add generate_secured_api_key to ruby ([#3166](https://github.com/algolia/api-clients-automation/pull/3166)) by [@millotp](https://github.com/millotp/)
+- [de4090789](https://github.com/algolia/api-clients-automation/commit/de4090789) fix(clients): safer replaceAllObjects + metis compliant ([#3164](https://github.com/algolia/api-clients-automation/pull/3164)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [3.0.0.beta.3](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.beta.2...3.0.0.beta.3)
+
+- [072c38b9a](https://github.com/algolia/api-clients-automation/commit/072c38b9a) fix(clients): remove unused models from lite clients ([#3159](https://github.com/algolia/api-clients-automation/pull/3159)) by [@shortcuts](https://github.com/shortcuts/)
+- [c7f5de9d4](https://github.com/algolia/api-clients-automation/commit/c7f5de9d4) feat(clients): add waitForAppTask helper ([#3158](https://github.com/algolia/api-clients-automation/pull/3158)) by [@millotp](https://github.com/millotp/)
+- [3a97fad1f](https://github.com/algolia/api-clients-automation/commit/3a97fad1f) fix(clients): chunked batch helper ([#3154](https://github.com/algolia/api-clients-automation/pull/3154)) by [@shortcuts](https://github.com/shortcuts/)
+- [c251dc87e](https://github.com/algolia/api-clients-automation/commit/c251dc87e) fix(specs): rankingInfo required properties ([#3157](https://github.com/algolia/api-clients-automation/pull/3157)) by [@millotp](https://github.com/millotp/)
+- [fd5a312fb](https://github.com/algolia/api-clients-automation/commit/fd5a312fb) feat(specs): add getAppTask endpoint to search ([#3156](https://github.com/algolia/api-clients-automation/pull/3156)) by [@millotp](https://github.com/millotp/)
+- [cdc866549](https://github.com/algolia/api-clients-automation/commit/cdc866549) fix(specs): dont mention index api keys ([#3117](https://github.com/algolia/api-clients-automation/pull/3117)) by [@kai687](https://github.com/kai687/)
+
+## [3.0.0.beta.2](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.beta.1...3.0.0.beta.2)
+
+- [2b70d9ea5](https://github.com/algolia/api-clients-automation/commit/2b70d9ea5) fix(specs): exhaustiveFacetsCount is not deprecated for sffv ([#3089](https://github.com/algolia/api-clients-automation/pull/3089)) by [@kai687](https://github.com/kai687/)
+- [1250c2b3c](https://github.com/algolia/api-clients-automation/commit/1250c2b3c) fix(specs): simplify filter types ([#3042](https://github.com/algolia/api-clients-automation/pull/3042)) by [@millotp](https://github.com/millotp/)
+
 ## [3.0.0.beta.1](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.beta.0...3.0.0.beta.1)
 
 - [b621988bc](https://github.com/algolia/api-clients-automation/commit/b621988bc) feat(specs): promote @kai687 to code owner ([#3014](https://github.com/algolia/api-clients-automation/pull/3014)) by [@Fluf22](https://github.com/Fluf22/)

@@ -1,16 +1,19 @@
 package com.algolia.methods.snippets;
 
-import com.algolia.model.{{import}}.*;
+// >IMPORT
 import com.algolia.api.{{client}};
+import com.algolia.model.{{import}}.*;
+
+// IMPORT<
 
 class Snippet{{client}} {
   {{#blocksRequests}}
-  {{#snippet}}
+  {{#snippets}}
   // Snippet for the {{method}} method.
   //
   // {{{description}}}
-  void snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}() {
-    // >SEPARATOR {{method}}
+  void snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}() {
+    // >SEPARATOR {{method}} {{testName}}
     // Initialize the client
     {{client}} client = new {{client}}("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, "YOUR_APP_ID_REGION"{{/hasRegionalHost}});
 
@@ -26,6 +29,6 @@ class Snippet{{client}} {
     // SEPARATOR<
   }
 
-  {{/snippet}}
+  {{/snippets}}
   {{/blocksRequests}}
 }

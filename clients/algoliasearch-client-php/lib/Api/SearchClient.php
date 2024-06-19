@@ -24,7 +24,7 @@ use Algolia\AlgoliaSearch\Support\Helpers;
  */
 class SearchClient
 {
-    public const VERSION = '4.0.0-beta.1';
+    public const VERSION = '4.0.0-beta.4';
 
     /**
      * @var ApiWrapperInterface
@@ -1109,6 +1109,43 @@ class SearchClient
     }
 
     /**
+     * Checks the status of a given application task.
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     *
+     * @param int   $taskID         Unique task identifier. (required)
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     *
+     * @return \Algolia\AlgoliaSearch\Model\Search\GetTaskResponse|array<string, mixed>
+     */
+    public function getAppTask($taskID, $requestOptions = [])
+    {
+        // verify the required parameter 'taskID' is set
+        if (!isset($taskID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `taskID` is required when calling `getAppTask`.'
+            );
+        }
+
+        $resourcePath = '/1/task/{taskID}';
+        $queryParameters = [];
+        $headers = [];
+        $httpBody = null;
+
+        // path params
+        if (null !== $taskID) {
+            $resourcePath = str_replace(
+                '{taskID}',
+                ObjectSerializer::toPathValue($taskID),
+                $resourcePath
+            );
+        }
+
+        return $this->sendRequest('GET', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
+    }
+
+    /**
      * Lists supported languages with their supported dictionary types and number of custom entries.
      *
      * Required API Key ACLs:
@@ -1721,7 +1758,7 @@ class SearchClient
     }
 
     /**
-     * Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for index-specific API keys and analytics data. - If the destination index doesn't exist yet, it'll be created.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keep their original name and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+     * Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keep their original name and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
      *
      * Required API Key ACLs:
      *  - addObject
@@ -2725,6 +2762,36 @@ class SearchClient
     }
 
     /**
+     * Wait for an application-level task to complete with `taskID`.
+     *
+     * @param int      $taskId         Task Id
+     * @param array    $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     * @param null|int $maxRetries     Maximum number of retries
+     * @param null|int $timeout        Timeout
+     *
+     * @throws ExceededRetriesException
+     */
+    public function waitForAppTask($taskId, $requestOptions = [], $maxRetries = null, $timeout = null)
+    {
+        if (null === $timeout) {
+            $timeout = $this->config->getWaitTaskTimeBeforeRetry();
+        }
+
+        if (null === $maxRetries) {
+            $maxRetries = $this->config->getDefaultMaxRetries();
+        }
+
+        Helpers::retryUntil(
+            $this,
+            'getAppTask',
+            [$taskId, $requestOptions],
+            function ($res) {return 'published' === $res['status']; },
+            $maxRetries,
+            $timeout
+        );
+    }
+
+    /**
      * Wait for an API key to be added, updated or deleted based on a given `operation`.
      *
      * @param string   $operation      the `operation` that was done on a `key`
@@ -2805,6 +2872,7 @@ class SearchClient
 
     /**
      * Helper: Replace all objects in an index using a temporary one.
+     * See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
      *
      * @param string $indexName      the `indexName` to replace `objects` in
      * @param array  $objects        the array of `objects` to store in the given Algolia `indexName`
@@ -2813,27 +2881,36 @@ class SearchClient
      */
     public function replaceAllObjects($indexName, $objects, $batchSize = 1000, $requestOptions = [])
     {
-        $tmpIndex = $indexName.'_tmp_'.uniqid('php_', true);
+        $tmpIndexName = $indexName.'_tmp_'.uniqid('php_', true);
 
-        // Copy all index resources from production index
         $copyResponse = $this->operationIndex(
             $indexName,
             [
                 'operation' => 'copy',
-                'destination' => $tmpIndex,
+                'destination' => $tmpIndexName,
                 'scope' => ['settings', 'synonyms', 'rules'],
             ],
             $requestOptions
         );
 
-        $this->waitForTask($indexName, $copyResponse['taskID']);
+        $this->chunkedBatch($tmpIndexName, $objects, 'addObject', true, $batchSize, $requestOptions);
 
-        // Index objects in chunks
-        $this->chunkedBatch($tmpIndex, $objects, 'addObject', true, $batchSize, $requestOptions);
+        $this->waitForTask($tmpIndexName, $copyResponse['taskID']);
 
-        // Move temporary index to production
+        $copyResponse = $this->operationIndex(
+            $indexName,
+            [
+                'operation' => 'copy',
+                'destination' => $tmpIndexName,
+                'scope' => ['settings', 'synonyms', 'rules'],
+            ],
+            $requestOptions
+        );
+
+        $this->waitForTask($tmpIndexName, $copyResponse['taskID']);
+
         $moveResponse = $this->operationIndex(
-            $tmpIndex,
+            $tmpIndexName,
             [
                 'operation' => 'move',
                 'destination' => $indexName,
@@ -2841,7 +2918,7 @@ class SearchClient
             $requestOptions
         );
 
-        $this->waitForTask($tmpIndex, $moveResponse['taskID']);
+        $this->waitForTask($tmpIndexName, $moveResponse['taskID']);
     }
 
     /**
@@ -2871,13 +2948,13 @@ class SearchClient
                 'action' => $action,
                 'body' => $object,
             ];
-            ++$count;
 
-            if ($count === $batchSize) {
+            if (sizeof($requests) === $batchSize || $count === sizeof($objects) - 1) {
                 $responses[] = $this->batch($indexName, ['requests' => $requests], $requestOptions);
                 $requests = [];
-                $count = 0;
             }
+
+            ++$count;
         }
 
         if (!empty($requests)) {
@@ -2901,7 +2978,14 @@ class SearchClient
      */
     public static function generateSecuredApiKey($parentApiKey, $restrictions)
     {
-        $urlEncodedRestrictions = Helpers::buildQuery($restrictions);
+        $formattedRestrictions = $restrictions;
+        if (isset($restrictions['searchParams'])) {
+            $formattedRestrictions = array_merge($restrictions, $restrictions['searchParams']);
+            unset($formattedRestrictions['searchParams']);
+        }
+
+        ksort($formattedRestrictions);
+        $urlEncodedRestrictions = Helpers::buildQuery($formattedRestrictions);
 
         $content = hash_hmac('sha256', $urlEncodedRestrictions, $parentApiKey).$urlEncodedRestrictions;
 
@@ -2909,17 +2993,17 @@ class SearchClient
     }
 
     /**
-     * Helper: Returns the time the given securedAPIKey remains valid in seconds.
+     * Helper: Returns the time the given securedApiKey remains valid in seconds.
      *
-     * @param string $securedAPIKey the key to check
+     * @param string $securedApiKey the key to check
      *
      * @throws ValidUntilNotFoundException
      *
      * @return int remaining validity in seconds
      */
-    public static function getSecuredApiKeyRemainingValidity($securedAPIKey)
+    public static function getSecuredApiKeyRemainingValidity($securedApiKey)
     {
-        $decodedKey = base64_decode($securedAPIKey);
+        $decodedKey = base64_decode($securedApiKey);
         $regex = '/validUntil=(\d+)/';
         preg_match($regex, $decodedKey, $matches);
 

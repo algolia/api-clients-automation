@@ -167,7 +167,7 @@ public class Run {
     return this;
   }
 
-  /** Date of creation in RFC3339 format. */
+  /** Date of creation in RFC 3339 format. */
   @javax.annotation.Nonnull
   public String getCreatedAt() {
     return createdAt;
@@ -178,7 +178,7 @@ public class Run {
     return this;
   }
 
-  /** Date of start in RFC3339 format. */
+  /** Date of start in RFC 3339 format. */
   @javax.annotation.Nullable
   public String getStartedAt() {
     return startedAt;
@@ -189,7 +189,7 @@ public class Run {
     return this;
   }
 
-  /** Date of finish in RFC3339 format. */
+  /** Date of finish in RFC 3339 format. */
   @javax.annotation.Nullable
   public String getFinishedAt() {
     return finishedAt;

@@ -100,7 +100,7 @@ class AbtestingTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("allow del method for a custom path with all parameters") {
+  test("allow del method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customDelete[JObject](
       path = "test/all",
@@ -136,7 +136,7 @@ class AbtestingTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("allow get method for a custom path with all parameters") {
+  test("allow get method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customGet[JObject](
       path = "test/all",
@@ -158,7 +158,7 @@ class AbtestingTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions should be escaped too") {
+  test("requestOptions should be escaped too2") {
     val (client, echo) = testClient()
     val future = client.customGet[JObject](
       path = "test/all",
@@ -213,7 +213,7 @@ class AbtestingTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("allow post method for a custom path with all parameters") {
+  test("allow post method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/all",
@@ -238,7 +238,7 @@ class AbtestingTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions can override default query parameters") {
+  test("requestOptions can override default query parameters2") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -269,7 +269,7 @@ class AbtestingTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions merges query parameters with default ones") {
+  test("requestOptions merges query parameters with default ones3") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -300,7 +300,7 @@ class AbtestingTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions can override default headers") {
+  test("requestOptions can override default headers4") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -337,7 +337,7 @@ class AbtestingTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions merges headers with default ones") {
+  test("requestOptions merges headers with default ones5") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -374,7 +374,7 @@ class AbtestingTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts booleans") {
+  test("requestOptions queryParameters accepts booleans6") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -405,7 +405,7 @@ class AbtestingTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts integers") {
+  test("requestOptions queryParameters accepts integers7") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -436,7 +436,7 @@ class AbtestingTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts list of string") {
+  test("requestOptions queryParameters accepts list of string8") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -467,7 +467,7 @@ class AbtestingTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts list of booleans") {
+  test("requestOptions queryParameters accepts list of booleans9") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -499,7 +499,7 @@ class AbtestingTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts list of integers") {
+  test("requestOptions queryParameters accepts list of integers10") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -546,7 +546,7 @@ class AbtestingTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("allow put method for a custom path with all parameters") {
+  test("allow put method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customPut[JObject](
       path = "test/all",
@@ -612,7 +612,7 @@ class AbtestingTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("listABTests with parameters") {
+  test("listABTests with parameters1") {
     val (client, echo) = testClient()
     val future = client.listABTests(
       offset = Some(0),

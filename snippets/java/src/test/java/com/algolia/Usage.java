@@ -1,7 +1,10 @@
 package com.algolia.methods.snippets;
 
+// >IMPORT
 import com.algolia.api.UsageClient;
 import com.algolia.model.usage.*;
+
+// IMPORT<
 
 class SnippetUsageClient {
 
@@ -9,7 +12,7 @@ class SnippetUsageClient {
   //
   // allow del method for a custom path with minimal parameters
   void snippetForCustomDelete() {
-    // >SEPARATOR customDelete
+    // >SEPARATOR customDelete default
     // Initialize the client
     UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -22,7 +25,7 @@ class SnippetUsageClient {
   //
   // allow get method for a custom path with minimal parameters
   void snippetForCustomGet() {
-    // >SEPARATOR customGet
+    // >SEPARATOR customGet default
     // Initialize the client
     UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -35,7 +38,7 @@ class SnippetUsageClient {
   //
   // allow post method for a custom path with minimal parameters
   void snippetForCustomPost() {
-    // >SEPARATOR customPost
+    // >SEPARATOR customPost default
     // Initialize the client
     UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -48,7 +51,7 @@ class SnippetUsageClient {
   //
   // allow put method for a custom path with minimal parameters
   void snippetForCustomPut() {
-    // >SEPARATOR customPut
+    // >SEPARATOR customPut default
     // Initialize the client
     UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -61,12 +64,12 @@ class SnippetUsageClient {
   //
   // getIndexUsage with minimal parameters
   void snippetForGetIndexUsage() {
-    // >SEPARATOR getIndexUsage
+    // >SEPARATOR getIndexUsage default
     // Initialize the client
     UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.getIndexUsage(Statistic.fromValue("queries_operations"), "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+    client.getIndexUsage(Statistic.QUERIES_OPERATIONS, "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
     // SEPARATOR<
   }
 
@@ -74,12 +77,12 @@ class SnippetUsageClient {
   //
   // getUsage with minimal parameters
   void snippetForGetUsage() {
-    // >SEPARATOR getUsage
+    // >SEPARATOR getUsage default
     // Initialize the client
     UsageClient client = new UsageClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.getUsage(Statistic.fromValue("queries_operations"), "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+    client.getUsage(Statistic.QUERIES_OPERATIONS, "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
     // SEPARATOR<
   }
 }

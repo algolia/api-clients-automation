@@ -4,6 +4,11 @@
 
 namespace Algolia\AlgoliaSearch\Snippets;
 
+// >IMPORT
+use Algolia\AlgoliaSearch\Api\MonitoringClient;
+
+// IMPORT<
+
 class SnippetMonitoringClient
 {
     /**
@@ -13,9 +18,9 @@ class SnippetMonitoringClient
      */
     public function snippetForCustomDelete()
     {
-        // >SEPARATOR customDelete
+        // >SEPARATOR customDelete default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->customDelete(
@@ -34,9 +39,9 @@ class SnippetMonitoringClient
      */
     public function snippetForCustomGet()
     {
-        // >SEPARATOR customGet
+        // >SEPARATOR customGet default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->customGet(
@@ -55,9 +60,9 @@ class SnippetMonitoringClient
      */
     public function snippetForCustomPost()
     {
-        // >SEPARATOR customPost
+        // >SEPARATOR customPost default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->customPost(
@@ -76,9 +81,9 @@ class SnippetMonitoringClient
      */
     public function snippetForCustomPut()
     {
-        // >SEPARATOR customPut
+        // >SEPARATOR customPut default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->customPut(
@@ -97,9 +102,9 @@ class SnippetMonitoringClient
      */
     public function snippetForGetClusterIncidents()
     {
-        // >SEPARATOR getClusterIncidents
+        // >SEPARATOR getClusterIncidents default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->getClusterIncidents(
@@ -118,9 +123,9 @@ class SnippetMonitoringClient
      */
     public function snippetForGetClusterStatus()
     {
-        // >SEPARATOR getClusterStatus
+        // >SEPARATOR getClusterStatus default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->getClusterStatus(
@@ -139,9 +144,9 @@ class SnippetMonitoringClient
      */
     public function snippetForGetIncidents()
     {
-        // >SEPARATOR getIncidents
+        // >SEPARATOR getIncidents default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->getIncidents();
@@ -158,9 +163,9 @@ class SnippetMonitoringClient
      */
     public function snippetForGetIndexingTime()
     {
-        // >SEPARATOR getIndexingTime
+        // >SEPARATOR getIndexingTime default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->getIndexingTime(
@@ -179,9 +184,9 @@ class SnippetMonitoringClient
      */
     public function snippetForGetLatency()
     {
-        // >SEPARATOR getLatency
+        // >SEPARATOR getLatency default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->getLatency(
@@ -200,9 +205,9 @@ class SnippetMonitoringClient
      */
     public function snippetForGetMetrics()
     {
-        // >SEPARATOR getMetrics
+        // >SEPARATOR getMetrics default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->getMetrics(
@@ -222,9 +227,9 @@ class SnippetMonitoringClient
      */
     public function snippetForGetReachability()
     {
-        // >SEPARATOR getReachability
+        // >SEPARATOR getReachability default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->getReachability(
@@ -243,9 +248,9 @@ class SnippetMonitoringClient
      */
     public function snippetForGetServers()
     {
-        // >SEPARATOR getServers
+        // >SEPARATOR getServers default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->getServers();
@@ -262,9 +267,9 @@ class SnippetMonitoringClient
      */
     public function snippetForGetStatus()
     {
-        // >SEPARATOR getStatus
+        // >SEPARATOR getStatus default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->getStatus();

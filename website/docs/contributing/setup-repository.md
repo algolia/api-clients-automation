@@ -60,13 +60,14 @@ Once you've successfully built and mounted the Docker image, you can now play wi
 - [How to add a new language](/docs/contributing/add-new-language)
 - [Use CLI specs commands](/docs/contributing/CLI/specs-commands)
 - [Use CLI clients commands](/docs/contributing/CLI/clients-commands)
+- [Use CLI release commands](/docs/contributing/CLI/release-commands)
 - [Use CLI Common Test Suite commands](/docs/contributing/CLI/specs-commands)
 
 ## Troubleshooting
 
 :::caution
 
-You should run the commands via the [Docker container](#mounting-the-docker-image) to avoid issues.
+You should run the commands via the [Docker container](#mounting-the-docker-images) to avoid issues.
 
 :::
 

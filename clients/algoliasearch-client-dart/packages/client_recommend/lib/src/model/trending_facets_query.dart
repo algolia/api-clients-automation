@@ -42,7 +42,7 @@ final class TrendingFacetsQuery {
 
   /// Facet attribute for which to retrieve trending facet values.
   @JsonKey(name: r'facetName')
-  final Object facetName;
+  final Object? facetName;
 
   @JsonKey(name: r'model')
   final TrendingFacetsModel model;
@@ -68,7 +68,7 @@ final class TrendingFacetsQuery {
       threshold.hashCode +
       maxRecommendations.hashCode +
       queryParameters.hashCode +
-      facetName.hashCode +
+      (facetName == null ? 0 : facetName.hashCode) +
       model.hashCode +
       fallbackParameters.hashCode;
 

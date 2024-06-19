@@ -24,7 +24,7 @@ class TestInsightsClient < Test::Unit::TestCase
   end
 
   # allow del method for a custom path with minimal parameters
-  def test_custom_delete0
+  def test_custom_delete
     req = @client.custom_delete_with_http_info("test/minimal")
 
     assert_equal(:delete, req.method)
@@ -48,7 +48,7 @@ class TestInsightsClient < Test::Unit::TestCase
   end
 
   # allow get method for a custom path with minimal parameters
-  def test_custom_get0
+  def test_custom_get
     req = @client.custom_get_with_http_info("test/minimal")
 
     assert_equal(:get, req.method)
@@ -105,7 +105,7 @@ class TestInsightsClient < Test::Unit::TestCase
   end
 
   # allow post method for a custom path with minimal parameters
-  def test_custom_post0
+  def test_custom_post
     req = @client.custom_post_with_http_info("test/minimal")
 
     assert_equal(:post, req.method)
@@ -288,7 +288,7 @@ class TestInsightsClient < Test::Unit::TestCase
   end
 
   # allow put method for a custom path with minimal parameters
-  def test_custom_put0
+  def test_custom_put
     req = @client.custom_put_with_http_info("test/minimal")
 
     assert_equal(:put, req.method)
@@ -313,8 +313,8 @@ class TestInsightsClient < Test::Unit::TestCase
     assert_equal(JSON.parse('{"body":"parameters"}'), JSON.parse(req.body))
   end
 
-  # deleteUserToken0
-  def test_delete_user_token0
+  # deleteUserToken
+  def test_delete_user_token
     req = @client.delete_user_token_with_http_info("test-user-1")
 
     assert_equal(:delete, req.method)
@@ -325,8 +325,8 @@ class TestInsightsClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # pushEvents0
-  def test_push_events0
+  # pushEvents
+  def test_push_events
     req = @client.push_events_with_http_info(
       InsightsEvents.new(
         events: [ClickedObjectIDsAfterSearch.new(
@@ -365,7 +365,7 @@ class TestInsightsClient < Test::Unit::TestCase
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1_715_385_600_000,
+            timestamp: 1_718_755_200_000,
             object_ids: ["9780545139700", "9780439784542"],
             query_id: "43b15df305339e827f0ac0bdc5ebcaa7"
           ),
@@ -375,7 +375,7 @@ class TestInsightsClient < Test::Unit::TestCase
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1_715_385_600_000,
+            timestamp: 1_718_755_200_000,
             object_ids: ["9780545139700", "9780439784542"]
           )
         ]
@@ -387,7 +387,7 @@ class TestInsightsClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1715385600000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1715385600000,"objectIDs":["9780545139700","9780439784542"]}]}'), JSON.parse(req.body)
+      JSON.parse('{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1718755200000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1718755200000,"objectIDs":["9780545139700","9780439784542"]}]}'), JSON.parse(req.body)
     )
 
     res = @e2e_client.push_events_with_http_info(
@@ -399,7 +399,7 @@ class TestInsightsClient < Test::Unit::TestCase
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1_715_385_600_000,
+            timestamp: 1_718_755_200_000,
             object_ids: ["9780545139700", "9780439784542"],
             query_id: "43b15df305339e827f0ac0bdc5ebcaa7"
           ),
@@ -409,7 +409,7 @@ class TestInsightsClient < Test::Unit::TestCase
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1_715_385_600_000,
+            timestamp: 1_718_755_200_000,
             object_ids: ["9780545139700", "9780439784542"]
           )
         ]
@@ -426,7 +426,7 @@ class TestInsightsClient < Test::Unit::TestCase
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1_715_385_600_000,
+            timestamp: 1_718_755_200_000,
             object_ids: ["9780545139700", "9780439784542"],
             query_id: "43b15df305339e827f0ac0bdc5ebcaa7"
           ),
@@ -436,7 +436,7 @@ class TestInsightsClient < Test::Unit::TestCase
             index: "products",
             user_token: "user-123456",
             authenticated_user_token: "user-123456",
-            timestamp: 1_715_385_600_000,
+            timestamp: 1_718_755_200_000,
             object_ids: ["9780545139700", "9780439784542"]
           )
         ]

@@ -51,7 +51,7 @@ class InsightsClientRequestsTests {
 
   @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
-  void customDeleteTest0() {
+  void customDeleteTest() {
     assertDoesNotThrow(() -> {
       client.customDelete("test/minimal");
     });
@@ -87,7 +87,7 @@ class InsightsClientRequestsTests {
 
   @Test
   @DisplayName("allow get method for a custom path with minimal parameters")
-  void customGetTest0() {
+  void customGetTest() {
     assertDoesNotThrow(() -> {
       client.customGet("test/minimal");
     });
@@ -174,7 +174,7 @@ class InsightsClientRequestsTests {
 
   @Test
   @DisplayName("allow post method for a custom path with minimal parameters")
-  void customPostTest0() {
+  void customPostTest() {
     assertDoesNotThrow(() -> {
       client.customPost("test/minimal");
     });
@@ -520,7 +520,7 @@ class InsightsClientRequestsTests {
 
   @Test
   @DisplayName("allow put method for a custom path with minimal parameters")
-  void customPutTest0() {
+  void customPutTest() {
     assertDoesNotThrow(() -> {
       client.customPut("test/minimal");
     });
@@ -555,8 +555,8 @@ class InsightsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("deleteUserToken0")
-  void deleteUserTokenTest0() {
+  @DisplayName("deleteUserToken")
+  void deleteUserTokenTest() {
     assertDoesNotThrow(() -> {
       client.deleteUserToken("test-user-1");
     });
@@ -567,15 +567,15 @@ class InsightsClientRequestsTests {
   }
 
   @Test
-  @DisplayName("pushEvents0")
-  void pushEventsTest0() {
+  @DisplayName("pushEvents")
+  void pushEventsTest() {
     assertDoesNotThrow(() -> {
       client.pushEvents(
         new InsightsEvents()
           .setEvents(
             List.of(
               new ClickedObjectIDsAfterSearch()
-                .setEventType(ClickEvent.fromValue("click"))
+                .setEventType(ClickEvent.CLICK)
                 .setEventName("Product Clicked")
                 .setIndex("products")
                 .setUserToken("user-123456")
@@ -610,21 +610,21 @@ class InsightsClientRequestsTests {
           .setEvents(
             List.of(
               new ConvertedObjectIDsAfterSearch()
-                .setEventType(ConversionEvent.fromValue("conversion"))
+                .setEventType(ConversionEvent.CONVERSION)
                 .setEventName("Product Purchased")
                 .setIndex("products")
                 .setUserToken("user-123456")
                 .setAuthenticatedUserToken("user-123456")
-                .setTimestamp(1715385600000L)
+                .setTimestamp(1718755200000L)
                 .setObjectIDs(List.of("9780545139700", "9780439784542"))
                 .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
               new ViewedObjectIDs()
-                .setEventType(ViewEvent.fromValue("view"))
+                .setEventType(ViewEvent.VIEW)
                 .setEventName("Product Detail Page Viewed")
                 .setIndex("products")
                 .setUserToken("user-123456")
                 .setAuthenticatedUserToken("user-123456")
-                .setTimestamp(1715385600000L)
+                .setTimestamp(1718755200000L)
                 .setObjectIDs(List.of("9780545139700", "9780439784542"))
             )
           )
@@ -636,9 +636,9 @@ class InsightsClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product" +
-        " Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1715385600000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product" +
+        " Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1718755200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product" +
         " Detail Page" +
-        " Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1715385600000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
+        " Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1718755200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
         req.body,
         JSONCompareMode.STRICT
       )
@@ -649,21 +649,21 @@ class InsightsClientRequestsTests {
         .setEvents(
           List.of(
             new ConvertedObjectIDsAfterSearch()
-              .setEventType(ConversionEvent.fromValue("conversion"))
+              .setEventType(ConversionEvent.CONVERSION)
               .setEventName("Product Purchased")
               .setIndex("products")
               .setUserToken("user-123456")
               .setAuthenticatedUserToken("user-123456")
-              .setTimestamp(1715385600000L)
+              .setTimestamp(1718755200000L)
               .setObjectIDs(List.of("9780545139700", "9780439784542"))
               .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
             new ViewedObjectIDs()
-              .setEventType(ViewEvent.fromValue("view"))
+              .setEventType(ViewEvent.VIEW)
               .setEventName("Product Detail Page Viewed")
               .setIndex("products")
               .setUserToken("user-123456")
               .setAuthenticatedUserToken("user-123456")
-              .setTimestamp(1715385600000L)
+              .setTimestamp(1718755200000L)
               .setObjectIDs(List.of("9780545139700", "9780439784542"))
           )
         )
@@ -682,7 +682,7 @@ class InsightsClientRequestsTests {
           .setEvents(
             List.of(
               new ConvertedObjectIDsAfterSearch()
-                .setEventType(ConversionEvent.fromValue("conversion"))
+                .setEventType(ConversionEvent.CONVERSION)
                 .setEventName("Product Purchased")
                 .setIndex("products")
                 .setUserToken("user-123456")
@@ -716,7 +716,7 @@ class InsightsClientRequestsTests {
           .setEvents(
             List.of(
               new ViewedObjectIDs()
-                .setEventType(ViewEvent.fromValue("view"))
+                .setEventType(ViewEvent.VIEW)
                 .setEventName("Product Detail Page Viewed")
                 .setIndex("products")
                 .setUserToken("user-123456")
@@ -749,8 +749,8 @@ class InsightsClientRequestsTests {
           .setEvents(
             List.of(
               new AddedToCartObjectIDsAfterSearch()
-                .setEventType(ConversionEvent.fromValue("conversion"))
-                .setEventSubtype(AddToCartEvent.fromValue("addToCart"))
+                .setEventType(ConversionEvent.CONVERSION)
+                .setEventSubtype(AddToCartEvent.ADD_TO_CART)
                 .setEventName("Product Added To Cart")
                 .setIndex("products")
                 .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7")

@@ -54,6 +54,47 @@ public extension SearchClient {
         )
     }
 
+    /// Wait for an application-level task to complete
+    /// - parameter taskID: The id of the task to wait for
+    /// - parameter maxRetries: The maximum number of retries
+    /// - parameter initialDelay: The initial delay between retries
+    /// - parameter maxDelay: The maximum delay between retries
+    /// - returns: GetTaskResponse
+    @discardableResult
+    func waitForAppTask(
+        with taskID: Int64,
+        maxRetries: Int = 50,
+        timeout: (Int) -> TimeInterval = { count in
+            min(TimeInterval(count) * 0.2, 5)
+        },
+        requestOptions: RequestOptions? = nil
+    ) async throws -> GetTaskResponse {
+        var retryCount = 0
+
+        return try await createIterable(
+            execute: { _ in
+                try await self.getAppTask(taskID: taskID, requestOptions: requestOptions)
+            },
+            validate: { response in
+                response.status == SearchTaskStatus.published
+            },
+            aggregator: { _ in
+                retryCount += 1
+            },
+            timeout: {
+                timeout(retryCount)
+            },
+            error: IterableError(
+                validate: { _ in
+                    retryCount >= maxRetries
+                },
+                message: { _ in
+                    "The maximum number of retries exceeded. (\(retryCount)/\(maxRetries))"
+                }
+            )
+        )
+    }
+
     /// Wait for an API key to be available
     /// - parameter key: The key to wait for
     /// - parameter operation: The type of operation
@@ -416,6 +457,9 @@ public extension SearchClient {
     }
 
     /// Replace all objects in an index
+    ///
+    /// See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation
+    /// details.
     /// - parameter objects: The new objects
     /// - parameter indexName: The name of the index where to replace the objects
     /// - parameter requestOptions: The request options
@@ -429,8 +473,7 @@ public extension SearchClient {
     ) async throws -> ReplaceAllObjectsResponse {
         let tmpIndexName = try "\(indexName)_tmp_\(randomString())"
 
-        // Copy all index resources from production index
-        let copyOperationResponse = try await operationIndex(
+        var copyOperationResponse = try await operationIndex(
             indexName: indexName,
             operationIndexParams: OperationIndexParams(
                 operation: .copy,
@@ -440,9 +483,6 @@ public extension SearchClient {
             requestOptions: requestOptions
         )
 
-        try await self.waitForTask(with: copyOperationResponse.taskID, in: indexName)
-
-        // Send records to the tmp index (batched)
         let batchResponses = try await self.chunkedBatch(
             indexName: tmpIndexName,
             objects: objects,
@@ -450,8 +490,19 @@ public extension SearchClient {
             batchSize: batchSize,
             requestOptions: requestOptions
         )
+        try await self.waitForTask(with: copyOperationResponse.taskID, in: tmpIndexName)
 
-        // Move the temporary index to replace the main one
+        copyOperationResponse = try await operationIndex(
+            indexName: indexName,
+            operationIndexParams: OperationIndexParams(
+                operation: .copy,
+                destination: tmpIndexName,
+                scope: [.rules, .settings, .synonyms]
+            ),
+            requestOptions: requestOptions
+        )
+        try await self.waitForTask(with: copyOperationResponse.taskID, in: tmpIndexName)
+
         let moveOperationResponse = try await self.operationIndex(
             indexName: tmpIndexName,
             operationIndexParams: OperationIndexParams(
@@ -460,7 +511,6 @@ public extension SearchClient {
             ),
             requestOptions: requestOptions
         )
-
         try await self.waitForTask(with: moveOperationResponse.taskID, in: tmpIndexName)
 
         return ReplaceAllObjectsResponse(
@@ -476,7 +526,7 @@ public extension SearchClient {
     /// - returns: String?
     func generateSecuredApiKey(
         parentApiKey: String,
-        with restriction: SecuredAPIKeyRestrictions = SecuredAPIKeyRestrictions()
+        with restriction: SecuredApiKeyRestrictions = SecuredApiKeyRestrictions()
     ) throws -> String? {
         let queryParams = try restriction.toURLEncodedString()
         let hash = queryParams.hmac256(withKey: parentApiKey)
@@ -484,10 +534,10 @@ public extension SearchClient {
     }
 
     /// Get the remaining validity of a secured API key
-    /// - parameter securedAPIKey: The secured API key
+    /// - parameter securedApiKey: The secured API key
     /// - returns: TimeInterval?
-    func getSecuredApiKeyRemainingValidity(for securedAPIKey: String) -> TimeInterval? {
-        guard let rawDecodedAPIKey = String(data: Data(base64Encoded: securedAPIKey) ?? Data(), encoding: .utf8),
+    func getSecuredApiKeyRemainingValidity(for securedApiKey: String) -> TimeInterval? {
+        guard let rawDecodedAPIKey = String(data: Data(base64Encoded: securedApiKey) ?? Data(), encoding: .utf8),
               !rawDecodedAPIKey.isEmpty else {
             return nil
         }

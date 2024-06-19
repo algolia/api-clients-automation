@@ -49,7 +49,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for CreateAuthentication
      * createAuthenticationOAuth.
      */
-    public function testCreateAuthentication0()
+    public function testCreateAuthentication()
     {
         $client = $this->getClient();
         $client->createAuthentication(
@@ -100,7 +100,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for CreateDestination
      * createDestination.
      */
-    public function testCreateDestination0()
+    public function testCreateDestination()
     {
         $client = $this->getClient();
         $client->createDestination(
@@ -125,7 +125,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for CreateSource
      * createSource.
      */
-    public function testCreateSource0()
+    public function testCreateSource()
     {
         $client = $this->getClient();
         $client->createSource(
@@ -157,7 +157,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for CreateTask
      * createTaskOnDemand.
      */
-    public function testCreateTask0()
+    public function testCreateTask()
     {
         $client = $this->getClient();
         $client->createTask(
@@ -233,7 +233,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for CustomDelete
      * allow del method for a custom path with minimal parameters.
      */
-    public function testCustomDelete0()
+    public function testCustomDelete()
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -276,7 +276,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for CustomGet
      * allow get method for a custom path with minimal parameters.
      */
-    public function testCustomGet0()
+    public function testCustomGet()
     {
         $client = $this->getClient();
         $client->customGet(
@@ -354,7 +354,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for CustomPost
      * allow post method for a custom path with minimal parameters.
      */
-    public function testCustomPost0()
+    public function testCustomPost()
     {
         $client = $this->getClient();
         $client->customPost(
@@ -701,7 +701,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for CustomPut
      * allow put method for a custom path with minimal parameters.
      */
-    public function testCustomPut0()
+    public function testCustomPut()
     {
         $client = $this->getClient();
         $client->customPut(
@@ -746,7 +746,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for DeleteAuthentication
      * deleteAuthentication.
      */
-    public function testDeleteAuthentication0()
+    public function testDeleteAuthentication()
     {
         $client = $this->getClient();
         $client->deleteAuthentication(
@@ -766,7 +766,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for DeleteDestination
      * deleteDestination.
      */
-    public function testDeleteDestination0()
+    public function testDeleteDestination()
     {
         $client = $this->getClient();
         $client->deleteDestination(
@@ -786,7 +786,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for DeleteSource
      * deleteSource.
      */
-    public function testDeleteSource0()
+    public function testDeleteSource()
     {
         $client = $this->getClient();
         $client->deleteSource(
@@ -806,7 +806,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for DeleteTask
      * deleteTask.
      */
-    public function testDeleteTask0()
+    public function testDeleteTask()
     {
         $client = $this->getClient();
         $client->deleteTask(
@@ -826,7 +826,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for DisableTask
      * disableTask.
      */
-    public function testDisableTask0()
+    public function testDisableTask()
     {
         $client = $this->getClient();
         $client->disableTask(
@@ -846,7 +846,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for EnableTask
      * enable task e2e.
      */
-    public function testEnableTask0()
+    public function testEnableTask()
     {
         $client = $this->getClient();
         $client->enableTask(
@@ -875,7 +875,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for GetAuthentication
      * getAuthentication.
      */
-    public function testGetAuthentication0()
+    public function testGetAuthentication()
     {
         $client = $this->getClient();
         $client->getAuthentication(
@@ -895,7 +895,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for GetAuthentications
      * getAuthentications.
      */
-    public function testGetAuthentications0()
+    public function testGetAuthentications()
     {
         $client = $this->getClient();
         $client->getAuthentications();
@@ -965,7 +965,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for GetDestination
      * getDestination.
      */
-    public function testGetDestination0()
+    public function testGetDestination()
     {
         $client = $this->getClient();
         $client->getDestination(
@@ -985,7 +985,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for GetDestinations
      * getDestinations.
      */
-    public function testGetDestinations0()
+    public function testGetDestinations()
     {
         $client = $this->getClient();
         $client->getDestinations();
@@ -1003,7 +1003,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for GetDockerSourceStreams
      * getDockerSourceStreams.
      */
-    public function testGetDockerSourceStreams0()
+    public function testGetDockerSourceStreams()
     {
         $client = $this->getClient();
         $client->getDockerSourceStreams(
@@ -1023,7 +1023,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for GetEvent
      * getEvent.
      */
-    public function testGetEvent0()
+    public function testGetEvent()
     {
         $client = $this->getClient();
         $client->getEvent(
@@ -1044,7 +1044,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for GetEvents
      * getEvents.
      */
-    public function testGetEvents0()
+    public function testGetEvents()
     {
         $client = $this->getClient();
         $client->getEvents(
@@ -1064,7 +1064,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for GetRun
      * getRun.
      */
-    public function testGetRun0()
+    public function testGetRun()
     {
         $client = $this->getClient();
         $client->getRun(
@@ -1084,7 +1084,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for GetRuns
      * getRuns.
      */
-    public function testGetRuns0()
+    public function testGetRuns()
     {
         $client = $this->getClient();
         $client->getRuns();
@@ -1102,7 +1102,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for GetSource
      * getSource.
      */
-    public function testGetSource0()
+    public function testGetSource()
     {
         $client = $this->getClient();
         $client->getSource(
@@ -1131,7 +1131,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for GetSources
      * getSources.
      */
-    public function testGetSources0()
+    public function testGetSources()
     {
         $client = $this->getClient();
         $client->getSources();
@@ -1149,7 +1149,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for GetTask
      * getTask.
      */
-    public function testGetTask0()
+    public function testGetTask()
     {
         $client = $this->getClient();
         $client->getTask(
@@ -1169,7 +1169,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for GetTasks
      * getTasks.
      */
-    public function testGetTasks0()
+    public function testGetTasks()
     {
         $client = $this->getClient();
         $client->getTasks();
@@ -1187,7 +1187,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for RunTask
      * runTask.
      */
-    public function testRunTask0()
+    public function testRunTask()
     {
         $client = $this->getClient();
         $client->runTask(
@@ -1207,7 +1207,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for SearchAuthentications
      * searchAuthentications.
      */
-    public function testSearchAuthentications0()
+    public function testSearchAuthentications()
     {
         $client = $this->getClient();
         $client->searchAuthentications(
@@ -1232,7 +1232,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for SearchDestinations
      * searchDestinations.
      */
-    public function testSearchDestinations0()
+    public function testSearchDestinations()
     {
         $client = $this->getClient();
         $client->searchDestinations(
@@ -1257,7 +1257,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for SearchSources
      * searchSources.
      */
-    public function testSearchSources0()
+    public function testSearchSources()
     {
         $client = $this->getClient();
         $client->searchSources(
@@ -1282,7 +1282,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for SearchTasks
      * searchTasks.
      */
-    public function testSearchTasks0()
+    public function testSearchTasks()
     {
         $client = $this->getClient();
         $client->searchTasks(
@@ -1325,7 +1325,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for TriggerDockerSourceDiscover
      * triggerDockerSourceDiscover.
      */
-    public function testTriggerDockerSourceDiscover0()
+    public function testTriggerDockerSourceDiscover()
     {
         $client = $this->getClient();
         $client->triggerDockerSourceDiscover(
@@ -1345,7 +1345,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for UpdateAuthentication
      * updateAuthentication.
      */
-    public function testUpdateAuthentication0()
+    public function testUpdateAuthentication()
     {
         $client = $this->getClient();
         $client->updateAuthentication(
@@ -1367,7 +1367,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for UpdateDestination
      * updateDestination.
      */
-    public function testUpdateDestination0()
+    public function testUpdateDestination()
     {
         $client = $this->getClient();
         $client->updateDestination(
@@ -1389,7 +1389,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for UpdateSource
      * updateSource.
      */
-    public function testUpdateSource0()
+    public function testUpdateSource()
     {
         $client = $this->getClient();
         $client->updateSource(
@@ -1411,7 +1411,7 @@ class IngestionTest extends TestCase implements HttpClientInterface
      * Test case for UpdateTask
      * updateTask.
      */
-    public function testUpdateTask0()
+    public function testUpdateTask()
     {
         $client = $this->getClient();
         $client->updateTask(

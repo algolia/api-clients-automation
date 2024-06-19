@@ -10,6 +10,7 @@ debug.log
 **/.yarn/*
 !**/.yarn/releases
 !**/.yarn/plugins
+!**/.yarn/patches
 
 .vscode/
 .idea/
@@ -34,6 +35,7 @@ generators/bin
 
 **/java/bin/
 **/kotlin/bin/
+.kotlin/
 
 # Dart
 .dart_tool/

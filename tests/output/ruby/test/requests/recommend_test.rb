@@ -17,7 +17,7 @@ class TestRecommendClient < Test::Unit::TestCase
   end
 
   # allow del method for a custom path with minimal parameters
-  def test_custom_delete0
+  def test_custom_delete
     req = @client.custom_delete_with_http_info("test/minimal")
 
     assert_equal(:delete, req.method)
@@ -41,7 +41,7 @@ class TestRecommendClient < Test::Unit::TestCase
   end
 
   # allow get method for a custom path with minimal parameters
-  def test_custom_get0
+  def test_custom_get
     req = @client.custom_get_with_http_info("test/minimal")
 
     assert_equal(:get, req.method)
@@ -98,7 +98,7 @@ class TestRecommendClient < Test::Unit::TestCase
   end
 
   # allow post method for a custom path with minimal parameters
-  def test_custom_post0
+  def test_custom_post
     req = @client.custom_post_with_http_info("test/minimal")
 
     assert_equal(:post, req.method)
@@ -281,7 +281,7 @@ class TestRecommendClient < Test::Unit::TestCase
   end
 
   # allow put method for a custom path with minimal parameters
-  def test_custom_put0
+  def test_custom_put
     req = @client.custom_put_with_http_info("test/minimal")
 
     assert_equal(:put, req.method)
@@ -306,8 +306,8 @@ class TestRecommendClient < Test::Unit::TestCase
     assert_equal(JSON.parse('{"body":"parameters"}'), JSON.parse(req.body))
   end
 
-  # deleteRecommendRule0
-  def test_delete_recommend_rule0
+  # deleteRecommendRule
+  def test_delete_recommend_rule
     req = @client.delete_recommend_rule_with_http_info(
       "indexName",
       'related-products',
@@ -322,8 +322,8 @@ class TestRecommendClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # getRecommendRule0
-  def test_get_recommend_rule0
+  # getRecommendRule
+  def test_get_recommend_rule
     req = @client.get_recommend_rule_with_http_info(
       "indexName",
       'related-products',
@@ -338,8 +338,8 @@ class TestRecommendClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # getRecommendStatus0
-  def test_get_recommend_status0
+  # getRecommendStatus
+  def test_get_recommend_status
     req = @client.get_recommend_status_with_http_info("indexName", 'related-products', 12_345)
 
     assert_equal(:get, req.method)
@@ -351,7 +351,7 @@ class TestRecommendClient < Test::Unit::TestCase
   end
 
   # get recommendations for recommend model with minimal parameters
-  def test_get_recommendations0
+  def test_get_recommendations
     req = @client.get_recommendations_with_http_info(
       GetRecommendationsParams.new(
         requests: [RelatedQuery.new(
@@ -540,8 +540,8 @@ class TestRecommendClient < Test::Unit::TestCase
     )
   end
 
-  # searchRecommendRules0
-  def test_search_recommend_rules0
+  # searchRecommendRules
+  def test_search_recommend_rules
     req = @client.search_recommend_rules_with_http_info("indexName", 'related-products')
 
     assert_equal(:post, req.method)

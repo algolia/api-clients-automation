@@ -4,14 +4,19 @@
 # You can install this by running `source scripts/install.sh` or by adding this to your .bashrc/.zshrc:
 # [[ -s "$HOME/<path to api-clients-automation>/scripts/install.sh" ]] && source "$HOME/<path to api-clients-automation>/scripts/install.sh"
 
+# for extra DX you could also add the following shortcuts to your .bashrc/.zshrc:
+# alias ag="apic generate"
+# alias acg="apic cts generate"
+# alias acr="apic cts run"
+
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null && pwd)"
 
 apic() {
-  (cd scripts && NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js $*)
+  (cd $ROOT/scripts && NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js $*)
 }
 
 apicb() {
-  (cd scripts && yarn build:cli && NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js $*)
+  (cd $ROOT/scripts && yarn build:cli && NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js $*)
 }
 
 export apic
@@ -79,7 +84,7 @@ _apic_format_complete() {
   if [[ COMP_CWORD -eq 2 ]]; then
     COMPREPLY=($(compgen -W "$(_list_languages)" -- "$cur"))
   elif [[ COMP_CWORD -eq 3 ]]; then
-    COMPREPLY=($(compgen -d -- "$cur"))
+    COMPREPLY=($(compgen -d -S / -- "$cur"))
   fi
 }
 
@@ -87,7 +92,7 @@ _apic_complete() {
   cur="${COMP_WORDS[COMP_CWORD]}"
   prev="${COMP_WORDS[COMP_CWORD-1]}"
   if [[ COMP_CWORD -eq 1 ]]; then
-    COMPREPLY=($(compgen -W "generate build cts playground format snippets" -- "$cur"))
+    COMPREPLY=($(compgen -W "build cts format generate playground release snippets" -- "$cur"))
   else
     first="${COMP_WORDS[1]}"
     if [[ $first == "generate" || $first == "playground" || $first == "snippets" ]]; then
@@ -98,6 +103,8 @@ _apic_complete() {
       _apic_build_complete
     elif [[ $first == "cts" ]]; then
       _apic_cts_complete
+    elif [[ $first == "release" ]]; then
+      COMPREPLY=($(compgen -W "$(_list_languages_all)" -- "$cur"))
     fi
   fi
 }

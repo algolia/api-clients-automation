@@ -37,7 +37,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `allow del method for a custom path with all parameters`() = runTest {
+  fun `allow del method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
         customDelete(
@@ -73,7 +73,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `allow get method for a custom path with all parameters`() = runTest {
+  fun `allow get method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
         customGet(
@@ -91,7 +91,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `requestOptions should be escaped too`() = runTest {
+  fun `requestOptions should be escaped too2`() = runTest {
     client.runTest(
       call = {
         customGet(
@@ -137,7 +137,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `allow post method for a custom path with all parameters`() = runTest {
+  fun `allow post method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -161,7 +161,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `requestOptions can override default query parameters`() = runTest {
+  fun `requestOptions can override default query parameters2`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -190,7 +190,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `requestOptions merges query parameters with default ones`() = runTest {
+  fun `requestOptions merges query parameters with default ones3`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -219,7 +219,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `requestOptions can override default headers`() = runTest {
+  fun `requestOptions can override default headers4`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -249,7 +249,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `requestOptions merges headers with default ones`() = runTest {
+  fun `requestOptions merges headers with default ones5`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -279,7 +279,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts booleans`() = runTest {
+  fun `requestOptions queryParameters accepts booleans6`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -308,7 +308,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts integers`() = runTest {
+  fun `requestOptions queryParameters accepts integers7`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -337,7 +337,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts list of string`() = runTest {
+  fun `requestOptions queryParameters accepts list of string8`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -366,7 +366,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts list of booleans`() = runTest {
+  fun `requestOptions queryParameters accepts list of booleans9`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -395,7 +395,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts list of integers`() = runTest {
+  fun `requestOptions queryParameters accepts list of integers10`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -442,7 +442,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `allow put method for a custom path with all parameters`() = runTest {
+  fun `allow put method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
         customPut(
@@ -468,7 +468,7 @@ class RecommendTest {
   // deleteRecommendRule
 
   @Test
-  fun `deleteRecommendRule0`() = runTest {
+  fun `deleteRecommendRule`() = runTest {
     client.runTest(
       call = {
         deleteRecommendRule(
@@ -488,7 +488,7 @@ class RecommendTest {
   // getRecommendRule
 
   @Test
-  fun `getRecommendRule0`() = runTest {
+  fun `getRecommendRule`() = runTest {
     client.runTest(
       call = {
         getRecommendRule(
@@ -508,7 +508,7 @@ class RecommendTest {
   // getRecommendStatus
 
   @Test
-  fun `getRecommendStatus0`() = runTest {
+  fun `getRecommendStatus`() = runTest {
     client.runTest(
       call = {
         getRecommendStatus(
@@ -553,7 +553,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `get recommendations for recommend model with all parameters`() = runTest {
+  fun `get recommendations for recommend model with all parameters1`() = runTest {
     client.runTest(
       call = {
         getRecommendations(
@@ -587,7 +587,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `get recommendations for trending model with minimal parameters`() = runTest {
+  fun `get recommendations for trending model with minimal parameters2`() = runTest {
     client.runTest(
       call = {
         getRecommendations(
@@ -613,7 +613,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `get recommendations for trending model with all parameters`() = runTest {
+  fun `get recommendations for trending model with all parameters3`() = runTest {
     client.runTest(
       call = {
         getRecommendations(
@@ -648,7 +648,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `get multiple recommendations with minimal parameters`() = runTest {
+  fun `get multiple recommendations with minimal parameters4`() = runTest {
     client.runTest(
       call = {
         getRecommendations(
@@ -679,7 +679,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `get multiple recommendations with all parameters`() = runTest {
+  fun `get multiple recommendations with all parameters5`() = runTest {
     client.runTest(
       call = {
         getRecommendations(
@@ -728,7 +728,7 @@ class RecommendTest {
   }
 
   @Test
-  fun `get frequently bought together recommendations`() = runTest {
+  fun `get frequently bought together recommendations6`() = runTest {
     client.runTest(
       call = {
         getRecommendations(
@@ -755,7 +755,7 @@ class RecommendTest {
   // searchRecommendRules
 
   @Test
-  fun `searchRecommendRules0`() = runTest {
+  fun `searchRecommendRules`() = runTest {
     client.runTest(
       call = {
         searchRecommendRules(

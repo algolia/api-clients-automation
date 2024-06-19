@@ -55,7 +55,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     }
   }
 
-  test("createConfig0") {
+  test("createConfig") {
     val (client, echo) = testClient()
     val future = client.createConfig(
       querySuggestionsConfigurationWithIndex = QuerySuggestionsConfigurationWithIndex(
@@ -104,7 +104,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("allow del method for a custom path with all parameters") {
+  test("allow del method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customDelete[JObject](
       path = "test/all",
@@ -140,7 +140,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("allow get method for a custom path with all parameters") {
+  test("allow get method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customGet[JObject](
       path = "test/all",
@@ -162,7 +162,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions should be escaped too") {
+  test("requestOptions should be escaped too2") {
     val (client, echo) = testClient()
     val future = client.customGet[JObject](
       path = "test/all",
@@ -217,7 +217,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("allow post method for a custom path with all parameters") {
+  test("allow post method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/all",
@@ -242,7 +242,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions can override default query parameters") {
+  test("requestOptions can override default query parameters2") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -273,7 +273,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions merges query parameters with default ones") {
+  test("requestOptions merges query parameters with default ones3") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -304,7 +304,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions can override default headers") {
+  test("requestOptions can override default headers4") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -341,7 +341,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions merges headers with default ones") {
+  test("requestOptions merges headers with default ones5") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -378,7 +378,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts booleans") {
+  test("requestOptions queryParameters accepts booleans6") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -409,7 +409,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts integers") {
+  test("requestOptions queryParameters accepts integers7") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -440,7 +440,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts list of string") {
+  test("requestOptions queryParameters accepts list of string8") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -471,7 +471,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts list of booleans") {
+  test("requestOptions queryParameters accepts list of booleans9") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -503,7 +503,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts list of integers") {
+  test("requestOptions queryParameters accepts list of integers10") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -550,7 +550,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("allow put method for a custom path with all parameters") {
+  test("allow put method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customPut[JObject](
       path = "test/all",
@@ -575,7 +575,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     }
   }
 
-  test("deleteConfig0") {
+  test("deleteConfig") {
     val (client, echo) = testClient()
     val future = client.deleteConfig(
       indexName = "theIndexName"
@@ -589,7 +589,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getAllConfigs0") {
+  test("getAllConfigs") {
     val (client, echo) = testClient()
     val future = client.getAllConfigs(
     )
@@ -627,7 +627,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     )
   }
 
-  test("getConfigStatus0") {
+  test("getConfigStatus") {
     val (client, echo) = testClient()
     val future = client.getConfigStatus(
       indexName = "theIndexName"
@@ -641,7 +641,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getLogFile0") {
+  test("getLogFile") {
     val (client, echo) = testClient()
     val future = client.getLogFile(
       indexName = "theIndexName"
@@ -655,7 +655,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("updateConfig0") {
+  test("updateConfig") {
     val (client, echo) = testClient()
     val future = client.updateConfig(
       indexName = "theIndexName",

@@ -1,11 +1,11 @@
 [
   {
     "parameters": {
-      "indexName": "theIndexName",
+      "indexName": "<YOUR_INDEX_NAME>",
       "objectID": "uniqueID"
     },
     "request": {
-      "path": "/1/indexes/theIndexName/uniqueID",
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/uniqueID",
       "method": "DELETE"
     }
   }

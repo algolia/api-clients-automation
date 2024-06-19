@@ -49,7 +49,7 @@ public class AbtestingClientRequestTests
   public void Dispose() { }
 
   [Fact(DisplayName = "addABTests with minimal parameters")]
-  public async Task AddABTestsTest0()
+  public async Task AddABTestsTest()
   {
     await _client.AddABTestsAsync(
       new AddABTestsRequest
@@ -77,7 +77,7 @@ public class AbtestingClientRequestTests
   }
 
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
-  public async Task CustomDeleteTest0()
+  public async Task CustomDeleteTest()
   {
     await _client.CustomDeleteAsync("test/minimal");
 
@@ -115,7 +115,7 @@ public class AbtestingClientRequestTests
   }
 
   [Fact(DisplayName = "allow get method for a custom path with minimal parameters")]
-  public async Task CustomGetTest0()
+  public async Task CustomGetTest()
   {
     await _client.CustomGetAsync("test/minimal");
 
@@ -195,7 +195,7 @@ public class AbtestingClientRequestTests
   }
 
   [Fact(DisplayName = "allow post method for a custom path with minimal parameters")]
-  public async Task CustomPostTest0()
+  public async Task CustomPostTest()
   {
     await _client.CustomPostAsync("test/minimal");
 
@@ -525,7 +525,7 @@ public class AbtestingClientRequestTests
   }
 
   [Fact(DisplayName = "allow put method for a custom path with minimal parameters")]
-  public async Task CustomPutTest0()
+  public async Task CustomPutTest()
   {
     await _client.CustomPutAsync("test/minimal");
 
@@ -568,7 +568,7 @@ public class AbtestingClientRequestTests
   }
 
   [Fact(DisplayName = "deleteABTest")]
-  public async Task DeleteABTestTest0()
+  public async Task DeleteABTestTest()
   {
     await _client.DeleteABTestAsync(42);
 
@@ -579,7 +579,7 @@ public class AbtestingClientRequestTests
   }
 
   [Fact(DisplayName = "getABTest")]
-  public async Task GetABTestTest0()
+  public async Task GetABTestTest()
   {
     await _client.GetABTestAsync(42);
 
@@ -590,7 +590,7 @@ public class AbtestingClientRequestTests
   }
 
   [Fact(DisplayName = "listABTests with minimal parameters")]
-  public async Task ListABTestsTest0()
+  public async Task ListABTestsTest()
   {
     await _client.ListABTestsAsync();
 
@@ -643,7 +643,7 @@ public class AbtestingClientRequestTests
   }
 
   [Fact(DisplayName = "stopABTest")]
-  public async Task StopABTestTest0()
+  public async Task StopABTestTest()
   {
     await _client.StopABTestAsync(42);
 

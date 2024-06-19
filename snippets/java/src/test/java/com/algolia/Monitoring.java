@@ -1,7 +1,10 @@
 package com.algolia.methods.snippets;
 
+// >IMPORT
 import com.algolia.api.MonitoringClient;
 import com.algolia.model.monitoring.*;
+
+// IMPORT<
 
 class SnippetMonitoringClient {
 
@@ -9,7 +12,7 @@ class SnippetMonitoringClient {
   //
   // allow del method for a custom path with minimal parameters
   void snippetForCustomDelete() {
-    // >SEPARATOR customDelete
+    // >SEPARATOR customDelete default
     // Initialize the client
     MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -22,7 +25,7 @@ class SnippetMonitoringClient {
   //
   // allow get method for a custom path with minimal parameters
   void snippetForCustomGet() {
-    // >SEPARATOR customGet
+    // >SEPARATOR customGet default
     // Initialize the client
     MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -35,7 +38,7 @@ class SnippetMonitoringClient {
   //
   // allow post method for a custom path with minimal parameters
   void snippetForCustomPost() {
-    // >SEPARATOR customPost
+    // >SEPARATOR customPost default
     // Initialize the client
     MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -48,7 +51,7 @@ class SnippetMonitoringClient {
   //
   // allow put method for a custom path with minimal parameters
   void snippetForCustomPut() {
-    // >SEPARATOR customPut
+    // >SEPARATOR customPut default
     // Initialize the client
     MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -61,7 +64,7 @@ class SnippetMonitoringClient {
   //
   // getClusterIncidents
   void snippetForGetClusterIncidents() {
-    // >SEPARATOR getClusterIncidents
+    // >SEPARATOR getClusterIncidents default
     // Initialize the client
     MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -74,7 +77,7 @@ class SnippetMonitoringClient {
   //
   // getClusterStatus
   void snippetForGetClusterStatus() {
-    // >SEPARATOR getClusterStatus
+    // >SEPARATOR getClusterStatus default
     // Initialize the client
     MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -87,7 +90,7 @@ class SnippetMonitoringClient {
   //
   // getIncidents
   void snippetForGetIncidents() {
-    // >SEPARATOR getIncidents
+    // >SEPARATOR getIncidents default
     // Initialize the client
     MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -100,7 +103,7 @@ class SnippetMonitoringClient {
   //
   // getIndexingTime
   void snippetForGetIndexingTime() {
-    // >SEPARATOR getIndexingTime
+    // >SEPARATOR getIndexingTime default
     // Initialize the client
     MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -113,7 +116,7 @@ class SnippetMonitoringClient {
   //
   // getLatency
   void snippetForGetLatency() {
-    // >SEPARATOR getLatency
+    // >SEPARATOR getLatency default
     // Initialize the client
     MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -126,12 +129,12 @@ class SnippetMonitoringClient {
   //
   // getMetrics
   void snippetForGetMetrics() {
-    // >SEPARATOR getMetrics
+    // >SEPARATOR getMetrics default
     // Initialize the client
     MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.getMetrics(Metric.fromValue("avg_build_time"), Period.fromValue("minute"));
+    client.getMetrics(Metric.AVG_BUILD_TIME, Period.MINUTE);
     // SEPARATOR<
   }
 
@@ -139,7 +142,7 @@ class SnippetMonitoringClient {
   //
   // getReachability
   void snippetForGetReachability() {
-    // >SEPARATOR getReachability
+    // >SEPARATOR getReachability default
     // Initialize the client
     MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -152,7 +155,7 @@ class SnippetMonitoringClient {
   //
   // getInventory
   void snippetForGetServers() {
-    // >SEPARATOR getServers
+    // >SEPARATOR getServers default
     // Initialize the client
     MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -165,7 +168,7 @@ class SnippetMonitoringClient {
   //
   // getStatus
   void snippetForGetStatus() {
-    // >SEPARATOR getStatus
+    // >SEPARATOR getStatus default
     // Initialize the client
     MonitoringClient client = new MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY");
 

@@ -21,8 +21,8 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # addApiKey0
-  def test_add_api_key0
+  # addApiKey
+  def test_add_api_key
     req = @client.add_api_key_with_http_info(
       ApiKey.new(
         acl: ['search', 'addObject'],
@@ -42,8 +42,8 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # addOrUpdateObject0
-  def test_add_or_update_object0
+  # addOrUpdateObject
+  def test_add_or_update_object
     req = @client.add_or_update_object_with_http_info(
       "indexName",
       "uniqueID",
@@ -57,8 +57,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse('{"key":"value"}'), JSON.parse(req.body))
   end
 
-  # appendSource0
-  def test_append_source0
+  # appendSource
+  def test_append_source
     req = @client.append_source_with_http_info(
       Source.new(
         source: "theSource",
@@ -76,8 +76,8 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # assignUserId0
-  def test_assign_user_id0
+  # assignUserId
+  def test_assign_user_id
     req = @client.assign_user_id_with_http_info(
       "userID",
       AssignUserIdParams.new(cluster: "theCluster")
@@ -109,37 +109,40 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse('{"cluster":"cluster with spaces"}'), JSON.parse(req.body))
   end
 
-  # allows batch method with `addObject` action
-  def test_batch0
+  # addObject
+  def test_batch
     req = @client.batch_with_http_info(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       BatchWriteParams.new(
-        requests: [BatchRequest.new(
-          action: 'addObject',
-          body: { key: "value" }
-        )]
+        requests: [
+          BatchRequest.new(
+            action: 'addObject',
+            body: { key: "bar",
+                    foo: "1" }
+          ),
+          BatchRequest.new(action: 'addObject', body: { key: "baz", foo: "2" })
+        ]
       )
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/indexes/theIndexName/batch', req.path)
+    assert_equal('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"requests":[{"action":"addObject","body":{"key":"value"}}]}'),
-      JSON.parse(req.body)
+      JSON.parse('{"requests":[{"action":"addObject","body":{"key":"bar","foo":"1"}},{"action":"addObject","body":{"key":"baz","foo":"2"}}]}'), JSON.parse(req.body)
     )
   end
 
-  # allows batch method with `clear` action
+  # clear
   def test_batch1
     req = @client.batch_with_http_info(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       BatchWriteParams.new(requests: [BatchRequest.new(action: 'clear', body: { key: "value" })])
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/indexes/theIndexName/batch', req.path)
+    assert_equal('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
@@ -148,15 +151,15 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # allows batch method with `delete` action
+  # delete
   def test_batch2
     req = @client.batch_with_http_info(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       BatchWriteParams.new(requests: [BatchRequest.new(action: 'delete', body: { key: "value" })])
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/indexes/theIndexName/batch', req.path)
+    assert_equal('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
@@ -165,10 +168,10 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # allows batch method with `deleteObject` action
+  # deleteObject
   def test_batch3
     req = @client.batch_with_http_info(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       BatchWriteParams.new(
         requests: [BatchRequest.new(
           action: 'deleteObject',
@@ -178,7 +181,7 @@ class TestSearchClient < Test::Unit::TestCase
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/indexes/theIndexName/batch', req.path)
+    assert_equal('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
@@ -187,10 +190,10 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # allows batch method with `partialUpdateObject` action
+  # partialUpdateObject
   def test_batch4
     req = @client.batch_with_http_info(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       BatchWriteParams.new(
         requests: [BatchRequest.new(
           action: 'partialUpdateObject',
@@ -200,7 +203,7 @@ class TestSearchClient < Test::Unit::TestCase
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/indexes/theIndexName/batch', req.path)
+    assert_equal('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
@@ -208,10 +211,10 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # allows batch method with `partialUpdateObjectNoCreate` action
+  # partialUpdateObjectNoCreate
   def test_batch5
     req = @client.batch_with_http_info(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       BatchWriteParams.new(
         requests: [BatchRequest.new(
           action: 'partialUpdateObjectNoCreate',
@@ -221,7 +224,7 @@ class TestSearchClient < Test::Unit::TestCase
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/indexes/theIndexName/batch', req.path)
+    assert_equal('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
@@ -229,10 +232,10 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # allows batch method with `updateObject` action
+  # updateObject
   def test_batch6
     req = @client.batch_with_http_info(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       BatchWriteParams.new(
         requests: [BatchRequest.new(
           action: 'updateObject',
@@ -242,7 +245,7 @@ class TestSearchClient < Test::Unit::TestCase
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/indexes/theIndexName/batch', req.path)
+    assert_equal('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
@@ -251,8 +254,8 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # batchAssignUserIds0
-  def test_batch_assign_user_ids0
+  # batchAssignUserIds
+  def test_batch_assign_user_ids
     req = @client.batch_assign_user_ids_with_http_info(
       "userID",
       BatchAssignUserIdsParams.new(cluster: "theCluster", users: ["user1", "user2"])
@@ -271,82 +274,68 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # get batchDictionaryEntries results with minimal parameters
-  def test_batch_dictionary_entries0
+  # replace
+  def test_batch_dictionary_entries
     req = @client.batch_dictionary_entries_with_http_info(
-      'compounds',
+      'plurals',
       BatchDictionaryEntriesParams.new(
-        requests: [
-          BatchDictionaryEntriesRequest.new(
-            action: 'addEntry',
-            body: DictionaryEntry.new(
-              object_id: "1",
-              language: 'en'
-            )
-          ),
-          BatchDictionaryEntriesRequest.new(
-            action: 'deleteEntry',
-            body: DictionaryEntry.new(object_id: "2", language: 'fr')
+        clear_existing_dictionary_entries: true,
+        requests: [BatchDictionaryEntriesRequest.new(
+          action: 'addEntry',
+          body: DictionaryEntry.new(
+            object_id: "1",
+            language: 'en',
+            word: "fancy",
+            words: ["believe", "algolia"],
+            decomposition: ["trust", "algolia"],
+            state: 'enabled'
           )
-        ]
+        )]
       )
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/dictionaries/compounds/batch', req.path)
+    assert_equal('/1/dictionaries/plurals/batch', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr"}}]}'), JSON.parse(req.body)
+      JSON.parse('{"clearExistingDictionaryEntries":true,"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}}]}'), JSON.parse(req.body)
     )
   end
 
-  # get batchDictionaryEntries results with all parameters
+  # delete
   def test_batch_dictionary_entries1
     req = @client.batch_dictionary_entries_with_http_info(
-      'compounds',
+      'plurals',
       BatchDictionaryEntriesParams.new(
-        clear_existing_dictionary_entries: false,
-        requests: [
-          BatchDictionaryEntriesRequest.new(
-            action: 'addEntry',
-            body: DictionaryEntry.new(
-              object_id: "1",
-              language: 'en',
-              word: "fancy",
-              words: ["believe", "algolia"],
-              decomposition: ["trust", "algolia"],
-              state: 'enabled'
-            )
-          ),
-          BatchDictionaryEntriesRequest.new(
-            action: 'deleteEntry',
-            body: DictionaryEntry.new(
-              object_id: "2",
-              language: 'fr',
-              word: "humility",
-              words: ["candor", "algolia"],
-              decomposition: ["grit", "algolia"],
-              state: 'enabled'
-            )
+        clear_existing_dictionary_entries: true,
+        requests: [BatchDictionaryEntriesRequest.new(
+          action: 'deleteEntry',
+          body: DictionaryEntry.new(
+            object_id: "1",
+            language: 'en',
+            word: "fancy",
+            words: ["believe", "algolia"],
+            decomposition: ["trust", "algolia"],
+            state: 'enabled'
           )
-        ]
+        )]
       )
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/dictionaries/compounds/batch', req.path)
+    assert_equal('/1/dictionaries/plurals/batch', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"clearExistingDictionaryEntries":false,"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr","word":"humility","words":["candor","algolia"],"decomposition":["grit","algolia"],"state":"enabled"}}]}'), JSON.parse(req.body)
+      JSON.parse('{"clearExistingDictionaryEntries":true,"requests":[{"action":"deleteEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}}]}'), JSON.parse(req.body)
     )
   end
 
-  # get batchDictionaryEntries results additional properties
+  # append
   def test_batch_dictionary_entries2
     req = @client.batch_dictionary_entries_with_http_info(
-      'compounds',
+      'stopwords',
       BatchDictionaryEntriesParams.new(
         requests: [BatchDictionaryEntriesRequest.new(
           action: 'addEntry',
@@ -356,7 +345,7 @@ class TestSearchClient < Test::Unit::TestCase
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/dictionaries/compounds/batch', req.path)
+    assert_equal('/1/dictionaries/stopwords/batch', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
@@ -365,7 +354,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # browse with minimal parameters
-  def test_browse0
+  def test_browse
     req = @client.browse_with_http_info("cts_e2e_browse")
 
     assert_equal(:post, req.method)
@@ -410,8 +399,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse('{"cursor":"test"}'), JSON.parse(req.body))
   end
 
-  # clearObjects0
-  def test_clear_objects0
+  # clearObjects
+  def test_clear_objects
     req = @client.clear_objects_with_http_info("theIndexName")
 
     assert_equal(:post, req.method)
@@ -420,8 +409,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
   end
 
-  # clearRules0
-  def test_clear_rules0
+  # clearRules
+  def test_clear_rules
     req = @client.clear_rules_with_http_info("indexName")
 
     assert_equal(:post, req.method)
@@ -430,8 +419,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
   end
 
-  # clearSynonyms0
-  def test_clear_synonyms0
+  # clearSynonyms
+  def test_clear_synonyms
     req = @client.clear_synonyms_with_http_info("indexName")
 
     assert_equal(:post, req.method)
@@ -441,7 +430,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # allow del method for a custom path with minimal parameters
-  def test_custom_delete0
+  def test_custom_delete
     req = @client.custom_delete_with_http_info("test/minimal")
 
     assert_equal(:delete, req.method)
@@ -465,7 +454,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # allow get method for a custom path with minimal parameters
-  def test_custom_get0
+  def test_custom_get
     req = @client.custom_get_with_http_info("test/minimal")
 
     assert_equal(:get, req.method)
@@ -522,7 +511,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # allow post method for a custom path with minimal parameters
-  def test_custom_post0
+  def test_custom_post
     req = @client.custom_post_with_http_info("test/minimal")
 
     assert_equal(:post, req.method)
@@ -705,7 +694,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # allow put method for a custom path with minimal parameters
-  def test_custom_put0
+  def test_custom_put
     req = @client.custom_put_with_http_info("test/minimal")
 
     assert_equal(:put, req.method)
@@ -730,8 +719,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse('{"body":"parameters"}'), JSON.parse(req.body))
   end
 
-  # deleteApiKey0
-  def test_delete_api_key0
+  # deleteApiKey
+  def test_delete_api_key
     req = @client.delete_api_key_with_http_info("myTestApiKey")
 
     assert_equal(:delete, req.method)
@@ -742,8 +731,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # deleteBy0
-  def test_delete_by0
+  # deleteBy
+  def test_delete_by
     req = @client.delete_by_with_http_info(
       "theIndexName",
       DeleteByParams.new(filters: "brand:brandName")
@@ -756,8 +745,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(JSON.parse('{"filters":"brand:brandName"}'), JSON.parse(req.body))
   end
 
-  # deleteIndex0
-  def test_delete_index0
+  # deleteIndex
+  def test_delete_index
     req = @client.delete_index_with_http_info("theIndexName")
 
     assert_equal(:delete, req.method)
@@ -768,12 +757,12 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # deleteObject0
-  def test_delete_object0
-    req = @client.delete_object_with_http_info("theIndexName", "uniqueID")
+  # deleteObject
+  def test_delete_object
+    req = @client.delete_object_with_http_info("<YOUR_INDEX_NAME>", "uniqueID")
 
     assert_equal(:delete, req.method)
-    assert_equal('/1/indexes/theIndexName/uniqueID', req.path)
+    assert_equal('/1/indexes/%3CYOUR_INDEX_NAME%3E/uniqueID', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -781,7 +770,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # delete rule simple case
-  def test_delete_rule0
+  def test_delete_rule
     req = @client.delete_rule_with_http_info("indexName", "id1")
 
     assert_equal(:delete, req.method)
@@ -804,8 +793,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # deleteSource0
-  def test_delete_source0
+  # deleteSource
+  def test_delete_source
     req = @client.delete_source_with_http_info("theSource")
 
     assert_equal(:delete, req.method)
@@ -816,8 +805,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # deleteSynonym0
-  def test_delete_synonym0
+  # deleteSynonym
+  def test_delete_synonym
     req = @client.delete_synonym_with_http_info("indexName", "id1")
 
     assert_equal(:delete, req.method)
@@ -828,8 +817,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # getApiKey0
-  def test_get_api_key0
+  # getApiKey
+  def test_get_api_key
     req = @client.get_api_key_with_http_info("myTestApiKey")
 
     assert_equal(:get, req.method)
@@ -840,8 +829,20 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
+  # getAppTask
+  def test_get_app_task
+    req = @client.get_app_task_with_http_info(123)
+
+    assert_equal(:get, req.method)
+    assert_equal('/1/task/123', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, 'body is not nil')
+  end
+
   # get getDictionaryLanguages
-  def test_get_dictionary_languages0
+  def test_get_dictionary_languages
     req = @client.get_dictionary_languages_with_http_info
 
     assert_equal(:get, req.method)
@@ -853,7 +854,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # get getDictionarySettings results
-  def test_get_dictionary_settings0
+  def test_get_dictionary_settings
     req = @client.get_dictionary_settings_with_http_info
 
     assert_equal(:get, req.method)
@@ -865,7 +866,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # getLogs with minimal parameters
-  def test_get_logs0
+  def test_get_logs
     req = @client.get_logs_with_http_info
 
     assert_equal(:get, req.method)
@@ -891,8 +892,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # getObject0
-  def test_get_object0
+  # getObject
+  def test_get_object
     req = @client.get_object_with_http_info(
       "theIndexName",
       "uniqueID",
@@ -907,8 +908,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # getObjects0
-  def test_get_objects0
+  # getObjects
+  def test_get_objects
     req = @client.get_objects_with_http_info(
       GetObjectsParams.new(
         requests: [GetObjectsRequest.new(
@@ -929,8 +930,8 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # getRule0
-  def test_get_rule0
+  # getRule
+  def test_get_rule
     req = @client.get_rule_with_http_info("indexName", "id1")
 
     assert_equal(:get, req.method)
@@ -941,8 +942,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # getSettings0
-  def test_get_settings0
+  # getSettings
+  def test_get_settings
     req = @client.get_settings_with_http_info("cts_e2e_settings")
 
     assert_equal(:get, req.method)
@@ -960,8 +961,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
-  # getSources0
-  def test_get_sources0
+  # getSources
+  def test_get_sources
     req = @client.get_sources_with_http_info
 
     assert_equal(:get, req.method)
@@ -972,8 +973,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # getSynonym0
-  def test_get_synonym0
+  # getSynonym
+  def test_get_synonym
     req = @client.get_synonym_with_http_info("indexName", "id1")
 
     assert_equal(:get, req.method)
@@ -984,8 +985,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # getTask0
-  def test_get_task0
+  # getTask
+  def test_get_task
     req = @client.get_task_with_http_info("theIndexName", 123)
 
     assert_equal(:get, req.method)
@@ -996,8 +997,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # getTopUserIds0
-  def test_get_top_user_ids0
+  # getTopUserIds
+  def test_get_top_user_ids
     req = @client.get_top_user_ids_with_http_info
 
     assert_equal(:get, req.method)
@@ -1008,8 +1009,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # getUserId0
-  def test_get_user_id0
+  # getUserId
+  def test_get_user_id
     req = @client.get_user_id_with_http_info("uniqueID")
 
     assert_equal(:get, req.method)
@@ -1021,7 +1022,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # hasPendingMappings with minimal parameters
-  def test_has_pending_mappings0
+  def test_has_pending_mappings
     req = @client.has_pending_mappings_with_http_info
 
     assert_equal(:get, req.method)
@@ -1044,8 +1045,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # listApiKeys0
-  def test_list_api_keys0
+  # listApiKeys
+  def test_list_api_keys
     req = @client.list_api_keys_with_http_info
 
     assert_equal(:get, req.method)
@@ -1056,8 +1057,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # listClusters0
-  def test_list_clusters0
+  # listClusters
+  def test_list_clusters
     req = @client.list_clusters_with_http_info
 
     assert_equal(:get, req.method)
@@ -1069,7 +1070,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # listIndices with minimal parameters
-  def test_list_indices0
+  def test_list_indices
     req = @client.list_indices_with_http_info
 
     assert_equal(:get, req.method)
@@ -1093,7 +1094,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # listUserIds with minimal parameters
-  def test_list_user_ids0
+  def test_list_user_ids
     req = @client.list_user_ids_with_http_info
 
     assert_equal(:get, req.method)
@@ -1116,8 +1117,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # multipleBatch0
-  def test_multiple_batch0
+  # multipleBatch
+  def test_multiple_batch
     req = @client.multiple_batch_with_http_info(
       BatchParams.new(
         requests: [MultipleBatchRequest.new(
@@ -1135,28 +1136,62 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # operationIndex0
-  def test_operation_index0
+  # scopes
+  def test_operation_index
     req = @client.operation_index_with_http_info(
-      "theIndexName",
+      "<SOURCE_INDEX_NAME>",
       OperationIndexParams.new(
-        operation: 'copy',
-        destination: "dest",
+        operation: 'move',
+        destination: "<DESTINATION_INDEX_NAME>",
         scope: ['rules', 'settings']
       )
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/indexes/theIndexName/operation', req.path)
+    assert_equal('/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
-      JSON.parse('{"operation":"copy","destination":"dest","scope":["rules","settings"]}'), JSON.parse(req.body)
+      JSON.parse('{"operation":"move","destination":"<DESTINATION_INDEX_NAME>","scope":["rules","settings"]}'), JSON.parse(req.body)
     )
   end
 
-  # partialUpdateObject0
-  def test_partial_update_object0
+  # copy
+  def test_operation_index1
+    req = @client.operation_index_with_http_info(
+      "<SOURCE_INDEX_NAME>",
+      OperationIndexParams.new(operation: 'copy', destination: "<DESTINATION_INDEX_NAME>")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse('{"operation":"copy","destination":"<DESTINATION_INDEX_NAME>"}'),
+      JSON.parse(req.body)
+    )
+  end
+
+  # move
+  def test_operation_index2
+    req = @client.operation_index_with_http_info(
+      "<SOURCE_INDEX_NAME>",
+      OperationIndexParams.new(operation: 'move', destination: "<DESTINATION_INDEX_NAME>")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse('{"operation":"move","destination":"<DESTINATION_INDEX_NAME>"}'),
+      JSON.parse(req.body)
+    )
+  end
+
+  # partialUpdateObject
+  def test_partial_update_object
     req = @client.partial_update_object_with_http_info(
       "theIndexName",
       "uniqueID",
@@ -1174,8 +1209,8 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # removeUserId0
-  def test_remove_user_id0
+  # removeUserId
+  def test_remove_user_id
     req = @client.remove_user_id_with_http_info("uniqueID")
 
     assert_equal(:delete, req.method)
@@ -1186,8 +1221,8 @@ class TestSearchClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # replaceSources0
-  def test_replace_sources0
+  # replaceSources
+  def test_replace_sources
     req = @client.replace_sources_with_http_info(
       [Source.new(
         source: "theSource",
@@ -1205,8 +1240,8 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # restoreApiKey0
-  def test_restore_api_key0
+  # restoreApiKey
+  def test_restore_api_key
     req = @client.restore_api_key_with_http_info("myApiKey")
 
     assert_equal(:post, req.method)
@@ -1215,22 +1250,22 @@ class TestSearchClient < Test::Unit::TestCase
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
   end
 
-  # saveObject0
-  def test_save_object0
+  # saveObject
+  def test_save_object
     req = @client.save_object_with_http_info(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       { objectID: "id", test: "val" }
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/indexes/theIndexName', req.path)
+    assert_equal('/1/indexes/%3CYOUR_INDEX_NAME%3E', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"objectID":"id","test":"val"}'), JSON.parse(req.body))
   end
 
   # saveRule with minimal parameters
-  def test_save_rule0
+  def test_save_rule
     req = @client.save_rule_with_http_info(
       "indexName",
       "id1",
@@ -1294,9 +1329,9 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # saveRules with minimal parameters
-  def test_save_rules0
+  def test_save_rules
     req = @client.save_rules_with_http_info(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       [
         Rule.new(
           object_id: "a-rule-id",
@@ -1309,12 +1344,17 @@ class TestSearchClient < Test::Unit::TestCase
           object_id: "a-second-rule-id",
           conditions: [Condition.new(pattern: "apple", anchoring: 'contains')]
         )
-      ]
+      ],
+      false,
+      true
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/indexes/indexName/rules/batch', req.path)
-    assert_equal({}.to_a, req.query_params.to_a)
+    assert_equal('/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch', req.path)
+    assert_equal(
+      { 'forwardToReplicas': "false", 'clearExistingRules': "true" }.to_a,
+      req.query_params.to_a
+    )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(
       JSON.parse('[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}]},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}]}]'), JSON.parse(req.body)
@@ -1324,7 +1364,7 @@ class TestSearchClient < Test::Unit::TestCase
   # saveRules with all parameters
   def test_save_rules1
     req = @client.save_rules_with_http_info(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       [Rule.new(
         object_id: "id1",
         conditions: [Condition.new(
@@ -1357,7 +1397,7 @@ class TestSearchClient < Test::Unit::TestCase
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/indexes/indexName/rules/batch', req.path)
+    assert_equal('/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch', req.path)
     assert_equal(
       { 'forwardToReplicas': "true", 'clearExistingRules': "true" }.to_a,
       req.query_params.to_a
@@ -1368,8 +1408,8 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # saveSynonym0
-  def test_save_synonym0
+  # saveSynonym
+  def test_save_synonym
     req = @client.save_synonym_with_http_info(
       "indexName",
       "id1",
@@ -1386,10 +1426,10 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # saveSynonyms0
-  def test_save_synonyms0
+  # saveSynonyms
+  def test_save_synonyms
     req = @client.save_synonyms_with_http_info(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       [SynonymHit.new(object_id: "id1", type: 'synonym', synonyms: ["car", "vehicule", "auto"]),
         SynonymHit.new(
           object_id: "id2",
@@ -1398,13 +1438,13 @@ class TestSearchClient < Test::Unit::TestCase
           synonyms: ["ephone", "aphone", "yphone"]
         )],
       true,
-      false
+      true
     )
 
     assert_equal(:post, req.method)
-    assert_equal('/1/indexes/indexName/synonyms/batch', req.path)
+    assert_equal('/1/indexes/%3CYOUR_INDEX_NAME%3E/synonyms/batch', req.path)
     assert_equal(
-      { 'forwardToReplicas': "true", 'replaceExistingSynonyms': "false" }.to_a,
+      { 'forwardToReplicas': "true", 'replaceExistingSynonyms': "true" }.to_a,
       req.query_params.to_a
     )
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
@@ -1413,8 +1453,84 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
+  # withHitsPerPage
+  def test_search
+    req = @client.search_with_http_info(
+      SearchMethodParams.new(
+        requests: [SearchForHits.new(
+          index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", hits_per_page: 50
+        )]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/indexes/*/queries', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse('{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","hitsPerPage":50}]}'), JSON.parse(req.body)
+    )
+  end
+
+  # filterOnly
+  def test_search1
+    req = @client.search_with_http_info(
+      SearchMethodParams.new(
+        requests: [SearchForHits.new(
+          index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", filters: "actor:Scarlett Johansson"
+        )]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/indexes/*/queries', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse('{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"actor:Scarlett Johansson"}]}'), JSON.parse(req.body)
+    )
+  end
+
+  # filterOr
+  def test_search2
+    req = @client.search_with_http_info(
+      SearchMethodParams.new(
+        requests: [SearchForHits.new(
+          index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", filters: "actor:Tom Cruise OR actor:Scarlett Johansson"
+        )]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/indexes/*/queries', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse('{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"actor:Tom Cruise OR actor:Scarlett Johansson"}]}'), JSON.parse(req.body)
+    )
+  end
+
+  # filterNot
+  def test_search3
+    req = @client.search_with_http_info(
+      SearchMethodParams.new(
+        requests: [SearchForHits.new(
+          index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", filters: "NOT actor:Nicolas Cage"
+        )]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/indexes/*/queries', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse('{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"NOT actor:Nicolas Cage"}]}'), JSON.parse(req.body)
+    )
+  end
+
   # search for a single hits request with minimal parameters
-  def test_search0
+  def test_search4
     req = @client.search_with_http_info(SearchMethodParams.new(requests: [SearchForHits.new(index_name: "cts_e2e_search_empty_index")]))
 
     assert_equal(:post, req.method)
@@ -1434,8 +1550,46 @@ class TestSearchClient < Test::Unit::TestCase
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
+  # retrieveFacets
+  def test_search5
+    req = @client.search_with_http_info(
+      SearchMethodParams.new(
+        requests: [SearchForHits.new(
+          index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", facets: ["author", "genre"]
+        )]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/indexes/*/queries', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse('{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["author","genre"]}]}'), JSON.parse(req.body)
+    )
+  end
+
+  # retrieveFacetsWildcard
+  def test_search6
+    req = @client.search_with_http_info(
+      SearchMethodParams.new(
+        requests: [SearchForHits.new(
+          index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", facets: ["*"]
+        )]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/indexes/*/queries', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse('{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["*"]}]}'), JSON.parse(req.body)
+    )
+  end
+
   # search for a single facet request with minimal parameters
-  def test_search1
+  def test_search7
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [SearchForFacets.new(
@@ -1482,7 +1636,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search for a single hits request with all parameters
-  def test_search2
+  def test_search8
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [SearchForHits.new(
@@ -1501,7 +1655,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search for a single facet request with all parameters
-  def test_search3
+  def test_search9
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [SearchForFacets.new(
@@ -1526,7 +1680,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search for multiple mixed requests in multiple indices with minimal parameters
-  def test_search4
+  def test_search10
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [SearchForHits.new(index_name: "theIndexName"),
@@ -1550,7 +1704,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search for multiple mixed requests in multiple indices with all parameters
-  def test_search5
+  def test_search11
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [
@@ -1583,7 +1737,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search filters accept all of the possible shapes
-  def test_search6
+  def test_search12
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [
@@ -1617,7 +1771,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search filters end to end
-  def test_search7
+  def test_search13
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [
@@ -1700,7 +1854,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search with all search parameters
-  def test_search8
+  def test_search14
     req = @client.search_with_http_info(
       SearchMethodParams.new(
         requests: [SearchForHits.new(
@@ -1808,7 +1962,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # get searchDictionaryEntries results with minimal parameters
-  def test_search_dictionary_entries0
+  def test_search_dictionary_entries
     req = @client.search_dictionary_entries_with_http_info(
       'stopwords',
       SearchDictionaryEntriesParams.new(query: "about")
@@ -1852,7 +2006,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # get searchForFacetValues results with minimal parameters
-  def test_search_for_facet_values0
+  def test_search_for_facet_values
     req = @client.search_for_facet_values_with_http_info("indexName", "facetName")
 
     assert_equal(:post, req.method)
@@ -1883,8 +2037,8 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # searchRules0
-  def test_search_rules0
+  # searchRules
+  def test_search_rules
     req = @client.search_rules_with_http_info(
       "indexName",
       SearchRulesParams.new(query: "something")
@@ -1898,7 +2052,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # search with minimal parameters
-  def test_search_single_index0
+  def test_search_single_index
     req = @client.search_single_index_with_http_info("indexName")
 
     assert_equal(:post, req.method)
@@ -1982,7 +2136,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # searchSynonyms with minimal parameters
-  def test_search_synonyms0
+  def test_search_synonyms
     req = @client.search_synonyms_with_http_info("indexName")
 
     assert_equal(:post, req.method)
@@ -2013,8 +2167,8 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # searchUserIds0
-  def test_search_user_ids0
+  # searchUserIds
+  def test_search_user_ids
     req = @client.search_user_ids_with_http_info(
       SearchUserIdsParams.new(
         query: "test",
@@ -2034,7 +2188,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # get setDictionarySettings results with minimal parameters
-  def test_set_dictionary_settings0
+  def test_set_dictionary_settings
     req = @client.set_dictionary_settings_with_http_info(
       DictionarySettingsParams.new(
         disable_standard_entries: StandardEntries.new(
@@ -2077,8 +2231,28 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
+  # setSettingsAttributesForFaceting
+  def test_set_settings
+    req = @client.set_settings_with_http_info(
+      "<YOUR_INDEX_NAME>",
+      IndexSettings.new(
+        attributes_for_faceting: ["actor",
+          "filterOnly(category)",
+          "searchable(publisher)"]
+      )
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal('/1/indexes/%3CYOUR_INDEX_NAME%3E/settings', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse('{"attributesForFaceting":["actor","filterOnly(category)","searchable(publisher)"]}'), JSON.parse(req.body)
+    )
+  end
+
   # setSettings with minimal parameters
-  def test_set_settings0
+  def test_set_settings1
     req = @client.set_settings_with_http_info(
       "cts_e2e_settings",
       IndexSettings.new(pagination_limited_to: 10),
@@ -2101,7 +2275,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # setSettings allow boolean `typoTolerance`
-  def test_set_settings1
+  def test_set_settings2
     req = @client.set_settings_with_http_info(
       "theIndexName",
       IndexSettings.new(typo_tolerance: true),
@@ -2116,7 +2290,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # setSettings allow enum `typoTolerance`
-  def test_set_settings2
+  def test_set_settings3
     req = @client.set_settings_with_http_info(
       "theIndexName",
       IndexSettings.new(typo_tolerance: 'min'),
@@ -2131,7 +2305,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # setSettings allow boolean `ignorePlurals`
-  def test_set_settings3
+  def test_set_settings4
     req = @client.set_settings_with_http_info(
       "theIndexName",
       IndexSettings.new(ignore_plurals: true),
@@ -2146,7 +2320,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # setSettings allow list of string `ignorePlurals`
-  def test_set_settings4
+  def test_set_settings5
     req = @client.set_settings_with_http_info(
       "theIndexName",
       IndexSettings.new(ignore_plurals: ['fr']),
@@ -2161,7 +2335,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # setSettings allow boolean `removeStopWords`
-  def test_set_settings5
+  def test_set_settings6
     req = @client.set_settings_with_http_info(
       "theIndexName",
       IndexSettings.new(remove_stop_words: true),
@@ -2176,7 +2350,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # setSettings allow list of string `removeStopWords`
-  def test_set_settings6
+  def test_set_settings7
     req = @client.set_settings_with_http_info(
       "theIndexName",
       IndexSettings.new(remove_stop_words: ['fr']),
@@ -2191,7 +2365,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # setSettings allow boolean `distinct`
-  def test_set_settings7
+  def test_set_settings8
     req = @client.set_settings_with_http_info(
       "theIndexName",
       IndexSettings.new(distinct: true),
@@ -2206,7 +2380,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # setSettings allow integers for `distinct`
-  def test_set_settings8
+  def test_set_settings9
     req = @client.set_settings_with_http_info(
       "theIndexName",
       IndexSettings.new(distinct: 1),
@@ -2221,7 +2395,7 @@ class TestSearchClient < Test::Unit::TestCase
   end
 
   # setSettings allow all `indexSettings`
-  def test_set_settings9
+  def test_set_settings10
     req = @client.set_settings_with_http_info(
       "theIndexName",
       IndexSettings.new(
@@ -2306,8 +2480,8 @@ class TestSearchClient < Test::Unit::TestCase
     )
   end
 
-  # updateApiKey0
-  def test_update_api_key0
+  # updateApiKey
+  def test_update_api_key
     req = @client.update_api_key_with_http_info(
       "myApiKey",
       ApiKey.new(

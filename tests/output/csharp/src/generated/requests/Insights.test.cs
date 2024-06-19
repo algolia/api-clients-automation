@@ -49,7 +49,7 @@ public class InsightsClientRequestTests
   public void Dispose() { }
 
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
-  public async Task CustomDeleteTest0()
+  public async Task CustomDeleteTest()
   {
     await _client.CustomDeleteAsync("test/minimal");
 
@@ -87,7 +87,7 @@ public class InsightsClientRequestTests
   }
 
   [Fact(DisplayName = "allow get method for a custom path with minimal parameters")]
-  public async Task CustomGetTest0()
+  public async Task CustomGetTest()
   {
     await _client.CustomGetAsync("test/minimal");
 
@@ -167,7 +167,7 @@ public class InsightsClientRequestTests
   }
 
   [Fact(DisplayName = "allow post method for a custom path with minimal parameters")]
-  public async Task CustomPostTest0()
+  public async Task CustomPostTest()
   {
     await _client.CustomPostAsync("test/minimal");
 
@@ -497,7 +497,7 @@ public class InsightsClientRequestTests
   }
 
   [Fact(DisplayName = "allow put method for a custom path with minimal parameters")]
-  public async Task CustomPutTest0()
+  public async Task CustomPutTest()
   {
     await _client.CustomPutAsync("test/minimal");
 
@@ -539,8 +539,8 @@ public class InsightsClientRequestTests
     }
   }
 
-  [Fact(DisplayName = "deleteUserToken0")]
-  public async Task DeleteUserTokenTest0()
+  [Fact(DisplayName = "deleteUserToken")]
+  public async Task DeleteUserTokenTest()
   {
     await _client.DeleteUserTokenAsync("test-user-1");
 
@@ -550,8 +550,8 @@ public class InsightsClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "pushEvents0")]
-  public async Task PushEventsTest0()
+  [Fact(DisplayName = "pushEvents")]
+  public async Task PushEventsTest()
   {
     await _client.PushEventsAsync(
       new InsightsEvents
@@ -602,7 +602,7 @@ public class InsightsClientRequestTests
               Index = "products",
               UserToken = "user-123456",
               AuthenticatedUserToken = "user-123456",
-              Timestamp = 1715385600000L,
+              Timestamp = 1718755200000L,
               ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
               QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
             }
@@ -615,7 +615,7 @@ public class InsightsClientRequestTests
               Index = "products",
               UserToken = "user-123456",
               AuthenticatedUserToken = "user-123456",
-              Timestamp = 1715385600000L,
+              Timestamp = 1718755200000L,
               ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
             }
           )
@@ -627,7 +627,7 @@ public class InsightsClientRequestTests
     Assert.Equal("/1/events", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1715385600000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1715385600000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
+      "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1718755200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1718755200000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
@@ -648,7 +648,7 @@ public class InsightsClientRequestTests
                 Index = "products",
                 UserToken = "user-123456",
                 AuthenticatedUserToken = "user-123456",
-                Timestamp = 1715385600000L,
+                Timestamp = 1718755200000L,
                 ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
                 QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
               }
@@ -661,7 +661,7 @@ public class InsightsClientRequestTests
                 Index = "products",
                 UserToken = "user-123456",
                 AuthenticatedUserToken = "user-123456",
-                Timestamp = 1715385600000L,
+                Timestamp = 1718755200000L,
                 ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
               }
             )

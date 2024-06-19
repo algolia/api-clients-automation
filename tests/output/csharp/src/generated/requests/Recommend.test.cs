@@ -25,7 +25,7 @@ public class RecommendClientRequestTests
   public void Dispose() { }
 
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
-  public async Task CustomDeleteTest0()
+  public async Task CustomDeleteTest()
   {
     await _client.CustomDeleteAsync("test/minimal");
 
@@ -63,7 +63,7 @@ public class RecommendClientRequestTests
   }
 
   [Fact(DisplayName = "allow get method for a custom path with minimal parameters")]
-  public async Task CustomGetTest0()
+  public async Task CustomGetTest()
   {
     await _client.CustomGetAsync("test/minimal");
 
@@ -143,7 +143,7 @@ public class RecommendClientRequestTests
   }
 
   [Fact(DisplayName = "allow post method for a custom path with minimal parameters")]
-  public async Task CustomPostTest0()
+  public async Task CustomPostTest()
   {
     await _client.CustomPostAsync("test/minimal");
 
@@ -473,7 +473,7 @@ public class RecommendClientRequestTests
   }
 
   [Fact(DisplayName = "allow put method for a custom path with minimal parameters")]
-  public async Task CustomPutTest0()
+  public async Task CustomPutTest()
   {
     await _client.CustomPutAsync("test/minimal");
 
@@ -515,8 +515,8 @@ public class RecommendClientRequestTests
     }
   }
 
-  [Fact(DisplayName = "deleteRecommendRule0")]
-  public async Task DeleteRecommendRuleTest0()
+  [Fact(DisplayName = "deleteRecommendRule")]
+  public async Task DeleteRecommendRuleTest()
   {
     await _client.DeleteRecommendRuleAsync(
       "indexName",
@@ -530,8 +530,8 @@ public class RecommendClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getRecommendRule0")]
-  public async Task GetRecommendRuleTest0()
+  [Fact(DisplayName = "getRecommendRule")]
+  public async Task GetRecommendRuleTest()
   {
     await _client.GetRecommendRuleAsync(
       "indexName",
@@ -545,8 +545,8 @@ public class RecommendClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getRecommendStatus0")]
-  public async Task GetRecommendStatusTest0()
+  [Fact(DisplayName = "getRecommendStatus")]
+  public async Task GetRecommendStatusTest()
   {
     await _client.GetRecommendStatusAsync(
       "indexName",
@@ -561,7 +561,7 @@ public class RecommendClientRequestTests
   }
 
   [Fact(DisplayName = "get recommendations for recommend model with minimal parameters")]
-  public async Task GetRecommendationsTest0()
+  public async Task GetRecommendationsTest()
   {
     await _client.GetRecommendationsAsync(
       new GetRecommendationsParams
@@ -857,8 +857,8 @@ public class RecommendClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "searchRecommendRules0")]
-  public async Task SearchRecommendRulesTest0()
+  [Fact(DisplayName = "searchRecommendRules")]
+  public async Task SearchRecommendRulesTest()
   {
     await _client.SearchRecommendRulesAsync(
       "indexName",

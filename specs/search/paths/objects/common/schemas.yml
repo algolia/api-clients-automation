@@ -44,3 +44,15 @@ attributeToUpdate:
   oneOf:
     - $ref: '#/attribute'
     - $ref: '#/builtInOperation'
+
+batchResponse:
+  type: object
+  additionalProperties: false
+  properties:
+    taskID:
+      $ref: '../../../../common/responses/common.yml#/taskID'
+    objectIDs:
+      $ref: '../../../../common/responses/common.yml#/objectIDs'
+  required:
+    - taskID
+    - objectIDs

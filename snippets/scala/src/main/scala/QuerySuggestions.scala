@@ -3,7 +3,9 @@ package algoliasearch.methods.snippets
 
 import scala.concurrent.duration.Duration
 
+// >IMPORT
 import algoliasearch.api.QuerySuggestionsClient
+// IMPORT<
 import algoliasearch.querysuggestions.*
 
 import org.json4s.*
@@ -16,15 +18,15 @@ class SnippetQuerySuggestionsClient {
 
   /** Snippet for the createConfig method.
     *
-    * createConfig0
+    * createConfig
     */
   def snippetForQuerySuggestionsClientCreateConfig(): Unit = {
-    // >SEPARATOR createConfig
+    // >SEPARATOR createConfig default
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val res = client.createConfig(
+    val response = client.createConfig(
       querySuggestionsConfigurationWithIndex = QuerySuggestionsConfigurationWithIndex(
         indexName = "theIndexName",
         sourceIndices = Seq(
@@ -46,7 +48,7 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -55,17 +57,17 @@ class SnippetQuerySuggestionsClient {
     * allow del method for a custom path with minimal parameters
     */
   def snippetForQuerySuggestionsClientCustomDelete(): Unit = {
-    // >SEPARATOR customDelete
+    // >SEPARATOR customDelete default
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val res = client.customDelete[JObject](
+    val response = client.customDelete[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -74,17 +76,17 @@ class SnippetQuerySuggestionsClient {
     * allow get method for a custom path with minimal parameters
     */
   def snippetForQuerySuggestionsClientCustomGet(): Unit = {
-    // >SEPARATOR customGet
+    // >SEPARATOR customGet default
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val res = client.customGet[JObject](
+    val response = client.customGet[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -93,17 +95,17 @@ class SnippetQuerySuggestionsClient {
     * allow post method for a custom path with minimal parameters
     */
   def snippetForQuerySuggestionsClientCustomPost(): Unit = {
-    // >SEPARATOR customPost
+    // >SEPARATOR customPost default
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val res = client.customPost[JObject](
+    val response = client.customPost[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -112,54 +114,54 @@ class SnippetQuerySuggestionsClient {
     * allow put method for a custom path with minimal parameters
     */
   def snippetForQuerySuggestionsClientCustomPut(): Unit = {
-    // >SEPARATOR customPut
+    // >SEPARATOR customPut default
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val res = client.customPut[JObject](
+    val response = client.customPut[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
   /** Snippet for the deleteConfig method.
     *
-    * deleteConfig0
+    * deleteConfig
     */
   def snippetForQuerySuggestionsClientDeleteConfig(): Unit = {
-    // >SEPARATOR deleteConfig
+    // >SEPARATOR deleteConfig default
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val res = client.deleteConfig(
+    val response = client.deleteConfig(
       indexName = "theIndexName"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
   /** Snippet for the getAllConfigs method.
     *
-    * getAllConfigs0
+    * getAllConfigs
     */
   def snippetForQuerySuggestionsClientGetAllConfigs(): Unit = {
-    // >SEPARATOR getAllConfigs
+    // >SEPARATOR getAllConfigs default
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val res = client.getAllConfigs(
+    val response = client.getAllConfigs(
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -168,69 +170,69 @@ class SnippetQuerySuggestionsClient {
     * Retrieve QS config e2e
     */
   def snippetForQuerySuggestionsClientGetConfig(): Unit = {
-    // >SEPARATOR getConfig
+    // >SEPARATOR getConfig default
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val res = client.getConfig(
+    val response = client.getConfig(
       indexName = "cts_e2e_browse_query_suggestions"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
   /** Snippet for the getConfigStatus method.
     *
-    * getConfigStatus0
+    * getConfigStatus
     */
   def snippetForQuerySuggestionsClientGetConfigStatus(): Unit = {
-    // >SEPARATOR getConfigStatus
+    // >SEPARATOR getConfigStatus default
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val res = client.getConfigStatus(
+    val response = client.getConfigStatus(
       indexName = "theIndexName"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
   /** Snippet for the getLogFile method.
     *
-    * getLogFile0
+    * getLogFile
     */
   def snippetForQuerySuggestionsClientGetLogFile(): Unit = {
-    // >SEPARATOR getLogFile
+    // >SEPARATOR getLogFile default
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val res = client.getLogFile(
+    val response = client.getLogFile(
       indexName = "theIndexName"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
   /** Snippet for the updateConfig method.
     *
-    * updateConfig0
+    * updateConfig
     */
   def snippetForQuerySuggestionsClientUpdateConfig(): Unit = {
-    // >SEPARATOR updateConfig
+    // >SEPARATOR updateConfig default
     // Initialize the client
     val client = QuerySuggestionsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
 
     // Call the API
-    val res = client.updateConfig(
+    val response = client.updateConfig(
       indexName = "theIndexName",
       querySuggestionsConfiguration = QuerySuggestionsConfiguration(
         sourceIndices = Seq(
@@ -252,7 +254,7 @@ class SnippetQuerySuggestionsClient {
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 

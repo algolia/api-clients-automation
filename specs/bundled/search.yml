@@ -1012,17 +1012,7 @@ paths:
           content:
             application/json:
               schema:
-                title: batchResponse
-                type: object
-                additionalProperties: false
-                properties:
-                  taskID:
-                    $ref: '#/components/schemas/taskID'
-                  objectIDs:
-                    $ref: '#/components/schemas/objectIDs'
-                required:
-                  - taskID
-                  - objectIDs
+                $ref: '#/components/schemas/batchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -2927,6 +2917,45 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+  /1/task/{taskID}:
+    get:
+      tags:
+        - search
+      operationId: getAppTask
+      x-acl:
+        - editSettings
+      description: |
+        Checks the status of a given application task.
+      summary: Check application task status
+      parameters:
+        - name: taskID
+          in: path
+          description: Unique task identifier.
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1506303845001
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: getTaskResponse
+                type: object
+                additionalProperties: false
+                properties:
+                  status:
+                    $ref: '#/components/schemas/taskStatus'
+                required:
+                  - status
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/FeatureNotEnabled'
+        '403':
+          $ref: '#/components/responses/MethodNotAllowed'
   /1/indexes/{indexName}/task/{taskID}:
     get:
       tags:
@@ -2993,8 +3022,8 @@ paths:
         Copies or moves (renames) an index within the same Algolia application.
 
 
-        - Existing destination indices are overwritten, except for
-        index-specific API keys and analytics data.
+        - Existing destination indices are overwritten, except for their
+        analytics data.
 
         - If the destination index doesn't exist yet, it'll be created.
 
@@ -3148,6 +3177,7 @@ paths:
   /generateSecuredApiKey:
     get:
       x-helper: true
+      x-asynchronous-helper: false
       tags:
         - search
       operationId: generateSecuredApiKey
@@ -3185,7 +3215,7 @@ paths:
         key, or be more restrictive.
       parameters:
         - in: query
-          name: apiKey
+          name: parentApiKey
           description: >-
             API key from which the secured API key will inherit its
             restrictions.
@@ -3197,7 +3227,7 @@ paths:
           description: Restrictions to add to the API key.
           required: true
           schema:
-            $ref: '#/components/schemas/securedAPIKeyRestrictions'
+            $ref: '#/components/schemas/securedApiKeyRestrictions'
       responses:
         '200':
           description: OK
@@ -3205,6 +3235,134 @@ paths:
             application/json:
               schema:
                 type: string
+        '400':
+          $ref: '#/components/responses/IndexNotFound'
+  /replaceAllObjects:
+    get:
+      x-helper: true
+      tags:
+        - search
+      operationId: replaceAllObjects
+      summary: Replace all records in an index
+      description: >
+        Replace all records from your index with a new set of records.
+
+
+        This method lets you replace all records in your index without downtime.
+        It performs these operations:
+          1. Copy settings, synonyms, and rules from your original index to a temporary index.
+          2. Add your new records to the temporary index.
+          3. Replace your original index with the temporary index.
+
+        Use the safe parameter to ensure that these (asynchronous) operations
+        are performed in sequence.
+
+        If there's an error duing one of these steps, the temporary index won't
+        be deleted.
+
+        This operation is rate-limited.
+
+        This method creates a temporary index: your record count is temporarily
+        doubled. Algolia doesn't count the three days with the highest number of
+        records towards your monthly usage.
+
+        If you're on a legacy plan (before July 2020), this method counts two
+        operations towards your usage (in addition to the number of records):
+        copySettings and moveIndex.
+
+        The API key you use for this operation must have access to the index
+        YourIndex and the temporary index YourIndex_tmp.
+      parameters:
+        - in: query
+          name: indexName
+          description: The `indexName` to replace `objects` in.
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: objects
+          description: List of objects to replace the current objects with.
+          required: true
+          schema:
+            type: array
+            items:
+              type: object
+        - in: query
+          name: batchSize
+          description: >-
+            The size of the chunk of `objects`. The number of `batch` calls will
+            be equal to `length(objects) / batchSize`. Defaults to 1000.
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/replaceAllObjectsResponse'
+        '400':
+          $ref: '#/components/responses/IndexNotFound'
+  /chunkedBatch:
+    get:
+      x-helper: true
+      tags:
+        - search
+      operationId: chunkedBatch
+      summary: Replace all records in an index
+      description: >
+        Helper: Chunks the given `objects` list in subset of 1000 elements max
+        in order to make it fit in `batch` requests.
+      parameters:
+        - in: query
+          name: indexName
+          description: The `indexName` to replace `objects` in.
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: objects
+          description: List of objects to replace the current objects with.
+          required: true
+          schema:
+            type: array
+            items:
+              type: object
+        - in: query
+          name: action
+          description: >-
+            The `batch` `action` to perform on the given array of `objects`,
+            defaults to `addObject`.
+          required: false
+          schema:
+            $ref: '#/components/schemas/action'
+        - in: query
+          name: waitForTasks
+          description: >-
+            Whether or not we should wait until every `batch` tasks has been
+            processed, this operation may slow the total execution time of this
+            method but is more reliable.
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: batchSize
+          description: >-
+            The size of the chunk of `objects`. The number of `batch` calls will
+            be equal to `length(objects) / batchSize`. Defaults to 1000.
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/batchResponse'
         '400':
           $ref: '#/components/responses/IndexNotFound'
 components:
@@ -3260,6 +3418,7 @@ components:
     ForwardToReplicas:
       in: query
       name: forwardToReplicas
+      required: false
       description: Whether changes are applied to replica indices.
       schema:
         type: boolean
@@ -3314,6 +3473,7 @@ components:
       description: |
         Requested page of the API response.
         If `null`, the API response is not paginated.
+      required: false
       schema:
         oneOf:
           - type: integer
@@ -3324,6 +3484,7 @@ components:
       in: query
       name: hitsPerPage
       description: Number of hits per page.
+      required: false
       schema:
         type: integer
         default: 100
@@ -5085,10 +5246,6 @@ components:
       oneOf:
         - $ref: '#/components/schemas/searchParamsString'
         - $ref: '#/components/schemas/searchParamsObject'
-    exhaustiveFacetsCount:
-      type: boolean
-      description: See the `facetsCount` field of the `exhaustive` object in the response.
-      deprecated: true
     nbHits:
       type: integer
       description: Number of results (hits).
@@ -5131,13 +5288,14 @@ components:
         - dest
         - source
     userData:
+      type: object
       example:
         settingID: f2a7b51e3503acc6a39b3784ffb84300
         pluginVersion: 1.6.0
       description: |
         An object with custom data.
 
-        You can store up to 32&nbsp;kB as custom data.
+        You can store up to 32kB as custom data.
       default: {}
       x-categories:
         - Advanced
@@ -5220,7 +5378,11 @@ components:
                 alternatives exist for the query). This field will not be
                 included when typo-tolerance is entirely disabled.
         exhaustiveFacetsCount:
-          $ref: '#/components/schemas/exhaustiveFacetsCount'
+          type: boolean
+          description: >-
+            See the `facetsCount` field of the `exhaustive` object in the
+            response.
+          deprecated: true
         exhaustiveNbHits:
           type: boolean
           description: See the `nbHits` field of the `exhaustive` object in the response.
@@ -5522,13 +5684,10 @@ components:
           type: boolean
           description: Whether the record is re-ranked.
       required:
-        - promoted
         - nbTypos
         - firstMatchedWord
         - geoDistance
         - nbExactWords
-        - words
-        - filters
         - userScore
     _distinctSeqID:
       type: integer
@@ -5702,7 +5861,12 @@ components:
                   approximated](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
                 type: integer
         exhaustiveFacetsCount:
-          $ref: '#/components/schemas/exhaustiveFacetsCount'
+          type: boolean
+          description: >
+            Whether the facet count is exhaustive (true) or approximate (false).
+
+            For more information, see [Why are my facet and hit counts not
+            accurate](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
         processingTimeMS:
           $ref: '#/components/schemas/processingTimeMS'
     searchResult:
@@ -5783,6 +5947,18 @@ components:
           $ref: '#/components/schemas/insideBoundingBox'
         insidePolygon:
           $ref: '#/components/schemas/insidePolygon'
+    updatedAtResponse:
+      type: object
+      description: Response, taskID, and update timestamp.
+      additionalProperties: false
+      required:
+        - taskID
+        - updatedAt
+      properties:
+        taskID:
+          $ref: '#/components/schemas/taskID'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
     builtInOperationType:
       type: string
       enum:
@@ -5832,6 +6008,17 @@ components:
         - record-1
         - record-2
       description: Unique record identifiers.
+    batchResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        taskID:
+          $ref: '#/components/schemas/taskID'
+        objectIDs:
+          $ref: '#/components/schemas/objectIDs'
+      required:
+        - taskID
+        - objectIDs
     baseIndexSettings:
       type: object
       title: Index settings.
@@ -7185,7 +7372,7 @@ components:
         - add
         - delete
         - update
-    securedAPIKeyRestrictions:
+    securedApiKeyRestrictions:
       type: object
       additionalProperties: false
       properties:
@@ -7250,6 +7437,29 @@ components:
             an issue if many users search from the same IP address.
 
             To avoid this, add a user token to each generated API key.
+    replaceAllObjectsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        copyOperationResponse:
+          description: >-
+            The response of the `operationIndex` request for the `copy`
+            operation.
+          $ref: '#/components/schemas/updatedAtResponse'
+        batchResponses:
+          type: array
+          description: The response of the `batch` request(s).
+          items:
+            $ref: '#/components/schemas/batchResponse'
+        moveOperationResponse:
+          description: >-
+            The response of the `operationIndex` request for the `move`
+            operation.
+          $ref: '#/components/schemas/updatedAtResponse'
+      required:
+        - copyOperationResponse
+        - batchResponses
+        - moveOperationResponse
   responses:
     BadRequest:
       description: Bad request or request arguments.
@@ -7315,18 +7525,7 @@ components:
       content:
         application/json:
           schema:
-            title: updatedAtResponse
-            description: Response, taskID, and update timestamp.
-            additionalProperties: false
-            type: object
-            required:
-              - taskID
-              - updatedAt
-            properties:
-              taskID:
-                $ref: '#/components/schemas/taskID'
-              updatedAt:
-                $ref: '#/components/schemas/updatedAt'
+            $ref: '#/components/schemas/updatedAtResponse'
     CreatedAt:
       description: OK
       content:

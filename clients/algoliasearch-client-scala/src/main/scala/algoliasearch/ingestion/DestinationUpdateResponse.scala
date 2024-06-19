@@ -30,7 +30,7 @@ package algoliasearch.ingestion
   * @param name
   *   Descriptive name for the resource.
   * @param updatedAt
-  *   Date of last update in RFC3339 format.
+  *   Date of last update in RFC 3339 format.
   */
 case class DestinationUpdateResponse(
     destinationID: String,

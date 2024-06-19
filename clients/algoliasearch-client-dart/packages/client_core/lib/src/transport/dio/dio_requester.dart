@@ -26,6 +26,7 @@ class DioRequester implements Requester {
     Duration? connectTimeout,
     Iterable<AgentSegment>? clientSegments,
     Function(Object?)? logger,
+    Iterable<Interceptor>? interceptors,
   }) : _client = Dio(
           BaseOptions(
             headers: headers,
@@ -47,6 +48,7 @@ class DioRequester implements Requester {
                 responseBody: true,
                 logPrint: logger,
               ),
+            if (interceptors != null) ...interceptors,
           ]);
 
   @override

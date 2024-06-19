@@ -69,7 +69,7 @@ class AnalyticsTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("allow del method for a custom path with all parameters") {
+  test("allow del method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customDelete[JObject](
       path = "test/all",
@@ -105,7 +105,7 @@ class AnalyticsTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("allow get method for a custom path with all parameters") {
+  test("allow get method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customGet[JObject](
       path = "test/all",
@@ -127,7 +127,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions should be escaped too") {
+  test("requestOptions should be escaped too2") {
     val (client, echo) = testClient()
     val future = client.customGet[JObject](
       path = "test/all",
@@ -182,7 +182,7 @@ class AnalyticsTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("allow post method for a custom path with all parameters") {
+  test("allow post method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/all",
@@ -207,7 +207,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions can override default query parameters") {
+  test("requestOptions can override default query parameters2") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -238,7 +238,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions merges query parameters with default ones") {
+  test("requestOptions merges query parameters with default ones3") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -269,7 +269,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions can override default headers") {
+  test("requestOptions can override default headers4") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -306,7 +306,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions merges headers with default ones") {
+  test("requestOptions merges headers with default ones5") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -343,7 +343,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts booleans") {
+  test("requestOptions queryParameters accepts booleans6") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -374,7 +374,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts integers") {
+  test("requestOptions queryParameters accepts integers7") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -405,7 +405,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts list of string") {
+  test("requestOptions queryParameters accepts list of string8") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -436,7 +436,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts list of booleans") {
+  test("requestOptions queryParameters accepts list of booleans9") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -468,7 +468,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts list of integers") {
+  test("requestOptions queryParameters accepts list of integers10") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -515,7 +515,7 @@ class AnalyticsTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("allow put method for a custom path with all parameters") {
+  test("allow put method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customPut[JObject](
       path = "test/all",
@@ -561,7 +561,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getAddToCartRate with all parameters") {
+  test("get getAddToCartRate with all parameters1") {
     val (client, echo) = testClient()
     val future = client.getAddToCartRate(
       index = "index",
@@ -609,7 +609,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getAverageClickPosition with all parameters") {
+  test("get getAverageClickPosition with all parameters1") {
     val (client, echo) = testClient()
     val future = client.getAverageClickPosition(
       index = "index",
@@ -657,7 +657,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getClickPositions with all parameters") {
+  test("get getClickPositions with all parameters1") {
     val (client, echo) = testClient()
     val future = client.getClickPositions(
       index = "index",
@@ -705,7 +705,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getClickThroughRate with all parameters") {
+  test("get getClickThroughRate with all parameters1") {
     val (client, echo) = testClient()
     val future = client.getClickThroughRate(
       index = "index",
@@ -753,7 +753,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getConversationRate with all parameters") {
+  test("get getConversationRate with all parameters1") {
     val (client, echo) = testClient()
     val future = client.getConversionRate(
       index = "index",
@@ -801,7 +801,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getNoClickRate with all parameters") {
+  test("get getNoClickRate with all parameters1") {
     val (client, echo) = testClient()
     val future = client.getNoClickRate(
       index = "index",
@@ -849,7 +849,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getNoResultsRate with all parameters") {
+  test("get getNoResultsRate with all parameters1") {
     val (client, echo) = testClient()
     val future = client.getNoResultsRate(
       index = "index",
@@ -897,7 +897,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getPurchaseRate with all parameters") {
+  test("get getPurchaseRate with all parameters1") {
     val (client, echo) = testClient()
     val future = client.getPurchaseRate(
       index = "index",
@@ -945,7 +945,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getRevenue with all parameters") {
+  test("get getRevenue with all parameters1") {
     val (client, echo) = testClient()
     val future = client.getRevenue(
       index = "index",
@@ -993,7 +993,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getSearchesCount with all parameters") {
+  test("get getSearchesCount with all parameters1") {
     val (client, echo) = testClient()
     val future = client.getSearchesCount(
       index = "index",
@@ -1041,7 +1041,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getSearchesNoClicks with all parameters") {
+  test("get getSearchesNoClicks with all parameters1") {
     val (client, echo) = testClient()
     val future = client.getSearchesNoClicks(
       index = "index",
@@ -1090,7 +1090,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getSearchesNoResults with all parameters") {
+  test("get getSearchesNoResults with all parameters1") {
     val (client, echo) = testClient()
     val future = client.getSearchesNoResults(
       index = "index",
@@ -1160,7 +1160,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getTopCountries with all parameters") {
+  test("get getTopCountries with all parameters1") {
     val (client, echo) = testClient()
     val future = client.getTopCountries(
       index = "index",
@@ -1209,7 +1209,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getTopFilterAttributes with all parameters") {
+  test("get getTopFilterAttributes with all parameters1") {
     val (client, echo) = testClient()
     val future = client.getTopFilterAttributes(
       index = "index",
@@ -1260,7 +1260,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getTopFilterForAttribute with minimal parameters and multiple attributes") {
+  test("get getTopFilterForAttribute with minimal parameters and multiple attributes1") {
     val (client, echo) = testClient()
     val future = client.getTopFilterForAttribute(
       attribute = "myAttribute1,myAttribute2",
@@ -1282,7 +1282,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getTopFilterForAttribute with all parameters") {
+  test("get getTopFilterForAttribute with all parameters2") {
     val (client, echo) = testClient()
     val future = client.getTopFilterForAttribute(
       attribute = "myAttribute",
@@ -1312,7 +1312,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getTopFilterForAttribute with all parameters and multiple attributes") {
+  test("get getTopFilterForAttribute with all parameters and multiple attributes3") {
     val (client, echo) = testClient()
     val future = client.getTopFilterForAttribute(
       attribute = "myAttribute1,myAttribute2",
@@ -1363,7 +1363,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getTopFiltersNoResults with all parameters") {
+  test("get getTopFiltersNoResults with all parameters1") {
     val (client, echo) = testClient()
     val future = client.getTopFiltersNoResults(
       index = "index",
@@ -1413,7 +1413,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getTopHits with all parameters") {
+  test("get getTopHits with all parameters1") {
     val (client, echo) = testClient()
     val future = client.getTopHits(
       index = "index",
@@ -1465,7 +1465,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getTopSearches with all parameters") {
+  test("get getTopSearches with all parameters1") {
     val (client, echo) = testClient()
     val future = client.getTopSearches(
       index = "index",
@@ -1497,7 +1497,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("e2e with complex query params") {
+  test("e2e with complex query params2") {
     val (client, echo) = testClient()
     val future = client.getTopSearches(
       index = "cts_e2e_space in index"
@@ -1546,7 +1546,7 @@ class AnalyticsTest extends AnyFunSuite {
     }
   }
 
-  test("get getUsersCount with all parameters") {
+  test("get getUsersCount with all parameters1") {
     val (client, echo) = testClient()
     val future = client.getUsersCount(
       index = "index",

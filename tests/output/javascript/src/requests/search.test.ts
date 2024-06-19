@@ -32,7 +32,7 @@ const e2eClient = searchClient(
 );
 
 describe('addApiKey', () => {
-  test('addApiKey0', async () => {
+  test('addApiKey', async () => {
     const req = (await client.addApiKey({
       acl: ['search', 'addObject'],
       description: 'my new api key',
@@ -55,7 +55,7 @@ describe('addApiKey', () => {
 });
 
 describe('addOrUpdateObject', () => {
-  test('addOrUpdateObject0', async () => {
+  test('addOrUpdateObject', async () => {
     const req = (await client.addOrUpdateObject({
       indexName: 'indexName',
       objectID: 'uniqueID',
@@ -70,7 +70,7 @@ describe('addOrUpdateObject', () => {
 });
 
 describe('appendSource', () => {
-  test('appendSource0', async () => {
+  test('appendSource', async () => {
     const req = (await client.appendSource({
       source: 'theSource',
       description: 'theDescription',
@@ -87,7 +87,7 @@ describe('appendSource', () => {
 });
 
 describe('assignUserId', () => {
-  test('assignUserId0', async () => {
+  test('assignUserId', async () => {
     const req = (await client.assignUserId({
       xAlgoliaUserID: 'userID',
       assignUserIdParams: { cluster: 'theCluster' },
@@ -119,31 +119,37 @@ describe('assignUserId', () => {
 });
 
 describe('batch', () => {
-  test('allows batch method with `addObject` action', async () => {
+  test('addObject', async () => {
     const req = (await client.batch({
-      indexName: 'theIndexName',
+      indexName: '<YOUR_INDEX_NAME>',
       batchWriteParams: {
-        requests: [{ action: 'addObject', body: { key: 'value' } }],
+        requests: [
+          { action: 'addObject', body: { key: 'bar', foo: '1' } },
+          { action: 'addObject', body: { key: 'baz', foo: '2' } },
+        ],
       },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/theIndexName/batch');
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      requests: [{ action: 'addObject', body: { key: 'value' } }],
+      requests: [
+        { action: 'addObject', body: { key: 'bar', foo: '1' } },
+        { action: 'addObject', body: { key: 'baz', foo: '2' } },
+      ],
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('allows batch method with `clear` action', async () => {
+  test('clear', async () => {
     const req = (await client.batch({
-      indexName: 'theIndexName',
+      indexName: '<YOUR_INDEX_NAME>',
       batchWriteParams: {
         requests: [{ action: 'clear', body: { key: 'value' } }],
       },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/theIndexName/batch');
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
       requests: [{ action: 'clear', body: { key: 'value' } }],
@@ -151,15 +157,15 @@ describe('batch', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('allows batch method with `delete` action', async () => {
+  test('delete', async () => {
     const req = (await client.batch({
-      indexName: 'theIndexName',
+      indexName: '<YOUR_INDEX_NAME>',
       batchWriteParams: {
         requests: [{ action: 'delete', body: { key: 'value' } }],
       },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/theIndexName/batch');
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
       requests: [{ action: 'delete', body: { key: 'value' } }],
@@ -167,15 +173,15 @@ describe('batch', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('allows batch method with `deleteObject` action', async () => {
+  test('deleteObject', async () => {
     const req = (await client.batch({
-      indexName: 'theIndexName',
+      indexName: '<YOUR_INDEX_NAME>',
       batchWriteParams: {
         requests: [{ action: 'deleteObject', body: { key: 'value' } }],
       },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/theIndexName/batch');
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
       requests: [{ action: 'deleteObject', body: { key: 'value' } }],
@@ -183,15 +189,15 @@ describe('batch', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('allows batch method with `partialUpdateObject` action', async () => {
+  test('partialUpdateObject', async () => {
     const req = (await client.batch({
-      indexName: 'theIndexName',
+      indexName: '<YOUR_INDEX_NAME>',
       batchWriteParams: {
         requests: [{ action: 'partialUpdateObject', body: { key: 'value' } }],
       },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/theIndexName/batch');
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
       requests: [{ action: 'partialUpdateObject', body: { key: 'value' } }],
@@ -199,9 +205,9 @@ describe('batch', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('allows batch method with `partialUpdateObjectNoCreate` action', async () => {
+  test('partialUpdateObjectNoCreate', async () => {
     const req = (await client.batch({
-      indexName: 'theIndexName',
+      indexName: '<YOUR_INDEX_NAME>',
       batchWriteParams: {
         requests: [
           { action: 'partialUpdateObjectNoCreate', body: { key: 'value' } },
@@ -209,7 +215,7 @@ describe('batch', () => {
       },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/theIndexName/batch');
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
       requests: [
@@ -219,15 +225,15 @@ describe('batch', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('allows batch method with `updateObject` action', async () => {
+  test('updateObject', async () => {
     const req = (await client.batch({
-      indexName: 'theIndexName',
+      indexName: '<YOUR_INDEX_NAME>',
       batchWriteParams: {
         requests: [{ action: 'updateObject', body: { key: 'value' } }],
       },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/theIndexName/batch');
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/batch');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
       requests: [{ action: 'updateObject', body: { key: 'value' } }],
@@ -237,7 +243,7 @@ describe('batch', () => {
 });
 
 describe('batchAssignUserIds', () => {
-  test('batchAssignUserIds0', async () => {
+  test('batchAssignUserIds', async () => {
     const req = (await client.batchAssignUserIds({
       xAlgoliaUserID: 'userID',
       batchAssignUserIdsParams: {
@@ -260,33 +266,11 @@ describe('batchAssignUserIds', () => {
 });
 
 describe('batchDictionaryEntries', () => {
-  test('get batchDictionaryEntries results with minimal parameters', async () => {
+  test('replace', async () => {
     const req = (await client.batchDictionaryEntries({
-      dictionaryName: 'compounds',
+      dictionaryName: 'plurals',
       batchDictionaryEntriesParams: {
-        requests: [
-          { action: 'addEntry', body: { objectID: '1', language: 'en' } },
-          { action: 'deleteEntry', body: { objectID: '2', language: 'fr' } },
-        ],
-      },
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual('/1/dictionaries/compounds/batch');
-    expect(req.method).toEqual('POST');
-    expect(req.data).toEqual({
-      requests: [
-        { action: 'addEntry', body: { objectID: '1', language: 'en' } },
-        { action: 'deleteEntry', body: { objectID: '2', language: 'fr' } },
-      ],
-    });
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
-
-  test('get batchDictionaryEntries results with all parameters', async () => {
-    const req = (await client.batchDictionaryEntries({
-      dictionaryName: 'compounds',
-      batchDictionaryEntriesParams: {
-        clearExistingDictionaryEntries: false,
+        clearExistingDictionaryEntries: true,
         requests: [
           {
             action: 'addEntry',
@@ -299,25 +283,14 @@ describe('batchDictionaryEntries', () => {
               state: 'enabled',
             },
           },
-          {
-            action: 'deleteEntry',
-            body: {
-              objectID: '2',
-              language: 'fr',
-              word: 'humility',
-              words: ['candor', 'algolia'],
-              decomposition: ['grit', 'algolia'],
-              state: 'enabled',
-            },
-          },
         ],
       },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/dictionaries/compounds/batch');
+    expect(req.path).toEqual('/1/dictionaries/plurals/batch');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
-      clearExistingDictionaryEntries: false,
+      clearExistingDictionaryEntries: true,
       requests: [
         {
           action: 'addEntry',
@@ -330,14 +303,45 @@ describe('batchDictionaryEntries', () => {
             state: 'enabled',
           },
         },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('delete', async () => {
+    const req = (await client.batchDictionaryEntries({
+      dictionaryName: 'plurals',
+      batchDictionaryEntriesParams: {
+        clearExistingDictionaryEntries: true,
+        requests: [
+          {
+            action: 'deleteEntry',
+            body: {
+              objectID: '1',
+              language: 'en',
+              word: 'fancy',
+              words: ['believe', 'algolia'],
+              decomposition: ['trust', 'algolia'],
+              state: 'enabled',
+            },
+          },
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/dictionaries/plurals/batch');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      clearExistingDictionaryEntries: true,
+      requests: [
         {
           action: 'deleteEntry',
           body: {
-            objectID: '2',
-            language: 'fr',
-            word: 'humility',
-            words: ['candor', 'algolia'],
-            decomposition: ['grit', 'algolia'],
+            objectID: '1',
+            language: 'en',
+            word: 'fancy',
+            words: ['believe', 'algolia'],
+            decomposition: ['trust', 'algolia'],
             state: 'enabled',
           },
         },
@@ -346,9 +350,9 @@ describe('batchDictionaryEntries', () => {
     expect(req.searchParams).toStrictEqual(undefined);
   });
 
-  test('get batchDictionaryEntries results additional properties', async () => {
+  test('append', async () => {
     const req = (await client.batchDictionaryEntries({
-      dictionaryName: 'compounds',
+      dictionaryName: 'stopwords',
       batchDictionaryEntriesParams: {
         requests: [
           {
@@ -359,7 +363,7 @@ describe('batchDictionaryEntries', () => {
       },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/dictionaries/compounds/batch');
+    expect(req.path).toEqual('/1/dictionaries/stopwords/batch');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
       requests: [
@@ -427,7 +431,7 @@ describe('browse', () => {
 });
 
 describe('clearObjects', () => {
-  test('clearObjects0', async () => {
+  test('clearObjects', async () => {
     const req = (await client.clearObjects({
       indexName: 'theIndexName',
     })) as unknown as EchoResponse;
@@ -440,7 +444,7 @@ describe('clearObjects', () => {
 });
 
 describe('clearRules', () => {
-  test('clearRules0', async () => {
+  test('clearRules', async () => {
     const req = (await client.clearRules({
       indexName: 'indexName',
     })) as unknown as EchoResponse;
@@ -453,7 +457,7 @@ describe('clearRules', () => {
 });
 
 describe('clearSynonyms', () => {
-  test('clearSynonyms0', async () => {
+  test('clearSynonyms', async () => {
     const req = (await client.clearSynonyms({
       indexName: 'indexName',
     })) as unknown as EchoResponse;
@@ -800,7 +804,7 @@ describe('customPut', () => {
 });
 
 describe('deleteApiKey', () => {
-  test('deleteApiKey0', async () => {
+  test('deleteApiKey', async () => {
     const req = (await client.deleteApiKey({
       key: 'myTestApiKey',
     })) as unknown as EchoResponse;
@@ -813,7 +817,7 @@ describe('deleteApiKey', () => {
 });
 
 describe('deleteBy', () => {
-  test('deleteBy0', async () => {
+  test('deleteBy', async () => {
     const req = (await client.deleteBy({
       indexName: 'theIndexName',
       deleteByParams: { filters: 'brand:brandName' },
@@ -827,7 +831,7 @@ describe('deleteBy', () => {
 });
 
 describe('deleteIndex', () => {
-  test('deleteIndex0', async () => {
+  test('deleteIndex', async () => {
     const req = (await client.deleteIndex({
       indexName: 'theIndexName',
     })) as unknown as EchoResponse;
@@ -840,13 +844,13 @@ describe('deleteIndex', () => {
 });
 
 describe('deleteObject', () => {
-  test('deleteObject0', async () => {
+  test('deleteObject', async () => {
     const req = (await client.deleteObject({
-      indexName: 'theIndexName',
+      indexName: '<YOUR_INDEX_NAME>',
       objectID: 'uniqueID',
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/theIndexName/uniqueID');
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/uniqueID');
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -880,7 +884,7 @@ describe('deleteRule', () => {
 });
 
 describe('deleteSource', () => {
-  test('deleteSource0', async () => {
+  test('deleteSource', async () => {
     const req = (await client.deleteSource({
       source: 'theSource',
     })) as unknown as EchoResponse;
@@ -893,7 +897,7 @@ describe('deleteSource', () => {
 });
 
 describe('deleteSynonym', () => {
-  test('deleteSynonym0', async () => {
+  test('deleteSynonym', async () => {
     const req = (await client.deleteSynonym({
       indexName: 'indexName',
       objectID: 'id1',
@@ -907,12 +911,25 @@ describe('deleteSynonym', () => {
 });
 
 describe('getApiKey', () => {
-  test('getApiKey0', async () => {
+  test('getApiKey', async () => {
     const req = (await client.getApiKey({
       key: 'myTestApiKey',
     })) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/keys/myTestApiKey');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('getAppTask', () => {
+  test('getAppTask', async () => {
+    const req = (await client.getAppTask({
+      taskID: 123,
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/task/123');
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toStrictEqual(undefined);
@@ -974,7 +991,7 @@ describe('getLogs', () => {
 });
 
 describe('getObject', () => {
-  test('getObject0', async () => {
+  test('getObject', async () => {
     const req = (await client.getObject({
       indexName: 'theIndexName',
       objectID: 'uniqueID',
@@ -991,7 +1008,7 @@ describe('getObject', () => {
 });
 
 describe('getObjects', () => {
-  test('getObjects0', async () => {
+  test('getObjects', async () => {
     const req = (await client.getObjects({
       requests: [
         {
@@ -1018,7 +1035,7 @@ describe('getObjects', () => {
 });
 
 describe('getRule', () => {
-  test('getRule0', async () => {
+  test('getRule', async () => {
     const req = (await client.getRule({
       indexName: 'indexName',
       objectID: 'id1',
@@ -1032,7 +1049,7 @@ describe('getRule', () => {
 });
 
 describe('getSettings', () => {
-  test('getSettings0', async () => {
+  test('getSettings', async () => {
     const req = (await client.getSettings({
       indexName: 'cts_e2e_settings',
     })) as unknown as EchoResponse;
@@ -1074,7 +1091,7 @@ describe('getSettings', () => {
 });
 
 describe('getSources', () => {
-  test('getSources0', async () => {
+  test('getSources', async () => {
     const req = (await client.getSources()) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/security/sources');
@@ -1085,7 +1102,7 @@ describe('getSources', () => {
 });
 
 describe('getSynonym', () => {
-  test('getSynonym0', async () => {
+  test('getSynonym', async () => {
     const req = (await client.getSynonym({
       indexName: 'indexName',
       objectID: 'id1',
@@ -1099,7 +1116,7 @@ describe('getSynonym', () => {
 });
 
 describe('getTask', () => {
-  test('getTask0', async () => {
+  test('getTask', async () => {
     const req = (await client.getTask({
       indexName: 'theIndexName',
       taskID: 123,
@@ -1113,7 +1130,7 @@ describe('getTask', () => {
 });
 
 describe('getTopUserIds', () => {
-  test('getTopUserIds0', async () => {
+  test('getTopUserIds', async () => {
     const req = (await client.getTopUserIds()) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/clusters/mapping/top');
@@ -1124,7 +1141,7 @@ describe('getTopUserIds', () => {
 });
 
 describe('getUserId', () => {
-  test('getUserId0', async () => {
+  test('getUserId', async () => {
     const req = (await client.getUserId({
       userID: 'uniqueID',
     })) as unknown as EchoResponse;
@@ -1159,7 +1176,7 @@ describe('hasPendingMappings', () => {
 });
 
 describe('listApiKeys', () => {
-  test('listApiKeys0', async () => {
+  test('listApiKeys', async () => {
     const req = (await client.listApiKeys()) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/keys');
@@ -1170,7 +1187,7 @@ describe('listApiKeys', () => {
 });
 
 describe('listClusters', () => {
-  test('listClusters0', async () => {
+  test('listClusters', async () => {
     const req = (await client.listClusters()) as unknown as EchoResponse;
 
     expect(req.path).toEqual('/1/clusters');
@@ -1227,7 +1244,7 @@ describe('listUserIds', () => {
 });
 
 describe('multipleBatch', () => {
-  test('multipleBatch0', async () => {
+  test('multipleBatch', async () => {
     const req = (await client.multipleBatch({
       requests: [
         {
@@ -1254,29 +1271,65 @@ describe('multipleBatch', () => {
 });
 
 describe('operationIndex', () => {
-  test('operationIndex0', async () => {
+  test('scopes', async () => {
     const req = (await client.operationIndex({
-      indexName: 'theIndexName',
+      indexName: '<SOURCE_INDEX_NAME>',
       operationIndexParams: {
-        operation: 'copy',
-        destination: 'dest',
+        operation: 'move',
+        destination: '<DESTINATION_INDEX_NAME>',
         scope: ['rules', 'settings'],
       },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/theIndexName/operation');
+    expect(req.path).toEqual('/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      operation: 'move',
+      destination: '<DESTINATION_INDEX_NAME>',
+      scope: ['rules', 'settings'],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('copy', async () => {
+    const req = (await client.operationIndex({
+      indexName: '<SOURCE_INDEX_NAME>',
+      operationIndexParams: {
+        operation: 'copy',
+        destination: '<DESTINATION_INDEX_NAME>',
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({
       operation: 'copy',
-      destination: 'dest',
-      scope: ['rules', 'settings'],
+      destination: '<DESTINATION_INDEX_NAME>',
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('move', async () => {
+    const req = (await client.operationIndex({
+      indexName: '<SOURCE_INDEX_NAME>',
+      operationIndexParams: {
+        operation: 'move',
+        destination: '<DESTINATION_INDEX_NAME>',
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      operation: 'move',
+      destination: '<DESTINATION_INDEX_NAME>',
     });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
 
 describe('partialUpdateObject', () => {
-  test('partialUpdateObject0', async () => {
+  test('partialUpdateObject', async () => {
     const req = (await client.partialUpdateObject({
       indexName: 'theIndexName',
       objectID: 'uniqueID',
@@ -1298,7 +1351,7 @@ describe('partialUpdateObject', () => {
 });
 
 describe('removeUserId', () => {
-  test('removeUserId0', async () => {
+  test('removeUserId', async () => {
     const req = (await client.removeUserId({
       userID: 'uniqueID',
     })) as unknown as EchoResponse;
@@ -1311,7 +1364,7 @@ describe('removeUserId', () => {
 });
 
 describe('replaceSources', () => {
-  test('replaceSources0', async () => {
+  test('replaceSources', async () => {
     const req = (await client.replaceSources({
       source: [{ source: 'theSource', description: 'theDescription' }],
     })) as unknown as EchoResponse;
@@ -1326,7 +1379,7 @@ describe('replaceSources', () => {
 });
 
 describe('restoreApiKey', () => {
-  test('restoreApiKey0', async () => {
+  test('restoreApiKey', async () => {
     const req = (await client.restoreApiKey({
       key: 'myApiKey',
     })) as unknown as EchoResponse;
@@ -1339,13 +1392,13 @@ describe('restoreApiKey', () => {
 });
 
 describe('saveObject', () => {
-  test('saveObject0', async () => {
+  test('saveObject', async () => {
     const req = (await client.saveObject({
-      indexName: 'theIndexName',
+      indexName: '<YOUR_INDEX_NAME>',
       body: { objectID: 'id', test: 'val' },
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/theIndexName');
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ objectID: 'id', test: 'val' });
     expect(req.searchParams).toStrictEqual(undefined);
@@ -1454,7 +1507,7 @@ describe('saveRule', () => {
 describe('saveRules', () => {
   test('saveRules with minimal parameters', async () => {
     const req = (await client.saveRules({
-      indexName: 'indexName',
+      indexName: '<YOUR_INDEX_NAME>',
       rules: [
         {
           objectID: 'a-rule-id',
@@ -1465,9 +1518,11 @@ describe('saveRules', () => {
           conditions: [{ pattern: 'apple', anchoring: 'contains' }],
         },
       ],
+      forwardToReplicas: false,
+      clearExistingRules: true,
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/indexName/rules/batch');
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual([
       {
@@ -1479,12 +1534,15 @@ describe('saveRules', () => {
         conditions: [{ pattern: 'apple', anchoring: 'contains' }],
       },
     ]);
-    expect(req.searchParams).toStrictEqual(undefined);
+    expect(req.searchParams).toStrictEqual({
+      forwardToReplicas: 'false',
+      clearExistingRules: 'true',
+    });
   });
 
   test('saveRules with all parameters', async () => {
     const req = (await client.saveRules({
-      indexName: 'indexName',
+      indexName: '<YOUR_INDEX_NAME>',
       rules: [
         {
           objectID: 'id1',
@@ -1524,7 +1582,7 @@ describe('saveRules', () => {
       clearExistingRules: true,
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/indexName/rules/batch');
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual([
       {
@@ -1569,7 +1627,7 @@ describe('saveRules', () => {
 });
 
 describe('saveSynonym', () => {
-  test('saveSynonym0', async () => {
+  test('saveSynonym', async () => {
     const req = (await client.saveSynonym({
       indexName: 'indexName',
       objectID: 'id1',
@@ -1593,9 +1651,9 @@ describe('saveSynonym', () => {
 });
 
 describe('saveSynonyms', () => {
-  test('saveSynonyms0', async () => {
+  test('saveSynonyms', async () => {
     const req = (await client.saveSynonyms({
-      indexName: 'indexName',
+      indexName: '<YOUR_INDEX_NAME>',
       synonymHit: [
         {
           objectID: 'id1',
@@ -1610,10 +1668,10 @@ describe('saveSynonyms', () => {
         },
       ],
       forwardToReplicas: true,
-      replaceExistingSynonyms: false,
+      replaceExistingSynonyms: true,
     })) as unknown as EchoResponse;
 
-    expect(req.path).toEqual('/1/indexes/indexName/synonyms/batch');
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/synonyms/batch');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual([
       {
@@ -1630,12 +1688,112 @@ describe('saveSynonyms', () => {
     ]);
     expect(req.searchParams).toStrictEqual({
       forwardToReplicas: 'true',
-      replaceExistingSynonyms: 'false',
+      replaceExistingSynonyms: 'true',
     });
   });
 });
 
 describe('search', () => {
+  test('withHitsPerPage', async () => {
+    const req = (await client.search({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          hitsPerPage: 50,
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/queries');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          hitsPerPage: 50,
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('filterOnly', async () => {
+    const req = (await client.search({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          filters: 'actor:Scarlett Johansson',
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/queries');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          filters: 'actor:Scarlett Johansson',
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('filterOr', async () => {
+    const req = (await client.search({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          filters: 'actor:Tom Cruise OR actor:Scarlett Johansson',
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/queries');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          filters: 'actor:Tom Cruise OR actor:Scarlett Johansson',
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('filterNot', async () => {
+    const req = (await client.search({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          filters: 'NOT actor:Nicolas Cage',
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/queries');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          filters: 'NOT actor:Nicolas Cage',
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
   test('search for a single hits request with minimal parameters', async () => {
     const req = (await client.search({
       requests: [{ indexName: 'cts_e2e_search_empty_index' }],
@@ -1672,6 +1830,56 @@ describe('search', () => {
     };
 
     expect(expectedBody).toEqual(union(expectedBody, resp));
+  });
+
+  test('retrieveFacets', async () => {
+    const req = (await client.search({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          facets: ['author', 'genre'],
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/queries');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          facets: ['author', 'genre'],
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
+  test('retrieveFacetsWildcard', async () => {
+    const req = (await client.search({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          facets: ['*'],
+        },
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/*/queries');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      requests: [
+        {
+          indexName: '<YOUR_INDEX_NAME>',
+          query: '<YOUR_QUERY>',
+          facets: ['*'],
+        },
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
   });
 
   test('search for a single facet request with minimal parameters', async () => {
@@ -2321,7 +2529,7 @@ describe('searchForFacetValues', () => {
 });
 
 describe('searchRules', () => {
-  test('searchRules0', async () => {
+  test('searchRules', async () => {
     const req = (await client.searchRules({
       indexName: 'indexName',
       searchRulesParams: { query: 'something' },
@@ -2466,7 +2674,7 @@ describe('searchSynonyms', () => {
 });
 
 describe('searchUserIds', () => {
-  test('searchUserIds0', async () => {
+  test('searchUserIds', async () => {
     const req = (await client.searchUserIds({
       query: 'test',
       clusterName: 'theClusterName',
@@ -2523,6 +2731,30 @@ describe('setDictionarySettings', () => {
 });
 
 describe('setSettings', () => {
+  test('setSettingsAttributesForFaceting', async () => {
+    const req = (await client.setSettings({
+      indexName: '<YOUR_INDEX_NAME>',
+      indexSettings: {
+        attributesForFaceting: [
+          'actor',
+          'filterOnly(category)',
+          'searchable(publisher)',
+        ],
+      },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/%3CYOUR_INDEX_NAME%3E/settings');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({
+      attributesForFaceting: [
+        'actor',
+        'filterOnly(category)',
+        'searchable(publisher)',
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+
   test('setSettings with minimal parameters', async () => {
     const req = (await client.setSettings({
       indexName: 'cts_e2e_settings',
@@ -2794,7 +3026,7 @@ describe('setSettings', () => {
 });
 
 describe('updateApiKey', () => {
-  test('updateApiKey0', async () => {
+  test('updateApiKey', async () => {
     const req = (await client.updateApiKey({
       key: 'myApiKey',
       apiKey: {
@@ -2814,33 +3046,6 @@ describe('updateApiKey', () => {
       maxHitsPerQuery: 20,
     });
     expect(req.searchParams).toStrictEqual(undefined);
-  });
-});
-
-describe('generateSecuredApiKey', () => {
-  test('generates a key without restrictions', () => {
-    const resp = client.generateSecuredApiKey({ parentApiKey: 'foo' });
-    expect(resp).toEqual(
-      'NjgzNzE2ZDlkN2Y4MmVlZDE3NGM2Y2FlYmUwODZlZTkzMzc2Yzc5ZDdjNjFkZDY3MGVhMDBmN2Y4ZDZlYjBhOA=='
-    );
-  });
-
-  test('generates a key with restrictions', () => {
-    const resp = client.generateSecuredApiKey({
-      parentApiKey: 'foo',
-      restrictions: {
-        validUntil: 100,
-        restrictIndices: ['bar'],
-        restrictSources: '192,168.1.0/24',
-        userToken: 'foobarbaz',
-        searchParams: {
-          query: 'foo',
-        },
-      },
-    });
-    expect(resp).toEqual(
-      'M2RlY2Y5ZjgzMDU1ZDRiYjkyOTdjYjYxYWNjNWNhNTQ5ZGI5Mjc3ZmVjNmNmNjM2ZjAwMTA4OGRjNDI5YjFhOXZhbGlkVW50aWw9MTAwJnJlc3RyaWN0SW5kaWNlcz0lNUIlMjJiYXIlMjIlNUQmcmVzdHJpY3RTb3VyY2VzPTE5MiUyQzE2OC4xLjAlMkYyNCZ1c2VyVG9rZW49Zm9vYmFyYmF6JnNlYXJjaFBhcmFtcz0lN0IlMjJxdWVyeSUyMiUzQSUyMmZvbyUyMiU3RA=='
-    );
   });
 });
 
@@ -2897,7 +3102,7 @@ describe('replaceAllObjects', () => {
     });
 
     expect(client.batch).toHaveBeenCalledTimes(1);
-    expect(client.operationIndex).toHaveBeenCalledTimes(2);
+    expect(client.operationIndex).toHaveBeenCalledTimes(3);
     expect(resp).toEqual({
       copyOperationResponse: { taskID: 21, updatedAt: 'foobar' },
       batchResponses: [
@@ -2923,7 +3128,7 @@ describe('replaceAllObjects', () => {
     });
 
     expect(client.batch).toHaveBeenCalledTimes(4);
-    expect(client.operationIndex).toHaveBeenCalledTimes(2);
+    expect(client.operationIndex).toHaveBeenCalledTimes(3);
     expect(resp).toEqual({
       copyOperationResponse: { taskID: 21, updatedAt: 'foobar' },
       batchResponses: [
@@ -2957,7 +3162,7 @@ describe('replaceAllObjects', () => {
     const resp = await client.replaceAllObjects({ indexName: 'foo', objects });
 
     expect(client.batch).toHaveBeenCalledTimes(2);
-    expect(client.operationIndex).toHaveBeenCalledTimes(2);
+    expect(client.operationIndex).toHaveBeenCalledTimes(3);
     expect(resp).toEqual({
       copyOperationResponse: { taskID: 21, updatedAt: 'foobar' },
       batchResponses: [

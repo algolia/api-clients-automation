@@ -69,7 +69,7 @@ class InsightsTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("allow del method for a custom path with all parameters") {
+  test("allow del method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customDelete[JObject](
       path = "test/all",
@@ -105,7 +105,7 @@ class InsightsTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("allow get method for a custom path with all parameters") {
+  test("allow get method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customGet[JObject](
       path = "test/all",
@@ -127,7 +127,7 @@ class InsightsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions should be escaped too") {
+  test("requestOptions should be escaped too2") {
     val (client, echo) = testClient()
     val future = client.customGet[JObject](
       path = "test/all",
@@ -182,7 +182,7 @@ class InsightsTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("allow post method for a custom path with all parameters") {
+  test("allow post method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/all",
@@ -207,7 +207,7 @@ class InsightsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions can override default query parameters") {
+  test("requestOptions can override default query parameters2") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -238,7 +238,7 @@ class InsightsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions merges query parameters with default ones") {
+  test("requestOptions merges query parameters with default ones3") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -269,7 +269,7 @@ class InsightsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions can override default headers") {
+  test("requestOptions can override default headers4") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -306,7 +306,7 @@ class InsightsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions merges headers with default ones") {
+  test("requestOptions merges headers with default ones5") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -343,7 +343,7 @@ class InsightsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts booleans") {
+  test("requestOptions queryParameters accepts booleans6") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -374,7 +374,7 @@ class InsightsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts integers") {
+  test("requestOptions queryParameters accepts integers7") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -405,7 +405,7 @@ class InsightsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts list of string") {
+  test("requestOptions queryParameters accepts list of string8") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -436,7 +436,7 @@ class InsightsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts list of booleans") {
+  test("requestOptions queryParameters accepts list of booleans9") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -468,7 +468,7 @@ class InsightsTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts list of integers") {
+  test("requestOptions queryParameters accepts list of integers10") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -515,7 +515,7 @@ class InsightsTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("allow put method for a custom path with all parameters") {
+  test("allow put method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customPut[JObject](
       path = "test/all",
@@ -540,7 +540,7 @@ class InsightsTest extends AnyFunSuite {
     }
   }
 
-  test("deleteUserToken0") {
+  test("deleteUserToken") {
     val (client, echo) = testClient()
     val future = client.deleteUserToken(
       userToken = "test-user-1"
@@ -554,7 +554,7 @@ class InsightsTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("pushEvents0") {
+  test("pushEvents") {
     val (client, echo) = testClient()
     val future = client.pushEvents(
       insightsEvents = InsightsEvents(
@@ -586,7 +586,7 @@ class InsightsTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("Many events type") {
+  test("Many events type1") {
     val (client, echo) = testClient()
     val future = client.pushEvents(
       insightsEvents = InsightsEvents(
@@ -597,7 +597,7 @@ class InsightsTest extends AnyFunSuite {
             index = "products",
             userToken = "user-123456",
             authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1715385600000L),
+            timestamp = Some(1718755200000L),
             objectIDs = Seq("9780545139700", "9780439784542"),
             queryID = "43b15df305339e827f0ac0bdc5ebcaa7"
           ),
@@ -607,7 +607,7 @@ class InsightsTest extends AnyFunSuite {
             index = "products",
             userToken = "user-123456",
             authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1715385600000L),
+            timestamp = Some(1718755200000L),
             objectIDs = Seq("9780545139700", "9780439784542")
           )
         )
@@ -620,7 +620,7 @@ class InsightsTest extends AnyFunSuite {
     assert(res.path == "/1/events")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1715385600000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1715385600000,"objectIDs":["9780545139700","9780439784542"]}]}"""
+      """{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1718755200000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1718755200000,"objectIDs":["9780545139700","9780439784542"]}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
@@ -634,7 +634,7 @@ class InsightsTest extends AnyFunSuite {
             index = "products",
             userToken = "user-123456",
             authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1715385600000L),
+            timestamp = Some(1718755200000L),
             objectIDs = Seq("9780545139700", "9780439784542"),
             queryID = "43b15df305339e827f0ac0bdc5ebcaa7"
           ),
@@ -644,7 +644,7 @@ class InsightsTest extends AnyFunSuite {
             index = "products",
             userToken = "user-123456",
             authenticatedUserToken = Some("user-123456"),
-            timestamp = Some(1715385600000L),
+            timestamp = Some(1718755200000L),
             objectIDs = Seq("9780545139700", "9780439784542")
           )
         )
@@ -655,7 +655,7 @@ class InsightsTest extends AnyFunSuite {
     compareJSON("""{"message":"OK","status":200}""", write(response), JSONCompareMode.LENIENT)
   }
 
-  test("ConvertedObjectIDsAfterSearch") {
+  test("ConvertedObjectIDsAfterSearch2") {
     val (client, echo) = testClient()
     val future = client.pushEvents(
       insightsEvents = InsightsEvents(
@@ -686,7 +686,7 @@ class InsightsTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("ViewedObjectIDs") {
+  test("ViewedObjectIDs3") {
     val (client, echo) = testClient()
     val future = client.pushEvents(
       insightsEvents = InsightsEvents(
@@ -716,7 +716,7 @@ class InsightsTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("AddedToCartObjectIDs") {
+  test("AddedToCartObjectIDs4") {
     val (client, echo) = testClient()
     val future = client.pushEvents(
       insightsEvents = InsightsEvents(

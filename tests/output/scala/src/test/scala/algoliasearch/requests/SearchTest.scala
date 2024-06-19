@@ -51,7 +51,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("addApiKey0") {
+  test("addApiKey") {
     val (client, echo) = testClient()
     val future = client.addApiKey(
       apiKey = ApiKey(
@@ -75,7 +75,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("addOrUpdateObject0") {
+  test("addOrUpdateObject") {
     val (client, echo) = testClient()
     val future = client.addOrUpdateObject(
       indexName = "indexName",
@@ -93,7 +93,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("appendSource0") {
+  test("appendSource") {
     val (client, echo) = testClient()
     val future = client.appendSource(
       source = Source(
@@ -112,7 +112,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("assignUserId0") {
+  test("assignUserId") {
     val (client, echo) = testClient()
     val future = client.assignUserId(
       xAlgoliaUserID = "userID",
@@ -137,7 +137,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("it should not encode the userID") {
+  test("it should not encode the userID1") {
     val (client, echo) = testClient()
     val future = client.assignUserId(
       xAlgoliaUserID = "user id with spaces",
@@ -162,15 +162,19 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("allows batch method with `addObject` action") {
+  test("addObject") {
     val (client, echo) = testClient()
     val future = client.batch(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       batchWriteParams = BatchWriteParams(
         requests = Seq(
           BatchRequest(
             action = Action.withName("addObject"),
-            body = JObject(List(JField("key", JString("value"))))
+            body = JObject(List(JField("key", JString("bar")), JField("foo", JString("1"))))
+          ),
+          BatchRequest(
+            action = Action.withName("addObject"),
+            body = JObject(List(JField("key", JString("baz")), JField("foo", JString("2"))))
           )
         )
       )
@@ -179,17 +183,19 @@ class SearchTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/theIndexName/batch")
+    assert(res.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch")
     assert(res.method == "POST")
-    val expectedBody = parse("""{"requests":[{"action":"addObject","body":{"key":"value"}}]}""")
+    val expectedBody = parse(
+      """{"requests":[{"action":"addObject","body":{"key":"bar","foo":"1"}},{"action":"addObject","body":{"key":"baz","foo":"2"}}]}"""
+    )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
 
-  test("allows batch method with `clear` action") {
+  test("clear1") {
     val (client, echo) = testClient()
     val future = client.batch(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       batchWriteParams = BatchWriteParams(
         requests = Seq(
           BatchRequest(
@@ -203,17 +209,17 @@ class SearchTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/theIndexName/batch")
+    assert(res.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch")
     assert(res.method == "POST")
     val expectedBody = parse("""{"requests":[{"action":"clear","body":{"key":"value"}}]}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
 
-  test("allows batch method with `delete` action") {
+  test("delete2") {
     val (client, echo) = testClient()
     val future = client.batch(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       batchWriteParams = BatchWriteParams(
         requests = Seq(
           BatchRequest(
@@ -227,17 +233,17 @@ class SearchTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/theIndexName/batch")
+    assert(res.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch")
     assert(res.method == "POST")
     val expectedBody = parse("""{"requests":[{"action":"delete","body":{"key":"value"}}]}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
 
-  test("allows batch method with `deleteObject` action") {
+  test("deleteObject3") {
     val (client, echo) = testClient()
     val future = client.batch(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       batchWriteParams = BatchWriteParams(
         requests = Seq(
           BatchRequest(
@@ -251,17 +257,17 @@ class SearchTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/theIndexName/batch")
+    assert(res.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch")
     assert(res.method == "POST")
     val expectedBody = parse("""{"requests":[{"action":"deleteObject","body":{"key":"value"}}]}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
 
-  test("allows batch method with `partialUpdateObject` action") {
+  test("partialUpdateObject4") {
     val (client, echo) = testClient()
     val future = client.batch(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       batchWriteParams = BatchWriteParams(
         requests = Seq(
           BatchRequest(
@@ -275,17 +281,17 @@ class SearchTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/theIndexName/batch")
+    assert(res.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch")
     assert(res.method == "POST")
     val expectedBody = parse("""{"requests":[{"action":"partialUpdateObject","body":{"key":"value"}}]}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
 
-  test("allows batch method with `partialUpdateObjectNoCreate` action") {
+  test("partialUpdateObjectNoCreate5") {
     val (client, echo) = testClient()
     val future = client.batch(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       batchWriteParams = BatchWriteParams(
         requests = Seq(
           BatchRequest(
@@ -299,17 +305,17 @@ class SearchTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/theIndexName/batch")
+    assert(res.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch")
     assert(res.method == "POST")
     val expectedBody = parse("""{"requests":[{"action":"partialUpdateObjectNoCreate","body":{"key":"value"}}]}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
 
-  test("allows batch method with `updateObject` action") {
+  test("updateObject6") {
     val (client, echo) = testClient()
     val future = client.batch(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       batchWriteParams = BatchWriteParams(
         requests = Seq(
           BatchRequest(
@@ -323,14 +329,14 @@ class SearchTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/theIndexName/batch")
+    assert(res.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch")
     assert(res.method == "POST")
     val expectedBody = parse("""{"requests":[{"action":"updateObject","body":{"key":"value"}}]}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
 
-  test("batchAssignUserIds0") {
+  test("batchAssignUserIds") {
     val (client, echo) = testClient()
     val future = client.batchAssignUserIds(
       xAlgoliaUserID = "userID",
@@ -356,48 +362,12 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("get batchDictionaryEntries results with minimal parameters") {
+  test("replace") {
     val (client, echo) = testClient()
     val future = client.batchDictionaryEntries(
-      dictionaryName = DictionaryType.withName("compounds"),
+      dictionaryName = DictionaryType.withName("plurals"),
       batchDictionaryEntriesParams = BatchDictionaryEntriesParams(
-        requests = Seq(
-          BatchDictionaryEntriesRequest(
-            action = DictionaryAction.withName("addEntry"),
-            body = DictionaryEntry(
-              objectID = "1",
-              language = SupportedLanguage.withName("en")
-            )
-          ),
-          BatchDictionaryEntriesRequest(
-            action = DictionaryAction.withName("deleteEntry"),
-            body = DictionaryEntry(
-              objectID = "2",
-              language = SupportedLanguage.withName("fr")
-            )
-          )
-        )
-      )
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/dictionaries/compounds/batch")
-    assert(res.method == "POST")
-    val expectedBody = parse(
-      """{"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr"}}]}"""
-    )
-    val actualBody = parse(res.body.get)
-    assert(actualBody == expectedBody)
-  }
-
-  test("get batchDictionaryEntries results with all parameters") {
-    val (client, echo) = testClient()
-    val future = client.batchDictionaryEntries(
-      dictionaryName = DictionaryType.withName("compounds"),
-      batchDictionaryEntriesParams = BatchDictionaryEntriesParams(
-        clearExistingDictionaryEntries = Some(false),
+        clearExistingDictionaryEntries = Some(true),
         requests = Seq(
           BatchDictionaryEntriesRequest(
             action = DictionaryAction.withName("addEntry"),
@@ -409,15 +379,38 @@ class SearchTest extends AnyFunSuite {
               decomposition = Some(Seq("trust", "algolia")),
               state = Some(DictionaryEntryState.withName("enabled"))
             )
-          ),
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/dictionaries/plurals/batch")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"clearExistingDictionaryEntries":true,"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("delete1") {
+    val (client, echo) = testClient()
+    val future = client.batchDictionaryEntries(
+      dictionaryName = DictionaryType.withName("plurals"),
+      batchDictionaryEntriesParams = BatchDictionaryEntriesParams(
+        clearExistingDictionaryEntries = Some(true),
+        requests = Seq(
           BatchDictionaryEntriesRequest(
             action = DictionaryAction.withName("deleteEntry"),
             body = DictionaryEntry(
-              objectID = "2",
-              language = SupportedLanguage.withName("fr"),
-              word = Some("humility"),
-              words = Some(Seq("candor", "algolia")),
-              decomposition = Some(Seq("grit", "algolia")),
+              objectID = "1",
+              language = SupportedLanguage.withName("en"),
+              word = Some("fancy"),
+              words = Some(Seq("believe", "algolia")),
+              decomposition = Some(Seq("trust", "algolia")),
               state = Some(DictionaryEntryState.withName("enabled"))
             )
           )
@@ -428,19 +421,19 @@ class SearchTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/dictionaries/compounds/batch")
+    assert(res.path == "/1/dictionaries/plurals/batch")
     assert(res.method == "POST")
     val expectedBody = parse(
-      """{"clearExistingDictionaryEntries":false,"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr","word":"humility","words":["candor","algolia"],"decomposition":["grit","algolia"],"state":"enabled"}}]}"""
+      """{"clearExistingDictionaryEntries":true,"requests":[{"action":"deleteEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}}]}"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
 
-  test("get batchDictionaryEntries results additional properties") {
+  test("append2") {
     val (client, echo) = testClient()
     val future = client.batchDictionaryEntries(
-      dictionaryName = DictionaryType.withName("compounds"),
+      dictionaryName = DictionaryType.withName("stopwords"),
       batchDictionaryEntriesParams = BatchDictionaryEntriesParams(
         requests = Seq(
           BatchDictionaryEntriesRequest(
@@ -458,7 +451,7 @@ class SearchTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/dictionaries/compounds/batch")
+    assert(res.path == "/1/dictionaries/stopwords/batch")
     assert(res.method == "POST")
     val expectedBody =
       parse("""{"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","additional":"try me"}}]}""")
@@ -493,7 +486,7 @@ class SearchTest extends AnyFunSuite {
     )
   }
 
-  test("browse with search parameters") {
+  test("browse with search parameters1") {
     val (client, echo) = testClient()
     val future = client.browse(
       indexName = "indexName",
@@ -515,7 +508,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("browse allow a cursor in parameters") {
+  test("browse allow a cursor in parameters2") {
     val (client, echo) = testClient()
     val future = client.browse(
       indexName = "indexName",
@@ -536,7 +529,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("clearObjects0") {
+  test("clearObjects") {
     val (client, echo) = testClient()
     val future = client.clearObjects(
       indexName = "theIndexName"
@@ -550,7 +543,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.contains("{}"))
   }
 
-  test("clearRules0") {
+  test("clearRules") {
     val (client, echo) = testClient()
     val future = client.clearRules(
       indexName = "indexName"
@@ -564,7 +557,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.contains("{}"))
   }
 
-  test("clearSynonyms0") {
+  test("clearSynonyms") {
     val (client, echo) = testClient()
     val future = client.clearSynonyms(
       indexName = "indexName"
@@ -592,7 +585,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("allow del method for a custom path with all parameters") {
+  test("allow del method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customDelete[JObject](
       path = "test/all",
@@ -628,7 +621,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("allow get method for a custom path with all parameters") {
+  test("allow get method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customGet[JObject](
       path = "test/all",
@@ -650,7 +643,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions should be escaped too") {
+  test("requestOptions should be escaped too2") {
     val (client, echo) = testClient()
     val future = client.customGet[JObject](
       path = "test/all",
@@ -705,7 +698,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("allow post method for a custom path with all parameters") {
+  test("allow post method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/all",
@@ -730,7 +723,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions can override default query parameters") {
+  test("requestOptions can override default query parameters2") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -761,7 +754,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions merges query parameters with default ones") {
+  test("requestOptions merges query parameters with default ones3") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -792,7 +785,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions can override default headers") {
+  test("requestOptions can override default headers4") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -829,7 +822,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions merges headers with default ones") {
+  test("requestOptions merges headers with default ones5") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -866,7 +859,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts booleans") {
+  test("requestOptions queryParameters accepts booleans6") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -897,7 +890,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts integers") {
+  test("requestOptions queryParameters accepts integers7") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -928,7 +921,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts list of string") {
+  test("requestOptions queryParameters accepts list of string8") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -959,7 +952,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts list of booleans") {
+  test("requestOptions queryParameters accepts list of booleans9") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -991,7 +984,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("requestOptions queryParameters accepts list of integers") {
+  test("requestOptions queryParameters accepts list of integers10") {
     val (client, echo) = testClient()
     val future = client.customPost[JObject](
       path = "test/requestOptions",
@@ -1038,7 +1031,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("allow put method for a custom path with all parameters") {
+  test("allow put method for a custom path with all parameters1") {
     val (client, echo) = testClient()
     val future = client.customPut[JObject](
       path = "test/all",
@@ -1063,7 +1056,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("deleteApiKey0") {
+  test("deleteApiKey") {
     val (client, echo) = testClient()
     val future = client.deleteApiKey(
       key = "myTestApiKey"
@@ -1077,7 +1070,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("deleteBy0") {
+  test("deleteBy") {
     val (client, echo) = testClient()
     val future = client.deleteBy(
       indexName = "theIndexName",
@@ -1096,7 +1089,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("deleteIndex0") {
+  test("deleteIndex") {
     val (client, echo) = testClient()
     val future = client.deleteIndex(
       indexName = "theIndexName"
@@ -1110,17 +1103,17 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("deleteObject0") {
+  test("deleteObject") {
     val (client, echo) = testClient()
     val future = client.deleteObject(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       objectID = "uniqueID"
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/theIndexName/uniqueID")
+    assert(res.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/uniqueID")
     assert(res.method == "DELETE")
     assert(res.body.isEmpty)
   }
@@ -1140,7 +1133,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("delete rule with simple characters to encode in objectID") {
+  test("delete rule with simple characters to encode in objectID1") {
     val (client, echo) = testClient()
     val future = client.deleteRule(
       indexName = "indexName",
@@ -1155,7 +1148,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("deleteSource0") {
+  test("deleteSource") {
     val (client, echo) = testClient()
     val future = client.deleteSource(
       source = "theSource"
@@ -1169,7 +1162,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("deleteSynonym0") {
+  test("deleteSynonym") {
     val (client, echo) = testClient()
     val future = client.deleteSynonym(
       indexName = "indexName",
@@ -1184,7 +1177,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getApiKey0") {
+  test("getApiKey") {
     val (client, echo) = testClient()
     val future = client.getApiKey(
       key = "myTestApiKey"
@@ -1194,6 +1187,20 @@ class SearchTest extends AnyFunSuite {
     val res = echo.lastResponse.get
 
     assert(res.path == "/1/keys/myTestApiKey")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getAppTask") {
+    val (client, echo) = testClient()
+    val future = client.getAppTask(
+      taskID = 123L
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/task/123")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
   }
@@ -1237,7 +1244,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getLogs with parameters") {
+  test("getLogs with parameters1") {
     val (client, echo) = testClient()
     val future = client.getLogs(
       offset = Some(5),
@@ -1262,7 +1269,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("getObject0") {
+  test("getObject") {
     val (client, echo) = testClient()
     val future = client.getObject(
       indexName = "theIndexName",
@@ -1285,7 +1292,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("getObjects0") {
+  test("getObjects") {
     val (client, echo) = testClient()
     val future = client.getObjects(
       getObjectsParams = GetObjectsParams(
@@ -1311,7 +1318,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("getRule0") {
+  test("getRule") {
     val (client, echo) = testClient()
     val future = client.getRule(
       indexName = "indexName",
@@ -1326,7 +1333,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getSettings0") {
+  test("getSettings") {
     val (client, echo) = testClient()
     val future = client.getSettings(
       indexName = "cts_e2e_settings"
@@ -1351,7 +1358,7 @@ class SearchTest extends AnyFunSuite {
     )
   }
 
-  test("getSources0") {
+  test("getSources") {
     val (client, echo) = testClient()
     val future = client.getSources(
     )
@@ -1364,7 +1371,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getSynonym0") {
+  test("getSynonym") {
     val (client, echo) = testClient()
     val future = client.getSynonym(
       indexName = "indexName",
@@ -1379,7 +1386,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getTask0") {
+  test("getTask") {
     val (client, echo) = testClient()
     val future = client.getTask(
       indexName = "theIndexName",
@@ -1394,7 +1401,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getTopUserIds0") {
+  test("getTopUserIds") {
     val (client, echo) = testClient()
     val future = client.getTopUserIds(
     )
@@ -1407,7 +1414,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getUserId0") {
+  test("getUserId") {
     val (client, echo) = testClient()
     val future = client.getUserId(
       userID = "uniqueID"
@@ -1434,7 +1441,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("hasPendingMappings with parameters") {
+  test("hasPendingMappings with parameters1") {
     val (client, echo) = testClient()
     val future = client.hasPendingMappings(
       getClusters = Some(true)
@@ -1455,7 +1462,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("listApiKeys0") {
+  test("listApiKeys") {
     val (client, echo) = testClient()
     val future = client.listApiKeys(
     )
@@ -1468,7 +1475,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("listClusters0") {
+  test("listClusters") {
     val (client, echo) = testClient()
     val future = client.listClusters(
     )
@@ -1494,7 +1501,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("listIndices with parameters") {
+  test("listIndices with parameters1") {
     val (client, echo) = testClient()
     val future = client.listIndices(
       page = Some(8),
@@ -1529,7 +1536,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("listUserIds with parameters") {
+  test("listUserIds with parameters1") {
     val (client, echo) = testClient()
     val future = client.listUserIds(
       page = Some(8),
@@ -1551,7 +1558,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("multipleBatch0") {
+  test("multipleBatch") {
     val (client, echo) = testClient()
     val future = client.multipleBatch(
       batchParams = BatchParams(
@@ -1576,13 +1583,13 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("operationIndex0") {
+  test("scopes") {
     val (client, echo) = testClient()
     val future = client.operationIndex(
-      indexName = "theIndexName",
+      indexName = "<SOURCE_INDEX_NAME>",
       operationIndexParams = OperationIndexParams(
-        operation = OperationType.withName("copy"),
-        destination = "dest",
+        operation = OperationType.withName("move"),
+        destination = "<DESTINATION_INDEX_NAME>",
         scope = Some(Seq(ScopeType.withName("rules"), ScopeType.withName("settings")))
       )
     )
@@ -1590,14 +1597,55 @@ class SearchTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/theIndexName/operation")
+    assert(res.path == "/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation")
     assert(res.method == "POST")
-    val expectedBody = parse("""{"operation":"copy","destination":"dest","scope":["rules","settings"]}""")
+    val expectedBody =
+      parse("""{"operation":"move","destination":"<DESTINATION_INDEX_NAME>","scope":["rules","settings"]}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }
 
-  test("partialUpdateObject0") {
+  test("copy1") {
+    val (client, echo) = testClient()
+    val future = client.operationIndex(
+      indexName = "<SOURCE_INDEX_NAME>",
+      operationIndexParams = OperationIndexParams(
+        operation = OperationType.withName("copy"),
+        destination = "<DESTINATION_INDEX_NAME>"
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"operation":"copy","destination":"<DESTINATION_INDEX_NAME>"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("move2") {
+    val (client, echo) = testClient()
+    val future = client.operationIndex(
+      indexName = "<SOURCE_INDEX_NAME>",
+      operationIndexParams = OperationIndexParams(
+        operation = OperationType.withName("move"),
+        destination = "<DESTINATION_INDEX_NAME>"
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"operation":"move","destination":"<DESTINATION_INDEX_NAME>"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("partialUpdateObject") {
     val (client, echo) = testClient()
     val future = client.partialUpdateObject(
       indexName = "theIndexName",
@@ -1629,7 +1677,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("removeUserId0") {
+  test("removeUserId") {
     val (client, echo) = testClient()
     val future = client.removeUserId(
       userID = "uniqueID"
@@ -1643,7 +1691,7 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("replaceSources0") {
+  test("replaceSources") {
     val (client, echo) = testClient()
     val future = client.replaceSources(
       source = Seq(
@@ -1664,7 +1712,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("restoreApiKey0") {
+  test("restoreApiKey") {
     val (client, echo) = testClient()
     val future = client.restoreApiKey(
       key = "myApiKey"
@@ -1678,17 +1726,17 @@ class SearchTest extends AnyFunSuite {
     assert(res.body.contains("{}"))
   }
 
-  test("saveObject0") {
+  test("saveObject") {
     val (client, echo) = testClient()
     val future = client.saveObject(
-      indexName = "theIndexName",
+      indexName = "<YOUR_INDEX_NAME>",
       body = JObject(List(JField("objectID", JString("id")), JField("test", JString("val"))))
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/theIndexName")
+    assert(res.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E")
     assert(res.method == "POST")
     val expectedBody = parse("""{"objectID":"id","test":"val"}""")
     val actualBody = parse(res.body.get)
@@ -1723,7 +1771,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("saveRule with all parameters") {
+  test("saveRule with all parameters1") {
     val (client, echo) = testClient()
     val future = client.saveRule(
       indexName = "indexName",
@@ -1831,7 +1879,7 @@ class SearchTest extends AnyFunSuite {
   test("saveRules with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.saveRules(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       rules = Seq(
         Rule(
           objectID = "a-rule-id",
@@ -1855,25 +1903,35 @@ class SearchTest extends AnyFunSuite {
             )
           )
         )
-      )
+      ),
+      forwardToReplicas = Some(false),
+      clearExistingRules = Some(true)
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/indexName/rules/batch")
+    assert(res.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch")
     assert(res.method == "POST")
     val expectedBody = parse(
       """[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}]},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}]}]"""
     )
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
+    val expectedQuery =
+      parse("""{"forwardToReplicas":"false","clearExistingRules":"true"}""").asInstanceOf[JObject].obj.toMap
+    val actualQuery = res.queryParameters
+    assert(actualQuery.size == expectedQuery.size)
+    for ((k, v) <- actualQuery) {
+      assert(expectedQuery.contains(k))
+      assert(expectedQuery(k).values == v)
+    }
   }
 
-  test("saveRules with all parameters") {
+  test("saveRules with all parameters1") {
     val (client, echo) = testClient()
     val future = client.saveRules(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       rules = Seq(
         Rule(
           objectID = "id1",
@@ -1961,7 +2019,7 @@ class SearchTest extends AnyFunSuite {
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/indexName/rules/batch")
+    assert(res.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch")
     assert(res.method == "POST")
     val expectedBody = parse(
       """[{"objectID":"id1","conditions":[{"pattern":"apple","anchoring":"contains","alternatives":false,"context":"search"}],"consequence":{"params":{"filters":"brand:apple","query":{"remove":["algolia"],"edits":[{"type":"remove","delete":"abc","insert":"cde"},{"type":"replace","delete":"abc","insert":"cde"}]}},"hide":[{"objectID":"321"}],"filterPromotes":false,"userData":{"algolia":"aloglia"},"promote":[{"objectID":"abc","position":3},{"objectIDs":["abc","def"],"position":1}]},"description":"test","enabled":true,"validity":[{"from":1656670273,"until":1656670277}]}]"""
@@ -1978,7 +2036,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("saveSynonym0") {
+  test("saveSynonym") {
     val (client, echo) = testClient()
     val future = client.saveSynonym(
       indexName = "indexName",
@@ -2008,10 +2066,10 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("saveSynonyms0") {
+  test("saveSynonyms") {
     val (client, echo) = testClient()
     val future = client.saveSynonyms(
-      indexName = "indexName",
+      indexName = "<YOUR_INDEX_NAME>",
       synonymHit = Seq(
         SynonymHit(
           objectID = "id1",
@@ -2026,13 +2084,13 @@ class SearchTest extends AnyFunSuite {
         )
       ),
       forwardToReplicas = Some(true),
-      replaceExistingSynonyms = Some(false)
+      replaceExistingSynonyms = Some(true)
     )
 
     Await.ready(future, Duration.Inf)
     val res = echo.lastResponse.get
 
-    assert(res.path == "/1/indexes/indexName/synonyms/batch")
+    assert(res.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/synonyms/batch")
     assert(res.method == "POST")
     val expectedBody = parse(
       """[{"objectID":"id1","type":"synonym","synonyms":["car","vehicule","auto"]},{"objectID":"id2","type":"onewaysynonym","input":"iphone","synonyms":["ephone","aphone","yphone"]}]"""
@@ -2040,7 +2098,7 @@ class SearchTest extends AnyFunSuite {
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
     val expectedQuery =
-      parse("""{"forwardToReplicas":"true","replaceExistingSynonyms":"false"}""").asInstanceOf[JObject].obj.toMap
+      parse("""{"forwardToReplicas":"true","replaceExistingSynonyms":"true"}""").asInstanceOf[JObject].obj.toMap
     val actualQuery = res.queryParameters
     assert(actualQuery.size == expectedQuery.size)
     for ((k, v) <- actualQuery) {
@@ -2049,7 +2107,110 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("search for a single hits request with minimal parameters") {
+  test("withHitsPerPage") {
+    val (client, echo) = testClient()
+    val future = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = Seq(
+          SearchForHits(
+            indexName = "<YOUR_INDEX_NAME>",
+            query = Some("<YOUR_QUERY>"),
+            hitsPerPage = Some(50)
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/*/queries")
+    assert(res.method == "POST")
+    val expectedBody =
+      parse("""{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","hitsPerPage":50}]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("filterOnly1") {
+    val (client, echo) = testClient()
+    val future = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = Seq(
+          SearchForHits(
+            indexName = "<YOUR_INDEX_NAME>",
+            query = Some("<YOUR_QUERY>"),
+            filters = Some("actor:Scarlett Johansson")
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/*/queries")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"actor:Scarlett Johansson"}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("filterOr2") {
+    val (client, echo) = testClient()
+    val future = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = Seq(
+          SearchForHits(
+            indexName = "<YOUR_INDEX_NAME>",
+            query = Some("<YOUR_QUERY>"),
+            filters = Some("actor:Tom Cruise OR actor:Scarlett Johansson")
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/*/queries")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"actor:Tom Cruise OR actor:Scarlett Johansson"}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("filterNot3") {
+    val (client, echo) = testClient()
+    val future = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = Seq(
+          SearchForHits(
+            indexName = "<YOUR_INDEX_NAME>",
+            query = Some("<YOUR_QUERY>"),
+            filters = Some("NOT actor:Nicolas Cage")
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/*/queries")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"NOT actor:Nicolas Cage"}]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("search for a single hits request with minimal parameters4") {
     val (client, echo) = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -2088,7 +2249,57 @@ class SearchTest extends AnyFunSuite {
     )
   }
 
-  test("search for a single facet request with minimal parameters") {
+  test("retrieveFacets5") {
+    val (client, echo) = testClient()
+    val future = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = Seq(
+          SearchForHits(
+            indexName = "<YOUR_INDEX_NAME>",
+            query = Some("<YOUR_QUERY>"),
+            facets = Some(Seq("author", "genre"))
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/*/queries")
+    assert(res.method == "POST")
+    val expectedBody =
+      parse("""{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["author","genre"]}]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("retrieveFacetsWildcard6") {
+    val (client, echo) = testClient()
+    val future = client.search(
+      searchMethodParams = SearchMethodParams(
+        requests = Seq(
+          SearchForHits(
+            indexName = "<YOUR_INDEX_NAME>",
+            query = Some("<YOUR_QUERY>"),
+            facets = Some(Seq("*"))
+          )
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/*/queries")
+    assert(res.method == "POST")
+    val expectedBody =
+      parse("""{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["*"]}]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("search for a single facet request with minimal parameters7") {
     val (client, echo) = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -2135,7 +2346,7 @@ class SearchTest extends AnyFunSuite {
     )
   }
 
-  test("search for a single hits request with all parameters") {
+  test("search for a single hits request with all parameters8") {
     val (client, echo) = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -2161,7 +2372,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search for a single facet request with all parameters") {
+  test("search for a single facet request with all parameters9") {
     val (client, echo) = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -2191,7 +2402,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search for multiple mixed requests in multiple indices with minimal parameters") {
+  test("search for multiple mixed requests in multiple indices with minimal parameters10") {
     val (client, echo) = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -2225,7 +2436,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search for multiple mixed requests in multiple indices with all parameters") {
+  test("search for multiple mixed requests in multiple indices with all parameters11") {
     val (client, echo) = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -2261,7 +2472,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search filters accept all of the possible shapes") {
+  test("search filters accept all of the possible shapes12") {
     val (client, echo) = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -2323,7 +2534,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search filters end to end") {
+  test("search filters end to end13") {
     val (client, echo) = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -2414,7 +2625,7 @@ class SearchTest extends AnyFunSuite {
     )
   }
 
-  test("search with all search parameters") {
+  test("search with all search parameters14") {
     val (client, echo) = testClient()
     val future = client.search(
       searchMethodParams = SearchMethodParams(
@@ -2570,7 +2781,7 @@ class SearchTest extends AnyFunSuite {
     )
   }
 
-  test("get searchDictionaryEntries results with all parameters") {
+  test("get searchDictionaryEntries results with all parameters1") {
     val (client, echo) = testClient()
     val future = client.searchDictionaryEntries(
       dictionaryName = DictionaryType.withName("compounds"),
@@ -2609,7 +2820,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("get searchForFacetValues results with all parameters") {
+  test("get searchForFacetValues results with all parameters1") {
     val (client, echo) = testClient()
     val future = client.searchForFacetValues(
       indexName = "indexName",
@@ -2633,7 +2844,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("searchRules0") {
+  test("searchRules") {
     val (client, echo) = testClient()
     val future = client.searchRules(
       indexName = "indexName",
@@ -2670,7 +2881,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("search with special characters in indexName") {
+  test("search with special characters in indexName1") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "cts_e2e_space in index"
@@ -2692,7 +2903,7 @@ class SearchTest extends AnyFunSuite {
     val response = Await.result(e2eFuture, Duration.Inf)
   }
 
-  test("search with searchParams") {
+  test("search with searchParams2") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "indexName",
@@ -2714,7 +2925,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("single search retrieve snippets") {
+  test("single search retrieve snippets3") {
     val (client, echo) = testClient()
     val future = client.searchSingleIndex(
       indexName = "cts_e2e_browse",
@@ -2772,7 +2983,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("searchSynonyms with all parameters") {
+  test("searchSynonyms with all parameters1") {
     val (client, echo) = testClient()
     val future = client.searchSynonyms(
       indexName = "indexName",
@@ -2796,7 +3007,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("searchUserIds0") {
+  test("searchUserIds") {
     val (client, echo) = testClient()
     val future = client.searchUserIds(
       searchUserIdsParams = SearchUserIdsParams(
@@ -2837,7 +3048,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("get setDictionarySettings results with all parameters") {
+  test("get setDictionarySettings results with all parameters1") {
     val (client, echo) = testClient()
     val future = client.setDictionarySettings(
       dictionarySettingsParams = DictionarySettingsParams(
@@ -2861,7 +3072,26 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("setSettings with minimal parameters") {
+  test("setSettingsAttributesForFaceting") {
+    val (client, echo) = testClient()
+    val future = client.setSettings(
+      indexName = "<YOUR_INDEX_NAME>",
+      indexSettings = IndexSettings(
+        attributesForFaceting = Some(Seq("actor", "filterOnly(category)", "searchable(publisher)"))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"attributesForFaceting":["actor","filterOnly(category)","searchable(publisher)"]}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("setSettings with minimal parameters1") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "cts_e2e_settings",
@@ -2898,7 +3128,7 @@ class SearchTest extends AnyFunSuite {
     val response = Await.result(e2eFuture, Duration.Inf)
   }
 
-  test("setSettings allow boolean `typoTolerance`") {
+  test("setSettings allow boolean `typoTolerance`2") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -2925,7 +3155,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("setSettings allow enum `typoTolerance`") {
+  test("setSettings allow enum `typoTolerance`3") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -2952,7 +3182,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("setSettings allow boolean `ignorePlurals`") {
+  test("setSettings allow boolean `ignorePlurals`4") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -2979,7 +3209,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("setSettings allow list of string `ignorePlurals`") {
+  test("setSettings allow list of string `ignorePlurals`5") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -3006,7 +3236,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("setSettings allow boolean `removeStopWords`") {
+  test("setSettings allow boolean `removeStopWords`6") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -3033,7 +3263,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("setSettings allow list of string `removeStopWords`") {
+  test("setSettings allow list of string `removeStopWords`7") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -3060,7 +3290,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("setSettings allow boolean `distinct`") {
+  test("setSettings allow boolean `distinct`8") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -3087,7 +3317,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("setSettings allow integers for `distinct`") {
+  test("setSettings allow integers for `distinct`9") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -3114,7 +3344,7 @@ class SearchTest extends AnyFunSuite {
     }
   }
 
-  test("setSettings allow all `indexSettings`") {
+  test("setSettings allow all `indexSettings`10") {
     val (client, echo) = testClient()
     val future = client.setSettings(
       indexName = "theIndexName",
@@ -3219,7 +3449,7 @@ class SearchTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
-  test("updateApiKey0") {
+  test("updateApiKey") {
     val (client, echo) = testClient()
     val future = client.updateApiKey(
       key = "myApiKey",

@@ -43,7 +43,7 @@ class UsageClientRequestsTests {
 
   @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
-  void customDeleteTest0() {
+  void customDeleteTest() {
     assertDoesNotThrow(() -> {
       client.customDelete("test/minimal");
     });
@@ -79,7 +79,7 @@ class UsageClientRequestsTests {
 
   @Test
   @DisplayName("allow get method for a custom path with minimal parameters")
-  void customGetTest0() {
+  void customGetTest() {
     assertDoesNotThrow(() -> {
       client.customGet("test/minimal");
     });
@@ -166,7 +166,7 @@ class UsageClientRequestsTests {
 
   @Test
   @DisplayName("allow post method for a custom path with minimal parameters")
-  void customPostTest0() {
+  void customPostTest() {
     assertDoesNotThrow(() -> {
       client.customPost("test/minimal");
     });
@@ -512,7 +512,7 @@ class UsageClientRequestsTests {
 
   @Test
   @DisplayName("allow put method for a custom path with minimal parameters")
-  void customPutTest0() {
+  void customPutTest() {
     assertDoesNotThrow(() -> {
       client.customPut("test/minimal");
     });
@@ -548,9 +548,9 @@ class UsageClientRequestsTests {
 
   @Test
   @DisplayName("getIndexUsage with minimal parameters")
-  void getIndexUsageTest0() {
+  void getIndexUsageTest() {
     assertDoesNotThrow(() -> {
-      client.getIndexUsage(Statistic.fromValue("queries_operations"), "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+      client.getIndexUsage(Statistic.QUERIES_OPERATIONS, "myIndexName", "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/usage/queries_operations/myIndexName", req.path);
@@ -575,9 +575,9 @@ class UsageClientRequestsTests {
 
   @Test
   @DisplayName("getUsage with minimal parameters")
-  void getUsageTest0() {
+  void getUsageTest() {
     assertDoesNotThrow(() -> {
-      client.getUsage(Statistic.fromValue("queries_operations"), "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
+      client.getUsage(Statistic.QUERIES_OPERATIONS, "2024-04-03T12:46:43Z", "2024-04-05T12:46:43Z");
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/usage/queries_operations", req.path);

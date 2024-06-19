@@ -50,7 +50,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// createAuthenticationOAuth
-    func testCreateAuthenticationTest0() async throws {
+    func testCreateAuthenticationTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -118,7 +118,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// createDestination
-    func testCreateDestinationTest0() async throws {
+    func testCreateDestinationTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -153,7 +153,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// createSource
-    func testCreateSourceTest0() async throws {
+    func testCreateSourceTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -193,7 +193,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// createTaskOnDemand
-    func testCreateTaskTest0() async throws {
+    func testCreateTaskTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -301,7 +301,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// allow del method for a custom path with minimal parameters
-    func testCustomDeleteTest0() async throws {
+    func testCustomDeleteTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -354,7 +354,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// allow get method for a custom path with minimal parameters
-    func testCustomGetTest0() async throws {
+    func testCustomGetTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -457,7 +457,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// allow post method for a custom path with minimal parameters
-    func testCustomPostTest0() async throws {
+    func testCustomPostTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -944,7 +944,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// allow put method for a custom path with minimal parameters
-    func testCustomPutTest0() async throws {
+    func testCustomPutTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1010,7 +1010,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// deleteAuthentication
-    func testDeleteAuthenticationTest0() async throws {
+    func testDeleteAuthenticationTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1033,7 +1033,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// deleteDestination
-    func testDeleteDestinationTest0() async throws {
+    func testDeleteDestinationTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1056,7 +1056,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// deleteSource
-    func testDeleteSourceTest0() async throws {
+    func testDeleteSourceTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1078,7 +1078,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// deleteTask
-    func testDeleteTaskTest0() async throws {
+    func testDeleteTaskTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1100,7 +1100,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// disableTask
-    func testDisableTaskTest0() async throws {
+    func testDisableTaskTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1124,7 +1124,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// enable task e2e
-    func testEnableTaskTest0() async throws {
+    func testEnableTaskTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1166,7 +1166,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// getAuthentication
-    func testGetAuthenticationTest0() async throws {
+    func testGetAuthenticationTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1189,7 +1189,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// getAuthentications
-    func testGetAuthenticationsTest0() async throws {
+    func testGetAuthenticationsTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1276,7 +1276,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// getDestination
-    func testGetDestinationTest0() async throws {
+    func testGetDestinationTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1299,7 +1299,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// getDestinations
-    func testGetDestinationsTest0() async throws {
+    func testGetDestinationsTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1321,7 +1321,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// getDockerSourceStreams
-    func testGetDockerSourceStreamsTest0() async throws {
+    func testGetDockerSourceStreamsTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1344,7 +1344,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// getEvent
-    func testGetEventTest0() async throws {
+    func testGetEventTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1372,7 +1372,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// getEvents
-    func testGetEventsTest0() async throws {
+    func testGetEventsTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1394,7 +1394,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// getRun
-    func testGetRunTest0() async throws {
+    func testGetRunTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1416,7 +1416,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// getRuns
-    func testGetRunsTest0() async throws {
+    func testGetRunsTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1438,7 +1438,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// getSource
-    func testGetSourceTest0() async throws {
+    func testGetSourceTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1479,7 +1479,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// getSources
-    func testGetSourcesTest0() async throws {
+    func testGetSourcesTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1501,7 +1501,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// getTask
-    func testGetTaskTest0() async throws {
+    func testGetTaskTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1523,7 +1523,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// getTasks
-    func testGetTasksTest0() async throws {
+    func testGetTasksTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1545,7 +1545,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// runTask
-    func testRunTaskTest0() async throws {
+    func testRunTaskTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1569,7 +1569,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// searchAuthentications
-    func testSearchAuthenticationsTest0() async throws {
+    func testSearchAuthenticationsTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1603,7 +1603,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// searchDestinations
-    func testSearchDestinationsTest0() async throws {
+    func testSearchDestinationsTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1637,7 +1637,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// searchSources
-    func testSearchSourcesTest0() async throws {
+    func testSearchSourcesTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1670,7 +1670,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// searchTasks
-    func testSearchTasksTest0() async throws {
+    func testSearchTasksTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1727,7 +1727,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// triggerDockerSourceDiscover
-    func testTriggerDockerSourceDiscoverTest0() async throws {
+    func testTriggerDockerSourceDiscoverTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1752,7 +1752,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// updateAuthentication
-    func testUpdateAuthenticationTest0() async throws {
+    func testUpdateAuthenticationTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1783,7 +1783,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// updateDestination
-    func testUpdateDestinationTest0() async throws {
+    func testUpdateDestinationTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1814,7 +1814,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// updateSource
-    func testUpdateSourceTest0() async throws {
+    func testUpdateSourceTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,
@@ -1845,7 +1845,7 @@ final class IngestionClientRequestsTests: XCTestCase {
     }
 
     /// updateTask
-    func testUpdateTaskTest0() async throws {
+    func testUpdateTaskTest() async throws {
         let configuration = try IngestionClientConfiguration(
             appID: IngestionClientRequestsTests.APPLICATION_ID,
             apiKey: IngestionClientRequestsTests.API_KEY,

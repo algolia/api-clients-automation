@@ -1,14 +1,14 @@
 [
   {
     "parameters": {
-      "indexName": "theIndexName",
+      "indexName": "<YOUR_INDEX_NAME>",
       "body": {
         "objectID": "id",
         "test": "val"
       }
     },
     "request": {
-      "path": "/1/indexes/theIndexName",
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E",
       "method": "POST",
       "body": {
         "objectID": "id",

@@ -9,13 +9,15 @@ import { remove } from 'fs-extra';
 import clientsConfig from '../config/clients.config.json' assert { type: 'json' };
 import releaseConfig from '../config/release.config.json' assert { type: 'json' };
 
-import { buildSpecs } from './buildSpecs';
 import { Cache } from './cache';
 import { getDockerImage } from './config';
 import { generateOpenapitools } from './pre-gen';
 import { getGitAuthor } from './release/common.js';
+import { buildSpecs } from './specs';
 import { createSpinner } from './spinners.js';
 import type { Generator, GeneratorMode, Language, RunOptions } from './types.js';
+
+export const fullReleaseConfig = releaseConfig;
 
 export const MAIN_BRANCH = releaseConfig.mainBranch;
 export const OWNER = releaseConfig.owner;
@@ -47,7 +49,6 @@ export const GENERATORS = Object.entries(clientsConfig).reduce(
         clientName = client;
       }
 
-      // eslint-disable-next-line no-param-reassign
       current[key] = {
         additionalProperties: {},
         ...gen,
@@ -59,7 +60,6 @@ export const GENERATORS = Object.entries(clientsConfig).reduce(
 
       // guess the package name for js from the output folder variable
       if (language === 'javascript') {
-        // eslint-disable-next-line no-param-reassign
         current[key].additionalProperties.packageName = output.substring(
           output.lastIndexOf('/') + 1,
         );
@@ -73,11 +73,7 @@ export const GENERATORS = Object.entries(clientsConfig).reduce(
 
 export const LANGUAGES = [...new Set(Object.values(GENERATORS).map((gen) => gen.language))];
 
-export const CLIENTS = [
-  ...new Set(Object.values(GENERATORS).map((gen) => gen.client)),
-  'usage',
-  'crawler',
-];
+export const CLIENTS = [...new Set(Object.values(GENERATORS).map((gen) => gen.client)), 'crawler'];
 
 export async function run(
   command: string,

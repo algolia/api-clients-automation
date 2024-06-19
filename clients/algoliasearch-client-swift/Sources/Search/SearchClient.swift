@@ -1513,6 +1513,58 @@ open class SearchClient {
         )
     }
 
+    /// - parameter taskID: (path) Unique task identifier.
+    /// - returns: GetTaskResponse
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func getAppTask(taskID: Int64, requestOptions: RequestOptions? = nil) async throws -> GetTaskResponse {
+        let response: Response<GetTaskResponse> = try await getAppTaskWithHTTPInfo(
+            taskID: taskID,
+            requestOptions: requestOptions
+        )
+
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    // Checks the status of a given application task.
+    // Required API Key ACLs:
+    //  - editSettings
+    //
+    // - parameter taskID: (path) Unique task identifier.
+    // - returns: RequestBuilder<GetTaskResponse>
+
+    open func getAppTaskWithHTTPInfo(
+        taskID: Int64,
+        requestOptions userRequestOptions: RequestOptions? = nil
+    ) async throws -> Response<GetTaskResponse> {
+        var resourcePath = "/1/task/{taskID}"
+        let taskIDPreEscape = "\(APIHelper.mapValueToPathItem(taskID))"
+        let taskIDPostEscape = taskIDPreEscape
+            .addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(
+            of: "{taskID}",
+            with: taskIDPostEscape,
+            options: .literal,
+            range: nil
+        )
+        let body: AnyCodable? = nil
+        let queryParameters: [String: Any?]? = nil
+
+        let nillableHeaders: [String: Any?]? = nil
+
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+
+        return try await self.transporter.send(
+            method: "GET",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryParameters: queryParameters) + userRequestOptions
+        )
+    }
+
     /// - returns: [String: SearchLanguages]
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open func getDictionaryLanguages(requestOptions: RequestOptions? = nil) async throws -> [String: SearchLanguages] {
@@ -2527,12 +2579,11 @@ open class SearchClient {
     }
 
     // Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are
-    // overwritten, except for index-specific API keys and analytics data. - If the destination index doesn't exist yet,
-    // it'll be created.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and
-    // default settings. - The API keys of the source index are merged with the existing keys in the destination index.
-    // -
-    // You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index
-    // that already has replicas. - Be aware of the [size
+    // overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created. 
+    // **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. -
+    // The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the
+    // `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has
+    // replicas. - Be aware of the [size
     // limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
     // -
     // Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)

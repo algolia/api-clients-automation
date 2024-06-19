@@ -1,5 +1,30 @@
 [
   {
+    "testName": "setSettingsAttributesForFaceting",
+    "isSnippet": true,
+    "parameters": {
+      "indexName": "<YOUR_INDEX_NAME>",
+      "indexSettings": {
+        "attributesForFaceting": [
+          "actor",
+          "filterOnly(category)",
+          "searchable(publisher)"
+        ]
+      }
+    },
+    "request": {
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings",
+      "method": "PUT",
+      "body": {
+        "attributesForFaceting": [
+          "actor",
+          "filterOnly(category)",
+          "searchable(publisher)"
+        ]
+      }
+    }
+  },
+  {
     "testName": "setSettings with minimal parameters",
     "parameters": {
       "indexName": "cts_e2e_settings",

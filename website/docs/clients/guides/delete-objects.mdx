@@ -2,8 +2,7 @@
 title: Delete Multiple Objects using Batch
 ---
 
-import { TabsLanguage } from '../../../src/components/TabsLanguage';
-import TabItem from '@theme/TabItem';
+import { CodeBlockLanguage } from '../../../src/components/CodeBlockLanguage';
 
 In Algolia, you can delete multiple objects efficiently using the batch functionality. This guide will show you how to delete multiple objects at once.
 
@@ -13,160 +12,15 @@ To delete multiple objects using batch, create a *batch write params*  object th
 Each delete request should have the `action` set to `deleteObject` and the `body` containing the respective object ID.
 This allows you to define multiple delete operations within the `requests` array.
 
-<TabsLanguage>
-<TabItem value="javascript">
+<CodeBlockLanguage snippet={({getSnippet, waitForTaskSnippet}) => (
+`${getSnippet('import')}
 
-```javascript
-const objectIDs = ['1', '2', '3', '4', '5'];
+${getSnippet('init')}
 
-const batchWriteParams = {
-  requests: objectIDs.map(id => ({
-    action: 'deleteObject',
-    body: {
-      objectID: id,
-    },
-  })),
-};
+${getSnippet('batch', 'deleteObject')}
 
-await client.batch({ indexName, batchWriteParams });
-```
-
-</TabItem>
-<TabItem value="php">
-
-php
-
-// TODO
-
-</TabItem>
-<TabItem value="java">
-
-```java
-List<String> objectIDs = Arrays.asList("1", "2", "3", "4", "5");
-BatchWriteParams batchWriteParams = new BatchWriteParams();
-for (String objectID : objectIDs) {
-    batchWriteParams.addRequests(
-            new BatchRequest()
-                    .setAction(Action.DELETE_OBJECT)
-                    .setBody(Collections.singletonMap("objectID", objectID))
-    );
-}
-client.batch(indexName, batchWriteParams);
-```
-
-</TabItem>
-
-<TabItem value="kotlin">
-
-```kotlin
-val objectIDs = listOf("1", "2", "3", "4", "5")
-client.batch(
-    indexName = "<YOUR_INDEX_NAME>",
-    batchWriteParams = BatchWriteParams(
-        requests = objectIDs.map { objectID ->
-            BatchRequest(
-                action = Action.DELETE_OBJECT,
-                body = buildJsonObject {
-                    put("objectID", JsonPrimitive(objectID))
-                },
-            )
-        }
-    )
-)
-```
-
-</TabItem>
-
-<TabItem value="dart">
-
-```dart
-var objectIDs = ['1', '2', '3', '4', '5'];
-await client.batch(
-  indexName: '<YOUR_INDEX_NAME>',
-  batchWriteParams: BatchWriteParams(
-    requests: objectIDs
-        .map((id) => BatchRequest(
-              action: Action.deleteObject,
-              body: {'objectID': id},
-            ))
-        .toList(),
-  ),
-);
-```
-
-</TabItem>
-
-<TabItem value="go">
-
-```go
-import (
-  "github.com/algolia/algoliasearch-client-go/v4/algolia/search"
-)
-
-indexName := "<INDEX_NAME>"
-appID := "<APPLICATION_ID>"
-apiKey := "<API_KEY>"
-
-searchClient, _ := search.NewClient(appID, apiKey)
-
-objectIDs := []string{"1", "2", "3", "4", "5"}
-batchRequests := make([]search.BatchRequest, 0, len(objectIDs))
-
-for _, objectID := range objectIDs {
-  batchRequests = append(
-    batchRequests,
-    *search.NewBatchRequest(search.ACTION_DELETE_OBJECT, map[string]any{"objectID": objectID}),
-  )
-}
-
-batchWriteParams := search.NewBatchWriteParams(batchRequests)
-
-batchResponse, err := searchClient.Batch(searchClient.NewApiBatchRequest(
-  indexName,
-  batchWriteParams,
-))
-if err != nil {
-  panic(err)
-}
-
-taskResponse, err := searchClient.WaitForTask(
-  indexName,
-  batchResponse.TaskID,
-  nil,
-  nil,
-  nil,
-)
-if err != nil {
-  panic(err)
-}
-```
-
-</TabItem>
-
-
-<TabItem value="csharp">
-
-```csharp
-using Algolia.Search.Clients;
-using Algolia.Search.Models.Search;
-
-var client = new SearchClient("<YOUR_APP_ID>", "<YOUR_API_KEY>");
-
-var objectIDs = new List<string> { "1", "2", "3", "4", "5" };
-
-var requests = objectIDs
-  .Select(objectId => new BatchRequest
-  {
-    Action = Algolia.Search.Models.Search.Action.DeleteObject,
-    Body = new { objectID = objectId }
-  }).ToList();
-
-await client.BatchAsync("<YOUR_INDEX_NAME>", new BatchWriteParams(requests));
-```
-
-</TabItem>
-
-</TabsLanguage>
+${waitForTaskSnippet()}
+`)}/>
 
 By executing the above code, all the objects with the specified object IDs will be deleted from your index.
 

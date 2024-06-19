@@ -129,7 +129,7 @@ paths:
             }
 
             // Call the API
-            resp, err := client.CustomGet(client.NewApiCustomGetRequest(
+            response, err := client.CustomGet(client.NewApiCustomGetRequest(
               "test/minimal",
             ))
             if err != nil {
@@ -138,7 +138,7 @@ paths:
             }
 
             // use the model directly
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -186,8 +186,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            $client = MonitoringClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>');
 
 
@@ -208,15 +207,15 @@ paths:
             _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.custom_get(
+            response = await _client.custom_get(
                 path="test/minimal",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -228,17 +227,17 @@ paths:
 
             # Call the API
 
-            resp = client.custom_get("test/minimal")
+            response = client.custom_get("test/minimal")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -250,14 +249,14 @@ paths:
 
             // Call the API
 
-            val res = client.customGet[JObject](
+            val response = client.customGet[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -269,7 +268,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customGet(path: "test/minimal")
+            let response = try await client.customGet(path: "test/minimal")
     post:
       operationId: customPost
       requestBody:
@@ -322,7 +321,7 @@ paths:
             }
 
             // Call the API
-            resp, err := client.CustomPost(client.NewApiCustomPostRequest(
+            response, err := client.CustomPost(client.NewApiCustomPostRequest(
               "test/minimal",
             ))
             if err != nil {
@@ -331,7 +330,7 @@ paths:
             }
 
             // use the model directly
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -379,8 +378,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            $client = MonitoringClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>');
 
 
@@ -401,15 +399,15 @@ paths:
             _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.custom_post(
+            response = await _client.custom_post(
                 path="test/minimal",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -421,17 +419,17 @@ paths:
 
             # Call the API
 
-            resp = client.custom_post("test/minimal")
+            response = client.custom_post("test/minimal")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -443,14 +441,14 @@ paths:
 
             // Call the API
 
-            val res = client.customPost[JObject](
+            val response = client.customPost[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -462,7 +460,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPost(path: "test/minimal")
+            let response = try await client.customPost(path: "test/minimal")
     put:
       operationId: customPut
       requestBody:
@@ -515,7 +513,7 @@ paths:
             }
 
             // Call the API
-            resp, err := client.CustomPut(client.NewApiCustomPutRequest(
+            response, err := client.CustomPut(client.NewApiCustomPutRequest(
               "test/minimal",
             ))
             if err != nil {
@@ -524,7 +522,7 @@ paths:
             }
 
             // use the model directly
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -572,8 +570,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            $client = MonitoringClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>');
 
 
@@ -594,15 +591,15 @@ paths:
             _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.custom_put(
+            response = await _client.custom_put(
                 path="test/minimal",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -614,17 +611,17 @@ paths:
 
             # Call the API
 
-            resp = client.custom_put("test/minimal")
+            response = client.custom_put("test/minimal")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -636,14 +633,14 @@ paths:
 
             // Call the API
 
-            val res = client.customPut[JObject](
+            val response = client.customPut[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -655,7 +652,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPut(path: "test/minimal")
+            let response = try await client.customPut(path: "test/minimal")
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -693,25 +690,33 @@ paths:
             var response = await client.CustomDeleteAsync("test/minimal");
         - lang: go
           label: Go
-          source: |
+          source: >
             // Initialize the client
+
             client, err := monitoring.NewClient("YOUR_APP_ID", "YOUR_API_KEY")
+
             if err != nil {
               // The client can fail to initialize if you pass an invalid parameter.
               panic(err)
             }
 
+
             // Call the API
-            resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+
+            response, err :=
+            client.CustomDelete(client.NewApiCustomDeleteRequest(
               "test/minimal",
             ))
+
             if err != nil {
               // handle the eventual error
               panic(err)
             }
 
+
             // use the model directly
-            print(resp)
+
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -765,8 +770,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            $client = MonitoringClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>');
 
 
@@ -787,15 +791,15 @@ paths:
             _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.custom_delete(
+            response = await _client.custom_delete(
                 path="test/minimal",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -807,17 +811,17 @@ paths:
 
             # Call the API
 
-            resp = client.custom_delete("test/minimal")
+            response = client.custom_delete("test/minimal")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -829,14 +833,14 @@ paths:
 
             // Call the API
 
-            val res = client.customDelete[JObject](
+            val response = client.customDelete[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -848,7 +852,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customDelete(path: "test/minimal")
+            let response = try await client.customDelete(path: "test/minimal")
   /1/status:
     get:
       operationId: getStatus
@@ -886,14 +890,14 @@ paths:
             }
 
             // Call the API
-            resp, err := client.GetStatus()
+            response, err := client.GetStatus()
             if err != nil {
               // handle the eventual error
               panic(err)
             }
 
             // use the model directly
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -939,8 +943,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            $client = MonitoringClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>');
 
 
@@ -959,13 +962,13 @@ paths:
             _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.get_status()
+            response = await _client.get_status()
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -977,17 +980,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_status
+            response = client.get_status
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -999,14 +1002,14 @@ paths:
 
             // Call the API
 
-            val res = client.getStatus(
+            val response = client.getStatus(
 
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1018,7 +1021,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getStatus()
+            let response = try await client.getStatus()
   /1/status/{clusters}:
     get:
       summary: Retrieve cluster status
@@ -1064,7 +1067,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetClusterStatus(client.NewApiGetClusterStatusRequest(
               "c1-de",
             ))
@@ -1077,7 +1080,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1131,8 +1134,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            $client = MonitoringClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>');
 
 
@@ -1153,15 +1155,15 @@ paths:
             _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.get_cluster_status(
+            response = await _client.get_cluster_status(
                 clusters="c1-de",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1173,17 +1175,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_cluster_status("c1-de")
+            response = client.get_cluster_status("c1-de")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1195,14 +1197,14 @@ paths:
 
             // Call the API
 
-            val res = client.getClusterStatus(
+            val response = client.getClusterStatus(
               clusters = "c1-de"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1214,7 +1216,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getClusterStatus(clusters: "c1-de")
+            let response = try await client.getClusterStatus(clusters: "c1-de")
   /1/incidents:
     get:
       summary: Retrieve all incidents
@@ -1252,14 +1254,14 @@ paths:
             }
 
             // Call the API
-            resp, err := client.GetIncidents()
+            response, err := client.GetIncidents()
             if err != nil {
               // handle the eventual error
               panic(err)
             }
 
             // use the model directly
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1305,8 +1307,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            $client = MonitoringClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>');
 
 
@@ -1325,13 +1326,13 @@ paths:
             _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.get_incidents()
+            response = await _client.get_incidents()
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1343,17 +1344,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_incidents
+            response = client.get_incidents
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1365,14 +1366,14 @@ paths:
 
             // Call the API
 
-            val res = client.getIncidents(
+            val response = client.getIncidents(
 
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1384,7 +1385,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getIncidents()
+            let response = try await client.getIncidents()
   /1/incidents/{clusters}:
     get:
       summary: Retrieve cluster incidents
@@ -1430,7 +1431,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetClusterIncidents(client.NewApiGetClusterIncidentsRequest(
               "c1-de",
             ))
@@ -1443,7 +1444,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1497,8 +1498,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            $client = MonitoringClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>');
 
 
@@ -1519,15 +1519,15 @@ paths:
             _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.get_cluster_incidents(
+            response = await _client.get_cluster_incidents(
                 clusters="c1-de",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1539,17 +1539,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_cluster_incidents("c1-de")
+            response = client.get_cluster_incidents("c1-de")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1561,14 +1561,14 @@ paths:
 
             // Call the API
 
-            val res = client.getClusterIncidents(
+            val response = client.getClusterIncidents(
               clusters = "c1-de"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1580,7 +1580,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.getClusterIncidents(clusters: "c1-de")
+            let response = try await client.getClusterIncidents(clusters:
+            "c1-de")
   /1/inventory/servers:
     get:
       summary: Retrieve servers
@@ -1629,14 +1630,14 @@ paths:
             }
 
             // Call the API
-            resp, err := client.GetServers()
+            response, err := client.GetServers()
             if err != nil {
               // handle the eventual error
               panic(err)
             }
 
             // use the model directly
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1682,8 +1683,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            $client = MonitoringClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>');
 
 
@@ -1702,13 +1702,13 @@ paths:
             _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.get_servers()
+            response = await _client.get_servers()
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1720,17 +1720,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_servers
+            response = client.get_servers
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1742,14 +1742,14 @@ paths:
 
             // Call the API
 
-            val res = client.getServers(
+            val response = client.getServers(
 
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1761,7 +1761,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getServers()
+            let response = try await client.getServers()
   /1/latency/{clusters}:
     get:
       summary: Retrieve search latency times
@@ -1801,7 +1801,7 @@ paths:
             }
 
             // Call the API
-            resp, err := client.GetLatency(client.NewApiGetLatencyRequest(
+            response, err := client.GetLatency(client.NewApiGetLatencyRequest(
               "c1-de",
             ))
             if err != nil {
@@ -1810,7 +1810,7 @@ paths:
             }
 
             // use the model directly
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1858,8 +1858,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            $client = MonitoringClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>');
 
 
@@ -1880,15 +1879,15 @@ paths:
             _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.get_latency(
+            response = await _client.get_latency(
                 clusters="c1-de",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1900,17 +1899,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_latency("c1-de")
+            response = client.get_latency("c1-de")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1922,14 +1921,14 @@ paths:
 
             // Call the API
 
-            val res = client.getLatency(
+            val response = client.getLatency(
               clusters = "c1-de"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1941,7 +1940,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getLatency(clusters: "c1-de")
+            let response = try await client.getLatency(clusters: "c1-de")
   /1/indexing/{clusters}:
     get:
       summary: Retrieve indexing times
@@ -1985,7 +1984,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetIndexingTime(client.NewApiGetIndexingTimeRequest(
               "c1-de",
             ))
@@ -1998,7 +1997,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -2052,8 +2051,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            $client = MonitoringClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>');
 
 
@@ -2074,15 +2072,15 @@ paths:
             _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.get_indexing_time(
+            response = await _client.get_indexing_time(
                 clusters="c1-de",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2094,17 +2092,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_indexing_time("c1-de")
+            response = client.get_indexing_time("c1-de")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -2116,14 +2114,14 @@ paths:
 
             // Call the API
 
-            val res = client.getIndexingTime(
+            val response = client.getIndexingTime(
               clusters = "c1-de"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2135,7 +2133,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getIndexingTime(clusters: "c1-de")
+            let response = try await client.getIndexingTime(clusters: "c1-de")
   /1/reachability/{clusters}/probes:
     get:
       summary: Test the reachability of clusters
@@ -2179,7 +2177,7 @@ paths:
 
             // Call the API
 
-            resp, err :=
+            response, err :=
             client.GetReachability(client.NewApiGetReachabilityRequest(
               "c1-de",
             ))
@@ -2192,7 +2190,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -2246,8 +2244,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            $client = MonitoringClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>');
 
 
@@ -2268,15 +2265,15 @@ paths:
             _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.get_reachability(
+            response = await _client.get_reachability(
                 clusters="c1-de",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2288,17 +2285,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_reachability("c1-de")
+            response = client.get_reachability("c1-de")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -2310,14 +2307,14 @@ paths:
 
             // Call the API
 
-            val res = client.getReachability(
+            val response = client.getReachability(
               clusters = "c1-de"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2329,7 +2326,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.getReachability(clusters: "c1-de")
+            let response = try await client.getReachability(clusters: "c1-de")
   /1/infrastructure/{metric}/period/{period}:
     get:
       summary: Retrieve metrics
@@ -2381,7 +2378,7 @@ paths:
             }
 
             // Call the API
-            resp, err := client.GetMetrics(client.NewApiGetMetricsRequest(
+            response, err := client.GetMetrics(client.NewApiGetMetricsRequest(
               monitoring.Metric("avg_build_time"), monitoring.Period("minute"),
             ))
             if err != nil {
@@ -2390,7 +2387,7 @@ paths:
             }
 
             // use the model directly
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -2402,8 +2399,7 @@ paths:
 
             // Call the API
 
-            client.getMetrics(Metric.fromValue("avg_build_time"),
-            Period.fromValue("minute"));
+            client.getMetrics(Metric.AVG_BUILD_TIME, Period.MINUTE);
         - lang: javascript
           label: JavaScript
           source: |
@@ -2443,8 +2439,7 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\MonitoringClient::create('<YOUR_APP_ID>',
+            $client = MonitoringClient::create('<YOUR_APP_ID>',
             '<YOUR_API_KEY>');
 
 
@@ -2466,16 +2461,16 @@ paths:
             _client = MonitoringClient("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
-            resp = await _client.get_metrics(
+            response = await _client.get_metrics(
                 metric="avg_build_time",
                 period="minute",
             )
 
             # use the class directly
-            print(resp)
+            print(response)
 
             # print the JSON response
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2487,17 +2482,17 @@ paths:
 
             # Call the API
 
-            resp = client.get_metrics('avg_build_time', 'minute')
+            response = client.get_metrics('avg_build_time', 'minute')
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -2509,7 +2504,7 @@ paths:
 
             // Call the API
 
-            val res = client.getMetrics(
+            val response = client.getMetrics(
               metric = Metric.withName("avg_build_time"),
               period = Period.withName("minute")
             )
@@ -2517,7 +2512,7 @@ paths:
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2529,8 +2524,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.getMetrics(metric: Metric.avgBuildTime, period:
-            Period.minute)
+            let response = try await client.getMetrics(metric:
+            Metric.avgBuildTime, period: Period.minute)
 components:
   securitySchemes:
     appId:

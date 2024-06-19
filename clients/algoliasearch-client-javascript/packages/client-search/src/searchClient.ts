@@ -28,9 +28,9 @@ import type {
   BrowseOptions,
   ChunkedBatchOptions,
   ReplaceAllObjectsOptions,
-  ReplaceAllObjectsResponse,
   WaitForApiKeyOptions,
   WaitForTaskOptions,
+  WaitForAppTaskOptions,
   AddOrUpdateObjectProps,
   AssignUserIdProps,
   BatchProps,
@@ -52,6 +52,7 @@ import type {
   DeleteSourceProps,
   DeleteSynonymProps,
   GetApiKeyProps,
+  GetAppTaskProps,
   GetLogsProps,
   GetObjectProps,
   GetRuleProps,
@@ -102,6 +103,7 @@ import type { ListIndicesResponse } from '../model/listIndicesResponse';
 import type { ListUserIdsResponse } from '../model/listUserIdsResponse';
 import type { MultipleBatchResponse } from '../model/multipleBatchResponse';
 import type { RemoveUserIdResponse } from '../model/removeUserIdResponse';
+import type { ReplaceAllObjectsResponse } from '../model/replaceAllObjectsResponse';
 import type { ReplaceSourceResponse } from '../model/replaceSourceResponse';
 import type { Rule } from '../model/rule';
 import type { SaveObjectResponse } from '../model/saveObjectResponse';
@@ -123,7 +125,7 @@ import type { UpdatedAtWithObjectIdResponse } from '../model/updatedAtWithObject
 import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
 
-export const apiClientVersion = '5.0.0-beta.1';
+export const apiClientVersion = '5.0.0-beta.4';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -248,6 +250,40 @@ export function createSearchClient({
 
       return createIterablePromise({
         func: () => this.getTask({ indexName, taskID }, requestOptions),
+        validate: (response) => response.status === 'published',
+        aggregator: () => (retryCount += 1),
+        error: {
+          validate: () => retryCount >= maxRetries,
+          message: () =>
+            `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+        },
+        timeout: () => timeout(retryCount),
+      });
+    },
+
+    /**
+     * Helper: Wait for an application-level task to complete for a given `taskID`.
+     *
+     * @summary Helper method that waits for a task to be published (completed).
+     * @param waitForAppTaskOptions - The `waitForTaskOptions` object.
+     * @param waitForAppTaskOptions.taskID - The `taskID` returned in the method response.
+     * @param waitForAppTaskOptions.maxRetries - The maximum number of retries. 50 by default.
+     * @param waitForAppTaskOptions.timeout - The function to decide how long to wait between retries.
+     * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
+     */
+    waitForAppTask(
+      {
+        taskID,
+        maxRetries = 50,
+        timeout = (retryCount: number): number =>
+          Math.min(retryCount * 200, 5000),
+      }: WaitForAppTaskOptions,
+      requestOptions?: RequestOptions
+    ): Promise<GetTaskResponse> {
+      let retryCount = 0;
+
+      return createIterablePromise({
+        func: () => this.getAppTask({ taskID }, requestOptions),
         validate: (response) => response.status === 'published',
         aggregator: () => (retryCount += 1),
         error: {
@@ -518,9 +554,10 @@ export function createSearchClient({
       let requests: BatchRequest[] = [];
       const responses: BatchResponse[] = [];
 
-      for (const [i, obj] of objects.entries()) {
+      const objectEntries = objects.entries();
+      for (const [i, obj] of objectEntries) {
         requests.push({ action, body: obj });
-        if (i % batchSize === 0) {
+        if (requests.length === batchSize || i === objects.length - 1) {
           responses.push(
             await this.batch(
               { indexName, batchWriteParams: { requests } },
@@ -542,12 +579,13 @@ export function createSearchClient({
 
     /**
      * Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
+     * See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
      *
      * @summary Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
      * @param replaceAllObjects - The `replaceAllObjects` object.
      * @param replaceAllObjects.indexName - The `indexName` to replace `objects` in.
      * @param replaceAllObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
-     * @param replaceAllObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param replaceAllObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `objects.length / batchSize`. Defaults to 1000.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
     async replaceAllObjects(
@@ -557,7 +595,29 @@ export function createSearchClient({
       const randomSuffix = Math.random().toString(36).substring(7);
       const tmpIndexName = `${indexName}_tmp_${randomSuffix}`;
 
-      const copyOperationResponse = await this.operationIndex(
+      let copyOperationResponse = await this.operationIndex(
+        {
+          indexName,
+          operationIndexParams: {
+            operation: 'copy',
+            destination: tmpIndexName,
+            scope: ['settings', 'rules', 'synonyms'],
+          },
+        },
+        requestOptions
+      );
+
+      const batchResponses = await this.chunkedBatch(
+        { indexName: tmpIndexName, objects, waitForTasks: true, batchSize },
+        requestOptions
+      );
+
+      await this.waitForTask({
+        indexName: tmpIndexName,
+        taskID: copyOperationResponse.taskID,
+      });
+
+      copyOperationResponse = await this.operationIndex(
         {
           indexName,
           operationIndexParams: {
@@ -569,14 +629,9 @@ export function createSearchClient({
         requestOptions
       );
       await this.waitForTask({
-        indexName,
+        indexName: tmpIndexName,
         taskID: copyOperationResponse.taskID,
       });
-
-      const batchResponses = await this.chunkedBatch(
-        { indexName: tmpIndexName, objects, waitForTasks: true, batchSize },
-        requestOptions
-      );
 
       const moveOperationResponse = await this.operationIndex(
         {
@@ -586,12 +641,13 @@ export function createSearchClient({
         requestOptions
       );
       await this.waitForTask({
-        indexName,
+        indexName: tmpIndexName,
         taskID: moveOperationResponse.taskID,
       });
 
       return { copyOperationResponse, batchResponses, moveOperationResponse };
     },
+
     /**
      * Creates a new API key with specific permissions and restrictions.
      *
@@ -1556,6 +1612,43 @@ export function createSearchClient({
     },
 
     /**
+     * Checks the status of a given application task.
+     *
+     * Required API Key ACLs:
+     * - editSettings.
+     *
+     * @param getAppTask - The getAppTask object.
+     * @param getAppTask.taskID - Unique task identifier.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getAppTask(
+      { taskID }: GetAppTaskProps,
+      requestOptions?: RequestOptions
+    ): Promise<GetTaskResponse> {
+      if (!taskID) {
+        throw new Error(
+          'Parameter `taskID` is required when calling `getAppTask`.'
+        );
+      }
+
+      const requestPath = '/1/task/{taskID}'.replace(
+        '{taskID}',
+        encodeURIComponent(taskID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
      * Lists supported languages with their supported dictionary types and number of custom entries.
      *
      * Required API Key ACLs:
@@ -2185,7 +2278,7 @@ export function createSearchClient({
     },
 
     /**
-     * Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for index-specific API keys and analytics data. - If the destination index doesn\'t exist yet, it\'ll be created.  **Copy**  - Copying a source index that doesn\'t exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can\'t copy the `enableReRanking`, `mode`, and `replicas` settings. - You can\'t copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn\'t exist is ignored without returning an error. - When moving an index, the analytics data keep their original name and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+     * Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn\'t exist yet, it\'ll be created.  **Copy**  - Copying a source index that doesn\'t exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can\'t copy the `enableReRanking`, `mode`, and `replicas` settings. - You can\'t copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn\'t exist is ignored without returning an error. - When moving an index, the analytics data keep their original name and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
      *
      * Required API Key ACLs:
      * - addObject.

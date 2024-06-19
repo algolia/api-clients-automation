@@ -1,28 +1,45 @@
 [
   {
-    "testName": "allows batch method with `addObject` action",
+    "testName": "addObject",
+    "isSnippet": true,
     "parameters": {
-      "indexName": "theIndexName",
+      "indexName": "<YOUR_INDEX_NAME>",
       "batchWriteParams": {
         "requests": [
           {
             "action": "addObject",
             "body": {
-              "key": "value"
+              "key": "bar",
+              "foo": "1"
+            }
+          },
+          {
+            "action": "addObject",
+            "body": {
+              "key": "baz",
+              "foo": "2"
             }
           }
         ]
       }
     },
     "request": {
-      "path": "/1/indexes/theIndexName/batch",
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch",
       "method": "POST",
       "body": {
         "requests": [
           {
             "action": "addObject",
             "body": {
-              "key": "value"
+              "key": "bar",
+              "foo": "1"
+            }
+          },
+          {
+            "action": "addObject",
+            "body": {
+              "key": "baz",
+              "foo": "2"
             }
           }
         ]
@@ -30,9 +47,10 @@
     }
   },
   {
-    "testName": "allows batch method with `clear` action",
+    "testName": "clear",
+    "isSnippet": true,
     "parameters": {
-      "indexName": "theIndexName",
+      "indexName": "<YOUR_INDEX_NAME>",
       "batchWriteParams": {
         "requests": [
           {
@@ -45,7 +63,7 @@
       }
     },
     "request": {
-      "path": "/1/indexes/theIndexName/batch",
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch",
       "method": "POST",
       "body": {
         "requests": [
@@ -60,9 +78,10 @@
     }
   },
   {
-    "testName": "allows batch method with `delete` action",
+    "testName": "delete",
+    "isSnippet": true,
     "parameters": {
-      "indexName": "theIndexName",
+      "indexName": "<YOUR_INDEX_NAME>",
       "batchWriteParams": {
         "requests": [
           {
@@ -75,7 +94,7 @@
       }
     },
     "request": {
-      "path": "/1/indexes/theIndexName/batch",
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch",
       "method": "POST",
       "body": {
         "requests": [
@@ -90,9 +109,10 @@
     }
   },
   {
-    "testName": "allows batch method with `deleteObject` action",
+    "testName": "deleteObject",
+    "isSnippet": true,
     "parameters": {
-      "indexName": "theIndexName",
+      "indexName": "<YOUR_INDEX_NAME>",
       "batchWriteParams": {
         "requests": [
           {
@@ -105,7 +125,7 @@
       }
     },
     "request": {
-      "path": "/1/indexes/theIndexName/batch",
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch",
       "method": "POST",
       "body": {
         "requests": [
@@ -120,9 +140,10 @@
     }
   },
   {
-    "testName": "allows batch method with `partialUpdateObject` action",
+    "testName": "partialUpdateObject",
+    "isSnippet": true,
     "parameters": {
-      "indexName": "theIndexName",
+      "indexName": "<YOUR_INDEX_NAME>",
       "batchWriteParams": {
         "requests": [
           {
@@ -135,7 +156,7 @@
       }
     },
     "request": {
-      "path": "/1/indexes/theIndexName/batch",
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch",
       "method": "POST",
       "body": {
         "requests": [
@@ -150,9 +171,10 @@
     }
   },
   {
-    "testName": "allows batch method with `partialUpdateObjectNoCreate` action",
+    "testName": "partialUpdateObjectNoCreate",
+    "isSnippet": true,
     "parameters": {
-      "indexName": "theIndexName",
+      "indexName": "<YOUR_INDEX_NAME>",
       "batchWriteParams": {
         "requests": [
           {
@@ -165,7 +187,7 @@
       }
     },
     "request": {
-      "path": "/1/indexes/theIndexName/batch",
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch",
       "method": "POST",
       "body": {
         "requests": [
@@ -180,9 +202,10 @@
     }
   },
   {
-    "testName": "allows batch method with `updateObject` action",
+    "testName": "updateObject",
+    "isSnippet": true,
     "parameters": {
-      "indexName": "theIndexName",
+      "indexName": "<YOUR_INDEX_NAME>",
       "batchWriteParams": {
         "requests": [
           {
@@ -195,7 +218,7 @@
       }
     },
     "request": {
-      "path": "/1/indexes/theIndexName/batch",
+      "path": "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch",
       "method": "POST",
       "body": {
         "requests": [

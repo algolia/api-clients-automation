@@ -71,7 +71,7 @@ The retry strategy cannot be generated and needs to be implemented outside of th
 
 Some Algolia clients (search and recommend) targets the default appId host (`${appId}-dsn.algolia.net`, `${appId}.algolia.net`, etc.), while clients like `personalization` have their own regional `host` (`eu` | `us` | `de`).
 
-As the generator does not support reading `servers` in a spec file **yet**, hosts methods and variables are extracted with a custom script and create variables for you to use in the mustache templates, [read more here](/docs/contributing/add-new-api-client#generators).
+As the generator does not support reading `servers` in a spec file **yet**, hosts methods and variables are extracted with a custom script and create variables for you to use in the mustache templates, [read more here](/docs/contributing/add-new-api-client#2-configure-the-generator).
 
 ### User Agent
 

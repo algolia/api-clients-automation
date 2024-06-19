@@ -1,19 +1,22 @@
 #if canImport(Core)
     import Core
 #endif
+// >IMPORT
 import Abtesting
+
+// IMPORT<
 
 final class AbtestingClientSnippet {
     /// Snippet for the addABTests method.
     ///
     /// addABTests with minimal parameters
     func snippetForAddABTests() async throws {
-        // >SEPARATOR addABTests
+        // >SEPARATOR addABTests default
         // Initialize the client
         let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.addABTests(addABTestsRequest: AddABTestsRequest(
+        let response = try await client.addABTests(addABTestsRequest: AddABTestsRequest(
             name: "myABTest",
             variants: [
                 AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_1", trafficPercentage: 30)),
@@ -28,12 +31,12 @@ final class AbtestingClientSnippet {
     ///
     /// allow del method for a custom path with minimal parameters
     func snippetForCustomDelete() async throws {
-        // >SEPARATOR customDelete
+        // >SEPARATOR customDelete default
         // Initialize the client
         let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customDelete(path: "test/minimal")
+        let response = try await client.customDelete(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -41,12 +44,12 @@ final class AbtestingClientSnippet {
     ///
     /// allow get method for a custom path with minimal parameters
     func snippetForCustomGet() async throws {
-        // >SEPARATOR customGet
+        // >SEPARATOR customGet default
         // Initialize the client
         let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customGet(path: "test/minimal")
+        let response = try await client.customGet(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -54,12 +57,12 @@ final class AbtestingClientSnippet {
     ///
     /// allow post method for a custom path with minimal parameters
     func snippetForCustomPost() async throws {
-        // >SEPARATOR customPost
+        // >SEPARATOR customPost default
         // Initialize the client
         let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPost(path: "test/minimal")
+        let response = try await client.customPost(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -67,12 +70,12 @@ final class AbtestingClientSnippet {
     ///
     /// allow put method for a custom path with minimal parameters
     func snippetForCustomPut() async throws {
-        // >SEPARATOR customPut
+        // >SEPARATOR customPut default
         // Initialize the client
         let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPut(path: "test/minimal")
+        let response = try await client.customPut(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -80,12 +83,12 @@ final class AbtestingClientSnippet {
     ///
     /// deleteABTest
     func snippetForDeleteABTest() async throws {
-        // >SEPARATOR deleteABTest
+        // >SEPARATOR deleteABTest default
         // Initialize the client
         let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.deleteABTest(id: 42)
+        let response = try await client.deleteABTest(id: 42)
         // SEPARATOR<
     }
 
@@ -93,12 +96,12 @@ final class AbtestingClientSnippet {
     ///
     /// getABTest
     func snippetForGetABTest() async throws {
-        // >SEPARATOR getABTest
+        // >SEPARATOR getABTest default
         // Initialize the client
         let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getABTest(id: 42)
+        let response = try await client.getABTest(id: 42)
         // SEPARATOR<
     }
 
@@ -106,12 +109,12 @@ final class AbtestingClientSnippet {
     ///
     /// listABTests with minimal parameters
     func snippetForListABTests() async throws {
-        // >SEPARATOR listABTests
+        // >SEPARATOR listABTests default
         // Initialize the client
         let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.listABTests()
+        let response = try await client.listABTests()
         // SEPARATOR<
     }
 
@@ -119,12 +122,12 @@ final class AbtestingClientSnippet {
     ///
     /// stopABTest
     func snippetForStopABTest() async throws {
-        // >SEPARATOR stopABTest
+        // >SEPARATOR stopABTest default
         // Initialize the client
         let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.stopABTest(id: 42)
+        let response = try await client.stopABTest(id: 42)
         // SEPARATOR<
     }
 }

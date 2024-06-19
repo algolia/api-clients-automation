@@ -28,7 +28,7 @@ package algoliasearch.ingestion
   * @param taskID
   *   Universally unique identifier (UUID) of a task.
   * @param updatedAt
-  *   Date of last update in RFC3339 format.
+  *   Date of last update in RFC 3339 format.
   */
 case class TaskUpdateResponse(
     taskID: String,

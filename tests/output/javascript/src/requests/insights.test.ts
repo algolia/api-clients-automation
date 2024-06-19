@@ -369,7 +369,7 @@ describe('customPut', () => {
 });
 
 describe('deleteUserToken', () => {
-  test('deleteUserToken0', async () => {
+  test('deleteUserToken', async () => {
     const req = (await client.deleteUserToken({
       userToken: 'test-user-1',
     })) as unknown as EchoResponse;
@@ -382,7 +382,7 @@ describe('deleteUserToken', () => {
 });
 
 describe('pushEvents', () => {
-  test('pushEvents0', async () => {
+  test('pushEvents', async () => {
     const req = (await client.pushEvents({
       events: [
         {
@@ -428,7 +428,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1715385600000,
+          timestamp: 1718755200000,
           objectIDs: ['9780545139700', '9780439784542'],
           queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
         },
@@ -438,7 +438,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1715385600000,
+          timestamp: 1718755200000,
           objectIDs: ['9780545139700', '9780439784542'],
         },
       ],
@@ -454,7 +454,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1715385600000,
+          timestamp: 1718755200000,
           objectIDs: ['9780545139700', '9780439784542'],
           queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
         },
@@ -464,7 +464,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1715385600000,
+          timestamp: 1718755200000,
           objectIDs: ['9780545139700', '9780439784542'],
         },
       ],
@@ -479,7 +479,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1715385600000,
+          timestamp: 1718755200000,
           objectIDs: ['9780545139700', '9780439784542'],
           queryID: '43b15df305339e827f0ac0bdc5ebcaa7',
         },
@@ -489,7 +489,7 @@ describe('pushEvents', () => {
           index: 'products',
           userToken: 'user-123456',
           authenticatedUserToken: 'user-123456',
-          timestamp: 1715385600000,
+          timestamp: 1718755200000,
           objectIDs: ['9780545139700', '9780439784542'],
         },
       ],

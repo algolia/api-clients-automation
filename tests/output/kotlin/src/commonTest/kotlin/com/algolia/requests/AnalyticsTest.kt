@@ -38,7 +38,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `allow del method for a custom path with all parameters`() = runTest {
+  fun `allow del method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
         customDelete(
@@ -74,7 +74,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `allow get method for a custom path with all parameters`() = runTest {
+  fun `allow get method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
         customGet(
@@ -92,7 +92,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `requestOptions should be escaped too`() = runTest {
+  fun `requestOptions should be escaped too2`() = runTest {
     client.runTest(
       call = {
         customGet(
@@ -138,7 +138,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `allow post method for a custom path with all parameters`() = runTest {
+  fun `allow post method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -162,7 +162,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `requestOptions can override default query parameters`() = runTest {
+  fun `requestOptions can override default query parameters2`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -191,7 +191,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `requestOptions merges query parameters with default ones`() = runTest {
+  fun `requestOptions merges query parameters with default ones3`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -220,7 +220,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `requestOptions can override default headers`() = runTest {
+  fun `requestOptions can override default headers4`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -250,7 +250,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `requestOptions merges headers with default ones`() = runTest {
+  fun `requestOptions merges headers with default ones5`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -280,7 +280,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts booleans`() = runTest {
+  fun `requestOptions queryParameters accepts booleans6`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -309,7 +309,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts integers`() = runTest {
+  fun `requestOptions queryParameters accepts integers7`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -338,7 +338,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts list of string`() = runTest {
+  fun `requestOptions queryParameters accepts list of string8`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -367,7 +367,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts list of booleans`() = runTest {
+  fun `requestOptions queryParameters accepts list of booleans9`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -396,7 +396,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `requestOptions queryParameters accepts list of integers`() = runTest {
+  fun `requestOptions queryParameters accepts list of integers10`() = runTest {
     client.runTest(
       call = {
         customPost(
@@ -443,7 +443,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `allow put method for a custom path with all parameters`() = runTest {
+  fun `allow put method for a custom path with all parameters1`() = runTest {
     client.runTest(
       call = {
         customPut(
@@ -486,7 +486,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getAddToCartRate with all parameters`() = runTest {
+  fun `get getAddToCartRate with all parameters1`() = runTest {
     client.runTest(
       call = {
         getAddToCartRate(
@@ -525,7 +525,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getAverageClickPosition with all parameters`() = runTest {
+  fun `get getAverageClickPosition with all parameters1`() = runTest {
     client.runTest(
       call = {
         getAverageClickPosition(
@@ -564,7 +564,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getClickPositions with all parameters`() = runTest {
+  fun `get getClickPositions with all parameters1`() = runTest {
     client.runTest(
       call = {
         getClickPositions(
@@ -603,7 +603,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getClickThroughRate with all parameters`() = runTest {
+  fun `get getClickThroughRate with all parameters1`() = runTest {
     client.runTest(
       call = {
         getClickThroughRate(
@@ -642,7 +642,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getConversationRate with all parameters`() = runTest {
+  fun `get getConversationRate with all parameters1`() = runTest {
     client.runTest(
       call = {
         getConversionRate(
@@ -681,7 +681,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getNoClickRate with all parameters`() = runTest {
+  fun `get getNoClickRate with all parameters1`() = runTest {
     client.runTest(
       call = {
         getNoClickRate(
@@ -720,7 +720,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getNoResultsRate with all parameters`() = runTest {
+  fun `get getNoResultsRate with all parameters1`() = runTest {
     client.runTest(
       call = {
         getNoResultsRate(
@@ -759,7 +759,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getPurchaseRate with all parameters`() = runTest {
+  fun `get getPurchaseRate with all parameters1`() = runTest {
     client.runTest(
       call = {
         getPurchaseRate(
@@ -798,7 +798,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getRevenue with all parameters`() = runTest {
+  fun `get getRevenue with all parameters1`() = runTest {
     client.runTest(
       call = {
         getRevenue(
@@ -837,7 +837,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getSearchesCount with all parameters`() = runTest {
+  fun `get getSearchesCount with all parameters1`() = runTest {
     client.runTest(
       call = {
         getSearchesCount(
@@ -876,7 +876,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getSearchesNoClicks with all parameters`() = runTest {
+  fun `get getSearchesNoClicks with all parameters1`() = runTest {
     client.runTest(
       call = {
         getSearchesNoClicks(
@@ -917,7 +917,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getSearchesNoResults with all parameters`() = runTest {
+  fun `get getSearchesNoResults with all parameters1`() = runTest {
     client.runTest(
       call = {
         getSearchesNoResults(
@@ -977,7 +977,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getTopCountries with all parameters`() = runTest {
+  fun `get getTopCountries with all parameters1`() = runTest {
     client.runTest(
       call = {
         getTopCountries(
@@ -1018,7 +1018,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getTopFilterAttributes with all parameters`() = runTest {
+  fun `get getTopFilterAttributes with all parameters1`() = runTest {
     client.runTest(
       call = {
         getTopFilterAttributes(
@@ -1061,7 +1061,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getTopFilterForAttribute with minimal parameters and multiple attributes`() = runTest {
+  fun `get getTopFilterForAttribute with minimal parameters and multiple attributes1`() = runTest {
     client.runTest(
       call = {
         getTopFilterForAttribute(
@@ -1079,7 +1079,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getTopFilterForAttribute with all parameters`() = runTest {
+  fun `get getTopFilterForAttribute with all parameters2`() = runTest {
     client.runTest(
       call = {
         getTopFilterForAttribute(
@@ -1103,7 +1103,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getTopFilterForAttribute with all parameters and multiple attributes`() = runTest {
+  fun `get getTopFilterForAttribute with all parameters and multiple attributes3`() = runTest {
     client.runTest(
       call = {
         getTopFilterForAttribute(
@@ -1146,7 +1146,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getTopFiltersNoResults with all parameters`() = runTest {
+  fun `get getTopFiltersNoResults with all parameters1`() = runTest {
     client.runTest(
       call = {
         getTopFiltersNoResults(
@@ -1188,7 +1188,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getTopHits with all parameters`() = runTest {
+  fun `get getTopHits with all parameters1`() = runTest {
     client.runTest(
       call = {
         getTopHits(
@@ -1232,7 +1232,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getTopSearches with all parameters`() = runTest {
+  fun `get getTopSearches with all parameters1`() = runTest {
     client.runTest(
       call = {
         getTopSearches(
@@ -1258,7 +1258,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `e2e with complex query params`() = runTest {
+  fun `e2e with complex query params2`() = runTest {
     client.runTest(
       call = {
         getTopSearches(
@@ -1294,7 +1294,7 @@ class AnalyticsTest {
   }
 
   @Test
-  fun `get getUsersCount with all parameters`() = runTest {
+  fun `get getUsersCount with all parameters1`() = runTest {
     client.runTest(
       call = {
         getUsersCount(

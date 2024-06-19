@@ -54,7 +54,7 @@ public {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensi
     return this;
   }
   {{#isArray}}
-  public {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}} add{{nameInCamelCase}}({{#vendorExtensions.x-has-child-generic}}{{{complexType}}}<T>{{/vendorExtensions.x-has-child-generic}}{{^vendorExtensions.x-has-child-generic}}{{#items}}{{> generic_type}}{{/items}}{{/vendorExtensions.x-has-child-generic}} {{name}}Item) {
+  public {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}} add{{nameInPascalCase}}({{#vendorExtensions.x-has-child-generic}}{{{complexType}}}<T>{{/vendorExtensions.x-has-child-generic}}{{^vendorExtensions.x-has-child-generic}}{{#items}}{{> generic_type}}{{/items}}{{/vendorExtensions.x-has-child-generic}} {{name}}Item) {
     {{^required}}
     if (this.{{name}} == null) {
       this.{{name}} = new ArrayList<>();
@@ -65,7 +65,7 @@ public {{classname}}{{#vendorExtensions.x-has-child-generic}}<T>{{/vendorExtensi
   }
   {{/isArray}}
   {{#isMap}}
-  public {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}} put{{nameInCamelCase}}(String key, {{#items}}{{> generic_type}}{{/items}} {{name}}Item) {
+  public {{classname}}{{#x-has-child-generic}}<T>{{/x-has-child-generic}} put{{nameInPascalCase}}(String key, {{#items}}{{> generic_type}}{{/items}} {{name}}Item) {
     {{^required}}
     if (this.{{name}} == null) {
       this.{{name}} = new HashMap<>();

@@ -4,22 +4,24 @@
 
 namespace Algolia\AlgoliaSearch\Snippets;
 
+// >IMPORT
 use Algolia\AlgoliaSearch\Api\{{client}};
+// IMPORT<
 
 class Snippet{{client}}
 {
     {{#blocksRequests}}
-    {{#snippet}}
+    {{#snippets}}
     /**
     * Snippet for the {{#lambda.titlecase}}{{{method}}}{{/lambda.titlecase}} method
     *
     * {{{description}}}
     */
-    public function snippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}()
+    public function snippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}{{testIndex}}()
     {
-        // >SEPARATOR {{method}}
+        // >SEPARATOR {{method}} {{testName}}
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\{{client}}::create('<YOUR_APP_ID>', '<YOUR_API_KEY>'{{#hasRegionalHost}}, 'YOUR_APP_ID_REGION'{{/hasRegionalHost}});
+        $client = {{client}}::create('<YOUR_APP_ID>', '<YOUR_API_KEY>'{{#hasRegionalHost}}, 'YOUR_APP_ID_REGION'{{/hasRegionalHost}});
 
         {{#hasRequestOptions}}
           $requestOptions = [
@@ -44,6 +46,6 @@ class Snippet{{client}}
         // SEPARATOR<
     }
 
-    {{/snippet}}
+    {{/snippets}}
     {{/blocksRequests}}
 }

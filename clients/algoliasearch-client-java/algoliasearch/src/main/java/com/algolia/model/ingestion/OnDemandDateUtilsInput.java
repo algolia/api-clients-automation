@@ -28,7 +28,7 @@ public class OnDemandDateUtilsInput implements TaskInput {
     return this;
   }
 
-  /** Earliest date in RFC3339 format of the extracted data from Big Query. */
+  /** Earliest date in RFC 3339 format of the extracted data from Big Query. */
   @javax.annotation.Nonnull
   public String getStartDate() {
     return startDate;
@@ -39,7 +39,7 @@ public class OnDemandDateUtilsInput implements TaskInput {
     return this;
   }
 
-  /** Latest date in RFC3339 format of the extracted data from Big Query. */
+  /** Latest date in RFC 3339 format of the extracted data from Big Query. */
   @javax.annotation.Nonnull
   public String getEndDate() {
     return endDate;

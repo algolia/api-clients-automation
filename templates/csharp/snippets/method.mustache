@@ -1,6 +1,8 @@
 // {{generationBanner}}
 using Algolia.Search.Http;
+// >IMPORT
 using Algolia.Search.Clients;
+// IMPORT<
 using Algolia.Search.Models.{{clientPrefix}};
 using Action = Algolia.Search.Models.Search.Action;
 
@@ -8,15 +10,15 @@ public class Snippet{{client}}
 {
 
   {{#blocksRequests}}
-  {{#snippet}}
+  {{#snippets}}
   /// <summary>
   /// Snippet for the {{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}} method.
   ///
   /// {{{description}}}
   /// </summary>
-  public async Task SnippetFor{{client}}{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}()
+  public async Task SnippetFor{{client}}{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}()
   {
-    // >SEPARATOR {{method}}
+    // >SEPARATOR {{method}} {{testName}}
     // Initialize the client
     var client = new {{client}}(new {{clientPrefix}}Config("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}},"YOUR_APP_ID_REGION"{{/hasRegionalHost}}));
 
@@ -33,6 +35,6 @@ public class Snippet{{client}}
     // SEPARATOR<
   }
 
-  {{/snippet}}
+  {{/snippets}}
   {{/blocksRequests}}
 }

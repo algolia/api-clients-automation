@@ -49,7 +49,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for CustomDelete
      * allow del method for a custom path with minimal parameters.
      */
-    public function testCustomDelete0()
+    public function testCustomDelete()
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -92,7 +92,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for CustomGet
      * allow get method for a custom path with minimal parameters.
      */
-    public function testCustomGet0()
+    public function testCustomGet()
     {
         $client = $this->getClient();
         $client->customGet(
@@ -170,7 +170,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for CustomPost
      * allow post method for a custom path with minimal parameters.
      */
-    public function testCustomPost0()
+    public function testCustomPost()
     {
         $client = $this->getClient();
         $client->customPost(
@@ -517,7 +517,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for CustomPut
      * allow put method for a custom path with minimal parameters.
      */
-    public function testCustomPut0()
+    public function testCustomPut()
     {
         $client = $this->getClient();
         $client->customPut(
@@ -562,7 +562,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetAddToCartRate
      * get getAddToCartRate with minimal parameters.
      */
-    public function testGetAddToCartRate0()
+    public function testGetAddToCartRate()
     {
         $client = $this->getClient();
         $client->getAddToCartRate(
@@ -607,7 +607,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetAverageClickPosition
      * get getAverageClickPosition with minimal parameters.
      */
-    public function testGetAverageClickPosition0()
+    public function testGetAverageClickPosition()
     {
         $client = $this->getClient();
         $client->getAverageClickPosition(
@@ -652,7 +652,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetClickPositions
      * get getClickPositions with minimal parameters.
      */
-    public function testGetClickPositions0()
+    public function testGetClickPositions()
     {
         $client = $this->getClient();
         $client->getClickPositions(
@@ -697,7 +697,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetClickThroughRate
      * get getClickThroughRate with minimal parameters.
      */
-    public function testGetClickThroughRate0()
+    public function testGetClickThroughRate()
     {
         $client = $this->getClient();
         $client->getClickThroughRate(
@@ -742,7 +742,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetConversionRate
      * get getConversationRate with minimal parameters.
      */
-    public function testGetConversionRate0()
+    public function testGetConversionRate()
     {
         $client = $this->getClient();
         $client->getConversionRate(
@@ -787,7 +787,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetNoClickRate
      * get getNoClickRate with minimal parameters.
      */
-    public function testGetNoClickRate0()
+    public function testGetNoClickRate()
     {
         $client = $this->getClient();
         $client->getNoClickRate(
@@ -832,7 +832,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetNoResultsRate
      * get getNoResultsRate with minimal parameters.
      */
-    public function testGetNoResultsRate0()
+    public function testGetNoResultsRate()
     {
         $client = $this->getClient();
         $client->getNoResultsRate(
@@ -877,7 +877,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetPurchaseRate
      * get getPurchaseRate with minimal parameters.
      */
-    public function testGetPurchaseRate0()
+    public function testGetPurchaseRate()
     {
         $client = $this->getClient();
         $client->getPurchaseRate(
@@ -922,7 +922,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetRevenue
      * get getRevenue with minimal parameters.
      */
-    public function testGetRevenue0()
+    public function testGetRevenue()
     {
         $client = $this->getClient();
         $client->getRevenue(
@@ -967,7 +967,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetSearchesCount
      * get getSearchesCount with minimal parameters.
      */
-    public function testGetSearchesCount0()
+    public function testGetSearchesCount()
     {
         $client = $this->getClient();
         $client->getSearchesCount(
@@ -1012,7 +1012,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetSearchesNoClicks
      * get getSearchesNoClicks with minimal parameters.
      */
-    public function testGetSearchesNoClicks0()
+    public function testGetSearchesNoClicks()
     {
         $client = $this->getClient();
         $client->getSearchesNoClicks(
@@ -1059,7 +1059,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetSearchesNoResults
      * get getSearchesNoResults with minimal parameters.
      */
-    public function testGetSearchesNoResults0()
+    public function testGetSearchesNoResults()
     {
         $client = $this->getClient();
         $client->getSearchesNoResults(
@@ -1106,7 +1106,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetStatus
      * get getStatus with minimal parameters.
      */
-    public function testGetStatus0()
+    public function testGetStatus()
     {
         $client = $this->getClient();
         $client->getStatus(
@@ -1127,7 +1127,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetTopCountries
      * get getTopCountries with minimal parameters.
      */
-    public function testGetTopCountries0()
+    public function testGetTopCountries()
     {
         $client = $this->getClient();
         $client->getTopCountries(
@@ -1174,7 +1174,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetTopFilterAttributes
      * get getTopFilterAttributes with minimal parameters.
      */
-    public function testGetTopFilterAttributes0()
+    public function testGetTopFilterAttributes()
     {
         $client = $this->getClient();
         $client->getTopFilterAttributes(
@@ -1222,7 +1222,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetTopFilterForAttribute
      * get getTopFilterForAttribute with minimal parameters.
      */
-    public function testGetTopFilterForAttribute0()
+    public function testGetTopFilterForAttribute()
     {
         $client = $this->getClient();
         $client->getTopFilterForAttribute(
@@ -1322,7 +1322,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetTopFiltersNoResults
      * get getTopFiltersNoResults with minimal parameters.
      */
-    public function testGetTopFiltersNoResults0()
+    public function testGetTopFiltersNoResults()
     {
         $client = $this->getClient();
         $client->getTopFiltersNoResults(
@@ -1370,7 +1370,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetTopHits
      * get getTopHits with minimal parameters.
      */
-    public function testGetTopHits0()
+    public function testGetTopHits()
     {
         $client = $this->getClient();
         $client->getTopHits(
@@ -1420,7 +1420,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetTopSearches
      * get getTopSearches with minimal parameters.
      */
-    public function testGetTopSearches0()
+    public function testGetTopSearches()
     {
         $client = $this->getClient();
         $client->getTopSearches(
@@ -1501,7 +1501,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
      * Test case for GetUsersCount
      * get getUsersCount with minimal parameters.
      */
-    public function testGetUsersCount0()
+    public function testGetUsersCount()
     {
         $client = $this->getClient();
         $client->getUsersCount(

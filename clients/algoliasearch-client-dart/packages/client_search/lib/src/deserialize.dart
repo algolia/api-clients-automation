@@ -93,6 +93,7 @@ import 'package:algolia_client_search/src/model/redirect_rule_index_metadata_dat
 import 'package:algolia_client_search/src/model/remove_user_id_response.dart';
 import 'package:algolia_client_search/src/model/remove_words_if_no_results.dart';
 import 'package:algolia_client_search/src/model/rendering_content.dart';
+import 'package:algolia_client_search/src/model/replace_all_objects_response.dart';
 import 'package:algolia_client_search/src/model/replace_source_response.dart';
 import 'package:algolia_client_search/src/model/rule.dart';
 import 'package:algolia_client_search/src/model/save_object_response.dart';
@@ -408,6 +409,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'RenderingContent':
       return RenderingContent.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ReplaceAllObjectsResponse':
+      return ReplaceAllObjectsResponse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'ReplaceSourceResponse':
       return ReplaceSourceResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -489,8 +493,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'SearchUserIdsResponse':
       return SearchUserIdsResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'SecuredAPIKeyRestrictions':
-      return SecuredAPIKeyRestrictions.fromJson(value as Map<String, dynamic>)
+    case 'SecuredApiKeyRestrictions':
+      return SecuredApiKeyRestrictions.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'SemanticSearch':
       return SemanticSearch.fromJson(value as Map<String, dynamic>)

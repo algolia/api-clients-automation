@@ -7,20 +7,31 @@ import com.algolia.ApiClient;
 import com.algolia.config.*;
 import com.algolia.config.ClientOptions;
 import com.algolia.exceptions.*;
+import com.algolia.internal.JsonSerializer;
 import com.algolia.model.search.*;
 import com.algolia.utils.*;
 import com.fasterxml.jackson.core.type.TypeReference;
+import java.nio.charset.Charset;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.IntUnaryOperator;
+import java.util.regex.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 
 public class SearchClient extends ApiClient {
 
@@ -2032,6 +2043,55 @@ public class SearchClient extends ApiClient {
   }
 
   /**
+   * Checks the status of a given application task.
+   *
+   * @param taskID Unique task identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public GetTaskResponse getAppTask(@Nonnull Long taskID, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(getAppTaskAsync(taskID, requestOptions));
+  }
+
+  /**
+   * Checks the status of a given application task.
+   *
+   * @param taskID Unique task identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public GetTaskResponse getAppTask(@Nonnull Long taskID) throws AlgoliaRuntimeException {
+    return this.getAppTask(taskID, null);
+  }
+
+  /**
+   * (asynchronously) Checks the status of a given application task.
+   *
+   * @param taskID Unique task identifier. (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<GetTaskResponse> getAppTaskAsync(@Nonnull Long taskID, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getAppTask`.");
+
+    HttpRequest request = HttpRequest.builder().setPath("/1/task/{taskID}", taskID).setMethod("GET").build();
+
+    return executeAsync(request, requestOptions, new TypeReference<GetTaskResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Checks the status of a given application task.
+   *
+   * @param taskID Unique task identifier. (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<GetTaskResponse> getAppTaskAsync(@Nonnull Long taskID) throws AlgoliaRuntimeException {
+    return this.getAppTaskAsync(taskID, null);
+  }
+
+  /**
    * Lists supported languages with their supported dictionary types and number of custom entries.
    *
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -3362,12 +3422,12 @@ public class SearchClient extends ApiClient {
 
   /**
    * Copies or moves (renames) an index within the same Algolia application. - Existing destination
-   * indices are overwritten, except for index-specific API keys and analytics data. - If the
-   * destination index doesn't exist yet, it'll be created. **Copy** - Copying a source index that
-   * doesn't exist creates a new index with 0 records and default settings. - The API keys of the
-   * source index are merged with the existing keys in the destination index. - You can't copy the
-   * `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index
-   * that already has replicas. - Be aware of the [size
+   * indices are overwritten, except for their analytics data. - If the destination index doesn't
+   * exist yet, it'll be created. **Copy** - Copying a source index that doesn't exist creates a new
+   * index with 0 records and default settings. - The API keys of the source index are merged with
+   * the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and
+   * `replicas` settings. - You can't copy to a destination index that already has replicas. - Be
+   * aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
    * - Related guide: [Copy
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
@@ -3394,12 +3454,12 @@ public class SearchClient extends ApiClient {
 
   /**
    * Copies or moves (renames) an index within the same Algolia application. - Existing destination
-   * indices are overwritten, except for index-specific API keys and analytics data. - If the
-   * destination index doesn't exist yet, it'll be created. **Copy** - Copying a source index that
-   * doesn't exist creates a new index with 0 records and default settings. - The API keys of the
-   * source index are merged with the existing keys in the destination index. - You can't copy the
-   * `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index
-   * that already has replicas. - Be aware of the [size
+   * indices are overwritten, except for their analytics data. - If the destination index doesn't
+   * exist yet, it'll be created. **Copy** - Copying a source index that doesn't exist creates a new
+   * index with 0 records and default settings. - The API keys of the source index are merged with
+   * the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and
+   * `replicas` settings. - You can't copy to a destination index that already has replicas. - Be
+   * aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
    * - Related guide: [Copy
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
@@ -3421,12 +3481,12 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Copies or moves (renames) an index within the same Algolia application. -
-   * Existing destination indices are overwritten, except for index-specific API keys and analytics
-   * data. - If the destination index doesn't exist yet, it'll be created. **Copy** - Copying a
-   * source index that doesn't exist creates a new index with 0 records and default settings. - The
-   * API keys of the source index are merged with the existing keys in the destination index. - You
-   * can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a
-   * destination index that already has replicas. - Be aware of the [size
+   * Existing destination indices are overwritten, except for their analytics data. - If the
+   * destination index doesn't exist yet, it'll be created. **Copy** - Copying a source index that
+   * doesn't exist creates a new index with 0 records and default settings. - The API keys of the
+   * source index are merged with the existing keys in the destination index. - You can't copy the
+   * `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index
+   * that already has replicas. - Be aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
    * - Related guide: [Copy
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
@@ -3463,12 +3523,12 @@ public class SearchClient extends ApiClient {
 
   /**
    * (asynchronously) Copies or moves (renames) an index within the same Algolia application. -
-   * Existing destination indices are overwritten, except for index-specific API keys and analytics
-   * data. - If the destination index doesn't exist yet, it'll be created. **Copy** - Copying a
-   * source index that doesn't exist creates a new index with 0 records and default settings. - The
-   * API keys of the source index are merged with the existing keys in the destination index. - You
-   * can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a
-   * destination index that already has replicas. - Be aware of the [size
+   * Existing destination indices are overwritten, except for their analytics data. - If the
+   * destination index doesn't exist yet, it'll be created. **Copy** - Copying a source index that
+   * doesn't exist creates a new index with 0 records and default settings. - The API keys of the
+   * source index are merged with the existing keys in the destination index. - You can't copy the
+   * `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index
+   * that already has replicas. - Be aware of the [size
    * limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits).
    * - Related guide: [Copy
    * indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)
@@ -5674,6 +5734,57 @@ public class SearchClient extends ApiClient {
   }
 
   /**
+   * Helper: Wait for a application-level task to complete with `taskID`.
+   *
+   * @param taskID The `taskID` returned in the method response.
+   * @param maxRetries The maximum number of retry. 50 by default. (optional)
+   * @param timeout The function to decide how long to wait between retries. min(retries * 200,
+   *     5000) by default. (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public void waitForAppTask(Long taskID, int maxRetries, IntUnaryOperator timeout, RequestOptions requestOptions) {
+    TaskUtils.retryUntil(
+      () -> this.getAppTask(taskID, requestOptions),
+      (GetTaskResponse task) -> task.getStatus() == TaskStatus.PUBLISHED,
+      maxRetries,
+      timeout
+    );
+  }
+
+  /**
+   * Helper: Wait for an application-level task to complete with `taskID`.
+   *
+   * @param taskID The `taskID` returned in the method response.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public void waitForAppTask(Long taskID, RequestOptions requestOptions) {
+    this.waitForAppTask(taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, requestOptions);
+  }
+
+  /**
+   * Helper: Wait for an application-level task to complete with `taskID`.
+   *
+   * @param taskID The `taskID` returned in the method response.
+   * @param maxRetries The maximum number of retry. 50 by default. (optional)
+   * @param timeout The function to decide how long to wait between retries. min(retries * 200,
+   *     5000) by default. (optional)
+   */
+  public void waitForAppTask(Long taskID, int maxRetries, IntUnaryOperator timeout) {
+    this.waitForAppTask(taskID, maxRetries, timeout, null);
+  }
+
+  /**
+   * Helper: Wait for an application-level task to complete with `taskID`.
+   *
+   * @param taskID The `taskID` returned in the method response.
+   */
+  public void waitForAppTask(Long taskID) {
+    this.waitForAppTask(taskID, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
+  }
+
+  /**
    * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
    *
    * @param operation The `operation` that was done on a `key`.
@@ -5756,10 +5867,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
+   * Helper: Wait for an API key to be added or deleted based on a given `operation`.
    *
    * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
-   * @param key The `key` that has been added, deleted or updated.
+   * @param key The `key` that has been added or deleted.
    * @param maxRetries The maximum number of retry. 50 by default. (optional)
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
@@ -5791,10 +5902,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
+   * Helper: Wait for an API key to be added or deleted based on a given `operation`.
    *
    * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
-   * @param key The `key` that has been added, deleted or updated.
+   * @param key The `key` that has been added or deleted.
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions. (optional)
    */
@@ -5818,10 +5929,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
+   * Helper: Wait for an API key to be added or deleted based on a given `operation`.
    *
    * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
-   * @param key The `key` that has been added, deleted or updated.
+   * @param key The `key` that has been added or deleted.
    * @param maxRetries The maximum number of retry. 50 by default. (optional)
    * @param timeout The function to decide how long to wait between retries. min(retries * 200,
    *     5000) by default. (optional)
@@ -5843,10 +5954,10 @@ public class SearchClient extends ApiClient {
   }
 
   /**
-   * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
+   * Helper: Wait for an API key to be added or deleted based on a given `operation`.
    *
    * @param operation The `operation` that was done on a `key`. (ADD or DELETE only)
-   * @param key The `key` that has been added, deleted or updated.
+   * @param key The `key` that has been added or deleted.
    */
   public GetApiKeyResponse waitForApiKey(ApiKeyOperation operation, String key) {
     return this.waitForApiKey(operation, key, null, TaskUtils.DEFAULT_MAX_RETRIES, TaskUtils.DEFAULT_TIMEOUT, null);
@@ -6135,5 +6246,207 @@ public class SearchClient extends ApiClient {
       .thenApply(searchResponses ->
         searchResponses.getResults().stream().map(res -> (SearchForFacetValuesResponse) res).collect(Collectors.toList())
       );
+  }
+
+  /**
+   * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit
+   * in `batch` requests.
+   *
+   * @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to
+   *     make it fit in `batch` requests.
+   * @param indexName - The `indexName` to replace `objects` in.
+   * @param objects - The array of `objects` to store in the given Algolia `indexName`.
+   * @param action - The `batch` `action` to perform on the given array of `objects`.
+   * @param waitForTasks - Whether or not we should wait until every `batch` tasks has been
+   *     processed, this operation may slow the total execution time of this method but is more
+   *     reliable.
+   * @param batchSize - The size of the chunk of `objects`. The number of `batch` calls will be
+   *     equal to `length(objects) / batchSize`. Defaults to 1000.
+   * @param requestOptions - The requestOptions to send along with the query, they will be forwarded
+   *     to the `getTask` method and merged with the transporter requestOptions.
+   */
+  public <T> List<BatchResponse> chunkedBatch(
+    String indexName,
+    Iterable<T> objects,
+    Action action,
+    boolean waitForTasks,
+    int batchSize,
+    RequestOptions requestOptions
+  ) {
+    List<BatchResponse> responses = new ArrayList<>();
+    List<BatchRequest> requests = new ArrayList<>();
+
+    for (T item : objects) {
+      if (requests.size() == batchSize) {
+        BatchResponse batch = batch(indexName, new BatchWriteParams().setRequests(requests), requestOptions);
+        responses.add(batch);
+        requests.clear();
+      }
+
+      requests.add(new BatchRequest().setAction(action).setBody(item));
+    }
+
+    if (requests.size() > 0) {
+      BatchResponse batch = batch(indexName, new BatchWriteParams().setRequests(requests), requestOptions);
+      responses.add(batch);
+    }
+
+    if (waitForTasks) {
+      responses.forEach(response -> waitForTask(indexName, response.getTaskID(), requestOptions));
+    }
+
+    return responses;
+  }
+
+  /**
+   * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
+   * untouched. Replace all records in an index without any downtime. See
+   * https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for
+   * implementation details.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @throws AlgoliaRetryException When the retry has failed on all hosts
+   * @throws AlgoliaApiException When the API sends an http error code
+   * @throws AlgoliaRuntimeException When an error occurred during the serialization
+   */
+  public <T> ReplaceAllObjectsResponse replaceAllObjects(
+    String indexName,
+    Iterable<T> objects,
+    int batchSize,
+    RequestOptions requestOptions
+  ) {
+    Random rnd = new Random();
+    String tmpIndexName = indexName + "_tmp_" + rnd.nextInt(100);
+
+    // Copy settings, synonyms and rules
+    UpdatedAtResponse copyOperationResponse = operationIndex(
+      indexName,
+      new OperationIndexParams()
+        .setOperation(OperationType.COPY)
+        .setDestination(tmpIndexName)
+        .addScope(ScopeType.SETTINGS)
+        .addScope(ScopeType.RULES)
+        .addScope(ScopeType.SYNONYMS),
+      requestOptions
+    );
+
+    // Save new objects
+    List<BatchResponse> batchResponses = chunkedBatch(tmpIndexName, objects, Action.ADD_OBJECT, true, batchSize, requestOptions);
+
+    waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
+
+    copyOperationResponse =
+      operationIndex(
+        indexName,
+        new OperationIndexParams()
+          .setOperation(OperationType.COPY)
+          .setDestination(tmpIndexName)
+          .addScope(ScopeType.SETTINGS)
+          .addScope(ScopeType.RULES)
+          .addScope(ScopeType.SYNONYMS),
+        requestOptions
+      );
+    waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
+
+    // Move temporary index to source index
+    UpdatedAtResponse moveOperationResponse = operationIndex(
+      tmpIndexName,
+      new OperationIndexParams().setOperation(OperationType.MOVE).setDestination(indexName),
+      requestOptions
+    );
+    waitForTask(tmpIndexName, moveOperationResponse.getTaskID(), requestOptions);
+
+    return new ReplaceAllObjectsResponse()
+      .setCopyOperationResponse(copyOperationResponse)
+      .setBatchResponses(batchResponses)
+      .setMoveOperationResponse(moveOperationResponse);
+  }
+
+  /**
+   * Helper: Generates a secured API key based on the given `parent_api_key` and given
+   * `restrictions`.
+   *
+   * @param parentApiKey API key to generate from.
+   * @param restrictions Restrictions to add the key
+   * @throws Exception if an error occurs during the encoding
+   * @throws AlgoliaRetryException When the retry has failed on all hosts
+   * @throws AlgoliaApiException When the API sends an http error code
+   * @throws AlgoliaRuntimeException When an error occurred during the serialization
+   */
+  public String generateSecuredApiKey(@Nonnull String parentApiKey, @Nonnull SecuredApiKeyRestrictions restrictions) throws Exception {
+    Map<String, String> restrictionsMap = new HashMap<>();
+    if (restrictions.getFilters() != null) restrictionsMap.put("filters", StringUtils.paramToString(restrictions.getFilters()));
+    if (restrictions.getValidUntil() != 0) restrictionsMap.put("validUntil", StringUtils.paramToString(restrictions.getValidUntil()));
+    if (restrictions.getRestrictIndices() != null) restrictionsMap.put(
+      "restrictIndices",
+      StringUtils.paramToString(restrictions.getRestrictIndices())
+    );
+    if (restrictions.getRestrictSources() != null) restrictionsMap.put(
+      "restrictSources",
+      StringUtils.paramToString(restrictions.getRestrictSources())
+    );
+    if (restrictions.getUserToken() != null) restrictionsMap.put("userToken", StringUtils.paramToString(restrictions.getUserToken()));
+
+    if (restrictions.getSearchParams() != null) {
+      Map<String, Object> searchParamsMap = JsonSerializer
+        .getObjectMapper()
+        .convertValue(restrictions.getSearchParams(), new TypeReference<Map<String, Object>>() {});
+      searchParamsMap.forEach((key, value) -> restrictionsMap.put(key, StringUtils.paramToString(value)));
+    }
+
+    String queryStr = restrictionsMap
+      .entrySet()
+      .stream()
+      .sorted(Map.Entry.comparingByKey())
+      .map(entry -> String.format("%s=%s", entry.getKey(), entry.getValue()))
+      .collect(Collectors.joining("&"));
+
+    String key = hmac(parentApiKey, queryStr);
+
+    return new String(Base64.getEncoder().encode(String.format("%s%s", key, queryStr).getBytes(Charset.forName("UTF8"))));
+  }
+
+  private String hmac(String key, String msg) throws NoSuchAlgorithmException, InvalidKeyException {
+    Mac hmac = Mac.getInstance("HmacSHA256");
+    hmac.init(new SecretKeySpec(key.getBytes(), "HmacSHA256"));
+    byte[] rawHmac = hmac.doFinal(msg.getBytes());
+    StringBuilder sb = new StringBuilder(rawHmac.length * 2);
+    for (byte b : rawHmac) {
+      sb.append(String.format("%02x", b & 0xff));
+    }
+    return sb.toString();
+  }
+
+  /**
+   * Helper: Retrieves the remaining validity of the previous generated `secured_api_key`, the
+   * `validUntil` parameter must have been provided.
+   *
+   * @param securedApiKey The secured API Key to check
+   * @throws AlgoliaRuntimeException if <code>securedApiKey</code> is null, empty or whitespaces.
+   * @throws AlgoliaRuntimeException if <code>securedApiKey</code> doesn't have a <code>validUntil
+   *     </code> parameter.
+   */
+  public Duration getSecuredApiKeyRemainingValidity(@Nonnull String securedApiKey) {
+    if (securedApiKey == null || securedApiKey.trim().isEmpty()) {
+      throw new AlgoliaRuntimeException("securedAPIKey must not be empty, null or whitespaces");
+    }
+
+    byte[] decodedBytes = Base64.getDecoder().decode(securedApiKey);
+    String decodedString = new String(decodedBytes);
+
+    Pattern pattern = Pattern.compile("validUntil=\\d+");
+    Matcher matcher = pattern.matcher(decodedString);
+
+    if (!matcher.find()) {
+      throw new AlgoliaRuntimeException("The Secured API Key doesn't have a validUntil parameter.");
+    }
+
+    String validUntilMatch = matcher.group(0);
+    long timeStamp = Long.parseLong(validUntilMatch.replace("validUntil=", ""));
+
+    return Duration.ofSeconds(timeStamp - Instant.now().getEpochSecond());
   }
 }

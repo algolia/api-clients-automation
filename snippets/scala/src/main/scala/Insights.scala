@@ -3,7 +3,9 @@ package algoliasearch.methods.snippets
 
 import scala.concurrent.duration.Duration
 
+// >IMPORT
 import algoliasearch.api.InsightsClient
+// IMPORT<
 import algoliasearch.insights.*
 
 import org.json4s.*
@@ -19,17 +21,17 @@ class SnippetInsightsClient {
     * allow del method for a custom path with minimal parameters
     */
   def snippetForInsightsClientCustomDelete(): Unit = {
-    // >SEPARATOR customDelete
+    // >SEPARATOR customDelete default
     // Initialize the client
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.customDelete[JObject](
+    val response = client.customDelete[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -38,17 +40,17 @@ class SnippetInsightsClient {
     * allow get method for a custom path with minimal parameters
     */
   def snippetForInsightsClientCustomGet(): Unit = {
-    // >SEPARATOR customGet
+    // >SEPARATOR customGet default
     // Initialize the client
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.customGet[JObject](
+    val response = client.customGet[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -57,17 +59,17 @@ class SnippetInsightsClient {
     * allow post method for a custom path with minimal parameters
     */
   def snippetForInsightsClientCustomPost(): Unit = {
-    // >SEPARATOR customPost
+    // >SEPARATOR customPost default
     // Initialize the client
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.customPost[JObject](
+    val response = client.customPost[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
@@ -76,50 +78,50 @@ class SnippetInsightsClient {
     * allow put method for a custom path with minimal parameters
     */
   def snippetForInsightsClientCustomPut(): Unit = {
-    // >SEPARATOR customPut
+    // >SEPARATOR customPut default
     // Initialize the client
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.customPut[JObject](
+    val response = client.customPut[JObject](
       path = "test/minimal"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
   /** Snippet for the deleteUserToken method.
     *
-    * deleteUserToken0
+    * deleteUserToken
     */
   def snippetForInsightsClientDeleteUserToken(): Unit = {
-    // >SEPARATOR deleteUserToken
+    // >SEPARATOR deleteUserToken default
     // Initialize the client
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.deleteUserToken(
+    val response = client.deleteUserToken(
       userToken = "test-user-1"
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 
   /** Snippet for the pushEvents method.
     *
-    * pushEvents0
+    * pushEvents
     */
   def snippetForInsightsClientPushEvents(): Unit = {
-    // >SEPARATOR pushEvents
+    // >SEPARATOR pushEvents default
     // Initialize the client
     val client = InsightsClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = Option("YOUR_APP_ID_REGION"))
 
     // Call the API
-    val res = client.pushEvents(
+    val response = client.pushEvents(
       insightsEvents = InsightsEvents(
         events = Seq(
           ClickedObjectIDsAfterSearch(
@@ -138,7 +140,7 @@ class SnippetInsightsClient {
     )
 
     // Use the response
-    val value = Await.result(res, Duration(100, "sec"))
+    val value = Await.result(response, Duration(100, "sec"))
     // SEPARATOR<
   }
 

@@ -56,7 +56,7 @@ func TestSearch_AddApiKey(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("addApiKey0", func(t *testing.T) {
+	t.Run("addApiKey", func(t *testing.T) {
 		_, err := client.AddApiKey(client.NewApiAddApiKeyRequest(
 
 			search.NewEmptyApiKey().SetAcl(
@@ -76,7 +76,7 @@ func TestSearch_AddOrUpdateObject(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("addOrUpdateObject0", func(t *testing.T) {
+	t.Run("addOrUpdateObject", func(t *testing.T) {
 		_, err := client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
 			"indexName", "uniqueID", map[string]any{"key": "value"},
 		))
@@ -94,7 +94,7 @@ func TestSearch_AppendSource(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("appendSource0", func(t *testing.T) {
+	t.Run("appendSource", func(t *testing.T) {
 		_, err := client.AppendSource(client.NewApiAppendSourceRequest(
 
 			search.NewEmptySource().SetSource("theSource").SetDescription("theDescription"),
@@ -113,7 +113,7 @@ func TestSearch_AssignUserId(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("assignUserId0", func(t *testing.T) {
+	t.Run("assignUserId", func(t *testing.T) {
 		_, err := client.AssignUserId(client.NewApiAssignUserIdRequest(
 			"userID",
 			search.NewEmptyAssignUserIdParams().SetCluster("theCluster"),
@@ -155,99 +155,99 @@ func TestSearch_Batch(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("allows batch method with `addObject` action", func(t *testing.T) {
+	t.Run("addObject", func(t *testing.T) {
 		_, err := client.Batch(client.NewApiBatchRequest(
-			"theIndexName",
+			"<YOUR_INDEX_NAME>",
 			search.NewEmptyBatchWriteParams().SetRequests(
-				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "value"})}),
+				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "bar", "foo": "1"}), *search.NewEmptyBatchRequest().SetAction(search.Action("addObject")).SetBody(map[string]any{"key": "baz", "foo": "2"})}),
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/indexes/theIndexName/batch", echo.Path)
+		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"action":"addObject","body":{"key":"value"}}]}`)
+		ja.Assertf(*echo.Body, `{"requests":[{"action":"addObject","body":{"key":"bar","foo":"1"}},{"action":"addObject","body":{"key":"baz","foo":"2"}}]}`)
 	})
-	t.Run("allows batch method with `clear` action", func(t *testing.T) {
+	t.Run("clear", func(t *testing.T) {
 		_, err := client.Batch(client.NewApiBatchRequest(
-			"theIndexName",
+			"<YOUR_INDEX_NAME>",
 			search.NewEmptyBatchWriteParams().SetRequests(
 				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("clear")).SetBody(map[string]any{"key": "value"})}),
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/indexes/theIndexName/batch", echo.Path)
+		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"requests":[{"action":"clear","body":{"key":"value"}}]}`)
 	})
-	t.Run("allows batch method with `delete` action", func(t *testing.T) {
+	t.Run("delete", func(t *testing.T) {
 		_, err := client.Batch(client.NewApiBatchRequest(
-			"theIndexName",
+			"<YOUR_INDEX_NAME>",
 			search.NewEmptyBatchWriteParams().SetRequests(
 				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("delete")).SetBody(map[string]any{"key": "value"})}),
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/indexes/theIndexName/batch", echo.Path)
+		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"requests":[{"action":"delete","body":{"key":"value"}}]}`)
 	})
-	t.Run("allows batch method with `deleteObject` action", func(t *testing.T) {
+	t.Run("deleteObject", func(t *testing.T) {
 		_, err := client.Batch(client.NewApiBatchRequest(
-			"theIndexName",
+			"<YOUR_INDEX_NAME>",
 			search.NewEmptyBatchWriteParams().SetRequests(
 				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("deleteObject")).SetBody(map[string]any{"key": "value"})}),
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/indexes/theIndexName/batch", echo.Path)
+		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"requests":[{"action":"deleteObject","body":{"key":"value"}}]}`)
 	})
-	t.Run("allows batch method with `partialUpdateObject` action", func(t *testing.T) {
+	t.Run("partialUpdateObject", func(t *testing.T) {
 		_, err := client.Batch(client.NewApiBatchRequest(
-			"theIndexName",
+			"<YOUR_INDEX_NAME>",
 			search.NewEmptyBatchWriteParams().SetRequests(
 				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("partialUpdateObject")).SetBody(map[string]any{"key": "value"})}),
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/indexes/theIndexName/batch", echo.Path)
+		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"requests":[{"action":"partialUpdateObject","body":{"key":"value"}}]}`)
 	})
-	t.Run("allows batch method with `partialUpdateObjectNoCreate` action", func(t *testing.T) {
+	t.Run("partialUpdateObjectNoCreate", func(t *testing.T) {
 		_, err := client.Batch(client.NewApiBatchRequest(
-			"theIndexName",
+			"<YOUR_INDEX_NAME>",
 			search.NewEmptyBatchWriteParams().SetRequests(
 				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("partialUpdateObjectNoCreate")).SetBody(map[string]any{"key": "value"})}),
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/indexes/theIndexName/batch", echo.Path)
+		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"requests":[{"action":"partialUpdateObjectNoCreate","body":{"key":"value"}}]}`)
 	})
-	t.Run("allows batch method with `updateObject` action", func(t *testing.T) {
+	t.Run("updateObject", func(t *testing.T) {
 		_, err := client.Batch(client.NewApiBatchRequest(
-			"theIndexName",
+			"<YOUR_INDEX_NAME>",
 			search.NewEmptyBatchWriteParams().SetRequests(
 				[]search.BatchRequest{*search.NewEmptyBatchRequest().SetAction(search.Action("updateObject")).SetBody(map[string]any{"key": "value"})}),
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/indexes/theIndexName/batch", echo.Path)
+		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -259,7 +259,7 @@ func TestSearch_BatchAssignUserIds(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("batchAssignUserIds0", func(t *testing.T) {
+	t.Run("batchAssignUserIds", func(t *testing.T) {
 		_, err := client.BatchAssignUserIds(client.NewApiBatchAssignUserIdsRequest(
 			"userID",
 			search.NewEmptyBatchAssignUserIdsParams().SetCluster("theCluster").SetUsers(
@@ -284,52 +284,50 @@ func TestSearch_BatchDictionaryEntries(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("get batchDictionaryEntries results with minimal parameters", func(t *testing.T) {
+	t.Run("replace", func(t *testing.T) {
 		_, err := client.BatchDictionaryEntries(client.NewApiBatchDictionaryEntriesRequest(
-			search.DictionaryType("compounds"),
-			search.NewEmptyBatchDictionaryEntriesParams().SetRequests(
-				[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
-					search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en"))), *search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("deleteEntry")).SetBody(
-					search.NewEmptyDictionaryEntry().SetObjectID("2").SetLanguage(search.SupportedLanguage("fr")))}),
-		))
-		require.NoError(t, err)
-
-		require.Equal(t, "/1/dictionaries/compounds/batch", echo.Path)
-		require.Equal(t, "POST", echo.Method)
-
-		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr"}}]}`)
-	})
-	t.Run("get batchDictionaryEntries results with all parameters", func(t *testing.T) {
-		_, err := client.BatchDictionaryEntries(client.NewApiBatchDictionaryEntriesRequest(
-			search.DictionaryType("compounds"),
-			search.NewEmptyBatchDictionaryEntriesParams().SetClearExistingDictionaryEntries(false).SetRequests(
+			search.DictionaryType("plurals"),
+			search.NewEmptyBatchDictionaryEntriesParams().SetClearExistingDictionaryEntries(true).SetRequests(
 				[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
 					search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetWord("fancy").SetWords(
 						[]string{"believe", "algolia"}).SetDecomposition(
-						[]string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled"))), *search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("deleteEntry")).SetBody(
-					search.NewEmptyDictionaryEntry().SetObjectID("2").SetLanguage(search.SupportedLanguage("fr")).SetWord("humility").SetWords(
-						[]string{"candor", "algolia"}).SetDecomposition(
-						[]string{"grit", "algolia"}).SetState(search.DictionaryEntryState("enabled")))}),
+						[]string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled")))}),
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/dictionaries/compounds/batch", echo.Path)
+		require.Equal(t, "/1/dictionaries/plurals/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"clearExistingDictionaryEntries":false,"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}},{"action":"deleteEntry","body":{"objectID":"2","language":"fr","word":"humility","words":["candor","algolia"],"decomposition":["grit","algolia"],"state":"enabled"}}]}`)
+		ja.Assertf(*echo.Body, `{"clearExistingDictionaryEntries":true,"requests":[{"action":"addEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}}]}`)
 	})
-	t.Run("get batchDictionaryEntries results additional properties", func(t *testing.T) {
+	t.Run("delete", func(t *testing.T) {
 		_, err := client.BatchDictionaryEntries(client.NewApiBatchDictionaryEntriesRequest(
-			search.DictionaryType("compounds"),
+			search.DictionaryType("plurals"),
+			search.NewEmptyBatchDictionaryEntriesParams().SetClearExistingDictionaryEntries(true).SetRequests(
+				[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("deleteEntry")).SetBody(
+					search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetWord("fancy").SetWords(
+						[]string{"believe", "algolia"}).SetDecomposition(
+						[]string{"trust", "algolia"}).SetState(search.DictionaryEntryState("enabled")))}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/dictionaries/plurals/batch", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"clearExistingDictionaryEntries":true,"requests":[{"action":"deleteEntry","body":{"objectID":"1","language":"en","word":"fancy","words":["believe","algolia"],"decomposition":["trust","algolia"],"state":"enabled"}}]}`)
+	})
+	t.Run("append", func(t *testing.T) {
+		_, err := client.BatchDictionaryEntries(client.NewApiBatchDictionaryEntriesRequest(
+			search.DictionaryType("stopwords"),
 			search.NewEmptyBatchDictionaryEntriesParams().SetRequests(
 				[]search.BatchDictionaryEntriesRequest{*search.NewEmptyBatchDictionaryEntriesRequest().SetAction(search.DictionaryAction("addEntry")).SetBody(
 					search.NewEmptyDictionaryEntry().SetObjectID("1").SetLanguage(search.SupportedLanguage("en")).SetAdditionalProperty("additional", "try me"))}),
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/dictionaries/compounds/batch", echo.Path)
+		require.Equal(t, "/1/dictionaries/stopwords/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -411,7 +409,7 @@ func TestSearch_ClearObjects(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("clearObjects0", func(t *testing.T) {
+	t.Run("clearObjects", func(t *testing.T) {
 		_, err := client.ClearObjects(client.NewApiClearObjectsRequest(
 			"theIndexName",
 		))
@@ -428,7 +426,7 @@ func TestSearch_ClearRules(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("clearRules0", func(t *testing.T) {
+	t.Run("clearRules", func(t *testing.T) {
 		_, err := client.ClearRules(client.NewApiClearRulesRequest(
 			"indexName",
 		))
@@ -445,7 +443,7 @@ func TestSearch_ClearSynonyms(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("clearSynonyms0", func(t *testing.T) {
+	t.Run("clearSynonyms", func(t *testing.T) {
 		_, err := client.ClearSynonyms(client.NewApiClearSynonymsRequest(
 			"indexName",
 		))
@@ -820,7 +818,7 @@ func TestSearch_DeleteApiKey(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("deleteApiKey0", func(t *testing.T) {
+	t.Run("deleteApiKey", func(t *testing.T) {
 		_, err := client.DeleteApiKey(client.NewApiDeleteApiKeyRequest(
 			"myTestApiKey",
 		))
@@ -837,7 +835,7 @@ func TestSearch_DeleteBy(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("deleteBy0", func(t *testing.T) {
+	t.Run("deleteBy", func(t *testing.T) {
 		_, err := client.DeleteBy(client.NewApiDeleteByRequest(
 			"theIndexName",
 			search.NewEmptyDeleteByParams().SetFilters("brand:brandName"),
@@ -856,7 +854,7 @@ func TestSearch_DeleteIndex(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("deleteIndex0", func(t *testing.T) {
+	t.Run("deleteIndex", func(t *testing.T) {
 		_, err := client.DeleteIndex(client.NewApiDeleteIndexRequest(
 			"theIndexName",
 		))
@@ -873,13 +871,13 @@ func TestSearch_DeleteObject(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("deleteObject0", func(t *testing.T) {
+	t.Run("deleteObject", func(t *testing.T) {
 		_, err := client.DeleteObject(client.NewApiDeleteObjectRequest(
-			"theIndexName", "uniqueID",
+			"<YOUR_INDEX_NAME>", "uniqueID",
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/indexes/theIndexName/uniqueID", echo.Path)
+		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/uniqueID", echo.Path)
 		require.Equal(t, "DELETE", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -918,7 +916,7 @@ func TestSearch_DeleteSource(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("deleteSource0", func(t *testing.T) {
+	t.Run("deleteSource", func(t *testing.T) {
 		_, err := client.DeleteSource(client.NewApiDeleteSourceRequest(
 			"theSource",
 		))
@@ -935,7 +933,7 @@ func TestSearch_DeleteSynonym(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("deleteSynonym0", func(t *testing.T) {
+	t.Run("deleteSynonym", func(t *testing.T) {
 		_, err := client.DeleteSynonym(client.NewApiDeleteSynonymRequest(
 			"indexName", "id1",
 		))
@@ -952,13 +950,30 @@ func TestSearch_GetApiKey(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("getApiKey0", func(t *testing.T) {
+	t.Run("getApiKey", func(t *testing.T) {
 		_, err := client.GetApiKey(client.NewApiGetApiKeyRequest(
 			"myTestApiKey",
 		))
 		require.NoError(t, err)
 
 		require.Equal(t, "/1/keys/myTestApiKey", echo.Path)
+		require.Equal(t, "GET", echo.Method)
+
+		require.Nil(t, echo.Body)
+	})
+}
+
+func TestSearch_GetAppTask(t *testing.T) {
+	client, echo := createSearchClient(t)
+	_ = echo
+
+	t.Run("getAppTask", func(t *testing.T) {
+		_, err := client.GetAppTask(client.NewApiGetAppTaskRequest(
+			123,
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/task/123", echo.Path)
 		require.Equal(t, "GET", echo.Method)
 
 		require.Nil(t, echo.Body)
@@ -1029,7 +1044,7 @@ func TestSearch_GetObject(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("getObject0", func(t *testing.T) {
+	t.Run("getObject", func(t *testing.T) {
 		_, err := client.GetObject(client.NewApiGetObjectRequest(
 			"theIndexName", "uniqueID",
 		).WithAttributesToRetrieve(
@@ -1053,7 +1068,7 @@ func TestSearch_GetObjects(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("getObjects0", func(t *testing.T) {
+	t.Run("getObjects", func(t *testing.T) {
 		_, err := client.GetObjects(client.NewApiGetObjectsRequest(
 
 			search.NewEmptyGetObjectsParams().SetRequests(
@@ -1074,7 +1089,7 @@ func TestSearch_GetRule(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("getRule0", func(t *testing.T) {
+	t.Run("getRule", func(t *testing.T) {
 		_, err := client.GetRule(client.NewApiGetRuleRequest(
 			"indexName", "id1",
 		))
@@ -1091,7 +1106,7 @@ func TestSearch_GetSettings(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("getSettings0", func(t *testing.T) {
+	t.Run("getSettings", func(t *testing.T) {
 		_, err := client.GetSettings(client.NewApiGetSettingsRequest(
 			"cts_e2e_settings",
 		))
@@ -1133,7 +1148,7 @@ func TestSearch_GetSources(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("getSources0", func(t *testing.T) {
+	t.Run("getSources", func(t *testing.T) {
 		_, err := client.GetSources()
 		require.NoError(t, err)
 
@@ -1148,7 +1163,7 @@ func TestSearch_GetSynonym(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("getSynonym0", func(t *testing.T) {
+	t.Run("getSynonym", func(t *testing.T) {
 		_, err := client.GetSynonym(client.NewApiGetSynonymRequest(
 			"indexName", "id1",
 		))
@@ -1165,7 +1180,7 @@ func TestSearch_GetTask(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("getTask0", func(t *testing.T) {
+	t.Run("getTask", func(t *testing.T) {
 		_, err := client.GetTask(client.NewApiGetTaskRequest(
 			"theIndexName", 123,
 		))
@@ -1182,7 +1197,7 @@ func TestSearch_GetTopUserIds(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("getTopUserIds0", func(t *testing.T) {
+	t.Run("getTopUserIds", func(t *testing.T) {
 		_, err := client.GetTopUserIds()
 		require.NoError(t, err)
 
@@ -1197,7 +1212,7 @@ func TestSearch_GetUserId(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("getUserId0", func(t *testing.T) {
+	t.Run("getUserId", func(t *testing.T) {
 		_, err := client.GetUserId(client.NewApiGetUserIdRequest(
 			"uniqueID",
 		))
@@ -1244,7 +1259,7 @@ func TestSearch_ListApiKeys(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("listApiKeys0", func(t *testing.T) {
+	t.Run("listApiKeys", func(t *testing.T) {
 		_, err := client.ListApiKeys()
 		require.NoError(t, err)
 
@@ -1259,7 +1274,7 @@ func TestSearch_ListClusters(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("listClusters0", func(t *testing.T) {
+	t.Run("listClusters", func(t *testing.T) {
 		_, err := client.ListClusters()
 		require.NoError(t, err)
 
@@ -1334,7 +1349,7 @@ func TestSearch_MultipleBatch(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("multipleBatch0", func(t *testing.T) {
+	t.Run("multipleBatch", func(t *testing.T) {
 		_, err := client.MultipleBatch(client.NewApiMultipleBatchRequest(
 
 			search.NewEmptyBatchParams().SetRequests(
@@ -1354,19 +1369,45 @@ func TestSearch_OperationIndex(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("operationIndex0", func(t *testing.T) {
+	t.Run("scopes", func(t *testing.T) {
 		_, err := client.OperationIndex(client.NewApiOperationIndexRequest(
-			"theIndexName",
-			search.NewEmptyOperationIndexParams().SetOperation(search.OperationType("copy")).SetDestination("dest").SetScope(
+			"<SOURCE_INDEX_NAME>",
+			search.NewEmptyOperationIndexParams().SetOperation(search.OperationType("move")).SetDestination("<DESTINATION_INDEX_NAME>").SetScope(
 				[]search.ScopeType{search.ScopeType("rules"), search.ScopeType("settings")}),
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/indexes/theIndexName/operation", echo.Path)
+		require.Equal(t, "/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
-		ja.Assertf(*echo.Body, `{"operation":"copy","destination":"dest","scope":["rules","settings"]}`)
+		ja.Assertf(*echo.Body, `{"operation":"move","destination":"<DESTINATION_INDEX_NAME>","scope":["rules","settings"]}`)
+	})
+	t.Run("copy", func(t *testing.T) {
+		_, err := client.OperationIndex(client.NewApiOperationIndexRequest(
+			"<SOURCE_INDEX_NAME>",
+			search.NewEmptyOperationIndexParams().SetOperation(search.OperationType("copy")).SetDestination("<DESTINATION_INDEX_NAME>"),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"operation":"copy","destination":"<DESTINATION_INDEX_NAME>"}`)
+	})
+	t.Run("move", func(t *testing.T) {
+		_, err := client.OperationIndex(client.NewApiOperationIndexRequest(
+			"<SOURCE_INDEX_NAME>",
+			search.NewEmptyOperationIndexParams().SetOperation(search.OperationType("move")).SetDestination("<DESTINATION_INDEX_NAME>"),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"operation":"move","destination":"<DESTINATION_INDEX_NAME>"}`)
 	})
 }
 
@@ -1374,7 +1415,7 @@ func TestSearch_PartialUpdateObject(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("partialUpdateObject0", func(t *testing.T) {
+	t.Run("partialUpdateObject", func(t *testing.T) {
 		_, err := client.PartialUpdateObject(client.NewApiPartialUpdateObjectRequest(
 			"theIndexName", "uniqueID", map[string]search.AttributeToUpdate{"id1": *search.StringAsAttributeToUpdate("test"), "id2": *search.BuiltInOperationAsAttributeToUpdate(
 				search.NewEmptyBuiltInOperation().SetOperation(search.BuiltInOperationType("AddUnique")).SetValue("test2"))},
@@ -1399,7 +1440,7 @@ func TestSearch_RemoveUserId(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("removeUserId0", func(t *testing.T) {
+	t.Run("removeUserId", func(t *testing.T) {
 		_, err := client.RemoveUserId(client.NewApiRemoveUserIdRequest(
 			"uniqueID",
 		))
@@ -1416,7 +1457,7 @@ func TestSearch_ReplaceSources(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("replaceSources0", func(t *testing.T) {
+	t.Run("replaceSources", func(t *testing.T) {
 		_, err := client.ReplaceSources(client.NewApiReplaceSourcesRequest(
 
 			[]search.Source{*search.NewEmptySource().SetSource("theSource").SetDescription("theDescription")},
@@ -1435,7 +1476,7 @@ func TestSearch_RestoreApiKey(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("restoreApiKey0", func(t *testing.T) {
+	t.Run("restoreApiKey", func(t *testing.T) {
 		_, err := client.RestoreApiKey(client.NewApiRestoreApiKeyRequest(
 			"myApiKey",
 		))
@@ -1452,13 +1493,13 @@ func TestSearch_SaveObject(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("saveObject0", func(t *testing.T) {
+	t.Run("saveObject", func(t *testing.T) {
 		_, err := client.SaveObject(client.NewApiSaveObjectRequest(
-			"theIndexName", map[string]any{"objectID": "id", "test": "val"},
+			"<YOUR_INDEX_NAME>", map[string]any{"objectID": "id", "test": "val"},
 		))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/indexes/theIndexName", echo.Path)
+		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1523,22 +1564,28 @@ func TestSearch_SaveRules(t *testing.T) {
 
 	t.Run("saveRules with minimal parameters", func(t *testing.T) {
 		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
-			"indexName",
+			"<YOUR_INDEX_NAME>",
 			[]search.Rule{*search.NewEmptyRule().SetObjectID("a-rule-id").SetConditions(
 				[]search.Condition{*search.NewEmptyCondition().SetPattern("smartphone").SetAnchoring(search.Anchoring("contains"))}), *search.NewEmptyRule().SetObjectID("a-second-rule-id").SetConditions(
 				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains"))})},
-		))
+		).WithForwardToReplicas(false).WithClearExistingRules(true))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/indexes/indexName/rules/batch", echo.Path)
+		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `[{"objectID":"a-rule-id","conditions":[{"pattern":"smartphone","anchoring":"contains"}]},{"objectID":"a-second-rule-id","conditions":[{"pattern":"apple","anchoring":"contains"}]}]`)
+		queryParams := map[string]string{}
+		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"false","clearExistingRules":"true"}`), &queryParams))
+		require.Len(t, queryParams, len(echo.Query))
+		for k, v := range queryParams {
+			require.Equal(t, v, echo.Query.Get(k))
+		}
 	})
 	t.Run("saveRules with all parameters", func(t *testing.T) {
 		_, err := client.SaveRules(client.NewApiSaveRulesRequest(
-			"indexName",
+			"<YOUR_INDEX_NAME>",
 			[]search.Rule{*search.NewEmptyRule().SetObjectID("id1").SetConditions(
 				[]search.Condition{*search.NewEmptyCondition().SetPattern("apple").SetAnchoring(search.Anchoring("contains")).SetAlternatives(false).SetContext("search")}).SetConsequence(
 				search.NewEmptyConsequence().SetParams(
@@ -1555,7 +1602,7 @@ func TestSearch_SaveRules(t *testing.T) {
 		).WithForwardToReplicas(true).WithClearExistingRules(true))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/indexes/indexName/rules/batch", echo.Path)
+		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
@@ -1573,7 +1620,7 @@ func TestSearch_SaveSynonym(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("saveSynonym0", func(t *testing.T) {
+	t.Run("saveSynonym", func(t *testing.T) {
 		_, err := client.SaveSynonym(client.NewApiSaveSynonymRequest(
 			"indexName", "id1",
 			search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
@@ -1599,22 +1646,22 @@ func TestSearch_SaveSynonyms(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("saveSynonyms0", func(t *testing.T) {
+	t.Run("saveSynonyms", func(t *testing.T) {
 		_, err := client.SaveSynonyms(client.NewApiSaveSynonymsRequest(
-			"indexName",
+			"<YOUR_INDEX_NAME>",
 			[]search.SynonymHit{*search.NewEmptySynonymHit().SetObjectID("id1").SetType(search.SynonymType("synonym")).SetSynonyms(
 				[]string{"car", "vehicule", "auto"}), *search.NewEmptySynonymHit().SetObjectID("id2").SetType(search.SynonymType("onewaysynonym")).SetInput("iphone").SetSynonyms(
 				[]string{"ephone", "aphone", "yphone"})},
-		).WithForwardToReplicas(true).WithReplaceExistingSynonyms(false))
+		).WithForwardToReplicas(true).WithReplaceExistingSynonyms(true))
 		require.NoError(t, err)
 
-		require.Equal(t, "/1/indexes/indexName/synonyms/batch", echo.Path)
+		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/synonyms/batch", echo.Path)
 		require.Equal(t, "POST", echo.Method)
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `[{"objectID":"id1","type":"synonym","synonyms":["car","vehicule","auto"]},{"objectID":"id2","type":"onewaysynonym","input":"iphone","synonyms":["ephone","aphone","yphone"]}]`)
 		queryParams := map[string]string{}
-		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true","replaceExistingSynonyms":"false"}`), &queryParams))
+		require.NoError(t, json.Unmarshal([]byte(`{"forwardToReplicas":"true","replaceExistingSynonyms":"true"}`), &queryParams))
 		require.Len(t, queryParams, len(echo.Query))
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
@@ -1626,6 +1673,66 @@ func TestSearch_Search(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
+	t.Run("withHitsPerPage", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
+
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetHitsPerPage(50))}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/*/queries", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","hitsPerPage":50}]}`)
+	})
+	t.Run("filterOnly", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
+
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFilters("actor:Scarlett Johansson"))}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/*/queries", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"actor:Scarlett Johansson"}]}`)
+	})
+	t.Run("filterOr", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
+
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFilters("actor:Tom Cruise OR actor:Scarlett Johansson"))}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/*/queries", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"actor:Tom Cruise OR actor:Scarlett Johansson"}]}`)
+	})
+	t.Run("filterNot", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
+
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFilters("NOT actor:Nicolas Cage"))}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/*/queries", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","filters":"NOT actor:Nicolas Cage"}]}`)
+	})
 	t.Run("search for a single hits request with minimal parameters", func(t *testing.T) {
 		_, err := client.Search(client.NewApiSearchRequest(
 
@@ -1668,6 +1775,38 @@ func TestSearch_Search(t *testing.T) {
 
 		jaE2E := jsonassert.New(t)
 		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
+	})
+	t.Run("retrieveFacets", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
+
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFacets(
+						[]string{"author", "genre"}))}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/*/queries", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["author","genre"]}]}`)
+	})
+	t.Run("retrieveFacetsWildcard", func(t *testing.T) {
+		_, err := client.Search(client.NewApiSearchRequest(
+
+			search.NewEmptySearchMethodParams().SetRequests(
+				[]search.SearchQuery{*search.SearchForHitsAsSearchQuery(
+					search.NewEmptySearchForHits().SetIndexName("<YOUR_INDEX_NAME>").SetQuery("<YOUR_QUERY>").SetFacets(
+						[]string{"*"}))}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/*/queries", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"requests":[{"indexName":"<YOUR_INDEX_NAME>","query":"<YOUR_QUERY>","facets":["*"]}]}`)
 	})
 	t.Run("search for a single facet request with minimal parameters", func(t *testing.T) {
 		_, err := client.Search(client.NewApiSearchRequest(
@@ -2006,7 +2145,7 @@ func TestSearch_SearchRules(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("searchRules0", func(t *testing.T) {
+	t.Run("searchRules", func(t *testing.T) {
 		_, err := client.SearchRules(client.NewApiSearchRulesRequest(
 			"indexName",
 		).WithSearchRulesParams(
@@ -2150,7 +2289,7 @@ func TestSearch_SearchUserIds(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("searchUserIds0", func(t *testing.T) {
+	t.Run("searchUserIds", func(t *testing.T) {
 		_, err := client.SearchUserIds(client.NewApiSearchUserIdsRequest(
 
 			search.NewEmptySearchUserIdsParams().SetQuery("test").SetClusterName("theClusterName").SetPage(5).SetHitsPerPage(10),
@@ -2203,6 +2342,20 @@ func TestSearch_SetSettings(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
+	t.Run("setSettingsAttributesForFaceting", func(t *testing.T) {
+		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
+			"<YOUR_INDEX_NAME>",
+			search.NewEmptyIndexSettings().SetAttributesForFaceting(
+				[]string{"actor", "filterOnly(category)", "searchable(publisher)"}),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", echo.Path)
+		require.Equal(t, "PUT", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"attributesForFaceting":["actor","filterOnly(category)","searchable(publisher)"]}`)
+	})
 	t.Run("setSettings with minimal parameters", func(t *testing.T) {
 		_, err := client.SetSettings(client.NewApiSetSettingsRequest(
 			"cts_e2e_settings",
@@ -2432,7 +2585,7 @@ func TestSearch_UpdateApiKey(t *testing.T) {
 	client, echo := createSearchClient(t)
 	_ = echo
 
-	t.Run("updateApiKey0", func(t *testing.T) {
+	t.Run("updateApiKey", func(t *testing.T) {
 		_, err := client.UpdateApiKey(client.NewApiUpdateApiKeyRequest(
 			"myApiKey",
 			search.NewEmptyApiKey().SetAcl(
@@ -2460,7 +2613,7 @@ func TestSearch_GenerateSecuredApiKey(t *testing.T) {
 	})
 
 	t.Run("generates a key with restrictions", func(t *testing.T) {
-		key, err := client.GenerateSecuredApiKey("foo", search.NewSecuredAPIKeyRestrictions().SetValidUntil(100).SetRestrictIndices([]string{"bar"}).SetRestrictSources("192,168.1.0/24").SetUserToken("foobarbaz").SetSearchParams(search.NewSearchParamsObject().SetQuery("foo")))
+		key, err := client.GenerateSecuredApiKey("foo", search.NewSecuredApiKeyRestrictions().SetValidUntil(100).SetRestrictIndices([]string{"bar"}).SetRestrictSources("192,168.1.0/24").SetUserToken("foobarbaz").SetSearchParams(search.NewSearchParamsObject().SetQuery("foo")))
 		require.NoError(t, err)
 
 		require.Equal(t, "NGMxODk0MjViNjM3ODcxNjc4NWU4Y2I5NGIxNDAzMTg4MjU5Mjc4YTEwMzU4Mjk2YjBiMmVjOWViYTIyOTBiY3F1ZXJ5PWZvbyZyZXN0cmljdEluZGljZXM9YmFyJnJlc3RyaWN0U291cmNlcz0xOTIlMkMxNjguMS4wJTJGMjQmdXNlclRva2VuPWZvb2JhcmJheiZ2YWxpZFVudGlsPTEwMA==", key)
@@ -2472,7 +2625,7 @@ func TestSearch_GetSecuredApiKeyRemainingVaildity(t *testing.T) {
 	_ = echo
 
 	t.Run("is able to check the remaining validity of a key", func(t *testing.T) {
-		key, err := client.GenerateSecuredApiKey("foo", search.NewSecuredAPIKeyRestrictions().SetValidUntil(42))
+		key, err := client.GenerateSecuredApiKey("foo", search.NewSecuredApiKeyRestrictions().SetValidUntil(42))
 		require.NoError(t, err)
 
 		require.Equal(t, "NDI5ZjRkMTRiNTBlZmExZWIyN2I3NzczOGUwMzE0NjYwMDU1M2M3NjYyY2IxODZhMDAxMWEwOWJmZjE5MzY0NnZhbGlkVW50aWw9NDI=", key)

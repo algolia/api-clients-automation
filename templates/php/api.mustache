@@ -328,6 +328,38 @@ use {{invokerPackage}}\Support\Helpers;
     }
 
     /**
+     * Wait for an application-level task to complete with `taskID`.
+     *
+     * @param int $taskId Task Id
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     * @param int|null $maxRetries Maximum number of retries
+     * @param int|null $timeout Timeout
+     *
+     * @throws ExceededRetriesException
+     *
+     * @return void
+     */
+    public function waitForAppTask($taskId, $requestOptions = [], $maxRetries = null, $timeout = null)
+    {
+        if ($timeout === null) {
+            $timeout = $this->config->getWaitTaskTimeBeforeRetry();
+        }
+
+        if ($maxRetries === null) {
+            $maxRetries = $this->config->getDefaultMaxRetries();
+        }
+
+        Helpers::retryUntil(
+            $this,
+            'getAppTask',
+            [$taskId, $requestOptions],
+            function($res) {return 'published' === $res['status'];},
+            $maxRetries,
+            $timeout
+        );
+    }
+
+    /**
      * Wait for an API key to be added, updated or deleted based on a given `operation`.
      *
      * @param string $operation the `operation` that was done on a `key`
@@ -410,6 +442,7 @@ use {{invokerPackage}}\Support\Helpers;
 
     /**
     * Helper: Replace all objects in an index using a temporary one.
+    * See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
     *
     * @param string $indexName      The `indexName` to replace `objects` in.
     * @param array  $objects        The array of `objects` to store in the given Algolia `indexName`.
@@ -418,27 +451,36 @@ use {{invokerPackage}}\Support\Helpers;
     */
     public function replaceAllObjects($indexName, $objects, $batchSize = 1000, $requestOptions = [])
     {
-        $tmpIndex = $indexName.'_tmp_'.uniqid('php_', true);
+        $tmpIndexName = $indexName.'_tmp_'.uniqid('php_', true);
 
-        // Copy all index resources from production index
         $copyResponse = $this->operationIndex(
             $indexName,
             [
                 'operation' => 'copy',
-                'destination' => $tmpIndex,
+                'destination' => $tmpIndexName,
                 'scope' => ['settings', 'synonyms', 'rules'],
             ],
             $requestOptions
         );
 
-        $this->waitForTask($indexName, $copyResponse['taskID']);
+        $this->chunkedBatch($tmpIndexName, $objects, 'addObject', true, $batchSize, $requestOptions);
 
-        // Index objects in chunks
-        $this->chunkedBatch($tmpIndex, $objects, 'addObject', true, $batchSize, $requestOptions);
+        $this->waitForTask($tmpIndexName, $copyResponse['taskID']);
 
-        // Move temporary index to production
+        $copyResponse = $this->operationIndex(
+            $indexName,
+            [
+                'operation' => 'copy',
+                'destination' => $tmpIndexName,
+                'scope' => ['settings', 'synonyms', 'rules'],
+            ],
+            $requestOptions
+        );
+
+        $this->waitForTask($tmpIndexName, $copyResponse['taskID']);
+
         $moveResponse = $this->operationIndex(
-            $tmpIndex,
+            $tmpIndexName,
             [
                 'operation' => 'move',
                 'destination' => $indexName,
@@ -446,7 +488,7 @@ use {{invokerPackage}}\Support\Helpers;
             $requestOptions
         );
 
-        $this->waitForTask($tmpIndex, $moveResponse['taskID']);
+        $this->waitForTask($tmpIndexName, $moveResponse['taskID']);
     }
 
     /**
@@ -476,13 +518,13 @@ use {{invokerPackage}}\Support\Helpers;
                 'action' => $action,
                 'body' => $object,
             ];
-            $count++;
 
-            if ($count === $batchSize) {
+            if (sizeof($requests) === $batchSize || $count === sizeof($objects)-1) {
                 $responses[] = $this->batch($indexName, ['requests' => $requests], $requestOptions);
                 $requests = [];
-                $count = 0;
             }
+
+            $count++;
         }
 
         if (!empty($requests)) {
@@ -497,7 +539,7 @@ use {{invokerPackage}}\Support\Helpers;
     }
 
     /**
-    * Helper: Generate a secured API Key
+    * Helper: Generate a secured API Key.
     *
     * @param string $parentApiKey Parent API Key
     * @param array  $restrictions API Key's restrictions
@@ -506,7 +548,14 @@ use {{invokerPackage}}\Support\Helpers;
     */
     public static function generateSecuredApiKey($parentApiKey, $restrictions)
     {
-        $urlEncodedRestrictions = Helpers::buildQuery($restrictions);
+        $formattedRestrictions = $restrictions;
+        if (isset($restrictions['searchParams'])) {
+            $formattedRestrictions = array_merge($restrictions, $restrictions['searchParams']);
+            unset($formattedRestrictions['searchParams']);
+        }
+
+        ksort($formattedRestrictions);
+        $urlEncodedRestrictions = Helpers::buildQuery($formattedRestrictions);
 
         $content = hash_hmac('sha256', $urlEncodedRestrictions, $parentApiKey).$urlEncodedRestrictions;
 
@@ -514,17 +563,17 @@ use {{invokerPackage}}\Support\Helpers;
     }
 
     /**
-    * Helper: Returns the time the given securedAPIKey remains valid in seconds.
+    * Helper: Returns the time the given securedApiKey remains valid in seconds.
     *
-    * @param string $securedAPIKey the key to check
+    * @param string $securedApiKey the key to check
     *
     * @return int remaining validity in seconds
     *
     * @throws ValidUntilNotFoundException
     */
-    public static function getSecuredApiKeyRemainingValidity($securedAPIKey)
+    public static function getSecuredApiKeyRemainingValidity($securedApiKey)
     {
-        $decodedKey = base64_decode($securedAPIKey);
+        $decodedKey = base64_decode($securedApiKey);
         $regex = '/validUntil=(\d+)/';
         preg_match($regex, $decodedKey, $matches);
 

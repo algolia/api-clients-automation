@@ -581,8 +581,6 @@ class SearchResult extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
      * Gets exhaustiveFacetsCount.
      *
      * @return bool
-     *
-     * @deprecated
      */
     public function getExhaustiveFacetsCount()
     {
@@ -592,11 +590,9 @@ class SearchResult extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
     /**
      * Sets exhaustiveFacetsCount.
      *
-     * @param bool $exhaustiveFacetsCount see the `facetsCount` field of the `exhaustive` object in the response
+     * @param bool $exhaustiveFacetsCount Whether the facet count is exhaustive (true) or approximate (false). For more information, see [Why are my facet and hit counts not accurate](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
      *
      * @return self
-     *
-     * @deprecated
      */
     public function setExhaustiveFacetsCount($exhaustiveFacetsCount)
     {
@@ -1117,7 +1113,7 @@ class SearchResult extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
     /**
      * Sets userData.
      *
-     * @param null|object $userData An object with custom data.  You can store up to 32&nbsp;kB as custom data.
+     * @param null|object $userData An object with custom data.  You can store up to 32kB as custom data.
      *
      * @return self
      */

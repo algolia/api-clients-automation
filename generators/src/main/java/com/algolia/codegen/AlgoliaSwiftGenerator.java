@@ -10,7 +10,6 @@ import com.algolia.codegen.utils.OneOf;
 import com.samskivert.mustache.Mustache;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
-import io.swagger.v3.oas.models.media.ArraySchema;
 import io.swagger.v3.oas.models.media.ComposedSchema;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.media.StringSchema;
@@ -71,7 +70,6 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "languages",
     "matchedgeolocation",
     "matchlevel",
-    "mixedsearchfilters",
     "mode",
     "numericfilters",
     "optionalfilters",
@@ -375,7 +373,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     Schema<?> schema = ModelUtils.unaliasSchema(this.openAPI, p, importMapping);
     Schema<?> target = ModelUtils.isGenerateAliasAsModel() ? p : schema;
     if (ModelUtils.isArraySchema(target)) {
-      Schema<?> items = getSchemaItems((ArraySchema) schema);
+      Schema<?> items = ModelUtils.getSchemaItems(schema);
       return ModelUtils.isSet(target) && ModelUtils.isObjectSchema(items)
         ? "Set<" + getTypeDeclaration(items) + ">"
         : "[" + getTypeDeclaration(items) + "]";

@@ -51,7 +51,7 @@ class AbtestingClientRequestsTests {
 
   @Test
   @DisplayName("addABTests with minimal parameters")
-  void addABTestsTest0() {
+  void addABTestsTest() {
     assertDoesNotThrow(() -> {
       client.addABTests(
         new AddABTestsRequest()
@@ -79,7 +79,7 @@ class AbtestingClientRequestsTests {
 
   @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
-  void customDeleteTest0() {
+  void customDeleteTest() {
     assertDoesNotThrow(() -> {
       client.customDelete("test/minimal");
     });
@@ -115,7 +115,7 @@ class AbtestingClientRequestsTests {
 
   @Test
   @DisplayName("allow get method for a custom path with minimal parameters")
-  void customGetTest0() {
+  void customGetTest() {
     assertDoesNotThrow(() -> {
       client.customGet("test/minimal");
     });
@@ -202,7 +202,7 @@ class AbtestingClientRequestsTests {
 
   @Test
   @DisplayName("allow post method for a custom path with minimal parameters")
-  void customPostTest0() {
+  void customPostTest() {
     assertDoesNotThrow(() -> {
       client.customPost("test/minimal");
     });
@@ -548,7 +548,7 @@ class AbtestingClientRequestsTests {
 
   @Test
   @DisplayName("allow put method for a custom path with minimal parameters")
-  void customPutTest0() {
+  void customPutTest() {
     assertDoesNotThrow(() -> {
       client.customPut("test/minimal");
     });
@@ -584,7 +584,7 @@ class AbtestingClientRequestsTests {
 
   @Test
   @DisplayName("deleteABTest")
-  void deleteABTestTest0() {
+  void deleteABTestTest() {
     assertDoesNotThrow(() -> {
       client.deleteABTest(42);
     });
@@ -596,7 +596,7 @@ class AbtestingClientRequestsTests {
 
   @Test
   @DisplayName("getABTest")
-  void getABTestTest0() {
+  void getABTestTest() {
     assertDoesNotThrow(() -> {
       client.getABTest(42);
     });
@@ -608,7 +608,7 @@ class AbtestingClientRequestsTests {
 
   @Test
   @DisplayName("listABTests with minimal parameters")
-  void listABTestsTest0() {
+  void listABTestsTest() {
     assertDoesNotThrow(() -> {
       client.listABTests();
     });
@@ -659,7 +659,7 @@ class AbtestingClientRequestsTests {
 
   @Test
   @DisplayName("stopABTest")
-  void stopABTestTest0() {
+  void stopABTestTest() {
     assertDoesNotThrow(() -> {
       client.stopABTest(42);
     });

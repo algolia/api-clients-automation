@@ -40,7 +40,7 @@ class UsageTest extends TestCase implements HttpClientInterface
      * Test case for CustomDelete
      * allow del method for a custom path with minimal parameters.
      */
-    public function testCustomDelete0()
+    public function testCustomDelete()
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -83,7 +83,7 @@ class UsageTest extends TestCase implements HttpClientInterface
      * Test case for CustomGet
      * allow get method for a custom path with minimal parameters.
      */
-    public function testCustomGet0()
+    public function testCustomGet()
     {
         $client = $this->getClient();
         $client->customGet(
@@ -161,7 +161,7 @@ class UsageTest extends TestCase implements HttpClientInterface
      * Test case for CustomPost
      * allow post method for a custom path with minimal parameters.
      */
-    public function testCustomPost0()
+    public function testCustomPost()
     {
         $client = $this->getClient();
         $client->customPost(
@@ -508,7 +508,7 @@ class UsageTest extends TestCase implements HttpClientInterface
      * Test case for CustomPut
      * allow put method for a custom path with minimal parameters.
      */
-    public function testCustomPut0()
+    public function testCustomPut()
     {
         $client = $this->getClient();
         $client->customPut(
@@ -553,7 +553,7 @@ class UsageTest extends TestCase implements HttpClientInterface
      * Test case for GetIndexUsage
      * getIndexUsage with minimal parameters.
      */
-    public function testGetIndexUsage0()
+    public function testGetIndexUsage()
     {
         $client = $this->getClient();
         $client->getIndexUsage(
@@ -577,7 +577,7 @@ class UsageTest extends TestCase implements HttpClientInterface
      * Test case for GetUsage
      * getUsage with minimal parameters.
      */
-    public function testGetUsage0()
+    public function testGetUsage()
     {
         $client = $this->getClient();
         $client->getUsage(

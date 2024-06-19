@@ -9,7 +9,6 @@ import type { AssignUserIdParams } from './assignUserIdParams';
 import type { AttributeToUpdate } from './attributeToUpdate';
 import type { BatchAssignUserIdsParams } from './batchAssignUserIdsParams';
 import type { BatchDictionaryEntriesParams } from './batchDictionaryEntriesParams';
-import type { BatchResponse } from './batchResponse';
 import type { BatchWriteParams } from './batchWriteParams';
 import type { BrowseParams } from './browseParams';
 import type { DeleteByParams } from './deleteByParams';
@@ -26,10 +25,9 @@ import type { SearchParams } from './searchParams';
 import type { SearchParamsObject } from './searchParamsObject';
 import type { SearchRulesParams } from './searchRulesParams';
 import type { SearchSynonymsParams } from './searchSynonymsParams';
-import type { SecuredAPIKeyRestrictions } from './securedAPIKeyRestrictions';
+import type { SecuredApiKeyRestrictions } from './securedApiKeyRestrictions';
 import type { Source } from './source';
 import type { SynonymHit } from './synonymHit';
-import type { UpdatedAtResponse } from './updatedAtResponse';
 
 /**
  * Properties for the `addOrUpdateObject` method.
@@ -305,6 +303,16 @@ export type GetApiKeyProps = {
    * API key.
    */
   key: string;
+};
+
+/**
+ * Properties for the `getAppTask` method.
+ */
+export type GetAppTaskProps = {
+  /**
+   * Unique task identifier.
+   */
+  taskID: number;
 };
 
 /**
@@ -740,15 +748,18 @@ type WaitForOptions = Partial<{
   timeout: (retryCount: number) => number;
 }>;
 
-export type WaitForTaskOptions = WaitForOptions & {
-  /**
-   * The `indexName` where the operation was performed.
-   */
-  indexName: string;
+export type WaitForAppTaskOptions = WaitForOptions & {
   /**
    * The `taskID` returned by the method response.
    */
   taskID: number;
+};
+
+export type WaitForTaskOptions = WaitForAppTaskOptions & {
+  /**
+   * The `indexName` where the operation was performed.
+   */
+  indexName: string;
 };
 
 export type WaitForApiKeyOptions = WaitForOptions & {
@@ -785,7 +796,7 @@ export type GenerateSecuredApiKeyOptions = {
   /**
    * A set of properties defining the restrictions of the secured API key.
    */
-  restrictions?: SecuredAPIKeyRestrictions;
+  restrictions?: SecuredApiKeyRestrictions;
 };
 
 export type GetSecuredApiKeyRemainingValidityOptions = {
@@ -822,21 +833,4 @@ export type ReplaceAllObjectsOptions = {
    * The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
    */
   batchSize?: number;
-};
-
-export type ReplaceAllObjectsResponse = {
-  /**
-   * The response of the `operationIndex` request for the `copy` operation.
-   */
-  copyOperationResponse: UpdatedAtResponse;
-
-  /**
-   * The response of the `batch` request(s).
-   */
-  batchResponses: BatchResponse[];
-
-  /**
-   * The response of the `operationIndex` request for the `move` operation.
-   */
-  moveOperationResponse: UpdatedAtResponse;
 };

@@ -27,7 +27,7 @@ class {{clientPrefix}}Test {
     {{#tests}}
 
     @Test
-    fun `{{#lambda.replaceBacktick}}{{{testName}}}{{/lambda.replaceBacktick}}`() = runTest {
+    fun `{{#lambda.replaceBacktick}}{{{testName}}}{{testIndex}}{{/lambda.replaceBacktick}}`() = runTest {
         client.runTest(
             call = {
                 {{method}}(

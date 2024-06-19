@@ -138,7 +138,7 @@ final class IndexSettings {
   @JsonKey(name: r'searchableAttributes')
   final List<String>? searchableAttributes;
 
-  /// An object with custom data.  You can store up to 32&nbsp;kB as custom data.
+  /// An object with custom data.  You can store up to 32kB as custom data.
   @JsonKey(name: r'userData')
   final Object? userData;
 
@@ -470,7 +470,7 @@ final class IndexSettings {
       attributeCriteriaComputedByMinProximity.hashCode +
       renderingContent.hashCode +
       enableReRanking.hashCode +
-      reRankingApplyFilter.hashCode;
+      (reRankingApplyFilter == null ? 0 : reRankingApplyFilter.hashCode);
 
   factory IndexSettings.fromJson(Map<String, dynamic> json) =>
       _$IndexSettingsFromJson(json);

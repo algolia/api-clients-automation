@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+import type { components } from '@octokit/openapi-types';
+
 import { exists, getOctokit, run, setVerbose, toAbsolutePath } from '../../common';
 import { getClientsConfigField, getLanguageFolder } from '../../config';
 import { getTargetBranch } from '../../release/common';
@@ -6,102 +8,101 @@ import type { Language } from '../../types';
 
 import { commitStartRelease } from './text';
 
-function getAllRuns(languages: Language[], workflowIDs: Array<number | undefined>): Promise<any[]> {
+type Run = {
+  language: Language;
+  run?: components['schemas']['workflow-run'];
+  finished: boolean;
+};
+
+async function fetchAllRuns(runs: Run[]): Promise<void> {
   const octokit = getOctokit();
 
-  return Promise.all(
-    languages.map(async (lang, index) => {
-      // wait for the CI to start
-      const workflowID = workflowIDs[index];
-      if (!workflowID) {
-        return undefined;
-      }
+  await Promise.allSettled(
+    runs
+      .filter((ciRun) => !ciRun.finished)
+      .map(async (ciRun) => {
+        // wait for the CI to start
+        const workflowRun = await octokit.actions.listWorkflowRuns({
+          owner: 'algolia',
+          repo: getClientsConfigField(ciRun.language, 'gitRepoId'),
+          workflow_id: 'release.yml',
+          per_page: 1,
+          branch: ciRun.language === 'dart' ? undefined : getTargetBranch(ciRun.language),
+        });
 
-      const ciRun = await octokit.actions.listWorkflowRuns({
-        owner: 'algolia',
-        repo: getClientsConfigField(lang, 'gitRepoId'),
-        workflow_id: workflowID,
-        per_page: 1,
-        branch: getTargetBranch(lang),
-      });
+        if (workflowRun.data.workflow_runs.length === 0) {
+          return;
+        }
 
-      if (ciRun.data.workflow_runs.length === 0) {
-        return null;
-      }
+        // check that the run was created less than 10 minutes ago
+        if (
+          Date.now() - Date.parse(workflowRun.data.workflow_runs[0].created_at) >
+          15 * 60 * 1000
+        ) {
+          return;
+        }
 
-      // check that the run was created less than 10 minutes ago
-      if (Date.now() - Date.parse(ciRun.data.workflow_runs[0].created_at) > 15 * 60 * 1000) {
-        return null;
-      }
-
-      return ciRun.data.workflow_runs[0];
-    }),
+        ciRun.run = workflowRun.data.workflow_runs[0];
+      }),
   );
 }
 
-async function waitForAllReleases(languages: Language[]): Promise<void> {
-  const octokit = getOctokit();
-
+async function waitForAllReleases(languagesReleased: Language[]): Promise<void> {
   const lastCommitMessage = await run('git log -1 --format="%s"');
 
   if (!lastCommitMessage.startsWith(commitStartRelease)) {
     return;
   }
 
-  console.log(
-    `Waiting for all releases CI to finish for the following languages: ${languages.join(', ')}`,
-  );
-
-  const workflowIDs = await Promise.all(
-    languages.map(async (lang) => {
-      if (
-        !(await exists(toAbsolutePath(`${getLanguageFolder(lang)}/.github/workflows/release.yml`)))
-      ) {
-        return undefined;
-      }
-
-      const workflows = await octokit.actions.listRepoWorkflows({
-        owner: 'algolia',
-        repo: getClientsConfigField(lang, 'gitRepoId'),
-      });
-
-      return workflows.data.workflows.find(
-        (workflow) =>
-          workflow.path === '.github/workflows/release.yml' && workflow.state === 'active',
-      )?.id;
-    }),
-  );
+  const runs: Run[] = (
+    await Promise.all(
+      languagesReleased.map(async (lang) => {
+        return {
+          lang,
+          available: await exists(
+            toAbsolutePath(`${getLanguageFolder(lang)}/.github/workflows/release.yml`),
+          ),
+        };
+      }),
+    )
+  )
+    .filter((lang) => lang.available)
+    .map((lang) => ({ language: lang.lang, run: undefined, finished: false }));
 
   console.log(
-    `Found the following workflows: ${languages.map((l, i) => `${l} => ${workflowIDs[i]}`).join(', ')}`,
+    `Waiting for all releases CI to finish for the following languages: ${runs.map((l) => l.language).join(', ')}`,
   );
 
   const failures: Language[] = [];
 
   const start = Date.now();
   // kotlin release can take a long time
-  while (Date.now() - start < 1000 * 60 * 10) {
-    const runs = await getAllRuns(languages, workflowIDs);
-    for (let i = 0; i < languages.length; i++) {
-      if (runs[i] === null) {
-        console.log(`⏳ ${languages[i]} CI not started yet`);
+  while (Date.now() - start < 1000 * 60 * 12) {
+    await fetchAllRuns(runs);
+    for (const ciRun of runs) {
+      if (ciRun.finished) {
         continue;
       }
 
-      if (runs[i]?.status === 'completed') {
-        const success = runs[i]?.conclusion === 'success';
+      if (!ciRun.run) {
+        console.log(`⏳ ${ciRun.language} CI not started yet`);
+        continue;
+      }
+
+      if (ciRun.run.status === 'completed') {
+        const success = ciRun.run.conclusion === 'success';
         console.log(
-          `${success ? '✅' : '❌'} ${languages[i]} CI finished with conclusion: ${runs[i]?.conclusion}`,
+          `${success ? '✅' : '❌'} ${ciRun.language} CI finished with conclusion: ${ciRun.run.conclusion}`,
         );
         if (!success) {
-          failures.push(languages[i]);
+          failures.push(ciRun.language);
         }
         // stop fetching this run.
-        workflowIDs[i] = undefined;
+        ciRun.finished = true;
       }
     }
 
-    if (workflowIDs.every((id) => id === undefined)) {
+    if (runs.every((ciRun) => ciRun.finished)) {
       break;
     }
 

@@ -13,7 +13,6 @@ import { {{classname}} } from '{{filename}}';
 {{#isSearchClient}}
 import type { CreateIterablePromise } from '{{{npmNamespace}}}/client-common';
 import type { Action } from './action';
-import type { UpdatedAtResponse } from './updatedAtResponse';
 {{/isSearchClient}}
 
 {{#operations}}
@@ -64,15 +63,18 @@ type WaitForOptions = Partial<{
   timeout: (retryCount: number) => number;
 }>;
 
-export type WaitForTaskOptions = WaitForOptions & {
-  /**
-   * The `indexName` where the operation was performed.
-   */
-  indexName: string;
+export type WaitForAppTaskOptions = WaitForOptions & {
   /**
    * The `taskID` returned by the method response.
    */
   taskID: number;
+};
+
+export type WaitForTaskOptions = WaitForAppTaskOptions & {
+  /**
+   * The `indexName` where the operation was performed.
+   */
+  indexName: string;
 };
 
 export type WaitForApiKeyOptions = WaitForOptions & {
@@ -109,7 +111,7 @@ export type GenerateSecuredApiKeyOptions = {
   /**
    * A set of properties defining the restrictions of the secured API key.
    */
-  restrictions?: SecuredAPIKeyRestrictions;
+  restrictions?: SecuredApiKeyRestrictions;
 }
 
 export type GetSecuredApiKeyRemainingValidityOptions = {
@@ -146,23 +148,6 @@ export type ReplaceAllObjectsOptions = {
    * The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
    */
   batchSize?: number;
-}
-
-export type ReplaceAllObjectsResponse = {
-  /**
-   * The response of the `operationIndex` request for the `copy` operation.
-   */
-  copyOperationResponse: UpdatedAtResponse;
-
-  /**
-   * The response of the `batch` request(s).
-   */
-  batchResponses: BatchResponse[];
-
-  /**
-   * The response of the `operationIndex` request for the `move` operation.
-   */
-  moveOperationResponse: UpdatedAtResponse;
 }
 {{/isSearchClient}}
 

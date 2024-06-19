@@ -1,0 +1,11 @@
+[
+  {
+    "parameters": {
+      "taskID": 123
+    },
+    "request": {
+      "path": "/1/task/123",
+      "method": "GET"
+    }
+  }
+]

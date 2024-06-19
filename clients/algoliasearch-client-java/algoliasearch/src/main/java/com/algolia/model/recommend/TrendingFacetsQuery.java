@@ -90,7 +90,7 @@ public class TrendingFacetsQuery implements RecommendationsRequest {
   }
 
   /** Facet attribute for which to retrieve trending facet values. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Object getFacetName() {
     return facetName;
   }

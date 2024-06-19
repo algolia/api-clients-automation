@@ -35,6 +35,40 @@ waitForTask(
 },
 
 /**
+ * Helper: Wait for an application-level task to complete for a given `taskID`.
+ *
+ * @summary Helper method that waits for a task to be published (completed).
+ * @param waitForAppTaskOptions - The `waitForTaskOptions` object.
+ * @param waitForAppTaskOptions.taskID - The `taskID` returned in the method response.
+ * @param waitForAppTaskOptions.maxRetries - The maximum number of retries. 50 by default.
+ * @param waitForAppTaskOptions.timeout - The function to decide how long to wait between retries.
+ * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
+ */
+waitForAppTask(
+  {
+    taskID,
+    maxRetries = 50,
+    timeout = (retryCount: number): number =>
+      Math.min(retryCount * 200, 5000),
+  }: WaitForAppTaskOptions,
+  requestOptions?: RequestOptions
+): Promise<GetTaskResponse> {
+  let retryCount = 0;
+
+  return createIterablePromise({
+    func: () => this.getAppTask({ taskID }, requestOptions),
+    validate: (response) => response.status === 'published',
+    aggregator: () => (retryCount += 1),
+    error: {
+      validate: () => retryCount >= maxRetries,
+      message: () =>
+        `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+    },
+    timeout: () => timeout(retryCount),
+  });
+},
+
+/**
  * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
  *
  * @summary Helper method that waits for an API key task to be processed.
@@ -279,9 +313,10 @@ async chunkedBatch({ indexName, objects, action = 'addObject', waitForTasks, bat
   let requests: Array<BatchRequest> = [];
   const responses: Array<BatchResponse> = [];
 
-  for (const [i, obj] of objects.entries()) {
+  const objectEntries = objects.entries();
+  for (const [i, obj] of objectEntries) {
     requests.push({action, body: obj});
-    if (i % batchSize === 0) {
+    if (requests.length === batchSize || i === objects.length-1) {
       responses.push(await this.batch({indexName, batchWriteParams: {requests}}, requestOptions));
       requests = [];
     }
@@ -298,12 +333,13 @@ async chunkedBatch({ indexName, objects, action = 'addObject', waitForTasks, bat
 
 /**
  * Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
+ * See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
  *
  * @summary Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
  * @param replaceAllObjects - The `replaceAllObjects` object.
  * @param replaceAllObjects.indexName - The `indexName` to replace `objects` in.
  * @param replaceAllObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
- * @param replaceAllObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+ * @param replaceAllObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `objects.length / batchSize`. Defaults to 1000.
  * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
  */
 async replaceAllObjects(
@@ -313,26 +349,43 @@ async replaceAllObjects(
   const randomSuffix = Math.random().toString(36).substring(7);
   const tmpIndexName = `${indexName}_tmp_${randomSuffix}`;
 
-  const copyOperationResponse = await this.operationIndex(
-    {
-      indexName,
-      operationIndexParams: {
-        operation: 'copy',
-        destination: tmpIndexName,
-        scope: ['settings', 'rules', 'synonyms'],
+  let copyOperationResponse = await this.operationIndex(
+      {
+        indexName,
+        operationIndexParams: {
+          operation: 'copy',
+          destination: tmpIndexName,
+          scope: ['settings', 'rules', 'synonyms'],
+        },
       },
-    },
-    requestOptions
-  );
-  await this.waitForTask({
-    indexName,
-    taskID: copyOperationResponse.taskID,
-  });
+      requestOptions
+    );
 
   const batchResponses = await this.chunkedBatch(
     { indexName: tmpIndexName, objects, waitForTasks: true, batchSize },
     requestOptions
   );
+
+  await this.waitForTask({
+    indexName: tmpIndexName,
+    taskID: copyOperationResponse.taskID,
+  });
+
+  copyOperationResponse = await this.operationIndex(
+      {
+        indexName,
+        operationIndexParams: {
+          operation: 'copy',
+          destination: tmpIndexName,
+          scope: ['settings', 'rules', 'synonyms'],
+        },
+      },
+      requestOptions
+    );
+  await this.waitForTask({
+    indexName: tmpIndexName,
+    taskID: copyOperationResponse.taskID,
+  });
 
   const moveOperationResponse = await this.operationIndex(
     {
@@ -342,7 +395,7 @@ async replaceAllObjects(
     requestOptions
   );
   await this.waitForTask({
-    indexName,
+    indexName: tmpIndexName,
     taskID: moveOperationResponse.taskID,
   });
 

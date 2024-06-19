@@ -184,7 +184,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomGet(client.NewApiCustomGetRequest(
+            response, err := client.CustomGet(client.NewApiCustomGetRequest(
               "test/minimal",
             ))
 
@@ -196,7 +196,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -248,9 +248,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -274,19 +273,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.custom_get(
+            response = await _client.custom_get(
                 path="test/minimal",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -298,17 +297,17 @@ paths:
 
             # Call the API
 
-            resp = client.custom_get("test/minimal")
+            response = client.custom_get("test/minimal")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -320,14 +319,14 @@ paths:
 
             // Call the API
 
-            val res = client.customGet[JObject](
+            val response = client.customGet[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -339,7 +338,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customGet(path: "test/minimal")
+            let response = try await client.customGet(path: "test/minimal")
     post:
       operationId: customPost
       requestBody:
@@ -409,7 +408,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomPost(client.NewApiCustomPostRequest(
+            response, err := client.CustomPost(client.NewApiCustomPostRequest(
               "test/minimal",
             ))
 
@@ -421,7 +420,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -473,9 +472,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -499,19 +497,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.custom_post(
+            response = await _client.custom_post(
                 path="test/minimal",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -523,17 +521,17 @@ paths:
 
             # Call the API
 
-            resp = client.custom_post("test/minimal")
+            response = client.custom_post("test/minimal")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -545,14 +543,14 @@ paths:
 
             // Call the API
 
-            val res = client.customPost[JObject](
+            val response = client.customPost[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -564,7 +562,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPost(path: "test/minimal")
+            let response = try await client.customPost(path: "test/minimal")
     put:
       operationId: customPut
       requestBody:
@@ -634,7 +632,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomPut(client.NewApiCustomPutRequest(
+            response, err := client.CustomPut(client.NewApiCustomPutRequest(
               "test/minimal",
             ))
 
@@ -646,7 +644,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -698,9 +696,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -724,19 +721,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.custom_put(
+            response = await _client.custom_put(
                 path="test/minimal",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -748,17 +745,17 @@ paths:
 
             # Call the API
 
-            resp = client.custom_put("test/minimal")
+            response = client.custom_put("test/minimal")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -770,14 +767,14 @@ paths:
 
             // Call the API
 
-            val res = client.customPut[JObject](
+            val response = client.customPut[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -789,7 +786,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customPut(path: "test/minimal")
+            let response = try await client.customPut(path: "test/minimal")
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -853,7 +850,8 @@ paths:
 
             // Call the API
 
-            resp, err := client.CustomDelete(client.NewApiCustomDeleteRequest(
+            response, err :=
+            client.CustomDelete(client.NewApiCustomDeleteRequest(
               "test/minimal",
             ))
 
@@ -865,7 +863,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -923,9 +921,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -949,19 +946,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.custom_delete(
+            response = await _client.custom_delete(
                 path="test/minimal",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -973,17 +970,17 @@ paths:
 
             # Call the API
 
-            resp = client.custom_delete("test/minimal")
+            response = client.custom_delete("test/minimal")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -995,14 +992,14 @@ paths:
 
             // Call the API
 
-            val res = client.customDelete[JObject](
+            val response = client.customDelete[JObject](
               path = "test/minimal"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1014,7 +1011,7 @@ paths:
 
             // Call the API
 
-            _ = try await client.customDelete(path: "test/minimal")
+            let response = try await client.customDelete(path: "test/minimal")
   /1/events:
     post:
       tags:
@@ -1539,7 +1536,7 @@ paths:
 
             // Call the API
 
-            resp, err := client.PushEvents(client.NewApiPushEventsRequest(
+            response, err := client.PushEvents(client.NewApiPushEventsRequest(
 
               insights.NewEmptyInsightsEvents().SetEvents(
                 []insights.EventsItems{*insights.ClickedObjectIDsAfterSearchAsEventsItems(
@@ -1556,7 +1553,7 @@ paths:
 
             // use the model directly
 
-            print(resp)
+            print(response)
         - lang: java
           label: Java
           source: >
@@ -1573,7 +1570,7 @@ paths:
                 .setEvents(
                   List.of(
                     new ClickedObjectIDsAfterSearch()
-                      .setEventType(ClickEvent.fromValue("click"))
+                      .setEventType(ClickEvent.CLICK)
                       .setEventName("Product Clicked")
                       .setIndex("products")
                       .setUserToken("user-123456")
@@ -1652,9 +1649,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -1698,7 +1694,7 @@ paths:
 
             # Call the API
 
-            resp = await _client.push_events(
+            response = await _client.push_events(
                 insights_events={
                     "events": [
                         {
@@ -1725,12 +1721,12 @@ paths:
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -1742,7 +1738,7 @@ paths:
 
             # Call the API
 
-            resp = client.push_events(
+            response = client.push_events(
               InsightsEvents.new(
                 events: [ClickedObjectIDsAfterSearch.new(
                   event_type: 'click',
@@ -1763,12 +1759,12 @@ paths:
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -1780,7 +1776,7 @@ paths:
 
             // Call the API
 
-            val res = client.pushEvents(
+            val response = client.pushEvents(
               insightsEvents = InsightsEvents(
                 events = Seq(
                   ClickedObjectIDsAfterSearch(
@@ -1801,7 +1797,7 @@ paths:
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -1813,7 +1809,7 @@ paths:
 
             // Call the API
 
-            _ = try await client
+            let response = try await client
                 .pushEvents(insightsEvents: InsightsEvents(events: [
                     EventsItems
                         .clickedObjectIDsAfterSearch(ClickedObjectIDsAfterSearch(
@@ -1986,9 +1982,8 @@ paths:
           source: >
             // Initialize the client
 
-            $client =
-            Algolia\AlgoliaSearch\Api\InsightsClient::create('<YOUR_APP_ID>',
-            '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+            $client = InsightsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
 
 
             // Call the API
@@ -2012,19 +2007,19 @@ paths:
 
             # Call the API
 
-            resp = await _client.delete_user_token(
+            response = await _client.delete_user_token(
                 user_token="test-user-1",
             )
 
 
             # use the class directly
 
-            print(resp)
+            print(response)
 
 
             # print the JSON response
 
-            print(resp.to_json())
+            print(response.to_json())
         - lang: ruby
           label: Ruby
           source: >
@@ -2036,17 +2031,17 @@ paths:
 
             # Call the API
 
-            resp = client.delete_user_token("test-user-1")
+            response = client.delete_user_token("test-user-1")
 
 
             # use the class directly
 
-            puts resp
+            puts response
 
 
             # print the JSON response
 
-            puts resp.to_json
+            puts response.to_json
         - lang: scala
           label: Scala
           source: >
@@ -2058,14 +2053,14 @@ paths:
 
             // Call the API
 
-            val res = client.deleteUserToken(
+            val response = client.deleteUserToken(
               userToken = "test-user-1"
             )
 
 
             // Use the response
 
-            val value = Await.result(res, Duration(100, "sec"))
+            val value = Await.result(response, Duration(100, "sec"))
         - lang: swift
           label: Swift
           source: >
@@ -2077,7 +2072,8 @@ paths:
 
             // Call the API
 
-            _ = try await client.deleteUserToken(userToken: "test-user-1")
+            let response = try await client.deleteUserToken(userToken:
+            "test-user-1")
 components:
   securitySchemes:
     appId:

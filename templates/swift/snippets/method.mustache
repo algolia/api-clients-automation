@@ -1,16 +1,18 @@
 #if canImport(Core)
   import Core
 #endif
+// >IMPORT
 import {{import}}
+// IMPORT<
 
 final class {{client}}Snippet {
   {{#blocksRequests}}
-  {{#snippet}}
+  {{#snippets}}
   // Snippet for the {{method}} method.
   //
   // {{{description}}}
-  func snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}() async throws {
-    // >SEPARATOR {{method}}
+  func snippetFor{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}{{testIndex}}() async throws {
+    // >SEPARATOR {{method}} {{testName}}
     // Initialize the client
     let client = try {{client}}(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY"{{#hasRegionalHost}}, region: .{{defaultRegion}}{{/hasRegionalHost}})
 
@@ -23,9 +25,9 @@ final class {{client}}Snippet {
   {{/hasRequestOptions}}
 
     // Call the API
-    let _{{#isGeneric}}: {{{returnType}}}<Hit>{{/isGeneric}} = try await client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, requestOptions: requestOptions{{/hasRequestOptions}})
+    let response{{#isGeneric}}: {{{returnType}}}<Hit>{{/isGeneric}} = try await client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, requestOptions: requestOptions{{/hasRequestOptions}})
     // SEPARATOR<
   }
-  {{/snippet}}
+  {{/snippets}}
   {{/blocksRequests}}
 }

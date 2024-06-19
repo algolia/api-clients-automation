@@ -49,7 +49,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
      * Test case for AddABTests
      * addABTests with minimal parameters.
      */
-    public function testAddABTests0()
+    public function testAddABTests()
     {
         $client = $this->getClient();
         $client->addABTests(
@@ -80,7 +80,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
      * Test case for CustomDelete
      * allow del method for a custom path with minimal parameters.
      */
-    public function testCustomDelete0()
+    public function testCustomDelete()
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -123,7 +123,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
      * Test case for CustomGet
      * allow get method for a custom path with minimal parameters.
      */
-    public function testCustomGet0()
+    public function testCustomGet()
     {
         $client = $this->getClient();
         $client->customGet(
@@ -201,7 +201,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
      * Test case for CustomPost
      * allow post method for a custom path with minimal parameters.
      */
-    public function testCustomPost0()
+    public function testCustomPost()
     {
         $client = $this->getClient();
         $client->customPost(
@@ -548,7 +548,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
      * Test case for CustomPut
      * allow put method for a custom path with minimal parameters.
      */
-    public function testCustomPut0()
+    public function testCustomPut()
     {
         $client = $this->getClient();
         $client->customPut(
@@ -593,7 +593,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
      * Test case for DeleteABTest
      * deleteABTest.
      */
-    public function testDeleteABTest0()
+    public function testDeleteABTest()
     {
         $client = $this->getClient();
         $client->deleteABTest(
@@ -613,7 +613,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
      * Test case for GetABTest
      * getABTest.
      */
-    public function testGetABTest0()
+    public function testGetABTest()
     {
         $client = $this->getClient();
         $client->getABTest(
@@ -633,7 +633,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
      * Test case for ListABTests
      * listABTests with minimal parameters.
      */
-    public function testListABTests0()
+    public function testListABTests()
     {
         $client = $this->getClient();
         $client->listABTests();
@@ -687,7 +687,7 @@ class AbtestingTest extends TestCase implements HttpClientInterface
      * Test case for StopABTest
      * stopABTest.
      */
-    public function testStopABTest0()
+    public function testStopABTest()
     {
         $client = $this->getClient();
         $client->stopABTest(

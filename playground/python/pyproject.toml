@@ -2,7 +2,7 @@
 name = "app"
 version = "0.0.1"
 description = "playground for the algoliasearch-client-python repository"
-authors = ["Algolia Team <support@algolia.com>"]
+authors = ["Algolia Team <https://alg.li/support>"]
 license = "MIT"
 readme = "README.md"
 homepage = "https://www.algolia.com"
@@ -11,11 +11,7 @@ repository = "https://github.com/algolia/api-clients-automation"
 [tool.poetry.dependencies]
 python = "3.11.6"
 algoliasearch = { path = "../../clients/algoliasearch-client-python", develop = true }
-flake8 = "6.1.0"
-autoflake = "2.2.1"
-autopep8 = "2.0.4"
-black = "24.3.0"
-isort = "5.13.0"
+ruff = "0.4.9"
 python-dotenv = "1.0.0"
 
 [tool.poetry.scripts]

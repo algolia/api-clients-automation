@@ -73,7 +73,85 @@ func (c *APIClient) WaitForTaskWithContext(
         return false
       }
 
-      return response.Status == TASKSTATUS_PUBLISHED
+      return response.Status == TASK_STATUS_PUBLISHED
+    },
+    maxRetries,
+    initialDelay,
+    maxDelay,
+  )
+}
+
+/*
+WaitForAppTask waits for an application-level task to be published.
+Wraps WaitForAppTask with context.Background().
+It returns the task response if the operation was successful.
+It returns an error if the operation failed.
+
+The maxRetries parameter is the maximum number of retries.
+The initialDelay parameter is the initial delay between each retry.
+The maxDelay parameter is the maximum delay between each retry.
+
+  @param taskID int64 - Task ID.
+  @param maxRetries *int - Maximum number of retries.
+  @param initialDelay *time.Duration - Initial delay between retries.
+  @param maxDelay *time.Duration - Maximum delay between retries.
+  @param opts ...Option - Optional parameters for the request.
+  @return *GetTaskResponse - Task response.
+  @return error - Error if any.
+*/
+func (c *APIClient) WaitForAppTask(
+  taskID int64,
+  maxRetries *int,
+  initialDelay *time.Duration,
+  maxDelay *time.Duration,
+  opts ...Option,
+) (*GetTaskResponse, error) {
+  return c.WaitForAppTaskWithContext(
+    context.Background(),
+    taskID,
+    maxRetries,
+    initialDelay,
+    maxDelay,
+    opts...,
+  )
+}
+
+/*
+WaitForAppTaskWithContext waits for an application-level task to be published.
+It returns the task response if the operation was successful.
+It returns an error if the operation failed.
+
+The maxRetries parameter is the maximum number of retries.
+The initialDelay parameter is the initial delay between each retry.
+The maxDelay parameter is the maximum delay between each retry.
+
+  @param ctx context.Context - The context that will be drilled down to the actual request.
+  @param taskID int64 - Task ID.
+  @param maxRetries *int - Maximum number of retries.
+  @param initialDelay *time.Duration - Initial delay between retries.
+  @param maxDelay *time.Duration - Maximum delay between retries.
+  @param opts ...Option - Optional parameters for the request.
+  @return *GetTaskResponse - Task response.
+  @return error - Error if any.
+*/
+func (c *APIClient) WaitForAppTaskWithContext(
+  ctx context.Context,
+  taskID int64,
+  maxRetries *int,
+  initialDelay *time.Duration,
+  maxDelay *time.Duration,
+  opts ...Option,
+) (*GetTaskResponse, error) {
+  return utils.RetryUntil( //nolint:wrapcheck
+    func() (*GetTaskResponse, error) {
+      return c.GetAppTaskWithContext(ctx, c.NewApiGetAppTaskRequest(taskID), opts...)
+    },
+    func(response *GetTaskResponse, err error) bool {
+      if err != nil || response == nil {
+        return false
+      }
+
+      return response.Status == TASK_STATUS_PUBLISHED
     },
     maxRetries,
     initialDelay,
@@ -206,11 +284,11 @@ func (c *APIClient) WaitForApiKeyWithContext(
   maxDelay *time.Duration,
   opts ...Option,
 ) (*GetApiKeyResponse, error) {
-  if operation != APIKEYOPERATION_ADD && operation != APIKEYOPERATION_DELETE && operation != APIKEYOPERATION_UPDATE {
+  if operation != API_KEY_OPERATION_ADD && operation != API_KEY_OPERATION_DELETE && operation != API_KEY_OPERATION_UPDATE {
     return nil, &errs.WaitKeyOperationError{}
   }
 
-  if operation == APIKEYOPERATION_UPDATE {
+  if operation == API_KEY_OPERATION_UPDATE {
     if apiKey == nil {
       return nil, &errs.WaitKeyUpdateError{}
     }
@@ -275,9 +353,9 @@ func (c *APIClient) WaitForApiKeyWithContext(
     },
     func(response *GetApiKeyResponse, err error) bool {
       switch operation {
-      case APIKEYOPERATION_ADD:
+      case API_KEY_OPERATION_ADD:
         return err == nil && response != nil && response.CreatedAt > 0
-      case APIKEYOPERATION_DELETE:
+      case API_KEY_OPERATION_DELETE:
         if _, ok := err.(*APIError); ok {
           apiErr := err.(*APIError)
 
@@ -294,7 +372,7 @@ func (c *APIClient) WaitForApiKeyWithContext(
   )
 }
 
-func encodeRestrictions(restrictions *SecuredAPIKeyRestrictions) (string, error) {
+func encodeRestrictions(restrictions *SecuredApiKeyRestrictions) (string, error) {
 	if restrictions == nil {
 		return "", nil
 	}
@@ -345,7 +423,7 @@ func encodeRestrictions(restrictions *SecuredAPIKeyRestrictions) (string, error)
 // GenerateSecuredApiKey generates a public API key intended to restrict access
 // to certain records. This new key is built upon the existing key named
 // `parentApiKey` and the following options.
-func (c *APIClient) GenerateSecuredApiKey(parentApiKey string, restrictions *SecuredAPIKeyRestrictions) (string, error) {
+func (c *APIClient) GenerateSecuredApiKey(parentApiKey string, restrictions *SecuredApiKeyRestrictions) (string, error) {
 	h := hmac.New(sha256.New, []byte(parentApiKey))
 
 	message, err := encodeRestrictions(restrictions)
@@ -414,7 +492,7 @@ func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, act
 	for i, obj := range objects {
 		requests = append(requests, *NewBatchRequest(*action, obj))
 
-		if i%*batchSize == 0 {
+		if len(requests) == *batchSize || i == len(objects)-1 {
 			resp, err := c.Batch(c.NewApiBatchRequest(indexName, NewBatchWriteParams(requests)))
 			if err != nil {
 				return nil, err
@@ -437,46 +515,51 @@ func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, act
 	return responses, nil
 }
 
-type ReplaceAllObjectsResponse struct {
-	CopyOperationResponse *UpdatedAtResponse
-	BatchResponses        []BatchResponse
-	MoveOperationResponse *UpdatedAtResponse
-}
-
 // ReplaceAllObjects replaces all objects (records) in the given `indexName` with the given `objects`. A temporary index is created during this process in order to backup your data.
+// See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
 func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any, batchSize *int) (*ReplaceAllObjectsResponse, error) {
-	tmpIndex := fmt.Sprintf("%s_tmp_%d", indexName, time.Now().UnixNano())
+	tmpIndexName := fmt.Sprintf("%s_tmp_%d", indexName, time.Now().UnixNano())
 
-	copyResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATIONTYPE_COPY, tmpIndex, WithOperationIndexParamsScope([]ScopeType{SCOPETYPE_RULES, SCOPETYPE_SETTINGS, SCOPETYPE_SYNONYMS}))))
-	if err != nil {
-		return nil, err
-	}
-
-	_, err = c.WaitForTask(indexName, copyResp.TaskID, nil, nil, nil)
+	copyResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope([]ScopeType{SCOPE_TYPE_RULES, SCOPE_TYPE_SETTINGS, SCOPE_TYPE_SYNONYMS}))))
 	if err != nil {
 		return nil, err
 	}
 
 	waitForTask := true
 
-	batchResp, err := c.ChunkedBatch(tmpIndex, objects, nil, &waitForTask, batchSize)
+	batchResp, err := c.ChunkedBatch(tmpIndexName, objects, nil, &waitForTask, batchSize)
 	if err != nil {
 		return nil, err
 	}
 
-	moveResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(tmpIndex, NewOperationIndexParams(OPERATIONTYPE_MOVE, indexName)))
+	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, nil, nil, nil)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = c.WaitForTask(indexName, moveResp.TaskID, nil, nil, nil)
+	copyResp, err = c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope([]ScopeType{SCOPE_TYPE_RULES, SCOPE_TYPE_SETTINGS, SCOPE_TYPE_SYNONYMS}))))
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = c.WaitForTask(tmpIndexName, copyResp.TaskID, nil, nil, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	moveResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(tmpIndexName, NewOperationIndexParams(OPERATION_TYPE_MOVE, indexName)))
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = c.WaitForTask(tmpIndexName, moveResp.TaskID, nil, nil, nil)
 	if err != nil {
 		return nil, err
 	}
 
 	return &ReplaceAllObjectsResponse{
-		CopyOperationResponse: copyResp,
+		CopyOperationResponse: *copyResp,
 		BatchResponses:        batchResp,
-		MoveOperationResponse: moveResp,
+		MoveOperationResponse: *moveResp,
 	}, nil
 }

@@ -1,22 +1,25 @@
 package com.algolia.methods.snippets;
 
+// >IMPORT
 import com.algolia.api.SearchClient;
 import com.algolia.model.search.*;
+
+// IMPORT<
 
 class SnippetSearchClient {
 
   // Snippet for the addApiKey method.
   //
-  // addApiKey0
+  // addApiKey
   void snippetForAddApiKey() {
-    // >SEPARATOR addApiKey
+    // >SEPARATOR addApiKey default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
     client.addApiKey(
       new ApiKey()
-        .setAcl(List.of(Acl.fromValue("search"), Acl.fromValue("addObject")))
+        .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT))
         .setDescription("my new api key")
         .setValidity(300)
         .setMaxQueriesPerIPPerHour(100)
@@ -27,9 +30,9 @@ class SnippetSearchClient {
 
   // Snippet for the addOrUpdateObject method.
   //
-  // addOrUpdateObject0
+  // addOrUpdateObject
   void snippetForAddOrUpdateObject() {
-    // >SEPARATOR addOrUpdateObject
+    // >SEPARATOR addOrUpdateObject default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -40,9 +43,9 @@ class SnippetSearchClient {
 
   // Snippet for the appendSource method.
   //
-  // appendSource0
+  // appendSource
   void snippetForAppendSource() {
-    // >SEPARATOR appendSource
+    // >SEPARATOR appendSource default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -53,9 +56,9 @@ class SnippetSearchClient {
 
   // Snippet for the assignUserId method.
   //
-  // assignUserId0
+  // assignUserId
   void snippetForAssignUserId() {
-    // >SEPARATOR assignUserId
+    // >SEPARATOR assignUserId default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -66,26 +69,129 @@ class SnippetSearchClient {
 
   // Snippet for the batch method.
   //
-  // allows batch method with `addObject` action
+  // addObject
   void snippetForBatch() {
-    // >SEPARATOR batch
+    // >SEPARATOR batch addObject
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
     client.batch(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       new BatchWriteParams()
-        .setRequests(List.of(new BatchRequest().setAction(Action.fromValue("addObject")).setBody(Map.of("key", "value"))))
+        .setRequests(
+          List.of(
+            new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "bar", "foo", "1")),
+            new BatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "baz", "foo", "2"))
+          )
+        )
+    );
+    // SEPARATOR<
+  }
+
+  // Snippet for the batch method.
+  //
+  // clear
+  void snippetForBatch1() {
+    // >SEPARATOR batch clear
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.batch(
+      "<YOUR_INDEX_NAME>",
+      new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.CLEAR).setBody(Map.of("key", "value"))))
+    );
+    // SEPARATOR<
+  }
+
+  // Snippet for the batch method.
+  //
+  // delete
+  void snippetForBatch2() {
+    // >SEPARATOR batch delete
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.batch(
+      "<YOUR_INDEX_NAME>",
+      new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.DELETE).setBody(Map.of("key", "value"))))
+    );
+    // SEPARATOR<
+  }
+
+  // Snippet for the batch method.
+  //
+  // deleteObject
+  void snippetForBatch3() {
+    // >SEPARATOR batch deleteObject
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.batch(
+      "<YOUR_INDEX_NAME>",
+      new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.DELETE_OBJECT).setBody(Map.of("key", "value"))))
+    );
+    // SEPARATOR<
+  }
+
+  // Snippet for the batch method.
+  //
+  // partialUpdateObject
+  void snippetForBatch4() {
+    // >SEPARATOR batch partialUpdateObject
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.batch(
+      "<YOUR_INDEX_NAME>",
+      new BatchWriteParams()
+        .setRequests(List.of(new BatchRequest().setAction(Action.PARTIAL_UPDATE_OBJECT).setBody(Map.of("key", "value"))))
+    );
+    // SEPARATOR<
+  }
+
+  // Snippet for the batch method.
+  //
+  // partialUpdateObjectNoCreate
+  void snippetForBatch5() {
+    // >SEPARATOR batch partialUpdateObjectNoCreate
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.batch(
+      "<YOUR_INDEX_NAME>",
+      new BatchWriteParams()
+        .setRequests(List.of(new BatchRequest().setAction(Action.PARTIAL_UPDATE_OBJECT_NO_CREATE).setBody(Map.of("key", "value"))))
+    );
+    // SEPARATOR<
+  }
+
+  // Snippet for the batch method.
+  //
+  // updateObject
+  void snippetForBatch6() {
+    // >SEPARATOR batch updateObject
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.batch(
+      "<YOUR_INDEX_NAME>",
+      new BatchWriteParams().setRequests(List.of(new BatchRequest().setAction(Action.UPDATE_OBJECT).setBody(Map.of("key", "value"))))
     );
     // SEPARATOR<
   }
 
   // Snippet for the batchAssignUserIds method.
   //
-  // batchAssignUserIds0
+  // batchAssignUserIds
   void snippetForBatchAssignUserIds() {
-    // >SEPARATOR batchAssignUserIds
+    // >SEPARATOR batchAssignUserIds default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -96,24 +202,87 @@ class SnippetSearchClient {
 
   // Snippet for the batchDictionaryEntries method.
   //
-  // get batchDictionaryEntries results with minimal parameters
+  // replace
   void snippetForBatchDictionaryEntries() {
-    // >SEPARATOR batchDictionaryEntries
+    // >SEPARATOR batchDictionaryEntries replace
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
     client.batchDictionaryEntries(
-      DictionaryType.fromValue("compounds"),
+      DictionaryType.PLURALS,
+      new BatchDictionaryEntriesParams()
+        .setClearExistingDictionaryEntries(true)
+        .setRequests(
+          List.of(
+            new BatchDictionaryEntriesRequest()
+              .setAction(DictionaryAction.ADD_ENTRY)
+              .setBody(
+                new DictionaryEntry()
+                  .setObjectID("1")
+                  .setLanguage(SupportedLanguage.EN)
+                  .setWord("fancy")
+                  .setWords(List.of("believe", "algolia"))
+                  .setDecomposition(List.of("trust", "algolia"))
+                  .setState(DictionaryEntryState.ENABLED)
+              )
+          )
+        )
+    );
+    // SEPARATOR<
+  }
+
+  // Snippet for the batchDictionaryEntries method.
+  //
+  // delete
+  void snippetForBatchDictionaryEntries1() {
+    // >SEPARATOR batchDictionaryEntries delete
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.batchDictionaryEntries(
+      DictionaryType.PLURALS,
+      new BatchDictionaryEntriesParams()
+        .setClearExistingDictionaryEntries(true)
+        .setRequests(
+          List.of(
+            new BatchDictionaryEntriesRequest()
+              .setAction(DictionaryAction.DELETE_ENTRY)
+              .setBody(
+                new DictionaryEntry()
+                  .setObjectID("1")
+                  .setLanguage(SupportedLanguage.EN)
+                  .setWord("fancy")
+                  .setWords(List.of("believe", "algolia"))
+                  .setDecomposition(List.of("trust", "algolia"))
+                  .setState(DictionaryEntryState.ENABLED)
+              )
+          )
+        )
+    );
+    // SEPARATOR<
+  }
+
+  // Snippet for the batchDictionaryEntries method.
+  //
+  // append
+  void snippetForBatchDictionaryEntries2() {
+    // >SEPARATOR batchDictionaryEntries append
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.batchDictionaryEntries(
+      DictionaryType.STOPWORDS,
       new BatchDictionaryEntriesParams()
         .setRequests(
           List.of(
             new BatchDictionaryEntriesRequest()
-              .setAction(DictionaryAction.fromValue("addEntry"))
-              .setBody(new DictionaryEntry().setObjectID("1").setLanguage(SupportedLanguage.fromValue("en"))),
-            new BatchDictionaryEntriesRequest()
-              .setAction(DictionaryAction.fromValue("deleteEntry"))
-              .setBody(new DictionaryEntry().setObjectID("2").setLanguage(SupportedLanguage.fromValue("fr")))
+              .setAction(DictionaryAction.ADD_ENTRY)
+              .setBody(
+                new DictionaryEntry().setObjectID("1").setLanguage(SupportedLanguage.EN).setAdditionalProperty("additional", "try me")
+              )
           )
         )
     );
@@ -124,7 +293,7 @@ class SnippetSearchClient {
   //
   // browse with minimal parameters
   void snippetForBrowse() {
-    // >SEPARATOR browse
+    // >SEPARATOR browse default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -135,9 +304,9 @@ class SnippetSearchClient {
 
   // Snippet for the clearObjects method.
   //
-  // clearObjects0
+  // clearObjects
   void snippetForClearObjects() {
-    // >SEPARATOR clearObjects
+    // >SEPARATOR clearObjects default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -148,9 +317,9 @@ class SnippetSearchClient {
 
   // Snippet for the clearRules method.
   //
-  // clearRules0
+  // clearRules
   void snippetForClearRules() {
-    // >SEPARATOR clearRules
+    // >SEPARATOR clearRules default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -161,9 +330,9 @@ class SnippetSearchClient {
 
   // Snippet for the clearSynonyms method.
   //
-  // clearSynonyms0
+  // clearSynonyms
   void snippetForClearSynonyms() {
-    // >SEPARATOR clearSynonyms
+    // >SEPARATOR clearSynonyms default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -176,7 +345,7 @@ class SnippetSearchClient {
   //
   // allow del method for a custom path with minimal parameters
   void snippetForCustomDelete() {
-    // >SEPARATOR customDelete
+    // >SEPARATOR customDelete default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -189,7 +358,7 @@ class SnippetSearchClient {
   //
   // allow get method for a custom path with minimal parameters
   void snippetForCustomGet() {
-    // >SEPARATOR customGet
+    // >SEPARATOR customGet default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -202,7 +371,7 @@ class SnippetSearchClient {
   //
   // allow post method for a custom path with minimal parameters
   void snippetForCustomPost() {
-    // >SEPARATOR customPost
+    // >SEPARATOR customPost default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -215,7 +384,7 @@ class SnippetSearchClient {
   //
   // allow put method for a custom path with minimal parameters
   void snippetForCustomPut() {
-    // >SEPARATOR customPut
+    // >SEPARATOR customPut default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -226,9 +395,9 @@ class SnippetSearchClient {
 
   // Snippet for the deleteApiKey method.
   //
-  // deleteApiKey0
+  // deleteApiKey
   void snippetForDeleteApiKey() {
-    // >SEPARATOR deleteApiKey
+    // >SEPARATOR deleteApiKey default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -239,9 +408,9 @@ class SnippetSearchClient {
 
   // Snippet for the deleteBy method.
   //
-  // deleteBy0
+  // deleteBy
   void snippetForDeleteBy() {
-    // >SEPARATOR deleteBy
+    // >SEPARATOR deleteBy default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -252,9 +421,9 @@ class SnippetSearchClient {
 
   // Snippet for the deleteIndex method.
   //
-  // deleteIndex0
+  // deleteIndex
   void snippetForDeleteIndex() {
-    // >SEPARATOR deleteIndex
+    // >SEPARATOR deleteIndex default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -265,14 +434,14 @@ class SnippetSearchClient {
 
   // Snippet for the deleteObject method.
   //
-  // deleteObject0
+  // deleteObject
   void snippetForDeleteObject() {
-    // >SEPARATOR deleteObject
+    // >SEPARATOR deleteObject default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.deleteObject("theIndexName", "uniqueID");
+    client.deleteObject("<YOUR_INDEX_NAME>", "uniqueID");
     // SEPARATOR<
   }
 
@@ -280,7 +449,7 @@ class SnippetSearchClient {
   //
   // delete rule simple case
   void snippetForDeleteRule() {
-    // >SEPARATOR deleteRule
+    // >SEPARATOR deleteRule default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -291,9 +460,9 @@ class SnippetSearchClient {
 
   // Snippet for the deleteSource method.
   //
-  // deleteSource0
+  // deleteSource
   void snippetForDeleteSource() {
-    // >SEPARATOR deleteSource
+    // >SEPARATOR deleteSource default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -304,9 +473,9 @@ class SnippetSearchClient {
 
   // Snippet for the deleteSynonym method.
   //
-  // deleteSynonym0
+  // deleteSynonym
   void snippetForDeleteSynonym() {
-    // >SEPARATOR deleteSynonym
+    // >SEPARATOR deleteSynonym default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -317,9 +486,9 @@ class SnippetSearchClient {
 
   // Snippet for the getApiKey method.
   //
-  // getApiKey0
+  // getApiKey
   void snippetForGetApiKey() {
-    // >SEPARATOR getApiKey
+    // >SEPARATOR getApiKey default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -328,11 +497,24 @@ class SnippetSearchClient {
     // SEPARATOR<
   }
 
+  // Snippet for the getAppTask method.
+  //
+  // getAppTask
+  void snippetForGetAppTask() {
+    // >SEPARATOR getAppTask default
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.getAppTask(123L);
+    // SEPARATOR<
+  }
+
   // Snippet for the getDictionaryLanguages method.
   //
   // get getDictionaryLanguages
   void snippetForGetDictionaryLanguages() {
-    // >SEPARATOR getDictionaryLanguages
+    // >SEPARATOR getDictionaryLanguages default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -345,7 +527,7 @@ class SnippetSearchClient {
   //
   // get getDictionarySettings results
   void snippetForGetDictionarySettings() {
-    // >SEPARATOR getDictionarySettings
+    // >SEPARATOR getDictionarySettings default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -358,7 +540,7 @@ class SnippetSearchClient {
   //
   // getLogs with minimal parameters
   void snippetForGetLogs() {
-    // >SEPARATOR getLogs
+    // >SEPARATOR getLogs default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -369,9 +551,9 @@ class SnippetSearchClient {
 
   // Snippet for the getObject method.
   //
-  // getObject0
+  // getObject
   void snippetForGetObject() {
-    // >SEPARATOR getObject
+    // >SEPARATOR getObject default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -382,9 +564,9 @@ class SnippetSearchClient {
 
   // Snippet for the getObjects method.
   //
-  // getObjects0
+  // getObjects
   void snippetForGetObjects() {
-    // >SEPARATOR getObjects
+    // >SEPARATOR getObjects default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -403,9 +585,9 @@ class SnippetSearchClient {
 
   // Snippet for the getRule method.
   //
-  // getRule0
+  // getRule
   void snippetForGetRule() {
-    // >SEPARATOR getRule
+    // >SEPARATOR getRule default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -416,9 +598,9 @@ class SnippetSearchClient {
 
   // Snippet for the getSettings method.
   //
-  // getSettings0
+  // getSettings
   void snippetForGetSettings() {
-    // >SEPARATOR getSettings
+    // >SEPARATOR getSettings default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -429,9 +611,9 @@ class SnippetSearchClient {
 
   // Snippet for the getSources method.
   //
-  // getSources0
+  // getSources
   void snippetForGetSources() {
-    // >SEPARATOR getSources
+    // >SEPARATOR getSources default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -442,9 +624,9 @@ class SnippetSearchClient {
 
   // Snippet for the getSynonym method.
   //
-  // getSynonym0
+  // getSynonym
   void snippetForGetSynonym() {
-    // >SEPARATOR getSynonym
+    // >SEPARATOR getSynonym default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -455,9 +637,9 @@ class SnippetSearchClient {
 
   // Snippet for the getTask method.
   //
-  // getTask0
+  // getTask
   void snippetForGetTask() {
-    // >SEPARATOR getTask
+    // >SEPARATOR getTask default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -468,9 +650,9 @@ class SnippetSearchClient {
 
   // Snippet for the getTopUserIds method.
   //
-  // getTopUserIds0
+  // getTopUserIds
   void snippetForGetTopUserIds() {
-    // >SEPARATOR getTopUserIds
+    // >SEPARATOR getTopUserIds default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -481,9 +663,9 @@ class SnippetSearchClient {
 
   // Snippet for the getUserId method.
   //
-  // getUserId0
+  // getUserId
   void snippetForGetUserId() {
-    // >SEPARATOR getUserId
+    // >SEPARATOR getUserId default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -496,7 +678,7 @@ class SnippetSearchClient {
   //
   // hasPendingMappings with minimal parameters
   void snippetForHasPendingMappings() {
-    // >SEPARATOR hasPendingMappings
+    // >SEPARATOR hasPendingMappings default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -507,9 +689,9 @@ class SnippetSearchClient {
 
   // Snippet for the listApiKeys method.
   //
-  // listApiKeys0
+  // listApiKeys
   void snippetForListApiKeys() {
-    // >SEPARATOR listApiKeys
+    // >SEPARATOR listApiKeys default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -520,9 +702,9 @@ class SnippetSearchClient {
 
   // Snippet for the listClusters method.
   //
-  // listClusters0
+  // listClusters
   void snippetForListClusters() {
-    // >SEPARATOR listClusters
+    // >SEPARATOR listClusters default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -535,7 +717,7 @@ class SnippetSearchClient {
   //
   // listIndices with minimal parameters
   void snippetForListIndices() {
-    // >SEPARATOR listIndices
+    // >SEPARATOR listIndices default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -548,7 +730,7 @@ class SnippetSearchClient {
   //
   // listUserIds with minimal parameters
   void snippetForListUserIds() {
-    // >SEPARATOR listUserIds
+    // >SEPARATOR listUserIds default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -559,9 +741,9 @@ class SnippetSearchClient {
 
   // Snippet for the multipleBatch method.
   //
-  // multipleBatch0
+  // multipleBatch
   void snippetForMultipleBatch() {
-    // >SEPARATOR multipleBatch
+    // >SEPARATOR multipleBatch default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -569,9 +751,7 @@ class SnippetSearchClient {
     client.multipleBatch(
       new BatchParams()
         .setRequests(
-          List.of(
-            new MultipleBatchRequest().setAction(Action.fromValue("addObject")).setBody(Map.of("key", "value")).setIndexName("theIndexName")
-          )
+          List.of(new MultipleBatchRequest().setAction(Action.ADD_OBJECT).setBody(Map.of("key", "value")).setIndexName("theIndexName"))
         )
     );
     // SEPARATOR<
@@ -579,28 +759,60 @@ class SnippetSearchClient {
 
   // Snippet for the operationIndex method.
   //
-  // operationIndex0
+  // scopes
   void snippetForOperationIndex() {
-    // >SEPARATOR operationIndex
+    // >SEPARATOR operationIndex scopes
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
     client.operationIndex(
-      "theIndexName",
+      "<SOURCE_INDEX_NAME>",
       new OperationIndexParams()
-        .setOperation(OperationType.fromValue("copy"))
-        .setDestination("dest")
-        .setScope(List.of(ScopeType.fromValue("rules"), ScopeType.fromValue("settings")))
+        .setOperation(OperationType.MOVE)
+        .setDestination("<DESTINATION_INDEX_NAME>")
+        .setScope(List.of(ScopeType.RULES, ScopeType.SETTINGS))
+    );
+    // SEPARATOR<
+  }
+
+  // Snippet for the operationIndex method.
+  //
+  // copy
+  void snippetForOperationIndex1() {
+    // >SEPARATOR operationIndex copy
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.operationIndex(
+      "<SOURCE_INDEX_NAME>",
+      new OperationIndexParams().setOperation(OperationType.COPY).setDestination("<DESTINATION_INDEX_NAME>")
+    );
+    // SEPARATOR<
+  }
+
+  // Snippet for the operationIndex method.
+  //
+  // move
+  void snippetForOperationIndex2() {
+    // >SEPARATOR operationIndex move
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.operationIndex(
+      "<SOURCE_INDEX_NAME>",
+      new OperationIndexParams().setOperation(OperationType.MOVE).setDestination("<DESTINATION_INDEX_NAME>")
     );
     // SEPARATOR<
   }
 
   // Snippet for the partialUpdateObject method.
   //
-  // partialUpdateObject0
+  // partialUpdateObject
   void snippetForPartialUpdateObject() {
-    // >SEPARATOR partialUpdateObject
+    // >SEPARATOR partialUpdateObject default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -612,7 +824,7 @@ class SnippetSearchClient {
         "id1",
         AttributeToUpdate.of("test"),
         "id2",
-        new BuiltInOperation().setOperation(BuiltInOperationType.fromValue("AddUnique")).setValue("test2")
+        new BuiltInOperation().setOperation(BuiltInOperationType.ADD_UNIQUE).setValue("test2")
       ),
       true
     );
@@ -621,9 +833,9 @@ class SnippetSearchClient {
 
   // Snippet for the removeUserId method.
   //
-  // removeUserId0
+  // removeUserId
   void snippetForRemoveUserId() {
-    // >SEPARATOR removeUserId
+    // >SEPARATOR removeUserId default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -634,9 +846,9 @@ class SnippetSearchClient {
 
   // Snippet for the replaceSources method.
   //
-  // replaceSources0
+  // replaceSources
   void snippetForReplaceSources() {
-    // >SEPARATOR replaceSources
+    // >SEPARATOR replaceSources default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -647,9 +859,9 @@ class SnippetSearchClient {
 
   // Snippet for the restoreApiKey method.
   //
-  // restoreApiKey0
+  // restoreApiKey
   void snippetForRestoreApiKey() {
-    // >SEPARATOR restoreApiKey
+    // >SEPARATOR restoreApiKey default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -660,14 +872,14 @@ class SnippetSearchClient {
 
   // Snippet for the saveObject method.
   //
-  // saveObject0
+  // saveObject
   void snippetForSaveObject() {
-    // >SEPARATOR saveObject
+    // >SEPARATOR saveObject default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.saveObject("theIndexName", Map.of("objectID", "id", "test", "val"));
+    client.saveObject("<YOUR_INDEX_NAME>", Map.of("objectID", "id", "test", "val"));
     // SEPARATOR<
   }
 
@@ -675,7 +887,7 @@ class SnippetSearchClient {
   //
   // saveRule with minimal parameters
   void snippetForSaveRule() {
-    // >SEPARATOR saveRule
+    // >SEPARATOR saveRule default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -683,9 +895,7 @@ class SnippetSearchClient {
     client.saveRule(
       "indexName",
       "id1",
-      new Rule()
-        .setObjectID("id1")
-        .setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.fromValue("contains"))))
+      new Rule().setObjectID("id1").setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
     );
     // SEPARATOR<
   }
@@ -694,30 +904,32 @@ class SnippetSearchClient {
   //
   // saveRules with minimal parameters
   void snippetForSaveRules() {
-    // >SEPARATOR saveRules
+    // >SEPARATOR saveRules default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
     client.saveRules(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       List.of(
         new Rule()
           .setObjectID("a-rule-id")
-          .setConditions(List.of(new Condition().setPattern("smartphone").setAnchoring(Anchoring.fromValue("contains")))),
+          .setConditions(List.of(new Condition().setPattern("smartphone").setAnchoring(Anchoring.CONTAINS))),
         new Rule()
           .setObjectID("a-second-rule-id")
-          .setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.fromValue("contains"))))
-      )
+          .setConditions(List.of(new Condition().setPattern("apple").setAnchoring(Anchoring.CONTAINS)))
+      ),
+      false,
+      true
     );
     // SEPARATOR<
   }
 
   // Snippet for the saveSynonym method.
   //
-  // saveSynonym0
+  // saveSynonym
   void snippetForSaveSynonym() {
-    // >SEPARATOR saveSynonym
+    // >SEPARATOR saveSynonym default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -725,7 +937,7 @@ class SnippetSearchClient {
     client.saveSynonym(
       "indexName",
       "id1",
-      new SynonymHit().setObjectID("id1").setType(SynonymType.fromValue("synonym")).setSynonyms(List.of("car", "vehicule", "auto")),
+      new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(List.of("car", "vehicule", "auto")),
       true
     );
     // SEPARATOR<
@@ -733,39 +945,141 @@ class SnippetSearchClient {
 
   // Snippet for the saveSynonyms method.
   //
-  // saveSynonyms0
+  // saveSynonyms
   void snippetForSaveSynonyms() {
-    // >SEPARATOR saveSynonyms
+    // >SEPARATOR saveSynonyms default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
     client.saveSynonyms(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       List.of(
-        new SynonymHit().setObjectID("id1").setType(SynonymType.fromValue("synonym")).setSynonyms(List.of("car", "vehicule", "auto")),
+        new SynonymHit().setObjectID("id1").setType(SynonymType.SYNONYM).setSynonyms(List.of("car", "vehicule", "auto")),
         new SynonymHit()
           .setObjectID("id2")
-          .setType(SynonymType.fromValue("onewaysynonym"))
+          .setType(SynonymType.ONEWAYSYNONYM)
           .setInput("iphone")
           .setSynonyms(List.of("ephone", "aphone", "yphone"))
       ),
       true,
-      false
+      true
     );
     // SEPARATOR<
   }
 
   // Snippet for the search method.
   //
-  // search for a single hits request with minimal parameters
+  // withHitsPerPage
   void snippetForSearch() {
-    // >SEPARATOR search
+    // >SEPARATOR search withHitsPerPage
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.search(new SearchMethodParams().setRequests(List.of(new SearchForHits().setIndexName("cts_e2e_search_empty_index"))), Hit.class);
+    client.search(
+      new SearchMethodParams()
+        .setRequests(List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setHitsPerPage(50))),
+      Hit.class
+    );
+    // SEPARATOR<
+  }
+
+  // Snippet for the search method.
+  //
+  // filterOnly
+  void snippetForSearch1() {
+    // >SEPARATOR search filterOnly
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.search(
+      new SearchMethodParams()
+        .setRequests(
+          List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFilters("actor:Scarlett Johansson"))
+        ),
+      Hit.class
+    );
+    // SEPARATOR<
+  }
+
+  // Snippet for the search method.
+  //
+  // filterOr
+  void snippetForSearch2() {
+    // >SEPARATOR search filterOr
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.search(
+      new SearchMethodParams()
+        .setRequests(
+          List.of(
+            new SearchForHits()
+              .setIndexName("<YOUR_INDEX_NAME>")
+              .setQuery("<YOUR_QUERY>")
+              .setFilters("actor:Tom Cruise OR actor:Scarlett Johansson")
+          )
+        ),
+      Hit.class
+    );
+    // SEPARATOR<
+  }
+
+  // Snippet for the search method.
+  //
+  // filterNot
+  void snippetForSearch3() {
+    // >SEPARATOR search filterNot
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.search(
+      new SearchMethodParams()
+        .setRequests(
+          List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFilters("NOT actor:Nicolas Cage"))
+        ),
+      Hit.class
+    );
+    // SEPARATOR<
+  }
+
+  // Snippet for the search method.
+  //
+  // retrieveFacets
+  void snippetForSearch5() {
+    // >SEPARATOR search retrieveFacets
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.search(
+      new SearchMethodParams()
+        .setRequests(
+          List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFacets(List.of("author", "genre")))
+        ),
+      Hit.class
+    );
+    // SEPARATOR<
+  }
+
+  // Snippet for the search method.
+  //
+  // retrieveFacetsWildcard
+  void snippetForSearch6() {
+    // >SEPARATOR search retrieveFacetsWildcard
+    // Initialize the client
+    SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
+
+    // Call the API
+    client.search(
+      new SearchMethodParams()
+        .setRequests(List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setFacets(List.of("*")))),
+      Hit.class
+    );
     // SEPARATOR<
   }
 
@@ -773,12 +1087,12 @@ class SnippetSearchClient {
   //
   // get searchDictionaryEntries results with minimal parameters
   void snippetForSearchDictionaryEntries() {
-    // >SEPARATOR searchDictionaryEntries
+    // >SEPARATOR searchDictionaryEntries default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.searchDictionaryEntries(DictionaryType.fromValue("stopwords"), new SearchDictionaryEntriesParams().setQuery("about"));
+    client.searchDictionaryEntries(DictionaryType.STOPWORDS, new SearchDictionaryEntriesParams().setQuery("about"));
     // SEPARATOR<
   }
 
@@ -786,7 +1100,7 @@ class SnippetSearchClient {
   //
   // get searchForFacetValues results with minimal parameters
   void snippetForSearchForFacetValues() {
-    // >SEPARATOR searchForFacetValues
+    // >SEPARATOR searchForFacetValues default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -797,9 +1111,9 @@ class SnippetSearchClient {
 
   // Snippet for the searchRules method.
   //
-  // searchRules0
+  // searchRules
   void snippetForSearchRules() {
-    // >SEPARATOR searchRules
+    // >SEPARATOR searchRules default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -812,7 +1126,7 @@ class SnippetSearchClient {
   //
   // search with minimal parameters
   void snippetForSearchSingleIndex() {
-    // >SEPARATOR searchSingleIndex
+    // >SEPARATOR searchSingleIndex default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -825,7 +1139,7 @@ class SnippetSearchClient {
   //
   // searchSynonyms with minimal parameters
   void snippetForSearchSynonyms() {
-    // >SEPARATOR searchSynonyms
+    // >SEPARATOR searchSynonyms default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -836,9 +1150,9 @@ class SnippetSearchClient {
 
   // Snippet for the searchUserIds method.
   //
-  // searchUserIds0
+  // searchUserIds
   void snippetForSearchUserIds() {
-    // >SEPARATOR searchUserIds
+    // >SEPARATOR searchUserIds default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -851,7 +1165,7 @@ class SnippetSearchClient {
   //
   // get setDictionarySettings results with minimal parameters
   void snippetForSetDictionarySettings() {
-    // >SEPARATOR setDictionarySettings
+    // >SEPARATOR setDictionarySettings default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
@@ -865,33 +1179,32 @@ class SnippetSearchClient {
 
   // Snippet for the setSettings method.
   //
-  // setSettings with minimal parameters
+  // setSettingsAttributesForFaceting
   void snippetForSetSettings() {
-    // >SEPARATOR setSettings
+    // >SEPARATOR setSettings setSettingsAttributesForFaceting
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
-    client.setSettings("cts_e2e_settings", new IndexSettings().setPaginationLimitedTo(10), true);
+    client.setSettings(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings().setAttributesForFaceting(List.of("actor", "filterOnly(category)", "searchable(publisher)"))
+    );
     // SEPARATOR<
   }
 
   // Snippet for the updateApiKey method.
   //
-  // updateApiKey0
+  // updateApiKey
   void snippetForUpdateApiKey() {
-    // >SEPARATOR updateApiKey
+    // >SEPARATOR updateApiKey default
     // Initialize the client
     SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
     // Call the API
     client.updateApiKey(
       "myApiKey",
-      new ApiKey()
-        .setAcl(List.of(Acl.fromValue("search"), Acl.fromValue("addObject")))
-        .setValidity(300)
-        .setMaxQueriesPerIPPerHour(100)
-        .setMaxHitsPerQuery(20)
+      new ApiKey().setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT)).setValidity(300).setMaxQueriesPerIPPerHour(100).setMaxHitsPerQuery(20)
     );
     // SEPARATOR<
   }

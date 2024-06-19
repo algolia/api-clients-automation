@@ -19,6 +19,26 @@ def wait_for_task(index_name, task_id, max_retries = 50, timeout = -> (retry_cou
   raise ApiError, "The maximum number of retries exceeded. (#{max_retries})"
 end
 
+# Helper: Wait for an application-level task to be published (completed) for a given `task_id`.
+#
+# @param task_id [Integer] the `task_id` returned in the method response. (required)
+# @param max_retries [Integer] the maximum number of retries. (optional, default to 50)
+# @param timeout [Proc] the function to decide how long to wait between retries. (optional)
+# @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `get_task` method.
+# @return [Http::Response] the last get_task response
+def wait_for_app_task(task_id, max_retries = 50, timeout = -> (retry_count) { [retry_count * 200, 5000].min }, request_options = {})
+  retries = 0
+  while retries < max_retries
+    res = get_app_task(task_id, request_options)
+    if res.status == 'published'
+      return res
+    end
+    retries += 1
+    sleep(timeout.call(retries) / 1000.0)
+  end
+  raise ApiError, "The maximum number of retries exceeded. (#{max_retries})"
+end
+
 # Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
 #
 # @param operation [String] the `operation` that was done on a `key`.
@@ -136,4 +156,149 @@ def browse_synonyms(index_name, search_synonyms_params = Search::SearchSynonymsP
   end
 
   synonyms unless block_given?
+end
+
+# Helper: Generates a secured API key based on the given `parent_api_key` and given `restrictions`.
+#
+# @param parent_api_key [String] Parent API key used the generate the secured key
+# @param restrictions [SecuredApiKeyRestrictions] Restrictions to apply on the secured key
+#
+# @return [String]
+#
+def generate_secured_api_key(parent_api_key, restrictions = {})
+  restrictions = restrictions.to_hash
+  if restrictions.key?(:searchParams)
+    # merge searchParams with the root of the restrictions
+
+    restrictions.merge!(restrictions[:searchParams])
+    restrictions.delete(:searchParams)
+  end
+
+  url_encoded_restrictions = Algolia::Transport.stringify_query_params(restrictions).sort.to_h.map do |key, value|
+    "#{key}=#{value}"
+  end.join('&')
+
+  hmac = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), parent_api_key, url_encoded_restrictions)
+  Base64.encode64("#{hmac}#{url_encoded_restrictions}").gsub("\n", '')
+end
+
+# Helper: Retrieves the remaining validity of the previous generated `secured_api_key`, the `validUntil` parameter must have been provided.
+#
+# @param secured_api_key [String]
+#
+# @return [Integer]
+#
+def get_secured_api_key_remaining_validity(secured_api_key)
+  now         = Time.now.to_i
+  decoded_key = Base64.decode64(secured_api_key)
+  regex       = 'validUntil=(\d+)'
+  matches     = decoded_key.match(regex)
+
+  if matches.nil?
+    raise AlgoliaError, 'The SecuredApiKey doesn\'t have a validUntil parameter.'
+  end
+
+  valid_until = matches[1].to_i
+
+  valid_until - now
+end
+
+# Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
+#
+# @param index_name [String] the `index_name` where the operation will be performed.
+# @param objects [Array] The array of `objects` to store in the given Algolia `index_name`.
+# @param action [Action] The `batch` `action` to perform on the given array of `objects`, defaults to `addObject`.
+# @param wait_for_tasks [Boolean] Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+# @param batch_size [int] The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+# @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+#
+# @return [Array<BatchResponse>]
+#
+def chunked_batch(index_name, objects, action = Action::ADD_OBJECT, wait_for_tasks = false, batch_size = 1000, request_options = {})
+  responses = []
+  objects.each_slice(batch_size) do |chunk|
+    requests = chunk.map do |object|
+      Search::BatchRequest.new(action: action, body: object)
+    end
+
+    responses.append(batch(index_name, Search::BatchWriteParams.new(requests: requests), request_options))
+  end
+
+  if wait_for_tasks
+    responses.each do |response|
+      wait_for_task(index_name, response.task_id)
+    end
+  end
+
+  responses
+end
+
+# Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
+#
+# @param index_name [String] The `index_name` to replace `objects` in.
+# @param objects [Array] The array of `objects` to store in the given Algolia `index_name`.
+# @param batch_size [int] The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+# @param request_options: The request options to send along with the query, they will be merged with the transporter base parameters (headers, query params, timeouts, etc.). (optional)
+#
+# @return [Array<ReplaceAllObjectsResponse>]
+def replace_all_objects(index_name, objects, batch_size = 1000, request_options = {})
+  tmp_index_name = index_name + '_tmp_' + rand(10_000_000).to_s
+
+  copy_operation_response = operation_index(
+    index_name,
+    Search::OperationIndexParams.new(
+      operation: Search::OperationType::COPY,
+      destination: tmp_index_name,
+      scope: [
+        Search::ScopeType::SETTINGS,
+        Search::ScopeType::SYNONYMS,
+        Search::ScopeType::RULES
+      ]
+    ),
+    request_options
+  )
+
+  batch_responses = chunked_batch(
+    tmp_index_name,
+    objects,
+    Search::Action::ADD_OBJECT,
+    true,
+    batch_size,
+    request_options
+  )
+
+  wait_for_task(tmp_index_name, copy_operation_response.task_id)
+
+  copy_operation_response = operation_index(
+    index_name,
+    Search::OperationIndexParams.new(
+      operation: Search::OperationType::COPY,
+      destination: tmp_index_name,
+      scope: [
+        Search::ScopeType::SETTINGS,
+        Search::ScopeType::SYNONYMS,
+        Search::ScopeType::RULES
+      ]
+    ),
+    request_options
+  )
+
+  wait_for_task(tmp_index_name, copy_operation_response.task_id)
+
+  move_operation_response = operation_index(
+    tmp_index_name,
+    Search::OperationIndexParams.new(
+      operation: Search::OperationType::MOVE,
+      destination: index_name
+    ),
+    request_options
+  )
+
+  wait_for_task(tmp_index_name, move_operation_response.task_id)
+
+  Search::ReplaceAllObjectsResponse.new(
+    copy_operation_response: copy_operation_response,
+    batch_responses: batch_responses,
+    move_operation_response: move_operation_response
+  )
 end

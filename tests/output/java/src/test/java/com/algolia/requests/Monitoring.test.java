@@ -43,7 +43,7 @@ class MonitoringClientRequestsTests {
 
   @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
-  void customDeleteTest0() {
+  void customDeleteTest() {
     assertDoesNotThrow(() -> {
       client.customDelete("test/minimal");
     });
@@ -79,7 +79,7 @@ class MonitoringClientRequestsTests {
 
   @Test
   @DisplayName("allow get method for a custom path with minimal parameters")
-  void customGetTest0() {
+  void customGetTest() {
     assertDoesNotThrow(() -> {
       client.customGet("test/minimal");
     });
@@ -166,7 +166,7 @@ class MonitoringClientRequestsTests {
 
   @Test
   @DisplayName("allow post method for a custom path with minimal parameters")
-  void customPostTest0() {
+  void customPostTest() {
     assertDoesNotThrow(() -> {
       client.customPost("test/minimal");
     });
@@ -512,7 +512,7 @@ class MonitoringClientRequestsTests {
 
   @Test
   @DisplayName("allow put method for a custom path with minimal parameters")
-  void customPutTest0() {
+  void customPutTest() {
     assertDoesNotThrow(() -> {
       client.customPut("test/minimal");
     });
@@ -548,7 +548,7 @@ class MonitoringClientRequestsTests {
 
   @Test
   @DisplayName("getClusterIncidents")
-  void getClusterIncidentsTest0() {
+  void getClusterIncidentsTest() {
     assertDoesNotThrow(() -> {
       client.getClusterIncidents("c1-de");
     });
@@ -560,7 +560,7 @@ class MonitoringClientRequestsTests {
 
   @Test
   @DisplayName("getClusterStatus")
-  void getClusterStatusTest0() {
+  void getClusterStatusTest() {
     assertDoesNotThrow(() -> {
       client.getClusterStatus("c1-de");
     });
@@ -572,7 +572,7 @@ class MonitoringClientRequestsTests {
 
   @Test
   @DisplayName("getIncidents")
-  void getIncidentsTest0() {
+  void getIncidentsTest() {
     assertDoesNotThrow(() -> {
       client.getIncidents();
     });
@@ -584,7 +584,7 @@ class MonitoringClientRequestsTests {
 
   @Test
   @DisplayName("getIndexingTime")
-  void getIndexingTimeTest0() {
+  void getIndexingTimeTest() {
     assertDoesNotThrow(() -> {
       client.getIndexingTime("c1-de");
     });
@@ -596,7 +596,7 @@ class MonitoringClientRequestsTests {
 
   @Test
   @DisplayName("getLatency")
-  void getLatencyTest0() {
+  void getLatencyTest() {
     assertDoesNotThrow(() -> {
       client.getLatency("c1-de");
     });
@@ -608,9 +608,9 @@ class MonitoringClientRequestsTests {
 
   @Test
   @DisplayName("getMetrics")
-  void getMetricsTest0() {
+  void getMetricsTest() {
     assertDoesNotThrow(() -> {
-      client.getMetrics(Metric.fromValue("avg_build_time"), Period.fromValue("minute"));
+      client.getMetrics(Metric.AVG_BUILD_TIME, Period.MINUTE);
     });
     EchoResponse req = echo.getLastResponse();
     assertEquals("/1/infrastructure/avg_build_time/period/minute", req.path);
@@ -620,7 +620,7 @@ class MonitoringClientRequestsTests {
 
   @Test
   @DisplayName("getReachability")
-  void getReachabilityTest0() {
+  void getReachabilityTest() {
     assertDoesNotThrow(() -> {
       client.getReachability("c1-de");
     });
@@ -632,7 +632,7 @@ class MonitoringClientRequestsTests {
 
   @Test
   @DisplayName("getInventory")
-  void getServersTest0() {
+  void getServersTest() {
     assertDoesNotThrow(() -> {
       client.getServers();
     });
@@ -644,7 +644,7 @@ class MonitoringClientRequestsTests {
 
   @Test
   @DisplayName("getStatus")
-  void getStatusTest0() {
+  void getStatusTest() {
     assertDoesNotThrow(() -> {
       client.getStatus();
     });

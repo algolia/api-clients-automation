@@ -60,7 +60,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     if (mode.equals("tests")) {
       ctsManager.addTestsSupportingFiles(supportingFiles);
 
-      testsGenerators.add(new TestsRequest(language, client));
+      testsGenerators.add(new TestsRequest(language, client, false));
       testsGenerators.add(new TestsClient(language, client));
     } else if (mode.equals("snippets")) {
       ctsManager.addSnippetsSupportingFiles(supportingFiles);
@@ -98,6 +98,7 @@ public class AlgoliaCTSGenerator extends DefaultCodegen {
     lambdas.put("replaceBacktick", new ReplaceBacktickLambda());
     lambdas.put("scalaIdentifier", new ScalaIdentifierLambda());
     lambdas.put("csharpIdentifier", new CSharpIdentifierLambda());
+    lambdas.put("javaEnum", new JavaEnumLambda());
     lambdas.put("codeSnakeCase", new CodeSnakeCaseLambda());
     lambdas.put("escapeRubyKeywords", new EscapeRubyKeywordsLambda());
     lambdas.put("swiftIdentifier", new SwiftIdentifierLambda());

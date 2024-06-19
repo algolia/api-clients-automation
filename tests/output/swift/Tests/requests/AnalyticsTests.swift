@@ -50,7 +50,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// allow del method for a custom path with minimal parameters
-    func testCustomDeleteTest0() async throws {
+    func testCustomDeleteTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -103,7 +103,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// allow get method for a custom path with minimal parameters
-    func testCustomGetTest0() async throws {
+    func testCustomGetTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -206,7 +206,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// allow post method for a custom path with minimal parameters
-    func testCustomPostTest0() async throws {
+    func testCustomPostTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -693,7 +693,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// allow put method for a custom path with minimal parameters
-    func testCustomPutTest0() async throws {
+    func testCustomPutTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -759,7 +759,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getAddToCartRate with minimal parameters
-    func testGetAddToCartRateTest0() async throws {
+    func testGetAddToCartRateTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -824,7 +824,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getAverageClickPosition with minimal parameters
-    func testGetAverageClickPositionTest0() async throws {
+    func testGetAverageClickPositionTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -889,7 +889,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getClickPositions with minimal parameters
-    func testGetClickPositionsTest0() async throws {
+    func testGetClickPositionsTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -954,7 +954,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getClickThroughRate with minimal parameters
-    func testGetClickThroughRateTest0() async throws {
+    func testGetClickThroughRateTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -1019,7 +1019,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getConversationRate with minimal parameters
-    func testGetConversionRateTest0() async throws {
+    func testGetConversionRateTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -1084,7 +1084,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getNoClickRate with minimal parameters
-    func testGetNoClickRateTest0() async throws {
+    func testGetNoClickRateTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -1149,7 +1149,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getNoResultsRate with minimal parameters
-    func testGetNoResultsRateTest0() async throws {
+    func testGetNoResultsRateTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -1214,7 +1214,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getPurchaseRate with minimal parameters
-    func testGetPurchaseRateTest0() async throws {
+    func testGetPurchaseRateTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -1279,7 +1279,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getRevenue with minimal parameters
-    func testGetRevenueTest0() async throws {
+    func testGetRevenueTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -1344,7 +1344,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getSearchesCount with minimal parameters
-    func testGetSearchesCountTest0() async throws {
+    func testGetSearchesCountTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -1409,7 +1409,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getSearchesNoClicks with minimal parameters
-    func testGetSearchesNoClicksTest0() async throws {
+    func testGetSearchesNoClicksTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -1476,7 +1476,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getSearchesNoResults with minimal parameters
-    func testGetSearchesNoResultsTest0() async throws {
+    func testGetSearchesNoResultsTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -1543,7 +1543,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getStatus with minimal parameters
-    func testGetStatusTest0() async throws {
+    func testGetStatusTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -1571,7 +1571,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getTopCountries with minimal parameters
-    func testGetTopCountriesTest0() async throws {
+    func testGetTopCountriesTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -1638,7 +1638,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getTopFilterAttributes with minimal parameters
-    func testGetTopFilterAttributesTest0() async throws {
+    func testGetTopFilterAttributesTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -1706,7 +1706,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getTopFilterForAttribute with minimal parameters
-    func testGetTopFilterForAttributeTest0() async throws {
+    func testGetTopFilterForAttributeTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -1847,7 +1847,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getTopFiltersNoResults with minimal parameters
-    func testGetTopFiltersNoResultsTest0() async throws {
+    func testGetTopFiltersNoResultsTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -1915,7 +1915,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getTopHits with minimal parameters
-    func testGetTopHitsTest0() async throws {
+    func testGetTopHitsTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -1985,7 +1985,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getTopSearches with minimal parameters
-    func testGetTopSearchesTest0() async throws {
+    func testGetTopSearchesTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,
@@ -2102,7 +2102,7 @@ final class AnalyticsClientRequestsTests: XCTestCase {
     }
 
     /// get getUsersCount with minimal parameters
-    func testGetUsersCountTest0() async throws {
+    func testGetUsersCountTest() async throws {
         let configuration = try AnalyticsClientConfiguration(
             appID: AnalyticsClientRequestsTests.APPLICATION_ID,
             apiKey: AnalyticsClientRequestsTests.API_KEY,

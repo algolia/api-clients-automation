@@ -55,7 +55,7 @@ public class RankingInfo {
   }
 
   /** Whether a filter matched the query. minimum: 0 */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getFilters() {
     return filters;
   }
@@ -146,7 +146,7 @@ public class RankingInfo {
   }
 
   /** Whether the record was promoted by a rule. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Boolean getPromoted() {
     return promoted;
   }
@@ -182,7 +182,7 @@ public class RankingInfo {
   }
 
   /** Number of matched words. minimum: 1 */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Integer getWords() {
     return words;
   }

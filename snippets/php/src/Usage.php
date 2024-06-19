@@ -4,6 +4,11 @@
 
 namespace Algolia\AlgoliaSearch\Snippets;
 
+// >IMPORT
+use Algolia\AlgoliaSearch\Api\UsageClient;
+
+// IMPORT<
+
 class SnippetUsageClient
 {
     /**
@@ -13,9 +18,9 @@ class SnippetUsageClient
      */
     public function snippetForCustomDelete()
     {
-        // >SEPARATOR customDelete
+        // >SEPARATOR customDelete default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = UsageClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->customDelete(
@@ -34,9 +39,9 @@ class SnippetUsageClient
      */
     public function snippetForCustomGet()
     {
-        // >SEPARATOR customGet
+        // >SEPARATOR customGet default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = UsageClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->customGet(
@@ -55,9 +60,9 @@ class SnippetUsageClient
      */
     public function snippetForCustomPost()
     {
-        // >SEPARATOR customPost
+        // >SEPARATOR customPost default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = UsageClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->customPost(
@@ -76,9 +81,9 @@ class SnippetUsageClient
      */
     public function snippetForCustomPut()
     {
-        // >SEPARATOR customPut
+        // >SEPARATOR customPut default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = UsageClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->customPut(
@@ -97,9 +102,9 @@ class SnippetUsageClient
      */
     public function snippetForGetIndexUsage()
     {
-        // >SEPARATOR getIndexUsage
+        // >SEPARATOR getIndexUsage default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = UsageClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->getIndexUsage(
@@ -121,9 +126,9 @@ class SnippetUsageClient
      */
     public function snippetForGetUsage()
     {
-        // >SEPARATOR getUsage
+        // >SEPARATOR getUsage default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\UsageClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
+        $client = UsageClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
         // Call the API
         $response = $client->getUsage(

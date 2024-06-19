@@ -1,7 +1,10 @@
 package com.algolia.methods.snippets;
 
+// >IMPORT
 import com.algolia.api.PersonalizationClient;
 import com.algolia.model.personalization.*;
+
+// IMPORT<
 
 class SnippetPersonalizationClient {
 
@@ -9,7 +12,7 @@ class SnippetPersonalizationClient {
   //
   // allow del method for a custom path with minimal parameters
   void snippetForCustomDelete() {
-    // >SEPARATOR customDelete
+    // >SEPARATOR customDelete default
     // Initialize the client
     PersonalizationClient client = new PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -22,7 +25,7 @@ class SnippetPersonalizationClient {
   //
   // allow get method for a custom path with minimal parameters
   void snippetForCustomGet() {
-    // >SEPARATOR customGet
+    // >SEPARATOR customGet default
     // Initialize the client
     PersonalizationClient client = new PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -35,7 +38,7 @@ class SnippetPersonalizationClient {
   //
   // allow post method for a custom path with minimal parameters
   void snippetForCustomPost() {
-    // >SEPARATOR customPost
+    // >SEPARATOR customPost default
     // Initialize the client
     PersonalizationClient client = new PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -48,7 +51,7 @@ class SnippetPersonalizationClient {
   //
   // allow put method for a custom path with minimal parameters
   void snippetForCustomPut() {
-    // >SEPARATOR customPut
+    // >SEPARATOR customPut default
     // Initialize the client
     PersonalizationClient client = new PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -61,7 +64,7 @@ class SnippetPersonalizationClient {
   //
   // delete deleteUserProfile
   void snippetForDeleteUserProfile() {
-    // >SEPARATOR deleteUserProfile
+    // >SEPARATOR deleteUserProfile default
     // Initialize the client
     PersonalizationClient client = new PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -74,7 +77,7 @@ class SnippetPersonalizationClient {
   //
   // get getPersonalizationStrategy
   void snippetForGetPersonalizationStrategy() {
-    // >SEPARATOR getPersonalizationStrategy
+    // >SEPARATOR getPersonalizationStrategy default
     // Initialize the client
     PersonalizationClient client = new PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -87,7 +90,7 @@ class SnippetPersonalizationClient {
   //
   // get getUserTokenProfile
   void snippetForGetUserTokenProfile() {
-    // >SEPARATOR getUserTokenProfile
+    // >SEPARATOR getUserTokenProfile default
     // Initialize the client
     PersonalizationClient client = new PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -100,14 +103,14 @@ class SnippetPersonalizationClient {
   //
   // set setPersonalizationStrategy
   void snippetForSetPersonalizationStrategy() {
-    // >SEPARATOR setPersonalizationStrategy
+    // >SEPARATOR setPersonalizationStrategy default
     // Initialize the client
     PersonalizationClient client = new PersonalizationClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
     // Call the API
     client.setPersonalizationStrategy(
       new PersonalizationStrategyParams()
-        .setEventScoring(List.of(new EventScoring().setScore(42).setEventName("Algolia").setEventType(EventType.fromValue("click"))))
+        .setEventScoring(List.of(new EventScoring().setScore(42).setEventName("Algolia").setEventType(EventType.CLICK)))
         .setFacetScoring(List.of(new FacetScoring().setScore(42).setFacetName("Event")))
         .setPersonalizationImpact(42)
     );

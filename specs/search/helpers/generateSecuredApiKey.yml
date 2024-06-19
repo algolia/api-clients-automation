@@ -1,6 +1,7 @@
 method:
   get:
     x-helper: true
+    x-asynchronous-helper: false
     tags:
       - Api Keys
     operationId: generateSecuredApiKey
@@ -21,7 +22,7 @@ method:
       The generated API key can have the same restrictions as the parent API key, or be more restrictive.
     parameters:
       - in: query
-        name: apiKey
+        name: parentApiKey
         description: API key from which the secured API key will inherit its restrictions.
         required: true
         schema:
@@ -31,7 +32,7 @@ method:
         description: Restrictions to add to the API key.
         required: true
         schema:
-          $ref: '#/securedAPIKeyRestrictions'
+          $ref: '#/securedApiKeyRestrictions'
     responses:
       '200':
         description: OK
@@ -42,7 +43,7 @@ method:
       '400':
         $ref: '../../common/responses/IndexNotFound.yml'
 
-securedAPIKeyRestrictions:
+securedApiKeyRestrictions:
   type: object
   additionalProperties: false
   properties:

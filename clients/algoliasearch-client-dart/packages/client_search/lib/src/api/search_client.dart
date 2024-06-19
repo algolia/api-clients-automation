@@ -922,6 +922,34 @@ final class SearchClient implements ApiClient {
     );
   }
 
+  /// Checks the status of a given application task.
+  ///
+  /// Required API Key ACLs:
+  ///   - editSettings
+  ///
+  /// Parameters:
+  /// * [taskID] Unique task identifier.
+  /// * [requestOptions] additional request configuration.
+  Future<GetTaskResponse> getAppTask({
+    required int taskID,
+    RequestOptions? requestOptions,
+  }) async {
+    final request = ApiRequest(
+      method: RequestMethod.get,
+      path: r'/1/task/{taskID}'.replaceAll(
+          '{' r'taskID' '}', Uri.encodeComponent(taskID.toString())),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<GetTaskResponse, GetTaskResponse>(
+      response,
+      'GetTaskResponse',
+      growable: true,
+    );
+  }
+
   /// Lists supported languages with their supported dictionary types and number of custom entries.
   ///
   /// Required API Key ACLs:
@@ -1492,7 +1520,7 @@ final class SearchClient implements ApiClient {
     );
   }
 
-  /// Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for index-specific API keys and analytics data. - If the destination index doesn't exist yet, it'll be created.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keep their original name and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
+  /// Copies or moves (renames) an index within the same Algolia application.  - Existing destination indices are overwritten, except for their analytics data. - If the destination index doesn't exist yet, it'll be created.  **Copy**  - Copying a source index that doesn't exist creates a new index with 0 records and default settings. - The API keys of the source index are merged with the existing keys in the destination index. - You can't copy the `enableReRanking`, `mode`, and `replicas` settings. - You can't copy to a destination index that already has replicas. - Be aware of the [size limits](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits). - Related guide: [Copy indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/copy-indices/)  **Move**  - Moving a source index that doesn't exist is ignored without returning an error. - When moving an index, the analytics data keep their original name and a new set of analytics data is started for the new name.   To access the original analytics in the dashboard, create an index with the original name. - If the destination index has replicas, moving will overwrite the existing index and copy the data to the replica indices. - Related guide: [Move indices](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/move-indices/).
   ///
   /// Required API Key ACLs:
   ///   - addObject

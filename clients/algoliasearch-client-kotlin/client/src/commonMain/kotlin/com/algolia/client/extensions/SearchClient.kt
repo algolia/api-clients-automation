@@ -106,6 +106,34 @@ public suspend fun SearchClient.waitTask(
 }
 
 /**
+ * Wait for an application-level [taskID] to complete before executing the next line of code.
+ *
+ * @param taskID The ID of the task to wait for.
+ * @param timeout If specified, the method will throw a
+ *   [kotlinx.coroutines.TimeoutCancellationException] after the timeout value in milliseconds is
+ *   elapsed.
+ * @param maxRetries maximum number of retry attempts.
+ * @param requestOptions additional request configuration.
+ */
+public suspend fun SearchClient.waitAppTask(
+  taskID: Long,
+  maxRetries: Int = 50,
+  timeout: Duration = Duration.INFINITE,
+  initialDelay: Duration = 200.milliseconds,
+  maxDelay: Duration = 5.seconds,
+  requestOptions: RequestOptions? = null,
+): TaskStatus {
+  return retryUntil(
+    timeout = timeout,
+    maxRetries = maxRetries,
+    initialDelay = initialDelay,
+    maxDelay = maxDelay,
+    retry = { getAppTask(taskID, requestOptions).status },
+    until = { it == TaskStatus.Published },
+  )
+}
+
+/**
  * Wait on an API key update operation.
  *
  * @param key The key that has been updated.
@@ -249,71 +277,124 @@ public suspend fun SearchClient.searchForFacets(
 }
 
 /**
+ * Helper: Chunks the given `objects` list in subset of 1000 elements max to make it fit in `batch` requests.
+ *
+ * @param indexName The index in which to perform the request.
+ * @param records The list of objects to index.
+ * @param serializer The serializer to use for the objects.
+ * @param action The action to perform on the objects. Default is `Action.AddObject`.
+ * @param waitForTask If true, wait for the task to complete.
+ * @param batchSize The size of the batch. Default is 1000.
+ * @param requestOptions The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+ * @return The list of responses from the batch requests.
+ *
+ */
+public suspend fun <T> SearchClient.chunkedBatch(
+  indexName: String,
+  records: List<T>,
+  serializer: KSerializer<T>,
+  action: Action = Action.AddObject,
+  waitForTask: Boolean,
+  batchSize: Int = 1000,
+  requestOptions: RequestOptions? = null,
+): List<BatchResponse> {
+  val tasks = mutableListOf<BatchResponse>()
+  records.chunked(batchSize).forEach { chunk ->
+    val requests = chunk.map {
+      BatchRequest(
+        action = action,
+        body = options.json.encodeToJsonElement(serializer, it).jsonObject,
+      )
+    }
+    val batch = batch(
+      indexName = indexName,
+      batchWriteParams = BatchWriteParams(requests),
+      requestOptions = requestOptions,
+    )
+    tasks.add(batch)
+  }
+  if (waitForTask) {
+    tasks.forEach { waitTask(indexName, it.taskID) }
+  }
+  return tasks
+}
+
+/**
  * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are untouched.
  * Replace all objects in an index without any downtime.
  * Internally, this method copies the existing index settings, synonyms and query rules and indexes all
  * passed objects. Finally, the temporary one replaces the existing index.
  *
- * @param serializer [KSerializer] of type [T] for serialization.
+ * See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
+ *
+ * @param indexName The index in which to perform the request.
  * @param records The list of records to replace.
- * @return intermediate operations (index name to task ID).
+ * @param serializer [KSerializer] of type [T] for serialization.
+ * @param batchSize The size of the batch. Default is 1000.
+ * @return responses from the three-step operations: copy, batch, move.
  */
 public suspend fun <T> SearchClient.replaceAllObjects(
   indexName: String,
-  serializer: KSerializer<T>,
   records: List<T>,
+  serializer: KSerializer<T>,
+  batchSize: Int = 1000,
   requestOptions: RequestOptions?,
-): List<Long> {
-  if (records.isEmpty()) return emptyList()
+): ReplaceAllObjectsResponse {
+  val tmpIndexName = "${indexName}_tmp_${Random.nextInt(from = 0, until = 100)}"
 
-  val requests = records.map { record ->
-    val body = options.json.encodeToJsonElement(serializer, record).jsonObject
-    BatchRequest(action = Action.AddObject, body = body)
-  }
-  val destinationIndex = "${indexName}_tmp_${Random.nextInt(from = 0, until = 100)}"
-
-  // 1. Copy index resources
-  val copy = operationIndex(
+  var copy = operationIndex(
     indexName = indexName,
     operationIndexParams = OperationIndexParams(
       operation = OperationType.Copy,
-      destination = destinationIndex,
+      destination = tmpIndexName,
       scope = listOf(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms),
     ),
     requestOptions = requestOptions,
   )
-  waitTask(indexName = indexName, taskID = copy.taskID)
 
-  // 2. Save new objects
-  val batch = batch(
-    indexName = destinationIndex,
-    batchWriteParams = BatchWriteParams(requests),
+  val batchResponses = this.chunkedBatch(
+    indexName = tmpIndexName,
+    records = records,
+    serializer = serializer,
+    action = Action.AddObject,
+    waitForTask = true,
+    batchSize = batchSize,
     requestOptions = requestOptions,
   )
-  waitTask(indexName = destinationIndex, taskID = batch.taskID)
 
-  // 3.  Move temporary index to source index
+  waitTask(indexName = tmpIndexName, taskID = copy.taskID)
+
+  copy = operationIndex(
+    indexName = indexName,
+    operationIndexParams = OperationIndexParams(
+      operation = OperationType.Copy,
+      destination = tmpIndexName,
+      scope = listOf(ScopeType.Settings, ScopeType.Rules, ScopeType.Synonyms),
+    ),
+    requestOptions = requestOptions,
+  )
+  waitTask(indexName = tmpIndexName, taskID = copy.taskID)
+
   val move = operationIndex(
-    indexName = destinationIndex,
+    indexName = tmpIndexName,
     operationIndexParams = OperationIndexParams(operation = OperationType.Move, destination = indexName),
     requestOptions = requestOptions,
   )
-  waitTask(indexName = destinationIndex, taskID = move.taskID)
+  waitTask(indexName = tmpIndexName, taskID = move.taskID)
 
-  // 4. Return the list of operations
-  return listOf(copy.taskID, batch.taskID, move.taskID)
+  return ReplaceAllObjectsResponse(copy, batchResponses, move)
 }
 
 /**
  * Generate a virtual API Key without any call to the server.
  *
- * @param parentAPIKey API key to generate from.
+ * @param parentApiKey API key to generate from.
  * @param restriction Restriction to add the key
  * @throws Exception if an error occurs during the encoding
  */
-public fun SearchClient.generateSecuredApiKey(parentAPIKey: String, restriction: SecuredAPIKeyRestrictions): String {
+public fun SearchClient.generateSecuredApiKey(parentApiKey: String, restriction: SecuredApiKeyRestrictions): String {
   val restrictionString = buildRestrictionString(restriction)
-  val hash = encodeKeySHA256(parentAPIKey, restrictionString)
+  val hash = encodeKeySHA256(parentApiKey, restrictionString)
   return "$hash$restrictionString".encodeBase64()
 }
 
@@ -322,7 +403,7 @@ public fun SearchClient.generateSecuredApiKey(parentAPIKey: String, restriction:
  *
  * @param apiKey The secured API Key to check.
  * @return Duration left before the secured API key expires.
- * @throws IllegalArgumentException if [apiKey] doesn't have a [SecuredAPIKeyRestrictions.validUntil].
+ * @throws IllegalArgumentException if [apiKey] doesn't have a [SecuredApiKeyRestrictions.validUntil].
  */
 public fun securedApiKeyRemainingValidity(apiKey: String): Duration {
   val decoded = apiKey.decodeBase64String()

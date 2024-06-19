@@ -1,19 +1,22 @@
 #if canImport(Core)
     import Core
 #endif
+// >IMPORT
 import QuerySuggestions
+
+// IMPORT<
 
 final class QuerySuggestionsClientSnippet {
     /// Snippet for the createConfig method.
     ///
-    /// createConfig0
+    /// createConfig
     func snippetForCreateConfig() async throws {
-        // >SEPARATOR createConfig
+        // >SEPARATOR createConfig default
         // Initialize the client
         let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client
+        let response = try await client
             .createConfig(querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex(
                 sourceIndices: [SourceIndex(
                     indexName: "testIndex",
@@ -31,12 +34,12 @@ final class QuerySuggestionsClientSnippet {
     ///
     /// allow del method for a custom path with minimal parameters
     func snippetForCustomDelete() async throws {
-        // >SEPARATOR customDelete
+        // >SEPARATOR customDelete default
         // Initialize the client
         let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customDelete(path: "test/minimal")
+        let response = try await client.customDelete(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -44,12 +47,12 @@ final class QuerySuggestionsClientSnippet {
     ///
     /// allow get method for a custom path with minimal parameters
     func snippetForCustomGet() async throws {
-        // >SEPARATOR customGet
+        // >SEPARATOR customGet default
         // Initialize the client
         let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customGet(path: "test/minimal")
+        let response = try await client.customGet(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -57,12 +60,12 @@ final class QuerySuggestionsClientSnippet {
     ///
     /// allow post method for a custom path with minimal parameters
     func snippetForCustomPost() async throws {
-        // >SEPARATOR customPost
+        // >SEPARATOR customPost default
         // Initialize the client
         let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPost(path: "test/minimal")
+        let response = try await client.customPost(path: "test/minimal")
         // SEPARATOR<
     }
 
@@ -70,38 +73,38 @@ final class QuerySuggestionsClientSnippet {
     ///
     /// allow put method for a custom path with minimal parameters
     func snippetForCustomPut() async throws {
-        // >SEPARATOR customPut
+        // >SEPARATOR customPut default
         // Initialize the client
         let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.customPut(path: "test/minimal")
+        let response = try await client.customPut(path: "test/minimal")
         // SEPARATOR<
     }
 
     /// Snippet for the deleteConfig method.
     ///
-    /// deleteConfig0
+    /// deleteConfig
     func snippetForDeleteConfig() async throws {
-        // >SEPARATOR deleteConfig
+        // >SEPARATOR deleteConfig default
         // Initialize the client
         let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.deleteConfig(indexName: "theIndexName")
+        let response = try await client.deleteConfig(indexName: "theIndexName")
         // SEPARATOR<
     }
 
     /// Snippet for the getAllConfigs method.
     ///
-    /// getAllConfigs0
+    /// getAllConfigs
     func snippetForGetAllConfigs() async throws {
-        // >SEPARATOR getAllConfigs
+        // >SEPARATOR getAllConfigs default
         // Initialize the client
         let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getAllConfigs()
+        let response = try await client.getAllConfigs()
         // SEPARATOR<
     }
 
@@ -109,51 +112,51 @@ final class QuerySuggestionsClientSnippet {
     ///
     /// Retrieve QS config e2e
     func snippetForGetConfig() async throws {
-        // >SEPARATOR getConfig
+        // >SEPARATOR getConfig default
         // Initialize the client
         let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getConfig(indexName: "cts_e2e_browse_query_suggestions")
+        let response = try await client.getConfig(indexName: "cts_e2e_browse_query_suggestions")
         // SEPARATOR<
     }
 
     /// Snippet for the getConfigStatus method.
     ///
-    /// getConfigStatus0
+    /// getConfigStatus
     func snippetForGetConfigStatus() async throws {
-        // >SEPARATOR getConfigStatus
+        // >SEPARATOR getConfigStatus default
         // Initialize the client
         let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getConfigStatus(indexName: "theIndexName")
+        let response = try await client.getConfigStatus(indexName: "theIndexName")
         // SEPARATOR<
     }
 
     /// Snippet for the getLogFile method.
     ///
-    /// getLogFile0
+    /// getLogFile
     func snippetForGetLogFile() async throws {
-        // >SEPARATOR getLogFile
+        // >SEPARATOR getLogFile default
         // Initialize the client
         let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.getLogFile(indexName: "theIndexName")
+        let response = try await client.getLogFile(indexName: "theIndexName")
         // SEPARATOR<
     }
 
     /// Snippet for the updateConfig method.
     ///
-    /// updateConfig0
+    /// updateConfig
     func snippetForUpdateConfig() async throws {
-        // >SEPARATOR updateConfig
+        // >SEPARATOR updateConfig default
         // Initialize the client
         let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        _ = try await client.updateConfig(
+        let response = try await client.updateConfig(
             indexName: "theIndexName",
             configuration: QuerySuggestionsConfiguration(
                 sourceIndices: [SourceIndex(

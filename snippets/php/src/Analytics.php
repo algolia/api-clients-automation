@@ -4,6 +4,11 @@
 
 namespace Algolia\AlgoliaSearch\Snippets;
 
+// >IMPORT
+use Algolia\AlgoliaSearch\Api\AnalyticsClient;
+
+// IMPORT<
+
 class SnippetAnalyticsClient
 {
     /**
@@ -13,9 +18,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForCustomDelete()
     {
-        // >SEPARATOR customDelete
+        // >SEPARATOR customDelete default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->customDelete(
@@ -34,9 +39,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForCustomGet()
     {
-        // >SEPARATOR customGet
+        // >SEPARATOR customGet default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->customGet(
@@ -55,9 +60,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForCustomPost()
     {
-        // >SEPARATOR customPost
+        // >SEPARATOR customPost default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->customPost(
@@ -76,9 +81,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForCustomPut()
     {
-        // >SEPARATOR customPut
+        // >SEPARATOR customPut default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->customPut(
@@ -97,9 +102,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetAddToCartRate()
     {
-        // >SEPARATOR getAddToCartRate
+        // >SEPARATOR getAddToCartRate default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getAddToCartRate(
@@ -118,9 +123,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetAverageClickPosition()
     {
-        // >SEPARATOR getAverageClickPosition
+        // >SEPARATOR getAverageClickPosition default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getAverageClickPosition(
@@ -139,9 +144,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetClickPositions()
     {
-        // >SEPARATOR getClickPositions
+        // >SEPARATOR getClickPositions default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getClickPositions(
@@ -160,9 +165,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetClickThroughRate()
     {
-        // >SEPARATOR getClickThroughRate
+        // >SEPARATOR getClickThroughRate default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getClickThroughRate(
@@ -181,9 +186,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetConversionRate()
     {
-        // >SEPARATOR getConversionRate
+        // >SEPARATOR getConversionRate default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getConversionRate(
@@ -202,9 +207,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetNoClickRate()
     {
-        // >SEPARATOR getNoClickRate
+        // >SEPARATOR getNoClickRate default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getNoClickRate(
@@ -223,9 +228,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetNoResultsRate()
     {
-        // >SEPARATOR getNoResultsRate
+        // >SEPARATOR getNoResultsRate default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getNoResultsRate(
@@ -244,9 +249,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetPurchaseRate()
     {
-        // >SEPARATOR getPurchaseRate
+        // >SEPARATOR getPurchaseRate default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getPurchaseRate(
@@ -265,9 +270,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetRevenue()
     {
-        // >SEPARATOR getRevenue
+        // >SEPARATOR getRevenue default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getRevenue(
@@ -286,9 +291,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetSearchesCount()
     {
-        // >SEPARATOR getSearchesCount
+        // >SEPARATOR getSearchesCount default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getSearchesCount(
@@ -307,9 +312,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetSearchesNoClicks()
     {
-        // >SEPARATOR getSearchesNoClicks
+        // >SEPARATOR getSearchesNoClicks default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getSearchesNoClicks(
@@ -328,9 +333,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetSearchesNoResults()
     {
-        // >SEPARATOR getSearchesNoResults
+        // >SEPARATOR getSearchesNoResults default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getSearchesNoResults(
@@ -349,9 +354,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetStatus()
     {
-        // >SEPARATOR getStatus
+        // >SEPARATOR getStatus default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getStatus(
@@ -370,9 +375,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetTopCountries()
     {
-        // >SEPARATOR getTopCountries
+        // >SEPARATOR getTopCountries default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getTopCountries(
@@ -391,9 +396,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetTopFilterAttributes()
     {
-        // >SEPARATOR getTopFilterAttributes
+        // >SEPARATOR getTopFilterAttributes default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getTopFilterAttributes(
@@ -412,9 +417,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetTopFilterForAttribute()
     {
-        // >SEPARATOR getTopFilterForAttribute
+        // >SEPARATOR getTopFilterForAttribute default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getTopFilterForAttribute(
@@ -434,9 +439,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetTopFiltersNoResults()
     {
-        // >SEPARATOR getTopFiltersNoResults
+        // >SEPARATOR getTopFiltersNoResults default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getTopFiltersNoResults(
@@ -455,9 +460,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetTopHits()
     {
-        // >SEPARATOR getTopHits
+        // >SEPARATOR getTopHits default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getTopHits(
@@ -476,9 +481,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetTopSearches()
     {
-        // >SEPARATOR getTopSearches
+        // >SEPARATOR getTopSearches default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getTopSearches(
@@ -497,9 +502,9 @@ class SnippetAnalyticsClient
      */
     public function snippetForGetUsersCount()
     {
-        // >SEPARATOR getUsersCount
+        // >SEPARATOR getUsersCount default
         // Initialize the client
-        $client = Algolia\AlgoliaSearch\Api\AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+        $client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
 
         // Call the API
         $response = $client->getUsersCount(

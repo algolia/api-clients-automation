@@ -51,8 +51,8 @@ public class QuerySuggestionsClientRequestTests
   [Fact]
   public void Dispose() { }
 
-  [Fact(DisplayName = "createConfig0")]
-  public async Task CreateConfigTest0()
+  [Fact(DisplayName = "createConfig")]
+  public async Task CreateConfigTest()
   {
     await _client.CreateConfigAsync(
       new QuerySuggestionsConfigurationWithIndex
@@ -87,7 +87,7 @@ public class QuerySuggestionsClientRequestTests
   }
 
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
-  public async Task CustomDeleteTest0()
+  public async Task CustomDeleteTest()
   {
     await _client.CustomDeleteAsync("test/minimal");
 
@@ -125,7 +125,7 @@ public class QuerySuggestionsClientRequestTests
   }
 
   [Fact(DisplayName = "allow get method for a custom path with minimal parameters")]
-  public async Task CustomGetTest0()
+  public async Task CustomGetTest()
   {
     await _client.CustomGetAsync("test/minimal");
 
@@ -205,7 +205,7 @@ public class QuerySuggestionsClientRequestTests
   }
 
   [Fact(DisplayName = "allow post method for a custom path with minimal parameters")]
-  public async Task CustomPostTest0()
+  public async Task CustomPostTest()
   {
     await _client.CustomPostAsync("test/minimal");
 
@@ -535,7 +535,7 @@ public class QuerySuggestionsClientRequestTests
   }
 
   [Fact(DisplayName = "allow put method for a custom path with minimal parameters")]
-  public async Task CustomPutTest0()
+  public async Task CustomPutTest()
   {
     await _client.CustomPutAsync("test/minimal");
 
@@ -577,8 +577,8 @@ public class QuerySuggestionsClientRequestTests
     }
   }
 
-  [Fact(DisplayName = "deleteConfig0")]
-  public async Task DeleteConfigTest0()
+  [Fact(DisplayName = "deleteConfig")]
+  public async Task DeleteConfigTest()
   {
     await _client.DeleteConfigAsync("theIndexName");
 
@@ -588,8 +588,8 @@ public class QuerySuggestionsClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getAllConfigs0")]
-  public async Task GetAllConfigsTest0()
+  [Fact(DisplayName = "getAllConfigs")]
+  public async Task GetAllConfigsTest()
   {
     await _client.GetAllConfigsAsync();
 
@@ -600,7 +600,7 @@ public class QuerySuggestionsClientRequestTests
   }
 
   [Fact(DisplayName = "Retrieve QS config e2e")]
-  public async Task GetConfigTest0()
+  public async Task GetConfigTest()
   {
     await _client.GetConfigAsync("cts_e2e_browse_query_suggestions");
 
@@ -628,8 +628,8 @@ public class QuerySuggestionsClientRequestTests
     }
   }
 
-  [Fact(DisplayName = "getConfigStatus0")]
-  public async Task GetConfigStatusTest0()
+  [Fact(DisplayName = "getConfigStatus")]
+  public async Task GetConfigStatusTest()
   {
     await _client.GetConfigStatusAsync("theIndexName");
 
@@ -639,8 +639,8 @@ public class QuerySuggestionsClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getLogFile0")]
-  public async Task GetLogFileTest0()
+  [Fact(DisplayName = "getLogFile")]
+  public async Task GetLogFileTest()
   {
     await _client.GetLogFileAsync("theIndexName");
 
@@ -650,8 +650,8 @@ public class QuerySuggestionsClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "updateConfig0")]
-  public async Task UpdateConfigTest0()
+  [Fact(DisplayName = "updateConfig")]
+  public async Task UpdateConfigTest()
   {
     await _client.UpdateConfigAsync(
       "theIndexName",

@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:algolia_client_core/src/config/agent_segment.dart';
 import 'package:algolia_client_core/src/config/host.dart';
 import 'package:algolia_client_core/src/transport/requester.dart';
+import 'package:dio/dio.dart';
 
 final class ClientOptions {
   /// The list of hosts that the client can connect to.
@@ -29,17 +30,21 @@ final class ClientOptions {
   /// Custom requester used to send HTTP requests.
   final Requester? requester;
 
+  /// List of Dio interceptors.
+  /// Used only in case of using the default (dio) requester.
+  final Iterable<Interceptor>? interceptors;
+
   /// Constructs a [ClientOptions] instance with the provided parameters.
-  const ClientOptions({
-    this.connectTimeout = const Duration(seconds: 2),
-    this.writeTimeout = const Duration(seconds: 30),
-    this.readTimeout = const Duration(seconds: 5),
-    this.hosts,
-    this.headers,
-    this.agentSegments,
-    this.requester,
-    this.logger,
-  });
+  const ClientOptions(
+      {this.connectTimeout = const Duration(seconds: 2),
+      this.writeTimeout = const Duration(seconds: 30),
+      this.readTimeout = const Duration(seconds: 5),
+      this.hosts,
+      this.headers,
+      this.agentSegments,
+      this.requester,
+      this.logger,
+      this.interceptors});
 
   @override
   bool operator ==(Object other) =>
@@ -52,7 +57,9 @@ final class ClientOptions {
           readTimeout == other.readTimeout &&
           headers == other.headers &&
           agentSegments == other.agentSegments &&
-          requester == other.requester;
+          logger == other.logger &&
+          requester == other.requester &&
+          interceptors == other.interceptors;
 
   @override
   int get hashCode =>
@@ -62,10 +69,12 @@ final class ClientOptions {
       readTimeout.hashCode ^
       headers.hashCode ^
       agentSegments.hashCode ^
-      requester.hashCode;
+      logger.hashCode ^
+      requester.hashCode ^
+      interceptors.hashCode;
 
   @override
   String toString() {
-    return 'ClientOptions{hosts: $hosts, connectTimeout: $connectTimeout, writeTimeout: $writeTimeout, readTimeout: $readTimeout, headers: $headers, agentSegments: $agentSegments, requester: $requester}';
+    return 'ClientOptions{hosts: $hosts, connectTimeout: $connectTimeout, writeTimeout: $writeTimeout, readTimeout: $readTimeout, headers: $headers, agentSegments: $agentSegments, logger: $logger, requester: $requester, interceptors: $interceptors}';
   }
 }

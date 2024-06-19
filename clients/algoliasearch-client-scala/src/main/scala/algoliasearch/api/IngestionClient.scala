@@ -647,10 +647,10 @@ class IngestionClient(
     * @param order
     *   Sort order of the response, ascending or descending.
     * @param startDate
-    *   Date and time in RFC3339 format for the earliest events to retrieve. By default, the current time minus three
+    *   Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three
     *   hours is used.
     * @param endDate
-    *   Date and time in RFC3339 format for the latest events to retrieve. By default, the current time is used.
+    *   Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
     */
   def getEvents(
       runID: String,
@@ -724,9 +724,9 @@ class IngestionClient(
     * @param order
     *   Sort order of the response, ascending or descending.
     * @param startDate
-    *   Date in RFC3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+    *   Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
     * @param endDate
-    *   Date in RFC3339 format for the latest run to retrieve. By default, the current day is used.
+    *   Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
     */
   def getRuns(
       itemsPerPage: Option[Int] = None,

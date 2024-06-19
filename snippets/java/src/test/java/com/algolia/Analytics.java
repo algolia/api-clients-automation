@@ -1,7 +1,10 @@
 package com.algolia.methods.snippets;
 
+// >IMPORT
 import com.algolia.api.AnalyticsClient;
 import com.algolia.model.analytics.*;
+
+// IMPORT<
 
 class SnippetAnalyticsClient {
 
@@ -9,7 +12,7 @@ class SnippetAnalyticsClient {
   //
   // allow del method for a custom path with minimal parameters
   void snippetForCustomDelete() {
-    // >SEPARATOR customDelete
+    // >SEPARATOR customDelete default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -22,7 +25,7 @@ class SnippetAnalyticsClient {
   //
   // allow get method for a custom path with minimal parameters
   void snippetForCustomGet() {
-    // >SEPARATOR customGet
+    // >SEPARATOR customGet default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -35,7 +38,7 @@ class SnippetAnalyticsClient {
   //
   // allow post method for a custom path with minimal parameters
   void snippetForCustomPost() {
-    // >SEPARATOR customPost
+    // >SEPARATOR customPost default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -48,7 +51,7 @@ class SnippetAnalyticsClient {
   //
   // allow put method for a custom path with minimal parameters
   void snippetForCustomPut() {
-    // >SEPARATOR customPut
+    // >SEPARATOR customPut default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -61,7 +64,7 @@ class SnippetAnalyticsClient {
   //
   // get getAddToCartRate with minimal parameters
   void snippetForGetAddToCartRate() {
-    // >SEPARATOR getAddToCartRate
+    // >SEPARATOR getAddToCartRate default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -74,7 +77,7 @@ class SnippetAnalyticsClient {
   //
   // get getAverageClickPosition with minimal parameters
   void snippetForGetAverageClickPosition() {
-    // >SEPARATOR getAverageClickPosition
+    // >SEPARATOR getAverageClickPosition default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -87,7 +90,7 @@ class SnippetAnalyticsClient {
   //
   // get getClickPositions with minimal parameters
   void snippetForGetClickPositions() {
-    // >SEPARATOR getClickPositions
+    // >SEPARATOR getClickPositions default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -100,7 +103,7 @@ class SnippetAnalyticsClient {
   //
   // get getClickThroughRate with minimal parameters
   void snippetForGetClickThroughRate() {
-    // >SEPARATOR getClickThroughRate
+    // >SEPARATOR getClickThroughRate default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -113,7 +116,7 @@ class SnippetAnalyticsClient {
   //
   // get getConversationRate with minimal parameters
   void snippetForGetConversionRate() {
-    // >SEPARATOR getConversionRate
+    // >SEPARATOR getConversionRate default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -126,7 +129,7 @@ class SnippetAnalyticsClient {
   //
   // get getNoClickRate with minimal parameters
   void snippetForGetNoClickRate() {
-    // >SEPARATOR getNoClickRate
+    // >SEPARATOR getNoClickRate default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -139,7 +142,7 @@ class SnippetAnalyticsClient {
   //
   // get getNoResultsRate with minimal parameters
   void snippetForGetNoResultsRate() {
-    // >SEPARATOR getNoResultsRate
+    // >SEPARATOR getNoResultsRate default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -152,7 +155,7 @@ class SnippetAnalyticsClient {
   //
   // get getPurchaseRate with minimal parameters
   void snippetForGetPurchaseRate() {
-    // >SEPARATOR getPurchaseRate
+    // >SEPARATOR getPurchaseRate default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -165,7 +168,7 @@ class SnippetAnalyticsClient {
   //
   // get getRevenue with minimal parameters
   void snippetForGetRevenue() {
-    // >SEPARATOR getRevenue
+    // >SEPARATOR getRevenue default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -178,7 +181,7 @@ class SnippetAnalyticsClient {
   //
   // get getSearchesCount with minimal parameters
   void snippetForGetSearchesCount() {
-    // >SEPARATOR getSearchesCount
+    // >SEPARATOR getSearchesCount default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -191,7 +194,7 @@ class SnippetAnalyticsClient {
   //
   // get getSearchesNoClicks with minimal parameters
   void snippetForGetSearchesNoClicks() {
-    // >SEPARATOR getSearchesNoClicks
+    // >SEPARATOR getSearchesNoClicks default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -204,7 +207,7 @@ class SnippetAnalyticsClient {
   //
   // get getSearchesNoResults with minimal parameters
   void snippetForGetSearchesNoResults() {
-    // >SEPARATOR getSearchesNoResults
+    // >SEPARATOR getSearchesNoResults default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -217,7 +220,7 @@ class SnippetAnalyticsClient {
   //
   // get getStatus with minimal parameters
   void snippetForGetStatus() {
-    // >SEPARATOR getStatus
+    // >SEPARATOR getStatus default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -230,7 +233,7 @@ class SnippetAnalyticsClient {
   //
   // get getTopCountries with minimal parameters
   void snippetForGetTopCountries() {
-    // >SEPARATOR getTopCountries
+    // >SEPARATOR getTopCountries default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -243,7 +246,7 @@ class SnippetAnalyticsClient {
   //
   // get getTopFilterAttributes with minimal parameters
   void snippetForGetTopFilterAttributes() {
-    // >SEPARATOR getTopFilterAttributes
+    // >SEPARATOR getTopFilterAttributes default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -256,7 +259,7 @@ class SnippetAnalyticsClient {
   //
   // get getTopFilterForAttribute with minimal parameters
   void snippetForGetTopFilterForAttribute() {
-    // >SEPARATOR getTopFilterForAttribute
+    // >SEPARATOR getTopFilterForAttribute default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -269,7 +272,7 @@ class SnippetAnalyticsClient {
   //
   // get getTopFiltersNoResults with minimal parameters
   void snippetForGetTopFiltersNoResults() {
-    // >SEPARATOR getTopFiltersNoResults
+    // >SEPARATOR getTopFiltersNoResults default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -282,7 +285,7 @@ class SnippetAnalyticsClient {
   //
   // get getTopHits with minimal parameters
   void snippetForGetTopHits() {
-    // >SEPARATOR getTopHits
+    // >SEPARATOR getTopHits default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -295,7 +298,7 @@ class SnippetAnalyticsClient {
   //
   // get getTopSearches with minimal parameters
   void snippetForGetTopSearches() {
-    // >SEPARATOR getTopSearches
+    // >SEPARATOR getTopSearches default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 
@@ -308,7 +311,7 @@ class SnippetAnalyticsClient {
   //
   // get getUsersCount with minimal parameters
   void snippetForGetUsersCount() {
-    // >SEPARATOR getUsersCount
+    // >SEPARATOR getUsersCount default
     // Initialize the client
     AnalyticsClient client = new AnalyticsClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
 

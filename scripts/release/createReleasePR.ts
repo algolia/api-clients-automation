@@ -1,6 +1,9 @@
 /* eslint-disable no-console */
+import fsp from 'fs/promises';
+
 import chalk from 'chalk';
 import dotenv from 'dotenv';
+import lts from 'lts';
 import semver from 'semver';
 
 import generationCommitText from '../ci/codegen/text.js';
@@ -19,6 +22,8 @@ import {
   gitBranchExists,
   setVerbose,
   configureGitHubAuthor,
+  fullReleaseConfig,
+  toAbsolutePath,
 } from '../common.js';
 import { getLanguageFolder, getPackageVersionDefault } from '../config.js';
 import type { Language } from '../types.js';
@@ -38,6 +43,11 @@ import { updateAPIVersions } from './updateAPIVersions.js';
 dotenv.config({ path: ROOT_ENV_PATH });
 
 export const COMMON_SCOPES = ['specs', 'clients'];
+
+// python pre-releases have a pattern like `X.Y.ZaN` for alpha or `X.Y.ZbN` for beta
+// see https://peps.python.org/pep-0440/
+// It also support ruby pre-releases like `X.Y.Z.alpha.N` for alpha or `X.Y.Z.beta.N` for beta
+const preReleaseRegExp = new RegExp(/\d\.\d\.\d(\.?a(lpha\.)?\d+|\.?b(eta\.)?\d+)$/);
 
 // Prevent fetching the same user multiple times
 const fetchedUsers: Record<string, string> = {};
@@ -176,14 +186,13 @@ export function getNextVersion(current: string, releaseType: semver.ReleaseType 
 
   let nextVersion: string | null = current;
 
-  // python pre-releases have a pattern like `X.Y.ZaN` for alpha or `X.Y.ZbN` for beta
-  // see https://peps.python.org/pep-0440/
-  // It also support ruby pre-releases like `X.Y.Z.alpha.N` for alpha or `X.Y.Z.beta.N` for beta
-  if (
-    releaseType !== 'major' &&
-    (/\d\.\d\.\d\.?a(lpha\.)?\d+$/.test(current) || /\d\.\d\.\d\.?b(eta\.)?\d+$/.test(current))
-  ) {
-    nextVersion = current.replace(/\d+$/, (match) => `${parseInt(match, 10) + 1}`);
+  const preReleaseVersion = current.match(preReleaseRegExp);
+  if (preReleaseVersion?.length) {
+    if (releaseType === 'major') {
+      nextVersion = current.replace(preReleaseVersion[1], '');
+    } else {
+      nextVersion = current.replace(/\d+$/, (match) => `${parseInt(match, 10) + 1}`);
+    }
   } else if (current.endsWith('-SNAPSHOT')) {
     // snapshots should not be bumped
     nextVersion = current;
@@ -203,18 +212,39 @@ export function getNextVersion(current: string, releaseType: semver.ReleaseType 
 export async function decideReleaseStrategy({
   versions,
   commits,
+  languages,
+  major,
+  dryRun,
 }: {
   versions: VersionsBeforeBump;
   commits: PassedCommit[];
+  languages: Language[];
+  major?: boolean;
+  dryRun?: boolean;
 }): Promise<Versions> {
   const versionsToPublish: Versions = {};
 
   for (const [lang, version] of Object.entries(versions)) {
+    const currentVersion = versions[lang].current;
+
+    if (!languages.includes(lang as Language)) {
+      console.log(`${lang} is not in the given language list, skipping release`);
+
+      versionsToPublish[lang] = {
+        ...version,
+        noCommit: true,
+        releaseType: null,
+        skipRelease: true,
+        next: getNextVersion(currentVersion, null),
+      };
+
+      continue;
+    }
+
     const commitsPerLang = commits.filter(
       (commit) => commit.scope === lang || COMMON_SCOPES.includes(commit.scope),
     );
 
-    const currentVersion = versions[lang].current;
     let nbGitDiff = await getNbGitDiff({
       branch: await getLastReleasedTag(),
       head: null,
@@ -223,12 +253,11 @@ export async function decideReleaseStrategy({
 
     console.log(`Deciding next version bump for ${lang}.`);
 
-    // allows forcing a client release
-    if (process.env.LOCAL_TEST_DEV) {
+    if (dryRun) {
       nbGitDiff = 1;
     }
 
-    if (nbGitDiff === 0 || commitsPerLang.length === 0) {
+    if (!major && (nbGitDiff === 0 || commitsPerLang.length === 0)) {
       versionsToPublish[lang] = {
         ...version,
         noCommit: true,
@@ -248,47 +277,33 @@ export async function decideReleaseStrategy({
       continue;
     }
 
-    // snapshots should not be bumped as prerelease
-    if (semver.prerelease(currentVersion) && !currentVersion.endsWith('-SNAPSHOT')) {
-      // if version is like 0.1.2-beta.1, it increases to 0.1.2-beta.2, even if there's a breaking change.
-      versionsToPublish[lang] = {
-        ...version,
-        releaseType: 'prerelease',
-        next: getNextVersion(currentVersion, 'prerelease'),
-      };
-
-      continue;
-    }
-
-    if (commitsPerLang.some((commit) => commit.message.includes('BREAKING CHANGE'))) {
-      versionsToPublish[lang] = {
-        ...version,
-        releaseType: 'major',
-        next: getNextVersion(currentVersion, 'major'),
-      };
-
-      continue;
-    }
-
+    let releaseType: semver.ReleaseType = 'patch';
+    let skipRelease = false;
     const commitTypes = new Set(commitsPerLang.map(({ type }) => type));
-    if (commitTypes.has('feat')) {
-      versionsToPublish[lang] = {
-        ...version,
-        releaseType: 'minor',
-        next: getNextVersion(currentVersion, 'minor'),
-      };
 
-      continue;
+    switch (true) {
+      case major || commitsPerLang.some((commit) => commit.message.includes('BREAKING CHANGE')):
+        releaseType = 'major';
+        break;
+      case semver.prerelease(currentVersion) && !currentVersion.endsWith('-SNAPSHOT'):
+        releaseType = 'prerelease';
+        break;
+      case commitTypes.has('feat'):
+        releaseType = 'minor';
+        break;
+      case !commitTypes.has('fix'):
+        skipRelease = true;
+        break;
+      default:
+        releaseType = 'patch';
     }
 
     versionsToPublish[lang] = {
       ...version,
-      releaseType: 'patch',
-      ...(commitTypes.has('fix') ? undefined : { skipRelease: true }),
-      next: getNextVersion(currentVersion, 'patch'),
+      releaseType,
+      skipRelease,
+      next: getNextVersion(currentVersion, releaseType),
     };
-
-    continue;
   }
 
   return versionsToPublish;
@@ -352,8 +367,6 @@ async function getCommits(): Promise<{
 
 /**
  * Ensure the release environment is correct before triggering.
- *
- * You can bypass blocking checks by setting LOCAL_TEST_DEV to true.
  */
 async function prepareGitEnvironment(): Promise<void> {
   ensureGitHubToken();
@@ -362,19 +375,11 @@ async function prepareGitEnvironment(): Promise<void> {
     await configureGitHubAuthor();
   }
 
-  if (
-    !process.env.LOCAL_TEST_DEV &&
-    (await run('git rev-parse --abbrev-ref HEAD')) !== MAIN_BRANCH
-  ) {
+  if ((await run('git rev-parse --abbrev-ref HEAD')) !== MAIN_BRANCH) {
     throw new Error(`You can run this script only from \`${MAIN_BRANCH}\` branch.`);
   }
 
-  if (
-    !process.env.LOCAL_TEST_DEV &&
-    (await getNbGitDiff({
-      head: null,
-    })) !== 0
-  ) {
+  if ((await getNbGitDiff({ head: null })) !== 0) {
     throw new Error('Working directory is not clean. Commit all the changes first.');
   }
 
@@ -388,8 +393,109 @@ async function prepareGitEnvironment(): Promise<void> {
   await run('git pull origin $(git branch --show-current)');
 }
 
-async function createReleasePR(): Promise<void> {
-  await prepareGitEnvironment();
+// updates the release.config.json file for the sla field, which contains a release history of start and end date support
+// inspired by node: https://github.com/nodejs/Release/blob/main/schedule.json, following https://github.com/nodejs/release#release-schedule, leveraging https://github.com/nodejs/lts-schedule
+export async function updateSLA(versions: Versions, graphOnly?: boolean): Promise<void> {
+  const start = new Date();
+  const end = new Date(new Date().setMonth(new Date().getMonth() + 24));
+
+  let queryStart = start;
+  let queryEnd = end;
+
+  for (const [lang, supportedVersions] of Object.entries(fullReleaseConfig.sla)) {
+    if (!graphOnly) {
+      const next = versions[lang].next;
+      const current = versions[lang].current;
+
+      // no ongoing release for this client, nothing changes
+      if (!next || current === next) {
+        continue;
+      }
+
+      // update the previously supported SLA version fields
+      if (current in supportedVersions) {
+        const nextMinor = next.match(/.+\.(.+)\..*/);
+        const currentMinor = current.match(/.+\.(.+)\..*/);
+
+        if (!currentMinor || !nextMinor) {
+          throw new Error(`unable to determine minor versions: ${currentMinor}, ${nextMinor}`);
+        }
+
+        // if it's not a major release, and we are on the same minor, we remove the current
+        // patch because we support SLA at minor level
+        if (versions[lang].releaseType !== 'major' && currentMinor[1] === nextMinor[1]) {
+          delete supportedVersions[current];
+          // if it's a major or not the same minor, it means we release a new latest versions, so the
+          // current SLA goes in maintenance mode
+        } else {
+          delete supportedVersions[current].lts;
+
+          // any other release cases make the previous version enter in maintenance
+          supportedVersions[current].maintenance = start.toISOString().split('T')[0];
+        }
+      }
+
+      // we don't support SLA for pre-releases, so we will:
+      // - set them as `prerelease`
+      // - not the set `lts` field, the gen script will set the as `unstable`
+      const isPreRelease =
+        next.match(preReleaseRegExp) !== null || semver.prerelease(next) !== null;
+
+      supportedVersions[next] = {
+        start: start.toISOString().split('T')[0],
+        lts: isPreRelease ? undefined : start.toISOString().split('T')[0],
+        end: end.toISOString().split('T')[0],
+        prerelease: isPreRelease,
+      };
+    }
+
+    // define the boundaries of the graph by searching for older and newest dates
+    for (const [supportedVersion, dates] of Object.entries(supportedVersions)) {
+      // delete maintenance versions that are not supported anymore
+      if ('maintenance' in dates && new Date(dates.end as string) < start) {
+        delete supportedVersions[supportedVersion];
+
+        continue;
+      }
+
+      const versionStart = new Date(dates.start);
+      if (versionStart < queryStart) {
+        queryStart = versionStart;
+      }
+
+      const versionEnd = new Date(dates.end);
+      if (versionEnd > queryEnd) {
+        queryEnd = versionEnd;
+      }
+    }
+
+    lts.create({
+      queryStart,
+      queryEnd,
+      png: toAbsolutePath(`website/static/img/${lang}-sla.png`),
+      data: supportedVersions,
+      projectName: '',
+    });
+  }
+
+  await fsp.writeFile(
+    toAbsolutePath('config/release.config.json'),
+    JSON.stringify(fullReleaseConfig, null, 2),
+  );
+}
+
+export async function createReleasePR({
+  languages,
+  major,
+  dryRun,
+}: {
+  languages: Language[];
+  major?: boolean;
+  dryRun?: boolean;
+}): Promise<void> {
+  if (!dryRun) {
+    await prepareGitEnvironment();
+  }
 
   console.log('Searching for commits since last release...');
   const { validCommits, skippedCommits } = await getCommits();
@@ -397,10 +503,15 @@ async function createReleasePR(): Promise<void> {
   const versions = await decideReleaseStrategy({
     versions: readVersions(),
     commits: validCommits,
+    languages,
+    major,
   });
+
+  await updateSLA(versions, false);
+
   const versionChanges = getVersionChangesText(versions);
 
-  console.log('Creating changelogs for all languages...');
+  console.log(`Creating changelogs for languages: ${languages}...`);
   const changelog: Changelog = LANGUAGES.reduce((newChangelog, lang) => {
     if (versions[lang].noCommit) {
       return newChangelog;
@@ -435,6 +546,12 @@ async function createReleasePR(): Promise<void> {
   console.log('Updating config files...');
   await updateAPIVersions(versions, changelog);
 
+  if (dryRun) {
+    console.log('  > asked for a dryrun, stopping here');
+
+    return;
+  }
+
   const headBranch = `chore/prepare-release-${TODAY}`;
   console.log(`Switching to branch: ${headBranch}`);
   if (await gitBranchExists(headBranch)) {
@@ -448,11 +565,7 @@ async function createReleasePR(): Promise<void> {
   console.log(`Pushing updated changes to: ${headBranch}`);
   const commitMessage = generationCommitText.commitPrepareReleaseMessage;
   await run('git add .');
-  if (process.env.LOCAL_TEST_DEV) {
-    await run(`git commit -m "${commitMessage} [skip ci]"`);
-  } else {
-    await run(`CI=false git commit -m "${commitMessage}"`);
-  }
+  await run(`CI=false git commit -m "${commitMessage}"`);
 
   // cleanup all the changes to the generated files (the ones not commited because of the pre-commit hook)
   await run(`git checkout .`);
@@ -480,9 +593,4 @@ async function createReleasePR(): Promise<void> {
 
   console.log(`Release PR #${data.number} is ready for review.`);
   console.log(`  > ${data.html_url}`);
-}
-
-if (import.meta.url.endsWith(process.argv[1])) {
-  setVerbose(false);
-  createReleasePR();
 }

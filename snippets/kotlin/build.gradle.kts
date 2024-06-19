@@ -1,8 +1,8 @@
 import com.diffplug.gradle.spotless.SpotlessExtension
 
 plugins {
-    kotlin("jvm") version "1.9.23"
-    kotlin("plugin.serialization") version "1.9.23"
+    kotlin("jvm") version "2.0.0"
+    kotlin("plugin.serialization") version "2.0.0"
     alias(libs.plugins.spotless)
 }
 
@@ -12,7 +12,7 @@ repositories {
 
 dependencies {
     implementation("com.algolia:algoliasearch-client-kotlin")
-    implementation("io.ktor:ktor-client-okhttp:2.3.10")
+    implementation("io.ktor:ktor-client-okhttp:2.3.11")
     implementation("ch.qos.logback:logback-classic:1.5.6")
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
 }
@@ -27,6 +27,7 @@ configure<SpotlessExtension> {
                     "ktlint_standard_no-wildcard-imports" to "disabled",
                     "ktlint_standard_trailing-comma-on-declaration-site" to "disabled",
                     "ktlint_standard_filename" to "disabled",
+                    "ktlint_standard_import-ordering" to "disabled",
                 ),
             )
     }

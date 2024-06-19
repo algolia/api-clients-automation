@@ -54,7 +54,7 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       break;
     case 'python':
       await run(
-        'poetry lock --no-update && poetry install --sync && pip freeze > requirements.txt && poetry run autopep8 -r --in-place --aggressive . && poetry run autoflake -r --remove-unused-variables --remove-all-unused-imports --in-place . && poetry run isort . && poetry run black . && poetry run flake8 --ignore=E501,W503 .',
+        'poetry lock --no-update && poetry install --sync && pip freeze > requirements.txt && poetry run ruff check --fix && poetry run ruff format',
         { cwd, language },
       );
       break;

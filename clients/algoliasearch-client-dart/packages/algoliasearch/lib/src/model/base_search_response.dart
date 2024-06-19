@@ -153,7 +153,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
   @JsonKey(name: r'serverUsed')
   final String? serverUsed;
 
-  /// An object with custom data.  You can store up to 32&nbsp;kB as custom data.
+  /// An object with custom data.  You can store up to 32kB as custom data.
   @JsonKey(name: r'userData')
   final Object? userData;
 
@@ -223,7 +223,7 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
       renderingContent.hashCode +
       serverTimeMS.hashCode +
       serverUsed.hashCode +
-      (userData == null ? 0 : userData.hashCode) +
+      userData.hashCode +
       queryID.hashCode +
       const MapEquality<String, dynamic>().hash(this);
 

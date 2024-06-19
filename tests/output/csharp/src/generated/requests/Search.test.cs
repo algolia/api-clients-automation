@@ -48,8 +48,8 @@ public class SearchClientRequestTests
   [Fact]
   public void Dispose() { }
 
-  [Fact(DisplayName = "addApiKey0")]
-  public async Task AddApiKeyTest0()
+  [Fact(DisplayName = "addApiKey")]
+  public async Task AddApiKeyTest()
   {
     await _client.AddApiKeyAsync(
       new ApiKey
@@ -72,8 +72,8 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "addOrUpdateObject0")]
-  public async Task AddOrUpdateObjectTest0()
+  [Fact(DisplayName = "addOrUpdateObject")]
+  public async Task AddOrUpdateObjectTest()
   {
     await _client.AddOrUpdateObjectAsync(
       "indexName",
@@ -87,8 +87,8 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault("{\"key\":\"value\"}", req.Body, new JsonDiffConfig(false));
   }
 
-  [Fact(DisplayName = "appendSource0")]
-  public async Task AppendSourceTest0()
+  [Fact(DisplayName = "appendSource")]
+  public async Task AppendSourceTest()
   {
     await _client.AppendSourceAsync(
       new Source { VarSource = "theSource", Description = "theDescription", }
@@ -104,8 +104,8 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "assignUserId0")]
-  public async Task AssignUserIdTest0()
+  [Fact(DisplayName = "assignUserId")]
+  public async Task AssignUserIdTest()
   {
     await _client.AssignUserIdAsync("userID", new AssignUserIdParams { Cluster = "theCluster", });
 
@@ -157,11 +157,11 @@ public class SearchClientRequestTests
     }
   }
 
-  [Fact(DisplayName = "allows batch method with `addObject` action")]
-  public async Task BatchTest0()
+  [Fact(DisplayName = "addObject")]
+  public async Task BatchTest()
   {
     await _client.BatchAsync(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       new BatchWriteParams
       {
         Requests = new List<BatchRequest>
@@ -169,27 +169,32 @@ public class SearchClientRequestTests
           new BatchRequest
           {
             Action = Enum.Parse<Action>("AddObject"),
-            Body = new Dictionary<string, string> { { "key", "value" } },
+            Body = new Dictionary<string, string> { { "key", "bar" }, { "foo", "1" } },
+          },
+          new BatchRequest
+          {
+            Action = Enum.Parse<Action>("AddObject"),
+            Body = new Dictionary<string, string> { { "key", "baz" }, { "foo", "2" } },
           }
         },
       }
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/indexes/theIndexName/batch", req.Path);
+    Assert.Equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"value\"}}]}",
+      "{\"requests\":[{\"action\":\"addObject\",\"body\":{\"key\":\"bar\",\"foo\":\"1\"}},{\"action\":\"addObject\",\"body\":{\"key\":\"baz\",\"foo\":\"2\"}}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
   }
 
-  [Fact(DisplayName = "allows batch method with `clear` action")]
+  [Fact(DisplayName = "clear")]
   public async Task BatchTest1()
   {
     await _client.BatchAsync(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       new BatchWriteParams
       {
         Requests = new List<BatchRequest>
@@ -204,7 +209,7 @@ public class SearchClientRequestTests
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/indexes/theIndexName/batch", req.Path);
+    Assert.Equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"action\":\"clear\",\"body\":{\"key\":\"value\"}}]}",
@@ -213,11 +218,11 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "allows batch method with `delete` action")]
+  [Fact(DisplayName = "delete")]
   public async Task BatchTest2()
   {
     await _client.BatchAsync(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       new BatchWriteParams
       {
         Requests = new List<BatchRequest>
@@ -232,7 +237,7 @@ public class SearchClientRequestTests
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/indexes/theIndexName/batch", req.Path);
+    Assert.Equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"action\":\"delete\",\"body\":{\"key\":\"value\"}}]}",
@@ -241,11 +246,11 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "allows batch method with `deleteObject` action")]
+  [Fact(DisplayName = "deleteObject")]
   public async Task BatchTest3()
   {
     await _client.BatchAsync(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       new BatchWriteParams
       {
         Requests = new List<BatchRequest>
@@ -260,7 +265,7 @@ public class SearchClientRequestTests
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/indexes/theIndexName/batch", req.Path);
+    Assert.Equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"action\":\"deleteObject\",\"body\":{\"key\":\"value\"}}]}",
@@ -269,11 +274,11 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "allows batch method with `partialUpdateObject` action")]
+  [Fact(DisplayName = "partialUpdateObject")]
   public async Task BatchTest4()
   {
     await _client.BatchAsync(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       new BatchWriteParams
       {
         Requests = new List<BatchRequest>
@@ -288,7 +293,7 @@ public class SearchClientRequestTests
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/indexes/theIndexName/batch", req.Path);
+    Assert.Equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"action\":\"partialUpdateObject\",\"body\":{\"key\":\"value\"}}]}",
@@ -297,11 +302,11 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "allows batch method with `partialUpdateObjectNoCreate` action")]
+  [Fact(DisplayName = "partialUpdateObjectNoCreate")]
   public async Task BatchTest5()
   {
     await _client.BatchAsync(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       new BatchWriteParams
       {
         Requests = new List<BatchRequest>
@@ -316,7 +321,7 @@ public class SearchClientRequestTests
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/indexes/theIndexName/batch", req.Path);
+    Assert.Equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"action\":\"partialUpdateObjectNoCreate\",\"body\":{\"key\":\"value\"}}]}",
@@ -325,11 +330,11 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "allows batch method with `updateObject` action")]
+  [Fact(DisplayName = "updateObject")]
   public async Task BatchTest6()
   {
     await _client.BatchAsync(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       new BatchWriteParams
       {
         Requests = new List<BatchRequest>
@@ -344,7 +349,7 @@ public class SearchClientRequestTests
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/indexes/theIndexName/batch", req.Path);
+    Assert.Equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/batch", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"action\":\"updateObject\",\"body\":{\"key\":\"value\"}}]}",
@@ -353,8 +358,8 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "batchAssignUserIds0")]
-  public async Task BatchAssignUserIdsTest0()
+  [Fact(DisplayName = "batchAssignUserIds")]
+  public async Task BatchAssignUserIdsTest()
   {
     await _client.BatchAssignUserIdsAsync(
       "userID",
@@ -385,55 +390,14 @@ public class SearchClientRequestTests
     }
   }
 
-  [Fact(DisplayName = "get batchDictionaryEntries results with minimal parameters")]
-  public async Task BatchDictionaryEntriesTest0()
+  [Fact(DisplayName = "replace")]
+  public async Task BatchDictionaryEntriesTest()
   {
     await _client.BatchDictionaryEntriesAsync(
-      Enum.Parse<DictionaryType>("Compounds"),
+      Enum.Parse<DictionaryType>("Plurals"),
       new BatchDictionaryEntriesParams
       {
-        Requests = new List<BatchDictionaryEntriesRequest>
-        {
-          new BatchDictionaryEntriesRequest
-          {
-            Action = Enum.Parse<DictionaryAction>("AddEntry"),
-            Body = new DictionaryEntry
-            {
-              ObjectID = "1",
-              Language = Enum.Parse<SupportedLanguage>("En"),
-            },
-          },
-          new BatchDictionaryEntriesRequest
-          {
-            Action = Enum.Parse<DictionaryAction>("DeleteEntry"),
-            Body = new DictionaryEntry
-            {
-              ObjectID = "2",
-              Language = Enum.Parse<SupportedLanguage>("Fr"),
-            },
-          }
-        },
-      }
-    );
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/1/dictionaries/compounds/batch", req.Path);
-    Assert.Equal("POST", req.Method.ToString());
-    JsonAssert.EqualOverrideDefault(
-      "{\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\"}},{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"2\",\"language\":\"fr\"}}]}",
-      req.Body,
-      new JsonDiffConfig(false)
-    );
-  }
-
-  [Fact(DisplayName = "get batchDictionaryEntries results with all parameters")]
-  public async Task BatchDictionaryEntriesTest1()
-  {
-    await _client.BatchDictionaryEntriesAsync(
-      Enum.Parse<DictionaryType>("Compounds"),
-      new BatchDictionaryEntriesParams
-      {
-        ClearExistingDictionaryEntries = false,
+        ClearExistingDictionaryEntries = true,
         Requests = new List<BatchDictionaryEntriesRequest>
         {
           new BatchDictionaryEntriesRequest
@@ -448,17 +412,41 @@ public class SearchClientRequestTests
               Decomposition = new List<string> { "trust", "algolia" },
               State = Enum.Parse<DictionaryEntryState>("Enabled"),
             },
-          },
+          }
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/dictionaries/plurals/batch", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"clearExistingDictionaryEntries\":true,\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"word\":\"fancy\",\"words\":[\"believe\",\"algolia\"],\"decomposition\":[\"trust\",\"algolia\"],\"state\":\"enabled\"}}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "delete")]
+  public async Task BatchDictionaryEntriesTest1()
+  {
+    await _client.BatchDictionaryEntriesAsync(
+      Enum.Parse<DictionaryType>("Plurals"),
+      new BatchDictionaryEntriesParams
+      {
+        ClearExistingDictionaryEntries = true,
+        Requests = new List<BatchDictionaryEntriesRequest>
+        {
           new BatchDictionaryEntriesRequest
           {
             Action = Enum.Parse<DictionaryAction>("DeleteEntry"),
             Body = new DictionaryEntry
             {
-              ObjectID = "2",
-              Language = Enum.Parse<SupportedLanguage>("Fr"),
-              Word = "humility",
-              Words = new List<string> { "candor", "algolia" },
-              Decomposition = new List<string> { "grit", "algolia" },
+              ObjectID = "1",
+              Language = Enum.Parse<SupportedLanguage>("En"),
+              Word = "fancy",
+              Words = new List<string> { "believe", "algolia" },
+              Decomposition = new List<string> { "trust", "algolia" },
               State = Enum.Parse<DictionaryEntryState>("Enabled"),
             },
           }
@@ -467,20 +455,20 @@ public class SearchClientRequestTests
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/dictionaries/compounds/batch", req.Path);
+    Assert.Equal("/1/dictionaries/plurals/batch", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"clearExistingDictionaryEntries\":false,\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"word\":\"fancy\",\"words\":[\"believe\",\"algolia\"],\"decomposition\":[\"trust\",\"algolia\"],\"state\":\"enabled\"}},{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"2\",\"language\":\"fr\",\"word\":\"humility\",\"words\":[\"candor\",\"algolia\"],\"decomposition\":[\"grit\",\"algolia\"],\"state\":\"enabled\"}}]}",
+      "{\"clearExistingDictionaryEntries\":true,\"requests\":[{\"action\":\"deleteEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"word\":\"fancy\",\"words\":[\"believe\",\"algolia\"],\"decomposition\":[\"trust\",\"algolia\"],\"state\":\"enabled\"}}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
   }
 
-  [Fact(DisplayName = "get batchDictionaryEntries results additional properties")]
+  [Fact(DisplayName = "append")]
   public async Task BatchDictionaryEntriesTest2()
   {
     await _client.BatchDictionaryEntriesAsync(
-      Enum.Parse<DictionaryType>("Compounds"),
+      Enum.Parse<DictionaryType>("Stopwords"),
       new BatchDictionaryEntriesParams
       {
         Requests = new List<BatchDictionaryEntriesRequest>
@@ -500,7 +488,7 @@ public class SearchClientRequestTests
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/dictionaries/compounds/batch", req.Path);
+    Assert.Equal("/1/dictionaries/stopwords/batch", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"requests\":[{\"action\":\"addEntry\",\"body\":{\"objectID\":\"1\",\"language\":\"en\",\"additional\":\"try me\"}}]}",
@@ -510,7 +498,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "browse with minimal parameters")]
-  public async Task BrowseTest0()
+  public async Task BrowseTest()
   {
     await _client.BrowseAsync<Hit>("cts_e2e_browse");
 
@@ -578,8 +566,8 @@ public class SearchClientRequestTests
     JsonAssert.EqualOverrideDefault("{\"cursor\":\"test\"}", req.Body, new JsonDiffConfig(false));
   }
 
-  [Fact(DisplayName = "clearObjects0")]
-  public async Task ClearObjectsTest0()
+  [Fact(DisplayName = "clearObjects")]
+  public async Task ClearObjectsTest()
   {
     await _client.ClearObjectsAsync("theIndexName");
 
@@ -589,8 +577,8 @@ public class SearchClientRequestTests
     Assert.Equal("{}", req.Body);
   }
 
-  [Fact(DisplayName = "clearRules0")]
-  public async Task ClearRulesTest0()
+  [Fact(DisplayName = "clearRules")]
+  public async Task ClearRulesTest()
   {
     await _client.ClearRulesAsync("indexName");
 
@@ -600,8 +588,8 @@ public class SearchClientRequestTests
     Assert.Equal("{}", req.Body);
   }
 
-  [Fact(DisplayName = "clearSynonyms0")]
-  public async Task ClearSynonymsTest0()
+  [Fact(DisplayName = "clearSynonyms")]
+  public async Task ClearSynonymsTest()
   {
     await _client.ClearSynonymsAsync("indexName");
 
@@ -612,7 +600,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
-  public async Task CustomDeleteTest0()
+  public async Task CustomDeleteTest()
   {
     await _client.CustomDeleteAsync("test/minimal");
 
@@ -650,7 +638,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "allow get method for a custom path with minimal parameters")]
-  public async Task CustomGetTest0()
+  public async Task CustomGetTest()
   {
     await _client.CustomGetAsync("test/minimal");
 
@@ -730,7 +718,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "allow post method for a custom path with minimal parameters")]
-  public async Task CustomPostTest0()
+  public async Task CustomPostTest()
   {
     await _client.CustomPostAsync("test/minimal");
 
@@ -1060,7 +1048,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "allow put method for a custom path with minimal parameters")]
-  public async Task CustomPutTest0()
+  public async Task CustomPutTest()
   {
     await _client.CustomPutAsync("test/minimal");
 
@@ -1102,8 +1090,8 @@ public class SearchClientRequestTests
     }
   }
 
-  [Fact(DisplayName = "deleteApiKey0")]
-  public async Task DeleteApiKeyTest0()
+  [Fact(DisplayName = "deleteApiKey")]
+  public async Task DeleteApiKeyTest()
   {
     await _client.DeleteApiKeyAsync("myTestApiKey");
 
@@ -1113,8 +1101,8 @@ public class SearchClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "deleteBy0")]
-  public async Task DeleteByTest0()
+  [Fact(DisplayName = "deleteBy")]
+  public async Task DeleteByTest()
   {
     await _client.DeleteByAsync(
       "theIndexName",
@@ -1131,8 +1119,8 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "deleteIndex0")]
-  public async Task DeleteIndexTest0()
+  [Fact(DisplayName = "deleteIndex")]
+  public async Task DeleteIndexTest()
   {
     await _client.DeleteIndexAsync("theIndexName");
 
@@ -1142,19 +1130,19 @@ public class SearchClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "deleteObject0")]
-  public async Task DeleteObjectTest0()
+  [Fact(DisplayName = "deleteObject")]
+  public async Task DeleteObjectTest()
   {
-    await _client.DeleteObjectAsync("theIndexName", "uniqueID");
+    await _client.DeleteObjectAsync("<YOUR_INDEX_NAME>", "uniqueID");
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/indexes/theIndexName/uniqueID", req.Path);
+    Assert.Equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/uniqueID", req.Path);
     Assert.Equal("DELETE", req.Method.ToString());
     Assert.Null(req.Body);
   }
 
   [Fact(DisplayName = "delete rule simple case")]
-  public async Task DeleteRuleTest0()
+  public async Task DeleteRuleTest()
   {
     await _client.DeleteRuleAsync("indexName", "id1");
 
@@ -1175,8 +1163,8 @@ public class SearchClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "deleteSource0")]
-  public async Task DeleteSourceTest0()
+  [Fact(DisplayName = "deleteSource")]
+  public async Task DeleteSourceTest()
   {
     await _client.DeleteSourceAsync("theSource");
 
@@ -1186,8 +1174,8 @@ public class SearchClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "deleteSynonym0")]
-  public async Task DeleteSynonymTest0()
+  [Fact(DisplayName = "deleteSynonym")]
+  public async Task DeleteSynonymTest()
   {
     await _client.DeleteSynonymAsync("indexName", "id1");
 
@@ -1197,8 +1185,8 @@ public class SearchClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getApiKey0")]
-  public async Task GetApiKeyTest0()
+  [Fact(DisplayName = "getApiKey")]
+  public async Task GetApiKeyTest()
   {
     await _client.GetApiKeyAsync("myTestApiKey");
 
@@ -1208,8 +1196,19 @@ public class SearchClientRequestTests
     Assert.Null(req.Body);
   }
 
+  [Fact(DisplayName = "getAppTask")]
+  public async Task GetAppTaskTest()
+  {
+    await _client.GetAppTaskAsync(123L);
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/task/123", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
   [Fact(DisplayName = "get getDictionaryLanguages")]
-  public async Task GetDictionaryLanguagesTest0()
+  public async Task GetDictionaryLanguagesTest()
   {
     await _client.GetDictionaryLanguagesAsync();
 
@@ -1220,7 +1219,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "get getDictionarySettings results")]
-  public async Task GetDictionarySettingsTest0()
+  public async Task GetDictionarySettingsTest()
   {
     await _client.GetDictionarySettingsAsync();
 
@@ -1231,7 +1230,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "getLogs with minimal parameters")]
-  public async Task GetLogsTest0()
+  public async Task GetLogsTest()
   {
     await _client.GetLogsAsync();
 
@@ -1265,8 +1264,8 @@ public class SearchClientRequestTests
     }
   }
 
-  [Fact(DisplayName = "getObject0")]
-  public async Task GetObjectTest0()
+  [Fact(DisplayName = "getObject")]
+  public async Task GetObjectTest()
   {
     await _client.GetObjectAsync("theIndexName", "uniqueID", new List<string> { "attr1", "attr2" });
 
@@ -1289,8 +1288,8 @@ public class SearchClientRequestTests
     }
   }
 
-  [Fact(DisplayName = "getObjects0")]
-  public async Task GetObjectsTest0()
+  [Fact(DisplayName = "getObjects")]
+  public async Task GetObjectsTest()
   {
     await _client.GetObjectsAsync<Hit>(
       new GetObjectsParams
@@ -1317,8 +1316,8 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "getRule0")]
-  public async Task GetRuleTest0()
+  [Fact(DisplayName = "getRule")]
+  public async Task GetRuleTest()
   {
     await _client.GetRuleAsync("indexName", "id1");
 
@@ -1328,8 +1327,8 @@ public class SearchClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getSettings0")]
-  public async Task GetSettingsTest0()
+  [Fact(DisplayName = "getSettings")]
+  public async Task GetSettingsTest()
   {
     await _client.GetSettingsAsync("cts_e2e_settings");
 
@@ -1357,8 +1356,8 @@ public class SearchClientRequestTests
     }
   }
 
-  [Fact(DisplayName = "getSources0")]
-  public async Task GetSourcesTest0()
+  [Fact(DisplayName = "getSources")]
+  public async Task GetSourcesTest()
   {
     await _client.GetSourcesAsync();
 
@@ -1368,8 +1367,8 @@ public class SearchClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getSynonym0")]
-  public async Task GetSynonymTest0()
+  [Fact(DisplayName = "getSynonym")]
+  public async Task GetSynonymTest()
   {
     await _client.GetSynonymAsync("indexName", "id1");
 
@@ -1379,8 +1378,8 @@ public class SearchClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getTask0")]
-  public async Task GetTaskTest0()
+  [Fact(DisplayName = "getTask")]
+  public async Task GetTaskTest()
   {
     await _client.GetTaskAsync("theIndexName", 123L);
 
@@ -1390,8 +1389,8 @@ public class SearchClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getTopUserIds0")]
-  public async Task GetTopUserIdsTest0()
+  [Fact(DisplayName = "getTopUserIds")]
+  public async Task GetTopUserIdsTest()
   {
     await _client.GetTopUserIdsAsync();
 
@@ -1401,8 +1400,8 @@ public class SearchClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getUserId0")]
-  public async Task GetUserIdTest0()
+  [Fact(DisplayName = "getUserId")]
+  public async Task GetUserIdTest()
   {
     await _client.GetUserIdAsync("uniqueID");
 
@@ -1413,7 +1412,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "hasPendingMappings with minimal parameters")]
-  public async Task HasPendingMappingsTest0()
+  public async Task HasPendingMappingsTest()
   {
     await _client.HasPendingMappingsAsync();
 
@@ -1447,8 +1446,8 @@ public class SearchClientRequestTests
     }
   }
 
-  [Fact(DisplayName = "listApiKeys0")]
-  public async Task ListApiKeysTest0()
+  [Fact(DisplayName = "listApiKeys")]
+  public async Task ListApiKeysTest()
   {
     await _client.ListApiKeysAsync();
 
@@ -1458,8 +1457,8 @@ public class SearchClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "listClusters0")]
-  public async Task ListClustersTest0()
+  [Fact(DisplayName = "listClusters")]
+  public async Task ListClustersTest()
   {
     await _client.ListClustersAsync();
 
@@ -1470,7 +1469,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "listIndices with minimal parameters")]
-  public async Task ListIndicesTest0()
+  public async Task ListIndicesTest()
   {
     await _client.ListIndicesAsync();
 
@@ -1505,7 +1504,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "listUserIds with minimal parameters")]
-  public async Task ListUserIdsTest0()
+  public async Task ListUserIdsTest()
   {
     await _client.ListUserIdsAsync();
 
@@ -1539,8 +1538,8 @@ public class SearchClientRequestTests
     }
   }
 
-  [Fact(DisplayName = "multipleBatch0")]
-  public async Task MultipleBatchTest0()
+  [Fact(DisplayName = "multipleBatch")]
+  public async Task MultipleBatchTest()
   {
     await _client.MultipleBatchAsync(
       new BatchParams
@@ -1567,15 +1566,15 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "operationIndex0")]
-  public async Task OperationIndexTest0()
+  [Fact(DisplayName = "scopes")]
+  public async Task OperationIndexTest()
   {
     await _client.OperationIndexAsync(
-      "theIndexName",
+      "<SOURCE_INDEX_NAME>",
       new OperationIndexParams
       {
-        Operation = Enum.Parse<OperationType>("Copy"),
-        Destination = "dest",
+        Operation = Enum.Parse<OperationType>("Move"),
+        Destination = "<DESTINATION_INDEX_NAME>",
         Scope = new List<ScopeType>
         {
           Enum.Parse<ScopeType>("Rules"),
@@ -1585,17 +1584,61 @@ public class SearchClientRequestTests
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/indexes/theIndexName/operation", req.Path);
+    Assert.Equal("/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"operation\":\"copy\",\"destination\":\"dest\",\"scope\":[\"rules\",\"settings\"]}",
+      "{\"operation\":\"move\",\"destination\":\"<DESTINATION_INDEX_NAME>\",\"scope\":[\"rules\",\"settings\"]}",
       req.Body,
       new JsonDiffConfig(false)
     );
   }
 
-  [Fact(DisplayName = "partialUpdateObject0")]
-  public async Task PartialUpdateObjectTest0()
+  [Fact(DisplayName = "copy")]
+  public async Task OperationIndexTest1()
+  {
+    await _client.OperationIndexAsync(
+      "<SOURCE_INDEX_NAME>",
+      new OperationIndexParams
+      {
+        Operation = Enum.Parse<OperationType>("Copy"),
+        Destination = "<DESTINATION_INDEX_NAME>",
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"operation\":\"copy\",\"destination\":\"<DESTINATION_INDEX_NAME>\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "move")]
+  public async Task OperationIndexTest2()
+  {
+    await _client.OperationIndexAsync(
+      "<SOURCE_INDEX_NAME>",
+      new OperationIndexParams
+      {
+        Operation = Enum.Parse<OperationType>("Move"),
+        Destination = "<DESTINATION_INDEX_NAME>",
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/%3CSOURCE_INDEX_NAME%3E/operation", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"operation\":\"move\",\"destination\":\"<DESTINATION_INDEX_NAME>\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "partialUpdateObject")]
+  public async Task PartialUpdateObjectTest()
   {
     await _client.PartialUpdateObjectAsync(
       "theIndexName",
@@ -1640,8 +1683,8 @@ public class SearchClientRequestTests
     }
   }
 
-  [Fact(DisplayName = "removeUserId0")]
-  public async Task RemoveUserIdTest0()
+  [Fact(DisplayName = "removeUserId")]
+  public async Task RemoveUserIdTest()
   {
     await _client.RemoveUserIdAsync("uniqueID");
 
@@ -1651,8 +1694,8 @@ public class SearchClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "replaceSources0")]
-  public async Task ReplaceSourcesTest0()
+  [Fact(DisplayName = "replaceSources")]
+  public async Task ReplaceSourcesTest()
   {
     await _client.ReplaceSourcesAsync(
       new List<Source>
@@ -1671,8 +1714,8 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "restoreApiKey0")]
-  public async Task RestoreApiKeyTest0()
+  [Fact(DisplayName = "restoreApiKey")]
+  public async Task RestoreApiKeyTest()
   {
     await _client.RestoreApiKeyAsync("myApiKey");
 
@@ -1682,16 +1725,16 @@ public class SearchClientRequestTests
     Assert.Equal("{}", req.Body);
   }
 
-  [Fact(DisplayName = "saveObject0")]
-  public async Task SaveObjectTest0()
+  [Fact(DisplayName = "saveObject")]
+  public async Task SaveObjectTest()
   {
     await _client.SaveObjectAsync(
-      "theIndexName",
+      "<YOUR_INDEX_NAME>",
       new Dictionary<string, string> { { "objectID", "id" }, { "test", "val" } }
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/indexes/theIndexName", req.Path);
+    Assert.Equal("/1/indexes/%3CYOUR_INDEX_NAME%3E", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "{\"objectID\":\"id\",\"test\":\"val\"}",
@@ -1701,7 +1744,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "saveRule with minimal parameters")]
-  public async Task SaveRuleTest0()
+  public async Task SaveRuleTest()
   {
     await _client.SaveRuleAsync(
       "indexName",
@@ -1747,7 +1790,7 @@ public class SearchClientRequestTests
         },
         Consequence = new Consequence
         {
-          VarParams = new ConsequenceParams
+          Params = new ConsequenceParams
           {
             Filters = "brand:apple",
             Query = new ConsequenceQuery(
@@ -1821,10 +1864,10 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "saveRules with minimal parameters")]
-  public async Task SaveRulesTest0()
+  public async Task SaveRulesTest()
   {
     await _client.SaveRulesAsync(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       new List<Rule>
       {
         new Rule
@@ -1843,24 +1886,39 @@ public class SearchClientRequestTests
             new Condition { Pattern = "apple", Anchoring = Enum.Parse<Anchoring>("Contains"), }
           },
         }
-      }
+      },
+      false,
+      true
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/indexes/indexName/rules/batch", req.Path);
+    Assert.Equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "[{\"objectID\":\"a-rule-id\",\"conditions\":[{\"pattern\":\"smartphone\",\"anchoring\":\"contains\"}]},{\"objectID\":\"a-second-rule-id\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\"}]}]",
       req.Body,
       new JsonDiffConfig(false)
     );
+    var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
+      "{\"forwardToReplicas\":\"false\",\"clearExistingRules\":\"true\"}"
+    );
+    Assert.NotNull(expectedQuery);
+
+    var actualQuery = req.QueryParameters;
+    Assert.Equal(expectedQuery.Count, actualQuery.Count);
+
+    foreach (var actual in actualQuery)
+    {
+      expectedQuery.TryGetValue(actual.Key, out var expected);
+      Assert.Equal(expected, actual.Value);
+    }
   }
 
   [Fact(DisplayName = "saveRules with all parameters")]
   public async Task SaveRulesTest1()
   {
     await _client.SaveRulesAsync(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       new List<Rule>
       {
         new Rule
@@ -1878,7 +1936,7 @@ public class SearchClientRequestTests
           },
           Consequence = new Consequence
           {
-            VarParams = new ConsequenceParams
+            Params = new ConsequenceParams
             {
               Filters = "brand:apple",
               Query = new ConsequenceQuery(
@@ -1931,7 +1989,7 @@ public class SearchClientRequestTests
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/indexes/indexName/rules/batch", req.Path);
+    Assert.Equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/rules/batch", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "[{\"objectID\":\"id1\",\"conditions\":[{\"pattern\":\"apple\",\"anchoring\":\"contains\",\"alternatives\":false,\"context\":\"search\"}],\"consequence\":{\"params\":{\"filters\":\"brand:apple\",\"query\":{\"remove\":[\"algolia\"],\"edits\":[{\"type\":\"remove\",\"delete\":\"abc\",\"insert\":\"cde\"},{\"type\":\"replace\",\"delete\":\"abc\",\"insert\":\"cde\"}]}},\"hide\":[{\"objectID\":\"321\"}],\"filterPromotes\":false,\"userData\":{\"algolia\":\"aloglia\"},\"promote\":[{\"objectID\":\"abc\",\"position\":3},{\"objectIDs\":[\"abc\",\"def\"],\"position\":1}]},\"description\":\"test\",\"enabled\":true,\"validity\":[{\"from\":1656670273,\"until\":1656670277}]}]",
@@ -1953,8 +2011,8 @@ public class SearchClientRequestTests
     }
   }
 
-  [Fact(DisplayName = "saveSynonym0")]
-  public async Task SaveSynonymTest0()
+  [Fact(DisplayName = "saveSynonym")]
+  public async Task SaveSynonymTest()
   {
     await _client.SaveSynonymAsync(
       "indexName",
@@ -1991,11 +2049,11 @@ public class SearchClientRequestTests
     }
   }
 
-  [Fact(DisplayName = "saveSynonyms0")]
-  public async Task SaveSynonymsTest0()
+  [Fact(DisplayName = "saveSynonyms")]
+  public async Task SaveSynonymsTest()
   {
     await _client.SaveSynonymsAsync(
-      "indexName",
+      "<YOUR_INDEX_NAME>",
       new List<SynonymHit>
       {
         new SynonymHit
@@ -2013,11 +2071,11 @@ public class SearchClientRequestTests
         }
       },
       true,
-      false
+      true
     );
 
     var req = _echo.LastResponse;
-    Assert.Equal("/1/indexes/indexName/synonyms/batch", req.Path);
+    Assert.Equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/synonyms/batch", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
       "[{\"objectID\":\"id1\",\"type\":\"synonym\",\"synonyms\":[\"car\",\"vehicule\",\"auto\"]},{\"objectID\":\"id2\",\"type\":\"onewaysynonym\",\"input\":\"iphone\",\"synonyms\":[\"ephone\",\"aphone\",\"yphone\"]}]",
@@ -2025,7 +2083,7 @@ public class SearchClientRequestTests
       new JsonDiffConfig(false)
     );
     var expectedQuery = JsonSerializer.Deserialize<Dictionary<string, string>>(
-      "{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"false\"}"
+      "{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"true\"}"
     );
     Assert.NotNull(expectedQuery);
 
@@ -2039,8 +2097,128 @@ public class SearchClientRequestTests
     }
   }
 
+  [Fact(DisplayName = "withHitsPerPage")]
+  public async Task SearchTest()
+  {
+    await _client.SearchAsync<Hit>(
+      new SearchMethodParams
+      {
+        Requests = new List<SearchQuery>
+        {
+          new SearchQuery(
+            new SearchForHits
+            {
+              IndexName = "<YOUR_INDEX_NAME>",
+              Query = "<YOUR_QUERY>",
+              HitsPerPage = 50,
+            }
+          )
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/*/queries", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"hitsPerPage\":50}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "filterOnly")]
+  public async Task SearchTest1()
+  {
+    await _client.SearchAsync<Hit>(
+      new SearchMethodParams
+      {
+        Requests = new List<SearchQuery>
+        {
+          new SearchQuery(
+            new SearchForHits
+            {
+              IndexName = "<YOUR_INDEX_NAME>",
+              Query = "<YOUR_QUERY>",
+              Filters = "actor:Scarlett Johansson",
+            }
+          )
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/*/queries", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"filters\":\"actor:Scarlett Johansson\"}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "filterOr")]
+  public async Task SearchTest2()
+  {
+    await _client.SearchAsync<Hit>(
+      new SearchMethodParams
+      {
+        Requests = new List<SearchQuery>
+        {
+          new SearchQuery(
+            new SearchForHits
+            {
+              IndexName = "<YOUR_INDEX_NAME>",
+              Query = "<YOUR_QUERY>",
+              Filters = "actor:Tom Cruise OR actor:Scarlett Johansson",
+            }
+          )
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/*/queries", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"filters\":\"actor:Tom Cruise OR actor:Scarlett Johansson\"}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "filterNot")]
+  public async Task SearchTest3()
+  {
+    await _client.SearchAsync<Hit>(
+      new SearchMethodParams
+      {
+        Requests = new List<SearchQuery>
+        {
+          new SearchQuery(
+            new SearchForHits
+            {
+              IndexName = "<YOUR_INDEX_NAME>",
+              Query = "<YOUR_QUERY>",
+              Filters = "NOT actor:Nicolas Cage",
+            }
+          )
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/*/queries", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"filters\":\"NOT actor:Nicolas Cage\"}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "search for a single hits request with minimal parameters")]
-  public async Task SearchTest0()
+  public async Task SearchTest4()
   {
     await _client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2088,8 +2266,68 @@ public class SearchClientRequestTests
     }
   }
 
+  [Fact(DisplayName = "retrieveFacets")]
+  public async Task SearchTest5()
+  {
+    await _client.SearchAsync<Hit>(
+      new SearchMethodParams
+      {
+        Requests = new List<SearchQuery>
+        {
+          new SearchQuery(
+            new SearchForHits
+            {
+              IndexName = "<YOUR_INDEX_NAME>",
+              Query = "<YOUR_QUERY>",
+              Facets = new List<string> { "author", "genre" },
+            }
+          )
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/*/queries", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"facets\":[\"author\",\"genre\"]}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "retrieveFacetsWildcard")]
+  public async Task SearchTest6()
+  {
+    await _client.SearchAsync<Hit>(
+      new SearchMethodParams
+      {
+        Requests = new List<SearchQuery>
+        {
+          new SearchQuery(
+            new SearchForHits
+            {
+              IndexName = "<YOUR_INDEX_NAME>",
+              Query = "<YOUR_QUERY>",
+              Facets = new List<string> { "*" },
+            }
+          )
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/*/queries", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"requests\":[{\"indexName\":\"<YOUR_INDEX_NAME>\",\"query\":\"<YOUR_QUERY>\",\"facets\":[\"*\"]}]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "search for a single facet request with minimal parameters")]
-  public async Task SearchTest1()
+  public async Task SearchTest7()
   {
     await _client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2154,7 +2392,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search for a single hits request with all parameters")]
-  public async Task SearchTest2()
+  public async Task SearchTest8()
   {
     await _client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2185,7 +2423,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search for a single facet request with all parameters")]
-  public async Task SearchTest3()
+  public async Task SearchTest9()
   {
     await _client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2221,7 +2459,7 @@ public class SearchClientRequestTests
   [Fact(
     DisplayName = "search for multiple mixed requests in multiple indices with minimal parameters"
   )]
-  public async Task SearchTest4()
+  public async Task SearchTest10()
   {
     await _client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2260,7 +2498,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search for multiple mixed requests in multiple indices with all parameters")]
-  public async Task SearchTest5()
+  public async Task SearchTest11()
   {
     await _client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2303,7 +2541,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search filters accept all of the possible shapes")]
-  public async Task SearchTest6()
+  public async Task SearchTest12()
   {
     await _client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2391,7 +2629,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search filters end to end")]
-  public async Task SearchTest7()
+  public async Task SearchTest13()
   {
     await _client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2544,7 +2782,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search with all search parameters")]
-  public async Task SearchTest8()
+  public async Task SearchTest14()
   {
     await _client.SearchAsync<Hit>(
       new SearchMethodParams
@@ -2689,7 +2927,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "get searchDictionaryEntries results with minimal parameters")]
-  public async Task SearchDictionaryEntriesTest0()
+  public async Task SearchDictionaryEntriesTest()
   {
     await _client.SearchDictionaryEntriesAsync(
       Enum.Parse<DictionaryType>("Stopwords"),
@@ -2748,7 +2986,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "get searchForFacetValues results with minimal parameters")]
-  public async Task SearchForFacetValuesTest0()
+  public async Task SearchForFacetValuesTest()
   {
     await _client.SearchForFacetValuesAsync("indexName", "facetName");
 
@@ -2766,7 +3004,7 @@ public class SearchClientRequestTests
       "facetName",
       new SearchForFacetValuesRequest
       {
-        VarParams = "query=foo&facetFilters=['bar']",
+        Params = "query=foo&facetFilters=['bar']",
         FacetQuery = "foo",
         MaxFacetHits = 42,
       }
@@ -2782,8 +3020,8 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "searchRules0")]
-  public async Task SearchRulesTest0()
+  [Fact(DisplayName = "searchRules")]
+  public async Task SearchRulesTest()
   {
     await _client.SearchRulesAsync("indexName", new SearchRulesParams { Query = "something", });
 
@@ -2798,7 +3036,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "search with minimal parameters")]
-  public async Task SearchSingleIndexTest0()
+  public async Task SearchSingleIndexTest()
   {
     await _client.SearchSingleIndexAsync<Hit>("indexName");
 
@@ -2911,7 +3149,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "searchSynonyms with minimal parameters")]
-  public async Task SearchSynonymsTest0()
+  public async Task SearchSynonymsTest()
   {
     await _client.SearchSynonymsAsync("indexName");
 
@@ -2945,8 +3183,8 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "searchUserIds0")]
-  public async Task SearchUserIdsTest0()
+  [Fact(DisplayName = "searchUserIds")]
+  public async Task SearchUserIdsTest()
   {
     await _client.SearchUserIdsAsync(
       new SearchUserIdsParams
@@ -2969,7 +3207,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "get setDictionarySettings results with minimal parameters")]
-  public async Task SetDictionarySettingsTest0()
+  public async Task SetDictionarySettingsTest()
   {
     await _client.SetDictionarySettingsAsync(
       new DictionarySettingsParams
@@ -3026,8 +3264,34 @@ public class SearchClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "setSettingsAttributesForFaceting")]
+  public async Task SetSettingsTest()
+  {
+    await _client.SetSettingsAsync(
+      "<YOUR_INDEX_NAME>",
+      new IndexSettings
+      {
+        AttributesForFaceting = new List<string>
+        {
+          "actor",
+          "filterOnly(category)",
+          "searchable(publisher)"
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/indexes/%3CYOUR_INDEX_NAME%3E/settings", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"attributesForFaceting\":[\"actor\",\"filterOnly(category)\",\"searchable(publisher)\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "setSettings with minimal parameters")]
-  public async Task SetSettingsTest0()
+  public async Task SetSettingsTest1()
   {
     await _client.SetSettingsAsync(
       "cts_e2e_settings",
@@ -3075,7 +3339,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "setSettings allow boolean `typoTolerance`")]
-  public async Task SetSettingsTest1()
+  public async Task SetSettingsTest2()
   {
     await _client.SetSettingsAsync(
       "theIndexName",
@@ -3107,7 +3371,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "setSettings allow enum `typoTolerance`")]
-  public async Task SetSettingsTest2()
+  public async Task SetSettingsTest3()
   {
     await _client.SetSettingsAsync(
       "theIndexName",
@@ -3142,7 +3406,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "setSettings allow boolean `ignorePlurals`")]
-  public async Task SetSettingsTest3()
+  public async Task SetSettingsTest4()
   {
     await _client.SetSettingsAsync(
       "theIndexName",
@@ -3174,7 +3438,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "setSettings allow list of string `ignorePlurals`")]
-  public async Task SetSettingsTest4()
+  public async Task SetSettingsTest5()
   {
     await _client.SetSettingsAsync(
       "theIndexName",
@@ -3211,7 +3475,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "setSettings allow boolean `removeStopWords`")]
-  public async Task SetSettingsTest5()
+  public async Task SetSettingsTest6()
   {
     await _client.SetSettingsAsync(
       "theIndexName",
@@ -3243,7 +3507,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "setSettings allow list of string `removeStopWords`")]
-  public async Task SetSettingsTest6()
+  public async Task SetSettingsTest7()
   {
     await _client.SetSettingsAsync(
       "theIndexName",
@@ -3280,7 +3544,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "setSettings allow boolean `distinct`")]
-  public async Task SetSettingsTest7()
+  public async Task SetSettingsTest8()
   {
     await _client.SetSettingsAsync(
       "theIndexName",
@@ -3308,7 +3572,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "setSettings allow integers for `distinct`")]
-  public async Task SetSettingsTest8()
+  public async Task SetSettingsTest9()
   {
     await _client.SetSettingsAsync(
       "theIndexName",
@@ -3336,7 +3600,7 @@ public class SearchClientRequestTests
   }
 
   [Fact(DisplayName = "setSettings allow all `indexSettings`")]
-  public async Task SetSettingsTest9()
+  public async Task SetSettingsTest10()
   {
     await _client.SetSettingsAsync(
       "theIndexName",
@@ -3448,8 +3712,8 @@ public class SearchClientRequestTests
     );
   }
 
-  [Fact(DisplayName = "updateApiKey0")]
-  public async Task UpdateApiKeyTest0()
+  [Fact(DisplayName = "updateApiKey")]
+  public async Task UpdateApiKeyTest()
   {
     await _client.UpdateApiKeyAsync(
       "myApiKey",

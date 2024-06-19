@@ -1,3 +1,24 @@
+## [4.0.0b19](https://github.com/algolia/algoliasearch-client-python/compare/4.0.0b18...4.0.0b19)
+
+- [b2a464a2b](https://github.com/algolia/api-clients-automation/commit/b2a464a2b) feat(clients): add generate_secured_api_key to ruby ([#3166](https://github.com/algolia/api-clients-automation/pull/3166)) by [@millotp](https://github.com/millotp/)
+- [de4090789](https://github.com/algolia/api-clients-automation/commit/de4090789) fix(clients): safer replaceAllObjects + metis compliant ([#3164](https://github.com/algolia/api-clients-automation/pull/3164)) by [@shortcuts](https://github.com/shortcuts/)
+- [9e0cec726](https://github.com/algolia/api-clients-automation/commit/9e0cec726) fix(python): remove contact ([#3161](https://github.com/algolia/api-clients-automation/pull/3161)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.0.0b18](https://github.com/algolia/algoliasearch-client-python/compare/4.0.0b17...4.0.0b18)
+
+- [072c38b9a](https://github.com/algolia/api-clients-automation/commit/072c38b9a) fix(clients): remove unused models from lite clients ([#3159](https://github.com/algolia/api-clients-automation/pull/3159)) by [@shortcuts](https://github.com/shortcuts/)
+- [c7f5de9d4](https://github.com/algolia/api-clients-automation/commit/c7f5de9d4) feat(clients): add waitForAppTask helper ([#3158](https://github.com/algolia/api-clients-automation/pull/3158)) by [@millotp](https://github.com/millotp/)
+- [3a97fad1f](https://github.com/algolia/api-clients-automation/commit/3a97fad1f) fix(clients): chunked batch helper ([#3154](https://github.com/algolia/api-clients-automation/pull/3154)) by [@shortcuts](https://github.com/shortcuts/)
+- [c251dc87e](https://github.com/algolia/api-clients-automation/commit/c251dc87e) fix(specs): rankingInfo required properties ([#3157](https://github.com/algolia/api-clients-automation/pull/3157)) by [@millotp](https://github.com/millotp/)
+- [fd5a312fb](https://github.com/algolia/api-clients-automation/commit/fd5a312fb) feat(specs): add getAppTask endpoint to search ([#3156](https://github.com/algolia/api-clients-automation/pull/3156)) by [@millotp](https://github.com/millotp/)
+- [cdc866549](https://github.com/algolia/api-clients-automation/commit/cdc866549) fix(specs): dont mention index api keys ([#3117](https://github.com/algolia/api-clients-automation/pull/3117)) by [@kai687](https://github.com/kai687/)
+
+## [4.0.0b17](https://github.com/algolia/algoliasearch-client-python/compare/4.0.0b16...4.0.0b17)
+
+- [2b70d9ea5](https://github.com/algolia/api-clients-automation/commit/2b70d9ea5) fix(specs): exhaustiveFacetsCount is not deprecated for sffv ([#3089](https://github.com/algolia/api-clients-automation/pull/3089)) by [@kai687](https://github.com/kai687/)
+- [1c6364c20](https://github.com/algolia/api-clients-automation/commit/1c6364c20) fix(python): properly remove existing codegen ([#3056](https://github.com/algolia/api-clients-automation/pull/3056)) by [@millotp](https://github.com/millotp/)
+- [1250c2b3c](https://github.com/algolia/api-clients-automation/commit/1250c2b3c) fix(specs): simplify filter types ([#3042](https://github.com/algolia/api-clients-automation/pull/3042)) by [@millotp](https://github.com/millotp/)
+
 ## [4.0.0b16](https://github.com/algolia/algoliasearch-client-python/compare/4.0.0b15...4.0.0b16)
 
 - [b621988bc](https://github.com/algolia/api-clients-automation/commit/b621988bc) feat(specs): promote @kai687 to code owner ([#3014](https://github.com/algolia/api-clients-automation/pull/3014)) by [@Fluf22](https://github.com/Fluf22/)

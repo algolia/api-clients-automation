@@ -1,7 +1,6 @@
 import { Argument, program } from 'commander';
 
 import { buildClients } from '../buildClients.js';
-import { buildSpecs } from '../buildSpecs.js';
 import { LANGUAGES, setVerbose } from '../common.js';
 import { ctsGenerateMany } from '../cts/generate.js';
 import { runCts } from '../cts/runCts.js';
@@ -9,7 +8,11 @@ import { startTestServer } from '../cts/testServer';
 import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
 import { playground } from '../playground.js';
+import { createReleasePR, updateSLA } from '../release/createReleasePR.js';
+import type { Versions } from '../release/types.js';
 import { snippetsGenerateMany } from '../snippets/generate.js';
+import { buildSpecs } from '../specs';
+import type { Language } from '../types.js';
 
 import type { LangArg } from './utils.js';
 import {
@@ -23,6 +26,7 @@ import {
 
 const args = {
   language: new Argument('[language]', 'The language').choices(PROMPT_LANGUAGES),
+  languages: new Argument('[language...]', 'The language').choices(PROMPT_LANGUAGES),
   clients: new Argument('[client...]', 'The client').choices(getClientChoices('all')),
   client: new Argument('[client]', 'The client').choices(PROMPT_CLIENTS),
 };
@@ -35,14 +39,6 @@ const flags = {
   skipCache: {
     flag: '-s, --skip-cache',
     description: 'skip cache checking to force building specs',
-  },
-  outputType: {
-    flag: '-json, --output-json',
-    description: 'outputs the spec in JSON instead of yml',
-  },
-  docs: {
-    flag: '-d, --docs',
-    description: 'generates the doc specs with the code snippets',
   },
 };
 
@@ -65,7 +61,7 @@ program
     await generate(generatorList({ language, client, clientList }));
   });
 
-const buildCommand = program.command('build');
+const buildCommand = program.command('build').description('Build the clients or specs');
 
 buildCommand
   .command('clients')
@@ -90,8 +86,8 @@ buildCommand
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
   .option(flags.skipCache.flag, flags.skipCache.description)
-  .option(flags.outputType.flag, flags.outputType.description)
-  .option(flags.docs.flag, flags.docs.description)
+  .option('-json, --output-json', 'outputs the spec in JSON instead of yml')
+  .option('-d, --docs', 'generates the doc specs with the code snippets')
   .action(async (clientArg: string[], { verbose, skipCache, outputJson, docs }) => {
     const { client, clientList } = transformSelection({
       langArg: ALL,
@@ -108,7 +104,7 @@ buildCommand
     });
   });
 
-const ctsCommand = program.command('cts');
+const ctsCommand = program.command('cts').description('Generate and run the CTS tests');
 
 ctsCommand
   .command('generate')
@@ -198,6 +194,34 @@ program
     setVerbose(Boolean(verbose));
 
     await snippetsGenerateMany(generatorList({ language, client, clientList }));
+  });
+
+program
+  .command('release')
+  .description('Releases the client')
+  .addArgument(args.languages)
+  .option(flags.verbose.flag, flags.verbose.description)
+  .option('-m, --major', 'triggers a major release for the given language list')
+  .option('-d, --dry-run', 'does not push anything to GitHub')
+  .option('-gg, --generate-graph', 'only generates the graph')
+  .action(async (langArgs: LangArg[], { verbose, major, dryRun, generateGraph }) => {
+    setVerbose(Boolean(verbose));
+
+    if (generateGraph) {
+      await updateSLA({} as Versions, true);
+
+      return;
+    }
+
+    if (langArgs.length === 0) {
+      langArgs = [ALL];
+    }
+
+    await createReleasePR({
+      languages: langArgs.includes(ALL) ? LANGUAGES : (langArgs as Language[]),
+      major,
+      dryRun,
+    });
   });
 
 program.parse();

@@ -1,28 +1,29 @@
 # {{generationBanner}}
+# >IMPORT
 from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
-
+# IMPORT<
 
 {{#blocksRequests}}
-{{#snippet}}
-async def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}():
+{{#snippets}}
+async def snippet_for_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{testIndex}}():
     """
     Snippet for the {{method}} method.
 
     {{{description}}}
     """
-    # >SEPARATOR {{method}}
+    # >SEPARATOR {{method}} {{testName}}
     # Initialize the client
     _client = {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, "YOUR_APP_ID_REGION"{{/hasRegionalHost}})
 
     # Call the API
-    resp = await _client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+    response = await _client.{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
 
     # use the class directly
-    print(resp)
+    print(response)
 
     # print the JSON response
-    print(resp.to_json())
+    print(response.to_json())
     # SEPARATOR<
 
-{{/snippet}}
+{{/snippets}}
 {{/blocksRequests}}

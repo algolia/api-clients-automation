@@ -49,7 +49,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
      * Test case for CustomDelete
      * allow del method for a custom path with minimal parameters.
      */
-    public function testCustomDelete0()
+    public function testCustomDelete()
     {
         $client = $this->getClient();
         $client->customDelete(
@@ -92,7 +92,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
      * Test case for CustomGet
      * allow get method for a custom path with minimal parameters.
      */
-    public function testCustomGet0()
+    public function testCustomGet()
     {
         $client = $this->getClient();
         $client->customGet(
@@ -170,7 +170,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
      * Test case for CustomPost
      * allow post method for a custom path with minimal parameters.
      */
-    public function testCustomPost0()
+    public function testCustomPost()
     {
         $client = $this->getClient();
         $client->customPost(
@@ -517,7 +517,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
      * Test case for CustomPut
      * allow put method for a custom path with minimal parameters.
      */
-    public function testCustomPut0()
+    public function testCustomPut()
     {
         $client = $this->getClient();
         $client->customPut(
@@ -560,9 +560,9 @@ class InsightsTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for DeleteUserToken
-     * deleteUserToken0.
+     * deleteUserToken.
      */
-    public function testDeleteUserToken0()
+    public function testDeleteUserToken()
     {
         $client = $this->getClient();
         $client->deleteUserToken(
@@ -580,9 +580,9 @@ class InsightsTest extends TestCase implements HttpClientInterface
 
     /**
      * Test case for PushEvents
-     * pushEvents0.
+     * pushEvents.
      */
-    public function testPushEvents0()
+    public function testPushEvents()
     {
         $client = $this->getClient();
         $client->pushEvents(
@@ -632,7 +632,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
                     'index' => 'products',
                     'userToken' => 'user-123456',
                     'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1715385600000,
+                    'timestamp' => 1718755200000,
                     'objectIDs' => [
                         '9780545139700',
 
@@ -646,7 +646,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
                     'index' => 'products',
                     'userToken' => 'user-123456',
                     'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1715385600000,
+                    'timestamp' => 1718755200000,
                     'objectIDs' => [
                         '9780545139700',
 
@@ -661,7 +661,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
             [
                 'path' => '/1/events',
                 'method' => 'POST',
-                'body' => json_decode('{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1715385600000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1715385600000,"objectIDs":["9780545139700","9780439784542"]}]}'),
+                'body' => json_decode('{"events":[{"eventType":"conversion","eventName":"Product Purchased","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1718755200000,"objectIDs":["9780545139700","9780439784542"],"queryID":"43b15df305339e827f0ac0bdc5ebcaa7"},{"eventType":"view","eventName":"Product Detail Page Viewed","index":"products","userToken":"user-123456","authenticatedUserToken":"user-123456","timestamp":1718755200000,"objectIDs":["9780545139700","9780439784542"]}]}'),
             ],
         ]);
 
@@ -673,7 +673,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
                     'index' => 'products',
                     'userToken' => 'user-123456',
                     'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1715385600000,
+                    'timestamp' => 1718755200000,
                     'objectIDs' => [
                         '9780545139700',
 
@@ -687,7 +687,7 @@ class InsightsTest extends TestCase implements HttpClientInterface
                     'index' => 'products',
                     'userToken' => 'user-123456',
                     'authenticatedUserToken' => 'user-123456',
-                    'timestamp' => 1715385600000,
+                    'timestamp' => 1718755200000,
                     'objectIDs' => [
                         '9780545139700',
 

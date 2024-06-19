@@ -24,7 +24,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # allow del method for a custom path with minimal parameters
-  def test_custom_delete0
+  def test_custom_delete
     req = @client.custom_delete_with_http_info("test/minimal")
 
     assert_equal(:delete, req.method)
@@ -48,7 +48,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # allow get method for a custom path with minimal parameters
-  def test_custom_get0
+  def test_custom_get
     req = @client.custom_get_with_http_info("test/minimal")
 
     assert_equal(:get, req.method)
@@ -105,7 +105,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # allow post method for a custom path with minimal parameters
-  def test_custom_post0
+  def test_custom_post
     req = @client.custom_post_with_http_info("test/minimal")
 
     assert_equal(:post, req.method)
@@ -288,7 +288,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # allow put method for a custom path with minimal parameters
-  def test_custom_put0
+  def test_custom_put
     req = @client.custom_put_with_http_info("test/minimal")
 
     assert_equal(:put, req.method)
@@ -314,7 +314,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getAddToCartRate with minimal parameters
-  def test_get_add_to_cart_rate0
+  def test_get_add_to_cart_rate
     req = @client.get_add_to_cart_rate_with_http_info("index")
 
     assert_equal(:get, req.method)
@@ -349,7 +349,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getAverageClickPosition with minimal parameters
-  def test_get_average_click_position0
+  def test_get_average_click_position
     req = @client.get_average_click_position_with_http_info("index")
 
     assert_equal(:get, req.method)
@@ -384,7 +384,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getClickPositions with minimal parameters
-  def test_get_click_positions0
+  def test_get_click_positions
     req = @client.get_click_positions_with_http_info("index")
 
     assert_equal(:get, req.method)
@@ -419,7 +419,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getClickThroughRate with minimal parameters
-  def test_get_click_through_rate0
+  def test_get_click_through_rate
     req = @client.get_click_through_rate_with_http_info("index")
 
     assert_equal(:get, req.method)
@@ -454,7 +454,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getConversationRate with minimal parameters
-  def test_get_conversion_rate0
+  def test_get_conversion_rate
     req = @client.get_conversion_rate_with_http_info("index")
 
     assert_equal(:get, req.method)
@@ -489,7 +489,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getNoClickRate with minimal parameters
-  def test_get_no_click_rate0
+  def test_get_no_click_rate
     req = @client.get_no_click_rate_with_http_info("index")
 
     assert_equal(:get, req.method)
@@ -519,7 +519,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getNoResultsRate with minimal parameters
-  def test_get_no_results_rate0
+  def test_get_no_results_rate
     req = @client.get_no_results_rate_with_http_info("index")
 
     assert_equal(:get, req.method)
@@ -554,7 +554,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getPurchaseRate with minimal parameters
-  def test_get_purchase_rate0
+  def test_get_purchase_rate
     req = @client.get_purchase_rate_with_http_info("index")
 
     assert_equal(:get, req.method)
@@ -584,7 +584,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getRevenue with minimal parameters
-  def test_get_revenue0
+  def test_get_revenue
     req = @client.get_revenue_with_http_info("index")
 
     assert_equal(:get, req.method)
@@ -614,7 +614,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getSearchesCount with minimal parameters
-  def test_get_searches_count0
+  def test_get_searches_count
     req = @client.get_searches_count_with_http_info("index")
 
     assert_equal(:get, req.method)
@@ -649,7 +649,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getSearchesNoClicks with minimal parameters
-  def test_get_searches_no_clicks0
+  def test_get_searches_no_clicks
     req = @client.get_searches_no_clicks_with_http_info("index")
 
     assert_equal(:get, req.method)
@@ -688,7 +688,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getSearchesNoResults with minimal parameters
-  def test_get_searches_no_results0
+  def test_get_searches_no_results
     req = @client.get_searches_no_results_with_http_info("index")
 
     assert_equal(:get, req.method)
@@ -727,7 +727,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getStatus with minimal parameters
-  def test_get_status0
+  def test_get_status
     req = @client.get_status_with_http_info("index")
 
     assert_equal(:get, req.method)
@@ -739,7 +739,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getTopCountries with minimal parameters
-  def test_get_top_countries0
+  def test_get_top_countries
     req = @client.get_top_countries_with_http_info("index")
 
     assert_equal(:get, req.method)
@@ -778,7 +778,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getTopFilterAttributes with minimal parameters
-  def test_get_top_filter_attributes0
+  def test_get_top_filter_attributes
     req = @client.get_top_filter_attributes_with_http_info("index")
 
     assert_equal(:get, req.method)
@@ -819,7 +819,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getTopFilterForAttribute with minimal parameters
-  def test_get_top_filter_for_attribute0
+  def test_get_top_filter_for_attribute
     req = @client.get_top_filter_for_attribute_with_http_info("myAttribute", "index")
 
     assert_equal(:get, req.method)
@@ -906,7 +906,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getTopFiltersNoResults with minimal parameters
-  def test_get_top_filters_no_results0
+  def test_get_top_filters_no_results
     req = @client.get_top_filters_no_results_with_http_info("index")
 
     assert_equal(:get, req.method)
@@ -947,7 +947,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getTopHits with minimal parameters
-  def test_get_top_hits0
+  def test_get_top_hits
     req = @client.get_top_hits_with_http_info("index")
 
     assert_equal(:get, req.method)
@@ -992,7 +992,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getTopSearches with minimal parameters
-  def test_get_top_searches0
+  def test_get_top_searches
     req = @client.get_top_searches_with_http_info("index")
 
     assert_equal(:get, req.method)
@@ -1058,7 +1058,7 @@ class TestAnalyticsClient < Test::Unit::TestCase
   end
 
   # get getUsersCount with minimal parameters
-  def test_get_users_count0
+  def test_get_users_count
     req = @client.get_users_count_with_http_info("index")
 
     assert_equal(:get, req.method)
