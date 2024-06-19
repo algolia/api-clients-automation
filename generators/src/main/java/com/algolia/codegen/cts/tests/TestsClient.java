@@ -128,40 +128,42 @@ public class TestsClient extends TestsGenerator {
               }
             }
 
-            if (step.expected.type != null) {
-              switch (step.expected.type) {
-                case "userAgent":
-                  stepOut.put("testUserAgent", true);
-                  break;
-                case "host":
-                  stepOut.put("testHost", true);
-                  break;
-                case "timeouts":
-                  stepOut.put("testTimeouts", true);
-                  break;
-                case "response":
-                  stepOut.put("testResponse", true);
-                  stepOut.put("useEchoRequester", false);
-                  break;
-                default:
-                  throw new CTSException("Unknown expected type: " + step.expected.type, test.testName);
+            if (step.expected != null) {
+              if (step.expected.type != null) {
+                switch (step.expected.type) {
+                  case "userAgent":
+                    stepOut.put("testUserAgent", true);
+                    break;
+                  case "host":
+                    stepOut.put("testHost", true);
+                    break;
+                  case "timeouts":
+                    stepOut.put("testTimeouts", true);
+                    break;
+                  case "response":
+                    stepOut.put("testResponse", true);
+                    stepOut.put("useEchoRequester", false);
+                    break;
+                  default:
+                    throw new CTSException("Unknown expected type: " + step.expected.type, test.testName);
+                }
               }
-            }
-            if (step.expected.error != null) {
-              stepOut.put("isError", true);
-              stepOut.put("expectedError", step.expected.error);
-              if (language.equals("go") && step.path != null) {
-                // hack for go that use PascalCase, but just in the operationID
-                stepOut.put("expectedError", step.expected.error.replace(step.path, Helpers.toPascalCase(step.path)));
-              }
-            } else if (step.expected.match != null) {
-              Map<String, Object> matchMap = new HashMap<>();
-              if (step.expected.match instanceof Map match) {
-                paramsType.enhanceParameters(match, matchMap);
-                stepOut.put("match", matchMap);
-                stepOut.put("matchIsObject", true);
-              } else {
-                stepOut.put("match", step.expected.match);
+              if (step.expected.error != null) {
+                stepOut.put("isError", true);
+                stepOut.put("expectedError", step.expected.error);
+                if (language.equals("go") && step.path != null) {
+                  // hack for go that use PascalCase, but just in the operationID
+                  stepOut.put("expectedError", step.expected.error.replace(step.path, Helpers.toPascalCase(step.path)));
+                }
+              } else if (step.expected.match != null) {
+                Map<String, Object> matchMap = new HashMap<>();
+                if (step.expected.match instanceof Map match) {
+                  paramsType.enhanceParameters(match, matchMap);
+                  stepOut.put("match", matchMap);
+                  stepOut.put("matchIsObject", true);
+                } else {
+                  stepOut.put("match", step.expected.match);
+                }
               }
             }
             steps.add(stepOut);
