@@ -525,7 +525,7 @@ sourceShopifyBase:
   x-discriminator-fields:
     - shopURL
 
-SourceValidateResponse:
+SourceWatchResponse:
   type: object
   additionalProperties: false
   properties:

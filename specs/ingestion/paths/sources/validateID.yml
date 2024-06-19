@@ -23,6 +23,6 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../../common/schemas/source.yml#/SourceValidateResponse'
+            $ref: '../../common/schemas/source.yml#/SourceWatchResponse'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
