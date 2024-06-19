@@ -536,7 +536,6 @@ SourceValidateResponse:
       description: depending on the source type, the validation returns sampling data of your source (JSON, CSV, BigQuery).
       items:
         type: object
-        additionalProperties: true
     events:
       description: in case of error, observability events will be added to the response, if any.
       type: array
