@@ -836,4 +836,60 @@ class SnippetIngestionClient
         var_dump($response);
         // SEPARATOR<
     }
+
+    /**
+     * Snippet for the ValidateSource method.
+     *
+     * validateSource
+     */
+    public function snippetForValidateSource()
+    {
+        // >SEPARATOR validateSource default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->validateSource(
+            ['type' => 'commercetools',
+                'name' => 'sourceName',
+                'input' => ['storeKeys' => [
+                    'myStore',
+                ],
+                    'locales' => [
+                        'de',
+                    ],
+                    'url' => 'http://commercetools.com',
+                    'projectKey' => 'keyID',
+                ],
+                'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ValidateSourceBeforeUpdate method.
+     *
+     * validateSourceBeforeUpdate
+     */
+    public function snippetForValidateSourceBeforeUpdate()
+    {
+        // >SEPARATOR validateSourceBeforeUpdate default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->validateSourceBeforeUpdate(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['name' => 'newName',
+            ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
 }

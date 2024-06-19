@@ -681,4 +681,51 @@ class SnippetIngestionClient {
 
     exitProcess(0)
   }
+
+  suspend fun snippetForValidateSource() {
+    // >SEPARATOR validateSource default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.validateSource(
+      sourceCreate = SourceCreate(
+        type = SourceType.entries.first { it.value == "commercetools" },
+        name = "sourceName",
+        input = SourceCommercetools(
+          storeKeys = listOf("myStore"),
+          locales = listOf("de"),
+          url = "http://commercetools.com",
+          projectKey = "keyID",
+        ),
+        authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForValidateSourceBeforeUpdate() {
+    // >SEPARATOR validateSourceBeforeUpdate default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.validateSourceBeforeUpdate(
+      sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      sourceUpdate = SourceUpdate(
+        name = "newName",
+      ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
 }

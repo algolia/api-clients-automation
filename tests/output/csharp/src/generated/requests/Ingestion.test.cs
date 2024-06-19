@@ -1240,4 +1240,49 @@ public class IngestionClientRequestTests
     Assert.Equal("PATCH", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"enabled\":false}", req.Body, new JsonDiffConfig(false));
   }
+
+  [Fact(DisplayName = "validateSource")]
+  public async Task ValidateSourceTest()
+  {
+    await _client.ValidateSourceAsync(
+      new SourceCreate
+      {
+        Type = Enum.Parse<SourceType>("Commercetools"),
+        Name = "sourceName",
+        Input = new SourceInput(
+          new SourceCommercetools
+          {
+            StoreKeys = new List<string> { "myStore" },
+            Locales = new List<string> { "de" },
+            Url = "http://commercetools.com",
+            ProjectKey = "keyID",
+          }
+        ),
+        AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/sources/validate", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "validateSourceBeforeUpdate")]
+  public async Task ValidateSourceBeforeUpdateTest()
+  {
+    await _client.ValidateSourceBeforeUpdateAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new SourceUpdate { Name = "newName", }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{\"name\":\"newName\"}", req.Body, new JsonDiffConfig(false));
+  }
 }

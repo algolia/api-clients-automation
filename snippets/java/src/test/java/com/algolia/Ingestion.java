@@ -529,4 +529,42 @@ class SnippetIngestionClient {
     client.updateTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new TaskUpdate().setEnabled(false));
     // SEPARATOR<
   }
+
+  // Snippet for the validateSource method.
+  //
+  // validateSource
+  void snippetForValidateSource() {
+    // >SEPARATOR validateSource default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.validateSource(
+      new SourceCreate()
+        .setType(SourceType.COMMERCETOOLS)
+        .setName("sourceName")
+        .setInput(
+          new SourceCommercetools()
+            .setStoreKeys(List.of("myStore"))
+            .setLocales(List.of("de"))
+            .setUrl("http://commercetools.com")
+            .setProjectKey("keyID")
+        )
+        .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    );
+    // SEPARATOR<
+  }
+
+  // Snippet for the validateSourceBeforeUpdate method.
+  //
+  // validateSourceBeforeUpdate
+  void snippetForValidateSourceBeforeUpdate() {
+    // >SEPARATOR validateSourceBeforeUpdate default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.validateSourceBeforeUpdate("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new SourceUpdate().setName("newName"));
+    // SEPARATOR<
+  }
 }

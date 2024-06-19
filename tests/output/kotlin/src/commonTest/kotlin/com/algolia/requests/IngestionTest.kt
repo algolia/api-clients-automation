@@ -1194,4 +1194,53 @@ class IngestionTest {
       },
     )
   }
+
+  // validateSource
+
+  @Test
+  fun `validateSource`() = runTest {
+    client.runTest(
+      call = {
+        validateSource(
+          sourceCreate = SourceCreate(
+            type = SourceType.entries.first { it.value == "commercetools" },
+            name = "sourceName",
+            input = SourceCommercetools(
+              storeKeys = listOf("myStore"),
+              locales = listOf("de"),
+              url = "http://commercetools.com",
+              projectKey = "keyID",
+            ),
+            authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/sources/validate".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}""", it.body)
+      },
+    )
+  }
+
+  // validateSourceBeforeUpdate
+
+  @Test
+  fun `validateSourceBeforeUpdate`() = runTest {
+    client.runTest(
+      call = {
+        validateSourceBeforeUpdate(
+          sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          sourceUpdate = SourceUpdate(
+            name = "newName",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"name":"newName"}""", it.body)
+      },
+    )
+  }
 }

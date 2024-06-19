@@ -771,4 +771,57 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the validateSource method.
+    *
+    * validateSource
+    */
+  def snippetForIngestionClientValidateSource(): Unit = {
+    // >SEPARATOR validateSource default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.validateSource(
+      sourceCreate = Some(
+        SourceCreate(
+          `type` = SourceType.withName("commercetools"),
+          name = "sourceName",
+          input = SourceCommercetools(
+            storeKeys = Some(Seq("myStore")),
+            locales = Some(Seq("de")),
+            url = "http://commercetools.com",
+            projectKey = "keyID"
+          ),
+          authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        )
+      )
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the validateSourceBeforeUpdate method.
+    *
+    * validateSourceBeforeUpdate
+    */
+  def snippetForIngestionClientValidateSourceBeforeUpdate(): Unit = {
+    // >SEPARATOR validateSourceBeforeUpdate default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.validateSourceBeforeUpdate(
+      sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      sourceUpdate = SourceUpdate(
+        name = Some("newName")
+      )
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
 }

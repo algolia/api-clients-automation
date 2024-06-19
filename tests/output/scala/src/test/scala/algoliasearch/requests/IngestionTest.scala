@@ -1245,4 +1245,53 @@ class IngestionTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("validateSource") {
+    val (client, echo) = testClient()
+    val future = client.validateSource(
+      sourceCreate = Some(
+        SourceCreate(
+          `type` = SourceType.withName("commercetools"),
+          name = "sourceName",
+          input = SourceCommercetools(
+            storeKeys = Some(Seq("myStore")),
+            locales = Some(Seq("de")),
+            url = "http://commercetools.com",
+            projectKey = "keyID"
+          ),
+          authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/sources/validate")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("validateSourceBeforeUpdate") {
+    val (client, echo) = testClient()
+    val future = client.validateSourceBeforeUpdate(
+      sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      sourceUpdate = SourceUpdate(
+        name = Some("newName")
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"name":"newName"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
 }
