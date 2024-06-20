@@ -31,6 +31,9 @@ public class TaskCreate {
   @JsonProperty("input")
   private TaskInput input;
 
+  @JsonProperty("cursor")
+  private String cursor;
+
   public TaskCreate setSourceID(String sourceID) {
     this.sourceID = sourceID;
     return this;
@@ -111,6 +114,17 @@ public class TaskCreate {
     return input;
   }
 
+  public TaskCreate setCursor(String cursor) {
+    this.cursor = cursor;
+    return this;
+  }
+
+  /** Date of the last cursor in RFC 3339 format. */
+  @javax.annotation.Nullable
+  public String getCursor() {
+    return cursor;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -127,13 +141,14 @@ public class TaskCreate {
       Objects.equals(this.action, taskCreate.action) &&
       Objects.equals(this.enabled, taskCreate.enabled) &&
       Objects.equals(this.failureThreshold, taskCreate.failureThreshold) &&
-      Objects.equals(this.input, taskCreate.input)
+      Objects.equals(this.input, taskCreate.input) &&
+      Objects.equals(this.cursor, taskCreate.cursor)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(sourceID, destinationID, trigger, action, enabled, failureThreshold, input);
+    return Objects.hash(sourceID, destinationID, trigger, action, enabled, failureThreshold, input, cursor);
   }
 
   @Override
@@ -147,6 +162,7 @@ public class TaskCreate {
     sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
     sb.append("    failureThreshold: ").append(toIndentedString(failureThreshold)).append("\n");
     sb.append("    input: ").append(toIndentedString(input)).append("\n");
+    sb.append("    cursor: ").append(toIndentedString(cursor)).append("\n");
     sb.append("}");
     return sb.toString();
   }

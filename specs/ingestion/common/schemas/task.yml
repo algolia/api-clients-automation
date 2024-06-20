@@ -20,9 +20,8 @@ Task:
       $ref: '#/failureThreshold'
     action:
       $ref: '#/ActionType'
-    # lastCursorValue:
-    #   type: integer
-    #   format: int64
+    cursor:
+      $ref: './common.yml#/cursor'
     createdAt:
       $ref: './common.yml#/createdAt'
     updatedAt:
@@ -64,9 +63,8 @@ TaskCreate:
       $ref: '#/failureThreshold'
     input:
       $ref: '#/TaskInput'
-    # lastCursorValue:
-    #   type: integer
-    #   format: int64
+    cursor:
+      $ref: './common.yml#/cursor'
   required:
     - sourceID
     - destinationID
