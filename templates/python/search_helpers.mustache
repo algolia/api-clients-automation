@@ -328,8 +328,8 @@
             index_name=tmp_index_name, task_id=move_operation_response.task_id
         )
 
-        return {
-            "copy_operation_response": copy_operation_response,
-            "batch_responses": batch_responses,
-            "move_operation_response": move_operation_response,
-        }
+        return ReplaceAllObjectsResponse(
+            copy_operation_response=copy_operation_response,
+            batch_responses=batch_responses,
+            move_operation_response=move_operation_response,
+        )
