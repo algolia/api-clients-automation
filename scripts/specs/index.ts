@@ -50,6 +50,11 @@ async function buildLiteSpec({
 
   await fsp.writeFile(bundledPath, yaml.dump(lite));
 
+  // remove unused components for the outputted light spec
+  await run(
+    `yarn openapi bundle ${bundledPath} -o ${bundledPath} --ext yml --remove-unused-components`,
+  );
+
   await transformBundle({
     bundledPath,
     clientName: spec,
@@ -149,7 +154,7 @@ export async function buildSpecs({
 
   // the `lite` spec will build the `recommend` spec, so we remove it from the list
   // to prevent concurrent builds
-  if (clients.includes('algoliasearch')) {
+  if (clients.includes('algoliasearch') && !docs) {
     clients = clients.filter((client) => client !== 'recommend');
   }
 
