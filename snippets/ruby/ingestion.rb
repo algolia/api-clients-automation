@@ -377,25 +377,6 @@ def snippet_for_get_destinations
   # SEPARATOR<
 end
 
-# Snippet for the getDockerSourceStreams method.
-#
-# getDockerSourceStreams
-def snippet_for_get_docker_source_streams
-  # >SEPARATOR getDockerSourceStreams default
-  # Initialize the client
-  client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
-
-  # Call the API
-  response = client.get_docker_source_streams("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-
-  # use the class directly
-  puts response
-
-  # print the JSON response
-  puts response.to_json
-  # SEPARATOR<
-end
-
 # Snippet for the getEvent method.
 #
 # getEvent

@@ -908,20 +908,6 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
-  test("getDockerSourceStreams") {
-    val (client, echo) = testClient()
-    val future = client.getDockerSourceStreams(
-      sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-    )
-
-    Await.ready(future, Duration.Inf)
-    val res = echo.lastResponse.get
-
-    assert(res.path == "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover")
-    assert(res.method == "GET")
-    assert(res.body.isEmpty)
-  }
-
   test("getEvent") {
     val (client, echo) = testClient()
     val future = client.getEvent(

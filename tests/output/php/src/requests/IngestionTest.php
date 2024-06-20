@@ -1000,26 +1000,6 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for GetDockerSourceStreams
-     * getDockerSourceStreams.
-     */
-    public function testGetDockerSourceStreams()
-    {
-        $client = $this->getClient();
-        $client->getDockerSourceStreams(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    /**
      * Test case for GetEvent
      * getEvent.
      */

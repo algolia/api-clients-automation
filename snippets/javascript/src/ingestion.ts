@@ -409,28 +409,6 @@ export async function snippetForGetDestinations(): Promise<void> {
   // SEPARATOR<
 }
 
-// Snippet for the getDockerSourceStreams method.
-//
-// getDockerSourceStreams
-export async function snippetForGetDockerSourceStreams(): Promise<void> {
-  // >SEPARATOR getDockerSourceStreams default
-  // Initialize the client
-  const client = ingestionClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
-
-  // Call the API
-  const response = await client.getDockerSourceStreams({
-    sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-  });
-
-  // use typed response
-  console.log(response);
-  // SEPARATOR<
-}
-
 // Snippet for the getEvent method.
 //
 // getEvent

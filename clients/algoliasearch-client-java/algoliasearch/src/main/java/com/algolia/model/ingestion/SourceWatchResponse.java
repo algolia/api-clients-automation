@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** SourceValidateResponse */
-public class SourceValidateResponse {
+/** SourceWatchResponse */
+public class SourceWatchResponse {
 
   @JsonProperty("runID")
   private String runID;
@@ -24,7 +24,7 @@ public class SourceValidateResponse {
   @JsonProperty("message")
   private String message;
 
-  public SourceValidateResponse setRunID(String runID) {
+  public SourceWatchResponse setRunID(String runID) {
     this.runID = runID;
     return this;
   }
@@ -35,12 +35,12 @@ public class SourceValidateResponse {
     return runID;
   }
 
-  public SourceValidateResponse setData(List<Object> data) {
+  public SourceWatchResponse setData(List<Object> data) {
     this.data = data;
     return this;
   }
 
-  public SourceValidateResponse addData(Object dataItem) {
+  public SourceWatchResponse addData(Object dataItem) {
     if (this.data == null) {
       this.data = new ArrayList<>();
     }
@@ -57,12 +57,12 @@ public class SourceValidateResponse {
     return data;
   }
 
-  public SourceValidateResponse setEvents(List<Event> events) {
+  public SourceWatchResponse setEvents(List<Event> events) {
     this.events = events;
     return this;
   }
 
-  public SourceValidateResponse addEvents(Event eventsItem) {
+  public SourceWatchResponse addEvents(Event eventsItem) {
     if (this.events == null) {
       this.events = new ArrayList<>();
     }
@@ -76,7 +76,7 @@ public class SourceValidateResponse {
     return events;
   }
 
-  public SourceValidateResponse setMessage(String message) {
+  public SourceWatchResponse setMessage(String message) {
     this.message = message;
     return this;
   }
@@ -95,12 +95,12 @@ public class SourceValidateResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SourceValidateResponse sourceValidateResponse = (SourceValidateResponse) o;
+    SourceWatchResponse sourceWatchResponse = (SourceWatchResponse) o;
     return (
-      Objects.equals(this.runID, sourceValidateResponse.runID) &&
-      Objects.equals(this.data, sourceValidateResponse.data) &&
-      Objects.equals(this.events, sourceValidateResponse.events) &&
-      Objects.equals(this.message, sourceValidateResponse.message)
+      Objects.equals(this.runID, sourceWatchResponse.runID) &&
+      Objects.equals(this.data, sourceWatchResponse.data) &&
+      Objects.equals(this.events, sourceWatchResponse.events) &&
+      Objects.equals(this.message, sourceWatchResponse.message)
     );
   }
 
@@ -112,7 +112,7 @@ public class SourceValidateResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SourceValidateResponse {\n");
+    sb.append("class SourceWatchResponse {\n");
     sb.append("    runID: ").append(toIndentedString(runID)).append("\n");
     sb.append("    data: ").append(toIndentedString(data)).append("\n");
     sb.append("    events: ").append(toIndentedString(events)).append("\n");

@@ -414,27 +414,6 @@ class SnippetIngestionClient
     }
 
     /**
-     * Snippet for the GetDockerSourceStreams method.
-     *
-     * getDockerSourceStreams
-     */
-    public function snippetForGetDockerSourceStreams()
-    {
-        // >SEPARATOR getDockerSourceStreams default
-        // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
-
-        // Call the API
-        $response = $client->getDockerSourceStreams(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        // play with the response
-        var_dump($response);
-        // SEPARATOR<
-    }
-
-    /**
      * Snippet for the GetEvent method.
      *
      * getEvent

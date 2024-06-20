@@ -344,23 +344,6 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
-  suspend fun snippetForGetDockerSourceStreams() {
-    // >SEPARATOR getDockerSourceStreams default
-    // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-    // Call the API
-    var response = client.getDockerSourceStreams(
-      sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
-
-    // Use the response
-    println(response)
-    // SEPARATOR<
-
-    exitProcess(0)
-  }
-
   suspend fun snippetForGetEvent() {
     // >SEPARATOR getEvent default
     // Initialize the client

@@ -767,23 +767,6 @@ func TestIngestion_GetDestinations(t *testing.T) {
 	})
 }
 
-func TestIngestion_GetDockerSourceStreams(t *testing.T) {
-	client, echo := createIngestionClient(t)
-	_ = echo
-
-	t.Run("getDockerSourceStreams", func(t *testing.T) {
-		_, err := client.GetDockerSourceStreams(client.NewApiGetDockerSourceStreamsRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		))
-		require.NoError(t, err)
-
-		require.Equal(t, "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover", echo.Path)
-		require.Equal(t, "GET", echo.Method)
-
-		require.Nil(t, echo.Body)
-	})
-}
-
 func TestIngestion_GetEvent(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo

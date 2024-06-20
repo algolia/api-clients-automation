@@ -627,18 +627,6 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # getDockerSourceStreams
-  def test_get_docker_source_streams
-    req = @client.get_docker_source_streams_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-
-    assert_equal(:get, req.method)
-    assert_equal('/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover', req.path)
-    assert_equal({}.to_a, req.query_params.to_a)
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-
-    assert(req.body.nil?, 'body is not nil')
-  end
-
   # getEvent
   def test_get_event
     req = @client.get_event_with_http_info(

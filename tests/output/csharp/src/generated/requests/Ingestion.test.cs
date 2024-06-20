@@ -915,17 +915,6 @@ public class IngestionClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getDockerSourceStreams")]
-  public async Task GetDockerSourceStreamsTest()
-  {
-    await _client.GetDockerSourceStreamsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover", req.Path);
-    Assert.Equal("GET", req.Method.ToString());
-    Assert.Null(req.Body);
-  }
-
   [Fact(DisplayName = "getEvent")]
   public async Task GetEventTest()
   {

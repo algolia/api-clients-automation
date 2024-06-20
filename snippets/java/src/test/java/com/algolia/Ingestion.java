@@ -271,19 +271,6 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
-  // Snippet for the getDockerSourceStreams method.
-  //
-  // getDockerSourceStreams
-  void snippetForGetDockerSourceStreams() {
-    // >SEPARATOR getDockerSourceStreams default
-    // Initialize the client
-    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
-
-    // Call the API
-    client.getDockerSourceStreams("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-    // SEPARATOR<
-  }
-
   // Snippet for the getEvent method.
   //
   // getEvent

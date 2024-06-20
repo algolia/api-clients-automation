@@ -804,20 +804,6 @@ class TestIngestionClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
-    async def test_get_docker_source_streams_(self):
-        """
-        getDockerSourceStreams
-        """
-        _req = await self._client.get_docker_source_streams_with_http_info(
-            source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
-
-        assert _req.path == "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover"
-        assert _req.verb == "GET"
-        assert _req.query_parameters.items() == {}.items()
-        assert _req.headers.items() >= {}.items()
-        assert _req.data is None
-
     async def test_get_event_(self):
         """
         getEvent

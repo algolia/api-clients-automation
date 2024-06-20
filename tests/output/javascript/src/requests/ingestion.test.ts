@@ -718,21 +718,6 @@ describe('getDestinations', () => {
   });
 });
 
-describe('getDockerSourceStreams', () => {
-  test('getDockerSourceStreams', async () => {
-    const req = (await client.getDockerSourceStreams({
-      sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual(
-      '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover'
-    );
-    expect(req.method).toEqual('GET');
-    expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
-});
-
 describe('getEvent', () => {
   test('getEvent', async () => {
     const req = (await client.getEvent({

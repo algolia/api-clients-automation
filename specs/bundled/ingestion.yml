@@ -661,7 +661,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SourceValidateResponse'
+                $ref: '#/components/schemas/SourceWatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
   /1/sources/search:
@@ -792,45 +792,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SourceValidateResponse'
+                $ref: '#/components/schemas/SourceWatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
   /1/sources/{sourceID}/discover:
-    get:
-      tags:
-        - ingestion
-      summary: Retrieve a stream listing
-      description: >
-        Retrieves a stream listing for a source.
-
-
-        Listing streams only works with sources with `type: docker` and
-        `imageType: singer`.
-      operationId: getDockerSourceStreams
-      x-acl:
-        - addObject
-        - deleteIndex
-        - editSettings
-      parameters:
-        - $ref: '#/components/parameters/pathSourceID'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                title: dockerSourceStreams
-                type: object
-                additionalProperties: false
-                properties:
-                  streams:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/DockerSourceStream'
-                required:
-                  - streams
-        '400':
-          $ref: '#/components/responses/BadRequest'
     post:
       tags:
         - ingestion
@@ -853,17 +818,7 @@ paths:
           content:
             application/json:
               schema:
-                title: dockerSourceDiscover
-                type: object
-                additionalProperties: false
-                properties:
-                  runID:
-                    $ref: '#/components/schemas/runID'
-                  createdAt:
-                    $ref: '#/components/schemas/createdAt'
-                required:
-                  - runID
-                  - createdAt
+                $ref: '#/components/schemas/SourceWatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
   /1/tasks:
@@ -2648,7 +2603,7 @@ components:
         - type
         - batchSize
         - publishedAt
-    SourceValidateResponse:
+    SourceWatchResponse:
       type: object
       additionalProperties: false
       properties:
@@ -2766,9 +2721,6 @@ components:
         - sourceID
         - name
         - updatedAt
-    DockerSourceStream:
-      type: object
-      description: Stream definition (see the Singer specification for details).
     ActionType:
       type: string
       description: Action to perform on the Algolia index.

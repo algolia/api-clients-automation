@@ -838,24 +838,6 @@ class IngestionTest {
     )
   }
 
-  // getDockerSourceStreams
-
-  @Test
-  fun `getDockerSourceStreams`() = runTest {
-    client.runTest(
-      call = {
-        getDockerSourceStreams(
-          sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-        )
-      },
-      intercept = {
-        assertEquals("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover".toPathSegments(), it.url.pathSegments)
-        assertEquals(HttpMethod.parse("GET"), it.method)
-        assertNoBody(it.body)
-      },
-    )
-  }
-
   // getEvent
 
   @Test

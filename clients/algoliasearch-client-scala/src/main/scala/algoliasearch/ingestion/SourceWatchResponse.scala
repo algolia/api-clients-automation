@@ -23,14 +23,20 @@
   */
 package algoliasearch.ingestion
 
-/** DockerSourceDiscover
+/** SourceWatchResponse
   *
   * @param runID
   *   Universally unique identifier (UUID) of a task run.
-  * @param createdAt
-  *   Date of creation in RFC 3339 format.
+  * @param data
+  *   depending on the source type, the validation returns sampling data of your source (JSON, CSV, BigQuery).
+  * @param events
+  *   in case of error, observability events will be added to the response, if any.
+  * @param message
+  *   a message describing the outcome of a validate run.
   */
-case class DockerSourceDiscover(
-    runID: String,
-    createdAt: String
+case class SourceWatchResponse(
+    runID: Option[String] = scala.None,
+    data: Option[Seq[Any]] = scala.None,
+    events: Option[Seq[Event]] = scala.None,
+    message: String
 )

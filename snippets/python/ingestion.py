@@ -450,29 +450,6 @@ async def snippet_for_get_destinations():
     # SEPARATOR<
 
 
-async def snippet_for_get_docker_source_streams():
-    """
-    Snippet for the getDockerSourceStreams method.
-
-    getDockerSourceStreams
-    """
-    # >SEPARATOR getDockerSourceStreams default
-    # Initialize the client
-    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-
-    # Call the API
-    response = await _client.get_docker_source_streams(
-        source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
-
-    # use the class directly
-    print(response)
-
-    # print the JSON response
-    print(response.to_json())
-    # SEPARATOR<
-
-
 async def snippet_for_get_event():
     """
     Snippet for the getEvent method.

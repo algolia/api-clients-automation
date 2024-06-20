@@ -907,18 +907,6 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getDockerSourceStreams")
-  void getDockerSourceStreamsTest() {
-    assertDoesNotThrow(() -> {
-      client.getDockerSourceStreams("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-    });
-    EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover", req.path);
-    assertEquals("GET", req.method);
-    assertNull(req.body);
-  }
-
-  @Test
   @DisplayName("getEvent")
   void getEventTest() {
     assertDoesNotThrow(() -> {

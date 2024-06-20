@@ -265,19 +265,6 @@ final class IngestionClientSnippet {
         // SEPARATOR<
     }
 
-    /// Snippet for the getDockerSourceStreams method.
-    ///
-    /// getDockerSourceStreams
-    func snippetForGetDockerSourceStreams() async throws {
-        // >SEPARATOR getDockerSourceStreams default
-        // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
-
-        // Call the API
-        let response = try await client.getDockerSourceStreams(sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-        // SEPARATOR<
-    }
-
     /// Snippet for the getEvent method.
     ///
     /// getEvent

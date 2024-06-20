@@ -21,8 +21,6 @@ import algoliasearch.ingestion.DestinationSortKeys._
 import algoliasearch.ingestion.DestinationType._
 import algoliasearch.ingestion.DestinationUpdate
 import algoliasearch.ingestion.DestinationUpdateResponse
-import algoliasearch.ingestion.DockerSourceDiscover
-import algoliasearch.ingestion.DockerSourceStreams
 import algoliasearch.ingestion.ErrorBase
 import algoliasearch.ingestion.Event
 import algoliasearch.ingestion.EventSortKeys._
@@ -48,7 +46,7 @@ import algoliasearch.ingestion.SourceSortKeys._
 import algoliasearch.ingestion.SourceType._
 import algoliasearch.ingestion.SourceUpdate
 import algoliasearch.ingestion.SourceUpdateResponse
-import algoliasearch.ingestion.SourceValidateResponse
+import algoliasearch.ingestion.SourceWatchResponse
 import algoliasearch.ingestion.Task
 import algoliasearch.ingestion.TaskCreate
 import algoliasearch.ingestion.TaskCreateResponse
@@ -576,30 +574,6 @@ class IngestionClient(
     execute[ListDestinationsResponse](request, requestOptions)
   }
 
-  /** Retrieves a stream listing for a source. Listing streams only works with sources with `type: docker` and
-    * `imageType: singer`.
-    *
-    * Required API Key ACLs:
-    *   - addObject
-    *   - deleteIndex
-    *   - editSettings
-    *
-    * @param sourceID
-    *   Unique identifier of a source.
-    */
-  def getDockerSourceStreams(sourceID: String, requestOptions: Option[RequestOptions] = None)(implicit
-      ec: ExecutionContext
-  ): Future[DockerSourceStreams] = Future {
-    requireNotNull(sourceID, "Parameter `sourceID` is required when calling `getDockerSourceStreams`.")
-
-    val request = HttpRequest
-      .builder()
-      .withMethod("GET")
-      .withPath(s"/1/sources/${escape(sourceID)}/discover")
-      .build()
-    execute[DockerSourceStreams](request, requestOptions)
-  }
-
   /** Retrieves a single task run event by its ID.
     *
     * Required API Key ACLs:
@@ -1027,7 +1001,7 @@ class IngestionClient(
     */
   def triggerDockerSourceDiscover(sourceID: String, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
-  ): Future[DockerSourceDiscover] = Future {
+  ): Future[SourceWatchResponse] = Future {
     requireNotNull(sourceID, "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.")
 
     val request = HttpRequest
@@ -1035,7 +1009,7 @@ class IngestionClient(
       .withMethod("POST")
       .withPath(s"/1/sources/${escape(sourceID)}/discover")
       .build()
-    execute[DockerSourceDiscover](request, requestOptions)
+    execute[SourceWatchResponse](request, requestOptions)
   }
 
   /** Updates an authentication resource.
@@ -1151,7 +1125,7 @@ class IngestionClient(
     */
   def validateSource(sourceCreate: Option[SourceCreate] = None, requestOptions: Option[RequestOptions] = None)(implicit
       ec: ExecutionContext
-  ): Future[SourceValidateResponse] = Future {
+  ): Future[SourceWatchResponse] = Future {
 
     val request = HttpRequest
       .builder()
@@ -1159,7 +1133,7 @@ class IngestionClient(
       .withPath(s"/1/sources/validate")
       .withBody(sourceCreate)
       .build()
-    execute[SourceValidateResponse](request, requestOptions)
+    execute[SourceWatchResponse](request, requestOptions)
   }
 
   /** Validates an update of a source payload to ensure it can be created and that the data source can be reached by
@@ -1177,7 +1151,7 @@ class IngestionClient(
       sourceID: String,
       sourceUpdate: SourceUpdate,
       requestOptions: Option[RequestOptions] = None
-  )(implicit ec: ExecutionContext): Future[SourceValidateResponse] = Future {
+  )(implicit ec: ExecutionContext): Future[SourceWatchResponse] = Future {
     requireNotNull(sourceID, "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.")
     requireNotNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `validateSourceBeforeUpdate`.")
 
@@ -1187,7 +1161,7 @@ class IngestionClient(
       .withPath(s"/1/sources/${escape(sourceID)}/validate")
       .withBody(sourceUpdate)
       .build()
-    execute[SourceValidateResponse](request, requestOptions)
+    execute[SourceWatchResponse](request, requestOptions)
   }
 
 }

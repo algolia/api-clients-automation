@@ -4354,7 +4354,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SourceValidateResponse'
+                $ref: '#/components/schemas/SourceWatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
       x-codeSamples:
@@ -5596,7 +5596,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SourceValidateResponse'
+                $ref: '#/components/schemas/SourceWatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
       x-codeSamples:
@@ -5809,233 +5809,6 @@ paths:
                 sourceUpdate: SourceUpdate(name: "newName")
             )
   /1/sources/{sourceID}/discover:
-    get:
-      tags:
-        - sources
-      summary: Retrieve a stream listing
-      description: >
-        Retrieves a stream listing for a source.
-
-
-        Listing streams only works with sources with `type: docker` and
-        `imageType: singer`.
-      operationId: getDockerSourceStreams
-      x-acl:
-        - addObject
-        - deleteIndex
-        - editSettings
-      parameters:
-        - $ref: '#/components/parameters/pathSourceID'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                title: dockerSourceStreams
-                type: object
-                additionalProperties: false
-                properties:
-                  streams:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/DockerSourceStream'
-                required:
-                  - streams
-        '400':
-          $ref: '#/components/responses/BadRequest'
-      x-codeSamples:
-        - lang: csharp
-          label: C#
-          source: >
-            // Initialize the client
-
-            var client = new IngestionClient(
-              new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-            );
-
-
-            // Call the API
-
-            var response = await
-            client.GetDockerSourceStreamsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-        - lang: go
-          label: Go
-          source: >
-            // Initialize the client with your application region, eg.
-            ingestion.YOUR_APP_ID_REGION
-
-            client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
-            ingestion.US)
-
-            if err != nil {
-              // The client can fail to initialize if you pass an invalid parameter.
-              panic(err)
-            }
-
-
-            // Call the API
-
-            response, err :=
-            client.GetDockerSourceStreams(client.NewApiGetDockerSourceStreamsRequest(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            ))
-
-            if err != nil {
-              // handle the eventual error
-              panic(err)
-            }
-
-
-            // use the model directly
-
-            print(response)
-        - lang: java
-          label: Java
-          source: >
-            // Initialize the client
-
-            IngestionClient client = new IngestionClient("YOUR_APP_ID",
-            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
-
-
-            // Call the API
-
-            client.getDockerSourceStreams("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-        - lang: javascript
-          label: JavaScript
-          source: |
-            // Initialize the client
-            const client = ingestionClient(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            );
-
-            // Call the API
-            const response = await client.getDockerSourceStreams({
-              sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            });
-
-            // use typed response
-            console.log(response);
-        - lang: kotlin
-          label: Kotlin
-          source: >
-            // Initialize the client
-
-            val client = IngestionClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-
-            // Call the API
-
-            var response = client.getDockerSourceStreams(
-              sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            // Use the response
-
-            println(response)
-        - lang: php
-          label: PHP
-          source: >
-            // Initialize the client
-
-            $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
-            'YOUR_APP_ID_REGION');
-
-
-            // Call the API
-
-            $response = $client->getDockerSourceStreams(
-                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-            );
-
-
-            // play with the response
-
-            var_dump($response);
-        - lang: python
-          label: Python
-          source: >
-            # Initialize the client
-
-            _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY",
-            "YOUR_APP_ID_REGION")
-
-
-            # Call the API
-
-            response = await _client.get_docker_source_streams(
-                source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            )
-
-
-            # use the class directly
-
-            print(response)
-
-
-            # print the JSON response
-
-            print(response.to_json())
-        - lang: ruby
-          label: Ruby
-          source: >
-            # Initialize the client
-
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
-
-
-            # Call the API
-
-            response =
-            client.get_docker_source_streams("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-
-
-            # use the class directly
-
-            puts response
-
-
-            # print the JSON response
-
-            puts response.to_json
-        - lang: scala
-          label: Scala
-          source: >
-            // Initialize the client
-
-            val client = IngestionClient(appId = "YOUR_APP_ID", apiKey =
-            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-
-            // Call the API
-
-            val response = client.getDockerSourceStreams(
-              sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
-            )
-
-
-            // Use the response
-
-            val value = Await.result(response, Duration(100, "sec"))
-        - lang: swift
-          label: Swift
-          source: >
-            // Initialize the client
-
-            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
-            "YOUR_API_KEY", region: .us)
-
-
-            // Call the API
-
-            let response = try await client.getDockerSourceStreams(sourceID:
-            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
     post:
       tags:
         - sources
@@ -6058,17 +5831,7 @@ paths:
           content:
             application/json:
               schema:
-                title: dockerSourceDiscover
-                type: object
-                additionalProperties: false
-                properties:
-                  runID:
-                    $ref: '#/components/schemas/runID'
-                  createdAt:
-                    $ref: '#/components/schemas/createdAt'
-                required:
-                  - runID
-                  - createdAt
+                $ref: '#/components/schemas/SourceWatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
       x-codeSamples:
@@ -10617,7 +10380,7 @@ components:
         - type
         - batchSize
         - publishedAt
-    SourceValidateResponse:
+    SourceWatchResponse:
       type: object
       additionalProperties: false
       properties:
@@ -10735,9 +10498,6 @@ components:
         - sourceID
         - name
         - updatedAt
-    DockerSourceStream:
-      type: object
-      description: Stream definition (see the Singer specification for details).
     ActionType:
       type: string
       description: Action to perform on the Algolia index.
