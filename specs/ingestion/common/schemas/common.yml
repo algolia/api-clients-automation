@@ -18,6 +18,10 @@ publishedAt:
   type: string
   description: Date of publish RFC 3339 format.
 
+cursor:
+  type: string
+  description: Date of the last cursor in RFC 3339 format.
+
 DeleteResponse:
   type: object
   properties:
