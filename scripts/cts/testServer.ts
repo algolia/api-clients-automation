@@ -148,7 +148,11 @@ async function algoliaMockServer(): Promise<Server> {
   const port = 6679;
 
   app.use(express.urlencoded({ extended: true }));
-  app.use(express.json());
+  app.use(
+    express.json({
+      type: ['application/json', 'text/plain'], // the js client sends the body as text/plain
+    }),
+  );
 
   const assert = (condition: boolean, message: string): void => {
     if (!condition) {
