@@ -122,10 +122,14 @@ paths:
   # sources API.
   /1/sources:
     $ref: 'paths/sources/sources.yml'
+  /1/sources/validate:
+    $ref: 'paths/sources/validate.yml'
   /1/sources/search:
     $ref: 'paths/sources/searchSources.yml'
   /1/sources/{sourceID}:
     $ref: 'paths/sources/sourceID.yml'
+  /1/sources/{sourceID}/validate:
+    $ref: 'paths/sources/validateID.yml'
   /1/sources/{sourceID}/discover:
     $ref: 'paths/sources/discover.yml'
 

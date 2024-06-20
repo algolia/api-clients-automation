@@ -636,6 +636,34 @@ paths:
                 $ref: '#/components/schemas/SourceCreateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+  /1/sources/validate:
+    post:
+      tags:
+        - ingestion
+      summary: Validates a source payload
+      description: >
+        Validates a source payload to ensure it can be created and that the data
+        source can be reached by Algolia.
+      operationId: validateSource
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SourceCreate'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceWatchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
   /1/sources/search:
     post:
       tags:
@@ -737,42 +765,37 @@ paths:
                 $ref: '#/components/schemas/DeleteResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
-  /1/sources/{sourceID}/discover:
-    get:
+  /1/sources/{sourceID}/validate:
+    post:
       tags:
         - ingestion
-      summary: Retrieve a stream listing
+      summary: Validates an update of a source payload
       description: >
-        Retrieves a stream listing for a source.
-
-
-        Listing streams only works with sources with `type: docker` and
-        `imageType: singer`.
-      operationId: getDockerSourceStreams
+        Validates an update of a source payload to ensure it can be created and
+        that the data source can be reached by Algolia.
+      operationId: validateSourceBeforeUpdate
       x-acl:
         - addObject
         - deleteIndex
         - editSettings
       parameters:
         - $ref: '#/components/parameters/pathSourceID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SourceUpdate'
+        required: true
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                title: dockerSourceStreams
-                type: object
-                additionalProperties: false
-                properties:
-                  streams:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/DockerSourceStream'
-                required:
-                  - streams
+                $ref: '#/components/schemas/SourceWatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+  /1/sources/{sourceID}/discover:
     post:
       tags:
         - ingestion
@@ -795,17 +818,7 @@ paths:
           content:
             application/json:
               schema:
-                title: dockerSourceDiscover
-                type: object
-                additionalProperties: false
-                properties:
-                  runID:
-                    $ref: '#/components/schemas/runID'
-                  createdAt:
-                    $ref: '#/components/schemas/createdAt'
-                required:
-                  - runID
-                  - createdAt
+                $ref: '#/components/schemas/SourceWatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
   /1/tasks:
@@ -2528,6 +2541,93 @@ components:
         - sourceID
         - name
         - createdAt
+    runID:
+      type: string
+      description: Universally unique identifier (UUID) of a task run.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    eventID:
+      type: string
+      description: Universally unique identifier (UUID) of an event.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    EventStatus:
+      type: string
+      enum:
+        - created
+        - started
+        - retried
+        - failed
+        - succeeded
+        - critical
+    EventType:
+      type: string
+      enum:
+        - fetch
+        - record
+        - log
+        - transform
+    publishedAt:
+      type: string
+      description: Date of publish RFC 3339 format.
+    Event:
+      type: object
+      description: An event describe a step of the task execution flow..
+      additionalProperties: false
+      properties:
+        eventID:
+          $ref: '#/components/schemas/eventID'
+        runID:
+          $ref: '#/components/schemas/runID'
+        parentID:
+          type: string
+          description: The parent event, the cause of this event.
+          example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+        status:
+          $ref: '#/components/schemas/EventStatus'
+        type:
+          $ref: '#/components/schemas/EventType'
+        batchSize:
+          type: integer
+          description: The extracted record batch size.
+          example: 10
+          minimum: 0
+          multipleOf: 1
+        data:
+          type: object
+          additionalProperties: true
+        publishedAt:
+          $ref: '#/components/schemas/publishedAt'
+      required:
+        - eventID
+        - runID
+        - status
+        - type
+        - batchSize
+        - publishedAt
+    SourceWatchResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        runID:
+          $ref: '#/components/schemas/runID'
+        data:
+          type: array
+          description: >-
+            depending on the source type, the validation returns sampling data
+            of your source (JSON, CSV, BigQuery).
+          items:
+            type: object
+        events:
+          description: >-
+            in case of error, observability events will be added to the
+            response, if any.
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        message:
+          description: a message describing the outcome of a validate run.
+          type: string
+      required:
+        - message
     SourceSearch:
       type: object
       additionalProperties: false
@@ -2621,13 +2721,6 @@ components:
         - sourceID
         - name
         - updatedAt
-    DockerSourceStream:
-      type: object
-      description: Stream definition (see the Singer specification for details).
-    runID:
-      type: string
-      description: Universally unique identifier (UUID) of a task run.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     ActionType:
       type: string
       description: Action to perform on the Algolia index.
@@ -3223,70 +3316,12 @@ components:
         - runs
         - pagination
         - window
-    EventStatus:
-      type: string
-      enum:
-        - created
-        - started
-        - retried
-        - failed
-        - succeeded
-        - critical
-    EventType:
-      type: string
-      enum:
-        - fetch
-        - record
-        - log
-        - transform
     eventSortKeys:
       type: string
       description: Property by which to sort the list of task run events.
       enum:
         - status
         - type
-        - publishedAt
-    eventID:
-      type: string
-      description: Universally unique identifier (UUID) of an event.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    publishedAt:
-      type: string
-      description: Date of publish RFC 3339 format.
-    Event:
-      type: object
-      description: An event describe a step of the task execution flow..
-      additionalProperties: false
-      properties:
-        eventID:
-          $ref: '#/components/schemas/eventID'
-        runID:
-          $ref: '#/components/schemas/runID'
-        parentID:
-          type: string
-          description: The parent event, the cause of this event.
-          example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-        status:
-          $ref: '#/components/schemas/EventStatus'
-        type:
-          $ref: '#/components/schemas/EventType'
-        batchSize:
-          type: integer
-          description: The extracted record batch size.
-          example: 10
-          minimum: 0
-          multipleOf: 1
-        data:
-          type: object
-          additionalProperties: true
-        publishedAt:
-          $ref: '#/components/schemas/publishedAt'
-      required:
-        - eventID
-        - runID
-        - status
-        - type
-        - batchSize
         - publishedAt
   responses:
     BadRequest:

@@ -718,21 +718,6 @@ describe('getDestinations', () => {
   });
 });
 
-describe('getDockerSourceStreams', () => {
-  test('getDockerSourceStreams', async () => {
-    const req = (await client.getDockerSourceStreams({
-      sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-    })) as unknown as EchoResponse;
-
-    expect(req.path).toEqual(
-      '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover'
-    );
-    expect(req.method).toEqual('GET');
-    expect(req.data).toEqual(undefined);
-    expect(req.searchParams).toStrictEqual(undefined);
-  });
-});
-
 describe('getEvent', () => {
   test('getEvent', async () => {
     const req = (await client.getEvent({
@@ -1046,6 +1031,53 @@ describe('updateTask', () => {
     expect(req.path).toEqual('/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
     expect(req.method).toEqual('PATCH');
     expect(req.data).toEqual({ enabled: false });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('validateSource', () => {
+  test('validateSource', async () => {
+    const req = (await client.validateSource({
+      type: 'commercetools',
+      name: 'sourceName',
+      input: {
+        storeKeys: ['myStore'],
+        locales: ['de'],
+        url: 'http://commercetools.com',
+        projectKey: 'keyID',
+      },
+      authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/sources/validate');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      type: 'commercetools',
+      name: 'sourceName',
+      input: {
+        storeKeys: ['myStore'],
+        locales: ['de'],
+        url: 'http://commercetools.com',
+        projectKey: 'keyID',
+      },
+      authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('validateSourceBeforeUpdate', () => {
+  test('validateSourceBeforeUpdate', async () => {
+    const req = (await client.validateSourceBeforeUpdate({
+      sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+      sourceUpdate: { name: 'newName' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual(
+      '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate'
+    );
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ name: 'newName' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });

@@ -907,18 +907,6 @@ class IngestionClientRequestsTests {
   }
 
   @Test
-  @DisplayName("getDockerSourceStreams")
-  void getDockerSourceStreamsTest() {
-    assertDoesNotThrow(() -> {
-      client.getDockerSourceStreams("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-    });
-    EchoResponse req = echo.getLastResponse();
-    assertEquals("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover", req.path);
-    assertEquals("GET", req.method);
-    assertNull(req.body);
-  }
-
-  @Test
   @DisplayName("getEvent")
   void getEventTest() {
     assertDoesNotThrow(() -> {
@@ -1191,5 +1179,47 @@ class IngestionClientRequestsTests {
     assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
     assertEquals("PATCH", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"enabled\":false}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("validateSource")
+  void validateSourceTest() {
+    assertDoesNotThrow(() -> {
+      client.validateSource(
+        new SourceCreate()
+          .setType(SourceType.COMMERCETOOLS)
+          .setName("sourceName")
+          .setInput(
+            new SourceCommercetools()
+              .setStoreKeys(List.of("myStore"))
+              .setLocales(List.of("de"))
+              .setUrl("http://commercetools.com")
+              .setProjectKey("keyID")
+          )
+          .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/sources/validate", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
+  @DisplayName("validateSourceBeforeUpdate")
+  void validateSourceBeforeUpdateTest() {
+    assertDoesNotThrow(() -> {
+      client.validateSourceBeforeUpdate("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new SourceUpdate().setName("newName"));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"name\":\"newName\"}", req.body, JSONCompareMode.STRICT));
   }
 }

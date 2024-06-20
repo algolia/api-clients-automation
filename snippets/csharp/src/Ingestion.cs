@@ -381,24 +381,6 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
-  /// Snippet for the GetDockerSourceStreams method.
-  ///
-  /// getDockerSourceStreams
-  /// </summary>
-  public async Task SnippetForIngestionClientGetDockerSourceStreams()
-  {
-    // >SEPARATOR getDockerSourceStreams default
-    // Initialize the client
-    var client = new IngestionClient(
-      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-    );
-
-    // Call the API
-    var response = await client.GetDockerSourceStreamsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-    // SEPARATOR<
-  }
-
-  /// <summary>
   /// Snippet for the GetEvent method.
   ///
   /// getEvent
@@ -772,6 +754,61 @@ public class SnippetIngestionClient
     var response = await client.UpdateTaskAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TaskUpdate { Enabled = false, }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ValidateSource method.
+  ///
+  /// validateSource
+  /// </summary>
+  public async Task SnippetForIngestionClientValidateSource()
+  {
+    // >SEPARATOR validateSource default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.ValidateSourceAsync(
+      new SourceCreate
+      {
+        Type = Enum.Parse<SourceType>("Commercetools"),
+        Name = "sourceName",
+        Input = new SourceInput(
+          new SourceCommercetools
+          {
+            StoreKeys = new List<string> { "myStore" },
+            Locales = new List<string> { "de" },
+            Url = "http://commercetools.com",
+            ProjectKey = "keyID",
+          }
+        ),
+        AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ValidateSourceBeforeUpdate method.
+  ///
+  /// validateSourceBeforeUpdate
+  /// </summary>
+  public async Task SnippetForIngestionClientValidateSourceBeforeUpdate()
+  {
+    // >SEPARATOR validateSourceBeforeUpdate default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.ValidateSourceBeforeUpdateAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new SourceUpdate { Name = "newName", }
     );
     // SEPARATOR<
   }

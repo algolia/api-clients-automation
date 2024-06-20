@@ -516,34 +516,6 @@ func SnippetForGetDestinationsOfIngestion() {
 	print(response)
 	// SEPARATOR<
 }
-func SnippetForGetDockerSourceStreamsOfIngestion() {
-	/*
-	   Snippet for the getDockerSourceStreams method.
-
-	   getDockerSourceStreams
-	*/
-
-	// >SEPARATOR getDockerSourceStreams default
-	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
-	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
-	if err != nil {
-		// The client can fail to initialize if you pass an invalid parameter.
-		panic(err)
-	}
-
-	// Call the API
-	response, err := client.GetDockerSourceStreams(client.NewApiGetDockerSourceStreamsRequest(
-		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-	))
-	if err != nil {
-		// handle the eventual error
-		panic(err)
-	}
-
-	// use the model directly
-	print(response)
-	// SEPARATOR<
-}
 func SnippetForGetEventOfIngestion() {
 	/*
 	   Snippet for the getEvent method.
@@ -1044,6 +1016,65 @@ func SnippetForUpdateTaskOfIngestion() {
 	response, err := client.UpdateTask(client.NewApiUpdateTaskRequest(
 		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
 		ingestion.NewEmptyTaskUpdate().SetEnabled(false),
+	))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForValidateSourceOfIngestion() {
+	/*
+	   Snippet for the validateSource method.
+
+	   validateSource
+	*/
+
+	// >SEPARATOR validateSource default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ValidateSource(client.NewApiValidateSourceRequest().WithSourceCreate(
+		ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType("commercetools")).SetName("sourceName").SetInput(ingestion.SourceCommercetoolsAsSourceInput(
+			ingestion.NewEmptySourceCommercetools().SetStoreKeys(
+				[]string{"myStore"}).SetLocales(
+				[]string{"de"}).SetUrl("http://commercetools.com").SetProjectKey("keyID"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
+	if err != nil {
+		// handle the eventual error
+		panic(err)
+	}
+
+	// use the model directly
+	print(response)
+	// SEPARATOR<
+}
+func SnippetForValidateSourceBeforeUpdateOfIngestion() {
+	/*
+	   Snippet for the validateSourceBeforeUpdate method.
+
+	   validateSourceBeforeUpdate
+	*/
+
+	// >SEPARATOR validateSourceBeforeUpdate default
+	// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION
+	client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY", ingestion.US)
+	if err != nil {
+		// The client can fail to initialize if you pass an invalid parameter.
+		panic(err)
+	}
+
+	// Call the API
+	response, err := client.ValidateSourceBeforeUpdate(client.NewApiValidateSourceBeforeUpdateRequest(
+		"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+		ingestion.NewEmptySourceUpdate().SetName("newName"),
 	))
 	if err != nil {
 		// handle the eventual error

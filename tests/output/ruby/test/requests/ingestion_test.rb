@@ -627,18 +627,6 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # getDockerSourceStreams
-  def test_get_docker_source_streams
-    req = @client.get_docker_source_streams_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-
-    assert_equal(:get, req.method)
-    assert_equal('/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover', req.path)
-    assert_equal({}.to_a, req.query_params.to_a)
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-
-    assert(req.body.nil?, 'body is not nil')
-  end
-
   # getEvent
   def test_get_event
     req = @client.get_event_with_http_info(
@@ -916,5 +904,43 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"enabled":false}'), JSON.parse(req.body))
+  end
+
+  # validateSource
+  def test_validate_source
+    req = @client.validate_source_with_http_info(
+      SourceCreate.new(
+        type: 'commercetools',
+        name: "sourceName",
+        input: SourceCommercetools.new(
+          store_keys: ["myStore"],
+          locales: ["de"],
+          url: "http://commercetools.com",
+          project_key: "keyID"
+        ),
+        authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/sources/validate', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse('{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'), JSON.parse(req.body)
+    )
+  end
+
+  # validateSourceBeforeUpdate
+  def test_validate_source_before_update
+    req = @client.validate_source_before_update_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f", SourceUpdate.new(name: "newName")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse('{"name":"newName"}'), JSON.parse(req.body))
   end
 end

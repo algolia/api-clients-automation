@@ -767,23 +767,6 @@ func TestIngestion_GetDestinations(t *testing.T) {
 	})
 }
 
-func TestIngestion_GetDockerSourceStreams(t *testing.T) {
-	client, echo := createIngestionClient(t)
-	_ = echo
-
-	t.Run("getDockerSourceStreams", func(t *testing.T) {
-		_, err := client.GetDockerSourceStreams(client.NewApiGetDockerSourceStreamsRequest(
-			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-		))
-		require.NoError(t, err)
-
-		require.Equal(t, "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover", echo.Path)
-		require.Equal(t, "GET", echo.Method)
-
-		require.Nil(t, echo.Body)
-	})
-}
-
 func TestIngestion_GetEvent(t *testing.T) {
 	client, echo := createIngestionClient(t)
 	_ = echo
@@ -1153,5 +1136,44 @@ func TestIngestion_UpdateTask(t *testing.T) {
 
 		ja := jsonassert.New(t)
 		ja.Assertf(*echo.Body, `{"enabled":false}`)
+	})
+}
+
+func TestIngestion_ValidateSource(t *testing.T) {
+	client, echo := createIngestionClient(t)
+	_ = echo
+
+	t.Run("validateSource", func(t *testing.T) {
+		_, err := client.ValidateSource(client.NewApiValidateSourceRequest().WithSourceCreate(
+			ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType("commercetools")).SetName("sourceName").SetInput(ingestion.SourceCommercetoolsAsSourceInput(
+				ingestion.NewEmptySourceCommercetools().SetStoreKeys(
+					[]string{"myStore"}).SetLocales(
+					[]string{"de"}).SetUrl("http://commercetools.com").SetProjectKey("keyID"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/sources/validate", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}`)
+	})
+}
+
+func TestIngestion_ValidateSourceBeforeUpdate(t *testing.T) {
+	client, echo := createIngestionClient(t)
+	_ = echo
+
+	t.Run("validateSourceBeforeUpdate", func(t *testing.T) {
+		_, err := client.ValidateSourceBeforeUpdate(client.NewApiValidateSourceBeforeUpdateRequest(
+			"6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+			ingestion.NewEmptySourceUpdate().SetName("newName"),
+		))
+		require.NoError(t, err)
+
+		require.Equal(t, "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate", echo.Path)
+		require.Equal(t, "POST", echo.Method)
+
+		ja := jsonassert.New(t)
+		ja.Assertf(*echo.Body, `{"name":"newName"}`)
 	})
 }

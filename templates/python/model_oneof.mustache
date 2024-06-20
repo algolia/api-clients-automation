@@ -37,7 +37,6 @@ class {{classname}}({{#parent}}{{{.}}}{{/parent}}{{^parent}}BaseModel{{/parent}}
 
         {{/isNullable}}
         error_messages = []
-        match = 0
 
         {{#composedSchemas.oneOf}}
         {{#isContainer}}

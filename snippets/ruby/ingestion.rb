@@ -377,25 +377,6 @@ def snippet_for_get_destinations
   # SEPARATOR<
 end
 
-# Snippet for the getDockerSourceStreams method.
-#
-# getDockerSourceStreams
-def snippet_for_get_docker_source_streams
-  # >SEPARATOR getDockerSourceStreams default
-  # Initialize the client
-  client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
-
-  # Call the API
-  response = client.get_docker_source_streams("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-
-  # use the class directly
-  puts response
-
-  # print the JSON response
-  puts response.to_json
-  # SEPARATOR<
-end
-
 # Snippet for the getEvent method.
 #
 # getEvent
@@ -767,6 +748,59 @@ def snippet_for_update_task
   response = client.update_task(
     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     TaskUpdate.new(enabled: false)
+  )
+
+  # use the class directly
+  puts response
+
+  # print the JSON response
+  puts response.to_json
+  # SEPARATOR<
+end
+
+# Snippet for the validateSource method.
+#
+# validateSource
+def snippet_for_validate_source
+  # >SEPARATOR validateSource default
+  # Initialize the client
+  client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+  # Call the API
+  response = client.validate_source(
+    SourceCreate.new(
+      type: 'commercetools',
+      name: "sourceName",
+      input: SourceCommercetools.new(
+        store_keys: ["myStore"],
+        locales: ["de"],
+        url: "http://commercetools.com",
+        project_key: "keyID"
+      ),
+      authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+  )
+
+  # use the class directly
+  puts response
+
+  # print the JSON response
+  puts response.to_json
+  # SEPARATOR<
+end
+
+# Snippet for the validateSourceBeforeUpdate method.
+#
+# validateSourceBeforeUpdate
+def snippet_for_validate_source_before_update
+  # >SEPARATOR validateSourceBeforeUpdate default
+  # Initialize the client
+  client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+  # Call the API
+  response = client.validate_source_before_update(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    SourceUpdate.new(name: "newName")
   )
 
   # use the class directly

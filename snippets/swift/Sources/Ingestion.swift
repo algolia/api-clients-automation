@@ -265,19 +265,6 @@ final class IngestionClientSnippet {
         // SEPARATOR<
     }
 
-    /// Snippet for the getDockerSourceStreams method.
-    ///
-    /// getDockerSourceStreams
-    func snippetForGetDockerSourceStreams() async throws {
-        // >SEPARATOR getDockerSourceStreams default
-        // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
-
-        // Call the API
-        let response = try await client.getDockerSourceStreams(sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-        // SEPARATOR<
-    }
-
     /// Snippet for the getEvent method.
     ///
     /// getEvent
@@ -537,6 +524,45 @@ final class IngestionClientSnippet {
         let response = try await client.updateTask(
             taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             taskUpdate: TaskUpdate(enabled: false)
+        )
+        // SEPARATOR<
+    }
+
+    /// Snippet for the validateSource method.
+    ///
+    /// validateSource
+    func snippetForValidateSource() async throws {
+        // >SEPARATOR validateSource default
+        // Initialize the client
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.validateSource(sourceCreate: SourceCreate(
+            type: SourceType.commercetools,
+            name: "sourceName",
+            input: SourceInput.sourceCommercetools(SourceCommercetools(
+                storeKeys: ["myStore"],
+                locales: ["de"],
+                url: "http://commercetools.com",
+                projectKey: "keyID"
+            )),
+            authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        ))
+        // SEPARATOR<
+    }
+
+    /// Snippet for the validateSourceBeforeUpdate method.
+    ///
+    /// validateSourceBeforeUpdate
+    func snippetForValidateSourceBeforeUpdate() async throws {
+        // >SEPARATOR validateSourceBeforeUpdate default
+        // Initialize the client
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.validateSourceBeforeUpdate(
+            sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            sourceUpdate: SourceUpdate(name: "newName")
         )
         // SEPARATOR<
     }

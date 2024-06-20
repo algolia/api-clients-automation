@@ -1117,68 +1117,6 @@ open class IngestionClient {
         )
     }
 
-    /// - parameter sourceID: (path) Unique identifier of a source.
-    /// - returns: DockerSourceStreams
-    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open func getDockerSourceStreams(
-        sourceID: String,
-        requestOptions: RequestOptions? = nil
-    ) async throws -> DockerSourceStreams {
-        let response: Response<DockerSourceStreams> = try await getDockerSourceStreamsWithHTTPInfo(
-            sourceID: sourceID,
-            requestOptions: requestOptions
-        )
-
-        guard let body = response.body else {
-            throw AlgoliaError.missingData
-        }
-
-        return body
-    }
-
-    // Retrieves a stream listing for a source.  Listing streams only works with sources with `type: docker` and
-    // `imageType: singer`.
-    // Required API Key ACLs:
-    //  - addObject
-    //  - deleteIndex
-    //  - editSettings
-    //
-    // - parameter sourceID: (path) Unique identifier of a source.
-    // - returns: RequestBuilder<DockerSourceStreams>
-
-    open func getDockerSourceStreamsWithHTTPInfo(
-        sourceID: String,
-        requestOptions userRequestOptions: RequestOptions? = nil
-    ) async throws -> Response<DockerSourceStreams> {
-        guard !sourceID.isEmpty else {
-            throw AlgoliaError.invalidArgument("sourceID", "getDockerSourceStreams")
-        }
-
-        var resourcePath = "/1/sources/{sourceID}/discover"
-        let sourceIDPreEscape = "\(APIHelper.mapValueToPathItem(sourceID))"
-        let sourceIDPostEscape = sourceIDPreEscape
-            .addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
-        resourcePath = resourcePath.replacingOccurrences(
-            of: "{sourceID}",
-            with: sourceIDPostEscape,
-            options: .literal,
-            range: nil
-        )
-        let body: AnyCodable? = nil
-        let queryParameters: [String: Any?]? = nil
-
-        let nillableHeaders: [String: Any?]? = nil
-
-        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
-
-        return try await self.transporter.send(
-            method: "GET",
-            path: resourcePath,
-            data: body,
-            requestOptions: RequestOptions(headers: headers, queryParameters: queryParameters) + userRequestOptions
-        )
-    }
-
     /// - parameter runID: (path) Unique identifier of a task run.
     /// - parameter eventID: (path) Unique identifier of an event.
     /// - returns: Event
@@ -2086,13 +2024,13 @@ open class IngestionClient {
     }
 
     /// - parameter sourceID: (path) Unique identifier of a source.
-    /// - returns: DockerSourceDiscover
+    /// - returns: SourceWatchResponse
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
     open func triggerDockerSourceDiscover(
         sourceID: String,
         requestOptions: RequestOptions? = nil
-    ) async throws -> DockerSourceDiscover {
-        let response: Response<DockerSourceDiscover> = try await triggerDockerSourceDiscoverWithHTTPInfo(
+    ) async throws -> SourceWatchResponse {
+        let response: Response<SourceWatchResponse> = try await triggerDockerSourceDiscoverWithHTTPInfo(
             sourceID: sourceID,
             requestOptions: requestOptions
         )
@@ -2112,12 +2050,12 @@ open class IngestionClient {
     //  - editSettings
     //
     // - parameter sourceID: (path) Unique identifier of a source.
-    // - returns: RequestBuilder<DockerSourceDiscover>
+    // - returns: RequestBuilder<SourceWatchResponse>
 
     open func triggerDockerSourceDiscoverWithHTTPInfo(
         sourceID: String,
         requestOptions userRequestOptions: RequestOptions? = nil
-    ) async throws -> Response<DockerSourceDiscover> {
+    ) async throws -> Response<SourceWatchResponse> {
         guard !sourceID.isEmpty else {
             throw AlgoliaError.invalidArgument("sourceID", "triggerDockerSourceDiscover")
         }
@@ -2406,6 +2344,122 @@ open class IngestionClient {
 
         return try await self.transporter.send(
             method: "PATCH",
+            path: resourcePath,
+            data: body,
+            requestOptions: RequestOptions(headers: headers, queryParameters: queryParameters) + userRequestOptions
+        )
+    }
+
+    /// - parameter sourceCreate: (body)  (optional)
+    /// - returns: SourceWatchResponse
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func validateSource(
+        sourceCreate: SourceCreate? = nil,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SourceWatchResponse {
+        let response: Response<SourceWatchResponse> = try await validateSourceWithHTTPInfo(
+            sourceCreate: sourceCreate,
+            requestOptions: requestOptions
+        )
+
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    // Validates a source payload to ensure it can be created and that the data source can be reached by Algolia.
+    // Required API Key ACLs:
+    //  - addObject
+    //  - deleteIndex
+    //  - editSettings
+    //
+    // - parameter sourceCreate: (body)  (optional)
+    // - returns: RequestBuilder<SourceWatchResponse>
+
+    open func validateSourceWithHTTPInfo(
+        sourceCreate: SourceCreate? = nil,
+        requestOptions userRequestOptions: RequestOptions? = nil
+    ) async throws -> Response<SourceWatchResponse> {
+        let resourcePath = "/1/sources/validate"
+        let body = sourceCreate
+        let queryParameters: [String: Any?]? = nil
+
+        let nillableHeaders: [String: Any?]? = nil
+
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+
+        return try await self.transporter.send(
+            method: "POST",
+            path: resourcePath,
+            data: body ?? AnyCodable(),
+            requestOptions: RequestOptions(headers: headers, queryParameters: queryParameters) + userRequestOptions
+        )
+    }
+
+    /// - parameter sourceID: (path) Unique identifier of a source.
+    /// - parameter sourceUpdate: (body)
+    /// - returns: SourceWatchResponse
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open func validateSourceBeforeUpdate(
+        sourceID: String,
+        sourceUpdate: SourceUpdate,
+        requestOptions: RequestOptions? = nil
+    ) async throws -> SourceWatchResponse {
+        let response: Response<SourceWatchResponse> = try await validateSourceBeforeUpdateWithHTTPInfo(
+            sourceID: sourceID,
+            sourceUpdate: sourceUpdate,
+            requestOptions: requestOptions
+        )
+
+        guard let body = response.body else {
+            throw AlgoliaError.missingData
+        }
+
+        return body
+    }
+
+    // Validates an update of a source payload to ensure it can be created and that the data source can be reached by
+    // Algolia.
+    // Required API Key ACLs:
+    //  - addObject
+    //  - deleteIndex
+    //  - editSettings
+    //
+    // - parameter sourceID: (path) Unique identifier of a source.
+    //
+    // - parameter sourceUpdate: (body)
+    // - returns: RequestBuilder<SourceWatchResponse>
+
+    open func validateSourceBeforeUpdateWithHTTPInfo(
+        sourceID: String,
+        sourceUpdate: SourceUpdate,
+        requestOptions userRequestOptions: RequestOptions? = nil
+    ) async throws -> Response<SourceWatchResponse> {
+        guard !sourceID.isEmpty else {
+            throw AlgoliaError.invalidArgument("sourceID", "validateSourceBeforeUpdate")
+        }
+
+        var resourcePath = "/1/sources/{sourceID}/validate"
+        let sourceIDPreEscape = "\(APIHelper.mapValueToPathItem(sourceID))"
+        let sourceIDPostEscape = sourceIDPreEscape
+            .addingPercentEncoding(withAllowedCharacters: .urlPathAlgoliaAllowed) ?? ""
+        resourcePath = resourcePath.replacingOccurrences(
+            of: "{sourceID}",
+            with: sourceIDPostEscape,
+            options: .literal,
+            range: nil
+        )
+        let body = sourceUpdate
+        let queryParameters: [String: Any?]? = nil
+
+        let nillableHeaders: [String: Any?]? = nil
+
+        let headers = APIHelper.rejectNilHeaders(nillableHeaders)
+
+        return try await self.transporter.send(
+            method: "POST",
             path: resourcePath,
             data: body,
             requestOptions: RequestOptions(headers: headers, queryParameters: queryParameters) + userRequestOptions

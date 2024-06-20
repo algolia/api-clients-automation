@@ -1372,59 +1372,6 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Retrieves a stream listing for a source. Listing streams only works with sources with `type:
-   * docker` and `imageType: singer`.
-   *
-   * @param sourceID Unique identifier of a source. (required)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public DockerSourceStreams getDockerSourceStreams(@Nonnull String sourceID, RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(getDockerSourceStreamsAsync(sourceID, requestOptions));
-  }
-
-  /**
-   * Retrieves a stream listing for a source. Listing streams only works with sources with `type:
-   * docker` and `imageType: singer`.
-   *
-   * @param sourceID Unique identifier of a source. (required)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public DockerSourceStreams getDockerSourceStreams(@Nonnull String sourceID) throws AlgoliaRuntimeException {
-    return this.getDockerSourceStreams(sourceID, null);
-  }
-
-  /**
-   * (asynchronously) Retrieves a stream listing for a source. Listing streams only works with
-   * sources with `type: docker` and `imageType: singer`.
-   *
-   * @param sourceID Unique identifier of a source. (required)
-   * @param requestOptions The requestOptions to send along with the query, they will be merged with
-   *     the transporter requestOptions.
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<DockerSourceStreams> getDockerSourceStreamsAsync(@Nonnull String sourceID, RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
-    Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `getDockerSourceStreams`.");
-
-    HttpRequest request = HttpRequest.builder().setPath("/1/sources/{sourceID}/discover", sourceID).setMethod("GET").build();
-    return executeAsync(request, requestOptions, new TypeReference<DockerSourceStreams>() {});
-  }
-
-  /**
-   * (asynchronously) Retrieves a stream listing for a source. Listing streams only works with
-   * sources with `type: docker` and `imageType: singer`.
-   *
-   * @param sourceID Unique identifier of a source. (required)
-   * @throws AlgoliaRuntimeException If it fails to process the API call
-   */
-  public CompletableFuture<DockerSourceStreams> getDockerSourceStreamsAsync(@Nonnull String sourceID) throws AlgoliaRuntimeException {
-    return this.getDockerSourceStreamsAsync(sourceID, null);
-  }
-
-  /**
    * Retrieves a single task run event by its ID.
    *
    * @param runID Unique identifier of a task run. (required)
@@ -2566,7 +2513,7 @@ public class IngestionClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public DockerSourceDiscover triggerDockerSourceDiscover(@Nonnull String sourceID, RequestOptions requestOptions)
+  public SourceWatchResponse triggerDockerSourceDiscover(@Nonnull String sourceID, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     return LaunderThrowable.await(triggerDockerSourceDiscoverAsync(sourceID, requestOptions));
   }
@@ -2578,7 +2525,7 @@ public class IngestionClient extends ApiClient {
    * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public DockerSourceDiscover triggerDockerSourceDiscover(@Nonnull String sourceID) throws AlgoliaRuntimeException {
+  public SourceWatchResponse triggerDockerSourceDiscover(@Nonnull String sourceID) throws AlgoliaRuntimeException {
     return this.triggerDockerSourceDiscover(sourceID, null);
   }
 
@@ -2591,12 +2538,12 @@ public class IngestionClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<DockerSourceDiscover> triggerDockerSourceDiscoverAsync(@Nonnull String sourceID, RequestOptions requestOptions)
+  public CompletableFuture<SourceWatchResponse> triggerDockerSourceDiscoverAsync(@Nonnull String sourceID, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/sources/{sourceID}/discover", sourceID).setMethod("POST").build();
-    return executeAsync(request, requestOptions, new TypeReference<DockerSourceDiscover>() {});
+    return executeAsync(request, requestOptions, new TypeReference<SourceWatchResponse>() {});
   }
 
   /**
@@ -2606,7 +2553,7 @@ public class IngestionClient extends ApiClient {
    * @param sourceID Unique identifier of a source. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<DockerSourceDiscover> triggerDockerSourceDiscoverAsync(@Nonnull String sourceID) throws AlgoliaRuntimeException {
+  public CompletableFuture<SourceWatchResponse> triggerDockerSourceDiscoverAsync(@Nonnull String sourceID) throws AlgoliaRuntimeException {
     return this.triggerDockerSourceDiscoverAsync(sourceID, null);
   }
 
@@ -2868,5 +2815,173 @@ public class IngestionClient extends ApiClient {
   public CompletableFuture<TaskUpdateResponse> updateTaskAsync(@Nonnull String taskID, @Nonnull TaskUpdate taskUpdate)
     throws AlgoliaRuntimeException {
     return this.updateTaskAsync(taskID, taskUpdate, null);
+  }
+
+  /**
+   * Validates a source payload to ensure it can be created and that the data source can be reached
+   * by Algolia.
+   *
+   * @param sourceCreate (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SourceWatchResponse validateSource(SourceCreate sourceCreate, RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(validateSourceAsync(sourceCreate, requestOptions));
+  }
+
+  /**
+   * Validates a source payload to ensure it can be created and that the data source can be reached
+   * by Algolia.
+   *
+   * @param sourceCreate (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SourceWatchResponse validateSource(SourceCreate sourceCreate) throws AlgoliaRuntimeException {
+    return this.validateSource(sourceCreate, null);
+  }
+
+  /**
+   * Validates a source payload to ensure it can be created and that the data source can be reached
+   * by Algolia.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SourceWatchResponse validateSource(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.validateSource(null, requestOptions);
+  }
+
+  /**
+   * Validates a source payload to ensure it can be created and that the data source can be reached
+   * by Algolia.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SourceWatchResponse validateSource() throws AlgoliaRuntimeException {
+    return this.validateSource(null, null);
+  }
+
+  /**
+   * (asynchronously) Validates a source payload to ensure it can be created and that the data
+   * source can be reached by Algolia.
+   *
+   * @param sourceCreate (optional)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SourceWatchResponse> validateSourceAsync(SourceCreate sourceCreate, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    HttpRequest request = HttpRequest.builder().setPath("/1/sources/validate").setMethod("POST").setBody(sourceCreate).build();
+    return executeAsync(request, requestOptions, new TypeReference<SourceWatchResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Validates a source payload to ensure it can be created and that the data
+   * source can be reached by Algolia.
+   *
+   * @param sourceCreate (optional)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SourceWatchResponse> validateSourceAsync(SourceCreate sourceCreate) throws AlgoliaRuntimeException {
+    return this.validateSourceAsync(sourceCreate, null);
+  }
+
+  /**
+   * (asynchronously) Validates a source payload to ensure it can be created and that the data
+   * source can be reached by Algolia.
+   *
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SourceWatchResponse> validateSourceAsync(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+    return this.validateSourceAsync(null, requestOptions);
+  }
+
+  /**
+   * (asynchronously) Validates a source payload to ensure it can be created and that the data
+   * source can be reached by Algolia.
+   *
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SourceWatchResponse> validateSourceAsync() throws AlgoliaRuntimeException {
+    return this.validateSourceAsync(null, null);
+  }
+
+  /**
+   * Validates an update of a source payload to ensure it can be created and that the data source
+   * can be reached by Algolia.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param sourceUpdate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SourceWatchResponse validateSourceBeforeUpdate(
+    @Nonnull String sourceID,
+    @Nonnull SourceUpdate sourceUpdate,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(validateSourceBeforeUpdateAsync(sourceID, sourceUpdate, requestOptions));
+  }
+
+  /**
+   * Validates an update of a source payload to ensure it can be created and that the data source
+   * can be reached by Algolia.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param sourceUpdate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public SourceWatchResponse validateSourceBeforeUpdate(@Nonnull String sourceID, @Nonnull SourceUpdate sourceUpdate)
+    throws AlgoliaRuntimeException {
+    return this.validateSourceBeforeUpdate(sourceID, sourceUpdate, null);
+  }
+
+  /**
+   * (asynchronously) Validates an update of a source payload to ensure it can be created and that
+   * the data source can be reached by Algolia.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param sourceUpdate (required)
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions.
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SourceWatchResponse> validateSourceBeforeUpdateAsync(
+    @Nonnull String sourceID,
+    @Nonnull SourceUpdate sourceUpdate,
+    RequestOptions requestOptions
+  ) throws AlgoliaRuntimeException {
+    Parameters.requireNonNull(sourceID, "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.");
+
+    Parameters.requireNonNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `validateSourceBeforeUpdate`.");
+
+    HttpRequest request = HttpRequest
+      .builder()
+      .setPath("/1/sources/{sourceID}/validate", sourceID)
+      .setMethod("POST")
+      .setBody(sourceUpdate)
+      .build();
+    return executeAsync(request, requestOptions, new TypeReference<SourceWatchResponse>() {});
+  }
+
+  /**
+   * (asynchronously) Validates an update of a source payload to ensure it can be created and that
+   * the data source can be reached by Algolia.
+   *
+   * @param sourceID Unique identifier of a source. (required)
+   * @param sourceUpdate (required)
+   * @throws AlgoliaRuntimeException If it fails to process the API call
+   */
+  public CompletableFuture<SourceWatchResponse> validateSourceBeforeUpdateAsync(
+    @Nonnull String sourceID,
+    @Nonnull SourceUpdate sourceUpdate
+  ) throws AlgoliaRuntimeException {
+    return this.validateSourceBeforeUpdateAsync(sourceID, sourceUpdate, null);
   }
 }

@@ -4329,6 +4329,328 @@ paths:
                 )),
                 authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
             ))
+  /1/sources/validate:
+    post:
+      tags:
+        - sources
+      summary: Validates a source payload
+      description: >
+        Validates a source payload to ensure it can be created and that the data
+        source can be reached by Algolia.
+      operationId: validateSource
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SourceCreate'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceWatchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+      x-codeSamples:
+        - lang: csharp
+          label: C#
+          source: |
+            // Initialize the client
+            var client = new IngestionClient(
+              new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+            );
+
+            // Call the API
+            var response = await client.ValidateSourceAsync(
+              new SourceCreate
+              {
+                Type = Enum.Parse<SourceType>("Commercetools"),
+                Name = "sourceName",
+                Input = new SourceInput(
+                  new SourceCommercetools
+                  {
+                    StoreKeys = new List<string> { "myStore" },
+                    Locales = new List<string> { "de" },
+                    Url = "http://commercetools.com",
+                    ProjectKey = "keyID",
+                  }
+                ),
+                AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              }
+            );
+        - lang: go
+          label: Go
+          source: >
+            // Initialize the client with your application region, eg.
+            ingestion.YOUR_APP_ID_REGION
+
+            client, err := ingestion.NewClient("YOUR_APP_ID", "YOUR_API_KEY",
+            ingestion.US)
+
+            if err != nil {
+              // The client can fail to initialize if you pass an invalid parameter.
+              panic(err)
+            }
+
+
+            // Call the API
+
+            response, err :=
+            client.ValidateSource(client.NewApiValidateSourceRequest().WithSourceCreate(
+              ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType("commercetools")).SetName("sourceName").SetInput(ingestion.SourceCommercetoolsAsSourceInput(
+                ingestion.NewEmptySourceCommercetools().SetStoreKeys(
+                  []string{"myStore"}).SetLocales(
+                  []string{"de"}).SetUrl("http://commercetools.com").SetProjectKey("keyID"))).SetAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")))
+            if err != nil {
+              // handle the eventual error
+              panic(err)
+            }
+
+
+            // use the model directly
+
+            print(response)
+        - lang: java
+          label: Java
+          source: >
+            // Initialize the client
+
+            IngestionClient client = new IngestionClient("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+
+            // Call the API
+
+            client.validateSource(
+              new SourceCreate()
+                .setType(SourceType.COMMERCETOOLS)
+                .setName("sourceName")
+                .setInput(
+                  new SourceCommercetools()
+                    .setStoreKeys(List.of("myStore"))
+                    .setLocales(List.of("de"))
+                    .setUrl("http://commercetools.com")
+                    .setProjectKey("keyID")
+                )
+                .setAuthenticationID("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+            );
+        - lang: javascript
+          label: JavaScript
+          source: |
+            // Initialize the client
+            const client = ingestionClient(
+              'YOUR_APP_ID',
+              'YOUR_API_KEY',
+              'YOUR_APP_ID_REGION'
+            );
+
+            // Call the API
+            const response = await client.validateSource({
+              type: 'commercetools',
+              name: 'sourceName',
+              input: {
+                storeKeys: ['myStore'],
+                locales: ['de'],
+                url: 'http://commercetools.com',
+                projectKey: 'keyID',
+              },
+              authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            });
+
+            // use typed response
+            console.log(response);
+        - lang: kotlin
+          label: Kotlin
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            var response = client.validateSource(
+              sourceCreate = SourceCreate(
+                type = SourceType.entries.first { it.value == "commercetools" },
+                name = "sourceName",
+                input = SourceCommercetools(
+                  storeKeys = listOf("myStore"),
+                  locales = listOf("de"),
+                  url = "http://commercetools.com",
+                  projectKey = "keyID",
+                ),
+                authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ),
+            )
+
+
+            // Use the response
+
+            println(response)
+        - lang: php
+          label: PHP
+          source: >
+            // Initialize the client
+
+            $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>',
+            'YOUR_APP_ID_REGION');
+
+
+            // Call the API
+
+            $response = $client->validateSource(
+                ['type' => 'commercetools',
+                    'name' => 'sourceName',
+                    'input' => ['storeKeys' => [
+                        'myStore',
+                    ],
+                        'locales' => [
+                            'de',
+                        ],
+                        'url' => 'http://commercetools.com',
+                        'projectKey' => 'keyID',
+                    ],
+                    'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ],
+            );
+
+
+            // play with the response
+
+            var_dump($response);
+        - lang: python
+          label: Python
+          source: >
+            # Initialize the client
+
+            _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY",
+            "YOUR_APP_ID_REGION")
+
+
+            # Call the API
+
+            response = await _client.validate_source(
+                source_create={
+                    "type": "commercetools",
+                    "name": "sourceName",
+                    "input": {
+                        "storeKeys": [
+                            "myStore",
+                        ],
+                        "locales": [
+                            "de",
+                        ],
+                        "url": "http://commercetools.com",
+                        "projectKey": "keyID",
+                    },
+                    "authenticationID": "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                },
+            )
+
+
+            # use the class directly
+
+            print(response)
+
+
+            # print the JSON response
+
+            print(response.to_json())
+        - lang: ruby
+          label: Ruby
+          source: >
+            # Initialize the client
+
+            client = Algolia::IngestionClient.create('YOUR_APP_ID',
+            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+
+            # Call the API
+
+            response = client.validate_source(
+              SourceCreate.new(
+                type: 'commercetools',
+                name: "sourceName",
+                input: SourceCommercetools.new(
+                  store_keys: ["myStore"],
+                  locales: ["de"],
+                  url: "http://commercetools.com",
+                  project_key: "keyID"
+                ),
+                authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+              )
+            )
+
+
+            # use the class directly
+
+            puts response
+
+
+            # print the JSON response
+
+            puts response.to_json
+        - lang: scala
+          label: Scala
+          source: >
+            // Initialize the client
+
+            val client = IngestionClient(appId = "YOUR_APP_ID", apiKey =
+            "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+
+            // Call the API
+
+            val response = client.validateSource(
+              sourceCreate = Some(
+                SourceCreate(
+                  `type` = SourceType.withName("commercetools"),
+                  name = "sourceName",
+                  input = SourceCommercetools(
+                    storeKeys = Some(Seq("myStore")),
+                    locales = Some(Seq("de")),
+                    url = "http://commercetools.com",
+                    projectKey = "keyID"
+                  ),
+                  authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+                )
+              )
+            )
+
+
+            // Use the response
+
+            val value = Await.result(response, Duration(100, "sec"))
+        - lang: swift
+          label: Swift
+          source: >
+            // Initialize the client
+
+            let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey:
+            "YOUR_API_KEY", region: .us)
+
+
+            // Call the API
+
+            let response = try await client.validateSource(sourceCreate:
+            SourceCreate(
+                type: SourceType.commercetools,
+                name: "sourceName",
+                input: SourceInput.sourceCommercetools(SourceCommercetools(
+                    storeKeys: ["myStore"],
+                    locales: ["de"],
+                    url: "http://commercetools.com",
+                    projectKey: "keyID"
+                )),
+                authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            ))
   /1/sources/search:
     post:
       tags:
@@ -5247,57 +5569,50 @@ paths:
 
             let response = try await client.deleteSource(sourceID:
             "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-  /1/sources/{sourceID}/discover:
-    get:
+  /1/sources/{sourceID}/validate:
+    post:
       tags:
         - sources
-      summary: Retrieve a stream listing
+      summary: Validates an update of a source payload
       description: >
-        Retrieves a stream listing for a source.
-
-
-        Listing streams only works with sources with `type: docker` and
-        `imageType: singer`.
-      operationId: getDockerSourceStreams
+        Validates an update of a source payload to ensure it can be created and
+        that the data source can be reached by Algolia.
+      operationId: validateSourceBeforeUpdate
       x-acl:
         - addObject
         - deleteIndex
         - editSettings
       parameters:
         - $ref: '#/components/parameters/pathSourceID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SourceUpdate'
+        required: true
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                title: dockerSourceStreams
-                type: object
-                additionalProperties: false
-                properties:
-                  streams:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/DockerSourceStream'
-                required:
-                  - streams
+                $ref: '#/components/schemas/SourceWatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
       x-codeSamples:
         - lang: csharp
           label: C#
-          source: >
+          source: |
             // Initialize the client
-
             var client = new IngestionClient(
               new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
             );
 
-
             // Call the API
-
-            var response = await
-            client.GetDockerSourceStreamsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+            var response = await client.ValidateSourceBeforeUpdateAsync(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              new SourceUpdate { Name = "newName", }
+            );
         - lang: go
           label: Go
           source: >
@@ -5316,8 +5631,9 @@ paths:
             // Call the API
 
             response, err :=
-            client.GetDockerSourceStreams(client.NewApiGetDockerSourceStreamsRequest(
+            client.ValidateSourceBeforeUpdate(client.NewApiValidateSourceBeforeUpdateRequest(
               "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              ingestion.NewEmptySourceUpdate().SetName("newName"),
             ))
 
             if err != nil {
@@ -5340,7 +5656,8 @@ paths:
 
             // Call the API
 
-            client.getDockerSourceStreams("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+            client.validateSourceBeforeUpdate("6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            new SourceUpdate().setName("newName"));
         - lang: javascript
           label: JavaScript
           source: |
@@ -5352,8 +5669,9 @@ paths:
             );
 
             // Call the API
-            const response = await client.getDockerSourceStreams({
+            const response = await client.validateSourceBeforeUpdate({
               sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+              sourceUpdate: { name: 'newName' },
             });
 
             // use typed response
@@ -5369,8 +5687,11 @@ paths:
 
             // Call the API
 
-            var response = client.getDockerSourceStreams(
+            var response = client.validateSourceBeforeUpdate(
               sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              sourceUpdate = SourceUpdate(
+                name = "newName",
+              ),
             )
 
 
@@ -5388,8 +5709,10 @@ paths:
 
             // Call the API
 
-            $response = $client->getDockerSourceStreams(
+            $response = $client->validateSourceBeforeUpdate(
                 '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                ['name' => 'newName',
+                ],
             );
 
 
@@ -5407,8 +5730,11 @@ paths:
 
             # Call the API
 
-            response = await _client.get_docker_source_streams(
+            response = await _client.validate_source_before_update(
                 source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                source_update={
+                    "name": "newName",
+                },
             )
 
 
@@ -5431,8 +5757,10 @@ paths:
 
             # Call the API
 
-            response =
-            client.get_docker_source_streams("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+            response = client.validate_source_before_update(
+              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              SourceUpdate.new(name: "newName")
+            )
 
 
             # use the class directly
@@ -5454,8 +5782,11 @@ paths:
 
             // Call the API
 
-            val response = client.getDockerSourceStreams(
-              sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+            val response = client.validateSourceBeforeUpdate(
+              sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+              sourceUpdate = SourceUpdate(
+                name = Some("newName")
+              )
             )
 
 
@@ -5473,8 +5804,11 @@ paths:
 
             // Call the API
 
-            let response = try await client.getDockerSourceStreams(sourceID:
-            "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+            let response = try await client.validateSourceBeforeUpdate(
+                sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                sourceUpdate: SourceUpdate(name: "newName")
+            )
+  /1/sources/{sourceID}/discover:
     post:
       tags:
         - sources
@@ -5497,17 +5831,7 @@ paths:
           content:
             application/json:
               schema:
-                title: dockerSourceDiscover
-                type: object
-                additionalProperties: false
-                properties:
-                  runID:
-                    $ref: '#/components/schemas/runID'
-                  createdAt:
-                    $ref: '#/components/schemas/createdAt'
-                required:
-                  - runID
-                  - createdAt
+                $ref: '#/components/schemas/SourceWatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
       x-codeSamples:
@@ -9994,6 +10318,93 @@ components:
         - sourceID
         - name
         - createdAt
+    runID:
+      type: string
+      description: Universally unique identifier (UUID) of a task run.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    eventID:
+      type: string
+      description: Universally unique identifier (UUID) of an event.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    EventStatus:
+      type: string
+      enum:
+        - created
+        - started
+        - retried
+        - failed
+        - succeeded
+        - critical
+    EventType:
+      type: string
+      enum:
+        - fetch
+        - record
+        - log
+        - transform
+    publishedAt:
+      type: string
+      description: Date of publish RFC 3339 format.
+    Event:
+      type: object
+      description: An event describe a step of the task execution flow..
+      additionalProperties: false
+      properties:
+        eventID:
+          $ref: '#/components/schemas/eventID'
+        runID:
+          $ref: '#/components/schemas/runID'
+        parentID:
+          type: string
+          description: The parent event, the cause of this event.
+          example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+        status:
+          $ref: '#/components/schemas/EventStatus'
+        type:
+          $ref: '#/components/schemas/EventType'
+        batchSize:
+          type: integer
+          description: The extracted record batch size.
+          example: 10
+          minimum: 0
+          multipleOf: 1
+        data:
+          type: object
+          additionalProperties: true
+        publishedAt:
+          $ref: '#/components/schemas/publishedAt'
+      required:
+        - eventID
+        - runID
+        - status
+        - type
+        - batchSize
+        - publishedAt
+    SourceWatchResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        runID:
+          $ref: '#/components/schemas/runID'
+        data:
+          type: array
+          description: >-
+            depending on the source type, the validation returns sampling data
+            of your source (JSON, CSV, BigQuery).
+          items:
+            type: object
+        events:
+          description: >-
+            in case of error, observability events will be added to the
+            response, if any.
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        message:
+          description: a message describing the outcome of a validate run.
+          type: string
+      required:
+        - message
     SourceSearch:
       type: object
       additionalProperties: false
@@ -10087,13 +10498,6 @@ components:
         - sourceID
         - name
         - updatedAt
-    DockerSourceStream:
-      type: object
-      description: Stream definition (see the Singer specification for details).
-    runID:
-      type: string
-      description: Universally unique identifier (UUID) of a task run.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     ActionType:
       type: string
       description: Action to perform on the Algolia index.
@@ -10689,70 +11093,12 @@ components:
         - runs
         - pagination
         - window
-    EventStatus:
-      type: string
-      enum:
-        - created
-        - started
-        - retried
-        - failed
-        - succeeded
-        - critical
-    EventType:
-      type: string
-      enum:
-        - fetch
-        - record
-        - log
-        - transform
     eventSortKeys:
       type: string
       description: Property by which to sort the list of task run events.
       enum:
         - status
         - type
-        - publishedAt
-    eventID:
-      type: string
-      description: Universally unique identifier (UUID) of an event.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    publishedAt:
-      type: string
-      description: Date of publish RFC 3339 format.
-    Event:
-      type: object
-      description: An event describe a step of the task execution flow..
-      additionalProperties: false
-      properties:
-        eventID:
-          $ref: '#/components/schemas/eventID'
-        runID:
-          $ref: '#/components/schemas/runID'
-        parentID:
-          type: string
-          description: The parent event, the cause of this event.
-          example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-        status:
-          $ref: '#/components/schemas/EventStatus'
-        type:
-          $ref: '#/components/schemas/EventType'
-        batchSize:
-          type: integer
-          description: The extracted record batch size.
-          example: 10
-          minimum: 0
-          multipleOf: 1
-        data:
-          type: object
-          additionalProperties: true
-        publishedAt:
-          $ref: '#/components/schemas/publishedAt'
-      required:
-        - eventID
-        - runID
-        - status
-        - type
-        - batchSize
         - publishedAt
   responses:
     BadRequest:

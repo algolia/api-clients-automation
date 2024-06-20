@@ -1000,26 +1000,6 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for GetDockerSourceStreams
-     * getDockerSourceStreams.
-     */
-    public function testGetDockerSourceStreams()
-    {
-        $client = $this->getClient();
-        $client->getDockerSourceStreams(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    /**
      * Test case for GetEvent
      * getEvent.
      */
@@ -1425,6 +1405,60 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 'method' => 'PATCH',
                 'body' => json_decode('{"enabled":false}'),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for ValidateSource
+     * validateSource.
+     */
+    public function testValidateSource()
+    {
+        $client = $this->getClient();
+        $client->validateSource(
+            ['type' => 'commercetools',
+                'name' => 'sourceName',
+                'input' => ['storeKeys' => [
+                    'myStore',
+                ],
+                    'locales' => [
+                        'de',
+                    ],
+                    'url' => 'http://commercetools.com',
+                    'projectKey' => 'keyID',
+                ],
+                'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/sources/validate',
+                'method' => 'POST',
+                'body' => json_decode('{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for ValidateSourceBeforeUpdate
+     * validateSourceBeforeUpdate.
+     */
+    public function testValidateSourceBeforeUpdate()
+    {
+        $client = $this->getClient();
+        $client->validateSourceBeforeUpdate(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['name' => 'newName',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate',
+                'method' => 'POST',
+                'body' => json_decode('{"name":"newName"}'),
             ],
         ]);
     }

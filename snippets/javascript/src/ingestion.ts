@@ -409,28 +409,6 @@ export async function snippetForGetDestinations(): Promise<void> {
   // SEPARATOR<
 }
 
-// Snippet for the getDockerSourceStreams method.
-//
-// getDockerSourceStreams
-export async function snippetForGetDockerSourceStreams(): Promise<void> {
-  // >SEPARATOR getDockerSourceStreams default
-  // Initialize the client
-  const client = ingestionClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
-
-  // Call the API
-  const response = await client.getDockerSourceStreams({
-    sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-  });
-
-  // use typed response
-  console.log(response);
-  // SEPARATOR<
-}
-
 // Snippet for the getEvent method.
 //
 // getEvent
@@ -832,6 +810,59 @@ export async function snippetForUpdateTask(): Promise<void> {
   const response = await client.updateTask({
     taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     taskUpdate: { enabled: false },
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the validateSource method.
+//
+// validateSource
+export async function snippetForValidateSource(): Promise<void> {
+  // >SEPARATOR validateSource default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.validateSource({
+    type: 'commercetools',
+    name: 'sourceName',
+    input: {
+      storeKeys: ['myStore'],
+      locales: ['de'],
+      url: 'http://commercetools.com',
+      projectKey: 'keyID',
+    },
+    authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the validateSourceBeforeUpdate method.
+//
+// validateSourceBeforeUpdate
+export async function snippetForValidateSourceBeforeUpdate(): Promise<void> {
+  // >SEPARATOR validateSourceBeforeUpdate default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.validateSourceBeforeUpdate({
+    sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    sourceUpdate: { name: 'newName' },
   });
 
   // use typed response
