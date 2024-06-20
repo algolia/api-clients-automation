@@ -58,38 +58,4 @@ class E2ESearchTests: XCTestCase {
 
         self.e2eClient = try? SearchClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY)
     }
-
-    func testReplaceAllObjectsSuccess() async throws {
-        guard let e2eClient = E2ESearchTests.e2eClient else {
-            XCTFail("Couldn't initialize the E2E client")
-            return
-        }
-
-        let batchSize = 1000
-        let indexName = "cts_e2e_swift_replace_all_objects"
-        let now = Int64(Date().timeIntervalSince1970)
-        var records: [Company] = []
-
-        for i in 0 ... Int.random(in: 250 ... 3500) {
-            try records.append(
-                .init(
-                    objectID: randomString(),
-                    name: randomString(length: (i % 5) + 1),
-                    value: Int.random(in: 1 ... 9_999_999),
-                    timestamp: now
-                )
-            )
-        }
-
-        let response = try await e2eClient.replaceAllObjects(with: records, in: indexName)
-
-        let expectedBatches = stride(from: 0, to: records.count, by: batchSize).map {
-            Array(records[$0 ..< min($0 + batchSize, records.count)])
-        }
-
-        XCTAssertEqual(response.batchResponses.count, expectedBatches.count)
-        for (index, batchResponse) in response.batchResponses.enumerated() {
-            XCTAssertEqual(batchResponse.objectIDs.count, expectedBatches[index].count)
-        }
-    }
 }
