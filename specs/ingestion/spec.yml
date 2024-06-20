@@ -88,6 +88,10 @@ tags:
     description: |
       Tasks contain information how your data should be read from a source and stored in a destination.
       Tasks have _triggers_ which determine when the task should run.
+  - name: transformations
+    x-displayName: Transformations
+    description: |
+      Transformations allows you to transform a record before it gets indexed in Algolia.
 x-tagGroups:
   - name: Resources
     tags:
