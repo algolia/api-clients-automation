@@ -1,37 +1,3 @@
-get:
-  tags:
-    - sources
-  summary: Retrieve a stream listing
-  description: |
-    Retrieves a stream listing for a source.
-
-    Listing streams only works with sources with `type: docker` and `imageType: singer`.
-  operationId: getDockerSourceStreams
-  x-acl:
-    - addObject
-    - deleteIndex
-    - editSettings
-  parameters:
-    - $ref: '../../common/parameters.yml#/pathSourceID'
-  responses:
-    '200':
-      description: OK
-      content:
-        application/json:
-          schema:
-            title: dockerSourceStreams
-            type: object
-            additionalProperties: false
-            properties:
-              streams:
-                type: array
-                items:
-                  $ref: '../../common/schemas/source.yml#/DockerSourceStream'
-            required:
-              - streams
-    '400':
-      $ref: '../../../common/responses/BadRequest.yml'
-
 post:
   tags:
     - sources
@@ -52,16 +18,6 @@ post:
       content:
         application/json:
           schema:
-            title: dockerSourceDiscover
-            type: object
-            additionalProperties: false
-            properties:
-              runID:
-                $ref: '../../common/schemas/common.yml#/runID'
-              createdAt:
-                $ref: '../../common/schemas/common.yml#/createdAt'
-            required:
-              - runID
-              - createdAt
+            $ref: '../../common/schemas/source.yml#/SourceWatchResponse'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
