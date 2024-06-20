@@ -147,6 +147,16 @@ paths:
   /1/tasks/{taskID}/disable:
     $ref: 'paths/tasks/disableTask.yml'
 
+  # transformations API.
+  /1/transformations:
+    $ref: 'paths/transformations/transformations.yml'
+  /1/transformations/try:
+    $ref: 'paths/transformations/transformationsTry.yml'
+  /1/transformations/search:
+    $ref: 'paths/transformations/transformationsSearch.yml'
+  /1/transformations/{transformationID}:
+    $ref: 'paths/transformations/transformationID.yml'
+
   # observability API.
   /1/runs:
     $ref: 'paths/runs/runs.yml'

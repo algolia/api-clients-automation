@@ -1,0 +1,63 @@
+get:
+  tags:
+    - transformations
+  summary: Retrieve a transformation
+  description: Retrieves a transformation by its ID.
+  operationId: getTransformation
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
+  parameters:
+    - $ref: '../../common/parameters.yml#/pathTransformationID'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/transformation.yml#/Transformation'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+
+put:
+  tags:
+    - transformations
+  summary: Update a transformation
+  description: Updates a transformation by its ID.
+  operationId: updateTransformation
+  parameters:
+    - $ref: '../../common/parameters.yml#/pathTransformationID'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/transformation.yml#/TransformationCreate'
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/transformation.yml#/TransformationUpdateResponse'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+
+delete:
+  tags:
+    - transformations
+  summary: Delete a transformation
+  description: Deletes a transformation by its ID.
+  operationId: deleteTransformation
+  parameters:
+    - $ref: '../../common/parameters.yml#/pathTransformationID'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/common.yml#/DeleteResponse'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'

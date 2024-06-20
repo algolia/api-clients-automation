@@ -1,0 +1,122 @@
+Transformation:
+  type: object
+  additionalProperties: false
+  properties:
+    transformationID:
+      $ref: './common.yml#/transformationID'
+    code:
+      $ref: '#/Code'
+    name:
+      $ref: '#/Name'
+    description:
+      $ref: '#/Description'
+    createdAt:
+      $ref: './common.yml#/createdAt'
+    updatedAt:
+      $ref: './common.yml#/updatedAt'
+  required:
+    - transformationID
+    - code
+    - name
+    - description
+    - createdAt
+
+Code:
+  type: string
+  description: The source code of the transformation.
+
+Name:
+  type: string
+  description: The uniquely identified name of your transformation.
+
+Description:
+  type: string
+  description: A descriptive name for your transformation of what it does.
+
+TransformationCreate:
+  type: object
+  additionalProperties: false
+  description: API request body for creating a transformation.
+  properties:
+    code:
+      $ref: '#/Code'
+    name:
+      $ref: '#/Name'
+    description:
+      $ref: '#/Description'
+  required:
+    - code
+    - name
+    - description
+
+TransformationCreateResponse:
+  type: object
+  additionalProperties: false
+  description: API response for creating a transformation.
+  properties:
+    transformationID:
+      $ref: './common.yml#/transformationID'
+    createdAt:
+      $ref: './common.yml#/createdAt'
+  required:
+    - transformationID
+    - createdAt
+
+TransformationUpdateResponse:
+  type: object
+  description: API response for updating a transformation.
+  additionalProperties: false
+  properties:
+    transformationID:
+      $ref: './common.yml#/transformationID'
+    updatedAt:
+      $ref: './common.yml#/updatedAt'
+  required:
+    - transformationID
+    - updatedAt
+
+TransformationSearch:
+  type: object
+  additionalProperties: false
+  properties:
+    transformationsIDs:
+      type: array
+      items:
+        $ref: './common.yml#/transformationID'
+  required:
+    - transformationsIDs
+
+TransformationTry:
+  type: object
+  additionalProperties: false
+  properties:
+    code:
+      $ref: '#/Code'
+    sampleRecord:
+      description: The record to apply the given code to.
+      type: object
+  required:
+    - code
+    - sampleRecord
+
+TransformationTryResponse:
+  type: object
+  additionalProperties: false
+  properties:
+    payloads:
+      type: array
+      description: The array of records returned by the transformation service.
+      items:
+        type: object
+    error:
+      type: object
+      description: The error if the transformation failed.
+      properties:
+        code:
+          description: The error status code.
+          type: integer
+        message:
+          description: A descriptive message explaining the failure.
+          type: string
+  required:
+    - payloads
