@@ -1,50 +1,6 @@
-<<<<<<< HEAD
-import type { PersonalizationClient } from '@algolia/client-personalization';
-import type { AnalyticsClient } from '@algolia/client-analytics';
-import type { AbtestingClient } from '@algolia/client-abtesting';
-
-import type { Region as AnalyticsRegion } from '{{{npmNamespace}}}/client-analytics/src/analyticsClient';
-import { createAnalyticsClient, REGIONS as analyticsRegions } from '{{{npmNamespace}}}/client-analytics/src/analyticsClient';
-
-import type { Region as AbtestingRegion } from '{{{npmNamespace}}}/client-abtesting/src/abtestingClient';
-import { createAbtestingClient, REGIONS as abtestingRegions } from '{{{npmNamespace}}}/client-abtesting/src/abtestingClient';
-
-import type { Region as PersonalizationRegion } from '{{{npmNamespace}}}/client-personalization/src/personalizationClient';
-import { createPersonalizationClient, REGIONS as personalizationRegions } from '{{{npmNamespace}}}/client-personalization/src/personalizationClient';
-import { createSearchClient, apiClientVersion as searchClientVersion } from '{{{npmNamespace}}}/client-search/src/searchClient';
-
-import { serializeQueryParameters  } from '{{{npmNamespace}}}/client-common';
-import type {} from '{{{npmNamespace}}}/client-common';
-import type { InitClientOptions, InitClientRegion, GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions } from "./models"
-
 {{#nodeSearchHelpers}}
 import {createHmac} from 'crypto';
 {{/nodeSearchHelpers}}
-||||||| parent of d9ac12f1c (feat(clients): add recommend to algoliasearch)
-import type { PersonalizationClient } from '@algolia/client-personalization';
-import type { AnalyticsClient } from '@algolia/client-analytics';
-import type { AbtestingClient } from '@algolia/client-abtesting';
-
-import type { Region as AnalyticsRegion } from '{{{npmNamespace}}}/client-analytics/src/analyticsClient';
-import { createAnalyticsClient, REGIONS as analyticsRegions } from '{{{npmNamespace}}}/client-analytics/src/analyticsClient';
-
-import type { Region as AbtestingRegion } from '{{{npmNamespace}}}/client-abtesting/src/abtestingClient';
-import { createAbtestingClient, REGIONS as abtestingRegions } from '{{{npmNamespace}}}/client-abtesting/src/abtestingClient';
-
-import type { Region as PersonalizationRegion } from '{{{npmNamespace}}}/client-personalization/src/personalizationClient';
-import { createPersonalizationClient, REGIONS as personalizationRegions } from '{{{npmNamespace}}}/client-personalization/src/personalizationClient';
-import { createSearchClient, apiClientVersion as searchClientVersion } from '{{{npmNamespace}}}/client-search/src/searchClient';
-
-import type { serializeQueryParameters  } from '{{{npmNamespace}}}/client-common';
-import type {} from '{{{npmNamespace}}}/client-common';
-import type { InitClientOptions, InitClientRegion, GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions } from "./models"
-
-{{#nodeSearchHelpers}}
-import {createHmac} from 'crypto';
-{{/nodeSearchHelpers}}
-=======
-import { createHmac } from 'crypto';
->>>>>>> d9ac12f1c (feat(clients): add recommend to algoliasearch)
 
 import {
   DEFAULT_CONNECT_TIMEOUT_BROWSER,
