@@ -150,7 +150,6 @@ export async function buildSpecs({
   // the `lite` spec will build the `recommend` spec, so we remove it from the list
   // to prevent concurrent builds
   if (clients.includes('algoliasearch')) {
-    // eslint-disable-next-line no-param-reassign
     clients = clients.filter((client) => client !== 'recommend');
   }
 
