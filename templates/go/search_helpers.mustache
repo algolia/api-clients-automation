@@ -4,29 +4,29 @@ Wraps WaitForTaskWithContext with context.Background().
 It returns the task response if the operation was successful.
 It returns an error if the operation failed.
 
-  @param indexName string - Index name.
-  @param taskID int64 - Task ID.
-  @param maxRetries *float64 - Maximum number of retries.
-  @param timeout func(float64) time.Duration - Timeout function.
-  @param opts ...Option - Optional parameters for the request.
-  @return *GetTaskResponse - Task response.
-  @return error - Error if any.
+		@param indexName string - Index name.
+		@param taskID int64 - Task ID.
+		@param maxRetries *float64 - Maximum number of retries.
+	  @param timeout func(float64) time.Duration - Timeout function.
+		@param opts ...Option - Optional parameters for the request.
+		@return *GetTaskResponse - Task response.
+		@return error - Error if any.
 */
 func (c *APIClient) WaitForTask(
-  indexName string,
-  taskID int64,
-  maxRetries *float64,
-  timeout func(float64) time.Duration,
-  opts ...Option,
+	indexName string,
+	taskID int64,
+	maxRetries *float64,
+	timeout func(float64) time.Duration,
+	opts ...Option,
 ) (*GetTaskResponse, error) {
-  return c.WaitForTaskWithContext(
-    context.Background(),
-    indexName,
-    taskID,
-    maxRetries,
-    timeout,
-    opts...,
-  )
+	return c.WaitForTaskWithContext(
+		context.Background(),
+		indexName,
+		taskID,
+		maxRetries,
+		timeout,
+		opts...,
+	)
 }
 
 /*
@@ -34,22 +34,22 @@ WaitForTaskWithContext waits for a task to be published.
 It returns the task response if the operation was successful.
 It returns an error if the operation failed.
 
-  @param ctx context.Context - The context that will be drilled down to the actual request.
-  @param indexName string - Index name.
-  @param taskID int64 - Task ID.
-  @param maxRetries *float64 - Maximum number of retries.
-  @param timeout func(float64) time.Duration - Timeout function.
-  @param opts ...Option - Optional parameters for the request.
-  @return *GetTaskResponse - Task response.
-  @return error - Error if any.
+	@param ctx context.Context - The context that will be drilled down to the actual request.
+	@param indexName string - Index name.
+	@param taskID int64 - Task ID.
+	@param maxRetries *float64 - Maximum number of retries.
+	@param timeout func(float64) time.Duration - Timeout function.
+	@param opts ...Option - Optional parameters for the request.
+	@return *GetTaskResponse - Task response.
+	@return error - Error if any.
 */
 func (c *APIClient) WaitForTaskWithContext(
-  ctx context.Context,
-  indexName string,
-  taskID int64,
-  maxRetries *float64,
-  timeout func(float64) time.Duration,
-  opts ...Option,
+	ctx context.Context,
+	indexName string,
+	taskID int64,
+	maxRetries *float64,
+	timeout func(float64) time.Duration,
+	opts ...Option,
 ) (*GetTaskResponse, error) {
 	retryCount := float64(0)
 
@@ -98,26 +98,26 @@ Wraps WaitForAppTask with context.Background().
 It returns the task response if the operation was successful.
 It returns an error if the operation failed.
 
-  @param taskID int64 - Task ID.
-  @param maxRetries *float64 - Maximum number of retries.
-  @param timeout func(float64) time.Duration - Timeout function.
-  @param opts ...Option - Optional parameters for the request.
-  @return *GetTaskResponse - Task response.
-  @return error - Error if any.
+	@param taskID int64 - Task ID.
+	@param maxRetries *float64 - Maximum number of retries.
+	@param timeout func(float64) time.Duration - Timeout function.
+	@param opts ...Option - Optional parameters for the request.
+	@return *GetTaskResponse - Task response.
+	@return error - Error if any.
 */
 func (c *APIClient) WaitForAppTask(
-  taskID int64,
-  maxRetries *float64,
-  timeout func(float64) time.Duration,
-  opts ...Option,
+	taskID int64,
+	maxRetries *float64,
+	timeout func(float64) time.Duration,
+	opts ...Option,
 ) (*GetTaskResponse, error) {
-  return c.WaitForAppTaskWithContext(
-    context.Background(),
-    taskID,
-    maxRetries,
-    timeout,
-    opts...,
-  )
+	return c.WaitForAppTaskWithContext(
+		context.Background(),
+		taskID,
+		maxRetries,
+		timeout,
+		opts...,
+	)
 }
 
 /*
@@ -125,20 +125,20 @@ WaitForAppTaskWithContext waits for an application-level task to be published.
 It returns the task response if the operation was successful.
 It returns an error if the operation failed.
 
-  @param ctx context.Context - The context that will be drilled down to the actual request.
-  @param taskID int64 - Task ID.
-  @param maxRetries *float64 - Maximum number of retries.
-  @param timeout func(float64) time.Duration - Timeout function.
-  @param opts ...Option - Optional parameters for the request.
-  @return *GetTaskResponse - Task response.
-  @return error - Error if any.
+	@param ctx context.Context - The context that will be drilled down to the actual request.
+	@param taskID int64 - Task ID.
+	@param maxRetries *float64 - Maximum number of retries.
+	@param timeout func(float64) time.Duration - Timeout function.
+	@param opts ...Option - Optional parameters for the request.
+	@return *GetTaskResponse - Task response.
+	@return error - Error if any.
 */
 func (c *APIClient) WaitForAppTaskWithContext(
-  ctx context.Context,
-  taskID int64,
-  maxRetries *float64,
-  timeout func(float64) time.Duration,
-  opts ...Option,
+	ctx context.Context,
+	taskID int64,
+	maxRetries *float64,
+	timeout func(float64) time.Duration,
+	opts ...Option,
 ) (*GetTaskResponse, error) {
 	retryCount := float64(0)
 
@@ -194,28 +194,28 @@ The operation can be one of the following:
 If the operation is "update", the apiKey parameter must be set.
 If the operation is "delete" or "add", the apiKey parameter is not used.
 
-  @param operation ApiKeyOperation - Operation type - add, delete or update.
-  @param key string - API key.
-  @param apiKey *ApiKey - API key structure - required for update operation.
-  @param opts ...Option - Optional parameters for the request.
-  @return *GetApiKeyResponse - API key response.
-  @return error - Error if any.
+	@param operation ApiKeyOperation - Operation type - add, delete or update.
+	@param key string - API key.
+	@param apiKey *ApiKey - API key structure - required for update operation.
+	@param opts ...Option - Optional parameters for the request.
+	@return *GetApiKeyResponse - API key response.
+	@return error - Error if any.
 */
 func (c *APIClient) WaitForApiKey(
-  operation ApiKeyOperation,
-  key string,
-  apiKey *ApiKey,
-  opts ...Option,
+	operation ApiKeyOperation,
+	key string,
+	apiKey *ApiKey,
+	opts ...Option,
 ) (*GetApiKeyResponse, error) {
-  return c.WaitForApiKeyWithContext(
-    context.Background(),
-    operation,
-    key,
-    apiKey,
-    nil,
-    nil,
-    opts...,
-  )
+	return c.WaitForApiKeyWithContext(
+		context.Background(),
+		operation,
+		key,
+		apiKey,
+		nil,
+		nil,
+		opts...,
+	)
 }
 
 /*
@@ -232,32 +232,32 @@ The operation can be one of the following:
 If the operation is "update", the apiKey parameter must be set.
 If the operation is "delete" or "add", the apiKey parameter is not used.
 
-  @param operation ApiKeyOperation - Operation type - add, delete or update.
-  @param key string - API key.
-  @param apiKey *ApiKey - API key structure - required for update operation.
-  @param maxRetries *float64 - Maximum number of retries.
-  @param timeout func(float64) time.Duration - Timeout function.
-  @param opts ...Option - Optional parameters for the request.
-  @return *GetApiKeyResponse - API key response.
-  @return error - Error if any.
+	@param operation ApiKeyOperation - Operation type - add, delete or update.
+	@param key string - API key.
+	@param apiKey *ApiKey - API key structure - required for update operation.
+	@param maxRetries *float64 - Maximum number of retries.
+	@param timeout func(float64) time.Duration - Timeout function.
+	@param opts ...Option - Optional parameters for the request.
+	@return *GetApiKeyResponse - API key response.
+	@return error - Error if any.
 */
 func (c *APIClient) WaitForApiKeyWithOptions(
-  operation ApiKeyOperation,
-  key string,
-  apiKey *ApiKey,
-  maxRetries *float64,
-  timeout func(float64) time.Duration,
-  opts ...Option,
+	operation ApiKeyOperation,
+	key string,
+	apiKey *ApiKey,
+	maxRetries *float64,
+	timeout func(float64) time.Duration,
+	opts ...Option,
 ) (*GetApiKeyResponse, error) {
-  return c.WaitForApiKeyWithContext(
-    context.Background(),
-    operation,
-    key,
-    apiKey,
-    maxRetries,
-    timeout,
-    opts...,
-  )
+	return c.WaitForApiKeyWithContext(
+		context.Background(),
+		operation,
+		key,
+		apiKey,
+		maxRetries,
+		timeout,
+		opts...,
+	)
 }
 
 /*
@@ -273,28 +273,28 @@ The operation can be one of the following:
 If the operation is "update", the apiKey parameter must be set.
 If the operation is "delete" or "add", the apiKey parameter is not used.
 
-  @param ctx context.Context - The context that will be drilled down to the actual request.
-  @param operation ApiKeyOperation - Operation type - add, delete or update.
-  @param key string - API key.
-  @param apiKey *ApiKey - API key structure - required for update operation.
-  @param maxRetries *float64 - Maximum number of retries.
-  @param timeout func(float64) time.Duration - Timeout function.
-  @param opts ...Option - Optional parameters for the request.
-  @return *GetApiKeyResponse - API key response.
-  @return error - Error if any.
+	@param ctx context.Context - The context that will be drilled down to the actual request.
+	@param operation ApiKeyOperation - Operation type - add, delete or update.
+	@param key string - API key.
+	@param apiKey *ApiKey - API key structure - required for update operation.
+	@param maxRetries *float64 - Maximum number of retries.
+	@param timeout func(float64) time.Duration - Timeout function.
+	@param opts ...Option - Optional parameters for the request.
+	@return *GetApiKeyResponse - API key response.
+	@return error - Error if any.
 */
 func (c *APIClient) WaitForApiKeyWithContext(
-  ctx context.Context,
-  operation ApiKeyOperation,
-  key string,
-  apiKey *ApiKey,
-  maxRetries *float64,
-  timeout func(float64) time.Duration,
-  opts ...Option,
+	ctx context.Context,
+	operation ApiKeyOperation,
+	key string,
+	apiKey *ApiKey,
+	maxRetries *float64,
+	timeout func(float64) time.Duration,
+	opts ...Option,
 ) (*GetApiKeyResponse, error) {
-  if operation != API_KEY_OPERATION_ADD && operation != API_KEY_OPERATION_DELETE && operation != API_KEY_OPERATION_UPDATE {
-    return nil, &errs.WaitKeyOperationError{}
-  }
+	if operation != API_KEY_OPERATION_ADD && operation != API_KEY_OPERATION_DELETE && operation != API_KEY_OPERATION_UPDATE {
+		return nil, &errs.WaitKeyOperationError{}
+	}
 
 	retryCount := float64(0)
 
