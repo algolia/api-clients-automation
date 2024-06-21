@@ -2,7 +2,10 @@
   "name": "@algolia/client-usage",
   "version": "0.0.2-beta.4",
   "description": "JavaScript client for client-usage",
-  "repository": "algolia/algoliasearch-client-javascript",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
+  },
   "license": "MIT",
   "author": "Algolia",
   "type": "module",
@@ -39,9 +42,9 @@
     "clean": "rm -rf ./dist || true"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-beta.4",
-    "@algolia/requester-browser-xhr": "5.0.0-beta.4",
-    "@algolia/requester-node-http": "5.0.0-beta.4"
+    "@algolia/client-common": "5.0.0-beta.5",
+    "@algolia/requester-browser-xhr": "5.0.0-beta.5",
+    "@algolia/requester-node-http": "5.0.0-beta.5"
   },
   "devDependencies": {
     "@types/node": "20.14.2",

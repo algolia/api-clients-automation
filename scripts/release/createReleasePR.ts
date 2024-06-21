@@ -213,13 +213,13 @@ export async function decideReleaseStrategy({
   versions,
   commits,
   languages,
-  major,
+  releaseType,
   dryRun,
 }: {
   versions: VersionsBeforeBump;
   commits: PassedCommit[];
   languages: Language[];
-  major?: boolean;
+  releaseType?: semver.ReleaseType;
   dryRun?: boolean;
 }): Promise<Versions> {
   const versionsToPublish: Versions = {};
@@ -253,11 +253,13 @@ export async function decideReleaseStrategy({
 
     console.log(`Deciding next version bump for ${lang}.`);
 
-    if (dryRun) {
+    // we force the release for this language in this case if there was no commits
+    if (dryRun || releaseType) {
       nbGitDiff = 1;
+      commitsPerLang.length = 1;
     }
 
-    if (!major && (nbGitDiff === 0 || commitsPerLang.length === 0)) {
+    if (nbGitDiff === 0 || commitsPerLang.length === 0) {
       versionsToPublish[lang] = {
         ...version,
         noCommit: true,
@@ -277,32 +279,36 @@ export async function decideReleaseStrategy({
       continue;
     }
 
-    let releaseType: semver.ReleaseType = 'patch';
+    let langReleaseType: semver.ReleaseType = 'patch';
     let skipRelease = false;
     const commitTypes = new Set(commitsPerLang.map(({ type }) => type));
 
     switch (true) {
-      case major || commitsPerLang.some((commit) => commit.message.includes('BREAKING CHANGE')):
-        releaseType = 'major';
+      case commitsPerLang.some((commit) => commit.message.includes('BREAKING CHANGE')):
+        langReleaseType = 'major';
         break;
       case semver.prerelease(currentVersion) && !currentVersion.endsWith('-SNAPSHOT'):
-        releaseType = 'prerelease';
+        langReleaseType = 'prerelease';
         break;
       case commitTypes.has('feat'):
-        releaseType = 'minor';
+        langReleaseType = 'minor';
         break;
       case !commitTypes.has('fix'):
         skipRelease = true;
         break;
       default:
-        releaseType = 'patch';
+        langReleaseType = 'patch';
+    }
+
+    if (releaseType) {
+      langReleaseType = releaseType;
     }
 
     versionsToPublish[lang] = {
       ...version,
-      releaseType,
+      releaseType: langReleaseType,
       skipRelease,
-      next: getNextVersion(currentVersion, releaseType),
+      next: getNextVersion(currentVersion, langReleaseType),
     };
   }
 
@@ -486,11 +492,11 @@ export async function updateSLA(versions: Versions, graphOnly?: boolean): Promis
 
 export async function createReleasePR({
   languages,
-  major,
+  releaseType,
   dryRun,
 }: {
   languages: Language[];
-  major?: boolean;
+  releaseType?: semver.ReleaseType;
   dryRun?: boolean;
 }): Promise<void> {
   if (!dryRun) {
@@ -504,7 +510,7 @@ export async function createReleasePR({
     versions: readVersions(),
     commits: validCommits,
     languages,
-    major,
+    releaseType,
   });
 
   await updateSLA(versions, false);

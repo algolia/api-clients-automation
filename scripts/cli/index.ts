@@ -1,4 +1,5 @@
 import { Argument, program } from 'commander';
+import semver from 'semver';
 
 import { buildClients } from '../buildClients.js';
 import { LANGUAGES, setVerbose } from '../common.js';
@@ -201,10 +202,20 @@ program
   .description('Releases the client')
   .addArgument(args.languages)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option('-m, --major', 'triggers a major release for the given language list')
+  .option<semver.ReleaseType>(
+    '-rt --releaseType <type>',
+    'triggers a release for the given language list with the given releaseType',
+    (value, _previous) => {
+      if (semver.RELEASE_TYPES.includes(value as semver.ReleaseType)) {
+        return value as semver.ReleaseType;
+      }
+      return 'patch';
+    },
+    undefined,
+  )
   .option('-d, --dry-run', 'does not push anything to GitHub')
   .option('-gg, --generate-graph', 'only generates the graph')
-  .action(async (langArgs: LangArg[], { verbose, major, dryRun, generateGraph }) => {
+  .action(async (langArgs: LangArg[], { verbose, releaseType, dryRun, generateGraph }) => {
     setVerbose(Boolean(verbose));
 
     if (generateGraph) {
@@ -219,7 +230,7 @@ program
 
     await createReleasePR({
       languages: langArgs.includes(ALL) ? LANGUAGES : (langArgs as Language[]),
-      major,
+      releaseType,
       dryRun,
     });
   });
