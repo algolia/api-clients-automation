@@ -201,10 +201,12 @@ program
   .description('Releases the client')
   .addArgument(args.languages)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option('-m, --major', 'triggers a major release for the given language list')
+  .option('-ma, --major', 'triggers a major release for the given language list')
+  .option('-mi, --minor', 'triggers a minor release for the given language list')
+  .option('-pa, --patch', 'triggers a patch release for the given language list')
   .option('-d, --dry-run', 'does not push anything to GitHub')
   .option('-gg, --generate-graph', 'only generates the graph')
-  .action(async (langArgs: LangArg[], { verbose, major, dryRun, generateGraph }) => {
+  .action(async (langArgs: LangArg[], { verbose, major, minor, patch, dryRun, generateGraph }) => {
     setVerbose(Boolean(verbose));
 
     if (generateGraph) {
@@ -219,7 +221,7 @@ program
 
     await createReleasePR({
       languages: langArgs.includes(ALL) ? LANGUAGES : (langArgs as Language[]),
-      major,
+      releaseType: (major && 'major') || (minor && 'minor') || (patch && 'patch') || undefined,
       dryRun,
     });
   });
