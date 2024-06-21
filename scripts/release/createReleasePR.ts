@@ -301,6 +301,7 @@ export async function decideReleaseStrategy({
     }
 
     if (releaseType) {
+      skipRelease = false;
       langReleaseType = releaseType;
     }
 
@@ -385,7 +386,7 @@ async function prepareGitEnvironment(): Promise<void> {
     throw new Error(`You can run this script only from \`${MAIN_BRANCH}\` branch.`);
   }
 
-  if ((await getNbGitDiff({ head: null })) !== 0) {
+  if (!process.env.FORCE && (await getNbGitDiff({ head: null })) !== 0) {
     throw new Error('Working directory is not clean. Commit all the changes first.');
   }
 

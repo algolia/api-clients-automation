@@ -1,3 +1,7 @@
+## [3.0.0.beta.6](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.beta.5...3.0.0.beta.6)
+
+
+
 ## [3.0.0.beta.5](https://github.com/algolia/algoliasearch-client-ruby/compare/3.0.0.beta.4...3.0.0.beta.5)
 
 - [b7ae19f2b](https://github.com/algolia/api-clients-automation/commit/b7ae19f2b) feat(specs): add transformations endpoints to ingestion ([#3215](https://github.com/algolia/api-clients-automation/pull/3215)) by [@shortcuts](https://github.com/shortcuts/)
