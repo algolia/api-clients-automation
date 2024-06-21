@@ -572,7 +572,7 @@ export async function createReleasePR({
   console.log(`Pushing updated changes to: ${headBranch}`);
   const commitMessage = generationCommitText.commitPrepareReleaseMessage;
   await run('git add .');
-  await run(`CI=false git commit -m "${commitMessage}"`);
+  await run(`CI=true git commit -m "${commitMessage}"`);
 
   // cleanup all the changes to the generated files (the ones not commited because of the pre-commit hook)
   await run(`git checkout .`);
