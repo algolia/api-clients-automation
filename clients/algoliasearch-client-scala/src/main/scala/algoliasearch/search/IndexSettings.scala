@@ -90,7 +90,9 @@ import algoliasearch.search.SupportedLanguage._
   *   words, and are particularly prevalent in Germanic languages—for example, \"firefighter\". With decompounding, the
   *   individual components are indexed separately. You can specify different lists for different languages.
   *   Decompounding is supported for these languages: Dutch (`nl`), German (`de`), Finnish (`fi`), Danish (`da`),
-  *   Swedish (`sv`), and Norwegian (`no`).
+  *   Swedish (`sv`), and Norwegian (`no`). Decompounding doesn't work for words with [non-spacing mark Unicode
+  *   characters](https://www.charactercodes.net/category/non-spacing_mark). For example, `Gartenstühle` won't be
+  *   decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
   * @param indexLanguages
   *   Languages for language-specific processing steps, such as word detection and dictionary settings. **You should
   *   always specify an indexing language.** If you don't specify an indexing language, the search engine uses all
@@ -227,9 +229,12 @@ import algoliasearch.search.SupportedLanguage._
   *   unexpected search results. For more information, see [Language-specific
   *   configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
   * @param decompoundQuery
-  *   Whether to split compound words into their building blocks. For more information, see [Word
+  *   Whether to split compound words in the query into their building blocks. For more information, see [Word
   *   segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words).
-  *   Word segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and Norwegian.
+  *   Word segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and Norwegian. Decompounding
+  *   doesn't work for words with [non-spacing mark Unicode
+  *   characters](https://www.charactercodes.net/category/non-spacing_mark). For example, `Gartenstühle` won't be
+  *   decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
   * @param enableRules
   *   Whether to enable rules.
   * @param enablePersonalization

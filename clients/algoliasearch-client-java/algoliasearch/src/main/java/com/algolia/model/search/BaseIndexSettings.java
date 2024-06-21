@@ -249,7 +249,9 @@ public class BaseIndexSettings {
    * \"firefighter\". With decompounding, the individual components are indexed separately. You can
    * specify different lists for different languages. Decompounding is supported for these
    * languages: Dutch (`nl`), German (`de`), Finnish (`fi`), Danish (`da`), Swedish (`sv`), and
-   * Norwegian (`no`).
+   * Norwegian (`no`). Decompounding doesn't work for words with [non-spacing mark Unicode
+   * characters](https://www.charactercodes.net/category/non-spacing_mark). For example,
+   * `Gartenstühle` won't be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
    */
   @javax.annotation.Nullable
   public Object getDecompoundedAttributes() {
