@@ -364,7 +364,13 @@ func (c *APIClient) WaitForApiKeyWithContext(
 		validateFunc = func(response *GetApiKeyResponse, err error) bool {
 			switch operation {
 			case API_KEY_OPERATION_ADD:
-				return err == nil && response != nil && response.CreatedAt > 0
+				if _, ok := err.(*APIError); ok {
+					apiErr := err.(*APIError)
+
+					return apiErr.Status != 404
+				}
+
+				return true
 			case API_KEY_OPERATION_DELETE:
 				if _, ok := err.(*APIError); ok {
 					apiErr := err.(*APIError)
