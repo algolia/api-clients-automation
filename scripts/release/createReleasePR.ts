@@ -301,6 +301,7 @@ export async function decideReleaseStrategy({
     }
 
     if (releaseType) {
+      skipRelease = false;
       langReleaseType = releaseType;
     }
 
@@ -385,7 +386,7 @@ async function prepareGitEnvironment(): Promise<void> {
     throw new Error(`You can run this script only from \`${MAIN_BRANCH}\` branch.`);
   }
 
-  if ((await getNbGitDiff({ head: null })) !== 0) {
+  if (!process.env.FORCE && (await getNbGitDiff({ head: null })) !== 0) {
     throw new Error('Working directory is not clean. Commit all the changes first.');
   }
 
@@ -571,7 +572,7 @@ export async function createReleasePR({
   console.log(`Pushing updated changes to: ${headBranch}`);
   const commitMessage = generationCommitText.commitPrepareReleaseMessage;
   await run('git add .');
-  await run(`CI=false git commit -m "${commitMessage}"`);
+  await run(`CI=true git commit -m "${commitMessage}"`);
 
   // cleanup all the changes to the generated files (the ones not commited because of the pre-commit hook)
   await run(`git checkout .`);
