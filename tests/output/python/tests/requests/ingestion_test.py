@@ -197,6 +197,26 @@ class TestIngestionClient:
             """{"sourceID":"search","destinationID":"destinationName","trigger":{"type":"onDemand"},"action":"replace"}"""
         )
 
+    async def test_create_transformation_(self):
+        """
+        createTransformation
+        """
+        _req = await self._client.create_transformation_with_http_info(
+            transformation_create={
+                "code": "foo",
+                "name": "bar",
+                "description": "baz",
+            },
+        )
+
+        assert _req.path == "/1/transformations"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"code":"foo","name":"bar","description":"baz"}"""
+        )
+
     async def test_custom_delete_(self):
         """
         allow del method for a custom path with minimal parameters
@@ -640,6 +660,20 @@ class TestIngestionClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    async def test_delete_transformation_(self):
+        """
+        deleteTransformation
+        """
+        _req = await self._client.delete_transformation_with_http_info(
+            transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
+
+        assert _req.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        assert _req.verb == "DELETE"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     async def test_disable_task_(self):
         """
         disableTask
@@ -931,6 +965,32 @@ class TestIngestionClient:
         assert _req.headers.items() >= {}.items()
         assert _req.data is None
 
+    async def test_get_transformation_(self):
+        """
+        getTransformation
+        """
+        _req = await self._client.get_transformation_with_http_info(
+            transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
+
+        assert _req.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
+    async def test_get_transformations_(self):
+        """
+        getTransformations
+        """
+        _req = await self._client.get_transformations_with_http_info()
+
+        assert _req.path == "/1/transformations"
+        assert _req.verb == "GET"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert _req.data is None
+
     async def test_run_task_(self):
         """
         runTask
@@ -1058,6 +1118,28 @@ class TestIngestionClient:
         )
         assert self._helpers.union(_expected_body, resp) == _expected_body
 
+    async def test_search_transformations_(self):
+        """
+        searchTransformations
+        """
+        _req = await self._client.search_transformations_with_http_info(
+            transformation_search={
+                "transformationsIDs": [
+                    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                    "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                    "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+                ],
+            },
+        )
+
+        assert _req.path == "/1/transformations/search"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"transformationsIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}"""
+        )
+
     async def test_trigger_docker_source_discover_(self):
         """
         triggerDockerSourceDiscover
@@ -1070,6 +1152,27 @@ class TestIngestionClient:
         assert _req.verb == "POST"
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
+
+    async def test_try_transformations_(self):
+        """
+        tryTransformations
+        """
+        _req = await self._client.try_transformations_with_http_info(
+            transformation_try={
+                "code": "foo",
+                "sampleRecord": {
+                    "bar": "baz",
+                },
+            },
+        )
+
+        assert _req.path == "/1/transformations/try"
+        assert _req.verb == "POST"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"code":"foo","sampleRecord":{"bar":"baz"}}"""
+        )
 
     async def test_update_authentication_(self):
         """
@@ -1138,6 +1241,27 @@ class TestIngestionClient:
         assert _req.query_parameters.items() == {}.items()
         assert _req.headers.items() >= {}.items()
         assert loads(_req.data) == loads("""{"enabled":false}""")
+
+    async def test_update_transformation_(self):
+        """
+        updateTransformation
+        """
+        _req = await self._client.update_transformation_with_http_info(
+            transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            transformation_create={
+                "code": "foo",
+                "name": "bar",
+                "description": "baz",
+            },
+        )
+
+        assert _req.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        assert _req.verb == "PUT"
+        assert _req.query_parameters.items() == {}.items()
+        assert _req.headers.items() >= {}.items()
+        assert loads(_req.data) == loads(
+            """{"code":"foo","name":"bar","description":"baz"}"""
+        )
 
     async def test_validate_source_(self):
         """

@@ -31,6 +31,7 @@ import algoliasearch.ingestion.ListDestinationsResponse
 import algoliasearch.ingestion.ListEventsResponse
 import algoliasearch.ingestion.ListSourcesResponse
 import algoliasearch.ingestion.ListTasksResponse
+import algoliasearch.ingestion.ListTransformationsResponse
 import algoliasearch.ingestion.OrderKeys._
 import algoliasearch.ingestion.PlatformWithNone
 import algoliasearch.ingestion.Run
@@ -38,6 +39,7 @@ import algoliasearch.ingestion.RunListResponse
 import algoliasearch.ingestion.RunResponse
 import algoliasearch.ingestion.RunSortKeys._
 import algoliasearch.ingestion.RunStatus._
+import algoliasearch.ingestion.SortKeys._
 import algoliasearch.ingestion.Source
 import algoliasearch.ingestion.SourceCreate
 import algoliasearch.ingestion.SourceCreateResponse
@@ -54,6 +56,13 @@ import algoliasearch.ingestion.TaskSearch
 import algoliasearch.ingestion.TaskSortKeys._
 import algoliasearch.ingestion.TaskUpdate
 import algoliasearch.ingestion.TaskUpdateResponse
+import algoliasearch.ingestion.Transformation
+import algoliasearch.ingestion.TransformationCreate
+import algoliasearch.ingestion.TransformationCreateResponse
+import algoliasearch.ingestion.TransformationSearch
+import algoliasearch.ingestion.TransformationTry
+import algoliasearch.ingestion.TransformationTryResponse
+import algoliasearch.ingestion.TransformationUpdateResponse
 import algoliasearch.ingestion.TriggerType._
 import algoliasearch.ingestion._
 import algoliasearch.ApiClient
@@ -204,6 +213,28 @@ class IngestionClient(
       .withBody(taskCreate)
       .build()
     execute[TaskCreateResponse](request, requestOptions)
+  }
+
+  /** Creates a new transformation.
+    *
+    * @param transformationCreate
+    *   Request body for creating a transformation.
+    */
+  def createTransformation(transformationCreate: TransformationCreate, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[TransformationCreateResponse] = Future {
+    requireNotNull(
+      transformationCreate,
+      "Parameter `transformationCreate` is required when calling `createTransformation`."
+    )
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1/transformations")
+      .withBody(transformationCreate)
+      .build()
+    execute[TransformationCreateResponse](request, requestOptions)
   }
 
   /** This method allow you to send requests to the Algolia REST API.
@@ -390,6 +421,24 @@ class IngestionClient(
       .builder()
       .withMethod("DELETE")
       .withPath(s"/1/tasks/${escape(taskID)}")
+      .build()
+    execute[DeleteResponse](request, requestOptions)
+  }
+
+  /** Deletes a transformation by its ID.
+    *
+    * @param transformationID
+    *   Unique identifier of a transformation.
+    */
+  def deleteTransformation(transformationID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[DeleteResponse] = Future {
+    requireNotNull(transformationID, "Parameter `transformationID` is required when calling `deleteTransformation`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("DELETE")
+      .withPath(s"/1/transformations/${escape(transformationID)}")
       .build()
     execute[DeleteResponse](request, requestOptions)
   }
@@ -878,6 +927,57 @@ class IngestionClient(
     execute[ListTasksResponse](request, requestOptions)
   }
 
+  /** Retrieves a transformation by its ID.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param transformationID
+    *   Unique identifier of a transformation.
+    */
+  def getTransformation(transformationID: String, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[Transformation] = Future {
+    requireNotNull(transformationID, "Parameter `transformationID` is required when calling `getTransformation`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/1/transformations/${escape(transformationID)}")
+      .build()
+    execute[Transformation](request, requestOptions)
+  }
+
+  /** Retrieves a list of transformations.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    *
+    * @param sort
+    *   Property by which to sort the list.
+    * @param order
+    *   Sort order of the response, ascending or descending.
+    */
+  def getTransformations(
+      sort: Option[SortKeys] = None,
+      order: Option[OrderKeys] = None,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[ListTransformationsResponse] = Future {
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("GET")
+      .withPath(s"/1/transformations")
+      .withQueryParameter("sort", sort)
+      .withQueryParameter("order", order)
+      .build()
+    execute[ListTransformationsResponse](request, requestOptions)
+  }
+
   /** Runs a task. You can check the status of task runs with the observability endpoints.
     *
     * Required API Key ACLs:
@@ -988,6 +1088,30 @@ class IngestionClient(
     execute[Seq[Task]](request, requestOptions)
   }
 
+  /** Searches for transformations.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    */
+  def searchTransformations(transformationSearch: TransformationSearch, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[Seq[Transformation]] = Future {
+    requireNotNull(
+      transformationSearch,
+      "Parameter `transformationSearch` is required when calling `searchTransformations`."
+    )
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1/transformations/search")
+      .withBody(transformationSearch)
+      .build()
+    execute[Seq[Transformation]](request, requestOptions)
+  }
+
   /** Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with
     * `type: docker` and `imageType: singer`.
     *
@@ -1010,6 +1134,27 @@ class IngestionClient(
       .withPath(s"/1/sources/${escape(sourceID)}/discover")
       .build()
     execute[SourceWatchResponse](request, requestOptions)
+  }
+
+  /** Searches for transformations.
+    *
+    * Required API Key ACLs:
+    *   - addObject
+    *   - deleteIndex
+    *   - editSettings
+    */
+  def tryTransformations(transformationTry: TransformationTry, requestOptions: Option[RequestOptions] = None)(implicit
+      ec: ExecutionContext
+  ): Future[TransformationTryResponse] = Future {
+    requireNotNull(transformationTry, "Parameter `transformationTry` is required when calling `tryTransformations`.")
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/1/transformations/try")
+      .withBody(transformationTry)
+      .build()
+    execute[TransformationTryResponse](request, requestOptions)
   }
 
   /** Updates an authentication resource.
@@ -1112,6 +1257,31 @@ class IngestionClient(
       .withBody(taskUpdate)
       .build()
     execute[TaskUpdateResponse](request, requestOptions)
+  }
+
+  /** Updates a transformation by its ID.
+    *
+    * @param transformationID
+    *   Unique identifier of a transformation.
+    */
+  def updateTransformation(
+      transformationID: String,
+      transformationCreate: TransformationCreate,
+      requestOptions: Option[RequestOptions] = None
+  )(implicit ec: ExecutionContext): Future[TransformationUpdateResponse] = Future {
+    requireNotNull(transformationID, "Parameter `transformationID` is required when calling `updateTransformation`.")
+    requireNotNull(
+      transformationCreate,
+      "Parameter `transformationCreate` is required when calling `updateTransformation`."
+    )
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("PUT")
+      .withPath(s"/1/transformations/${escape(transformationID)}")
+      .withBody(transformationCreate)
+      .build()
+    execute[TransformationUpdateResponse](request, requestOptions)
   }
 
   /** Validates a source payload to ensure it can be created and that the data source can be reached by Algolia.

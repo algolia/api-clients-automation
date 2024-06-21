@@ -1,0 +1,10 @@
+[
+  {
+    "testName": "getTransformations",
+    "parameters": {},
+    "request": {
+      "path": "/1/transformations",
+      "method": "GET"
+    }
+  }
+]

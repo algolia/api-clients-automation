@@ -55,6 +55,12 @@ taskID:
   description: Universally unique identifier (UUID) of a task.
   example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
 
+transformationID:
+  type: string
+  # format: uuid
+  description: Universally unique identifier (UUID) of a transformation.
+  example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+
 runID:
   type: string
   # format: uuid
