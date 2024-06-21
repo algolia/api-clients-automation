@@ -16,14 +16,12 @@ apic release <language... | all>
 
 ### Available options
 
-| Option         | Command               | Description                                                                   |
-|----------------|:----------------------|:----------------------------------------------------------------------------- |
-| verbose        | -v, --verbose         | Make the process verbose, display logs from third party tools                 |
-| dry run        | -d, --dry-run         | Locally generate a new release but do not push to GitHub                      |
-| generate graph | -gg, --generate-graph | Generates the SLA graph for the given parameters                              |
-| major          | -ma, --major          | Forces the release script to create a major release for the given client list |
-| minor          | -mi, --minor          | Forces the release script to create a minor release for the given client list |
-| patch          | -pa, --patch          | Forces the release script to create a patch release for the given client list |
+| Option         | Command               | Description                                                                                      |
+|----------------|:----------------------|:------------------------------------------------------------------------------------------------ |
+| verbose        | -v, --verbose         | Make the process verbose, display logs from third party tools                                    |
+| dry run        | -d, --dry-run         | Locally generate a new release but do not push to GitHub                                         |
+| generate graph | -gg, --generate-graph | Generates the SLA graph for the given parameters                                                 |
+| releaseType    | -rt, --releaseType    | Forces the release script to create a release for the given client list of the given releaseType |
 
 ## Release
 

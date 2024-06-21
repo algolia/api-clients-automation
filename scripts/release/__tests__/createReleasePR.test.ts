@@ -459,7 +459,7 @@ describe('createReleasePR', () => {
       expect(versions.javascript.next).toEqual('1.0.0');
     });
 
-    for (const releaseType of ['major', 'minor', 'patch']) {
+    for (const releaseType of ['major', 'minor', 'patch', 'prerelease']) {
     it(`allows forcing ${releaseType} releases`, async () => {
       const versions = await decideReleaseStrategy({
         versions: {
