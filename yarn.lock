@@ -8578,15 +8578,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"file-entry-cache@npm:8.0.0":
-  version: 8.0.0
-  resolution: "file-entry-cache@npm:8.0.0"
-  dependencies:
-    flat-cache: "npm:^4.0.0"
-  checksum: 10/afe55c4de4e0d226a23c1eae62a7219aafb390859122608a89fa4df6addf55c7fd3f1a2da6f5b41e7cdff496e4cf28bbd215d53eab5c817afa96d2b40c81bfb0
-  languageName: node
-  linkType: hard
-
 "file-entry-cache@npm:^6.0.1":
   version: 6.0.1
   resolution: "file-entry-cache@npm:6.0.1"
@@ -8672,16 +8663,6 @@ __metadata:
     keyv: "npm:^4.5.3"
     rimraf: "npm:^3.0.2"
   checksum: 10/02381c6ece5e9fa5b826c9bbea481d7fd77645d96e4b0b1395238124d581d10e56f17f723d897b6d133970f7a57f0fab9148cbbb67237a0a0ffe794ba60c0c70
-  languageName: node
-  linkType: hard
-
-"flat-cache@npm:^4.0.0":
-  version: 4.0.1
-  resolution: "flat-cache@npm:4.0.1"
-  dependencies:
-    flatted: "npm:^3.2.9"
-    keyv: "npm:^4.5.4"
-  checksum: 10/58ce851d9045fffc7871ce2bd718bc485ad7e777bf748c054904b87c351ff1080c2c11da00788d78738bfb51b71e4d5ea12d13b98eb36e3358851ffe495b62dc
   languageName: node
   linkType: hard
 
@@ -10802,7 +10783,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"keyv@npm:^4.5.3, keyv@npm:^4.5.4":
+"keyv@npm:^4.5.3":
   version: 4.5.4
   resolution: "keyv@npm:4.5.4"
   dependencies:
@@ -10830,16 +10811,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:5.21.0":
-  version: 5.21.0
-  resolution: "knip@npm:5.21.0"
+"knip@npm:5.22.2":
+  version: 5.22.2
+  resolution: "knip@npm:5.22.2"
   dependencies:
     "@ericcornelissen/bash-parser": "npm:0.5.3"
     "@nodelib/fs.walk": "npm:2.0.0"
     "@snyk/github-codeowners": "npm:1.1.0"
     easy-table: "npm:1.2.0"
     fast-glob: "npm:^3.3.2"
-    file-entry-cache: "npm:8.0.0"
     jiti: "npm:^1.21.0"
     js-yaml: "npm:^4.1.0"
     minimist: "npm:^1.2.8"
@@ -10859,7 +10839,7 @@ __metadata:
   bin:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
-  checksum: 10/2a600d69ee32a698b4535cef57e97ad39d78191910d7fd42d5d30e253bfa81eeec518543f6791e8dacaff0ca4acbd79ea3617c0ccaaadf47e5c1a1daa62bc8b4
+  checksum: 10/ae2c9e2e6bf0e9db8130a71c468fc930c7b4f04eaacfa230831bf58772a0e244ddb56763b8bab7c2a6daf05594aded0cf6e2f3bea8b7165ee09bbcbc9b52c752
   languageName: node
   linkType: hard
 
@@ -13630,7 +13610,7 @@ __metadata:
     folder-hash: "npm:4.0.4"
     fs-extra: "npm:11.2.0"
     js-yaml: "npm:4.1.0"
-    knip: "npm:5.21.0"
+    knip: "npm:5.22.2"
     lts: "patch:lts@npm%3A1.2.0#~/.yarn/patches/lts-npm-1.2.0-e55f0a54f7.patch"
     micromatch: "npm:4.0.7"
     semver: "npm:7.6.2"
