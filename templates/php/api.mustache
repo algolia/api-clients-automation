@@ -539,7 +539,7 @@ use {{invokerPackage}}\Support\Helpers;
     }
 
     /**
-    * Helper: Generate a secured API Key
+    * Helper: Generate a secured API Key.
     *
     * @param string $parentApiKey Parent API Key
     * @param array  $restrictions API Key's restrictions
@@ -548,7 +548,14 @@ use {{invokerPackage}}\Support\Helpers;
     */
     public static function generateSecuredApiKey($parentApiKey, $restrictions)
     {
-        $urlEncodedRestrictions = Helpers::buildQuery($restrictions);
+        $formattedRestrictions = $restrictions;
+        if (isset($restrictions['searchParams'])) {
+            $formattedRestrictions = array_merge($restrictions, $restrictions['searchParams']);
+            unset($formattedRestrictions['searchParams']);
+        }
+
+        ksort($formattedRestrictions);
+        $urlEncodedRestrictions = Helpers::buildQuery($formattedRestrictions);
 
         $content = hash_hmac('sha256', $urlEncodedRestrictions, $parentApiKey).$urlEncodedRestrictions;
 
@@ -556,17 +563,17 @@ use {{invokerPackage}}\Support\Helpers;
     }
 
     /**
-    * Helper: Returns the time the given securedAPIKey remains valid in seconds.
+    * Helper: Returns the time the given securedApiKey remains valid in seconds.
     *
-    * @param string $securedAPIKey the key to check
+    * @param string $securedApiKey the key to check
     *
     * @return int remaining validity in seconds
     *
     * @throws ValidUntilNotFoundException
     */
-    public static function getSecuredApiKeyRemainingValidity($securedAPIKey)
+    public static function getSecuredApiKeyRemainingValidity($securedApiKey)
     {
-        $decodedKey = base64_decode($securedAPIKey);
+        $decodedKey = base64_decode($securedApiKey);
         $regex = '/validUntil=(\d+)/';
         preg_match($regex, $decodedKey, $matches);
 

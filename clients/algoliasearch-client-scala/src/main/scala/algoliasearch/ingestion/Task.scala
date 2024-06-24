@@ -37,10 +37,12 @@ import algoliasearch.ingestion.ActionType._
   *   Whether the task is enabled.
   * @param failureThreshold
   *   Maximum accepted percentage of failures for a task run to finish successfully.
+  * @param cursor
+  *   Date of the last cursor in RFC 3339 format.
   * @param createdAt
-  *   Date of creation in RFC3339 format.
+  *   Date of creation in RFC 3339 format.
   * @param updatedAt
-  *   Date of last update in RFC3339 format.
+  *   Date of last update in RFC 3339 format.
   */
 case class Task(
     taskID: String,
@@ -51,6 +53,7 @@ case class Task(
     enabled: Boolean,
     failureThreshold: Option[Int] = scala.None,
     action: ActionType,
+    cursor: Option[String] = scala.None,
     createdAt: String,
     updatedAt: Option[String] = scala.None
 )

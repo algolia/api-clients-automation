@@ -10,6 +10,7 @@ debug.log
 **/.yarn/*
 !**/.yarn/releases
 !**/.yarn/plugins
+!**/.yarn/patches
 
 .vscode/
 .idea/

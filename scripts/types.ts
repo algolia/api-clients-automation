@@ -1,5 +1,7 @@
 import type config from '../config/clients.config.json';
 
+import type { CodeSamples } from './specs/types';
+
 /**
  * Config.
  */
@@ -41,7 +43,10 @@ export type Language = keyof typeof config;
 export type Spec = {
   servers: Server[];
   tags: Tag[];
-  paths: Path[];
+  paths: Path;
+  components: {
+    schemas: Record<string, any>;
+  };
 };
 
 /**
@@ -67,66 +72,6 @@ type Tag = {
 };
 
 type Method = 'delete' | 'get' | 'options' | 'patch' | 'post' | 'put';
-
-export type CodeSamples = {
-  lang:
-    | 'c'
-    | 'c++'
-    | 'coffeescript'
-    | 'csharp'
-    | 'css'
-    | 'dart'
-    | 'dm'
-    | 'elixir'
-    | 'go'
-    | 'groovy'
-    | 'html'
-    | 'java'
-    | 'javascript'
-    | 'kotlin'
-    | 'objective-c'
-    | 'perl'
-    | 'php'
-    | 'powershell'
-    | 'python'
-    | 'ruby'
-    | 'rust'
-    | 'scala'
-    | 'shell'
-    | 'swift'
-    | 'typescript';
-  label:
-    | 'C'
-    | 'C#'
-    | 'C++'
-    | 'CoffeeScript'
-    | 'CSS'
-    | 'Dart'
-    | 'DM'
-    | 'Elixir'
-    | 'Go'
-    | 'Groovy'
-    | 'HTML'
-    | 'Java'
-    | 'JavaScript'
-    | 'Kotlin'
-    | 'Objective-C'
-    | 'Perl'
-    | 'PHP'
-    | 'PowerShell'
-    | 'Python'
-    | 'Ruby'
-    | 'Rust'
-    | 'Scala'
-    | 'Shell'
-    | 'Swift'
-    | 'TypeScript';
-  source: string;
-};
-
-export type SnippetForMethod = Record<string, string>;
-export type SnippetForLanguage = Record<string, SnippetForMethod>;
-export type SnippetSamples = Record<Language, SnippetForLanguage>;
 
 /**
  * Paths of a spec.

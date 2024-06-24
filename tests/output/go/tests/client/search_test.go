@@ -50,8 +50,7 @@ func TestSearchapi0(t *testing.T) {
 	require.NoError(t, err)
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"test",
-	),
-	)
+	))
 	require.NoError(t, err)
 	require.Equal(t, "test-app-id-dsn.algolia.net", echo.Host)
 }
@@ -75,8 +74,7 @@ func TestSearchapi1(t *testing.T) {
 	require.NoError(t, err)
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"test",
-	),
-	)
+	))
 	require.NoError(t, err)
 	require.Equal(t, "test-app-id.algolia.net", echo.Host)
 }
@@ -100,8 +98,7 @@ func TestSearchapi2(t *testing.T) {
 	require.NoError(t, err)
 	res, err := client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test/retry",
-	),
-	)
+	))
 	require.NoError(t, err)
 	rawBody, err := json.Marshal(res)
 	require.NoError(t, err)
@@ -128,8 +125,7 @@ func TestSearchapi3(t *testing.T) {
 	require.NoError(t, err)
 	res, err := client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test/gzip",
-	).WithParameters(map[string]any{}).WithBody(map[string]any{"message": "this is a compressed body"}),
-	)
+	).WithParameters(map[string]any{}).WithBody(map[string]any{"message": "this is a compressed body"}))
 	require.NoError(t, err)
 	rawBody, err := json.Marshal(res)
 	require.NoError(t, err)
@@ -143,8 +139,7 @@ func TestSearchcommonApi0(t *testing.T) {
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
-	),
-	)
+	))
 	require.NoError(t, err)
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Search (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
@@ -156,8 +151,7 @@ func TestSearchcommonApi1(t *testing.T) {
 	_ = echo
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test",
-	),
-	)
+	))
 	require.NoError(t, err)
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(5000), echo.Timeout.Milliseconds())
@@ -170,11 +164,40 @@ func TestSearchcommonApi2(t *testing.T) {
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
-	),
-	)
+	))
 	require.NoError(t, err)
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(30000), echo.Timeout.Milliseconds())
+}
+
+// generate secured api key basic
+func TestSearchhelpers0(t *testing.T) {
+	var err error
+	client, echo := createSearchClient(t)
+	_ = echo
+	res, err := client.GenerateSecuredApiKey(
+		"2640659426d5107b6e47d75db9cbaef8",
+		search.NewEmptySecuredApiKeyRestrictions().SetValidUntil(2524604400).SetRestrictIndices(
+			[]string{"Movies"}),
+	)
+	require.NoError(t, err)
+	require.Equal(t, `NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw`, res)
+}
+
+// generate secured api key with searchParams
+func TestSearchhelpers1(t *testing.T) {
+	var err error
+	client, echo := createSearchClient(t)
+	_ = echo
+	res, err := client.GenerateSecuredApiKey(
+		"2640659426d5107b6e47d75db9cbaef8",
+		search.NewEmptySecuredApiKeyRestrictions().SetValidUntil(2524604400).SetRestrictIndices(
+			[]string{"Movies", "cts_e2e_settings"}).SetRestrictSources("192.168.1.0/24").SetFilters("category:Book OR category:Ebook AND _tags:published").SetUserToken("user123").SetSearchParams(
+			search.NewEmptySearchParamsObject().SetQuery("batman").SetTypoTolerance(search.TypoToleranceEnumAsTypoTolerance(search.TypoToleranceEnum("strict"))).SetAroundRadius(search.AroundRadiusAllAsAroundRadius(search.AroundRadiusAll("all"))).SetMode(search.Mode("neuralSearch")).SetHitsPerPage(10).SetOptionalWords(
+				[]string{"one", "two"})),
+	)
+	require.NoError(t, err)
+	require.Equal(t, `MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw`, res)
 }
 
 // client throws with invalid parameters
@@ -221,8 +244,7 @@ func TestSearchparameters1(t *testing.T) {
 	_ = echo
 	_, err = client.AddApiKey(client.NewApiAddApiKeyRequest(
 		tests.ZeroValue[*search.ApiKey](),
-	),
-	)
+	))
 	require.EqualError(t, err, "Parameter `apiKey` is required when calling `AddApiKey`.")
 }
 
@@ -233,17 +255,14 @@ func TestSearchparameters2(t *testing.T) {
 	_ = echo
 	_, err = client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
 		tests.ZeroValue[string](), "my-object-id", map[string]any{},
-	),
-	)
+	))
 	require.EqualError(t, err, "Parameter `indexName` is required when calling `AddOrUpdateObject`.")
 	_, err = client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
 		"my-index-name", tests.ZeroValue[string](), map[string]any{},
-	),
-	)
+	))
 	require.EqualError(t, err, "Parameter `objectID` is required when calling `AddOrUpdateObject`.")
 	_, err = client.AddOrUpdateObject(client.NewApiAddOrUpdateObjectRequest(
 		"my-index-name", "my-object-id", tests.ZeroValue[map[string]any](),
-	),
-	)
+	))
 	require.EqualError(t, err, "Parameter `body` is required when calling `AddOrUpdateObject`.")
 }

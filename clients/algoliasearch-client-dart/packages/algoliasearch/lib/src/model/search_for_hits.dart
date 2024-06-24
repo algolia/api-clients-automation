@@ -19,7 +19,6 @@ part 'search_for_hits.g.dart';
 final class SearchForHits {
   /// Returns a new [SearchForHits] instance.
   const SearchForHits({
-    this.params,
     this.query,
     this.similarQuery,
     this.filters,
@@ -99,10 +98,6 @@ final class SearchForHits {
     required this.indexName,
     this.type,
   });
-
-  /// Search parameters as a URL-encoded query string.
-  @JsonKey(name: r'params')
-  final String? params;
 
   /// Search query.
   @JsonKey(name: r'query')
@@ -452,7 +447,6 @@ final class SearchForHits {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is SearchForHits &&
-          other.params == params &&
           other.query == query &&
           other.similarQuery == similarQuery &&
           other.filters == filters &&
@@ -537,7 +531,6 @@ final class SearchForHits {
 
   @override
   int get hashCode =>
-      params.hashCode +
       query.hashCode +
       similarQuery.hashCode +
       filters.hashCode +
@@ -613,7 +606,7 @@ final class SearchForHits {
       attributeCriteriaComputedByMinProximity.hashCode +
       renderingContent.hashCode +
       enableReRanking.hashCode +
-      reRankingApplyFilter.hashCode +
+      (reRankingApplyFilter == null ? 0 : reRankingApplyFilter.hashCode) +
       indexName.hashCode +
       type.hashCode;
 

@@ -6,13 +6,13 @@ part of 'secured_api_key_restrictions.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SecuredAPIKeyRestrictions _$SecuredAPIKeyRestrictionsFromJson(
+SecuredApiKeyRestrictions _$SecuredApiKeyRestrictionsFromJson(
         Map<String, dynamic> json) =>
     $checkedCreate(
-      'SecuredAPIKeyRestrictions',
+      'SecuredApiKeyRestrictions',
       json,
       ($checkedConvert) {
-        final val = SecuredAPIKeyRestrictions(
+        final val = SecuredApiKeyRestrictions(
           searchParams: $checkedConvert(
               'searchParams',
               (v) => v == null
@@ -31,8 +31,8 @@ SecuredAPIKeyRestrictions _$SecuredAPIKeyRestrictionsFromJson(
       },
     );
 
-Map<String, dynamic> _$SecuredAPIKeyRestrictionsToJson(
-    SecuredAPIKeyRestrictions instance) {
+Map<String, dynamic> _$SecuredApiKeyRestrictionsToJson(
+    SecuredApiKeyRestrictions instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {

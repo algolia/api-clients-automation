@@ -3,6 +3,7 @@ import { afterAll, describe, expect, it, vi } from "vitest";
 import releaseConfig from '../../../config/release.config.json' assert { type: 'json' };
 import type { PassedCommit } from '../types.js';
 import { LANGUAGES } from "../../common.js";
+import { ReleaseType } from "semver";
 
 const gitAuthor = releaseConfig.gitAuthor;
 
@@ -458,7 +459,8 @@ describe('createReleasePR', () => {
       expect(versions.javascript.next).toEqual('1.0.0');
     });
 
-    it('allows forcing major releases', async () => {
+    for (const releaseType of ['major', 'minor', 'patch', 'prerelease']) {
+    it(`allows forcing ${releaseType} releases`, async () => {
       const versions = await decideReleaseStrategy({
         versions: {
           javascript: {
@@ -473,18 +475,14 @@ describe('createReleasePR', () => {
         },
         commits: [],
         languages: LANGUAGES,
-        major: true
+        releaseType: releaseType as ReleaseType,
       });
 
-      expect(versions.javascript.releaseType).toEqual('major');
-      expect(versions.javascript.next).toEqual('1.0.0');
-
-      expect(versions.php.releaseType).toEqual('major');
-      expect(versions.php.next).toEqual('1.0.0');
-
-      expect(versions.java.releaseType).toEqual('major');
-      expect(versions.java.next).toEqual('1.0.0');
+      expect(versions.javascript.releaseType).toEqual(releaseType);
+      expect(versions.php.releaseType).toEqual(releaseType);
+      expect(versions.java.releaseType).toEqual(releaseType);
     });
+    }
 
     it('allows releasing subset of clients', async () => {
       const versions = await decideReleaseStrategy({

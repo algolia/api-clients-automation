@@ -152,6 +152,56 @@ public class SearchClientTests
     Assert.Equal(30000, result.ResponseTimeout.TotalMilliseconds);
   }
 
+  [Fact(DisplayName = "generate secured api key basic")]
+  public async Task HelpersTest0()
+  {
+    var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
+    var res = client.GenerateSecuredApiKey(
+      "2640659426d5107b6e47d75db9cbaef8",
+      new SecuredApiKeyRestrictions
+      {
+        ValidUntil = 2524604400L,
+        RestrictIndices = new List<string> { "Movies" },
+      }
+    );
+
+    Assert.Equal(
+      "NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
+      res
+    );
+  }
+
+  [Fact(DisplayName = "generate secured api key with searchParams")]
+  public async Task HelpersTest1()
+  {
+    var client = new SearchClient(new SearchConfig("appId", "apiKey"), _echo);
+    var res = client.GenerateSecuredApiKey(
+      "2640659426d5107b6e47d75db9cbaef8",
+      new SecuredApiKeyRestrictions
+      {
+        ValidUntil = 2524604400L,
+        RestrictIndices = new List<string> { "Movies", "cts_e2e_settings" },
+        RestrictSources = "192.168.1.0/24",
+        Filters = "category:Book OR category:Ebook AND _tags:published",
+        UserToken = "user123",
+        SearchParams = new SearchParamsObject
+        {
+          Query = "batman",
+          TypoTolerance = new TypoTolerance(Enum.Parse<TypoToleranceEnum>("Strict")),
+          AroundRadius = new AroundRadius(Enum.Parse<AroundRadiusAll>("All")),
+          Mode = Enum.Parse<Mode>("NeuralSearch"),
+          HitsPerPage = 10,
+          OptionalWords = new List<string> { "one", "two" },
+        },
+      }
+    );
+
+    Assert.Equal(
+      "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
+      res
+    );
+  }
+
   [Fact(DisplayName = "client throws with invalid parameters")]
   public async Task ParametersTest0()
   {

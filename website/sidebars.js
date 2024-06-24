@@ -18,6 +18,7 @@ const sidebars = {
           items: [
             'contributing/CLI/specs-commands',
             'contributing/CLI/clients-commands',
+            'contributing/CLI/release-commands',
             'contributing/CLI/cts-commands',
           ],
         },
@@ -73,6 +74,7 @@ const sidebars = {
             'clients/migration-guides/php',
           ],
         },
+        'clients/service-level-agreement'
       ],
     },
     {

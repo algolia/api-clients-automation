@@ -30,7 +30,7 @@ package algoliasearch.ingestion
   * @param name
   *   Descriptive name of the source.
   * @param createdAt
-  *   Date of creation in RFC3339 format.
+  *   Date of creation in RFC 3339 format.
   */
 case class SourceCreateResponse(
     sourceID: String,

@@ -560,6 +560,130 @@ func (c *APIClient) CreateTaskWithContext(ctx context.Context, r ApiCreateTaskRe
 	return returnValue, nil
 }
 
+func (r *ApiCreateTransformationRequest) UnmarshalJSON(b []byte) error {
+	req := map[string]json.RawMessage{}
+	err := json.Unmarshal(b, &req)
+	if err != nil {
+		return fmt.Errorf("cannot unmarshal request: %w", err)
+	}
+	if v, ok := req["transformationCreate"]; ok {
+		err = json.Unmarshal(v, &r.transformationCreate)
+		if err != nil {
+			err = json.Unmarshal(b, &r.transformationCreate)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal transformationCreate: %w", err)
+			}
+		}
+	} else {
+		err = json.Unmarshal(b, &r.transformationCreate)
+		if err != nil {
+			return fmt.Errorf("cannot unmarshal body parameter transformationCreate: %w", err)
+		}
+	}
+
+	return nil
+}
+
+// ApiCreateTransformationRequest represents the request with all the parameters for the API call.
+type ApiCreateTransformationRequest struct {
+	transformationCreate *TransformationCreate
+}
+
+// NewApiCreateTransformationRequest creates an instance of the ApiCreateTransformationRequest to be used for the API call.
+func (c *APIClient) NewApiCreateTransformationRequest(transformationCreate *TransformationCreate) ApiCreateTransformationRequest {
+	return ApiCreateTransformationRequest{
+		transformationCreate: transformationCreate,
+	}
+}
+
+/*
+CreateTransformation Wraps CreateTransformationWithContext using context.Background.
+
+Creates a new transformation.
+
+Request can be constructed by NewApiCreateTransformationRequest with parameters below.
+
+	@param transformationCreate TransformationCreate - Request body for creating a transformation.
+	@return TransformationCreateResponse
+*/
+func (c *APIClient) CreateTransformation(r ApiCreateTransformationRequest, opts ...Option) (*TransformationCreateResponse, error) {
+	return c.CreateTransformationWithContext(context.Background(), r, opts...)
+}
+
+/*
+CreateTransformation
+
+Creates a new transformation.
+
+Request can be constructed by NewApiCreateTransformationRequest with parameters below.
+
+	@param transformationCreate TransformationCreate - Request body for creating a transformation.
+	@return TransformationCreateResponse
+*/
+func (c *APIClient) CreateTransformationWithContext(ctx context.Context, r ApiCreateTransformationRequest, opts ...Option) (*TransformationCreateResponse, error) {
+	var (
+		postBody    any
+		returnValue *TransformationCreateResponse
+	)
+
+	requestPath := "/1/transformations"
+
+	headers := make(map[string]string)
+	queryParams := url.Values{}
+
+	if r.transformationCreate == nil {
+		return returnValue, reportError("Parameter `transformationCreate` is required when calling `CreateTransformation`.")
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		switch opt.optionType {
+		case "query":
+			queryParams.Set(opt.name, opt.value)
+		case "header":
+			headers[opt.name] = opt.value
+		}
+	}
+
+	// body params
+	postBody = r.transformationCreate
+	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	if err != nil {
+		return returnValue, err
+	}
+
+	res, resBody, err := c.callAPI(req, false)
+	if err != nil {
+		return returnValue, err
+	}
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+
+	if res.StatusCode >= 300 {
+		newErr := &APIError{
+			Message: string(resBody),
+			Status:  res.StatusCode,
+		}
+
+		var v ErrorBase
+		err = c.decode(&v, resBody)
+		if err != nil {
+			newErr.Message = err.Error()
+			return returnValue, newErr
+		}
+
+		return returnValue, newErr
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, reportError("cannot decode result: %w", err)
+	}
+
+	return returnValue, nil
+}
+
 func (r *ApiCustomDeleteRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
@@ -591,7 +715,7 @@ func (r *ApiCustomDeleteRequest) UnmarshalJSON(b []byte) error {
 // ApiCustomDeleteRequest represents the request with all the parameters for the API call.
 type ApiCustomDeleteRequest struct {
 	path       string
-	parameters map[string]interface{}
+	parameters map[string]any
 }
 
 // NewApiCustomDeleteRequest creates an instance of the ApiCustomDeleteRequest to be used for the API call.
@@ -602,7 +726,7 @@ func (c *APIClient) NewApiCustomDeleteRequest(path string) ApiCustomDeleteReques
 }
 
 // WithParameters adds the parameters to the ApiCustomDeleteRequest and returns the request for chaining.
-func (r ApiCustomDeleteRequest) WithParameters(parameters map[string]interface{}) ApiCustomDeleteRequest {
+func (r ApiCustomDeleteRequest) WithParameters(parameters map[string]any) ApiCustomDeleteRequest {
 	r.parameters = parameters
 	return r
 }
@@ -615,10 +739,10 @@ This method allow you to send requests to the Algolia REST API.
 Request can be constructed by NewApiCustomDeleteRequest with parameters below.
 
 	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]interface{} - Query parameters to apply to the current query.
-	@return map[string]interface{}
+	@param parameters map[string]any - Query parameters to apply to the current query.
+	@return map[string]any
 */
-func (c *APIClient) CustomDelete(r ApiCustomDeleteRequest, opts ...Option) (map[string]interface{}, error) {
+func (c *APIClient) CustomDelete(r ApiCustomDeleteRequest, opts ...Option) (*map[string]any, error) {
 	return c.CustomDeleteWithContext(context.Background(), r, opts...)
 }
 
@@ -630,13 +754,13 @@ This method allow you to send requests to the Algolia REST API.
 Request can be constructed by NewApiCustomDeleteRequest with parameters below.
 
 	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]interface{} - Query parameters to apply to the current query.
-	@return map[string]interface{}
+	@param parameters map[string]any - Query parameters to apply to the current query.
+	@return map[string]any
 */
-func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDeleteRequest, opts ...Option) (map[string]interface{}, error) {
+func (c *APIClient) CustomDeleteWithContext(ctx context.Context, r ApiCustomDeleteRequest, opts ...Option) (*map[string]any, error) {
 	var (
 		postBody    any
-		returnValue map[string]interface{}
+		returnValue *map[string]any
 	)
 
 	requestPath := "/{path}"
@@ -732,7 +856,7 @@ func (r *ApiCustomGetRequest) UnmarshalJSON(b []byte) error {
 // ApiCustomGetRequest represents the request with all the parameters for the API call.
 type ApiCustomGetRequest struct {
 	path       string
-	parameters map[string]interface{}
+	parameters map[string]any
 }
 
 // NewApiCustomGetRequest creates an instance of the ApiCustomGetRequest to be used for the API call.
@@ -743,7 +867,7 @@ func (c *APIClient) NewApiCustomGetRequest(path string) ApiCustomGetRequest {
 }
 
 // WithParameters adds the parameters to the ApiCustomGetRequest and returns the request for chaining.
-func (r ApiCustomGetRequest) WithParameters(parameters map[string]interface{}) ApiCustomGetRequest {
+func (r ApiCustomGetRequest) WithParameters(parameters map[string]any) ApiCustomGetRequest {
 	r.parameters = parameters
 	return r
 }
@@ -756,10 +880,10 @@ This method allow you to send requests to the Algolia REST API.
 Request can be constructed by NewApiCustomGetRequest with parameters below.
 
 	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]interface{} - Query parameters to apply to the current query.
-	@return map[string]interface{}
+	@param parameters map[string]any - Query parameters to apply to the current query.
+	@return map[string]any
 */
-func (c *APIClient) CustomGet(r ApiCustomGetRequest, opts ...Option) (map[string]interface{}, error) {
+func (c *APIClient) CustomGet(r ApiCustomGetRequest, opts ...Option) (*map[string]any, error) {
 	return c.CustomGetWithContext(context.Background(), r, opts...)
 }
 
@@ -771,13 +895,13 @@ This method allow you to send requests to the Algolia REST API.
 Request can be constructed by NewApiCustomGetRequest with parameters below.
 
 	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]interface{} - Query parameters to apply to the current query.
-	@return map[string]interface{}
+	@param parameters map[string]any - Query parameters to apply to the current query.
+	@return map[string]any
 */
-func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequest, opts ...Option) (map[string]interface{}, error) {
+func (c *APIClient) CustomGetWithContext(ctx context.Context, r ApiCustomGetRequest, opts ...Option) (*map[string]any, error) {
 	var (
 		postBody    any
-		returnValue map[string]interface{}
+		returnValue *map[string]any
 	)
 
 	requestPath := "/{path}"
@@ -882,8 +1006,8 @@ func (r *ApiCustomPostRequest) UnmarshalJSON(b []byte) error {
 // ApiCustomPostRequest represents the request with all the parameters for the API call.
 type ApiCustomPostRequest struct {
 	path       string
-	parameters map[string]interface{}
-	body       map[string]interface{}
+	parameters map[string]any
+	body       map[string]any
 }
 
 // NewApiCustomPostRequest creates an instance of the ApiCustomPostRequest to be used for the API call.
@@ -894,13 +1018,13 @@ func (c *APIClient) NewApiCustomPostRequest(path string) ApiCustomPostRequest {
 }
 
 // WithParameters adds the parameters to the ApiCustomPostRequest and returns the request for chaining.
-func (r ApiCustomPostRequest) WithParameters(parameters map[string]interface{}) ApiCustomPostRequest {
+func (r ApiCustomPostRequest) WithParameters(parameters map[string]any) ApiCustomPostRequest {
 	r.parameters = parameters
 	return r
 }
 
 // WithBody adds the body to the ApiCustomPostRequest and returns the request for chaining.
-func (r ApiCustomPostRequest) WithBody(body map[string]interface{}) ApiCustomPostRequest {
+func (r ApiCustomPostRequest) WithBody(body map[string]any) ApiCustomPostRequest {
 	r.body = body
 	return r
 }
@@ -913,11 +1037,11 @@ This method allow you to send requests to the Algolia REST API.
 Request can be constructed by NewApiCustomPostRequest with parameters below.
 
 	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]interface{} - Query parameters to apply to the current query.
-	@param body map[string]interface{} - Parameters to send with the custom request.
-	@return map[string]interface{}
+	@param parameters map[string]any - Query parameters to apply to the current query.
+	@param body map[string]any - Parameters to send with the custom request.
+	@return map[string]any
 */
-func (c *APIClient) CustomPost(r ApiCustomPostRequest, opts ...Option) (map[string]interface{}, error) {
+func (c *APIClient) CustomPost(r ApiCustomPostRequest, opts ...Option) (*map[string]any, error) {
 	return c.CustomPostWithContext(context.Background(), r, opts...)
 }
 
@@ -929,14 +1053,14 @@ This method allow you to send requests to the Algolia REST API.
 Request can be constructed by NewApiCustomPostRequest with parameters below.
 
 	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]interface{} - Query parameters to apply to the current query.
-	@param body map[string]interface{} - Parameters to send with the custom request.
-	@return map[string]interface{}
+	@param parameters map[string]any - Query parameters to apply to the current query.
+	@param body map[string]any - Parameters to send with the custom request.
+	@return map[string]any
 */
-func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRequest, opts ...Option) (map[string]interface{}, error) {
+func (c *APIClient) CustomPostWithContext(ctx context.Context, r ApiCustomPostRequest, opts ...Option) (*map[string]any, error) {
 	var (
 		postBody    any
-		returnValue map[string]interface{}
+		returnValue *map[string]any
 	)
 
 	requestPath := "/{path}"
@@ -1047,8 +1171,8 @@ func (r *ApiCustomPutRequest) UnmarshalJSON(b []byte) error {
 // ApiCustomPutRequest represents the request with all the parameters for the API call.
 type ApiCustomPutRequest struct {
 	path       string
-	parameters map[string]interface{}
-	body       map[string]interface{}
+	parameters map[string]any
+	body       map[string]any
 }
 
 // NewApiCustomPutRequest creates an instance of the ApiCustomPutRequest to be used for the API call.
@@ -1059,13 +1183,13 @@ func (c *APIClient) NewApiCustomPutRequest(path string) ApiCustomPutRequest {
 }
 
 // WithParameters adds the parameters to the ApiCustomPutRequest and returns the request for chaining.
-func (r ApiCustomPutRequest) WithParameters(parameters map[string]interface{}) ApiCustomPutRequest {
+func (r ApiCustomPutRequest) WithParameters(parameters map[string]any) ApiCustomPutRequest {
 	r.parameters = parameters
 	return r
 }
 
 // WithBody adds the body to the ApiCustomPutRequest and returns the request for chaining.
-func (r ApiCustomPutRequest) WithBody(body map[string]interface{}) ApiCustomPutRequest {
+func (r ApiCustomPutRequest) WithBody(body map[string]any) ApiCustomPutRequest {
 	r.body = body
 	return r
 }
@@ -1078,11 +1202,11 @@ This method allow you to send requests to the Algolia REST API.
 Request can be constructed by NewApiCustomPutRequest with parameters below.
 
 	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]interface{} - Query parameters to apply to the current query.
-	@param body map[string]interface{} - Parameters to send with the custom request.
-	@return map[string]interface{}
+	@param parameters map[string]any - Query parameters to apply to the current query.
+	@param body map[string]any - Parameters to send with the custom request.
+	@return map[string]any
 */
-func (c *APIClient) CustomPut(r ApiCustomPutRequest, opts ...Option) (map[string]interface{}, error) {
+func (c *APIClient) CustomPut(r ApiCustomPutRequest, opts ...Option) (*map[string]any, error) {
 	return c.CustomPutWithContext(context.Background(), r, opts...)
 }
 
@@ -1094,14 +1218,14 @@ This method allow you to send requests to the Algolia REST API.
 Request can be constructed by NewApiCustomPutRequest with parameters below.
 
 	@param path string - Path of the endpoint, anything after \"/1\" must be specified.
-	@param parameters map[string]interface{} - Query parameters to apply to the current query.
-	@param body map[string]interface{} - Parameters to send with the custom request.
-	@return map[string]interface{}
+	@param parameters map[string]any - Query parameters to apply to the current query.
+	@param body map[string]any - Parameters to send with the custom request.
+	@return map[string]any
 */
-func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequest, opts ...Option) (map[string]interface{}, error) {
+func (c *APIClient) CustomPutWithContext(ctx context.Context, r ApiCustomPutRequest, opts ...Option) (*map[string]any, error) {
 	var (
 		postBody    any
-		returnValue map[string]interface{}
+		returnValue *map[string]any
 	)
 
 	requestPath := "/{path}"
@@ -1621,6 +1745,123 @@ func (c *APIClient) DeleteTaskWithContext(ctx context.Context, r ApiDeleteTaskRe
 	queryParams := url.Values{}
 	if r.taskID == "" {
 		return returnValue, reportError("Parameter `taskID` is required when calling `DeleteTask`.")
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		switch opt.optionType {
+		case "query":
+			queryParams.Set(opt.name, opt.value)
+		case "header":
+			headers[opt.name] = opt.value
+		}
+	}
+
+	req, err := c.prepareRequest(ctx, requestPath, http.MethodDelete, postBody, headers, queryParams)
+	if err != nil {
+		return returnValue, err
+	}
+
+	res, resBody, err := c.callAPI(req, false)
+	if err != nil {
+		return returnValue, err
+	}
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+
+	if res.StatusCode >= 300 {
+		newErr := &APIError{
+			Message: string(resBody),
+			Status:  res.StatusCode,
+		}
+
+		var v ErrorBase
+		err = c.decode(&v, resBody)
+		if err != nil {
+			newErr.Message = err.Error()
+			return returnValue, newErr
+		}
+
+		return returnValue, newErr
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, reportError("cannot decode result: %w", err)
+	}
+
+	return returnValue, nil
+}
+
+func (r *ApiDeleteTransformationRequest) UnmarshalJSON(b []byte) error {
+	req := map[string]json.RawMessage{}
+	err := json.Unmarshal(b, &req)
+	if err != nil {
+		return fmt.Errorf("cannot unmarshal request: %w", err)
+	}
+	if v, ok := req["transformationID"]; ok {
+		err = json.Unmarshal(v, &r.transformationID)
+		if err != nil {
+			err = json.Unmarshal(b, &r.transformationID)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal transformationID: %w", err)
+			}
+		}
+	}
+
+	return nil
+}
+
+// ApiDeleteTransformationRequest represents the request with all the parameters for the API call.
+type ApiDeleteTransformationRequest struct {
+	transformationID string
+}
+
+// NewApiDeleteTransformationRequest creates an instance of the ApiDeleteTransformationRequest to be used for the API call.
+func (c *APIClient) NewApiDeleteTransformationRequest(transformationID string) ApiDeleteTransformationRequest {
+	return ApiDeleteTransformationRequest{
+		transformationID: transformationID,
+	}
+}
+
+/*
+DeleteTransformation Wraps DeleteTransformationWithContext using context.Background.
+
+Deletes a transformation by its ID.
+
+Request can be constructed by NewApiDeleteTransformationRequest with parameters below.
+
+	@param transformationID string - Unique identifier of a transformation.
+	@return DeleteResponse
+*/
+func (c *APIClient) DeleteTransformation(r ApiDeleteTransformationRequest, opts ...Option) (*DeleteResponse, error) {
+	return c.DeleteTransformationWithContext(context.Background(), r, opts...)
+}
+
+/*
+DeleteTransformation
+
+Deletes a transformation by its ID.
+
+Request can be constructed by NewApiDeleteTransformationRequest with parameters below.
+
+	@param transformationID string - Unique identifier of a transformation.
+	@return DeleteResponse
+*/
+func (c *APIClient) DeleteTransformationWithContext(ctx context.Context, r ApiDeleteTransformationRequest, opts ...Option) (*DeleteResponse, error) {
+	var (
+		postBody    any
+		returnValue *DeleteResponse
+	)
+
+	requestPath := "/1/transformations/{transformationID}"
+	requestPath = strings.ReplaceAll(requestPath, "{transformationID}", url.PathEscape(parameterToString(r.transformationID)))
+
+	headers := make(map[string]string)
+	queryParams := url.Values{}
+	if r.transformationID == "" {
+		return returnValue, reportError("Parameter `transformationID` is required when calling `DeleteTransformation`.")
 	}
 
 	// optional params if any
@@ -2650,137 +2891,6 @@ func (c *APIClient) GetDestinationsWithContext(ctx context.Context, r ApiGetDest
 	return returnValue, nil
 }
 
-func (r *ApiGetDockerSourceStreamsRequest) UnmarshalJSON(b []byte) error {
-	req := map[string]json.RawMessage{}
-	err := json.Unmarshal(b, &req)
-	if err != nil {
-		return fmt.Errorf("cannot unmarshal request: %w", err)
-	}
-	if v, ok := req["sourceID"]; ok {
-		err = json.Unmarshal(v, &r.sourceID)
-		if err != nil {
-			err = json.Unmarshal(b, &r.sourceID)
-			if err != nil {
-				return fmt.Errorf("cannot unmarshal sourceID: %w", err)
-			}
-		}
-	}
-
-	return nil
-}
-
-// ApiGetDockerSourceStreamsRequest represents the request with all the parameters for the API call.
-type ApiGetDockerSourceStreamsRequest struct {
-	sourceID string
-}
-
-// NewApiGetDockerSourceStreamsRequest creates an instance of the ApiGetDockerSourceStreamsRequest to be used for the API call.
-func (c *APIClient) NewApiGetDockerSourceStreamsRequest(sourceID string) ApiGetDockerSourceStreamsRequest {
-	return ApiGetDockerSourceStreamsRequest{
-		sourceID: sourceID,
-	}
-}
-
-/*
-GetDockerSourceStreams Wraps GetDockerSourceStreamsWithContext using context.Background.
-
-Retrieves a stream listing for a source.
-
-Listing streams only works with sources with `type: docker` and `imageType: singer`.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiGetDockerSourceStreamsRequest with parameters below.
-
-	@param sourceID string - Unique identifier of a source.
-	@return DockerSourceStreams
-*/
-func (c *APIClient) GetDockerSourceStreams(r ApiGetDockerSourceStreamsRequest, opts ...Option) (*DockerSourceStreams, error) {
-	return c.GetDockerSourceStreamsWithContext(context.Background(), r, opts...)
-}
-
-/*
-GetDockerSourceStreams
-
-Retrieves a stream listing for a source.
-
-Listing streams only works with sources with `type: docker` and `imageType: singer`.
-
-Required API Key ACLs:
-  - addObject
-  - deleteIndex
-  - editSettings
-
-Request can be constructed by NewApiGetDockerSourceStreamsRequest with parameters below.
-
-	@param sourceID string - Unique identifier of a source.
-	@return DockerSourceStreams
-*/
-func (c *APIClient) GetDockerSourceStreamsWithContext(ctx context.Context, r ApiGetDockerSourceStreamsRequest, opts ...Option) (*DockerSourceStreams, error) {
-	var (
-		postBody    any
-		returnValue *DockerSourceStreams
-	)
-
-	requestPath := "/1/sources/{sourceID}/discover"
-	requestPath = strings.ReplaceAll(requestPath, "{sourceID}", url.PathEscape(parameterToString(r.sourceID)))
-
-	headers := make(map[string]string)
-	queryParams := url.Values{}
-	if r.sourceID == "" {
-		return returnValue, reportError("Parameter `sourceID` is required when calling `GetDockerSourceStreams`.")
-	}
-
-	// optional params if any
-	for _, opt := range opts {
-		switch opt.optionType {
-		case "query":
-			queryParams.Set(opt.name, opt.value)
-		case "header":
-			headers[opt.name] = opt.value
-		}
-	}
-
-	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
-	if err != nil {
-		return returnValue, err
-	}
-
-	res, resBody, err := c.callAPI(req, false)
-	if err != nil {
-		return returnValue, err
-	}
-	if res == nil {
-		return returnValue, reportError("res is nil")
-	}
-
-	if res.StatusCode >= 300 {
-		newErr := &APIError{
-			Message: string(resBody),
-			Status:  res.StatusCode,
-		}
-
-		var v ErrorBase
-		err = c.decode(&v, resBody)
-		if err != nil {
-			newErr.Message = err.Error()
-			return returnValue, newErr
-		}
-
-		return returnValue, newErr
-	}
-
-	err = c.decode(&returnValue, resBody)
-	if err != nil {
-		return returnValue, reportError("cannot decode result: %w", err)
-	}
-
-	return returnValue, nil
-}
-
 func (r *ApiGetEventRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
@@ -3103,8 +3213,8 @@ Request can be constructed by NewApiGetEventsRequest with parameters below.
 	@param type_ []EventType - Event type for filtering the list of task runs.
 	@param sort EventSortKeys - Property by which to sort the list of task run events.
 	@param order OrderKeys - Sort order of the response, ascending or descending.
-	@param startDate string - Date and time in RFC3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
-	@param endDate string - Date and time in RFC3339 format for the latest events to retrieve. By default, the current time is used.
+	@param startDate string - Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
+	@param endDate string - Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
 	@return ListEventsResponse
 */
 func (c *APIClient) GetEvents(r ApiGetEventsRequest, opts ...Option) (*ListEventsResponse, error) {
@@ -3130,8 +3240,8 @@ Request can be constructed by NewApiGetEventsRequest with parameters below.
 	@param type_ []EventType - Event type for filtering the list of task runs.
 	@param sort EventSortKeys - Property by which to sort the list of task run events.
 	@param order OrderKeys - Sort order of the response, ascending or descending.
-	@param startDate string - Date and time in RFC3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
-	@param endDate string - Date and time in RFC3339 format for the latest events to retrieve. By default, the current time is used.
+	@param startDate string - Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
+	@param endDate string - Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
 	@return ListEventsResponse
 */
 func (c *APIClient) GetEventsWithContext(ctx context.Context, r ApiGetEventsRequest, opts ...Option) (*ListEventsResponse, error) {
@@ -3513,8 +3623,8 @@ Request can be constructed by NewApiGetRunsRequest with parameters below.
 	@param taskID string - Task ID for filtering the list of task runs.
 	@param sort RunSortKeys - Property by which to sort the list of task runs.
 	@param order OrderKeys - Sort order of the response, ascending or descending.
-	@param startDate string - Date in RFC3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
-	@param endDate string - Date in RFC3339 format for the latest run to retrieve. By default, the current day is used.
+	@param startDate string - Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+	@param endDate string - Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
 	@return RunListResponse
 */
 func (c *APIClient) GetRuns(r ApiGetRunsRequest, opts ...Option) (*RunListResponse, error) {
@@ -3539,8 +3649,8 @@ Request can be constructed by NewApiGetRunsRequest with parameters below.
 	@param taskID string - Task ID for filtering the list of task runs.
 	@param sort RunSortKeys - Property by which to sort the list of task runs.
 	@param order OrderKeys - Sort order of the response, ascending or descending.
-	@param startDate string - Date in RFC3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
-	@param endDate string - Date in RFC3339 format for the latest run to retrieve. By default, the current day is used.
+	@param startDate string - Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+	@param endDate string - Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
 	@return RunListResponse
 */
 func (c *APIClient) GetRunsWithContext(ctx context.Context, r ApiGetRunsRequest, opts ...Option) (*RunListResponse, error) {
@@ -4415,6 +4525,285 @@ func (c *APIClient) GetTasksWithContext(ctx context.Context, r ApiGetTasksReques
 	return returnValue, nil
 }
 
+func (r *ApiGetTransformationRequest) UnmarshalJSON(b []byte) error {
+	req := map[string]json.RawMessage{}
+	err := json.Unmarshal(b, &req)
+	if err != nil {
+		return fmt.Errorf("cannot unmarshal request: %w", err)
+	}
+	if v, ok := req["transformationID"]; ok {
+		err = json.Unmarshal(v, &r.transformationID)
+		if err != nil {
+			err = json.Unmarshal(b, &r.transformationID)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal transformationID: %w", err)
+			}
+		}
+	}
+
+	return nil
+}
+
+// ApiGetTransformationRequest represents the request with all the parameters for the API call.
+type ApiGetTransformationRequest struct {
+	transformationID string
+}
+
+// NewApiGetTransformationRequest creates an instance of the ApiGetTransformationRequest to be used for the API call.
+func (c *APIClient) NewApiGetTransformationRequest(transformationID string) ApiGetTransformationRequest {
+	return ApiGetTransformationRequest{
+		transformationID: transformationID,
+	}
+}
+
+/*
+GetTransformation Wraps GetTransformationWithContext using context.Background.
+
+Retrieves a transformation by its ID.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
+
+Request can be constructed by NewApiGetTransformationRequest with parameters below.
+
+	@param transformationID string - Unique identifier of a transformation.
+	@return Transformation
+*/
+func (c *APIClient) GetTransformation(r ApiGetTransformationRequest, opts ...Option) (*Transformation, error) {
+	return c.GetTransformationWithContext(context.Background(), r, opts...)
+}
+
+/*
+GetTransformation
+
+Retrieves a transformation by its ID.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
+
+Request can be constructed by NewApiGetTransformationRequest with parameters below.
+
+	@param transformationID string - Unique identifier of a transformation.
+	@return Transformation
+*/
+func (c *APIClient) GetTransformationWithContext(ctx context.Context, r ApiGetTransformationRequest, opts ...Option) (*Transformation, error) {
+	var (
+		postBody    any
+		returnValue *Transformation
+	)
+
+	requestPath := "/1/transformations/{transformationID}"
+	requestPath = strings.ReplaceAll(requestPath, "{transformationID}", url.PathEscape(parameterToString(r.transformationID)))
+
+	headers := make(map[string]string)
+	queryParams := url.Values{}
+	if r.transformationID == "" {
+		return returnValue, reportError("Parameter `transformationID` is required when calling `GetTransformation`.")
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		switch opt.optionType {
+		case "query":
+			queryParams.Set(opt.name, opt.value)
+		case "header":
+			headers[opt.name] = opt.value
+		}
+	}
+
+	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	if err != nil {
+		return returnValue, err
+	}
+
+	res, resBody, err := c.callAPI(req, false)
+	if err != nil {
+		return returnValue, err
+	}
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+
+	if res.StatusCode >= 300 {
+		newErr := &APIError{
+			Message: string(resBody),
+			Status:  res.StatusCode,
+		}
+
+		var v ErrorBase
+		err = c.decode(&v, resBody)
+		if err != nil {
+			newErr.Message = err.Error()
+			return returnValue, newErr
+		}
+
+		return returnValue, newErr
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, reportError("cannot decode result: %w", err)
+	}
+
+	return returnValue, nil
+}
+
+func (r *ApiGetTransformationsRequest) UnmarshalJSON(b []byte) error {
+	req := map[string]json.RawMessage{}
+	err := json.Unmarshal(b, &req)
+	if err != nil {
+		return fmt.Errorf("cannot unmarshal request: %w", err)
+	}
+	if v, ok := req["sort"]; ok {
+		err = json.Unmarshal(v, &r.sort)
+		if err != nil {
+			err = json.Unmarshal(b, &r.sort)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal sort: %w", err)
+			}
+		}
+	}
+	if v, ok := req["order"]; ok {
+		err = json.Unmarshal(v, &r.order)
+		if err != nil {
+			err = json.Unmarshal(b, &r.order)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal order: %w", err)
+			}
+		}
+	}
+
+	return nil
+}
+
+// ApiGetTransformationsRequest represents the request with all the parameters for the API call.
+type ApiGetTransformationsRequest struct {
+	sort  SortKeys
+	order OrderKeys
+}
+
+// NewApiGetTransformationsRequest creates an instance of the ApiGetTransformationsRequest to be used for the API call.
+func (c *APIClient) NewApiGetTransformationsRequest() ApiGetTransformationsRequest {
+	return ApiGetTransformationsRequest{}
+}
+
+// WithSort adds the sort to the ApiGetTransformationsRequest and returns the request for chaining.
+func (r ApiGetTransformationsRequest) WithSort(sort SortKeys) ApiGetTransformationsRequest {
+	r.sort = sort
+	return r
+}
+
+// WithOrder adds the order to the ApiGetTransformationsRequest and returns the request for chaining.
+func (r ApiGetTransformationsRequest) WithOrder(order OrderKeys) ApiGetTransformationsRequest {
+	r.order = order
+	return r
+}
+
+/*
+GetTransformations Wraps GetTransformationsWithContext using context.Background.
+
+Retrieves a list of transformations.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
+
+Request can be constructed by NewApiGetTransformationsRequest with parameters below.
+
+	@param sort SortKeys - Property by which to sort the list.
+	@param order OrderKeys - Sort order of the response, ascending or descending.
+	@return ListTransformationsResponse
+*/
+func (c *APIClient) GetTransformations(r ApiGetTransformationsRequest, opts ...Option) (*ListTransformationsResponse, error) {
+	return c.GetTransformationsWithContext(context.Background(), r, opts...)
+}
+
+/*
+GetTransformations
+
+Retrieves a list of transformations.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
+
+Request can be constructed by NewApiGetTransformationsRequest with parameters below.
+
+	@param sort SortKeys - Property by which to sort the list.
+	@param order OrderKeys - Sort order of the response, ascending or descending.
+	@return ListTransformationsResponse
+*/
+func (c *APIClient) GetTransformationsWithContext(ctx context.Context, r ApiGetTransformationsRequest, opts ...Option) (*ListTransformationsResponse, error) {
+	var (
+		postBody    any
+		returnValue *ListTransformationsResponse
+	)
+
+	requestPath := "/1/transformations"
+
+	headers := make(map[string]string)
+	queryParams := url.Values{}
+
+	if !utils.IsNilOrEmpty(r.sort) {
+		queryParams.Set("sort", queryParameterToString(r.sort))
+	}
+	if !utils.IsNilOrEmpty(r.order) {
+		queryParams.Set("order", queryParameterToString(r.order))
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		switch opt.optionType {
+		case "query":
+			queryParams.Set(opt.name, opt.value)
+		case "header":
+			headers[opt.name] = opt.value
+		}
+	}
+
+	req, err := c.prepareRequest(ctx, requestPath, http.MethodGet, postBody, headers, queryParams)
+	if err != nil {
+		return returnValue, err
+	}
+
+	res, resBody, err := c.callAPI(req, false)
+	if err != nil {
+		return returnValue, err
+	}
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+
+	if res.StatusCode >= 300 {
+		newErr := &APIError{
+			Message: string(resBody),
+			Status:  res.StatusCode,
+		}
+
+		var v ErrorBase
+		err = c.decode(&v, resBody)
+		if err != nil {
+			newErr.Message = err.Error()
+			return returnValue, newErr
+		}
+
+		return returnValue, newErr
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, reportError("cannot decode result: %w", err)
+	}
+
+	return returnValue, nil
+}
+
 func (r *ApiRunTaskRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
@@ -5078,6 +5467,140 @@ func (c *APIClient) SearchTasksWithContext(ctx context.Context, r ApiSearchTasks
 	return returnValue, nil
 }
 
+func (r *ApiSearchTransformationsRequest) UnmarshalJSON(b []byte) error {
+	req := map[string]json.RawMessage{}
+	err := json.Unmarshal(b, &req)
+	if err != nil {
+		return fmt.Errorf("cannot unmarshal request: %w", err)
+	}
+	if v, ok := req["transformationSearch"]; ok {
+		err = json.Unmarshal(v, &r.transformationSearch)
+		if err != nil {
+			err = json.Unmarshal(b, &r.transformationSearch)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal transformationSearch: %w", err)
+			}
+		}
+	} else {
+		err = json.Unmarshal(b, &r.transformationSearch)
+		if err != nil {
+			return fmt.Errorf("cannot unmarshal body parameter transformationSearch: %w", err)
+		}
+	}
+
+	return nil
+}
+
+// ApiSearchTransformationsRequest represents the request with all the parameters for the API call.
+type ApiSearchTransformationsRequest struct {
+	transformationSearch *TransformationSearch
+}
+
+// NewApiSearchTransformationsRequest creates an instance of the ApiSearchTransformationsRequest to be used for the API call.
+func (c *APIClient) NewApiSearchTransformationsRequest(transformationSearch *TransformationSearch) ApiSearchTransformationsRequest {
+	return ApiSearchTransformationsRequest{
+		transformationSearch: transformationSearch,
+	}
+}
+
+/*
+SearchTransformations Wraps SearchTransformationsWithContext using context.Background.
+
+Searches for transformations.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
+
+Request can be constructed by NewApiSearchTransformationsRequest with parameters below.
+
+	@param transformationSearch TransformationSearch
+	@return []Transformation
+*/
+func (c *APIClient) SearchTransformations(r ApiSearchTransformationsRequest, opts ...Option) ([]Transformation, error) {
+	return c.SearchTransformationsWithContext(context.Background(), r, opts...)
+}
+
+/*
+SearchTransformations
+
+Searches for transformations.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
+
+Request can be constructed by NewApiSearchTransformationsRequest with parameters below.
+
+	@param transformationSearch TransformationSearch
+	@return []Transformation
+*/
+func (c *APIClient) SearchTransformationsWithContext(ctx context.Context, r ApiSearchTransformationsRequest, opts ...Option) ([]Transformation, error) {
+	var (
+		postBody    any
+		returnValue []Transformation
+	)
+
+	requestPath := "/1/transformations/search"
+
+	headers := make(map[string]string)
+	queryParams := url.Values{}
+
+	if r.transformationSearch == nil {
+		return returnValue, reportError("Parameter `transformationSearch` is required when calling `SearchTransformations`.")
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		switch opt.optionType {
+		case "query":
+			queryParams.Set(opt.name, opt.value)
+		case "header":
+			headers[opt.name] = opt.value
+		}
+	}
+
+	// body params
+	postBody = r.transformationSearch
+	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	if err != nil {
+		return returnValue, err
+	}
+
+	res, resBody, err := c.callAPI(req, false)
+	if err != nil {
+		return returnValue, err
+	}
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+
+	if res.StatusCode >= 300 {
+		newErr := &APIError{
+			Message: string(resBody),
+			Status:  res.StatusCode,
+		}
+
+		var v ErrorBase
+		err = c.decode(&v, resBody)
+		if err != nil {
+			newErr.Message = err.Error()
+			return returnValue, newErr
+		}
+
+		return returnValue, newErr
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, reportError("cannot decode result: %w", err)
+	}
+
+	return returnValue, nil
+}
+
 func (r *ApiTriggerDockerSourceDiscoverRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)
@@ -5123,9 +5646,9 @@ Required API Key ACLs:
 Request can be constructed by NewApiTriggerDockerSourceDiscoverRequest with parameters below.
 
 	@param sourceID string - Unique identifier of a source.
-	@return DockerSourceDiscover
+	@return SourceWatchResponse
 */
-func (c *APIClient) TriggerDockerSourceDiscover(r ApiTriggerDockerSourceDiscoverRequest, opts ...Option) (*DockerSourceDiscover, error) {
+func (c *APIClient) TriggerDockerSourceDiscover(r ApiTriggerDockerSourceDiscoverRequest, opts ...Option) (*SourceWatchResponse, error) {
 	return c.TriggerDockerSourceDiscoverWithContext(context.Background(), r, opts...)
 }
 
@@ -5143,12 +5666,12 @@ Required API Key ACLs:
 Request can be constructed by NewApiTriggerDockerSourceDiscoverRequest with parameters below.
 
 	@param sourceID string - Unique identifier of a source.
-	@return DockerSourceDiscover
+	@return SourceWatchResponse
 */
-func (c *APIClient) TriggerDockerSourceDiscoverWithContext(ctx context.Context, r ApiTriggerDockerSourceDiscoverRequest, opts ...Option) (*DockerSourceDiscover, error) {
+func (c *APIClient) TriggerDockerSourceDiscoverWithContext(ctx context.Context, r ApiTriggerDockerSourceDiscoverRequest, opts ...Option) (*SourceWatchResponse, error) {
 	var (
 		postBody    any
-		returnValue *DockerSourceDiscover
+		returnValue *SourceWatchResponse
 	)
 
 	requestPath := "/1/sources/{sourceID}/discover"
@@ -5170,6 +5693,140 @@ func (c *APIClient) TriggerDockerSourceDiscoverWithContext(ctx context.Context, 
 		}
 	}
 
+	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	if err != nil {
+		return returnValue, err
+	}
+
+	res, resBody, err := c.callAPI(req, false)
+	if err != nil {
+		return returnValue, err
+	}
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+
+	if res.StatusCode >= 300 {
+		newErr := &APIError{
+			Message: string(resBody),
+			Status:  res.StatusCode,
+		}
+
+		var v ErrorBase
+		err = c.decode(&v, resBody)
+		if err != nil {
+			newErr.Message = err.Error()
+			return returnValue, newErr
+		}
+
+		return returnValue, newErr
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, reportError("cannot decode result: %w", err)
+	}
+
+	return returnValue, nil
+}
+
+func (r *ApiTryTransformationsRequest) UnmarshalJSON(b []byte) error {
+	req := map[string]json.RawMessage{}
+	err := json.Unmarshal(b, &req)
+	if err != nil {
+		return fmt.Errorf("cannot unmarshal request: %w", err)
+	}
+	if v, ok := req["transformationTry"]; ok {
+		err = json.Unmarshal(v, &r.transformationTry)
+		if err != nil {
+			err = json.Unmarshal(b, &r.transformationTry)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal transformationTry: %w", err)
+			}
+		}
+	} else {
+		err = json.Unmarshal(b, &r.transformationTry)
+		if err != nil {
+			return fmt.Errorf("cannot unmarshal body parameter transformationTry: %w", err)
+		}
+	}
+
+	return nil
+}
+
+// ApiTryTransformationsRequest represents the request with all the parameters for the API call.
+type ApiTryTransformationsRequest struct {
+	transformationTry *TransformationTry
+}
+
+// NewApiTryTransformationsRequest creates an instance of the ApiTryTransformationsRequest to be used for the API call.
+func (c *APIClient) NewApiTryTransformationsRequest(transformationTry *TransformationTry) ApiTryTransformationsRequest {
+	return ApiTryTransformationsRequest{
+		transformationTry: transformationTry,
+	}
+}
+
+/*
+TryTransformations Wraps TryTransformationsWithContext using context.Background.
+
+Searches for transformations.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
+
+Request can be constructed by NewApiTryTransformationsRequest with parameters below.
+
+	@param transformationTry TransformationTry
+	@return TransformationTryResponse
+*/
+func (c *APIClient) TryTransformations(r ApiTryTransformationsRequest, opts ...Option) (*TransformationTryResponse, error) {
+	return c.TryTransformationsWithContext(context.Background(), r, opts...)
+}
+
+/*
+TryTransformations
+
+Searches for transformations.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
+
+Request can be constructed by NewApiTryTransformationsRequest with parameters below.
+
+	@param transformationTry TransformationTry
+	@return TransformationTryResponse
+*/
+func (c *APIClient) TryTransformationsWithContext(ctx context.Context, r ApiTryTransformationsRequest, opts ...Option) (*TransformationTryResponse, error) {
+	var (
+		postBody    any
+		returnValue *TransformationTryResponse
+	)
+
+	requestPath := "/1/transformations/try"
+
+	headers := make(map[string]string)
+	queryParams := url.Values{}
+
+	if r.transformationTry == nil {
+		return returnValue, reportError("Parameter `transformationTry` is required when calling `TryTransformations`.")
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		switch opt.optionType {
+		case "query":
+			queryParams.Set(opt.name, opt.value)
+		case "header":
+			headers[opt.name] = opt.value
+		}
+	}
+
+	// body params
+	postBody = r.transformationTry
 	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
 	if err != nil {
 		return returnValue, err
@@ -5765,6 +6422,431 @@ func (c *APIClient) UpdateTaskWithContext(ctx context.Context, r ApiUpdateTaskRe
 	// body params
 	postBody = r.taskUpdate
 	req, err := c.prepareRequest(ctx, requestPath, http.MethodPatch, postBody, headers, queryParams)
+	if err != nil {
+		return returnValue, err
+	}
+
+	res, resBody, err := c.callAPI(req, false)
+	if err != nil {
+		return returnValue, err
+	}
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+
+	if res.StatusCode >= 300 {
+		newErr := &APIError{
+			Message: string(resBody),
+			Status:  res.StatusCode,
+		}
+
+		var v ErrorBase
+		err = c.decode(&v, resBody)
+		if err != nil {
+			newErr.Message = err.Error()
+			return returnValue, newErr
+		}
+
+		return returnValue, newErr
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, reportError("cannot decode result: %w", err)
+	}
+
+	return returnValue, nil
+}
+
+func (r *ApiUpdateTransformationRequest) UnmarshalJSON(b []byte) error {
+	req := map[string]json.RawMessage{}
+	err := json.Unmarshal(b, &req)
+	if err != nil {
+		return fmt.Errorf("cannot unmarshal request: %w", err)
+	}
+	if v, ok := req["transformationID"]; ok {
+		err = json.Unmarshal(v, &r.transformationID)
+		if err != nil {
+			err = json.Unmarshal(b, &r.transformationID)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal transformationID: %w", err)
+			}
+		}
+	}
+	if v, ok := req["transformationCreate"]; ok {
+		err = json.Unmarshal(v, &r.transformationCreate)
+		if err != nil {
+			err = json.Unmarshal(b, &r.transformationCreate)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal transformationCreate: %w", err)
+			}
+		}
+	} else {
+		err = json.Unmarshal(b, &r.transformationCreate)
+		if err != nil {
+			return fmt.Errorf("cannot unmarshal body parameter transformationCreate: %w", err)
+		}
+	}
+
+	return nil
+}
+
+// ApiUpdateTransformationRequest represents the request with all the parameters for the API call.
+type ApiUpdateTransformationRequest struct {
+	transformationID     string
+	transformationCreate *TransformationCreate
+}
+
+// NewApiUpdateTransformationRequest creates an instance of the ApiUpdateTransformationRequest to be used for the API call.
+func (c *APIClient) NewApiUpdateTransformationRequest(transformationID string, transformationCreate *TransformationCreate) ApiUpdateTransformationRequest {
+	return ApiUpdateTransformationRequest{
+		transformationID:     transformationID,
+		transformationCreate: transformationCreate,
+	}
+}
+
+/*
+UpdateTransformation Wraps UpdateTransformationWithContext using context.Background.
+
+Updates a transformation by its ID.
+
+Request can be constructed by NewApiUpdateTransformationRequest with parameters below.
+
+	@param transformationID string - Unique identifier of a transformation.
+	@param transformationCreate TransformationCreate
+	@return TransformationUpdateResponse
+*/
+func (c *APIClient) UpdateTransformation(r ApiUpdateTransformationRequest, opts ...Option) (*TransformationUpdateResponse, error) {
+	return c.UpdateTransformationWithContext(context.Background(), r, opts...)
+}
+
+/*
+UpdateTransformation
+
+Updates a transformation by its ID.
+
+Request can be constructed by NewApiUpdateTransformationRequest with parameters below.
+
+	@param transformationID string - Unique identifier of a transformation.
+	@param transformationCreate TransformationCreate
+	@return TransformationUpdateResponse
+*/
+func (c *APIClient) UpdateTransformationWithContext(ctx context.Context, r ApiUpdateTransformationRequest, opts ...Option) (*TransformationUpdateResponse, error) {
+	var (
+		postBody    any
+		returnValue *TransformationUpdateResponse
+	)
+
+	requestPath := "/1/transformations/{transformationID}"
+	requestPath = strings.ReplaceAll(requestPath, "{transformationID}", url.PathEscape(parameterToString(r.transformationID)))
+
+	headers := make(map[string]string)
+	queryParams := url.Values{}
+	if r.transformationID == "" {
+		return returnValue, reportError("Parameter `transformationID` is required when calling `UpdateTransformation`.")
+	}
+
+	if r.transformationCreate == nil {
+		return returnValue, reportError("Parameter `transformationCreate` is required when calling `UpdateTransformation`.")
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		switch opt.optionType {
+		case "query":
+			queryParams.Set(opt.name, opt.value)
+		case "header":
+			headers[opt.name] = opt.value
+		}
+	}
+
+	// body params
+	postBody = r.transformationCreate
+	req, err := c.prepareRequest(ctx, requestPath, http.MethodPut, postBody, headers, queryParams)
+	if err != nil {
+		return returnValue, err
+	}
+
+	res, resBody, err := c.callAPI(req, false)
+	if err != nil {
+		return returnValue, err
+	}
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+
+	if res.StatusCode >= 300 {
+		newErr := &APIError{
+			Message: string(resBody),
+			Status:  res.StatusCode,
+		}
+
+		var v ErrorBase
+		err = c.decode(&v, resBody)
+		if err != nil {
+			newErr.Message = err.Error()
+			return returnValue, newErr
+		}
+
+		return returnValue, newErr
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, reportError("cannot decode result: %w", err)
+	}
+
+	return returnValue, nil
+}
+
+func (r *ApiValidateSourceRequest) UnmarshalJSON(b []byte) error {
+	req := map[string]json.RawMessage{}
+	err := json.Unmarshal(b, &req)
+	if err != nil {
+		return fmt.Errorf("cannot unmarshal request: %w", err)
+	}
+	if v, ok := req["sourceCreate"]; ok {
+		err = json.Unmarshal(v, &r.sourceCreate)
+		if err != nil {
+			err = json.Unmarshal(b, &r.sourceCreate)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal sourceCreate: %w", err)
+			}
+		}
+	}
+
+	return nil
+}
+
+// ApiValidateSourceRequest represents the request with all the parameters for the API call.
+type ApiValidateSourceRequest struct {
+	sourceCreate *SourceCreate
+}
+
+// NewApiValidateSourceRequest creates an instance of the ApiValidateSourceRequest to be used for the API call.
+func (c *APIClient) NewApiValidateSourceRequest() ApiValidateSourceRequest {
+	return ApiValidateSourceRequest{}
+}
+
+// WithSourceCreate adds the sourceCreate to the ApiValidateSourceRequest and returns the request for chaining.
+func (r ApiValidateSourceRequest) WithSourceCreate(sourceCreate *SourceCreate) ApiValidateSourceRequest {
+	r.sourceCreate = sourceCreate
+	return r
+}
+
+/*
+ValidateSource Wraps ValidateSourceWithContext using context.Background.
+
+Validates a source payload to ensure it can be created and that the data source can be reached by Algolia.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
+
+Request can be constructed by NewApiValidateSourceRequest with parameters below.
+
+	@param sourceCreate SourceCreate -
+	@return SourceWatchResponse
+*/
+func (c *APIClient) ValidateSource(r ApiValidateSourceRequest, opts ...Option) (*SourceWatchResponse, error) {
+	return c.ValidateSourceWithContext(context.Background(), r, opts...)
+}
+
+/*
+ValidateSource
+
+Validates a source payload to ensure it can be created and that the data source can be reached by Algolia.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
+
+Request can be constructed by NewApiValidateSourceRequest with parameters below.
+
+	@param sourceCreate SourceCreate -
+	@return SourceWatchResponse
+*/
+func (c *APIClient) ValidateSourceWithContext(ctx context.Context, r ApiValidateSourceRequest, opts ...Option) (*SourceWatchResponse, error) {
+	var (
+		postBody    any
+		returnValue *SourceWatchResponse
+	)
+
+	requestPath := "/1/sources/validate"
+
+	headers := make(map[string]string)
+	queryParams := url.Values{}
+
+	// optional params if any
+	for _, opt := range opts {
+		switch opt.optionType {
+		case "query":
+			queryParams.Set(opt.name, opt.value)
+		case "header":
+			headers[opt.name] = opt.value
+		}
+	}
+
+	// body params
+	if utils.IsNilOrEmpty(r.sourceCreate) {
+		postBody = "{}"
+	} else {
+		postBody = r.sourceCreate
+	}
+	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	if err != nil {
+		return returnValue, err
+	}
+
+	res, resBody, err := c.callAPI(req, false)
+	if err != nil {
+		return returnValue, err
+	}
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+
+	if res.StatusCode >= 300 {
+		newErr := &APIError{
+			Message: string(resBody),
+			Status:  res.StatusCode,
+		}
+
+		var v ErrorBase
+		err = c.decode(&v, resBody)
+		if err != nil {
+			newErr.Message = err.Error()
+			return returnValue, newErr
+		}
+
+		return returnValue, newErr
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, reportError("cannot decode result: %w", err)
+	}
+
+	return returnValue, nil
+}
+
+func (r *ApiValidateSourceBeforeUpdateRequest) UnmarshalJSON(b []byte) error {
+	req := map[string]json.RawMessage{}
+	err := json.Unmarshal(b, &req)
+	if err != nil {
+		return fmt.Errorf("cannot unmarshal request: %w", err)
+	}
+	if v, ok := req["sourceID"]; ok {
+		err = json.Unmarshal(v, &r.sourceID)
+		if err != nil {
+			err = json.Unmarshal(b, &r.sourceID)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal sourceID: %w", err)
+			}
+		}
+	}
+	if v, ok := req["sourceUpdate"]; ok {
+		err = json.Unmarshal(v, &r.sourceUpdate)
+		if err != nil {
+			err = json.Unmarshal(b, &r.sourceUpdate)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal sourceUpdate: %w", err)
+			}
+		}
+	} else {
+		err = json.Unmarshal(b, &r.sourceUpdate)
+		if err != nil {
+			return fmt.Errorf("cannot unmarshal body parameter sourceUpdate: %w", err)
+		}
+	}
+
+	return nil
+}
+
+// ApiValidateSourceBeforeUpdateRequest represents the request with all the parameters for the API call.
+type ApiValidateSourceBeforeUpdateRequest struct {
+	sourceID     string
+	sourceUpdate *SourceUpdate
+}
+
+// NewApiValidateSourceBeforeUpdateRequest creates an instance of the ApiValidateSourceBeforeUpdateRequest to be used for the API call.
+func (c *APIClient) NewApiValidateSourceBeforeUpdateRequest(sourceID string, sourceUpdate *SourceUpdate) ApiValidateSourceBeforeUpdateRequest {
+	return ApiValidateSourceBeforeUpdateRequest{
+		sourceID:     sourceID,
+		sourceUpdate: sourceUpdate,
+	}
+}
+
+/*
+ValidateSourceBeforeUpdate Wraps ValidateSourceBeforeUpdateWithContext using context.Background.
+
+Validates an update of a source payload to ensure it can be created and that the data source can be reached by Algolia.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
+
+Request can be constructed by NewApiValidateSourceBeforeUpdateRequest with parameters below.
+
+	@param sourceID string - Unique identifier of a source.
+	@param sourceUpdate SourceUpdate
+	@return SourceWatchResponse
+*/
+func (c *APIClient) ValidateSourceBeforeUpdate(r ApiValidateSourceBeforeUpdateRequest, opts ...Option) (*SourceWatchResponse, error) {
+	return c.ValidateSourceBeforeUpdateWithContext(context.Background(), r, opts...)
+}
+
+/*
+ValidateSourceBeforeUpdate
+
+Validates an update of a source payload to ensure it can be created and that the data source can be reached by Algolia.
+
+Required API Key ACLs:
+  - addObject
+  - deleteIndex
+  - editSettings
+
+Request can be constructed by NewApiValidateSourceBeforeUpdateRequest with parameters below.
+
+	@param sourceID string - Unique identifier of a source.
+	@param sourceUpdate SourceUpdate
+	@return SourceWatchResponse
+*/
+func (c *APIClient) ValidateSourceBeforeUpdateWithContext(ctx context.Context, r ApiValidateSourceBeforeUpdateRequest, opts ...Option) (*SourceWatchResponse, error) {
+	var (
+		postBody    any
+		returnValue *SourceWatchResponse
+	)
+
+	requestPath := "/1/sources/{sourceID}/validate"
+	requestPath = strings.ReplaceAll(requestPath, "{sourceID}", url.PathEscape(parameterToString(r.sourceID)))
+
+	headers := make(map[string]string)
+	queryParams := url.Values{}
+	if r.sourceID == "" {
+		return returnValue, reportError("Parameter `sourceID` is required when calling `ValidateSourceBeforeUpdate`.")
+	}
+
+	if r.sourceUpdate == nil {
+		return returnValue, reportError("Parameter `sourceUpdate` is required when calling `ValidateSourceBeforeUpdate`.")
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		switch opt.optionType {
+		case "query":
+			queryParams.Set(opt.name, opt.value)
+		case "header":
+			headers[opt.name] = opt.value
+		}
+	}
+
+	// body params
+	postBody = r.sourceUpdate
+	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
 	if err != nil {
 		return returnValue, err
 	}

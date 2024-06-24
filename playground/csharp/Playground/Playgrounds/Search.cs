@@ -201,7 +201,7 @@ public class SearchPlayground : IPlayground
 
     Console.WriteLine("--- Generate Secured API Keys `GenerateSecuredApiKeys` ---");
     var generateSecuredApiKeys = _client.GenerateSecuredApiKey(_configuration.SearchApiKey,
-      new SecuredAPIKeyRestrictions
+      new SecuredApiKeyRestrictions
       {
         RestrictIndices = [DefaultIndex],
       });

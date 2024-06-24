@@ -52,6 +52,7 @@ object JsonSupport {
     new RunStatusSerializer() :+
     new RunTypeSerializer() :+
     new ScheduleTriggerTypeSerializer() :+
+    new SortKeysSerializer() :+
     new SourceSortKeysSerializer() :+
     new SourceTypeSerializer() :+
     new StreamingTriggerTypeSerializer() :+

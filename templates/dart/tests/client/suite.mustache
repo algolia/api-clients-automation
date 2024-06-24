@@ -7,6 +7,7 @@ import 'package:test_api/hooks.dart';
 void main() {
   {{#blocksClient}}
   {{#tests}}
+  {{^isHelper}} {{! Helper tests are not supported yet}}
   test('{{{testName}}}', () async { 
     final requester = RequestInterceptor();
     {{#autoCreateClient}}
@@ -48,6 +49,7 @@ void main() {
     }
   );
 
+  {{/isHelper}}
   {{/tests}}
   {{/blocksClient}}
 }

@@ -116,6 +116,52 @@ class TestClientSearchClient < Test::Unit::TestCase
     assert_equal(30_000, req.timeout)
   end
 
+  # generate secured api key basic
+  def test_helpers0
+    client = Algolia::SearchClient.create(
+      'APP_ID',
+      'API_KEY',
+      { requester: Algolia::Transport::EchoRequester.new }
+    )
+    req = client.generate_secured_api_key(
+      "2640659426d5107b6e47d75db9cbaef8",
+      SecuredApiKeyRestrictions.new(valid_until: 2_524_604_400, restrict_indices: ["Movies"])
+    )
+    assert_equal(
+      'NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw', req
+    )
+  end
+
+  # generate secured api key with searchParams
+  def test_helpers1
+    client = Algolia::SearchClient.create(
+      'APP_ID',
+      'API_KEY',
+      { requester: Algolia::Transport::EchoRequester.new }
+    )
+    req = client.generate_secured_api_key(
+      "2640659426d5107b6e47d75db9cbaef8",
+      SecuredApiKeyRestrictions.new(
+        valid_until: 2_524_604_400,
+        restrict_indices: ["Movies", "cts_e2e_settings"],
+        restrict_sources: "192.168.1.0/24",
+        filters: "category:Book OR category:Ebook AND _tags:published",
+        user_token: "user123",
+        search_params: SearchParamsObject.new(
+          query: "batman",
+          typo_tolerance: 'strict',
+          around_radius: 'all',
+          mode: 'neuralSearch',
+          hits_per_page: 10,
+          optional_words: ["one", "two"]
+        )
+      )
+    )
+    assert_equal(
+      'MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw', req
+    )
+  end
+
   # client throws with invalid parameters
   def test_parameters0
     begin

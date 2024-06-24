@@ -28,7 +28,7 @@ package algoliasearch.ingestion
   * @param taskID
   *   Universally unique identifier (UUID) of a task.
   * @param createdAt
-  *   Date of creation in RFC3339 format.
+  *   Date of creation in RFC 3339 format.
   */
 case class TaskCreateResponse(
     taskID: String,

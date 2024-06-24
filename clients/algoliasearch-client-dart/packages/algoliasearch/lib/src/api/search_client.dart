@@ -4,6 +4,8 @@ import 'package:algolia_client_core/algolia_client_core.dart';
 import 'package:algoliasearch/src/deserialize.dart';
 import 'package:algoliasearch/src/version.dart';
 
+import 'package:algoliasearch/src/model/get_recommendations_params.dart';
+import 'package:algoliasearch/src/model/get_recommendations_response.dart';
 import 'package:algoliasearch/src/model/search_method_params.dart';
 import 'package:algoliasearch/src/model/search_responses.dart';
 
@@ -76,6 +78,35 @@ final class SearchClient implements ApiClient {
     return deserialize<Object, Object>(
       response,
       'Object',
+      growable: true,
+    );
+  }
+
+  /// Retrieves recommendations from selected AI models.
+  ///
+  /// Required API Key ACLs:
+  ///   - search
+  ///
+  /// Parameters:
+  /// * [getRecommendationsParams]
+  /// * [requestOptions] additional request configuration.
+  Future<GetRecommendationsResponse> getRecommendations({
+    required GetRecommendationsParams getRecommendationsParams,
+    RequestOptions? requestOptions,
+  }) async {
+    final request = ApiRequest(
+      method: RequestMethod.post,
+      path: r'/1/indexes/*/recommendations',
+      isRead: true,
+      body: getRecommendationsParams.toJson(),
+    );
+    final response = await _retryStrategy.execute(
+      request: request,
+      options: requestOptions,
+    );
+    return deserialize<GetRecommendationsResponse, GetRecommendationsResponse>(
+      response,
+      'GetRecommendationsResponse',
       growable: true,
     );
   }

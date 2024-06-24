@@ -112,6 +112,23 @@ public class IngestionClient(
   }
 
   /**
+   * Creates a new transformation.
+   * @param transformationCreate Request body for creating a transformation.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun createTransformation(transformationCreate: TransformationCreate, requestOptions: RequestOptions? = null): TransformationCreateResponse {
+    val requestConfig = RequestConfig(
+      method = RequestMethod.POST,
+      path = listOf("1", "transformations"),
+      body = transformationCreate,
+    )
+    return requester.execute(
+      requestConfig = requestConfig,
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
    * This method allow you to send requests to the Algolia REST API.
    * @param path Path of the endpoint, anything after \"/1\" must be specified.
    * @param parameters Query parameters to apply to the current query.
@@ -283,6 +300,23 @@ public class IngestionClient(
   }
 
   /**
+   * Deletes a transformation by its ID.
+   * @param transformationID Unique identifier of a transformation.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun deleteTransformation(transformationID: String, requestOptions: RequestOptions? = null): DeleteResponse {
+    require(transformationID.isNotBlank()) { "Parameter `transformationID` is required when calling `deleteTransformation`." }
+    val requestConfig = RequestConfig(
+      method = RequestMethod.DELETE,
+      path = listOf("1", "transformations", "$transformationID"),
+    )
+    return requester.execute(
+      requestConfig = requestConfig,
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
    * Disables a task.
    *
    * Required API Key ACLs:
@@ -439,28 +473,6 @@ public class IngestionClient(
   }
 
   /**
-   * Retrieves a stream listing for a source.  Listing streams only works with sources with `type: docker` and `imageType: singer`.
-   *
-   * Required API Key ACLs:
-   *   - addObject
-   *   - deleteIndex
-   *   - editSettings
-   * @param sourceID Unique identifier of a source.
-   * @param requestOptions additional request configuration.
-   */
-  public suspend fun getDockerSourceStreams(sourceID: String, requestOptions: RequestOptions? = null): DockerSourceStreams {
-    require(sourceID.isNotBlank()) { "Parameter `sourceID` is required when calling `getDockerSourceStreams`." }
-    val requestConfig = RequestConfig(
-      method = RequestMethod.GET,
-      path = listOf("1", "sources", "$sourceID", "discover"),
-    )
-    return requester.execute(
-      requestConfig = requestConfig,
-      requestOptions = requestOptions,
-    )
-  }
-
-  /**
    * Retrieves a single task run event by its ID.
    *
    * Required API Key ACLs:
@@ -498,8 +510,8 @@ public class IngestionClient(
    * @param type Event type for filtering the list of task runs.
    * @param sort Property by which to sort the list of task run events.
    * @param order Sort order of the response, ascending or descending. (default to desc)
-   * @param startDate Date and time in RFC3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
-   * @param endDate Date and time in RFC3339 format for the latest events to retrieve. By default, the current time is used.
+   * @param startDate Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
+   * @param endDate Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
    * @param requestOptions additional request configuration.
    */
   public suspend fun getEvents(runID: String, itemsPerPage: Int? = null, page: Int? = null, status: List<EventStatus>? = null, type: List<EventType>? = null, sort: EventSortKeys? = null, order: OrderKeys? = null, startDate: String? = null, endDate: String? = null, requestOptions: RequestOptions? = null): ListEventsResponse {
@@ -559,8 +571,8 @@ public class IngestionClient(
    * @param taskID Task ID for filtering the list of task runs.
    * @param sort Property by which to sort the list of task runs. (default to createdAt)
    * @param order Sort order of the response, ascending or descending. (default to desc)
-   * @param startDate Date in RFC3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
-   * @param endDate Date in RFC3339 format for the latest run to retrieve. By default, the current day is used.
+   * @param startDate Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+   * @param endDate Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
    * @param requestOptions additional request configuration.
    */
   public suspend fun getRuns(itemsPerPage: Int? = null, page: Int? = null, status: List<RunStatus>? = null, taskID: String? = null, sort: RunSortKeys? = null, order: OrderKeys? = null, startDate: String? = null, endDate: String? = null, requestOptions: RequestOptions? = null): RunListResponse {
@@ -703,6 +715,54 @@ public class IngestionClient(
   }
 
   /**
+   * Retrieves a transformation by its ID.
+   *
+   * Required API Key ACLs:
+   *   - addObject
+   *   - deleteIndex
+   *   - editSettings
+   * @param transformationID Unique identifier of a transformation.
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getTransformation(transformationID: String, requestOptions: RequestOptions? = null): Transformation {
+    require(transformationID.isNotBlank()) { "Parameter `transformationID` is required when calling `getTransformation`." }
+    val requestConfig = RequestConfig(
+      method = RequestMethod.GET,
+      path = listOf("1", "transformations", "$transformationID"),
+    )
+    return requester.execute(
+      requestConfig = requestConfig,
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Retrieves a list of transformations.
+   *
+   * Required API Key ACLs:
+   *   - addObject
+   *   - deleteIndex
+   *   - editSettings
+   * @param sort Property by which to sort the list. (default to desc)
+   * @param order Sort order of the response, ascending or descending. (default to desc)
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun getTransformations(sort: SortKeys? = null, order: OrderKeys? = null, requestOptions: RequestOptions? = null): ListTransformationsResponse {
+    val requestConfig = RequestConfig(
+      method = RequestMethod.GET,
+      path = listOf("1", "transformations"),
+      query = buildMap {
+        sort?.let { put("sort", it) }
+        order?.let { put("order", it) }
+      },
+    )
+    return requester.execute(
+      requestConfig = requestConfig,
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
    * Runs a task. You can check the status of task runs with the observability endpoints.
    *
    * Required API Key ACLs:
@@ -813,6 +873,28 @@ public class IngestionClient(
   }
 
   /**
+   * Searches for transformations.
+   *
+   * Required API Key ACLs:
+   *   - addObject
+   *   - deleteIndex
+   *   - editSettings
+   * @param transformationSearch
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun searchTransformations(transformationSearch: TransformationSearch, requestOptions: RequestOptions? = null): List<Transformation> {
+    val requestConfig = RequestConfig(
+      method = RequestMethod.POST,
+      path = listOf("1", "transformations", "search"),
+      body = transformationSearch,
+    )
+    return requester.execute(
+      requestConfig = requestConfig,
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
    * Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.
    *
    * Required API Key ACLs:
@@ -822,11 +904,33 @@ public class IngestionClient(
    * @param sourceID Unique identifier of a source.
    * @param requestOptions additional request configuration.
    */
-  public suspend fun triggerDockerSourceDiscover(sourceID: String, requestOptions: RequestOptions? = null): DockerSourceDiscover {
+  public suspend fun triggerDockerSourceDiscover(sourceID: String, requestOptions: RequestOptions? = null): SourceWatchResponse {
     require(sourceID.isNotBlank()) { "Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`." }
     val requestConfig = RequestConfig(
       method = RequestMethod.POST,
       path = listOf("1", "sources", "$sourceID", "discover"),
+    )
+    return requester.execute(
+      requestConfig = requestConfig,
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Searches for transformations.
+   *
+   * Required API Key ACLs:
+   *   - addObject
+   *   - deleteIndex
+   *   - editSettings
+   * @param transformationTry
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun tryTransformations(transformationTry: TransformationTry, requestOptions: RequestOptions? = null): TransformationTryResponse {
+    val requestConfig = RequestConfig(
+      method = RequestMethod.POST,
+      path = listOf("1", "transformations", "try"),
+      body = transformationTry,
     )
     return requester.execute(
       requestConfig = requestConfig,
@@ -918,6 +1022,71 @@ public class IngestionClient(
       method = RequestMethod.PATCH,
       path = listOf("1", "tasks", "$taskID"),
       body = taskUpdate,
+    )
+    return requester.execute(
+      requestConfig = requestConfig,
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Updates a transformation by its ID.
+   * @param transformationID Unique identifier of a transformation.
+   * @param transformationCreate
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun updateTransformation(transformationID: String, transformationCreate: TransformationCreate, requestOptions: RequestOptions? = null): TransformationUpdateResponse {
+    require(transformationID.isNotBlank()) { "Parameter `transformationID` is required when calling `updateTransformation`." }
+    val requestConfig = RequestConfig(
+      method = RequestMethod.PUT,
+      path = listOf("1", "transformations", "$transformationID"),
+      body = transformationCreate,
+    )
+    return requester.execute(
+      requestConfig = requestConfig,
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Validates a source payload to ensure it can be created and that the data source can be reached by Algolia.
+   *
+   * Required API Key ACLs:
+   *   - addObject
+   *   - deleteIndex
+   *   - editSettings
+   * @param sourceCreate
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun validateSource(sourceCreate: SourceCreate? = null, requestOptions: RequestOptions? = null): SourceWatchResponse {
+    val requestConfig = RequestConfig(
+      method = RequestMethod.POST,
+      path = listOf("1", "sources", "validate"),
+      body = sourceCreate,
+    )
+    return requester.execute(
+      requestConfig = requestConfig,
+      requestOptions = requestOptions,
+    )
+  }
+
+  /**
+   * Validates an update of a source payload to ensure it can be created and that the data source can be reached by Algolia.
+   *
+   * Required API Key ACLs:
+   *   - addObject
+   *   - deleteIndex
+   *   - editSettings
+   * @param sourceID Unique identifier of a source.
+   * @param sourceUpdate
+   * @param requestOptions additional request configuration.
+   */
+  public suspend fun validateSourceBeforeUpdate(sourceID: String, sourceUpdate: SourceUpdate, requestOptions: RequestOptions? = null): SourceWatchResponse {
+    require(sourceID.isNotBlank()) { "Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`." }
+    val requestConfig = RequestConfig(
+      method = RequestMethod.POST,
+      path = listOf("1", "sources", "$sourceID", "validate"),
+      body = sourceUpdate,
     )
     return requester.execute(
       requestConfig = requestConfig,

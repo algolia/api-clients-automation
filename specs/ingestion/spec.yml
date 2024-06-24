@@ -88,6 +88,10 @@ tags:
     description: |
       Tasks contain information how your data should be read from a source and stored in a destination.
       Tasks have _triggers_ which determine when the task should run.
+  - name: transformations
+    x-displayName: Transformations
+    description: |
+      Transformations allows you to transform a record before it gets indexed in Algolia.
 x-tagGroups:
   - name: Resources
     tags:
@@ -122,10 +126,14 @@ paths:
   # sources API.
   /1/sources:
     $ref: 'paths/sources/sources.yml'
+  /1/sources/validate:
+    $ref: 'paths/sources/validate.yml'
   /1/sources/search:
     $ref: 'paths/sources/searchSources.yml'
   /1/sources/{sourceID}:
     $ref: 'paths/sources/sourceID.yml'
+  /1/sources/{sourceID}/validate:
+    $ref: 'paths/sources/validateID.yml'
   /1/sources/{sourceID}/discover:
     $ref: 'paths/sources/discover.yml'
 
@@ -142,6 +150,16 @@ paths:
     $ref: 'paths/tasks/enableTask.yml'
   /1/tasks/{taskID}/disable:
     $ref: 'paths/tasks/disableTask.yml'
+
+  # transformations API.
+  /1/transformations:
+    $ref: 'paths/transformations/transformations.yml'
+  /1/transformations/try:
+    $ref: 'paths/transformations/transformationsTry.yml'
+  /1/transformations/search:
+    $ref: 'paths/transformations/transformationsSearch.yml'
+  /1/transformations/{transformationID}:
+    $ref: 'paths/transformations/transformationID.yml'
 
   # observability API.
   /1/runs:

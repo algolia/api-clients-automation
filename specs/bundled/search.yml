@@ -3177,6 +3177,7 @@ paths:
   /generateSecuredApiKey:
     get:
       x-helper: true
+      x-asynchronous-helper: false
       tags:
         - search
       operationId: generateSecuredApiKey
@@ -3214,7 +3215,7 @@ paths:
         key, or be more restrictive.
       parameters:
         - in: query
-          name: apiKey
+          name: parentApiKey
           description: >-
             API key from which the secured API key will inherit its
             restrictions.
@@ -3226,7 +3227,7 @@ paths:
           description: Restrictions to add to the API key.
           required: true
           schema:
-            $ref: '#/components/schemas/securedAPIKeyRestrictions'
+            $ref: '#/components/schemas/securedApiKeyRestrictions'
       responses:
         '200':
           description: OK
@@ -5287,13 +5288,14 @@ components:
         - dest
         - source
     userData:
+      type: object
       example:
         settingID: f2a7b51e3503acc6a39b3784ffb84300
         pluginVersion: 1.6.0
       description: |
         An object with custom data.
 
-        You can store up to 32&nbsp;kB as custom data.
+        You can store up to 32kB as custom data.
       default: {}
       x-categories:
         - Advanced
@@ -7370,7 +7372,7 @@ components:
         - add
         - delete
         - update
-    securedAPIKeyRestrictions:
+    securedApiKeyRestrictions:
       type: object
       additionalProperties: false
       properties:

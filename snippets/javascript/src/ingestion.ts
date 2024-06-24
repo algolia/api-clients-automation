@@ -113,6 +113,30 @@ export async function snippetForCreateTask(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the createTransformation method.
+//
+// createTransformation
+export async function snippetForCreateTransformation(): Promise<void> {
+  // >SEPARATOR createTransformation default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.createTransformation({
+    code: 'foo',
+    name: 'bar',
+    description: 'baz',
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the customDelete method.
 //
 // allow del method for a custom path with minimal parameters
@@ -281,6 +305,28 @@ export async function snippetForDeleteTask(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the deleteTransformation method.
+//
+// deleteTransformation
+export async function snippetForDeleteTransformation(): Promise<void> {
+  // >SEPARATOR deleteTransformation default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.deleteTransformation({
+    transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the disableTask method.
 //
 // disableTask
@@ -403,28 +449,6 @@ export async function snippetForGetDestinations(): Promise<void> {
 
   // Call the API
   const response = await client.getDestinations();
-
-  // use typed response
-  console.log(response);
-  // SEPARATOR<
-}
-
-// Snippet for the getDockerSourceStreams method.
-//
-// getDockerSourceStreams
-export async function snippetForGetDockerSourceStreams(): Promise<void> {
-  // >SEPARATOR getDockerSourceStreams default
-  // Initialize the client
-  const client = ingestionClient(
-    'YOUR_APP_ID',
-    'YOUR_API_KEY',
-    'YOUR_APP_ID_REGION'
-  );
-
-  // Call the API
-  const response = await client.getDockerSourceStreams({
-    sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-  });
 
   // use typed response
   console.log(response);
@@ -602,6 +626,48 @@ export async function snippetForGetTasks(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the getTransformation method.
+//
+// getTransformation
+export async function snippetForGetTransformation(): Promise<void> {
+  // >SEPARATOR getTransformation default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.getTransformation({
+    transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the getTransformations method.
+//
+// getTransformations
+export async function snippetForGetTransformations(): Promise<void> {
+  // >SEPARATOR getTransformations default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.getTransformations();
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the runTask method.
 //
 // runTask
@@ -725,6 +791,32 @@ export async function snippetForSearchTasks(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the searchTransformations method.
+//
+// searchTransformations
+export async function snippetForSearchTransformations(): Promise<void> {
+  // >SEPARATOR searchTransformations default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.searchTransformations({
+    transformationsIDs: [
+      '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+      '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
+      '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
+    ],
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the triggerDockerSourceDiscover method.
 //
 // triggerDockerSourceDiscover
@@ -740,6 +832,29 @@ export async function snippetForTriggerDockerSourceDiscover(): Promise<void> {
   // Call the API
   const response = await client.triggerDockerSourceDiscover({
     sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the tryTransformations method.
+//
+// tryTransformations
+export async function snippetForTryTransformations(): Promise<void> {
+  // >SEPARATOR tryTransformations default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.tryTransformations({
+    code: 'foo',
+    sampleRecord: { bar: 'baz' },
   });
 
   // use typed response
@@ -832,6 +947,82 @@ export async function snippetForUpdateTask(): Promise<void> {
   const response = await client.updateTask({
     taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
     taskUpdate: { enabled: false },
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the updateTransformation method.
+//
+// updateTransformation
+export async function snippetForUpdateTransformation(): Promise<void> {
+  // >SEPARATOR updateTransformation default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.updateTransformation({
+    transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    transformationCreate: { code: 'foo', name: 'bar', description: 'baz' },
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the validateSource method.
+//
+// validateSource
+export async function snippetForValidateSource(): Promise<void> {
+  // >SEPARATOR validateSource default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.validateSource({
+    type: 'commercetools',
+    name: 'sourceName',
+    input: {
+      storeKeys: ['myStore'],
+      locales: ['de'],
+      url: 'http://commercetools.com',
+      projectKey: 'keyID',
+    },
+    authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
+// Snippet for the validateSourceBeforeUpdate method.
+//
+// validateSourceBeforeUpdate
+export async function snippetForValidateSourceBeforeUpdate(): Promise<void> {
+  // >SEPARATOR validateSourceBeforeUpdate default
+  // Initialize the client
+  const client = ingestionClient(
+    'YOUR_APP_ID',
+    'YOUR_API_KEY',
+    'YOUR_APP_ID_REGION'
+  );
+
+  // Call the API
+  const response = await client.validateSourceBeforeUpdate({
+    sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    sourceUpdate: { name: 'newName' },
   });
 
   // use typed response

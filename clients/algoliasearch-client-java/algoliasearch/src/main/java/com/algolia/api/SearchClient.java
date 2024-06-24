@@ -6376,7 +6376,7 @@ public class SearchClient extends ApiClient {
    * @throws AlgoliaApiException When the API sends an http error code
    * @throws AlgoliaRuntimeException When an error occurred during the serialization
    */
-  public String generateSecuredApiKey(@Nonnull String parentApiKey, @Nonnull SecuredAPIKeyRestrictions restrictions) throws Exception {
+  public String generateSecuredApiKey(@Nonnull String parentApiKey, @Nonnull SecuredApiKeyRestrictions restrictions) throws Exception {
     Map<String, String> restrictionsMap = new HashMap<>();
     if (restrictions.getFilters() != null) restrictionsMap.put("filters", StringUtils.paramToString(restrictions.getFilters()));
     if (restrictions.getValidUntil() != 0) restrictionsMap.put("validUntil", StringUtils.paramToString(restrictions.getValidUntil()));

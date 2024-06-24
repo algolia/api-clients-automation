@@ -21,7 +21,7 @@ public class Window {
     return this;
   }
 
-  /** Date in RFC3339 format representing the oldest data in the time window. */
+  /** Date in RFC 3339 format representing the oldest data in the time window. */
   @javax.annotation.Nonnull
   public String getStartDate() {
     return startDate;
@@ -32,7 +32,7 @@ public class Window {
     return this;
   }
 
-  /** Date in RFC3339 format representing the newest data in the time window. */
+  /** Date in RFC 3339 format representing the newest data in the time window. */
   @javax.annotation.Nonnull
   public String getEndDate() {
     return endDate;

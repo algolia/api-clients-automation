@@ -39,11 +39,11 @@ import algoliasearch.ingestion.RunType._
   * @param reason
   *   More information about the task run's outcome.
   * @param createdAt
-  *   Date of creation in RFC3339 format.
+  *   Date of creation in RFC 3339 format.
   * @param startedAt
-  *   Date of start in RFC3339 format.
+  *   Date of start in RFC 3339 format.
   * @param finishedAt
-  *   Date of finish in RFC3339 format.
+  *   Date of finish in RFC 3339 format.
   */
 case class Run(
     runID: String,

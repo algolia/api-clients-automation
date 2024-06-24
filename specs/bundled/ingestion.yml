@@ -129,6 +129,11 @@ tags:
       stored in a destination.
 
       Tasks have _triggers_ which determine when the task should run.
+  - name: transformations
+    x-displayName: Transformations
+    description: >
+      Transformations allows you to transform a record before it gets indexed in
+      Algolia.
 paths:
   /{path}:
     get:
@@ -636,6 +641,34 @@ paths:
                 $ref: '#/components/schemas/SourceCreateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+  /1/sources/validate:
+    post:
+      tags:
+        - ingestion
+      summary: Validates a source payload
+      description: >
+        Validates a source payload to ensure it can be created and that the data
+        source can be reached by Algolia.
+      operationId: validateSource
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SourceCreate'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceWatchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
   /1/sources/search:
     post:
       tags:
@@ -737,42 +770,37 @@ paths:
                 $ref: '#/components/schemas/DeleteResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
-  /1/sources/{sourceID}/discover:
-    get:
+  /1/sources/{sourceID}/validate:
+    post:
       tags:
         - ingestion
-      summary: Retrieve a stream listing
+      summary: Validates an update of a source payload
       description: >
-        Retrieves a stream listing for a source.
-
-
-        Listing streams only works with sources with `type: docker` and
-        `imageType: singer`.
-      operationId: getDockerSourceStreams
+        Validates an update of a source payload to ensure it can be created and
+        that the data source can be reached by Algolia.
+      operationId: validateSourceBeforeUpdate
       x-acl:
         - addObject
         - deleteIndex
         - editSettings
       parameters:
         - $ref: '#/components/parameters/pathSourceID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SourceUpdate'
+        required: true
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                title: dockerSourceStreams
-                type: object
-                additionalProperties: false
-                properties:
-                  streams:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/DockerSourceStream'
-                required:
-                  - streams
+                $ref: '#/components/schemas/SourceWatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+  /1/sources/{sourceID}/discover:
     post:
       tags:
         - ingestion
@@ -795,17 +823,7 @@ paths:
           content:
             application/json:
               schema:
-                title: dockerSourceDiscover
-                type: object
-                additionalProperties: false
-                properties:
-                  runID:
-                    $ref: '#/components/schemas/runID'
-                  createdAt:
-                    $ref: '#/components/schemas/createdAt'
-                required:
-                  - runID
-                  - createdAt
+                $ref: '#/components/schemas/SourceWatchResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
   /1/tasks:
@@ -1032,6 +1050,181 @@ paths:
                 $ref: '#/components/schemas/TaskUpdateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+  /1/transformations:
+    get:
+      tags:
+        - ingestion
+      summary: List transformations
+      description: Retrieves a list of transformations.
+      operationId: getTransformations
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      parameters:
+        - $ref: '#/components/parameters/parameters_sort'
+        - $ref: '#/components/parameters/order'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: listTransformationsResponse
+                type: object
+                description: Configured transformations and pagination information.
+                additionalProperties: false
+                properties:
+                  transformations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Transformation'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                required:
+                  - transformations
+                  - pagination
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    post:
+      tags:
+        - ingestion
+      summary: Create a transformation
+      description: Creates a new transformation.
+      operationId: createTransformation
+      requestBody:
+        description: Request body for creating a transformation.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransformationCreate'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformationCreateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /1/transformations/try:
+    post:
+      tags:
+        - ingestion
+      summary: Search for transformations
+      description: Searches for transformations.
+      operationId: tryTransformations
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransformationTry'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformationTryResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /1/transformations/search:
+    post:
+      tags:
+        - ingestion
+      summary: Search for transformations
+      description: Searches for transformations.
+      operationId: searchTransformations
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransformationSearch'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: searchTransformationsResponse
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transformation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /1/transformations/{transformationID}:
+    get:
+      tags:
+        - ingestion
+      summary: Retrieve a transformation
+      description: Retrieves a transformation by its ID.
+      operationId: getTransformation
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      parameters:
+        - $ref: '#/components/parameters/pathTransformationID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transformation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    put:
+      tags:
+        - ingestion
+      summary: Update a transformation
+      description: Updates a transformation by its ID.
+      operationId: updateTransformation
+      parameters:
+        - $ref: '#/components/parameters/pathTransformationID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransformationCreate'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformationUpdateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    delete:
+      tags:
+        - ingestion
+      summary: Delete a transformation
+      description: Deletes a transformation by its ID.
+      operationId: deleteTransformation
+      parameters:
+        - $ref: '#/components/parameters/pathTransformationID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
   /1/runs:
     get:
       tags:
@@ -1053,14 +1246,14 @@ paths:
         - name: startDate
           in: query
           description: >-
-            Date in RFC3339 format for the earliest run to retrieve. By default,
-            the current day minus seven days is used.
+            Date in RFC 3339 format for the earliest run to retrieve. By
+            default, the current day minus seven days is used.
           schema:
             type: string
         - name: endDate
           in: query
           description: >-
-            Date in RFC3339 format for the latest run to retrieve. By default,
+            Date in RFC 3339 format for the latest run to retrieve. By default,
             the current day is used.
           schema:
             type: string
@@ -1117,14 +1310,14 @@ paths:
         - name: startDate
           in: query
           description: >-
-            Date and time in RFC3339 format for the earliest events to retrieve.
-            By default, the current time minus three hours is used.
+            Date and time in RFC 3339 format for the earliest events to
+            retrieve. By default, the current time minus three hours is used.
           schema:
             type: string
         - name: endDate
           in: query
           description: >-
-            Date and time in RFC3339 format for the latest events to retrieve.
+            Date and time in RFC 3339 format for the latest events to retrieve.
             By default, the current time is used.
           schema:
             type: string
@@ -1417,6 +1610,20 @@ components:
       description: Unique identifier of a task.
       schema:
         $ref: '#/components/schemas/taskID'
+    parameters_sort:
+      name: sort
+      in: query
+      description: Property by which to sort the list.
+      required: false
+      schema:
+        $ref: '#/components/schemas/sortKeys'
+    pathTransformationID:
+      name: transformationID
+      in: path
+      required: true
+      description: Unique identifier of a transformation.
+      schema:
+        $ref: '#/components/schemas/transformationID'
     runStatus:
       name: status
       in: query
@@ -1650,10 +1857,10 @@ components:
         - $ref: '#/components/schemas/AuthAlgoliaInsightsPartial'
     createdAt:
       type: string
-      description: Date of creation in RFC3339 format.
+      description: Date of creation in RFC 3339 format.
     updatedAt:
       type: string
-      description: Date of last update in RFC3339 format.
+      description: Date of last update in RFC 3339 format.
     Authentication:
       type: object
       description: >-
@@ -1864,7 +2071,7 @@ components:
       properties:
         deletedAt:
           type: string
-          description: Date of deletion in RFC3339 format.
+          description: Date of deletion in RFC 3339 format.
       required:
         - deletedAt
     AuthenticationUpdate:
@@ -2528,6 +2735,93 @@ components:
         - sourceID
         - name
         - createdAt
+    runID:
+      type: string
+      description: Universally unique identifier (UUID) of a task run.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    eventID:
+      type: string
+      description: Universally unique identifier (UUID) of an event.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    EventStatus:
+      type: string
+      enum:
+        - created
+        - started
+        - retried
+        - failed
+        - succeeded
+        - critical
+    EventType:
+      type: string
+      enum:
+        - fetch
+        - record
+        - log
+        - transform
+    publishedAt:
+      type: string
+      description: Date of publish RFC 3339 format.
+    Event:
+      type: object
+      description: An event describe a step of the task execution flow..
+      additionalProperties: false
+      properties:
+        eventID:
+          $ref: '#/components/schemas/eventID'
+        runID:
+          $ref: '#/components/schemas/runID'
+        parentID:
+          type: string
+          description: The parent event, the cause of this event.
+          example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+        status:
+          $ref: '#/components/schemas/EventStatus'
+        type:
+          $ref: '#/components/schemas/EventType'
+        batchSize:
+          type: integer
+          description: The extracted record batch size.
+          example: 10
+          minimum: 0
+          multipleOf: 1
+        data:
+          type: object
+          additionalProperties: true
+        publishedAt:
+          $ref: '#/components/schemas/publishedAt'
+      required:
+        - eventID
+        - runID
+        - status
+        - type
+        - batchSize
+        - publishedAt
+    SourceWatchResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        runID:
+          $ref: '#/components/schemas/runID'
+        data:
+          type: array
+          description: >-
+            depending on the source type, the validation returns sampling data
+            of your source (JSON, CSV, BigQuery).
+          items:
+            type: object
+        events:
+          description: >-
+            in case of error, observability events will be added to the
+            response, if any.
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        message:
+          description: a message describing the outcome of a validate run.
+          type: string
+      required:
+        - message
     SourceSearch:
       type: object
       additionalProperties: false
@@ -2621,13 +2915,6 @@ components:
         - sourceID
         - name
         - updatedAt
-    DockerSourceStream:
-      type: object
-      description: Stream definition (see the Singer specification for details).
-    runID:
-      type: string
-      description: Universally unique identifier (UUID) of a task run.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     ActionType:
       type: string
       description: Action to perform on the Algolia index.
@@ -2677,7 +2964,7 @@ components:
       enum:
         - onDemand
     LastRun:
-      description: The last time the scheduled task ran in RFC3339 format.
+      description: The last time the scheduled task ran in RFC 3339 format.
       type: string
     OnDemandTrigger:
       type: object
@@ -2711,7 +2998,7 @@ components:
         lastRun:
           $ref: '#/components/schemas/LastRun'
         nextRun:
-          description: The next scheduled run of the task in RFC3339 format.
+          description: The next scheduled run of the task in RFC 3339 format.
           type: string
       required:
         - type
@@ -2827,11 +3114,11 @@ components:
       properties:
         startDate:
           description: >-
-            Earliest date in RFC3339 format of the extracted data from Big
+            Earliest date in RFC 3339 format of the extracted data from Big
             Query.
           type: string
         endDate:
-          description: Latest date in RFC3339 format of the extracted data from Big Query.
+          description: Latest date in RFC 3339 format of the extracted data from Big Query.
           type: string
         mapping:
           $ref: '#/components/schemas/MappingInput'
@@ -2936,6 +3223,9 @@ components:
       description: >-
         Maximum accepted percentage of failures for a task run to finish
         successfully.
+    cursor:
+      type: string
+      description: Date of the last cursor in RFC 3339 format.
     Task:
       type: object
       additionalProperties: false
@@ -2958,6 +3248,8 @@ components:
           $ref: '#/components/schemas/failureThreshold'
         action:
           $ref: '#/components/schemas/ActionType'
+        cursor:
+          $ref: '#/components/schemas/cursor'
         createdAt:
           $ref: '#/components/schemas/createdAt'
         updatedAt:
@@ -3019,6 +3311,8 @@ components:
           $ref: '#/components/schemas/failureThreshold'
         input:
           $ref: '#/components/schemas/TaskInput'
+        cursor:
+          $ref: '#/components/schemas/cursor'
       required:
         - sourceID
         - destinationID
@@ -3095,6 +3389,132 @@ components:
       required:
         - runID
         - createdAt
+    sortKeys:
+      type: string
+      description: Property by which to sort the list.
+      default: desc
+      enum:
+        - name
+        - type
+        - updatedAt
+        - createdAt
+    transformationID:
+      type: string
+      description: Universally unique identifier (UUID) of a transformation.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    Code:
+      type: string
+      description: The source code of the transformation.
+    Name:
+      type: string
+      description: The uniquely identified name of your transformation.
+    Description:
+      type: string
+      description: A descriptive name for your transformation of what it does.
+    Transformation:
+      type: object
+      additionalProperties: false
+      properties:
+        transformationID:
+          $ref: '#/components/schemas/transformationID'
+        code:
+          $ref: '#/components/schemas/Code'
+        name:
+          $ref: '#/components/schemas/Name'
+        description:
+          $ref: '#/components/schemas/Description'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+      required:
+        - transformationID
+        - code
+        - name
+        - description
+        - createdAt
+    TransformationCreate:
+      type: object
+      additionalProperties: false
+      description: API request body for creating a transformation.
+      properties:
+        code:
+          $ref: '#/components/schemas/Code'
+        name:
+          $ref: '#/components/schemas/Name'
+        description:
+          $ref: '#/components/schemas/Description'
+      required:
+        - code
+        - name
+        - description
+    TransformationCreateResponse:
+      type: object
+      additionalProperties: false
+      description: API response for creating a transformation.
+      properties:
+        transformationID:
+          $ref: '#/components/schemas/transformationID'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+      required:
+        - transformationID
+        - createdAt
+    TransformationTry:
+      type: object
+      additionalProperties: false
+      properties:
+        code:
+          $ref: '#/components/schemas/Code'
+        sampleRecord:
+          description: The record to apply the given code to.
+          type: object
+      required:
+        - code
+        - sampleRecord
+    TransformationTryResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        payloads:
+          type: array
+          description: The array of records returned by the transformation service.
+          items:
+            type: object
+        error:
+          type: object
+          description: The error if the transformation failed.
+          properties:
+            code:
+              description: The error status code.
+              type: integer
+            message:
+              description: A descriptive message explaining the failure.
+              type: string
+      required:
+        - payloads
+    TransformationSearch:
+      type: object
+      additionalProperties: false
+      properties:
+        transformationsIDs:
+          type: array
+          items:
+            $ref: '#/components/schemas/transformationID'
+      required:
+        - transformationsIDs
+    TransformationUpdateResponse:
+      type: object
+      description: API response for updating a transformation.
+      additionalProperties: false
+      properties:
+        transformationID:
+          $ref: '#/components/schemas/transformationID'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+      required:
+        - transformationID
+        - updatedAt
     RunStatus:
       type: string
       description: Task run status.
@@ -3141,10 +3561,10 @@ components:
         - discover
     startedAt:
       type: string
-      description: Date of start in RFC3339 format.
+      description: Date of start in RFC 3339 format.
     finishedAt:
       type: string
-      description: Date of finish in RFC3339 format.
+      description: Date of finish in RFC 3339 format.
     Run:
       type: object
       additionalProperties: false
@@ -3197,12 +3617,12 @@ components:
         startDate:
           type: string
           description: >-
-            Date in RFC3339 format representing the oldest data in the time
+            Date in RFC 3339 format representing the oldest data in the time
             window.
         endDate:
           type: string
           description: >-
-            Date in RFC3339 format representing the newest data in the time
+            Date in RFC 3339 format representing the newest data in the time
             window.
       required:
         - startDate
@@ -3223,70 +3643,12 @@ components:
         - runs
         - pagination
         - window
-    EventStatus:
-      type: string
-      enum:
-        - created
-        - started
-        - retried
-        - failed
-        - succeeded
-        - critical
-    EventType:
-      type: string
-      enum:
-        - fetch
-        - record
-        - log
-        - transform
     eventSortKeys:
       type: string
       description: Property by which to sort the list of task run events.
       enum:
         - status
         - type
-        - publishedAt
-    eventID:
-      type: string
-      description: Universally unique identifier (UUID) of an event.
-      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-    publishedAt:
-      type: string
-      description: Date of publish RFC3339 format.
-    Event:
-      type: object
-      description: An event describe a step of the task execution flow..
-      additionalProperties: false
-      properties:
-        eventID:
-          $ref: '#/components/schemas/eventID'
-        runID:
-          $ref: '#/components/schemas/runID'
-        parentID:
-          type: string
-          description: The parent event, the cause of this event.
-          example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
-        status:
-          $ref: '#/components/schemas/EventStatus'
-        type:
-          $ref: '#/components/schemas/EventType'
-        batchSize:
-          type: integer
-          description: The extracted record batch size.
-          example: 10
-          minimum: 0
-          multipleOf: 1
-        data:
-          type: object
-          additionalProperties: true
-        publishedAt:
-          $ref: '#/components/schemas/publishedAt'
-      required:
-        - eventID
-        - runID
-        - status
-        - type
-        - batchSize
         - publishedAt
   responses:
     BadRequest:

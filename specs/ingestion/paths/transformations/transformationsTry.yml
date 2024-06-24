@@ -1,0 +1,25 @@
+post:
+  tags:
+    - transformations
+  summary: Search for transformations
+  description: Searches for transformations.
+  operationId: tryTransformations
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/transformation.yml#/TransformationTry'
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/transformation.yml#/TransformationTryResponse'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'

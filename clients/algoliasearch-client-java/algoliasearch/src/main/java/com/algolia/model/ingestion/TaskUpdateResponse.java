@@ -32,7 +32,7 @@ public class TaskUpdateResponse {
     return this;
   }
 
-  /** Date of last update in RFC3339 format. */
+  /** Date of last update in RFC 3339 format. */
   @javax.annotation.Nonnull
   public String getUpdatedAt() {
     return updatedAt;

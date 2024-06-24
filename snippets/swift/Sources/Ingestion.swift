@@ -83,6 +83,23 @@ final class IngestionClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the createTransformation method.
+    ///
+    /// createTransformation
+    func snippetForCreateTransformation() async throws {
+        // >SEPARATOR createTransformation default
+        // Initialize the client
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.createTransformation(transformationCreate: TransformationCreate(
+            code: "foo",
+            name: "bar",
+            description: "baz"
+        ))
+        // SEPARATOR<
+    }
+
     /// Snippet for the customDelete method.
     ///
     /// allow del method for a custom path with minimal parameters
@@ -187,6 +204,19 @@ final class IngestionClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the deleteTransformation method.
+    ///
+    /// deleteTransformation
+    func snippetForDeleteTransformation() async throws {
+        // >SEPARATOR deleteTransformation default
+        // Initialize the client
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.deleteTransformation(transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        // SEPARATOR<
+    }
+
     /// Snippet for the disableTask method.
     ///
     /// disableTask
@@ -262,19 +292,6 @@ final class IngestionClientSnippet {
 
         // Call the API
         let response = try await client.getDestinations()
-        // SEPARATOR<
-    }
-
-    /// Snippet for the getDockerSourceStreams method.
-    ///
-    /// getDockerSourceStreams
-    func snippetForGetDockerSourceStreams() async throws {
-        // >SEPARATOR getDockerSourceStreams default
-        // Initialize the client
-        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
-
-        // Call the API
-        let response = try await client.getDockerSourceStreams(sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
         // SEPARATOR<
     }
 
@@ -385,6 +402,32 @@ final class IngestionClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the getTransformation method.
+    ///
+    /// getTransformation
+    func snippetForGetTransformation() async throws {
+        // >SEPARATOR getTransformation default
+        // Initialize the client
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.getTransformation(transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        // SEPARATOR<
+    }
+
+    /// Snippet for the getTransformations method.
+    ///
+    /// getTransformations
+    func snippetForGetTransformations() async throws {
+        // >SEPARATOR getTransformations default
+        // Initialize the client
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.getTransformations()
+        // SEPARATOR<
+    }
+
     /// Snippet for the runTask method.
     ///
     /// runTask
@@ -464,6 +507,24 @@ final class IngestionClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the searchTransformations method.
+    ///
+    /// searchTransformations
+    func snippetForSearchTransformations() async throws {
+        // >SEPARATOR searchTransformations default
+        // Initialize the client
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client
+            .searchTransformations(transformationSearch: TransformationSearch(transformationsIDs: [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+            ]))
+        // SEPARATOR<
+    }
+
     /// Snippet for the triggerDockerSourceDiscover method.
     ///
     /// triggerDockerSourceDiscover
@@ -474,6 +535,22 @@ final class IngestionClientSnippet {
 
         // Call the API
         let response = try await client.triggerDockerSourceDiscover(sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        // SEPARATOR<
+    }
+
+    /// Snippet for the tryTransformations method.
+    ///
+    /// tryTransformations
+    func snippetForTryTransformations() async throws {
+        // >SEPARATOR tryTransformations default
+        // Initialize the client
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.tryTransformations(transformationTry: TransformationTry(
+            code: "foo",
+            sampleRecord: ["bar": "baz"]
+        ))
         // SEPARATOR<
     }
 
@@ -537,6 +614,61 @@ final class IngestionClientSnippet {
         let response = try await client.updateTask(
             taskID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
             taskUpdate: TaskUpdate(enabled: false)
+        )
+        // SEPARATOR<
+    }
+
+    /// Snippet for the updateTransformation method.
+    ///
+    /// updateTransformation
+    func snippetForUpdateTransformation() async throws {
+        // >SEPARATOR updateTransformation default
+        // Initialize the client
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.updateTransformation(
+            transformationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            transformationCreate: TransformationCreate(code: "foo", name: "bar", description: "baz")
+        )
+        // SEPARATOR<
+    }
+
+    /// Snippet for the validateSource method.
+    ///
+    /// validateSource
+    func snippetForValidateSource() async throws {
+        // >SEPARATOR validateSource default
+        // Initialize the client
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.validateSource(sourceCreate: SourceCreate(
+            type: SourceType.commercetools,
+            name: "sourceName",
+            input: SourceInput.sourceCommercetools(SourceCommercetools(
+                storeKeys: ["myStore"],
+                locales: ["de"],
+                url: "http://commercetools.com",
+                projectKey: "keyID"
+            )),
+            authenticationID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+        ))
+        // SEPARATOR<
+    }
+
+    /// Snippet for the validateSourceBeforeUpdate method.
+    ///
+    /// validateSourceBeforeUpdate
+    func snippetForValidateSourceBeforeUpdate() async throws {
+        // >SEPARATOR validateSourceBeforeUpdate default
+        // Initialize the client
+        let client = try IngestionClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.validateSourceBeforeUpdate(
+            sourceID: "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            sourceUpdate: SourceUpdate(name: "newName")
         )
         // SEPARATOR<
     }

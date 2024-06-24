@@ -41,6 +41,9 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
     // Generation notice, added on every generated files
     Helpers.setGenerationBanner(additionalProperties);
 
+    typeMapping.put("object", "map[string]any");
+    typeMapping.put("AnyType", "any");
+
     apiTestTemplateFiles.clear();
     modelTestTemplateFiles.clear();
     apiDocTemplateFiles.clear();
@@ -85,13 +88,11 @@ public class AlgoliaGoGenerator extends GoClientCodegen {
       }
 
       for (CodegenProperty param : Iterables.concat(model.vars, model.allVars, model.requiredVars, model.optionalVars)) {
-        if (
-          !param.isNullable || !param.isPrimitiveType || param.isContainer || param.isFreeFormObject || (param.isAnyType && !param.isModel)
-        ) {
+        if (!param.isNullable || param.isContainer || param.isFreeFormObject || (param.isAnyType && !param.isModel)) {
           continue;
         }
 
-        param.dataType = "utils." + param.dataType;
+        param.dataType = "utils.Nullable[" + param.vendorExtensions.get("x-go-base-type") + "]";
       }
     }
 

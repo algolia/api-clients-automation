@@ -61,7 +61,7 @@ import algoliasearch.search.SearchSynonymsParams
 import algoliasearch.search.SearchSynonymsResponse
 import algoliasearch.search.SearchUserIdsParams
 import algoliasearch.search.SearchUserIdsResponse
-import algoliasearch.search.SecuredAPIKeyRestrictions
+import algoliasearch.search.SecuredApiKeyRestrictions
 import algoliasearch.search.Source
 import algoliasearch.search.SynonymHit
 import algoliasearch.search.UpdateApiKeyResponse

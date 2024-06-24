@@ -166,6 +166,26 @@ class TestIngestionClient < Test::Unit::TestCase
     )
   end
 
+  # createTransformation
+  def test_create_transformation
+    req = @client.create_transformation_with_http_info(
+      TransformationCreate.new(
+        code: "foo",
+        name: "bar",
+        description: "baz"
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/transformations', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse('{"code":"foo","name":"bar","description":"baz"}'),
+      JSON.parse(req.body)
+    )
+  end
+
   # allow del method for a custom path with minimal parameters
   def test_custom_delete
     req = @client.custom_delete_with_http_info("test/minimal")
@@ -504,6 +524,18 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
+  # deleteTransformation
+  def test_delete_transformation
+    req = @client.delete_transformation_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+    assert_equal(:delete, req.method)
+    assert_equal('/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, 'body is not nil')
+  end
+
   # disableTask
   def test_disable_task
     req = @client.disable_task_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -627,18 +659,6 @@ class TestIngestionClient < Test::Unit::TestCase
     assert(req.body.nil?, 'body is not nil')
   end
 
-  # getDockerSourceStreams
-  def test_get_docker_source_streams
-    req = @client.get_docker_source_streams_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
-
-    assert_equal(:get, req.method)
-    assert_equal('/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover', req.path)
-    assert_equal({}.to_a, req.query_params.to_a)
-    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
-
-    assert(req.body.nil?, 'body is not nil')
-  end
-
   # getEvent
   def test_get_event
     req = @client.get_event_with_http_info(
@@ -741,6 +761,30 @@ class TestIngestionClient < Test::Unit::TestCase
 
     assert_equal(:get, req.method)
     assert_equal('/1/tasks', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, 'body is not nil')
+  end
+
+  # getTransformation
+  def test_get_transformation
+    req = @client.get_transformation_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+    assert_equal(:get, req.method)
+    assert_equal('/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+
+    assert(req.body.nil?, 'body is not nil')
+  end
+
+  # getTransformations
+  def test_get_transformations
+    req = @client.get_transformations_with_http_info
+
+    assert_equal(:get, req.method)
+    assert_equal('/1/transformations', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
 
@@ -852,6 +896,25 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal(expected_body, union(expected_body, JSON.parse(res.to_json)))
   end
 
+  # searchTransformations
+  def test_search_transformations
+    req = @client.search_transformations_with_http_info(
+      TransformationSearch.new(
+        transformations_ids: [
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+        ]
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/transformations/search', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse('{"transformationsIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}'), JSON.parse(req.body)
+    )
+  end
+
   # triggerDockerSourceDiscover
   def test_trigger_docker_source_discover
     req = @client.trigger_docker_source_discover_with_http_info("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
@@ -860,6 +923,22 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal('/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover', req.path)
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+  end
+
+  # tryTransformations
+  def test_try_transformations
+    req = @client.try_transformations_with_http_info(
+      TransformationTry.new(
+        code: "foo",
+        sample_record: { bar: "baz" }
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/transformations/try', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse('{"code":"foo","sampleRecord":{"bar":"baz"}}'), JSON.parse(req.body))
   end
 
   # updateAuthentication
@@ -916,5 +995,60 @@ class TestIngestionClient < Test::Unit::TestCase
     assert_equal({}.to_a, req.query_params.to_a)
     assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
     assert_equal(JSON.parse('{"enabled":false}'), JSON.parse(req.body))
+  end
+
+  # updateTransformation
+  def test_update_transformation
+    req = @client.update_transformation_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      TransformationCreate.new(code: "foo", name: "bar", description: "baz")
+    )
+
+    assert_equal(:put, req.method)
+    assert_equal('/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse('{"code":"foo","name":"bar","description":"baz"}'),
+      JSON.parse(req.body)
+    )
+  end
+
+  # validateSource
+  def test_validate_source
+    req = @client.validate_source_with_http_info(
+      SourceCreate.new(
+        type: 'commercetools',
+        name: "sourceName",
+        input: SourceCommercetools.new(
+          store_keys: ["myStore"],
+          locales: ["de"],
+          url: "http://commercetools.com",
+          project_key: "keyID"
+        ),
+        authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+      )
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/sources/validate', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(
+      JSON.parse('{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'), JSON.parse(req.body)
+    )
+  end
+
+  # validateSourceBeforeUpdate
+  def test_validate_source_before_update
+    req = @client.validate_source_before_update_with_http_info(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f", SourceUpdate.new(name: "newName")
+    )
+
+    assert_equal(:post, req.method)
+    assert_equal('/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate', req.path)
+    assert_equal({}.to_a, req.query_params.to_a)
+    assert(({}.to_a - req.headers.to_a).empty?, req.headers.to_s)
+    assert_equal(JSON.parse('{"name":"newName"}'), JSON.parse(req.body))
   end
 end

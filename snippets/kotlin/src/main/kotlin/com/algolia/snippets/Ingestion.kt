@@ -110,6 +110,27 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForCreateTransformation() {
+    // >SEPARATOR createTransformation default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.createTransformation(
+      transformationCreate = TransformationCreate(
+        code = "foo",
+        name = "bar",
+        description = "baz",
+      ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForCustomDelete() {
     // >SEPARATOR customDelete default
     // Initialize the client
@@ -246,6 +267,23 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForDeleteTransformation() {
+    // >SEPARATOR deleteTransformation default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.deleteTransformation(
+      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForDisableTask() {
     // >SEPARATOR disableTask default
     // Initialize the client
@@ -336,23 +374,6 @@ class SnippetIngestionClient {
 
     // Call the API
     var response = client.getDestinations()
-
-    // Use the response
-    println(response)
-    // SEPARATOR<
-
-    exitProcess(0)
-  }
-
-  suspend fun snippetForGetDockerSourceStreams() {
-    // >SEPARATOR getDockerSourceStreams default
-    // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-    // Call the API
-    var response = client.getDockerSourceStreams(
-      sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-    )
 
     // Use the response
     println(response)
@@ -492,6 +513,38 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForGetTransformation() {
+    // >SEPARATOR getTransformation default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.getTransformation(
+      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForGetTransformations() {
+    // >SEPARATOR getTransformations default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.getTransformations()
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForRunTask() {
     // >SEPARATOR runTask default
     // Initialize the client
@@ -585,6 +638,25 @@ class SnippetIngestionClient {
     exitProcess(0)
   }
 
+  suspend fun snippetForSearchTransformations() {
+    // >SEPARATOR searchTransformations default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.searchTransformations(
+      transformationSearch = TransformationSearch(
+        transformationsIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"),
+      ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
   suspend fun snippetForTriggerDockerSourceDiscover() {
     // >SEPARATOR triggerDockerSourceDiscover default
     // Initialize the client
@@ -593,6 +665,31 @@ class SnippetIngestionClient {
     // Call the API
     var response = client.triggerDockerSourceDiscover(
       sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForTryTransformations() {
+    // >SEPARATOR tryTransformations default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.tryTransformations(
+      transformationTry = TransformationTry(
+        code = "foo",
+        sampleRecord = buildJsonObject {
+          put(
+            "bar",
+            JsonPrimitive("baz"),
+          )
+        },
+      ),
     )
 
     // Use the response
@@ -672,6 +769,75 @@ class SnippetIngestionClient {
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       taskUpdate = TaskUpdate(
         enabled = false,
+      ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForUpdateTransformation() {
+    // >SEPARATOR updateTransformation default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.updateTransformation(
+      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      transformationCreate = TransformationCreate(
+        code = "foo",
+        name = "bar",
+        description = "baz",
+      ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForValidateSource() {
+    // >SEPARATOR validateSource default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.validateSource(
+      sourceCreate = SourceCreate(
+        type = SourceType.entries.first { it.value == "commercetools" },
+        name = "sourceName",
+        input = SourceCommercetools(
+          storeKeys = listOf("myStore"),
+          locales = listOf("de"),
+          url = "http://commercetools.com",
+          projectKey = "keyID",
+        ),
+        authenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      ),
+    )
+
+    // Use the response
+    println(response)
+    // SEPARATOR<
+
+    exitProcess(0)
+  }
+
+  suspend fun snippetForValidateSourceBeforeUpdate() {
+    // >SEPARATOR validateSourceBeforeUpdate default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    var response = client.validateSourceBeforeUpdate(
+      sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      sourceUpdate = SourceUpdate(
+        name = "newName",
       ),
     )
 

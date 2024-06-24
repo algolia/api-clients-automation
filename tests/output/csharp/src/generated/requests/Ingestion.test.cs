@@ -232,6 +232,28 @@ public class IngestionClientRequestTests
     );
   }
 
+  [Fact(DisplayName = "createTransformation")]
+  public async Task CreateTransformationTest()
+  {
+    await _client.CreateTransformationAsync(
+      new TransformationCreate
+      {
+        Code = "foo",
+        Name = "bar",
+        Description = "baz",
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/transformations", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"code\":\"foo\",\"name\":\"bar\",\"description\":\"baz\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "allow del method for a custom path with minimal parameters")]
   public async Task CustomDeleteTest()
   {
@@ -767,6 +789,17 @@ public class IngestionClientRequestTests
     Assert.Null(req.Body);
   }
 
+  [Fact(DisplayName = "deleteTransformation")]
+  public async Task DeleteTransformationTest()
+  {
+    await _client.DeleteTransformationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
+    Assert.Equal("DELETE", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
   [Fact(DisplayName = "disableTask")]
   public async Task DisableTaskTest()
   {
@@ -915,17 +948,6 @@ public class IngestionClientRequestTests
     Assert.Null(req.Body);
   }
 
-  [Fact(DisplayName = "getDockerSourceStreams")]
-  public async Task GetDockerSourceStreamsTest()
-  {
-    await _client.GetDockerSourceStreamsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
-
-    var req = _echo.LastResponse;
-    Assert.Equal("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover", req.Path);
-    Assert.Equal("GET", req.Method.ToString());
-    Assert.Null(req.Body);
-  }
-
   [Fact(DisplayName = "getEvent")]
   public async Task GetEventTest()
   {
@@ -1034,6 +1056,28 @@ public class IngestionClientRequestTests
 
     var req = _echo.LastResponse;
     Assert.Equal("/1/tasks", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
+  [Fact(DisplayName = "getTransformation")]
+  public async Task GetTransformationTest()
+  {
+    await _client.GetTransformationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
+    Assert.Equal("GET", req.Method.ToString());
+    Assert.Null(req.Body);
+  }
+
+  [Fact(DisplayName = "getTransformations")]
+  public async Task GetTransformationsTest()
+  {
+    await _client.GetTransformationsAsync();
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/transformations", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
   }
@@ -1174,6 +1218,31 @@ public class IngestionClientRequestTests
     }
   }
 
+  [Fact(DisplayName = "searchTransformations")]
+  public async Task SearchTransformationsTest()
+  {
+    await _client.SearchTransformationsAsync(
+      new TransformationSearch
+      {
+        TransformationsIDs = new List<string>
+        {
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+          "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+        },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/transformations/search", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"transformationsIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "triggerDockerSourceDiscover")]
   public async Task TriggerDockerSourceDiscoverTest()
   {
@@ -1183,6 +1252,27 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     Assert.Equal("{}", req.Body);
+  }
+
+  [Fact(DisplayName = "tryTransformations")]
+  public async Task TryTransformationsTest()
+  {
+    await _client.TryTransformationsAsync(
+      new TransformationTry
+      {
+        Code = "foo",
+        SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/transformations/try", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
   }
 
   [Fact(DisplayName = "updateAuthentication")]
@@ -1239,5 +1329,73 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
     Assert.Equal("PATCH", req.Method.ToString());
     JsonAssert.EqualOverrideDefault("{\"enabled\":false}", req.Body, new JsonDiffConfig(false));
+  }
+
+  [Fact(DisplayName = "updateTransformation")]
+  public async Task UpdateTransformationTest()
+  {
+    await _client.UpdateTransformationAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TransformationCreate
+      {
+        Code = "foo",
+        Name = "bar",
+        Description = "baz",
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.Path);
+    Assert.Equal("PUT", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"code\":\"foo\",\"name\":\"bar\",\"description\":\"baz\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "validateSource")]
+  public async Task ValidateSourceTest()
+  {
+    await _client.ValidateSourceAsync(
+      new SourceCreate
+      {
+        Type = Enum.Parse<SourceType>("Commercetools"),
+        Name = "sourceName",
+        Input = new SourceInput(
+          new SourceCommercetools
+          {
+            StoreKeys = new List<string> { "myStore" },
+            Locales = new List<string> { "de" },
+            Url = "http://commercetools.com",
+            ProjectKey = "keyID",
+          }
+        ),
+        AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/sources/validate", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault(
+      "{\"type\":\"commercetools\",\"name\":\"sourceName\",\"input\":{\"storeKeys\":[\"myStore\"],\"locales\":[\"de\"],\"url\":\"http://commercetools.com\",\"projectKey\":\"keyID\"},\"authenticationID\":\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"}",
+      req.Body,
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "validateSourceBeforeUpdate")]
+  public async Task ValidateSourceBeforeUpdateTest()
+  {
+    await _client.ValidateSourceBeforeUpdateAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new SourceUpdate { Name = "newName", }
+    );
+
+    var req = _echo.LastResponse;
+    Assert.Equal("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate", req.Path);
+    Assert.Equal("POST", req.Method.ToString());
+    JsonAssert.EqualOverrideDefault("{\"name\":\"newName\"}", req.Body, new JsonDiffConfig(false));
   }
 }

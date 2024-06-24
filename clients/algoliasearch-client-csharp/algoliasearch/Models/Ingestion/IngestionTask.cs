@@ -36,7 +36,7 @@ public partial class IngestionTask
   /// <param name="trigger">trigger (required).</param>
   /// <param name="enabled">Whether the task is enabled. (required) (default to true).</param>
   /// <param name="action">action (required).</param>
-  /// <param name="createdAt">Date of creation in RFC3339 format. (required).</param>
+  /// <param name="createdAt">Date of creation in RFC 3339 format. (required).</param>
   public IngestionTask(string taskID, string sourceID, string destinationID, Trigger trigger, bool enabled, ActionType? action, string createdAt)
   {
     TaskID = taskID ?? throw new ArgumentNullException(nameof(taskID));
@@ -96,16 +96,23 @@ public partial class IngestionTask
   public int? FailureThreshold { get; set; }
 
   /// <summary>
-  /// Date of creation in RFC3339 format.
+  /// Date of the last cursor in RFC 3339 format.
   /// </summary>
-  /// <value>Date of creation in RFC3339 format.</value>
+  /// <value>Date of the last cursor in RFC 3339 format.</value>
+  [JsonPropertyName("cursor")]
+  public string Cursor { get; set; }
+
+  /// <summary>
+  /// Date of creation in RFC 3339 format.
+  /// </summary>
+  /// <value>Date of creation in RFC 3339 format.</value>
   [JsonPropertyName("createdAt")]
   public string CreatedAt { get; set; }
 
   /// <summary>
-  /// Date of last update in RFC3339 format.
+  /// Date of last update in RFC 3339 format.
   /// </summary>
-  /// <value>Date of last update in RFC3339 format.</value>
+  /// <value>Date of last update in RFC 3339 format.</value>
   [JsonPropertyName("updatedAt")]
   public string UpdatedAt { get; set; }
 
@@ -125,6 +132,7 @@ public partial class IngestionTask
     sb.Append("  Enabled: ").Append(Enabled).Append("\n");
     sb.Append("  FailureThreshold: ").Append(FailureThreshold).Append("\n");
     sb.Append("  Action: ").Append(Action).Append("\n");
+    sb.Append("  Cursor: ").Append(Cursor).Append("\n");
     sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
     sb.Append("  UpdatedAt: ").Append(UpdatedAt).Append("\n");
     sb.Append("}\n");
@@ -161,6 +169,7 @@ public partial class IngestionTask
         (Enabled == input.Enabled || Enabled.Equals(input.Enabled)) &&
         (FailureThreshold == input.FailureThreshold || FailureThreshold.Equals(input.FailureThreshold)) &&
         (Action == input.Action || Action.Equals(input.Action)) &&
+        (Cursor == input.Cursor || (Cursor != null && Cursor.Equals(input.Cursor))) &&
         (CreatedAt == input.CreatedAt || (CreatedAt != null && CreatedAt.Equals(input.CreatedAt))) &&
         (UpdatedAt == input.UpdatedAt || (UpdatedAt != null && UpdatedAt.Equals(input.UpdatedAt)));
   }
@@ -197,6 +206,10 @@ public partial class IngestionTask
       hashCode = (hashCode * 59) + Enabled.GetHashCode();
       hashCode = (hashCode * 59) + FailureThreshold.GetHashCode();
       hashCode = (hashCode * 59) + Action.GetHashCode();
+      if (Cursor != null)
+      {
+        hashCode = (hashCode * 59) + Cursor.GetHashCode();
+      }
       if (CreatedAt != null)
       {
         hashCode = (hashCode * 59) + CreatedAt.GetHashCode();

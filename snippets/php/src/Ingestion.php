@@ -124,6 +124,30 @@ class SnippetIngestionClient
     }
 
     /**
+     * Snippet for the CreateTransformation method.
+     *
+     * createTransformation
+     */
+    public function snippetForCreateTransformation()
+    {
+        // >SEPARATOR createTransformation default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->createTransformation(
+            ['code' => 'foo',
+                'name' => 'bar',
+                'description' => 'baz',
+            ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the CustomDelete method.
      *
      * allow del method for a custom path with minimal parameters
@@ -292,6 +316,27 @@ class SnippetIngestionClient
     }
 
     /**
+     * Snippet for the DeleteTransformation method.
+     *
+     * deleteTransformation
+     */
+    public function snippetForDeleteTransformation()
+    {
+        // >SEPARATOR deleteTransformation default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->deleteTransformation(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the DisableTask method.
      *
      * disableTask
@@ -407,27 +452,6 @@ class SnippetIngestionClient
 
         // Call the API
         $response = $client->getDestinations();
-
-        // play with the response
-        var_dump($response);
-        // SEPARATOR<
-    }
-
-    /**
-     * Snippet for the GetDockerSourceStreams method.
-     *
-     * getDockerSourceStreams
-     */
-    public function snippetForGetDockerSourceStreams()
-    {
-        // >SEPARATOR getDockerSourceStreams default
-        // Initialize the client
-        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
-
-        // Call the API
-        $response = $client->getDockerSourceStreams(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
 
         // play with the response
         var_dump($response);
@@ -598,6 +622,46 @@ class SnippetIngestionClient
     }
 
     /**
+     * Snippet for the GetTransformation method.
+     *
+     * getTransformation
+     */
+    public function snippetForGetTransformation()
+    {
+        // >SEPARATOR getTransformation default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->getTransformation(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the GetTransformations method.
+     *
+     * getTransformations
+     */
+    public function snippetForGetTransformations()
+    {
+        // >SEPARATOR getTransformations default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->getTransformations();
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the RunTask method.
      *
      * runTask
@@ -725,6 +789,34 @@ class SnippetIngestionClient
     }
 
     /**
+     * Snippet for the SearchTransformations method.
+     *
+     * searchTransformations
+     */
+    public function snippetForSearchTransformations()
+    {
+        // >SEPARATOR searchTransformations default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->searchTransformations(
+            ['transformationsIDs' => [
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+
+                '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
+
+                '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
+            ],
+            ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
      * Snippet for the TriggerDockerSourceDiscover method.
      *
      * triggerDockerSourceDiscover
@@ -738,6 +830,30 @@ class SnippetIngestionClient
         // Call the API
         $response = $client->triggerDockerSourceDiscover(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the TryTransformations method.
+     *
+     * tryTransformations
+     */
+    public function snippetForTryTransformations()
+    {
+        // >SEPARATOR tryTransformations default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->tryTransformations(
+            ['code' => 'foo',
+                'sampleRecord' => ['bar' => 'baz',
+                ],
+            ],
         );
 
         // play with the response
@@ -829,6 +945,87 @@ class SnippetIngestionClient
         $response = $client->updateTask(
             '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
             ['enabled' => false,
+            ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the UpdateTransformation method.
+     *
+     * updateTransformation
+     */
+    public function snippetForUpdateTransformation()
+    {
+        // >SEPARATOR updateTransformation default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->updateTransformation(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['code' => 'foo',
+                'name' => 'bar',
+                'description' => 'baz',
+            ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ValidateSource method.
+     *
+     * validateSource
+     */
+    public function snippetForValidateSource()
+    {
+        // >SEPARATOR validateSource default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->validateSource(
+            ['type' => 'commercetools',
+                'name' => 'sourceName',
+                'input' => ['storeKeys' => [
+                    'myStore',
+                ],
+                    'locales' => [
+                        'de',
+                    ],
+                    'url' => 'http://commercetools.com',
+                    'projectKey' => 'keyID',
+                ],
+                'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ],
+        );
+
+        // play with the response
+        var_dump($response);
+        // SEPARATOR<
+    }
+
+    /**
+     * Snippet for the ValidateSourceBeforeUpdate method.
+     *
+     * validateSourceBeforeUpdate
+     */
+    public function snippetForValidateSourceBeforeUpdate()
+    {
+        // >SEPARATOR validateSourceBeforeUpdate default
+        // Initialize the client
+        $client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');
+
+        // Call the API
+        $response = $client->validateSourceBeforeUpdate(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['name' => 'newName',
             ],
         );
 

@@ -11,14 +11,14 @@ type MappingFieldDirective struct {
 	// Destination field key.
 	FieldKey string `json:"fieldKey"`
 	// How the destination field should be resolved from the source.
-	Value map[string]interface{} `json:"value"`
+	Value map[string]any `json:"value"`
 }
 
 // NewMappingFieldDirective instantiates a new MappingFieldDirective object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed.
-func NewMappingFieldDirective(fieldKey string, value map[string]interface{}) *MappingFieldDirective {
+func NewMappingFieldDirective(fieldKey string, value map[string]any) *MappingFieldDirective {
 	this := &MappingFieldDirective{}
 	this.FieldKey = fieldKey
 	this.Value = value
@@ -56,9 +56,9 @@ func (o *MappingFieldDirective) SetFieldKey(v string) *MappingFieldDirective {
 }
 
 // GetValue returns the Value field value.
-func (o *MappingFieldDirective) GetValue() map[string]interface{} {
+func (o *MappingFieldDirective) GetValue() map[string]any {
 	if o == nil {
-		var ret map[string]interface{}
+		var ret map[string]any
 		return ret
 	}
 
@@ -67,7 +67,7 @@ func (o *MappingFieldDirective) GetValue() map[string]interface{} {
 
 // GetValueOk returns a tuple with the Value field value
 // and a boolean to check if the value has been set.
-func (o *MappingFieldDirective) GetValueOk() (map[string]interface{}, bool) {
+func (o *MappingFieldDirective) GetValueOk() (map[string]any, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -75,7 +75,7 @@ func (o *MappingFieldDirective) GetValueOk() (map[string]interface{}, bool) {
 }
 
 // SetValue sets field value.
-func (o *MappingFieldDirective) SetValue(v map[string]interface{}) *MappingFieldDirective {
+func (o *MappingFieldDirective) SetValue(v map[string]any) *MappingFieldDirective {
 	o.Value = v
 	return o
 }
@@ -101,40 +101,4 @@ func (o MappingFieldDirective) String() string {
 	out += fmt.Sprintf("  fieldKey=%v\n", o.FieldKey)
 	out += fmt.Sprintf("  value=%v\n", o.Value)
 	return fmt.Sprintf("MappingFieldDirective {\n%s}", out)
-}
-
-type NullableMappingFieldDirective struct {
-	value *MappingFieldDirective
-	isSet bool
-}
-
-func (v NullableMappingFieldDirective) Get() *MappingFieldDirective {
-	return v.value
-}
-
-func (v *NullableMappingFieldDirective) Set(val *MappingFieldDirective) {
-	v.value = val
-	v.isSet = true
-}
-
-func (v NullableMappingFieldDirective) IsSet() bool {
-	return v.isSet
-}
-
-func (v *NullableMappingFieldDirective) Unset() {
-	v.value = nil
-	v.isSet = false
-}
-
-func NewNullableMappingFieldDirective(val *MappingFieldDirective) *NullableMappingFieldDirective {
-	return &NullableMappingFieldDirective{value: val, isSet: true}
-}
-
-func (v NullableMappingFieldDirective) MarshalJSON() ([]byte, error) {
-	return json.Marshal(v.value) //nolint:wrapcheck
-}
-
-func (v *NullableMappingFieldDirective) UnmarshalJSON(src []byte) error {
-	v.isSet = true
-	return json.Unmarshal(src, &v.value) //nolint:wrapcheck
 }

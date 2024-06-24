@@ -36,8 +36,7 @@ func TestAbtestingcommonApi0(t *testing.T) {
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
-	),
-	)
+	))
 	require.NoError(t, err)
 	require.Regexp(t, regexp.MustCompile(`^Algolia for Go \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Abtesting (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$`), echo.Header.Get("User-Agent"))
 }
@@ -49,8 +48,7 @@ func TestAbtestingcommonApi1(t *testing.T) {
 	_ = echo
 	_, err = client.CustomGet(client.NewApiCustomGetRequest(
 		"1/test",
-	),
-	)
+	))
 	require.NoError(t, err)
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(5000), echo.Timeout.Milliseconds())
@@ -63,8 +61,7 @@ func TestAbtestingcommonApi2(t *testing.T) {
 	_ = echo
 	_, err = client.CustomPost(client.NewApiCustomPostRequest(
 		"1/test",
-	),
-	)
+	))
 	require.NoError(t, err)
 	require.Equal(t, int64(2000), echo.ConnectTimeout.Milliseconds())
 	require.Equal(t, int64(30000), echo.Timeout.Milliseconds())
@@ -89,8 +86,7 @@ func TestAbtestingparameters0(t *testing.T) {
 	require.NoError(t, err)
 	_, err = client.GetABTest(client.NewApiGetABTestRequest(
 		123,
-	),
-	)
+	))
 	require.NoError(t, err)
 	require.Equal(t, "analytics.algolia.com", echo.Host)
 }
@@ -115,8 +111,7 @@ func TestAbtestingparameters1(t *testing.T) {
 	require.NoError(t, err)
 	_, err = client.GetABTest(client.NewApiGetABTestRequest(
 		123,
-	),
-	)
+	))
 	require.NoError(t, err)
 	require.Equal(t, "analytics.us.algolia.com", echo.Host)
 }

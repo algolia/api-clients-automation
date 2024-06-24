@@ -1,6 +1,6 @@
 import * as fsp from 'fs/promises';
 
-import { run, runComposerInstall, toAbsolutePath } from '../common.js';
+import { isVerbose, run, runComposerInstall, toAbsolutePath } from '../common.js';
 import { createSpinner } from '../spinners.js';
 import type { Language } from '../types.js';
 
@@ -17,7 +17,7 @@ async function runCtsOne(language: string): Promise<void> {
       await run('dart test', { cwd, language });
       break;
     case 'go':
-      await run('go test -race -count 1 ./...', {
+      await run(`go test -race -count 1 ${isVerbose() ? '-v' : ''} ./...`, {
         cwd,
         language,
       });

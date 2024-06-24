@@ -493,8 +493,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'SearchUserIdsResponse':
       return SearchUserIdsResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'SecuredAPIKeyRestrictions':
-      return SecuredAPIKeyRestrictions.fromJson(value as Map<String, dynamic>)
+    case 'SecuredApiKeyRestrictions':
+      return SecuredApiKeyRestrictions.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'SemanticSearch':
       return SemanticSearch.fromJson(value as Map<String, dynamic>)

@@ -124,6 +124,29 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the createTransformation method.
+    *
+    * createTransformation
+    */
+  def snippetForIngestionClientCreateTransformation(): Unit = {
+    // >SEPARATOR createTransformation default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.createTransformation(
+      transformationCreate = TransformationCreate(
+        code = "foo",
+        name = "bar",
+        description = "baz"
+      )
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
   /** Snippet for the customDelete method.
     *
     * allow del method for a custom path with minimal parameters
@@ -276,6 +299,25 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the deleteTransformation method.
+    *
+    * deleteTransformation
+    */
+  def snippetForIngestionClientDeleteTransformation(): Unit = {
+    // >SEPARATOR deleteTransformation default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.deleteTransformation(
+      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
   /** Snippet for the disableTask method.
     *
     * disableTask
@@ -381,25 +423,6 @@ class SnippetIngestionClient {
 
     // Call the API
     val response = client.getDestinations(
-    )
-
-    // Use the response
-    val value = Await.result(response, Duration(100, "sec"))
-    // SEPARATOR<
-  }
-
-  /** Snippet for the getDockerSourceStreams method.
-    *
-    * getDockerSourceStreams
-    */
-  def snippetForIngestionClientGetDockerSourceStreams(): Unit = {
-    // >SEPARATOR getDockerSourceStreams default
-    // Initialize the client
-    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
-
-    // Call the API
-    val response = client.getDockerSourceStreams(
-      sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
     )
 
     // Use the response
@@ -557,6 +580,43 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the getTransformation method.
+    *
+    * getTransformation
+    */
+  def snippetForIngestionClientGetTransformation(): Unit = {
+    // >SEPARATOR getTransformation default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.getTransformation(
+      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the getTransformations method.
+    *
+    * getTransformations
+    */
+  def snippetForIngestionClientGetTransformations(): Unit = {
+    // >SEPARATOR getTransformations default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.getTransformations(
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
   /** Snippet for the runTask method.
     *
     * runTask
@@ -664,6 +724,31 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  /** Snippet for the searchTransformations method.
+    *
+    * searchTransformations
+    */
+  def snippetForIngestionClientSearchTransformations(): Unit = {
+    // >SEPARATOR searchTransformations default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.searchTransformations(
+      transformationSearch = TransformationSearch(
+        transformationsIDs = Seq(
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+          "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+        )
+      )
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
   /** Snippet for the triggerDockerSourceDiscover method.
     *
     * triggerDockerSourceDiscover
@@ -676,6 +761,28 @@ class SnippetIngestionClient {
     // Call the API
     val response = client.triggerDockerSourceDiscover(
       sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the tryTransformations method.
+    *
+    * tryTransformations
+    */
+  def snippetForIngestionClientTryTransformations(): Unit = {
+    // >SEPARATOR tryTransformations default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.tryTransformations(
+      transformationTry = TransformationTry(
+        code = "foo",
+        sampleRecord = JObject(List(JField("bar", JString("baz"))))
+      )
     )
 
     // Use the response
@@ -763,6 +870,83 @@ class SnippetIngestionClient {
       taskID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       taskUpdate = TaskUpdate(
         enabled = Some(false)
+      )
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the updateTransformation method.
+    *
+    * updateTransformation
+    */
+  def snippetForIngestionClientUpdateTransformation(): Unit = {
+    // >SEPARATOR updateTransformation default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.updateTransformation(
+      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      transformationCreate = TransformationCreate(
+        code = "foo",
+        name = "bar",
+        description = "baz"
+      )
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the validateSource method.
+    *
+    * validateSource
+    */
+  def snippetForIngestionClientValidateSource(): Unit = {
+    // >SEPARATOR validateSource default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.validateSource(
+      sourceCreate = Some(
+        SourceCreate(
+          `type` = SourceType.withName("commercetools"),
+          name = "sourceName",
+          input = SourceCommercetools(
+            storeKeys = Some(Seq("myStore")),
+            locales = Some(Seq("de")),
+            url = "http://commercetools.com",
+            projectKey = "keyID"
+          ),
+          authenticationID = Some("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+        )
+      )
+    )
+
+    // Use the response
+    val value = Await.result(response, Duration(100, "sec"))
+    // SEPARATOR<
+  }
+
+  /** Snippet for the validateSourceBeforeUpdate method.
+    *
+    * validateSourceBeforeUpdate
+    */
+  def snippetForIngestionClientValidateSourceBeforeUpdate(): Unit = {
+    // >SEPARATOR validateSourceBeforeUpdate default
+    // Initialize the client
+    val client = IngestionClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY", region = "YOUR_APP_ID_REGION")
+
+    // Call the API
+    val response = client.validateSourceBeforeUpdate(
+      sourceID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      sourceUpdate = SourceUpdate(
+        name = Some("newName")
       )
     )
 

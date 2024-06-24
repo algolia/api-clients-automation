@@ -10,7 +10,7 @@ import (
 type TaskUpdateResponse struct {
 	// Universally unique identifier (UUID) of a task.
 	TaskID string `json:"taskID"`
-	// Date of last update in RFC3339 format.
+	// Date of last update in RFC 3339 format.
 	UpdatedAt string `json:"updatedAt"`
 }
 
@@ -101,40 +101,4 @@ func (o TaskUpdateResponse) String() string {
 	out += fmt.Sprintf("  taskID=%v\n", o.TaskID)
 	out += fmt.Sprintf("  updatedAt=%v\n", o.UpdatedAt)
 	return fmt.Sprintf("TaskUpdateResponse {\n%s}", out)
-}
-
-type NullableTaskUpdateResponse struct {
-	value *TaskUpdateResponse
-	isSet bool
-}
-
-func (v NullableTaskUpdateResponse) Get() *TaskUpdateResponse {
-	return v.value
-}
-
-func (v *NullableTaskUpdateResponse) Set(val *TaskUpdateResponse) {
-	v.value = val
-	v.isSet = true
-}
-
-func (v NullableTaskUpdateResponse) IsSet() bool {
-	return v.isSet
-}
-
-func (v *NullableTaskUpdateResponse) Unset() {
-	v.value = nil
-	v.isSet = false
-}
-
-func NewNullableTaskUpdateResponse(val *TaskUpdateResponse) *NullableTaskUpdateResponse {
-	return &NullableTaskUpdateResponse{value: val, isSet: true}
-}
-
-func (v NullableTaskUpdateResponse) MarshalJSON() ([]byte, error) {
-	return json.Marshal(v.value) //nolint:wrapcheck
-}
-
-func (v *NullableTaskUpdateResponse) UnmarshalJSON(src []byte) error {
-	v.isSet = true
-	return json.Unmarshal(src, &v.value) //nolint:wrapcheck
 }

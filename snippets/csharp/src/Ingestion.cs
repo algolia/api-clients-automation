@@ -129,6 +129,31 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
+  /// Snippet for the CreateTransformation method.
+  ///
+  /// createTransformation
+  /// </summary>
+  public async Task SnippetForIngestionClientCreateTransformation()
+  {
+    // >SEPARATOR createTransformation default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.CreateTransformationAsync(
+      new TransformationCreate
+      {
+        Code = "foo",
+        Name = "bar",
+        Description = "baz",
+      }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the CustomDelete method.
   ///
   /// allow del method for a custom path with minimal parameters
@@ -273,6 +298,24 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
+  /// Snippet for the DeleteTransformation method.
+  ///
+  /// deleteTransformation
+  /// </summary>
+  public async Task SnippetForIngestionClientDeleteTransformation()
+  {
+    // >SEPARATOR deleteTransformation default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.DeleteTransformationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the DisableTask method.
   ///
   /// disableTask
@@ -377,24 +420,6 @@ public class SnippetIngestionClient
 
     // Call the API
     var response = await client.GetDestinationsAsync();
-    // SEPARATOR<
-  }
-
-  /// <summary>
-  /// Snippet for the GetDockerSourceStreams method.
-  ///
-  /// getDockerSourceStreams
-  /// </summary>
-  public async Task SnippetForIngestionClientGetDockerSourceStreams()
-  {
-    // >SEPARATOR getDockerSourceStreams default
-    // Initialize the client
-    var client = new IngestionClient(
-      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
-    );
-
-    // Call the API
-    var response = await client.GetDockerSourceStreamsAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // SEPARATOR<
   }
 
@@ -546,6 +571,42 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
+  /// Snippet for the GetTransformation method.
+  ///
+  /// getTransformation
+  /// </summary>
+  public async Task SnippetForIngestionClientGetTransformation()
+  {
+    // >SEPARATOR getTransformation default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.GetTransformationAsync("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the GetTransformations method.
+  ///
+  /// getTransformations
+  /// </summary>
+  public async Task SnippetForIngestionClientGetTransformations()
+  {
+    // >SEPARATOR getTransformations default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.GetTransformationsAsync();
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the RunTask method.
   ///
   /// runTask
@@ -673,6 +734,34 @@ public class SnippetIngestionClient
   }
 
   /// <summary>
+  /// Snippet for the SearchTransformations method.
+  ///
+  /// searchTransformations
+  /// </summary>
+  public async Task SnippetForIngestionClientSearchTransformations()
+  {
+    // >SEPARATOR searchTransformations default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.SearchTransformationsAsync(
+      new TransformationSearch
+      {
+        TransformationsIDs = new List<string>
+        {
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+          "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+        },
+      }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the TriggerDockerSourceDiscover method.
   ///
   /// triggerDockerSourceDiscover
@@ -688,6 +777,30 @@ public class SnippetIngestionClient
     // Call the API
     var response = await client.TriggerDockerSourceDiscoverAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the TryTransformations method.
+  ///
+  /// tryTransformations
+  /// </summary>
+  public async Task SnippetForIngestionClientTryTransformations()
+  {
+    // >SEPARATOR tryTransformations default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.TryTransformationsAsync(
+      new TransformationTry
+      {
+        Code = "foo",
+        SampleRecord = new Dictionary<string, string> { { "bar", "baz" } },
+      }
     );
     // SEPARATOR<
   }
@@ -772,6 +885,87 @@ public class SnippetIngestionClient
     var response = await client.UpdateTaskAsync(
       "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
       new TaskUpdate { Enabled = false, }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the UpdateTransformation method.
+  ///
+  /// updateTransformation
+  /// </summary>
+  public async Task SnippetForIngestionClientUpdateTransformation()
+  {
+    // >SEPARATOR updateTransformation default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.UpdateTransformationAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TransformationCreate
+      {
+        Code = "foo",
+        Name = "bar",
+        Description = "baz",
+      }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ValidateSource method.
+  ///
+  /// validateSource
+  /// </summary>
+  public async Task SnippetForIngestionClientValidateSource()
+  {
+    // >SEPARATOR validateSource default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.ValidateSourceAsync(
+      new SourceCreate
+      {
+        Type = Enum.Parse<SourceType>("Commercetools"),
+        Name = "sourceName",
+        Input = new SourceInput(
+          new SourceCommercetools
+          {
+            StoreKeys = new List<string> { "myStore" },
+            Locales = new List<string> { "de" },
+            Url = "http://commercetools.com",
+            ProjectKey = "keyID",
+          }
+        ),
+        AuthenticationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
+  /// Snippet for the ValidateSourceBeforeUpdate method.
+  ///
+  /// validateSourceBeforeUpdate
+  /// </summary>
+  public async Task SnippetForIngestionClientValidateSourceBeforeUpdate()
+  {
+    // >SEPARATOR validateSourceBeforeUpdate default
+    // Initialize the client
+    var client = new IngestionClient(
+      new IngestionConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.ValidateSourceBeforeUpdateAsync(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new SourceUpdate { Name = "newName", }
     );
     // SEPARATOR<
   }

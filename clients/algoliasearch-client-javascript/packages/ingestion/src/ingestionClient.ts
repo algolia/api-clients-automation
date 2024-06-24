@@ -28,13 +28,13 @@ import type {
   DeleteDestinationProps,
   DeleteSourceProps,
   DeleteTaskProps,
+  DeleteTransformationProps,
   DisableTaskProps,
   EnableTaskProps,
   GetAuthenticationProps,
   GetAuthenticationsProps,
   GetDestinationProps,
   GetDestinationsProps,
-  GetDockerSourceStreamsProps,
   GetEventProps,
   GetEventsProps,
   GetRunProps,
@@ -43,12 +43,16 @@ import type {
   GetSourcesProps,
   GetTaskProps,
   GetTasksProps,
+  GetTransformationProps,
+  GetTransformationsProps,
   RunTaskProps,
   TriggerDockerSourceDiscoverProps,
   UpdateAuthenticationProps,
   UpdateDestinationProps,
   UpdateSourceProps,
   UpdateTaskProps,
+  UpdateTransformationProps,
+  ValidateSourceBeforeUpdateProps,
 } from '../model/clientMethodProps';
 import type { DeleteResponse } from '../model/deleteResponse';
 import type { Destination } from '../model/destination';
@@ -56,14 +60,13 @@ import type { DestinationCreate } from '../model/destinationCreate';
 import type { DestinationCreateResponse } from '../model/destinationCreateResponse';
 import type { DestinationSearch } from '../model/destinationSearch';
 import type { DestinationUpdateResponse } from '../model/destinationUpdateResponse';
-import type { DockerSourceDiscover } from '../model/dockerSourceDiscover';
-import type { DockerSourceStreams } from '../model/dockerSourceStreams';
 import type { Event } from '../model/event';
 import type { ListAuthenticationsResponse } from '../model/listAuthenticationsResponse';
 import type { ListDestinationsResponse } from '../model/listDestinationsResponse';
 import type { ListEventsResponse } from '../model/listEventsResponse';
 import type { ListSourcesResponse } from '../model/listSourcesResponse';
 import type { ListTasksResponse } from '../model/listTasksResponse';
+import type { ListTransformationsResponse } from '../model/listTransformationsResponse';
 import type { OnDemandTrigger } from '../model/onDemandTrigger';
 import type { Run } from '../model/run';
 import type { RunListResponse } from '../model/runListResponse';
@@ -74,6 +77,7 @@ import type { SourceCreate } from '../model/sourceCreate';
 import type { SourceCreateResponse } from '../model/sourceCreateResponse';
 import type { SourceSearch } from '../model/sourceSearch';
 import type { SourceUpdateResponse } from '../model/sourceUpdateResponse';
+import type { SourceWatchResponse } from '../model/sourceWatchResponse';
 import type { SubscriptionTrigger } from '../model/subscriptionTrigger';
 import type { Task } from '../model/task';
 import type { TaskCreate } from '../model/taskCreate';
@@ -81,6 +85,13 @@ import type { TaskCreateResponse } from '../model/taskCreateResponse';
 import type { TaskCreateTrigger } from '../model/taskCreateTrigger';
 import type { TaskSearch } from '../model/taskSearch';
 import type { TaskUpdateResponse } from '../model/taskUpdateResponse';
+import type { Transformation } from '../model/transformation';
+import type { TransformationCreate } from '../model/transformationCreate';
+import type { TransformationCreateResponse } from '../model/transformationCreateResponse';
+import type { TransformationSearch } from '../model/transformationSearch';
+import type { TransformationTry } from '../model/transformationTry';
+import type { TransformationTryResponse } from '../model/transformationTryResponse';
+import type { TransformationUpdateResponse } from '../model/transformationUpdateResponse';
 import type { Trigger } from '../model/trigger';
 
 export const apiClientVersion = '1.0.0-beta.4';
@@ -403,6 +414,53 @@ export function createIngestionClient({
     },
 
     /**
+     * Creates a new transformation.
+     *
+     * @param transformationCreate - Request body for creating a transformation.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    createTransformation(
+      transformationCreate: TransformationCreate,
+      requestOptions?: RequestOptions
+    ): Promise<TransformationCreateResponse> {
+      if (!transformationCreate) {
+        throw new Error(
+          'Parameter `transformationCreate` is required when calling `createTransformation`.'
+        );
+      }
+
+      if (!transformationCreate.code) {
+        throw new Error(
+          'Parameter `transformationCreate.code` is required when calling `createTransformation`.'
+        );
+      }
+      if (!transformationCreate.name) {
+        throw new Error(
+          'Parameter `transformationCreate.name` is required when calling `createTransformation`.'
+        );
+      }
+      if (!transformationCreate.description) {
+        throw new Error(
+          'Parameter `transformationCreate.description` is required when calling `createTransformation`.'
+        );
+      }
+
+      const requestPath = '/1/transformations';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: transformationCreate,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
      * This method allow you to send requests to the Algolia REST API.
      *
      * @param customDelete - The customDelete object.
@@ -671,6 +729,40 @@ export function createIngestionClient({
       const requestPath = '/1/tasks/{taskID}'.replace(
         '{taskID}',
         encodeURIComponent(taskID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'DELETE',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Deletes a transformation by its ID.
+     *
+     * @param deleteTransformation - The deleteTransformation object.
+     * @param deleteTransformation.transformationID - Unique identifier of a transformation.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    deleteTransformation(
+      { transformationID }: DeleteTransformationProps,
+      requestOptions?: RequestOptions
+    ): Promise<DeleteResponse> {
+      if (!transformationID) {
+        throw new Error(
+          'Parameter `transformationID` is required when calling `deleteTransformation`.'
+        );
+      }
+
+      const requestPath = '/1/transformations/{transformationID}'.replace(
+        '{transformationID}',
+        encodeURIComponent(transformationID)
       );
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -974,45 +1066,6 @@ export function createIngestionClient({
     },
 
     /**
-     * Retrieves a stream listing for a source.  Listing streams only works with sources with `type: docker` and `imageType: singer`.
-     *
-     * Required API Key ACLs:
-     * - addObject
-     * - deleteIndex
-     * - editSettings.
-     *
-     * @param getDockerSourceStreams - The getDockerSourceStreams object.
-     * @param getDockerSourceStreams.sourceID - Unique identifier of a source.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    getDockerSourceStreams(
-      { sourceID }: GetDockerSourceStreamsProps,
-      requestOptions?: RequestOptions
-    ): Promise<DockerSourceStreams> {
-      if (!sourceID) {
-        throw new Error(
-          'Parameter `sourceID` is required when calling `getDockerSourceStreams`.'
-        );
-      }
-
-      const requestPath = '/1/sources/{sourceID}/discover'.replace(
-        '{sourceID}',
-        encodeURIComponent(sourceID)
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
-      const request: Request = {
-        method: 'GET',
-        path: requestPath,
-        queryParameters,
-        headers,
-      };
-
-      return transporter.request(request, requestOptions);
-    },
-
-    /**
      * Retrieves a single task run event by its ID.
      *
      * Required API Key ACLs:
@@ -1073,8 +1126,8 @@ export function createIngestionClient({
      * @param getEvents.type - Event type for filtering the list of task runs.
      * @param getEvents.sort - Property by which to sort the list of task run events.
      * @param getEvents.order - Sort order of the response, ascending or descending.
-     * @param getEvents.startDate - Date and time in RFC3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
-     * @param getEvents.endDate - Date and time in RFC3339 format for the latest events to retrieve. By default, the current time is used.
+     * @param getEvents.startDate - Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
+     * @param getEvents.endDate - Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getEvents(
@@ -1198,8 +1251,8 @@ export function createIngestionClient({
      * @param getRuns.taskID - Task ID for filtering the list of task runs.
      * @param getRuns.sort - Property by which to sort the list of task runs.
      * @param getRuns.order - Sort order of the response, ascending or descending.
-     * @param getRuns.startDate - Date in RFC3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
-     * @param getRuns.endDate - Date in RFC3339 format for the latest run to retrieve. By default, the current day is used.
+     * @param getRuns.startDate - Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+     * @param getRuns.endDate - Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRuns(
@@ -1490,6 +1543,84 @@ export function createIngestionClient({
     },
 
     /**
+     * Retrieves a transformation by its ID.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param getTransformation - The getTransformation object.
+     * @param getTransformation.transformationID - Unique identifier of a transformation.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getTransformation(
+      { transformationID }: GetTransformationProps,
+      requestOptions?: RequestOptions
+    ): Promise<Transformation> {
+      if (!transformationID) {
+        throw new Error(
+          'Parameter `transformationID` is required when calling `getTransformation`.'
+        );
+      }
+
+      const requestPath = '/1/transformations/{transformationID}'.replace(
+        '{transformationID}',
+        encodeURIComponent(transformationID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Retrieves a list of transformations.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param getTransformations - The getTransformations object.
+     * @param getTransformations.sort - Property by which to sort the list.
+     * @param getTransformations.order - Sort order of the response, ascending or descending.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getTransformations(
+      { sort, order }: GetTransformationsProps = {},
+      requestOptions: RequestOptions | undefined = undefined
+    ): Promise<ListTransformationsResponse> {
+      const requestPath = '/1/transformations';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (sort !== undefined) {
+        queryParameters.sort = sort.toString();
+      }
+
+      if (order !== undefined) {
+        queryParameters.order = order.toString();
+      }
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
      * Runs a task. You can check the status of task runs with the observability endpoints.
      *
      * Required API Key ACLs:
@@ -1697,6 +1828,48 @@ export function createIngestionClient({
     },
 
     /**
+     * Searches for transformations.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param transformationSearch - The transformationSearch object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    searchTransformations(
+      transformationSearch: TransformationSearch,
+      requestOptions?: RequestOptions
+    ): Promise<Transformation[]> {
+      if (!transformationSearch) {
+        throw new Error(
+          'Parameter `transformationSearch` is required when calling `searchTransformations`.'
+        );
+      }
+
+      if (!transformationSearch.transformationsIDs) {
+        throw new Error(
+          'Parameter `transformationSearch.transformationsIDs` is required when calling `searchTransformations`.'
+        );
+      }
+
+      const requestPath = '/1/transformations/search';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: transformationSearch,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
      * Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.
      *
      * Required API Key ACLs:
@@ -1711,7 +1884,7 @@ export function createIngestionClient({
     triggerDockerSourceDiscover(
       { sourceID }: TriggerDockerSourceDiscoverProps,
       requestOptions?: RequestOptions
-    ): Promise<DockerSourceDiscover> {
+    ): Promise<SourceWatchResponse> {
       if (!sourceID) {
         throw new Error(
           'Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.'
@@ -1730,6 +1903,53 @@ export function createIngestionClient({
         path: requestPath,
         queryParameters,
         headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Searches for transformations.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param transformationTry - The transformationTry object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    tryTransformations(
+      transformationTry: TransformationTry,
+      requestOptions?: RequestOptions
+    ): Promise<TransformationTryResponse> {
+      if (!transformationTry) {
+        throw new Error(
+          'Parameter `transformationTry` is required when calling `tryTransformations`.'
+        );
+      }
+
+      if (!transformationTry.code) {
+        throw new Error(
+          'Parameter `transformationTry.code` is required when calling `tryTransformations`.'
+        );
+      }
+      if (!transformationTry.sampleRecord) {
+        throw new Error(
+          'Parameter `transformationTry.sampleRecord` is required when calling `tryTransformations`.'
+        );
+      }
+
+      const requestPath = '/1/transformations/try';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: transformationTry,
       };
 
       return transporter.request(request, requestOptions);
@@ -1913,6 +2133,141 @@ export function createIngestionClient({
         queryParameters,
         headers,
         data: taskUpdate,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Updates a transformation by its ID.
+     *
+     * @param updateTransformation - The updateTransformation object.
+     * @param updateTransformation.transformationID - Unique identifier of a transformation.
+     * @param updateTransformation.transformationCreate - The transformationCreate object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    updateTransformation(
+      { transformationID, transformationCreate }: UpdateTransformationProps,
+      requestOptions?: RequestOptions
+    ): Promise<TransformationUpdateResponse> {
+      if (!transformationID) {
+        throw new Error(
+          'Parameter `transformationID` is required when calling `updateTransformation`.'
+        );
+      }
+
+      if (!transformationCreate) {
+        throw new Error(
+          'Parameter `transformationCreate` is required when calling `updateTransformation`.'
+        );
+      }
+
+      if (!transformationCreate.code) {
+        throw new Error(
+          'Parameter `transformationCreate.code` is required when calling `updateTransformation`.'
+        );
+      }
+      if (!transformationCreate.name) {
+        throw new Error(
+          'Parameter `transformationCreate.name` is required when calling `updateTransformation`.'
+        );
+      }
+      if (!transformationCreate.description) {
+        throw new Error(
+          'Parameter `transformationCreate.description` is required when calling `updateTransformation`.'
+        );
+      }
+
+      const requestPath = '/1/transformations/{transformationID}'.replace(
+        '{transformationID}',
+        encodeURIComponent(transformationID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'PUT',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: transformationCreate,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Validates a source payload to ensure it can be created and that the data source can be reached by Algolia.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param sourceCreate -.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    validateSource(
+      sourceCreate: SourceCreate,
+      requestOptions: RequestOptions | undefined = undefined
+    ): Promise<SourceWatchResponse> {
+      const requestPath = '/1/sources/validate';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: sourceCreate ? sourceCreate : {},
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Validates an update of a source payload to ensure it can be created and that the data source can be reached by Algolia.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param validateSourceBeforeUpdate - The validateSourceBeforeUpdate object.
+     * @param validateSourceBeforeUpdate.sourceID - Unique identifier of a source.
+     * @param validateSourceBeforeUpdate.sourceUpdate - The sourceUpdate object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    validateSourceBeforeUpdate(
+      { sourceID, sourceUpdate }: ValidateSourceBeforeUpdateProps,
+      requestOptions?: RequestOptions
+    ): Promise<SourceWatchResponse> {
+      if (!sourceID) {
+        throw new Error(
+          'Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.'
+        );
+      }
+
+      if (!sourceUpdate) {
+        throw new Error(
+          'Parameter `sourceUpdate` is required when calling `validateSourceBeforeUpdate`.'
+        );
+      }
+
+      const requestPath = '/1/sources/{sourceID}/validate'.replace(
+        '{sourceID}',
+        encodeURIComponent(sourceID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: sourceUpdate,
       };
 
       return transporter.request(request, requestOptions);

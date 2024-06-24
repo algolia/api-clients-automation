@@ -1,4 +1,4 @@
-argcomplete==3.3.0
+argcomplete==3.4.0
 click==8.1.7
 packaging==24.1
 pipx==1.6.0

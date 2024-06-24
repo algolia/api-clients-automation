@@ -12,7 +12,7 @@ type DestinationUpdateResponse struct {
 	DestinationID string `json:"destinationID"`
 	// Descriptive name for the resource.
 	Name string `json:"name"`
-	// Date of last update in RFC3339 format.
+	// Date of last update in RFC 3339 format.
 	UpdatedAt string `json:"updatedAt"`
 }
 
@@ -133,40 +133,4 @@ func (o DestinationUpdateResponse) String() string {
 	out += fmt.Sprintf("  name=%v\n", o.Name)
 	out += fmt.Sprintf("  updatedAt=%v\n", o.UpdatedAt)
 	return fmt.Sprintf("DestinationUpdateResponse {\n%s}", out)
-}
-
-type NullableDestinationUpdateResponse struct {
-	value *DestinationUpdateResponse
-	isSet bool
-}
-
-func (v NullableDestinationUpdateResponse) Get() *DestinationUpdateResponse {
-	return v.value
-}
-
-func (v *NullableDestinationUpdateResponse) Set(val *DestinationUpdateResponse) {
-	v.value = val
-	v.isSet = true
-}
-
-func (v NullableDestinationUpdateResponse) IsSet() bool {
-	return v.isSet
-}
-
-func (v *NullableDestinationUpdateResponse) Unset() {
-	v.value = nil
-	v.isSet = false
-}
-
-func NewNullableDestinationUpdateResponse(val *DestinationUpdateResponse) *NullableDestinationUpdateResponse {
-	return &NullableDestinationUpdateResponse{value: val, isSet: true}
-}
-
-func (v NullableDestinationUpdateResponse) MarshalJSON() ([]byte, error) {
-	return json.Marshal(v.value) //nolint:wrapcheck
-}
-
-func (v *NullableDestinationUpdateResponse) UnmarshalJSON(src []byte) error {
-	v.isSet = true
-	return json.Unmarshal(src, &v.value) //nolint:wrapcheck
 }

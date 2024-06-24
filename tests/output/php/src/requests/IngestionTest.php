@@ -230,6 +230,29 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     /**
+     * Test case for CreateTransformation
+     * createTransformation.
+     */
+    public function testCreateTransformation()
+    {
+        $client = $this->getClient();
+        $client->createTransformation(
+            ['code' => 'foo',
+                'name' => 'bar',
+                'description' => 'baz',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations',
+                'method' => 'POST',
+                'body' => json_decode('{"code":"foo","name":"bar","description":"baz"}'),
+            ],
+        ]);
+    }
+
+    /**
      * Test case for CustomDelete
      * allow del method for a custom path with minimal parameters.
      */
@@ -823,6 +846,26 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     /**
+     * Test case for DeleteTransformation
+     * deleteTransformation.
+     */
+    public function testDeleteTransformation()
+    {
+        $client = $this->getClient();
+        $client->deleteTransformation(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                'method' => 'DELETE',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    /**
      * Test case for DisableTask
      * disableTask.
      */
@@ -1000,26 +1043,6 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     /**
-     * Test case for GetDockerSourceStreams
-     * getDockerSourceStreams.
-     */
-    public function testGetDockerSourceStreams()
-    {
-        $client = $this->getClient();
-        $client->getDockerSourceStreams(
-            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
-        );
-
-        $this->assertRequests([
-            [
-                'path' => '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover',
-                'method' => 'GET',
-                'body' => null,
-            ],
-        ]);
-    }
-
-    /**
      * Test case for GetEvent
      * getEvent.
      */
@@ -1184,6 +1207,44 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     /**
+     * Test case for GetTransformation
+     * getTransformation.
+     */
+    public function testGetTransformation()
+    {
+        $client = $this->getClient();
+        $client->getTransformation(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for GetTransformations
+     * getTransformations.
+     */
+    public function testGetTransformations()
+    {
+        $client = $this->getClient();
+        $client->getTransformations();
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations',
+                'method' => 'GET',
+                'body' => null,
+            ],
+        ]);
+    }
+
+    /**
      * Test case for RunTask
      * runTask.
      */
@@ -1322,6 +1383,33 @@ class IngestionTest extends TestCase implements HttpClientInterface
     }
 
     /**
+     * Test case for SearchTransformations
+     * searchTransformations.
+     */
+    public function testSearchTransformations()
+    {
+        $client = $this->getClient();
+        $client->searchTransformations(
+            ['transformationsIDs' => [
+                '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+
+                '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
+
+                '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
+            ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations/search',
+                'method' => 'POST',
+                'body' => json_decode('{"transformationsIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}'),
+            ],
+        ]);
+    }
+
+    /**
      * Test case for TriggerDockerSourceDiscover
      * triggerDockerSourceDiscover.
      */
@@ -1337,6 +1425,29 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover',
                 'method' => 'POST',
                 'body' => json_decode(''),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for TryTransformations
+     * tryTransformations.
+     */
+    public function testTryTransformations()
+    {
+        $client = $this->getClient();
+        $client->tryTransformations(
+            ['code' => 'foo',
+                'sampleRecord' => ['bar' => 'baz',
+                ],
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations/try',
+                'method' => 'POST',
+                'body' => json_decode('{"code":"foo","sampleRecord":{"bar":"baz"}}'),
             ],
         ]);
     }
@@ -1425,6 +1536,84 @@ class IngestionTest extends TestCase implements HttpClientInterface
                 'path' => '/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
                 'method' => 'PATCH',
                 'body' => json_decode('{"enabled":false}'),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for UpdateTransformation
+     * updateTransformation.
+     */
+    public function testUpdateTransformation()
+    {
+        $client = $this->getClient();
+        $client->updateTransformation(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['code' => 'foo',
+                'name' => 'bar',
+                'description' => 'baz',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+                'method' => 'PUT',
+                'body' => json_decode('{"code":"foo","name":"bar","description":"baz"}'),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for ValidateSource
+     * validateSource.
+     */
+    public function testValidateSource()
+    {
+        $client = $this->getClient();
+        $client->validateSource(
+            ['type' => 'commercetools',
+                'name' => 'sourceName',
+                'input' => ['storeKeys' => [
+                    'myStore',
+                ],
+                    'locales' => [
+                        'de',
+                    ],
+                    'url' => 'http://commercetools.com',
+                    'projectKey' => 'keyID',
+                ],
+                'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/sources/validate',
+                'method' => 'POST',
+                'body' => json_decode('{"type":"commercetools","name":"sourceName","input":{"storeKeys":["myStore"],"locales":["de"],"url":"http://commercetools.com","projectKey":"keyID"},"authenticationID":"6c02aeb1-775e-418e-870b-1faccd4b2c0f"}'),
+            ],
+        ]);
+    }
+
+    /**
+     * Test case for ValidateSourceBeforeUpdate
+     * validateSourceBeforeUpdate.
+     */
+    public function testValidateSourceBeforeUpdate()
+    {
+        $client = $this->getClient();
+        $client->validateSourceBeforeUpdate(
+            '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+            ['name' => 'newName',
+            ],
+        );
+
+        $this->assertRequests([
+            [
+                'path' => '/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/validate',
+                'method' => 'POST',
+                'body' => json_decode('{"name":"newName"}'),
             ],
         ]);
     }

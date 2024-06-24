@@ -14,11 +14,13 @@ import type { OrderKeys } from './orderKeys';
 import type { PlatformWithNone } from './platformWithNone';
 import type { RunSortKeys } from './runSortKeys';
 import type { RunStatus } from './runStatus';
+import type { SortKeys } from './sortKeys';
 import type { SourceSortKeys } from './sourceSortKeys';
 import type { SourceType } from './sourceType';
 import type { SourceUpdate } from './sourceUpdate';
 import type { TaskSortKeys } from './taskSortKeys';
 import type { TaskUpdate } from './taskUpdate';
+import type { TransformationCreate } from './transformationCreate';
 import type { TriggerType } from './triggerType';
 
 /**
@@ -126,6 +128,16 @@ export type DeleteTaskProps = {
 };
 
 /**
+ * Properties for the `deleteTransformation` method.
+ */
+export type DeleteTransformationProps = {
+  /**
+   * Unique identifier of a transformation.
+   */
+  transformationID: string;
+};
+
+/**
  * Properties for the `disableTask` method.
  */
 export type DisableTaskProps = {
@@ -226,16 +238,6 @@ export type GetDestinationsProps = {
 };
 
 /**
- * Properties for the `getDockerSourceStreams` method.
- */
-export type GetDockerSourceStreamsProps = {
-  /**
-   * Unique identifier of a source.
-   */
-  sourceID: string;
-};
-
-/**
  * Properties for the `getEvent` method.
  */
 export type GetEventProps = {
@@ -282,11 +284,11 @@ export type GetEventsProps = {
    */
   order?: OrderKeys;
   /**
-   * Date and time in RFC3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
+   * Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
    */
   startDate?: string;
   /**
-   * Date and time in RFC3339 format for the latest events to retrieve. By default, the current time is used.
+   * Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
    */
   endDate?: string;
 };
@@ -330,11 +332,11 @@ export type GetRunsProps = {
    */
   order?: OrderKeys;
   /**
-   * Date in RFC3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+   * Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
    */
   startDate?: string;
   /**
-   * Date in RFC3339 format for the latest run to retrieve. By default, the current day is used.
+   * Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
    */
   endDate?: string;
 };
@@ -432,6 +434,30 @@ export type GetTasksProps = {
 };
 
 /**
+ * Properties for the `getTransformation` method.
+ */
+export type GetTransformationProps = {
+  /**
+   * Unique identifier of a transformation.
+   */
+  transformationID: string;
+};
+
+/**
+ * Properties for the `getTransformations` method.
+ */
+export type GetTransformationsProps = {
+  /**
+   * Property by which to sort the list.
+   */
+  sort?: SortKeys;
+  /**
+   * Sort order of the response, ascending or descending.
+   */
+  order?: OrderKeys;
+};
+
+/**
  * Properties for the `runTask` method.
  */
 export type RunTaskProps = {
@@ -493,4 +519,26 @@ export type UpdateTaskProps = {
    */
   taskID: string;
   taskUpdate: TaskUpdate;
+};
+
+/**
+ * Properties for the `updateTransformation` method.
+ */
+export type UpdateTransformationProps = {
+  /**
+   * Unique identifier of a transformation.
+   */
+  transformationID: string;
+  transformationCreate: TransformationCreate;
+};
+
+/**
+ * Properties for the `validateSourceBeforeUpdate` method.
+ */
+export type ValidateSourceBeforeUpdateProps = {
+  /**
+   * Unique identifier of a source.
+   */
+  sourceID: string;
+  sourceUpdate: SourceUpdate;
 };

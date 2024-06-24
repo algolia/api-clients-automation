@@ -1,7 +1,7 @@
 import { Argument, program } from 'commander';
+import semver from 'semver';
 
 import { buildClients } from '../buildClients.js';
-import { buildSpecs } from '../buildSpecs.js';
 import { LANGUAGES, setVerbose } from '../common.js';
 import { ctsGenerateMany } from '../cts/generate.js';
 import { runCts } from '../cts/runCts.js';
@@ -9,8 +9,10 @@ import { startTestServer } from '../cts/testServer';
 import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
 import { playground } from '../playground.js';
-import { createReleasePR } from '../release/createReleasePR.js';
+import { createReleasePR, updateSLA } from '../release/createReleasePR.js';
+import type { Versions } from '../release/types.js';
 import { snippetsGenerateMany } from '../snippets/generate.js';
+import { buildSpecs } from '../specs';
 import type { Language } from '../types.js';
 
 import type { LangArg } from './utils.js';
@@ -60,7 +62,7 @@ program
     await generate(generatorList({ language, client, clientList }));
   });
 
-const buildCommand = program.command('build');
+const buildCommand = program.command('build').description('Build the clients or specs');
 
 buildCommand
   .command('clients')
@@ -103,7 +105,7 @@ buildCommand
     });
   });
 
-const ctsCommand = program.command('cts');
+const ctsCommand = program.command('cts').description('Generate and run the CTS tests');
 
 ctsCommand
   .command('generate')
@@ -200,10 +202,27 @@ program
   .description('Releases the client')
   .addArgument(args.languages)
   .option(flags.verbose.flag, flags.verbose.description)
-  .option('-m, --major', 'triggers a major release for the given language list')
+  .option<semver.ReleaseType>(
+    '-rt --releaseType <type>',
+    'triggers a release for the given language list with the given releaseType',
+    (value, _previous) => {
+      if (semver.RELEASE_TYPES.includes(value as semver.ReleaseType)) {
+        return value as semver.ReleaseType;
+      }
+      return 'patch';
+    },
+    undefined,
+  )
   .option('-d, --dry-run', 'does not push anything to GitHub')
-  .action(async (langArgs: LangArg[], { verbose, major, dryRun }) => {
+  .option('-gg, --generate-graph', 'only generates the graph')
+  .action(async (langArgs: LangArg[], { verbose, releaseType, dryRun, generateGraph }) => {
     setVerbose(Boolean(verbose));
+
+    if (generateGraph) {
+      await updateSLA({} as Versions, true);
+
+      return;
+    }
 
     if (langArgs.length === 0) {
       langArgs = [ALL];
@@ -211,7 +230,7 @@ program
 
     await createReleasePR({
       languages: langArgs.includes(ALL) ? LANGUAGES : (langArgs as Language[]),
-      major,
+      releaseType,
       dryRun,
     });
   });

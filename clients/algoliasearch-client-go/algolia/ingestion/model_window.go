@@ -8,9 +8,9 @@ import (
 
 // Window Time window by which to filter the observability data.
 type Window struct {
-	// Date in RFC3339 format representing the oldest data in the time window.
+	// Date in RFC 3339 format representing the oldest data in the time window.
 	StartDate string `json:"startDate"`
-	// Date in RFC3339 format representing the newest data in the time window.
+	// Date in RFC 3339 format representing the newest data in the time window.
 	EndDate string `json:"endDate"`
 }
 
@@ -101,40 +101,4 @@ func (o Window) String() string {
 	out += fmt.Sprintf("  startDate=%v\n", o.StartDate)
 	out += fmt.Sprintf("  endDate=%v\n", o.EndDate)
 	return fmt.Sprintf("Window {\n%s}", out)
-}
-
-type NullableWindow struct {
-	value *Window
-	isSet bool
-}
-
-func (v NullableWindow) Get() *Window {
-	return v.value
-}
-
-func (v *NullableWindow) Set(val *Window) {
-	v.value = val
-	v.isSet = true
-}
-
-func (v NullableWindow) IsSet() bool {
-	return v.isSet
-}
-
-func (v *NullableWindow) Unset() {
-	v.value = nil
-	v.isSet = false
-}
-
-func NewNullableWindow(val *Window) *NullableWindow {
-	return &NullableWindow{value: val, isSet: true}
-}
-
-func (v NullableWindow) MarshalJSON() ([]byte, error) {
-	return json.Marshal(v.value) //nolint:wrapcheck
-}
-
-func (v *NullableWindow) UnmarshalJSON(src []byte) error {
-	v.isSet = true
-	return json.Unmarshal(src, &v.value) //nolint:wrapcheck
 }

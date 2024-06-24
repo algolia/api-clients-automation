@@ -594,7 +594,7 @@ final class FallbackParams {
       attributeCriteriaComputedByMinProximity.hashCode +
       renderingContent.hashCode +
       enableReRanking.hashCode +
-      reRankingApplyFilter.hashCode;
+      (reRankingApplyFilter == null ? 0 : reRankingApplyFilter.hashCode);
 
   factory FallbackParams.fromJson(Map<String, dynamic> json) =>
       _$FallbackParamsFromJson(json);

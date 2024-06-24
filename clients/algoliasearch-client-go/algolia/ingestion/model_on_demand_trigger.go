@@ -9,7 +9,7 @@ import (
 // OnDemandTrigger Trigger information for manually-triggered tasks.
 type OnDemandTrigger struct {
 	Type OnDemandTriggerType `json:"type"`
-	// The last time the scheduled task ran in RFC3339 format.
+	// The last time the scheduled task ran in RFC 3339 format.
 	LastRun *string `json:"lastRun,omitempty"`
 }
 
@@ -118,40 +118,4 @@ func (o OnDemandTrigger) String() string {
 	out += fmt.Sprintf("  type=%v\n", o.Type)
 	out += fmt.Sprintf("  lastRun=%v\n", o.LastRun)
 	return fmt.Sprintf("OnDemandTrigger {\n%s}", out)
-}
-
-type NullableOnDemandTrigger struct {
-	value *OnDemandTrigger
-	isSet bool
-}
-
-func (v NullableOnDemandTrigger) Get() *OnDemandTrigger {
-	return v.value
-}
-
-func (v *NullableOnDemandTrigger) Set(val *OnDemandTrigger) {
-	v.value = val
-	v.isSet = true
-}
-
-func (v NullableOnDemandTrigger) IsSet() bool {
-	return v.isSet
-}
-
-func (v *NullableOnDemandTrigger) Unset() {
-	v.value = nil
-	v.isSet = false
-}
-
-func NewNullableOnDemandTrigger(val *OnDemandTrigger) *NullableOnDemandTrigger {
-	return &NullableOnDemandTrigger{value: val, isSet: true}
-}
-
-func (v NullableOnDemandTrigger) MarshalJSON() ([]byte, error) {
-	return json.Marshal(v.value) //nolint:wrapcheck
-}
-
-func (v *NullableOnDemandTrigger) UnmarshalJSON(src []byte) error {
-	v.isSet = true
-	return json.Unmarshal(src, &v.value) //nolint:wrapcheck
 }

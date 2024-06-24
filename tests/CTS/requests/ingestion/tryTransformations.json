@@ -1,0 +1,20 @@
+[
+  {
+    "parameters": {
+      "code": "foo",
+      "sampleRecord": {
+        "bar": "baz"
+      }
+    },
+    "request": {
+      "path": "/1/transformations/try",
+      "method": "POST",
+      "body": {
+        "code": "foo",
+        "sampleRecord": {
+          "bar": "baz"
+        }
+      }
+    }
+  }
+]

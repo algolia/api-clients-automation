@@ -9,18 +9,18 @@ import {
   REGIONS as abtestingRegions,
 } from '@algolia/client-abtesting/src/abtestingClient';
 import type { AnalyticsClient } from '@algolia/client-analytics';
-import type { Region as AnalyticsRegion } from '@algolia/client-analytics/src/analyticsClient';
 import {
   createAnalyticsClient,
   REGIONS as analyticsRegions,
 } from '@algolia/client-analytics/src/analyticsClient';
+import type { Region as AnalyticsRegion } from '@algolia/client-analytics/src/analyticsClient';
 import {
-  serializeQueryParameters,
   DEFAULT_CONNECT_TIMEOUT_NODE,
   DEFAULT_READ_TIMEOUT_NODE,
   DEFAULT_WRITE_TIMEOUT_NODE,
   createMemoryCache,
   createNullCache,
+  serializeQueryParameters,
 } from '@algolia/client-common';
 import type {
   ClientOptions,
@@ -36,6 +36,8 @@ import {
   createSearchClient,
   apiClientVersion as searchClientVersion,
 } from '@algolia/client-search/src/searchClient';
+import type { RecommendClient } from '@algolia/recommend';
+import { createRecommendClient } from '@algolia/recommend/src/recommendClient';
 import { createHttpRequester } from '@algolia/requester-node-http';
 
 import type {
@@ -82,6 +84,14 @@ export function algoliasearch(
     hostsCache: createMemoryCache(),
     ...options,
   };
+
+  function initRecommend(initOptions: InitClientOptions = {}): RecommendClient {
+    return createRecommendClient({
+      ...commonOptions,
+      ...initOptions.options,
+      ...initOptions,
+    });
+  }
 
   function initAnalytics(
     initOptions: InitClientOptions & InitClientRegion<AnalyticsRegion> = {}
@@ -153,9 +163,10 @@ export function algoliasearch(
     get _ua(): string {
       return this.transporter.algoliaAgent.value;
     },
+    initAbtesting,
     initAnalytics,
     initPersonalization,
-    initAbtesting,
+    initRecommend,
     /**
      * Helper: Generates a secured API key based on the given `parentApiKey` and given `restrictions`.
      *
@@ -168,7 +179,29 @@ export function algoliasearch(
       parentApiKey,
       restrictions = {},
     }: GenerateSecuredApiKeyOptions): string {
-      const queryParameters = serializeQueryParameters(restrictions);
+      let mergedRestrictions = restrictions;
+      if (restrictions.searchParams) {
+        // merge searchParams with the root restrictions
+        mergedRestrictions = {
+          ...restrictions,
+          ...restrictions.searchParams,
+        };
+
+        delete mergedRestrictions.searchParams;
+      }
+
+      mergedRestrictions = Object.keys(mergedRestrictions)
+        .sort()
+        .reduce(
+          (acc, key) => {
+            // eslint-disable-next-line no-param-reassign
+            acc[key] = (mergedRestrictions as any)[key];
+            return acc;
+          },
+          {} as Record<string, unknown>
+        );
+
+      const queryParameters = serializeQueryParameters(mergedRestrictions);
       return Buffer.from(
         createHmac('sha256', parentApiKey)
           .update(queryParameters)
