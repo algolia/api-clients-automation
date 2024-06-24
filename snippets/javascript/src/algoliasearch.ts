@@ -21,6 +21,31 @@ export async function snippetForCustomPost(): Promise<void> {
   // SEPARATOR<
 }
 
+// Snippet for the getRecommendations method.
+//
+// get recommendations for recommend model with minimal parameters
+export async function snippetForGetRecommendations(): Promise<void> {
+  // >SEPARATOR getRecommendations default
+  // Initialize the client
+  const client = liteClient('YOUR_APP_ID', 'YOUR_API_KEY');
+
+  // Call the API
+  const response = await client.getRecommendations({
+    requests: [
+      {
+        indexName: 'indexName',
+        objectID: 'objectID',
+        model: 'related-products',
+        threshold: 42.1,
+      },
+    ],
+  });
+
+  // use typed response
+  console.log(response);
+  // SEPARATOR<
+}
+
 // Snippet for the search method.
 //
 // withHitsPerPage
