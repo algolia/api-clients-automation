@@ -8,8 +8,7 @@
         "parameters": {
           "appId": "test-app-id",
           "apiKey": "test-api-key"
-        },
-        "expected": {}
+        }
       },
       {
         "type": "method",
@@ -34,8 +33,7 @@
         "parameters": {
           "appId": "test-app-id",
           "apiKey": "test-api-key"
-        },
-        "expected": {}
+        }
       },
       {
         "type": "method",
@@ -70,8 +68,7 @@
               "port": 6678
             }
           ]
-        },
-        "expected": {}
+        }
       },
       {
         "type": "method",
@@ -105,8 +102,7 @@
             }
           ],
           "gzip": true
-        },
-        "expected": {}
+        }
       },
       {
         "type": "method",

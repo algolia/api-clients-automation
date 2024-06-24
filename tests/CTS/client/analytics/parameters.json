@@ -8,8 +8,7 @@
         "parameters": {
           "appId": "my-app-id",
           "apiKey": "my-api-key"
-        },
-        "expected": {}
+        }
       },
       {
         "type": "method",
@@ -35,8 +34,7 @@
           "appId": "my-app-id",
           "apiKey": "my-api-key",
           "region": "de"
-        },
-        "expected": {}
+        }
       },
       {
         "type": "method",

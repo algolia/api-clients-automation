@@ -451,9 +451,9 @@ use {{invokerPackage}}\Support\Helpers;
     */
     public function replaceAllObjects($indexName, $objects, $batchSize = 1000, $requestOptions = [])
     {
-        $tmpIndexName = $indexName.'_tmp_'.uniqid('php_', true);
+        $tmpIndexName = $indexName.'_tmp_'.rand(10000000, 99999999);
 
-        $copyResponse = $this->operationIndex(
+        $copyOperationResponse = $this->operationIndex(
             $indexName,
             [
                 'operation' => 'copy',
@@ -463,11 +463,11 @@ use {{invokerPackage}}\Support\Helpers;
             $requestOptions
         );
 
-        $this->chunkedBatch($tmpIndexName, $objects, 'addObject', true, $batchSize, $requestOptions);
+        $batchResponses = $this->chunkedBatch($tmpIndexName, $objects, 'addObject', true, $batchSize, $requestOptions);
 
-        $this->waitForTask($tmpIndexName, $copyResponse['taskID']);
+        $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID']);
 
-        $copyResponse = $this->operationIndex(
+        $copyOperationResponse = $this->operationIndex(
             $indexName,
             [
                 'operation' => 'copy',
@@ -477,9 +477,9 @@ use {{invokerPackage}}\Support\Helpers;
             $requestOptions
         );
 
-        $this->waitForTask($tmpIndexName, $copyResponse['taskID']);
+        $this->waitForTask($tmpIndexName, $copyOperationResponse['taskID']);
 
-        $moveResponse = $this->operationIndex(
+        $moveOperationResponse = $this->operationIndex(
             $tmpIndexName,
             [
                 'operation' => 'move',
@@ -488,19 +488,25 @@ use {{invokerPackage}}\Support\Helpers;
             $requestOptions
         );
 
-        $this->waitForTask($tmpIndexName, $moveResponse['taskID']);
+        $this->waitForTask($tmpIndexName, $moveOperationResponse['taskID']);
+
+        return [
+          "copyOperationResponse" => $copyOperationResponse,
+          "batchResponses" => $batchResponses,
+          "moveOperationResponse" => $moveOperationResponse
+        ];
     }
 
     /**
-    * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
-    *
-    * @param string $indexName      The `indexName` to replace `objects` in.
-    * @param array  $objects        The array of `objects` to store in the given Algolia `indexName`.
-    * @param array  $action         The `batch` `action` to perform on the given array of `objects`, defaults to `addObject`.
-    * @param array  $waitForTasks   Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
-    * @param array  $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
-    * @param array  $requestOptions Request options
-    */
+     * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
+     *
+     * @param string $indexName      the `indexName` to replace `objects` in
+     * @param array  $objects        the array of `objects` to store in the given Algolia `indexName`
+     * @param array  $action         the `batch` `action` to perform on the given array of `objects`, defaults to `addObject`
+     * @param array  $waitForTasks   whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
+     * @param array  $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param array  $requestOptions Request options
+     */
     public function chunkedBatch(
         $indexName,
         $objects,
@@ -519,12 +525,12 @@ use {{invokerPackage}}\Support\Helpers;
                 'body' => $object,
             ];
 
-            if (sizeof($requests) === $batchSize || $count === sizeof($objects)-1) {
+            if (sizeof($requests) === $batchSize || $count === sizeof($objects) - 1) {
                 $responses[] = $this->batch($indexName, ['requests' => $requests], $requestOptions);
                 $requests = [];
             }
 
-            $count++;
+            ++$count;
         }
 
         if (!empty($requests)) {
@@ -536,6 +542,8 @@ use {{invokerPackage}}\Support\Helpers;
                 $this->waitForTask($indexName, $response['taskID']);
             }
         }
+
+        return $responses;
     }
 
     /**
