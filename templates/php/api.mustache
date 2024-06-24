@@ -537,15 +537,16 @@ use {{invokerPackage}}\Support\Helpers;
       return chunkedBatch($indexName, $objects, ($createIfNotExists == TRUE) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', false, 1000, $requestOptions);
     }
 
-     * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
-     *
-     * @param string $indexName      the `indexName` to replace `objects` in
-     * @param array  $objects        the array of `objects` to store in the given Algolia `indexName`
-     * @param array  $action         the `batch` `action` to perform on the given array of `objects`, defaults to `addObject`
-     * @param array  $waitForTasks   whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
-     * @param array  $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
-     * @param array  $requestOptions Request options
-     */
+    /**
+    * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
+    *
+    * @param string $indexName      the `indexName` to replace `objects` in
+    * @param array  $objects        the array of `objects` to store in the given Algolia `indexName`
+    * @param array  $action         the `batch` `action` to perform on the given array of `objects`, defaults to `addObject`
+    * @param array  $waitForTasks   whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable
+    * @param array  $batchSize      The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+    * @param array  $requestOptions Request options
+    */
     public function chunkedBatch(
         $indexName,
         $objects,
