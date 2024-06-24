@@ -3,6 +3,7 @@ package com.algolia.client
 
 import com.algolia.client.api.QuerySuggestionsClient
 import com.algolia.client.configuration.*
+import com.algolia.client.extensions.*
 import com.algolia.client.model.querysuggestions.*
 import com.algolia.client.transport.*
 import com.algolia.utils.*

@@ -209,6 +209,64 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     /**
+     * Test case : call replaceAllObjects without error.
+     */
+    public function test2helpers()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6679']));
+
+        $res = $client->replaceAllObjects(
+            'cts_e2e_replace_all_objects_PHP',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+
+                ['objectID' => '3',
+                    'name' => 'Cyril',
+                ],
+
+                ['objectID' => '4',
+                    'name' => 'David',
+                ],
+
+                ['objectID' => '5',
+                    'name' => 'Eva',
+                ],
+
+                ['objectID' => '6',
+                    'name' => 'Fiona',
+                ],
+
+                ['objectID' => '7',
+                    'name' => 'Gael',
+                ],
+
+                ['objectID' => '8',
+                    'name' => 'Hugo',
+                ],
+
+                ['objectID' => '9',
+                    'name' => 'Igor',
+                ],
+
+                ['objectID' => '10',
+                    'name' => 'Julia',
+                ],
+            ],
+            3,
+        );
+        $this->assertEquals(
+            '{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":127,"objectIDs":["1","2","3"]},{"taskID":130,"objectIDs":["4","5","6"]},{"taskID":133,"objectIDs":["7","8","9"]},{"taskID":134,"objectIDs":["10"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}',
+            json_encode($res)
+        );
+    }
+
+    /**
      * Test case : client throws with invalid parameters.
      */
     public function test0parameters()
