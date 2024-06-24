@@ -111,7 +111,7 @@ func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/s
 /*
 {{operationId}} calls the API and returns the raw response from it.
 {{> operation_description}}
-func (c *APIClient) {{nickname}}HTTPResponse(ctx context.Context, {{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...Option) (*http.Response, []byte, error) {
+func (c *APIClient) {{nickname}}WithHTTPInfo(ctx context.Context, {{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...Option) (*http.Response, []byte, error) {
 	var (
     postBody     any
 	)
@@ -248,7 +248,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
     var returnValue  {{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}
   {{/returnType}}
 
-  res, resBody, err := c.{{nickname}}HTTPResponse(ctx{{#hasParams}}, r{{/hasParams}}, opts...)
+  res, resBody, err := c.{{nickname}}WithHTTPInfo(ctx{{#hasParams}}, r{{/hasParams}}, opts...)
   if err != nil {
 		return {{#returnType}}returnValue, {{/returnType}}err
 	}
