@@ -60,14 +60,12 @@ final class {{client}}ClientTests: XCTestCase {
             {{#testResponse}}
               {{#matchIsObject}}
                 let comparableData = "{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}".data(using: .utf8)
-                let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
-                XCTAssertEqual(comparableJSON, responseBodyJSON);
               {{/matchIsObject}}
               {{^matchIsObject}}
                 let comparableData = "{{#lambda.escapeQuotes}}{{{match}}}{{/lambda.escapeQuotes}}".data(using: .utf8)
-                let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
-                XCTAssertEqual(comparableJSON, responseBodyJSON);
               {{/matchIsObject}}
+              let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+              XCTAssertEqual(comparableJSON, responseBodyJSON);
             {{/testResponse}}
           {{/match}}
         {{/isError}}

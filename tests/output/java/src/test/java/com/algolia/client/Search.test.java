@@ -199,6 +199,42 @@ class SearchClientClientTests {
   }
 
   @Test
+  @DisplayName("call replaceAllObjects without error")
+  void helpersTest2() {
+    assertDoesNotThrow(() -> {
+      SearchClient client = new SearchClient(
+        "test-app-id",
+        "test-api-key",
+        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6679)), false)
+      );
+      var res = client.replaceAllObjects(
+        "cts_e2e_replace_all_objects_Java",
+        List.of(
+          Map.of("objectID", "1", "name", "Adam"),
+          Map.of("objectID", "2", "name", "Benoit"),
+          Map.of("objectID", "3", "name", "Cyril"),
+          Map.of("objectID", "4", "name", "David"),
+          Map.of("objectID", "5", "name", "Eva"),
+          Map.of("objectID", "6", "name", "Fiona"),
+          Map.of("objectID", "7", "name", "Gael"),
+          Map.of("objectID", "8", "name", "Hugo"),
+          Map.of("objectID", "9", "name", "Igor"),
+          Map.of("objectID", "10", "name", "Julia")
+        ),
+        3
+      );
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals(
+          "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"batchResponses\":[{\"taskID\":127,\"objectIDs\":[\"1\",\"2\",\"3\"]},{\"taskID\":130,\"objectIDs\":[\"4\",\"5\",\"6\"]},{\"taskID\":133,\"objectIDs\":[\"7\",\"8\",\"9\"]},{\"taskID\":134,\"objectIDs\":[\"10\"]}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}",
+          json.writeValueAsString(res),
+          JSONCompareMode.STRICT
+        )
+      );
+    });
+  }
+
+  @Test
   @DisplayName("client throws with invalid parameters")
   void parametersTest0() {
     {

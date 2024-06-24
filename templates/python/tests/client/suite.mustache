@@ -50,7 +50,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
         {{/testHost}}
         {{#testResponse}}
         {{#matchIsObject}}
-        assert _req == """{{{match.parameters}}}"""
+        assert (_req if isinstance(_req, dict) else _req.to_dict()) == loads("""{{{match.parameters}}}""")
         {{/matchIsObject}}
         {{^matchIsObject}}
         assert _req == """{{{match}}}"""

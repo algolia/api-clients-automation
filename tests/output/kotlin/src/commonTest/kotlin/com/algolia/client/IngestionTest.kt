@@ -3,6 +3,7 @@ package com.algolia.client
 
 import com.algolia.client.api.IngestionClient
 import com.algolia.client.configuration.*
+import com.algolia.client.extensions.*
 import com.algolia.client.model.ingestion.*
 import com.algolia.client.transport.*
 import com.algolia.utils.*

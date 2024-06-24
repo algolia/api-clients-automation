@@ -3,6 +3,7 @@ package com.algolia.client;
 
 import com.algolia.client.api.{{client}}
 import com.algolia.client.model.{{import}}.*
+import com.algolia.client.extensions.*
 import com.algolia.client.configuration.*
 import com.algolia.client.transport.*
 import com.algolia.utils.*
@@ -16,7 +17,6 @@ class {{clientPrefix}}Test {
 
     {{#blocksClient}}
     {{#tests}}
-    {{^isHelper}} {{! Helper tests are not supported yet}}
     @Test
     fun `{{#lambda.replaceBacktick}}{{{testName}}}{{/lambda.replaceBacktick}}`() = runTest {
         {{#autoCreateClient}}
@@ -71,7 +71,6 @@ class {{clientPrefix}}Test {
         {{/isError}}
         {{/steps}}
     }
-    {{/isHelper}}
     {{/tests}}
     {{/blocksClient}}
 }

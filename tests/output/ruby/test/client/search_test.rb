@@ -50,7 +50,7 @@ class TestClientSearchClient < Test::Unit::TestCase
       )
     )
     req = client.custom_get("1/test/retry")
-    assert_equal({ 'message': "ok test server response" }, req)
+    assert_equal({ 'message': "ok test server response" }, req.to_hash)
   end
 
   # test the compression strategy
@@ -77,7 +77,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     assert_equal(
       { 'message': "ok compression test server response",
         'body': { 'message': "this is a compressed body" }},
-      req
+      req.to_hash
     )
   end
 
@@ -159,6 +159,46 @@ class TestClientSearchClient < Test::Unit::TestCase
     )
     assert_equal(
       'MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw', req
+    )
+  end
+
+  # call replaceAllObjects without error
+  def test_helpers2
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        'test-app-id',
+        'test-api-key',
+        [Algolia::Transport::StatefulHost.new(
+          'localhost',
+          protocol: 'http://',
+          port: 6679,
+          accept: CallType::READ | CallType::WRITE
+        )],
+        'searchClient'
+      )
+    )
+    req = client.replace_all_objects(
+      "cts_e2e_replace_all_objects_Ruby",
+      [{ objectID: "1", name: "Adam" },
+        { objectID: "2", name: "Benoit" },
+        { objectID: "3", name: "Cyril" },
+        { objectID: "4", name: "David" },
+        { objectID: "5", name: "Eva" },
+        { objectID: "6", name: "Fiona" },
+        { objectID: "7", name: "Gael" },
+        { objectID: "8", name: "Hugo" },
+        { objectID: "9", name: "Igor" },
+        { objectID: "10", name: "Julia" }],
+      3
+    )
+    assert_equal(
+      { 'copyOperationResponse': { 'taskID': 125, 'updatedAt': "2021-01-01T00:00:00.000Z" },
+        'batchResponses': [{ 'taskID': 127, 'objectIDs': ["1", "2", "3"] },
+          { 'taskID': 130, 'objectIDs': ["4", "5", "6"] },
+          { 'taskID': 133, 'objectIDs': ["7", "8", "9"] },
+          { 'taskID': 134, 'objectIDs': ["10"] }],
+        'moveOperationResponse': { 'taskID': 777, 'updatedAt': "2021-01-01T00:00:00.000Z" }},
+      req.to_hash
     )
   end
 
