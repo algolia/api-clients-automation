@@ -109,7 +109,7 @@ func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/s
 {{/allParams}}
 {{/hasParams}}
 /*
-{{operationId}} calls the API with the given context and extract the response to a defined struct.
+{{operationId}} calls the API and returns the raw response from it.
 {{> operation_description}}
 func (c *APIClient) {{nickname}}HTTPResponse(ctx context.Context, {{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...Option) (*http.Response, []byte, error) {
 	var (
@@ -242,11 +242,44 @@ func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}
 
 /*
 {{operationId}}
-{{> operation_description}}
+{{> operation_description}} casts the HTTP response body to a defined struct.
 func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...Option) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
-  res, resBody, err := c.{{nickname}}HTTPResponse(ctx{{#hasParams}}, r{{/hasParams}}, opts...)
+  {{#returnType}}
+    var returnValue  {{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}
+  {{/returnType}}
 
-  return utils.ExtractResponse[{{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}{{/returnType}}](c, res, resBody, err)
+  res, resBody, err := c.{{nickname}}HTTPResponse(ctx{{#hasParams}}, r{{/hasParams}}, opts...)
+  if err != nil {
+		return {{#returnType}}returnValue, {{/returnType}}err
+	}
+  if res == nil {
+    return {{#returnType}}returnValue, {{/returnType}}reportError("res is nil")
+  }
+
+	if res.StatusCode >= 300 {
+		newErr := &APIError{
+      Message: string(resBody),
+			Status: res.StatusCode,
+		}
+
+    var v ErrorBase
+    err = c.decode(&v, resBody)
+    if err != nil {
+      newErr.Message = err.Error()
+      return {{#returnType}}returnValue, {{/returnType}}newErr
+    }
+
+		return {{#returnType}}returnValue, {{/returnType}}newErr
+	}
+
+	{{#returnType}}
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return {{#returnType}}returnValue, {{/returnType}}reportError("cannot decode result: %w", err)
+	}
+
+	{{/returnType}}
+	return {{#returnType}}returnValue, {{/returnType}}nil
 }
 
 {{/operation}}
