@@ -242,7 +242,7 @@
         objects: List[Dict[str, Any]],
     ) -> List[BatchResponse]:
         """
-        Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+        Helper: Saves the given array of objects in the given index. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
         """
         return await self.chunked_batch(index_name=index_name, objects=objects, action=Action.ADDOBJECT)
 
@@ -252,7 +252,7 @@
         object_ids: List[str],
     ) -> List[BatchResponse]:
         """
-        Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+        Helper: Deletes every records for the given objectIDs. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
         """
         return await self.chunked_batch(index_name=index_name, objects=[{"objectID": id} for id in object_ids], action=Action.DELETEOBJECT)
 
@@ -263,7 +263,7 @@
         create_if_not_exists: Optional[bool] = False,
     ) -> List[BatchResponse]:
         """
-        Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+        Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
         """
         return await self.chunked_batch(index_name=index_name, objects=objects, action=Action.PARTIALUPDATEOBJECT and create_if_not_exists or Action.PARTIALUPDATEOBJECTNOCREATE)
 
