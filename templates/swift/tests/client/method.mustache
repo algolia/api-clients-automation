@@ -1,4 +1,4 @@
-let response = {{#isAsync}}try await {{/isAsync}}client{{#path}}.{{.}}{{#isAsync}}WithHTTPInfo{{/isAsync}}{{/path}}(
+let response = try {{#isAsync}}await {{/isAsync}}client{{#path}}.{{.}}{{#isAsync}}WithHTTPInfo{{/isAsync}}{{/path}}(
 {{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}},{{/-last}}
 {{/parametersWithDataType}}{{#requestOptions.parametersWithDataType}}{{#-first}}, requestOptions: RequestOptions({{/-first}}
 {{> tests/generateParams }}{{^-last}},{{/-last}}
@@ -11,4 +11,7 @@ let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from:
 {{^useEchoRequester}}
 let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)
 {{/useEchoRequester}}
+{{/isHelper}}
+{{#isHelper}}
+let responseBodyJSON = response
 {{/isHelper}}

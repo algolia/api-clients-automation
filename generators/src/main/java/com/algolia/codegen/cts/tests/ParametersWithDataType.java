@@ -256,12 +256,6 @@ public class ParametersWithDataType {
   private void handleEnum(Object param, Map<String, Object> testOutput) {
     testOutput.put("isEnum", true);
     testOutput.put("value", param);
-
-    if (language.equals("swift")) {
-      testOutput.put("valueEscaped", ((String) param).contains("-") ? Helpers.camelize((String) param) : param);
-    } else {
-      testOutput.put("valueEscaped", param + "_");
-    }
   }
 
   private void handleModel(
