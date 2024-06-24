@@ -8,8 +8,7 @@
         "parameters": {
           "appId": "my-app-id",
           "apiKey": "my-api-key"
-        },
-        "expected": {}
+        }
       },
       {
         "type": "method",

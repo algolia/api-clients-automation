@@ -376,6 +376,7 @@ paths:
       x-cacheable: true
       x-acl:
         - search
+      x-legacy-signature-recommend: true
       summary: Retrieve recommendations
       description: |
         Retrieves recommendations from selected AI models.

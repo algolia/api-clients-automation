@@ -90,5 +90,12 @@ export async function runCts(languages: Language[], clients: string[]): Promise<
         `Expected ${languages.length} timeout(s), got ${getTimeoutCounter()} instead.`,
       );
     }
+
+    // uncomment this once all languages are supported
+    // if (languages.length !== numberOfSuccessfulReplaceAllObjectsCalls()) {
+    //   throw new Error(
+    //     `Expected ${languages.length} call to replaceAllObjects, got ${numberOfSuccessfulReplaceAllObjectsCalls()} instead.`,
+    //   );
+    // }
   }
 }

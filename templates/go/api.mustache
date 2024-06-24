@@ -109,21 +109,11 @@ func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/s
 {{/allParams}}
 {{/hasParams}}
 /*
-{{operationId}} Wraps {{nickname}}WithContext using context.Background.
+{{operationId}} calls the API and returns the raw response from it.
 {{> operation_description}}
-func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...Option) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
-  return c.{{nickname}}WithContext(context.Background(), {{#hasParams}}r,{{/hasParams}} opts...)
-}
-
-/*
-{{operationId}}
-{{> operation_description}}
-func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...Option) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
+func (c *APIClient) {{nickname}}WithHTTPInfo(ctx context.Context, {{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...Option) (*http.Response, []byte, error) {
 	var (
     postBody     any
-		{{#returnType}}
-		returnValue  {{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}
-		{{/returnType}}
 	)
 
   {{#vendorExtensions}}
@@ -137,49 +127,49 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 	{{#required}}
   {{#isString}}
 	if r.{{paramName}} == "" { 
-    return {{#returnType}}returnValue, {{/returnType}}reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
+    return nil, nil, reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
   }{{/isString}}{{#isContainer}}
   if len(r.{{paramName}}) == 0 { 
-    return {{#returnType}}returnValue, {{/returnType}}reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
+    return nil, nil, reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
   }{{/isContainer}}{{#isMap}}
   if len(r.{{paramName}}) == 0 { 
-    return {{#returnType}}returnValue, {{/returnType}}reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
+    return nil, nil, reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
   }{{/isMap}}{{^isPrimitiveType}}{{^isContainer}}{{^isMap}}{{^isEnumRef}}
   if r.{{paramName}} == nil {
-	  return {{#returnType}}returnValue, {{/returnType}}reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
+	  return nil, nil, reportError("Parameter `{{paramName}}` is required when calling `{{operationId}}`.")
 	}{{/isEnumRef}}{{/isMap}}{{/isContainer}}{{/isPrimitiveType}}
 	{{#minItems}}
 	if len({{^isPathParam}}*{{/isPathParam}}r.{{paramName}}) < {{minItems}} {
-		return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} must have at least {{minItems}} elements")
+		return nil, nil, reportError("{{paramName}} must have at least {{minItems}} elements")
 	}
 	{{/minItems}}
 	{{#maxItems}}
 	if len({{^isPathParam}}*{{/isPathParam}}r.{{paramName}}) > {{maxItems}} {
-		return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} must have less than {{maxItems}} elements")
+		return nil, nil, reportError("{{paramName}} must have less than {{maxItems}} elements")
 	}
 	{{/maxItems}}
 	{{#minLength}}
 	if len({{^isPathParam}}*{{/isPathParam}}r.{{paramName}}) < {{minLength}} {
-		return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} must have at least {{minLength}} elements")
+		return nil, nil, reportError("{{paramName}} must have at least {{minLength}} elements")
 	}
 	{{/minLength}}
 	{{#maxLength}}
 	if len({{^isPathParam}}*{{/isPathParam}}r.{{paramName}}) > {{maxLength}} {
-		return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} must have less than {{maxLength}} elements")
+		return nil, nil, reportError("{{paramName}} must have less than {{maxLength}} elements")
 	}
 	{{/maxLength}}
 	{{#minimum}}
 	{{^isString}}
 	if {{^isPathParam}}*{{/isPathParam}}r.{{paramName}} < {{minimum}} {
 	{{/isString}}
-		return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} must be greater than {{minimum}}")
+		return nil, nil, reportError("{{paramName}} must be greater than {{minimum}}")
 	}
 	{{/minimum}}
 	{{#maximum}}
 	{{^isString}}
 	if {{^isPathParam}}*{{/isPathParam}}r.{{paramName}} > {{maximum}} {
 	{{/isString}}
-		return {{#returnType}}returnValue, {{/returnType}}reportError("{{paramName}} must be less than {{maximum}}")
+		return nil, nil, reportError("{{paramName}} must be less than {{maximum}}")
 	}
 	{{/maximum}}
 	{{/required}}
@@ -237,11 +227,29 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
 {{/bodyParams}}
 	req, err := c.prepareRequest(ctx, requestPath, http.Method{{httpMethod}}, postBody, headers, queryParams)
 	if err != nil {
-		return {{#returnType}}returnValue, {{/returnType}}err
+		return nil, nil, err
 	}
 
-	res, resBody, err := c.callAPI(req, {{#vendorExtensions}}{{#x-use-read-transporter}}true{{/x-use-read-transporter}}{{^x-use-read-transporter}}false{{/x-use-read-transporter}}{{/vendorExtensions}})
-	if err != nil {
+	return c.callAPI(req, {{#vendorExtensions}}{{#x-use-read-transporter}}true{{/x-use-read-transporter}}{{^x-use-read-transporter}}false{{/x-use-read-transporter}}{{/vendorExtensions}})
+}
+
+/*
+{{operationId}} wraps {{nickname}}WithContext using context.Background.
+{{> operation_description}}
+func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...Option) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
+  return c.{{nickname}}WithContext(context.Background(), {{#hasParams}}r,{{/hasParams}} opts...)
+}
+
+/*
+{{operationId}} casts the HTTP response body to a defined struct.
+{{> operation_description}}
+func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...Option) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
+  {{#returnType}}
+    var returnValue  {{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}
+  {{/returnType}}
+
+  res, resBody, err := c.{{nickname}}WithHTTPInfo(ctx{{#hasParams}}, r{{/hasParams}}, opts...)
+  if err != nil {
 		return {{#returnType}}returnValue, {{/returnType}}err
 	}
   if res == nil {
@@ -253,7 +261,7 @@ func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r
       Message: string(resBody),
 			Status: res.StatusCode,
 		}
-		
+
     var v ErrorBase
     err = c.decode(&v, resBody)
     if err != nil {

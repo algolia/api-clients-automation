@@ -1,3 +1,7 @@
+## [1.14.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.13.0...1.14.0)
+
+- [07e074806](https://github.com/algolia/api-clients-automation/commit/07e074806) feat(clients): add recommend to algoliasearch ([#2860](https://github.com/algolia/api-clients-automation/pull/2860)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [1.13.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.12.0...1.13.0)
 
 - [b7ae19f2b](https://github.com/algolia/api-clients-automation/commit/b7ae19f2b) feat(specs): add transformations endpoints to ingestion ([#3215](https://github.com/algolia/api-clients-automation/pull/3215)) by [@shortcuts](https://github.com/shortcuts/)
