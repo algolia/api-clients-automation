@@ -2,7 +2,10 @@
   "name": "@algolia/client-insights",
   "version": "5.0.0-beta.4",
   "description": "JavaScript client for client-insights",
-  "repository": "algolia/algoliasearch-client-javascript",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
+  },
   "license": "MIT",
   "author": "Algolia",
   "type": "module",
@@ -39,14 +42,14 @@
     "clean": "rm -rf ./dist || true"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-beta.4",
-    "@algolia/requester-browser-xhr": "5.0.0-beta.4",
-    "@algolia/requester-node-http": "5.0.0-beta.4"
+    "@algolia/client-common": "5.0.0-beta.5",
+    "@algolia/requester-browser-xhr": "5.0.0-beta.5",
+    "@algolia/requester-node-http": "5.0.0-beta.5"
   },
   "devDependencies": {
-    "@types/node": "20.14.2",
+    "@types/node": "20.14.8",
     "rollup": "4.18.0",
-    "typescript": "5.4.5"
+    "typescript": "5.5.2"
   },
   "engines": {
     "node": ">= 14.0.0"

@@ -155,6 +155,7 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
       additionalProperties.put("abtestingVersion", Helpers.getPackageJsonVersion("client-abtesting"));
       additionalProperties.put("personalizationVersion", Helpers.getPackageJsonVersion("client-personalization"));
       additionalProperties.put("searchVersion", Helpers.getPackageJsonVersion("client-search"));
+      additionalProperties.put("recommendVersion", Helpers.getPackageJsonVersion("recommend"));
 
       // Files used to generate the `lite` client
       apiName = "lite" + Helpers.API_SUFFIX;
@@ -185,7 +186,6 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     setDefaultGeneratorOptions();
     try {
       additionalProperties.put("utilsPackageVersion", Helpers.getPackageJsonVersion("client-common"));
-      additionalProperties.put("npmNamespace", Helpers.getClientConfigField("javascript", "npmNamespace"));
     } catch (GeneratorException e) {
       e.printStackTrace();
       System.exit(1);

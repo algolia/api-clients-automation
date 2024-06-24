@@ -1,3 +1,11 @@
+function initRecommend(initOptions: InitClientOptions = {}): RecommendClient {
+  return createRecommendClient({
+    ...commonOptions,
+    ...initOptions.options,
+    ...initOptions,
+  });
+}
+
 function initAnalytics(initOptions: InitClientOptions & InitClientRegion<AnalyticsRegion> = {}): AnalyticsClient {
   if (
     initOptions.region &&

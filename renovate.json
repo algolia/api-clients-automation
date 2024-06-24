@@ -16,7 +16,8 @@
     "gomod",
     "pip_requirements",
     "gradle-wrapper",
-    "bundler"
+    "bundler",
+    "sbt"
   ],
   "baseBranches": [
     "chore/renovateBaseBranch"
