@@ -43,8 +43,7 @@
           "appId": "my-app-id",
           "apiKey": "my-api-key",
           "region": "us"
-        },
-        "expected": {}
+        }
       }
     ]
   }

@@ -8,8 +8,7 @@
         "parameters": {
           "appId": "test-app-id",
           "apiKey": "test-api-key"
-        },
-        "expected": {}
+        }
       },
       {
         "type": "method",
@@ -34,8 +33,7 @@
         "parameters": {
           "appId": "test-app-id",
           "apiKey": "test-api-key"
-        },
-        "expected": {}
+        }
       },
       {
         "type": "method",
