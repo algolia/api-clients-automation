@@ -6312,6 +6312,26 @@ public class SearchClient extends ApiClient {
    * @throws AlgoliaApiException When the API sends an http error code
    * @throws AlgoliaRuntimeException When an error occurred during the serialization
    */
+  public <T> ReplaceAllObjectsResponse replaceAllObjects(String indexName, Iterable<T> objects, int batchSize) {
+    return replaceAllObjects(indexName, objects, batchSize, null);
+  }
+
+  /**
+   * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
+   * untouched. Replace all records in an index without any downtime. See
+   * https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for
+   * implementation details.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param batchSize The size of the chunk of `objects`. The number of `batch` calls will be equal
+   *     to `length(objects) / batchSize`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   * @throws AlgoliaRetryException When the retry has failed on all hosts
+   * @throws AlgoliaApiException When the API sends an http error code
+   * @throws AlgoliaRuntimeException When an error occurred during the serialization
+   */
   public <T> ReplaceAllObjectsResponse replaceAllObjects(
     String indexName,
     Iterable<T> objects,

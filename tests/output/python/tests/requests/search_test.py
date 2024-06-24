@@ -2,16 +2,12 @@
 from time import time
 from os import environ
 from json import loads
-from unittest.mock import AsyncMock
 from algoliasearch.http.transporter import EchoTransporter
 from algoliasearch.search.models.secured_api_key_restrictions import (
     SecuredApiKeyRestrictions,
 )
 from algoliasearch.search.client import SearchClient
 from algoliasearch.search.config import SearchConfig
-from algoliasearch.search.models.batch_response import BatchResponse
-from algoliasearch.search.models.updated_at_response import UpdatedAtResponse
-from algoliasearch.search.models.get_task_response import GetTaskResponse
 from ..helpers import Helpers
 from dotenv import load_dotenv
 
@@ -3461,113 +3457,3 @@ class TestSearchClient:
             assert False
         except Exception as e:
             assert str(e) == "Incorrect padding"
-
-    async def test_replace_all_objects_0(self):
-        """
-        executes with minimal parameters
-        """
-        self._client.batch = AsyncMock(
-            return_value=BatchResponse(task_id=42, object_ids=["foo", "bar"])
-        )
-        self._client.operation_index = AsyncMock(
-            return_value=UpdatedAtResponse(task_id=21, updated_at="foobar")
-        )
-        self._client.get_task = AsyncMock(
-            return_value=GetTaskResponse(status="published")
-        )
-        _resp = await self._client.replace_all_objects(
-            index_name="foo", objects=[{"name": "John Doe"}]
-        )
-        self._client.operation_index.assert_called()
-        self._client.batch.assert_called()
-        self._client.operation_index.assert_called()
-        assert _resp == {
-            "batch_responses": [BatchResponse(task_id=42, object_ids=["foo", "bar"])],
-            "copy_operation_response": UpdatedAtResponse(
-                task_id=21, updated_at="foobar"
-            ),
-            "move_operation_response": UpdatedAtResponse(
-                task_id=21, updated_at="foobar"
-            ),
-        }
-
-    async def test_replace_all_objects_1(self):
-        """
-        does many calls when len(objects) > batchSize
-        """
-        self._client.batch = AsyncMock(
-            return_value=BatchResponse(task_id=42, object_ids=["foo", "bar"])
-        )
-        self._client.operation_index = AsyncMock(
-            return_value=UpdatedAtResponse(task_id=21, updated_at="foobar")
-        )
-        self._client.get_task = AsyncMock(
-            return_value=GetTaskResponse(status="published")
-        )
-        _resp = await self._client.replace_all_objects(
-            index_name="foo",
-            objects=[
-                {
-                    "name": f"John Doe{i}",
-                    "objectID": f"fff2bd4d-bb17-4e21-a0c4-0a8ea5e363f2{i}",
-                }
-                for i in range(33)
-            ],
-            batch_size=10,
-        )
-        self._client.operation_index.assert_called()
-        self._client.batch.assert_called()
-        self._client.operation_index.assert_called()
-        assert _resp == {
-            "batch_responses": [
-                BatchResponse(task_id=42, object_ids=["foo", "bar"]),
-                BatchResponse(task_id=42, object_ids=["foo", "bar"]),
-                BatchResponse(task_id=42, object_ids=["foo", "bar"]),
-                BatchResponse(task_id=42, object_ids=["foo", "bar"]),
-            ],
-            "copy_operation_response": UpdatedAtResponse(
-                task_id=21, updated_at="foobar"
-            ),
-            "move_operation_response": UpdatedAtResponse(
-                task_id=21, updated_at="foobar"
-            ),
-        }
-
-    async def test_replace_all_objects_2(self):
-        """
-        batchSize is 1000 by default
-        """
-        self._client.batch = AsyncMock(
-            return_value=BatchResponse(task_id=42, object_ids=["foo", "bar"])
-        )
-        self._client.operation_index = AsyncMock(
-            return_value=UpdatedAtResponse(task_id=21, updated_at="foobar")
-        )
-        self._client.get_task = AsyncMock(
-            return_value=GetTaskResponse(status="published")
-        )
-        _resp = await self._client.replace_all_objects(
-            index_name="foo",
-            objects=[
-                {
-                    "name": f"John Doe{i}",
-                    "objectID": f"fff2bd4d-bb17-4e21-a0c4-0a8ea5e363f2{i}",
-                }
-                for i in range(1001)
-            ],
-        )
-        self._client.operation_index.assert_called()
-        self._client.batch.assert_called()
-        self._client.operation_index.assert_called()
-        assert _resp == {
-            "batch_responses": [
-                BatchResponse(task_id=42, object_ids=["foo", "bar"]),
-                BatchResponse(task_id=42, object_ids=["foo", "bar"]),
-            ],
-            "copy_operation_response": UpdatedAtResponse(
-                task_id=21, updated_at="foobar"
-            ),
-            "move_operation_response": UpdatedAtResponse(
-                task_id=21, updated_at="foobar"
-            ),
-        }

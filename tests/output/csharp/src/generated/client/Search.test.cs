@@ -202,6 +202,51 @@ public class SearchClientTests
     );
   }
 
+  [Fact(DisplayName = "call replaceAllObjects without error")]
+  public async Task HelpersTest2()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6679,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.ReplaceAllObjectsAsync(
+      "cts_e2e_replace_all_objects_Csharp",
+      new List<Object>
+      {
+        new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } },
+        new Dictionary<string, string> { { "objectID", "3" }, { "name", "Cyril" } },
+        new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } },
+        new Dictionary<string, string> { { "objectID", "5" }, { "name", "Eva" } },
+        new Dictionary<string, string> { { "objectID", "6" }, { "name", "Fiona" } },
+        new Dictionary<string, string> { { "objectID", "7" }, { "name", "Gael" } },
+        new Dictionary<string, string> { { "objectID", "8" }, { "name", "Hugo" } },
+        new Dictionary<string, string> { { "objectID", "9" }, { "name", "Igor" } },
+        new Dictionary<string, string> { { "objectID", "10" }, { "name", "Julia" } }
+      },
+      3
+    );
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"batchResponses\":[{\"taskID\":127,\"objectIDs\":[\"1\",\"2\",\"3\"]},{\"taskID\":130,\"objectIDs\":[\"4\",\"5\",\"6\"]},{\"taskID\":133,\"objectIDs\":[\"7\",\"8\",\"9\"]},{\"taskID\":134,\"objectIDs\":[\"10\"]}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "client throws with invalid parameters")]
   public async Task ParametersTest0()
   {
