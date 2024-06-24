@@ -84,6 +84,7 @@ async function spreadGeneration(): Promise<void> {
       const clientPath = toAbsolutePath(getLanguageFolder(lang));
       await emptyDirExceptForDotGit(tempGitDir);
       await copy(clientPath, tempGitDir, { preserveTimestamps: true });
+      await run("find . -name  '.openapi-generator*' | xargs -I{} rm -rf {}");
 
       if (
         (await getNbGitDiff({
