@@ -43,7 +43,10 @@ export type Language = keyof typeof config;
 export type Spec = {
   servers: Server[];
   tags: Tag[];
-  paths: Path[];
+  paths: Path;
+  components: {
+    schemas: Record<string, any>;
+  };
 };
 
 /**
