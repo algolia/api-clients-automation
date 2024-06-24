@@ -111,3 +111,36 @@ func CreateIterable[T any](
 
 	return executor(nil, nil)
 }
+
+func ExtractResponse[T any](c *APIClient, res *http.Response, resBody []byte, err error) (*T, error) {
+  var returnValue *T
+  if err != nil {
+    return returnValue, err
+  }
+  if res == nil {
+    return returnValue, reportError("res is nil")
+  }
+
+  if res.StatusCode >= 300 {
+    newErr := &APIError{
+      Message: string(resBody),
+      Status:  res.StatusCode,
+    }
+
+    var v ErrorBase
+    err = c.decode(&v, resBody)
+    if err != nil {
+      newErr.Message = err.Error()
+      return returnValue, newErr
+    }
+
+    return returnValue, newErr
+  }
+
+  err = c.decode(&returnValue, resBody)
+  if err != nil {
+    return returnValue, reportError("cannot decode result: %w", err)
+  }
+
+  return returnValue, nil
+}
