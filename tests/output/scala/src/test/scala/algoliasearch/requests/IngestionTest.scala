@@ -234,6 +234,26 @@ class IngestionTest extends AnyFunSuite {
     assert(actualBody == expectedBody)
   }
 
+  test("createTransformation") {
+    val (client, echo) = testClient()
+    val future = client.createTransformation(
+      transformationCreate = TransformationCreate(
+        code = "foo",
+        name = "bar",
+        description = "baz"
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/transformations")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"code":"foo","name":"bar","description":"baz"}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("allow del method for a custom path with minimal parameters") {
     val (client, echo) = testClient()
     val future = client.customDelete[JObject](
@@ -775,6 +795,20 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
+  test("deleteTransformation") {
+    val (client, echo) = testClient()
+    val future = client.deleteTransformation(
+      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "DELETE")
+    assert(res.body.isEmpty)
+  }
+
   test("disableTask") {
     val (client, echo) = testClient()
     val future = client.disableTask(
@@ -1029,6 +1063,33 @@ class IngestionTest extends AnyFunSuite {
     assert(res.body.isEmpty)
   }
 
+  test("getTransformation") {
+    val (client, echo) = testClient()
+    val future = client.getTransformation(
+      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
+  test("getTransformations") {
+    val (client, echo) = testClient()
+    val future = client.getTransformations(
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/transformations")
+    assert(res.method == "GET")
+    assert(res.body.isEmpty)
+  }
+
   test("runTask") {
     val (client, echo) = testClient()
     val future = client.runTask(
@@ -1141,6 +1202,30 @@ class IngestionTest extends AnyFunSuite {
     )
   }
 
+  test("searchTransformations") {
+    val (client, echo) = testClient()
+    val future = client.searchTransformations(
+      transformationSearch = TransformationSearch(
+        transformationsIDs = Seq(
+          "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+          "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+        )
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/transformations/search")
+    assert(res.method == "POST")
+    val expectedBody = parse(
+      """{"transformationsIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}"""
+    )
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
   test("triggerDockerSourceDiscover") {
     val (client, echo) = testClient()
     val future = client.triggerDockerSourceDiscover(
@@ -1153,6 +1238,25 @@ class IngestionTest extends AnyFunSuite {
     assert(res.path == "/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover")
     assert(res.method == "POST")
     assert(res.body.contains("{}"))
+  }
+
+  test("tryTransformations") {
+    val (client, echo) = testClient()
+    val future = client.tryTransformations(
+      transformationTry = TransformationTry(
+        code = "foo",
+        sampleRecord = JObject(List(JField("bar", JString("baz"))))
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/transformations/try")
+    assert(res.method == "POST")
+    val expectedBody = parse("""{"code":"foo","sampleRecord":{"bar":"baz"}}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
   }
 
   test("updateAuthentication") {
@@ -1227,6 +1331,27 @@ class IngestionTest extends AnyFunSuite {
     assert(res.path == "/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
     assert(res.method == "PATCH")
     val expectedBody = parse("""{"enabled":false}""")
+    val actualBody = parse(res.body.get)
+    assert(actualBody == expectedBody)
+  }
+
+  test("updateTransformation") {
+    val (client, echo) = testClient()
+    val future = client.updateTransformation(
+      transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      transformationCreate = TransformationCreate(
+        code = "foo",
+        name = "bar",
+        description = "baz"
+      )
+    )
+
+    Await.ready(future, Duration.Inf)
+    val res = echo.lastResponse.get
+
+    assert(res.path == "/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+    assert(res.method == "PUT")
+    val expectedBody = parse("""{"code":"foo","name":"bar","description":"baz"}""")
     val actualBody = parse(res.body.get)
     assert(actualBody == expectedBody)
   }

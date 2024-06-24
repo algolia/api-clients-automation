@@ -18,7 +18,7 @@ use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
  */
 class IngestionClient
 {
-    public const VERSION = '4.0.0-beta.4';
+    public const VERSION = '4.0.0-beta.5';
 
     /**
      * @var ApiWrapperInterface
@@ -218,6 +218,7 @@ class IngestionClient
      *                          - $taskCreate['enabled'] => (bool) Whether the task is enabled.
      *                          - $taskCreate['failureThreshold'] => (int) Maximum accepted percentage of failures for a task run to finish successfully.
      *                          - $taskCreate['input'] => (array)
+     *                          - $taskCreate['cursor'] => (string) Date of the last cursor in RFC 3339 format.
      *
      * @see \Algolia\AlgoliaSearch\Model\Ingestion\TaskCreate
      *
@@ -238,6 +239,37 @@ class IngestionClient
         $queryParameters = [];
         $headers = [];
         $httpBody = $taskCreate;
+
+        return $this->sendRequest('POST', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
+    }
+
+    /**
+     * Creates a new transformation.
+     *
+     * @param array $transformationCreate Request body for creating a transformation. (required)
+     *                                    - $transformationCreate['code'] => (string) The source code of the transformation. (required)
+     *                                    - $transformationCreate['name'] => (string) The uniquely identified name of your transformation. (required)
+     *                                    - $transformationCreate['description'] => (string) A descriptive name for your transformation of what it does. (required)
+     *
+     * @see \Algolia\AlgoliaSearch\Model\Ingestion\TransformationCreate
+     *
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     *
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\TransformationCreateResponse|array<string, mixed>
+     */
+    public function createTransformation($transformationCreate, $requestOptions = [])
+    {
+        // verify the required parameter 'transformationCreate' is set
+        if (!isset($transformationCreate)) {
+            throw new \InvalidArgumentException(
+                'Parameter `transformationCreate` is required when calling `createTransformation`.'
+            );
+        }
+
+        $resourcePath = '/1/transformations';
+        $queryParameters = [];
+        $headers = [];
+        $httpBody = $transformationCreate;
 
         return $this->sendRequest('POST', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
     }
@@ -544,6 +576,40 @@ class IngestionClient
             $resourcePath = str_replace(
                 '{taskID}',
                 ObjectSerializer::toPathValue($taskID),
+                $resourcePath
+            );
+        }
+
+        return $this->sendRequest('DELETE', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
+    }
+
+    /**
+     * Deletes a transformation by its ID.
+     *
+     * @param string $transformationID Unique identifier of a transformation. (required)
+     * @param array  $requestOptions   the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     *
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\DeleteResponse|array<string, mixed>
+     */
+    public function deleteTransformation($transformationID, $requestOptions = [])
+    {
+        // verify the required parameter 'transformationID' is set
+        if (!isset($transformationID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `transformationID` is required when calling `deleteTransformation`.'
+            );
+        }
+
+        $resourcePath = '/1/transformations/{transformationID}';
+        $queryParameters = [];
+        $headers = [];
+        $httpBody = null;
+
+        // path params
+        if (null !== $transformationID) {
+            $resourcePath = str_replace(
+                '{transformationID}',
+                ObjectSerializer::toPathValue($transformationID),
                 $resourcePath
             );
         }
@@ -1339,6 +1405,77 @@ class IngestionClient
     }
 
     /**
+     * Retrieves a transformation by its ID.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
+     *
+     * @param string $transformationID Unique identifier of a transformation. (required)
+     * @param array  $requestOptions   the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     *
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\Transformation|array<string, mixed>
+     */
+    public function getTransformation($transformationID, $requestOptions = [])
+    {
+        // verify the required parameter 'transformationID' is set
+        if (!isset($transformationID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `transformationID` is required when calling `getTransformation`.'
+            );
+        }
+
+        $resourcePath = '/1/transformations/{transformationID}';
+        $queryParameters = [];
+        $headers = [];
+        $httpBody = null;
+
+        // path params
+        if (null !== $transformationID) {
+            $resourcePath = str_replace(
+                '{transformationID}',
+                ObjectSerializer::toPathValue($transformationID),
+                $resourcePath
+            );
+        }
+
+        return $this->sendRequest('GET', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
+    }
+
+    /**
+     * Retrieves a list of transformations.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
+     *
+     * @param array $sort           Property by which to sort the list. (optional)
+     * @param array $order          Sort order of the response, ascending or descending. (optional)
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     *
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\ListTransformationsResponse|array<string, mixed>
+     */
+    public function getTransformations($sort = null, $order = null, $requestOptions = [])
+    {
+        $resourcePath = '/1/transformations';
+        $queryParameters = [];
+        $headers = [];
+        $httpBody = null;
+
+        if (null !== $sort) {
+            $queryParameters['sort'] = $sort;
+        }
+
+        if (null !== $order) {
+            $queryParameters['order'] = $order;
+        }
+
+        return $this->sendRequest('GET', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
+    }
+
+    /**
      * Runs a task. You can check the status of task runs with the observability endpoints.
      *
      * Required API Key ACLs:
@@ -1514,6 +1651,40 @@ class IngestionClient
     }
 
     /**
+     * Searches for transformations.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
+     *
+     * @param array $transformationSearch transformationSearch (required)
+     *                                    - $transformationSearch['transformationsIDs'] => (array)  (required)
+     *
+     * @see \Algolia\AlgoliaSearch\Model\Ingestion\TransformationSearch
+     *
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     *
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\Transformation[]|array<string, mixed>
+     */
+    public function searchTransformations($transformationSearch, $requestOptions = [])
+    {
+        // verify the required parameter 'transformationSearch' is set
+        if (!isset($transformationSearch)) {
+            throw new \InvalidArgumentException(
+                'Parameter `transformationSearch` is required when calling `searchTransformations`.'
+            );
+        }
+
+        $resourcePath = '/1/transformations/search';
+        $queryParameters = [];
+        $headers = [];
+        $httpBody = $transformationSearch;
+
+        return $this->sendRequest('POST', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
+    }
+
+    /**
      * Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.
      *
      * Required API Key ACLs:
@@ -1548,6 +1719,41 @@ class IngestionClient
                 $resourcePath
             );
         }
+
+        return $this->sendRequest('POST', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
+    }
+
+    /**
+     * Searches for transformations.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
+     *
+     * @param array $transformationTry transformationTry (required)
+     *                                 - $transformationTry['code'] => (string) The source code of the transformation. (required)
+     *                                 - $transformationTry['sampleRecord'] => (array) The record to apply the given code to. (required)
+     *
+     * @see \Algolia\AlgoliaSearch\Model\Ingestion\TransformationTry
+     *
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     *
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\TransformationTryResponse|array<string, mixed>
+     */
+    public function tryTransformations($transformationTry, $requestOptions = [])
+    {
+        // verify the required parameter 'transformationTry' is set
+        if (!isset($transformationTry)) {
+            throw new \InvalidArgumentException(
+                'Parameter `transformationTry` is required when calling `tryTransformations`.'
+            );
+        }
+
+        $resourcePath = '/1/transformations/try';
+        $queryParameters = [];
+        $headers = [];
+        $httpBody = $transformationTry;
 
         return $this->sendRequest('POST', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
     }
@@ -1757,6 +1963,53 @@ class IngestionClient
         }
 
         return $this->sendRequest('PATCH', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
+    }
+
+    /**
+     * Updates a transformation by its ID.
+     *
+     * @param string $transformationID     Unique identifier of a transformation. (required)
+     * @param array  $transformationCreate transformationCreate (required)
+     *                                     - $transformationCreate['code'] => (string) The source code of the transformation. (required)
+     *                                     - $transformationCreate['name'] => (string) The uniquely identified name of your transformation. (required)
+     *                                     - $transformationCreate['description'] => (string) A descriptive name for your transformation of what it does. (required)
+     *
+     * @see \Algolia\AlgoliaSearch\Model\Ingestion\TransformationCreate
+     *
+     * @param array $requestOptions the requestOptions to send along with the query, they will be merged with the transporter requestOptions
+     *
+     * @return \Algolia\AlgoliaSearch\Model\Ingestion\TransformationUpdateResponse|array<string, mixed>
+     */
+    public function updateTransformation($transformationID, $transformationCreate, $requestOptions = [])
+    {
+        // verify the required parameter 'transformationID' is set
+        if (!isset($transformationID)) {
+            throw new \InvalidArgumentException(
+                'Parameter `transformationID` is required when calling `updateTransformation`.'
+            );
+        }
+        // verify the required parameter 'transformationCreate' is set
+        if (!isset($transformationCreate)) {
+            throw new \InvalidArgumentException(
+                'Parameter `transformationCreate` is required when calling `updateTransformation`.'
+            );
+        }
+
+        $resourcePath = '/1/transformations/{transformationID}';
+        $queryParameters = [];
+        $headers = [];
+        $httpBody = $transformationCreate;
+
+        // path params
+        if (null !== $transformationID) {
+            $resourcePath = str_replace(
+                '{transformationID}',
+                ObjectSerializer::toPathValue($transformationID),
+                $resourcePath
+            );
+        }
+
+        return $this->sendRequest('PUT', $resourcePath, $headers, $queryParameters, $httpBody, $requestOptions);
     }
 
     /**

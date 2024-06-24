@@ -129,6 +129,11 @@ tags:
       stored in a destination.
 
       Tasks have _triggers_ which determine when the task should run.
+  - name: transformations
+    x-displayName: Transformations
+    description: >
+      Transformations allows you to transform a record before it gets indexed in
+      Algolia.
 paths:
   /{path}:
     get:
@@ -1045,6 +1050,181 @@ paths:
                 $ref: '#/components/schemas/TaskUpdateResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
+  /1/transformations:
+    get:
+      tags:
+        - ingestion
+      summary: List transformations
+      description: Retrieves a list of transformations.
+      operationId: getTransformations
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      parameters:
+        - $ref: '#/components/parameters/parameters_sort'
+        - $ref: '#/components/parameters/order'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: listTransformationsResponse
+                type: object
+                description: Configured transformations and pagination information.
+                additionalProperties: false
+                properties:
+                  transformations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Transformation'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                required:
+                  - transformations
+                  - pagination
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    post:
+      tags:
+        - ingestion
+      summary: Create a transformation
+      description: Creates a new transformation.
+      operationId: createTransformation
+      requestBody:
+        description: Request body for creating a transformation.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransformationCreate'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformationCreateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /1/transformations/try:
+    post:
+      tags:
+        - ingestion
+      summary: Search for transformations
+      description: Searches for transformations.
+      operationId: tryTransformations
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransformationTry'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformationTryResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /1/transformations/search:
+    post:
+      tags:
+        - ingestion
+      summary: Search for transformations
+      description: Searches for transformations.
+      operationId: searchTransformations
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransformationSearch'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: searchTransformationsResponse
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transformation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /1/transformations/{transformationID}:
+    get:
+      tags:
+        - ingestion
+      summary: Retrieve a transformation
+      description: Retrieves a transformation by its ID.
+      operationId: getTransformation
+      x-acl:
+        - addObject
+        - deleteIndex
+        - editSettings
+      parameters:
+        - $ref: '#/components/parameters/pathTransformationID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transformation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    put:
+      tags:
+        - ingestion
+      summary: Update a transformation
+      description: Updates a transformation by its ID.
+      operationId: updateTransformation
+      parameters:
+        - $ref: '#/components/parameters/pathTransformationID'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransformationCreate'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransformationUpdateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+    delete:
+      tags:
+        - ingestion
+      summary: Delete a transformation
+      description: Deletes a transformation by its ID.
+      operationId: deleteTransformation
+      parameters:
+        - $ref: '#/components/parameters/pathTransformationID'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
   /1/runs:
     get:
       tags:
@@ -1430,6 +1610,20 @@ components:
       description: Unique identifier of a task.
       schema:
         $ref: '#/components/schemas/taskID'
+    parameters_sort:
+      name: sort
+      in: query
+      description: Property by which to sort the list.
+      required: false
+      schema:
+        $ref: '#/components/schemas/sortKeys'
+    pathTransformationID:
+      name: transformationID
+      in: path
+      required: true
+      description: Unique identifier of a transformation.
+      schema:
+        $ref: '#/components/schemas/transformationID'
     runStatus:
       name: status
       in: query
@@ -3029,6 +3223,9 @@ components:
       description: >-
         Maximum accepted percentage of failures for a task run to finish
         successfully.
+    cursor:
+      type: string
+      description: Date of the last cursor in RFC 3339 format.
     Task:
       type: object
       additionalProperties: false
@@ -3051,6 +3248,8 @@ components:
           $ref: '#/components/schemas/failureThreshold'
         action:
           $ref: '#/components/schemas/ActionType'
+        cursor:
+          $ref: '#/components/schemas/cursor'
         createdAt:
           $ref: '#/components/schemas/createdAt'
         updatedAt:
@@ -3112,6 +3311,8 @@ components:
           $ref: '#/components/schemas/failureThreshold'
         input:
           $ref: '#/components/schemas/TaskInput'
+        cursor:
+          $ref: '#/components/schemas/cursor'
       required:
         - sourceID
         - destinationID
@@ -3188,6 +3389,132 @@ components:
       required:
         - runID
         - createdAt
+    sortKeys:
+      type: string
+      description: Property by which to sort the list.
+      default: desc
+      enum:
+        - name
+        - type
+        - updatedAt
+        - createdAt
+    transformationID:
+      type: string
+      description: Universally unique identifier (UUID) of a transformation.
+      example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
+    Code:
+      type: string
+      description: The source code of the transformation.
+    Name:
+      type: string
+      description: The uniquely identified name of your transformation.
+    Description:
+      type: string
+      description: A descriptive name for your transformation of what it does.
+    Transformation:
+      type: object
+      additionalProperties: false
+      properties:
+        transformationID:
+          $ref: '#/components/schemas/transformationID'
+        code:
+          $ref: '#/components/schemas/Code'
+        name:
+          $ref: '#/components/schemas/Name'
+        description:
+          $ref: '#/components/schemas/Description'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+      required:
+        - transformationID
+        - code
+        - name
+        - description
+        - createdAt
+    TransformationCreate:
+      type: object
+      additionalProperties: false
+      description: API request body for creating a transformation.
+      properties:
+        code:
+          $ref: '#/components/schemas/Code'
+        name:
+          $ref: '#/components/schemas/Name'
+        description:
+          $ref: '#/components/schemas/Description'
+      required:
+        - code
+        - name
+        - description
+    TransformationCreateResponse:
+      type: object
+      additionalProperties: false
+      description: API response for creating a transformation.
+      properties:
+        transformationID:
+          $ref: '#/components/schemas/transformationID'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+      required:
+        - transformationID
+        - createdAt
+    TransformationTry:
+      type: object
+      additionalProperties: false
+      properties:
+        code:
+          $ref: '#/components/schemas/Code'
+        sampleRecord:
+          description: The record to apply the given code to.
+          type: object
+      required:
+        - code
+        - sampleRecord
+    TransformationTryResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        payloads:
+          type: array
+          description: The array of records returned by the transformation service.
+          items:
+            type: object
+        error:
+          type: object
+          description: The error if the transformation failed.
+          properties:
+            code:
+              description: The error status code.
+              type: integer
+            message:
+              description: A descriptive message explaining the failure.
+              type: string
+      required:
+        - payloads
+    TransformationSearch:
+      type: object
+      additionalProperties: false
+      properties:
+        transformationsIDs:
+          type: array
+          items:
+            $ref: '#/components/schemas/transformationID'
+      required:
+        - transformationsIDs
+    TransformationUpdateResponse:
+      type: object
+      description: API response for updating a transformation.
+      additionalProperties: false
+      properties:
+        transformationID:
+          $ref: '#/components/schemas/transformationID'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+      required:
+        - transformationID
+        - updatedAt
     RunStatus:
       type: string
       description: Task run status.

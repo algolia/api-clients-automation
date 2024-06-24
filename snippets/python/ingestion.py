@@ -132,6 +132,33 @@ async def snippet_for_create_task():
     # SEPARATOR<
 
 
+async def snippet_for_create_transformation():
+    """
+    Snippet for the createTransformation method.
+
+    createTransformation
+    """
+    # >SEPARATOR createTransformation default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.create_transformation(
+        transformation_create={
+            "code": "foo",
+            "name": "bar",
+            "description": "baz",
+        },
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
 async def snippet_for_custom_delete():
     """
     Snippet for the customDelete method.
@@ -306,6 +333,29 @@ async def snippet_for_delete_task():
     # Call the API
     response = await _client.delete_task(
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_delete_transformation():
+    """
+    Snippet for the deleteTransformation method.
+
+    deleteTransformation
+    """
+    # >SEPARATOR deleteTransformation default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.delete_transformation(
+        transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     )
 
     # use the class directly
@@ -629,6 +679,50 @@ async def snippet_for_get_tasks():
     # SEPARATOR<
 
 
+async def snippet_for_get_transformation():
+    """
+    Snippet for the getTransformation method.
+
+    getTransformation
+    """
+    # >SEPARATOR getTransformation default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.get_transformation(
+        transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_get_transformations():
+    """
+    Snippet for the getTransformations method.
+
+    getTransformations
+    """
+    # >SEPARATOR getTransformations default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.get_transformations()
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
 async def snippet_for_run_task():
     """
     Snippet for the runTask method.
@@ -765,6 +859,35 @@ async def snippet_for_search_tasks():
     # SEPARATOR<
 
 
+async def snippet_for_search_transformations():
+    """
+    Snippet for the searchTransformations method.
+
+    searchTransformations
+    """
+    # >SEPARATOR searchTransformations default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.search_transformations(
+        transformation_search={
+            "transformationsIDs": [
+                "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                "76ab4c2a-ce17-496f-b7a6-506dc59ee498",
+            ],
+        },
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
 async def snippet_for_trigger_docker_source_discover():
     """
     Snippet for the triggerDockerSourceDiscover method.
@@ -778,6 +901,34 @@ async def snippet_for_trigger_docker_source_discover():
     # Call the API
     response = await _client.trigger_docker_source_discover(
         source_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_try_transformations():
+    """
+    Snippet for the tryTransformations method.
+
+    tryTransformations
+    """
+    # >SEPARATOR tryTransformations default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.try_transformations(
+        transformation_try={
+            "code": "foo",
+            "sampleRecord": {
+                "bar": "baz",
+            },
+        },
     )
 
     # use the class directly
@@ -881,6 +1032,34 @@ async def snippet_for_update_task():
         task_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
         task_update={
             "enabled": False,
+        },
+    )
+
+    # use the class directly
+    print(response)
+
+    # print the JSON response
+    print(response.to_json())
+    # SEPARATOR<
+
+
+async def snippet_for_update_transformation():
+    """
+    Snippet for the updateTransformation method.
+
+    updateTransformation
+    """
+    # >SEPARATOR updateTransformation default
+    # Initialize the client
+    _client = IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
+    # Call the API
+    response = await _client.update_transformation(
+        transformation_id="6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        transformation_create={
+            "code": "foo",
+            "name": "bar",
+            "description": "baz",
         },
     )
 

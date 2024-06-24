@@ -89,6 +89,19 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the createTransformation method.
+  //
+  // createTransformation
+  void snippetForCreateTransformation() {
+    // >SEPARATOR createTransformation default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.createTransformation(new TransformationCreate().setCode("foo").setName("bar").setDescription("baz"));
+    // SEPARATOR<
+  }
+
   // Snippet for the customDelete method.
   //
   // allow del method for a custom path with minimal parameters
@@ -190,6 +203,19 @@ class SnippetIngestionClient {
 
     // Call the API
     client.deleteTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
+  }
+
+  // Snippet for the deleteTransformation method.
+  //
+  // deleteTransformation
+  void snippetForDeleteTransformation() {
+    // >SEPARATOR deleteTransformation default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.deleteTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
     // SEPARATOR<
   }
 
@@ -375,6 +401,32 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the getTransformation method.
+  //
+  // getTransformation
+  void snippetForGetTransformation() {
+    // >SEPARATOR getTransformation default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.getTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
+  }
+
+  // Snippet for the getTransformations method.
+  //
+  // getTransformations
+  void snippetForGetTransformations() {
+    // >SEPARATOR getTransformations default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.getTransformations();
+    // SEPARATOR<
+  }
+
   // Snippet for the runTask method.
   //
   // runTask
@@ -452,6 +504,24 @@ class SnippetIngestionClient {
     // SEPARATOR<
   }
 
+  // Snippet for the searchTransformations method.
+  //
+  // searchTransformations
+  void snippetForSearchTransformations() {
+    // >SEPARATOR searchTransformations default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.searchTransformations(
+      new TransformationSearch()
+        .setTransformationsIDs(
+          List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+        )
+    );
+    // SEPARATOR<
+  }
+
   // Snippet for the triggerDockerSourceDiscover method.
   //
   // triggerDockerSourceDiscover
@@ -462,6 +532,19 @@ class SnippetIngestionClient {
 
     // Call the API
     client.triggerDockerSourceDiscover("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    // SEPARATOR<
+  }
+
+  // Snippet for the tryTransformations method.
+  //
+  // tryTransformations
+  void snippetForTryTransformations() {
+    // >SEPARATOR tryTransformations default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.tryTransformations(new TransformationTry().setCode("foo").setSampleRecord(Map.of("bar", "baz")));
     // SEPARATOR<
   }
 
@@ -514,6 +597,22 @@ class SnippetIngestionClient {
 
     // Call the API
     client.updateTask("6c02aeb1-775e-418e-870b-1faccd4b2c0f", new TaskUpdate().setEnabled(false));
+    // SEPARATOR<
+  }
+
+  // Snippet for the updateTransformation method.
+  //
+  // updateTransformation
+  void snippetForUpdateTransformation() {
+    // >SEPARATOR updateTransformation default
+    // Initialize the client
+    IngestionClient client = new IngestionClient("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION");
+
+    // Call the API
+    client.updateTransformation(
+      "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+      new TransformationCreate().setCode("foo").setName("bar").setDescription("baz")
+    );
     // SEPARATOR<
   }
 

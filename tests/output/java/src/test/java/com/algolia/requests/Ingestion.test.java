@@ -223,6 +223,20 @@ class IngestionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("createTransformation")
+  void createTransformationTest() {
+    assertDoesNotThrow(() -> {
+      client.createTransformation(new TransformationCreate().setCode("foo").setName("bar").setDescription("baz"));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"code\":\"foo\",\"name\":\"bar\",\"description\":\"baz\"}", req.body, JSONCompareMode.STRICT)
+    );
+  }
+
+  @Test
   @DisplayName("allow del method for a custom path with minimal parameters")
   void customDeleteTest() {
     assertDoesNotThrow(() -> {
@@ -776,6 +790,18 @@ class IngestionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("deleteTransformation")
+  void deleteTransformationTest() {
+    assertDoesNotThrow(() -> {
+      client.deleteTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
+    assertEquals("DELETE", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
   @DisplayName("disableTask")
   void disableTaskTest() {
     assertDoesNotThrow(() -> {
@@ -1012,6 +1038,30 @@ class IngestionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("getTransformation")
+  void getTransformationTest() {
+    assertDoesNotThrow(() -> {
+      client.getTransformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f");
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
+  @DisplayName("getTransformations")
+  void getTransformationsTest() {
+    assertDoesNotThrow(() -> {
+      client.getTransformations();
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations", req.path);
+    assertEquals("GET", req.method);
+    assertNull(req.body);
+  }
+
+  @Test
   @DisplayName("runTask")
   void runTaskTest() {
     assertDoesNotThrow(() -> {
@@ -1122,6 +1172,29 @@ class IngestionClientRequestsTests {
   }
 
   @Test
+  @DisplayName("searchTransformations")
+  void searchTransformationsTest() {
+    assertDoesNotThrow(() -> {
+      client.searchTransformations(
+        new TransformationSearch()
+          .setTransformationsIDs(
+            List.of("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498")
+          )
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/search", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals(
+        "{\"transformationsIDs\":[\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"]}",
+        req.body,
+        JSONCompareMode.STRICT
+      )
+    );
+  }
+
+  @Test
   @DisplayName("triggerDockerSourceDiscover")
   void triggerDockerSourceDiscoverTest() {
     assertDoesNotThrow(() -> {
@@ -1131,6 +1204,20 @@ class IngestionClientRequestsTests {
     assertEquals("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover", req.path);
     assertEquals("POST", req.method);
     assertEquals("{}", req.body);
+  }
+
+  @Test
+  @DisplayName("tryTransformations")
+  void tryTransformationsTest() {
+    assertDoesNotThrow(() -> {
+      client.tryTransformations(new TransformationTry().setCode("foo").setSampleRecord(Map.of("bar", "baz")));
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/try", req.path);
+    assertEquals("POST", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"code\":\"foo\",\"sampleRecord\":{\"bar\":\"baz\"}}", req.body, JSONCompareMode.STRICT)
+    );
   }
 
   @Test
@@ -1179,6 +1266,23 @@ class IngestionClientRequestsTests {
     assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
     assertEquals("PATCH", req.method);
     assertDoesNotThrow(() -> JSONAssert.assertEquals("{\"enabled\":false}", req.body, JSONCompareMode.STRICT));
+  }
+
+  @Test
+  @DisplayName("updateTransformation")
+  void updateTransformationTest() {
+    assertDoesNotThrow(() -> {
+      client.updateTransformation(
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        new TransformationCreate().setCode("foo").setName("bar").setDescription("baz")
+      );
+    });
+    EchoResponse req = echo.getLastResponse();
+    assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f", req.path);
+    assertEquals("PUT", req.method);
+    assertDoesNotThrow(() ->
+      JSONAssert.assertEquals("{\"code\":\"foo\",\"name\":\"bar\",\"description\":\"baz\"}", req.body, JSONCompareMode.STRICT)
+    );
   }
 
   @Test
