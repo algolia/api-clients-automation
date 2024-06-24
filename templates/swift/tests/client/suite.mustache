@@ -12,7 +12,6 @@ final class {{client}}ClientTests: XCTestCase {
   let API_KEY = "my_api_key"
   {{#blocksClient}}
   {{#tests}}
-  {{^isHelper}} {{! Helper tests are not supported yet}}
 
     /**
     {{testName}}
@@ -64,14 +63,18 @@ final class {{client}}ClientTests: XCTestCase {
               {{^matchIsObject}}
                 let comparableData = "{{#lambda.escapeQuotes}}{{{match}}}{{/lambda.escapeQuotes}}".data(using: .utf8)
               {{/matchIsObject}}
-              let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
-              XCTAssertEqual(comparableJSON, responseBodyJSON);
+              {{#isHelper}}
+                try XCTAssertEqual(comparableData, CodableHelper.jsonEncoder.encode(response))
+              {{/isHelper}}
+              {{^isHelper}}
+                let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+                XCTAssertEqual(comparableJSON, responseBodyJSON);
+              {{/isHelper}}
             {{/testResponse}}
           {{/match}}
         {{/isError}}
       {{/steps}}
     }
-  {{/isHelper}}
   {{/tests}}
   {{/blocksClient}}
 }

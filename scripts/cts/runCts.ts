@@ -59,7 +59,7 @@ async function runCtsOne(language: string): Promise<void> {
       await run('sbt test', { cwd, language });
       break;
     case 'swift':
-      await run('rm -rf .build && swift test -Xswiftc -suppress-warnings -q --parallel', {
+      await run('swift test -Xswiftc -suppress-warnings -q --parallel', {
         cwd,
         language,
       });

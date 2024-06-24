@@ -11,24 +11,6 @@ import XCTest
 @testable import Search
 
 class SecuredApiKeyHelpersTests: XCTestCase {
-    func testGenerateSecuredApiKeySuccess() async throws {
-        let client = try SearchClient(appID: "my-app-id", apiKey: "my-api-key")
-
-        let securedApiKey = try client.generateSecuredApiKey(
-            parentApiKey: "parent-api-key"
-        )
-
-        guard let securedApiKey else {
-            XCTFail("Unable to generate secured API key")
-            return
-        }
-
-        XCTAssertEqual(
-            securedApiKey,
-            "MGQ3NWNhMDc5ZTIwOTk0NGMzMTg5MjRhNDlhNGNkOWMzODI5ODM2NDUxNzg5ODg4YzBhMDg3YmQxMzAwYmRhNw=="
-        )
-    }
-
     func testGetSecuredApiKeyRemainingValiditySuccess() async throws {
         let now = Date().timeIntervalSince1970
         let waitDuration: TimeInterval = .seconds(3)

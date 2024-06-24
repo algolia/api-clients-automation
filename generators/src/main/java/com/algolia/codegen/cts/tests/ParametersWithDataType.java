@@ -195,8 +195,6 @@ public class ParametersWithDataType {
         return paramName.startsWith("_") ? paramName.substring(1) : paramName;
       case "go":
         return paramName.equals("type") ? "type_" : paramName;
-      case "swift":
-        return AlgoliaSwiftGenerator.removeReservedModelNamePrefix(paramName, client);
     }
 
     return paramName;
@@ -296,7 +294,7 @@ public class ParametersWithDataType {
       CodegenModel model = (CodegenModel) spec;
       IJsonSchemaValidationProperties match = findMatchingOneOf(param, model);
 
-      paramName = getTransformedParamName(paramName);
+      // paramName = getTransformedParamName(paramName);
 
       testOutput.putAll(traverseParams(paramName, param, match, parent, suffix, isParentFreeFormObject));
 

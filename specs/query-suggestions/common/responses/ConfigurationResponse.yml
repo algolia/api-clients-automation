@@ -1,9 +1,9 @@
-QuerySuggestionsConfigurationResponse:
+ConfigurationResponse:
   type: object
   description: API response for retrieving Query Suggestions configurations.
   allOf:
     - $ref: '#/AppID'
-    - $ref: '../schemas/QuerySuggestionsConfiguration.yml#/QuerySuggestionsConfigurationWithIndex'
+    - $ref: '../schemas/Configuration.yml#/ConfigurationWithIndex'
   required:
     - appID
     - allowSpecialCharacters
