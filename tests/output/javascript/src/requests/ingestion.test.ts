@@ -189,6 +189,21 @@ describe('createTask', () => {
   });
 });
 
+describe('createTransformation', () => {
+  test('createTransformation', async () => {
+    const req = (await client.createTransformation({
+      code: 'foo',
+      name: 'bar',
+      description: 'baz',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/transformations');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ code: 'foo', name: 'bar', description: 'baz' });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('customDelete', () => {
   test('allow del method for a custom path with minimal parameters', async () => {
     const req = (await client.customDelete({
@@ -579,6 +594,21 @@ describe('deleteTask', () => {
   });
 });
 
+describe('deleteTransformation', () => {
+  test('deleteTransformation', async () => {
+    const req = (await client.deleteTransformation({
+      transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual(
+      '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f'
+    );
+    expect(req.method).toEqual('DELETE');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('disableTask', () => {
   test('disableTask', async () => {
     const req = (await client.disableTask({
@@ -836,6 +866,32 @@ describe('getTasks', () => {
   });
 });
 
+describe('getTransformation', () => {
+  test('getTransformation', async () => {
+    const req = (await client.getTransformation({
+      transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual(
+      '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f'
+    );
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('getTransformations', () => {
+  test('getTransformations', async () => {
+    const req = (await client.getTransformations()) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/transformations');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('runTask', () => {
   test('runTask', async () => {
     const req = (await client.runTask({
@@ -960,6 +1016,29 @@ describe('searchTasks', () => {
   });
 });
 
+describe('searchTransformations', () => {
+  test('searchTransformations', async () => {
+    const req = (await client.searchTransformations({
+      transformationsIDs: [
+        '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
+        '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
+      ],
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/transformations/search');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      transformationsIDs: [
+        '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+        '947ac9c4-7e58-4c87-b1e7-14a68e99699a',
+        '76ab4c2a-ce17-496f-b7a6-506dc59ee498',
+      ],
+    });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
 describe('triggerDockerSourceDiscover', () => {
   test('triggerDockerSourceDiscover', async () => {
     const req = (await client.triggerDockerSourceDiscover({
@@ -971,6 +1050,20 @@ describe('triggerDockerSourceDiscover', () => {
     );
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('tryTransformations', () => {
+  test('tryTransformations', async () => {
+    const req = (await client.tryTransformations({
+      code: 'foo',
+      sampleRecord: { bar: 'baz' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/transformations/try');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ code: 'foo', sampleRecord: { bar: 'baz' } });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });
@@ -1031,6 +1124,22 @@ describe('updateTask', () => {
     expect(req.path).toEqual('/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f');
     expect(req.method).toEqual('PATCH');
     expect(req.data).toEqual({ enabled: false });
+    expect(req.searchParams).toStrictEqual(undefined);
+  });
+});
+
+describe('updateTransformation', () => {
+  test('updateTransformation', async () => {
+    const req = (await client.updateTransformation({
+      transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',
+      transformationCreate: { code: 'foo', name: 'bar', description: 'baz' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual(
+      '/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f'
+    );
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ code: 'foo', name: 'bar', description: 'baz' });
     expect(req.searchParams).toStrictEqual(undefined);
   });
 });

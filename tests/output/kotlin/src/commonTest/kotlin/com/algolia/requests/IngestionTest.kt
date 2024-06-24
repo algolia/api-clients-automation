@@ -193,6 +193,28 @@ class IngestionTest {
     )
   }
 
+  // createTransformation
+
+  @Test
+  fun `createTransformation`() = runTest {
+    client.runTest(
+      call = {
+        createTransformation(
+          transformationCreate = TransformationCreate(
+            code = "foo",
+            name = "bar",
+            description = "baz",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/transformations".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"code":"foo","name":"bar","description":"baz"}""", it.body)
+      },
+    )
+  }
+
   // customDelete
 
   @Test
@@ -712,6 +734,24 @@ class IngestionTest {
     )
   }
 
+  // deleteTransformation
+
+  @Test
+  fun `deleteTransformation`() = runTest {
+    client.runTest(
+      call = {
+        deleteTransformation(
+          transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
+      },
+      intercept = {
+        assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("DELETE"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // disableTask
 
   @Test
@@ -977,6 +1017,40 @@ class IngestionTest {
     )
   }
 
+  // getTransformation
+
+  @Test
+  fun `getTransformation`() = runTest {
+    client.runTest(
+      call = {
+        getTransformation(
+          transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+        )
+      },
+      intercept = {
+        assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
+  // getTransformations
+
+  @Test
+  fun `getTransformations`() = runTest {
+    client.runTest(
+      call = {
+        getTransformations()
+      },
+      intercept = {
+        assertEquals("/1/transformations".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("GET"), it.method)
+        assertNoBody(it.body)
+      },
+    )
+  }
+
   // runTask
 
   @Test
@@ -1075,6 +1149,26 @@ class IngestionTest {
     )
   }
 
+  // searchTransformations
+
+  @Test
+  fun `searchTransformations`() = runTest {
+    client.runTest(
+      call = {
+        searchTransformations(
+          transformationSearch = TransformationSearch(
+            transformationsIDs = listOf("6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"),
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/transformations/search".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"transformationsIDs":["6c02aeb1-775e-418e-870b-1faccd4b2c0f","947ac9c4-7e58-4c87-b1e7-14a68e99699a","76ab4c2a-ce17-496f-b7a6-506dc59ee498"]}""", it.body)
+      },
+    )
+  }
+
   // triggerDockerSourceDiscover
 
   @Test
@@ -1089,6 +1183,32 @@ class IngestionTest {
         assertEquals("/1/sources/6c02aeb1-775e-418e-870b-1faccd4b2c0f/discover".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("POST"), it.method)
         assertEmptyBody(it.body)
+      },
+    )
+  }
+
+  // tryTransformations
+
+  @Test
+  fun `tryTransformations`() = runTest {
+    client.runTest(
+      call = {
+        tryTransformations(
+          transformationTry = TransformationTry(
+            code = "foo",
+            sampleRecord = buildJsonObject {
+              put(
+                "bar",
+                JsonPrimitive("baz"),
+              )
+            },
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/transformations/try".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("POST"), it.method)
+        assertJsonBody("""{"code":"foo","sampleRecord":{"bar":"baz"}}""", it.body)
       },
     )
   }
@@ -1173,6 +1293,29 @@ class IngestionTest {
         assertEquals("/1/tasks/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
         assertEquals(HttpMethod.parse("PATCH"), it.method)
         assertJsonBody("""{"enabled":false}""", it.body)
+      },
+    )
+  }
+
+  // updateTransformation
+
+  @Test
+  fun `updateTransformation`() = runTest {
+    client.runTest(
+      call = {
+        updateTransformation(
+          transformationID = "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+          transformationCreate = TransformationCreate(
+            code = "foo",
+            name = "bar",
+            description = "baz",
+          ),
+        )
+      },
+      intercept = {
+        assertEquals("/1/transformations/6c02aeb1-775e-418e-870b-1faccd4b2c0f".toPathSegments(), it.url.pathSegments)
+        assertEquals(HttpMethod.parse("PUT"), it.method)
+        assertJsonBody("""{"code":"foo","name":"bar","description":"baz"}""", it.body)
       },
     )
   }

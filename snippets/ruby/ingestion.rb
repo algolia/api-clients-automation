@@ -111,6 +111,31 @@ def snippet_for_create_task
   # SEPARATOR<
 end
 
+# Snippet for the createTransformation method.
+#
+# createTransformation
+def snippet_for_create_transformation
+  # >SEPARATOR createTransformation default
+  # Initialize the client
+  client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+  # Call the API
+  response = client.create_transformation(
+    TransformationCreate.new(
+      code: "foo",
+      name: "bar",
+      description: "baz"
+    )
+  )
+
+  # use the class directly
+  puts response
+
+  # print the JSON response
+  puts response.to_json
+  # SEPARATOR<
+end
+
 # Snippet for the customDelete method.
 #
 # allow del method for a custom path with minimal parameters
@@ -254,6 +279,25 @@ def snippet_for_delete_task
 
   # Call the API
   response = client.delete_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+  # use the class directly
+  puts response
+
+  # print the JSON response
+  puts response.to_json
+  # SEPARATOR<
+end
+
+# Snippet for the deleteTransformation method.
+#
+# deleteTransformation
+def snippet_for_delete_transformation
+  # >SEPARATOR deleteTransformation default
+  # Initialize the client
+  client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+  # Call the API
+  response = client.delete_transformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
 
   # use the class directly
   puts response
@@ -532,6 +576,44 @@ def snippet_for_get_tasks
   # SEPARATOR<
 end
 
+# Snippet for the getTransformation method.
+#
+# getTransformation
+def snippet_for_get_transformation
+  # >SEPARATOR getTransformation default
+  # Initialize the client
+  client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+  # Call the API
+  response = client.get_transformation("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+  # use the class directly
+  puts response
+
+  # print the JSON response
+  puts response.to_json
+  # SEPARATOR<
+end
+
+# Snippet for the getTransformations method.
+#
+# getTransformations
+def snippet_for_get_transformations
+  # >SEPARATOR getTransformations default
+  # Initialize the client
+  client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+  # Call the API
+  response = client.get_transformations
+
+  # use the class directly
+  puts response
+
+  # print the JSON response
+  puts response.to_json
+  # SEPARATOR<
+end
+
 # Snippet for the runTask method.
 #
 # runTask
@@ -651,6 +733,31 @@ def snippet_for_search_tasks
   # SEPARATOR<
 end
 
+# Snippet for the searchTransformations method.
+#
+# searchTransformations
+def snippet_for_search_transformations
+  # >SEPARATOR searchTransformations default
+  # Initialize the client
+  client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+  # Call the API
+  response = client.search_transformations(
+    TransformationSearch.new(
+      transformations_ids: [
+        "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+      ]
+    )
+  )
+
+  # use the class directly
+  puts response
+
+  # print the JSON response
+  puts response.to_json
+  # SEPARATOR<
+end
+
 # Snippet for the triggerDockerSourceDiscover method.
 #
 # triggerDockerSourceDiscover
@@ -661,6 +768,30 @@ def snippet_for_trigger_docker_source_discover
 
   # Call the API
   response = client.trigger_docker_source_discover("6c02aeb1-775e-418e-870b-1faccd4b2c0f")
+
+  # use the class directly
+  puts response
+
+  # print the JSON response
+  puts response.to_json
+  # SEPARATOR<
+end
+
+# Snippet for the tryTransformations method.
+#
+# tryTransformations
+def snippet_for_try_transformations
+  # >SEPARATOR tryTransformations default
+  # Initialize the client
+  client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+  # Call the API
+  response = client.try_transformations(
+    TransformationTry.new(
+      code: "foo",
+      sample_record: { bar: "baz" }
+    )
+  )
 
   # use the class directly
   puts response
@@ -748,6 +879,28 @@ def snippet_for_update_task
   response = client.update_task(
     "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
     TaskUpdate.new(enabled: false)
+  )
+
+  # use the class directly
+  puts response
+
+  # print the JSON response
+  puts response.to_json
+  # SEPARATOR<
+end
+
+# Snippet for the updateTransformation method.
+#
+# updateTransformation
+def snippet_for_update_transformation
+  # >SEPARATOR updateTransformation default
+  # Initialize the client
+  client = Algolia::IngestionClient.create('YOUR_APP_ID', 'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+
+  # Call the API
+  response = client.update_transformation(
+    "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+    TransformationCreate.new(code: "foo", name: "bar", description: "baz")
   )
 
   # use the class directly

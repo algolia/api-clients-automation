@@ -1,0 +1,18 @@
+[
+  {
+    "parameters": {
+      "code": "foo",
+      "name": "bar",
+      "description": "baz"
+    },
+    "request": {
+      "path": "/1/transformations",
+      "method": "POST",
+      "body": {
+        "code": "foo",
+        "name": "bar",
+        "description": "baz"
+      }
+    }
+  }
+]

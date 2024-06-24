@@ -1,0 +1,58 @@
+get:
+  tags:
+    - transformations
+  summary: List transformations
+  description: Retrieves a list of transformations.
+  operationId: getTransformations
+  x-acl:
+    - addObject
+    - deleteIndex
+    - editSettings
+  parameters:
+    - $ref: '../../common/parameters.yml#/sort'
+    - $ref: '../../common/parameters.yml#/order'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: listTransformationsResponse
+            type: object
+            description: Configured transformations and pagination information.
+            additionalProperties: false
+            properties:
+              transformations:
+                type: array
+                items:
+                  $ref: '../../common/schemas/transformation.yml#/Transformation'
+              pagination:
+                $ref: '../../common/schemas/pagination.yml#/Pagination'
+            required:
+              - transformations
+              - pagination
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'
+
+post:
+  tags:
+    - transformations
+  summary: Create a transformation
+  description: Creates a new transformation.
+  operationId: createTransformation
+  requestBody:
+    description: Request body for creating a transformation.
+    content:
+      application/json:
+        schema:
+          $ref: '../../common/schemas/transformation.yml#/TransformationCreate'
+    required: true
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../../common/schemas/transformation.yml#/TransformationCreateResponse'
+    '400':
+      $ref: '../../../common/responses/BadRequest.yml'

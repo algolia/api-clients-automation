@@ -30,6 +30,14 @@ pathTaskID:
   schema:
     $ref: './schemas/common.yml#/taskID'
 
+pathTransformationID:
+  name: transformationID
+  in: path
+  required: true
+  description: Unique identifier of a transformation.
+  schema:
+    $ref: './schemas/common.yml#/transformationID'
+
 pathRunID:
   name: runID
   in: path
@@ -75,3 +83,17 @@ orderKeys:
   description: Ascending or descending sort order.
   default: desc
   enum: [asc, desc]
+
+sort:
+  name: sort
+  in: query
+  description: Property by which to sort the list.
+  required: false
+  schema:
+    $ref: '#/sortKeys'
+
+sortKeys:
+  type: string
+  description: Property by which to sort the list.
+  default: desc
+  enum: [name, type, updatedAt, createdAt]

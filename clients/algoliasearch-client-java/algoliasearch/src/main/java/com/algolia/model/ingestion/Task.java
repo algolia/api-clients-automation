@@ -34,6 +34,9 @@ public class Task {
   @JsonProperty("action")
   private ActionType action;
 
+  @JsonProperty("cursor")
+  private String cursor;
+
   @JsonProperty("createdAt")
   private String createdAt;
 
@@ -131,6 +134,17 @@ public class Task {
     return action;
   }
 
+  public Task setCursor(String cursor) {
+    this.cursor = cursor;
+    return this;
+  }
+
+  /** Date of the last cursor in RFC 3339 format. */
+  @javax.annotation.Nullable
+  public String getCursor() {
+    return cursor;
+  }
+
   public Task setCreatedAt(String createdAt) {
     this.createdAt = createdAt;
     return this;
@@ -171,6 +185,7 @@ public class Task {
       Objects.equals(this.enabled, task.enabled) &&
       Objects.equals(this.failureThreshold, task.failureThreshold) &&
       Objects.equals(this.action, task.action) &&
+      Objects.equals(this.cursor, task.cursor) &&
       Objects.equals(this.createdAt, task.createdAt) &&
       Objects.equals(this.updatedAt, task.updatedAt)
     );
@@ -178,7 +193,7 @@ public class Task {
 
   @Override
   public int hashCode() {
-    return Objects.hash(taskID, sourceID, destinationID, trigger, input, enabled, failureThreshold, action, createdAt, updatedAt);
+    return Objects.hash(taskID, sourceID, destinationID, trigger, input, enabled, failureThreshold, action, cursor, createdAt, updatedAt);
   }
 
   @Override
@@ -193,6 +208,7 @@ public class Task {
     sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
     sb.append("    failureThreshold: ").append(toIndentedString(failureThreshold)).append("\n");
     sb.append("    action: ").append(toIndentedString(action)).append("\n");
+    sb.append("    cursor: ").append(toIndentedString(cursor)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
     sb.append("}");

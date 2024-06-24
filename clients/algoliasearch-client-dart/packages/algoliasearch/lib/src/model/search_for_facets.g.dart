@@ -12,7 +12,6 @@ SearchForFacets _$SearchForFacetsFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = SearchForFacets(
-          params: $checkedConvert('params', (v) => v as String?),
           query: $checkedConvert('query', (v) => v as String?),
           similarQuery: $checkedConvert('similarQuery', (v) => v as String?),
           filters: $checkedConvert('filters', (v) => v as String?),
@@ -189,7 +188,6 @@ Map<String, dynamic> _$SearchForFacetsToJson(SearchForFacets instance) {
     }
   }
 
-  writeNotNull('params', instance.params);
   writeNotNull('query', instance.query);
   writeNotNull('similarQuery', instance.similarQuery);
   writeNotNull('filters', instance.filters);

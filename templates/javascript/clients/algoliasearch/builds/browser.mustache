@@ -1,5 +1,7 @@
 // {{{generationBanner}}}
 
+import type { InitClientOptions, InitClientRegion } from "./models"
+
 {{> algoliasearch/builds/definition}}
   const commonOptions: CreateClientOptions = {
     apiKey,
@@ -33,8 +35,9 @@
     get _ua(): string {
       return this.transporter.algoliaAgent.value;
     },
+    initAbtesting,
     initAnalytics,
     initPersonalization,
-    initAbtesting,
+    initRecommend,
   };
 }
