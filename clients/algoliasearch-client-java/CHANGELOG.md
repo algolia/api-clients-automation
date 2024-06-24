@@ -1,3 +1,7 @@
+## [4.0.0-beta.36](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.35...4.0.0-beta.36)
+
+- [07e074806](https://github.com/algolia/api-clients-automation/commit/07e074806) feat(clients): add recommend to algoliasearch ([#2860](https://github.com/algolia/api-clients-automation/pull/2860)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.0.0-beta.35](https://github.com/algolia/algoliasearch-client-java/compare/4.0.0-beta.34...4.0.0-beta.35)
 
 - [b7ae19f2b](https://github.com/algolia/api-clients-automation/commit/b7ae19f2b) feat(specs): add transformations endpoints to ingestion ([#3215](https://github.com/algolia/api-clients-automation/pull/3215)) by [@shortcuts](https://github.com/shortcuts/)
