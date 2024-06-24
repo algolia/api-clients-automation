@@ -531,7 +531,7 @@ func (c *APIClient) BrowseRulesWithContext(
 			searchRulesParams.HitsPerPage = &hitsPerPage
 
 			if previousResponse != nil {
-				searchRulesParams.Page = utils.ToPtr(int32(previousResponse.Page + 1))
+				searchRulesParams.Page = utils.ToPtr(previousResponse.Page + 1)
 			}
 
 			if searchRulesParams.Page == nil {
