@@ -488,14 +488,9 @@ public extension SearchClient {
         objectIDs: [String],
         requestOptions: RequestOptions? = nil
     ) async throws -> [BatchResponse] {
-        var objects: [some Encodable] = []
-        for id in objectIDs {
-            objects.append(["objectID": id])
-        }
-
         try await self.chunkedBatch(
             indexName: indexName,
-            objects: objects,
+            objects: objectIDs.map { AnyCodable(["objectID": $0]) },
             action: .deleteObject,
             waitForTasks: false,
             batchSize: 1000,
