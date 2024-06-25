@@ -522,7 +522,7 @@ use {{invokerPackage}}\Support\Helpers;
           $objects[] = ['objectID' => $id];
       }
 
-      return chunkedBatch($indexName, $objects, 'deleteObjects', false, 1000, $requestOptions)
+      return chunkedBatch($indexName, $objects, 'deleteObjects', false, 1000, $requestOptions);
     }
 
     /**
