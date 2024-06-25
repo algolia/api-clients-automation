@@ -14,7 +14,7 @@ func (c *APIClient) SearchForHits(ctx context.Context, r ApiSearchRequest, opts 
     return nil, err
   }
 
-  var hits []SearchResponse
+  hits := make([]SearchResponse, 0, len(res.GetResults()))
 
   for _, hit := range res.GetResults() {
     if hit.SearchResponse != nil {
@@ -22,7 +22,7 @@ func (c *APIClient) SearchForHits(ctx context.Context, r ApiSearchRequest, opts 
     }
   }
 
-  return hits, nil
+  return slices.Clip(hits), nil
 }
 
 /*
@@ -41,7 +41,7 @@ func (c *APIClient) SearchForFacets(ctx context.Context, r ApiSearchRequest, opt
     return nil, err
   }
 
-  var facetHits []SearchForFacetValuesResponse
+  facetHits := make([]SearchForFacetValuesResponse, 0, len(res.GetResults()))
 
   for _, hit := range res.GetResults() {
       if hit.SearchForFacetValuesResponse != nil {
@@ -49,7 +49,7 @@ func (c *APIClient) SearchForFacets(ctx context.Context, r ApiSearchRequest, opt
       }
   }
 
-  return facetHits, nil
+  return slices.Clip(facetHits), nil
 }
 
 /*
