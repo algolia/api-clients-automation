@@ -61,6 +61,9 @@ import algoliasearch.search.SupportedLanguage._
   *   standalone index that will no longer by synced with the primary index. **Modifier** - `virtual(\"REPLICA\")`.
   *   Create a virtual replica, Virtual replicas don't increase the number of records and are optimized for [Relevant
   *   sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).
+  * @param virtual
+  *   Only present if the index is a [virtual
+  *   replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
   * @param paginationLimitedTo
   *   Maximum number of search results that can be obtained through pagination. Higher pagination limits might slow down
   *   your search. For pagination limits above 1,000, the sorting of results beyond the 1,000th hit can't be guaranteed.
@@ -307,6 +310,7 @@ import algoliasearch.search.SupportedLanguage._
 case class IndexSettings(
     attributesForFaceting: Option[Seq[String]] = scala.None,
     replicas: Option[Seq[String]] = scala.None,
+    virtual: Option[Boolean] = scala.None,
     paginationLimitedTo: Option[Int] = scala.None,
     unretrievableAttributes: Option[Seq[String]] = scala.None,
     disableTypoToleranceOnWords: Option[Seq[String]] = scala.None,
