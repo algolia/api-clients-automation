@@ -6298,6 +6298,24 @@ public class SearchClient extends ApiClient {
     return responses;
   }
 
+  public <T> List<BatchResponse> chunkedBatch(String indexName, Iterable<T> objects, Action action, boolean waitForTasks) {
+    return chunkedBatch(indexName, objects, action, waitForTasks, 1000, null);
+  }
+
+  public <T> List<BatchResponse> chunkedBatch(String indexName, Iterable<T> objects, Action action, boolean waitForTasks, int batchSize) {
+    return chunkedBatch(indexName, objects, action, waitForTasks, batchSize, null);
+  }
+
+  public <T> List<BatchResponse> chunkedBatch(
+    String indexName,
+    Iterable<T> objects,
+    Action action,
+    boolean waitForTasks,
+    RequestOptions requestOptions
+  ) {
+    return chunkedBatch(indexName, objects, action, waitForTasks, 1000, requestOptions);
+  }
+
   /**
    * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
    * untouched. Replace all records in an index without any downtime. See

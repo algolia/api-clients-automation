@@ -16,6 +16,7 @@ BaseIndexSettings _$BaseIndexSettingsFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           replicas: $checkedConvert('replicas',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          virtual: $checkedConvert('virtual', (v) => v as bool?),
           paginationLimitedTo: $checkedConvert(
               'paginationLimitedTo', (v) => (v as num?)?.toInt()),
           unretrievableAttributes: $checkedConvert('unretrievableAttributes',
@@ -71,6 +72,7 @@ Map<String, dynamic> _$BaseIndexSettingsToJson(BaseIndexSettings instance) {
 
   writeNotNull('attributesForFaceting', instance.attributesForFaceting);
   writeNotNull('replicas', instance.replicas);
+  writeNotNull('virtual', instance.virtual);
   writeNotNull('paginationLimitedTo', instance.paginationLimitedTo);
   writeNotNull('unretrievableAttributes', instance.unretrievableAttributes);
   writeNotNull(

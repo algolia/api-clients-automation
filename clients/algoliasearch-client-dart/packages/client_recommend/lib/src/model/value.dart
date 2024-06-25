@@ -12,6 +12,7 @@ final class Value {
   const Value({
     this.order,
     this.sortRemainingBy,
+    this.hide,
   });
 
   /// Explicit order of facets or facet values.  This setting lets you always show specific facets or facet values at the top of the list.
@@ -21,15 +22,20 @@ final class Value {
   @JsonKey(name: r'sortRemainingBy')
   final SortRemainingBy? sortRemainingBy;
 
+  /// Hide facet values.
+  @JsonKey(name: r'hide')
+  final List<String>? hide;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is Value &&
           other.order == order &&
-          other.sortRemainingBy == sortRemainingBy;
+          other.sortRemainingBy == sortRemainingBy &&
+          other.hide == hide;
 
   @override
-  int get hashCode => order.hashCode + sortRemainingBy.hashCode;
+  int get hashCode => order.hashCode + sortRemainingBy.hashCode + hide.hashCode;
 
   factory Value.fromJson(Map<String, dynamic> json) => _$ValueFromJson(json);
 
