@@ -110,7 +110,33 @@ func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/s
 {{/hasParams}}
 /*
 {{operationId}} calls the API and returns the raw response from it.
-{{> operation_description}}
+  {{#notes}}
+
+    {{{unescapedNotes}}}
+  {{/notes}}
+  {{#vendorExtensions}}
+    {{#x-acl.0}}
+
+      Required API Key ACLs:{{/x-acl.0}}
+    {{#x-acl}}
+      - {{.}}
+    {{/x-acl}}
+  {{/vendorExtensions}}
+
+  Request can be constructed by NewApi{{operationId}}Request with parameters below.
+  @param ctx context.Context - Context of the request
+  {{#allParams}}
+    @param {{paramName}} {{dataType}}{{#description}} - {{{.}}}{{/description}}
+  {{/allParams}}
+  @param opts ...Option - Optional parameters for the API call
+  @return *http.Response - The raw response from the API
+  @return []byte - The raw response body from the API
+  @return error - An error if the API call fails
+  {{#isDeprecated}}
+
+    Deprecated
+  {{/isDeprecated}}
+  */
 func (c *APIClient) {{nickname}}WithHTTPInfo(ctx context.Context, {{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...Option) (*http.Response, []byte, error) {
 	var (
     postBody     any
