@@ -40,8 +40,11 @@ import algoliasearch.search.SortRemainingBy._
   * @param order
   *   Explicit order of facets or facet values. This setting lets you always show specific facets or facet values at the
   *   top of the list.
+  * @param hide
+  *   Hide facet values.
   */
 case class Value(
     order: Option[Seq[String]] = scala.None,
-    sortRemainingBy: Option[SortRemainingBy] = scala.None
+    sortRemainingBy: Option[SortRemainingBy] = scala.None,
+    hide: Option[Seq[String]] = scala.None
 )

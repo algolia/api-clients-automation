@@ -113,7 +113,14 @@ In order to support the partial assertion, your client must provide an helper na
 
 The clients tests are located in the folder `tests/CTS/client/<apiName>`, they aim at testing the constructors and common error thrown by an API, and can be use to build more complex multi-step tests.
 
-> TODO
+Clients tests also uses mock servers to test the client behavior, you can find the mock server in the `scripts/cts/testServer` folder.
+There are currently 3 servers:
+- `gzip` that asserts that the client can send and receive gzip compressed data.
+- `timeout` that asserts that the client retries the request when the server takes too long to respond.
+- `replaceAllObjects` that mimics the behavior of the Algolia engine for `replaceAllObjects` and asserts the requests.
+
+The servers are started everytime you run `apic cts run`, but you can also start them manually by running `apic cts server`.
+
 
 ## How to add a new language
 
