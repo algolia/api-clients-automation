@@ -62,6 +62,11 @@ fetchedIndex:
         type: string
       description: Only present if the index is a primary index with replicas. Contains the names of all linked replicas.
       example: ['T02_push','T2replica']
+    virtual:
+      type: boolean
+      description: Only present if the index is a [virtual replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
+      x-categories:
+        - Ranking
   required:
     - name
     - createdAt
