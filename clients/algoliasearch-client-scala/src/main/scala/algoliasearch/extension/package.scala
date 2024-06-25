@@ -197,10 +197,10 @@ package object extension {
       *
       * @param indexName
       *   The index in which to perform the request.
-      * @param records
-      *   The list of records to save.
+      * @param objects
+      *   The list of objects to save.
       * @param action
-      *   The action to perform on the records.
+      *   The action to perform on the objects.
       * @param waitForTasks
       *   Whether to wait for the tasks to complete.
       * @param batchSize
@@ -212,14 +212,14 @@ package object extension {
       */
     def chunkedBatch(
         indexName: String,
-        records: Seq[Any],
+        objects: Seq[Any],
         action: Action = Action.AddObject,
         waitForTasks: Boolean,
         batchSize: Int = 1000,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
       var futures = Seq.empty[Future[BatchResponse]]
-      records.grouped(batchSize).foreach { chunk =>
+      objects.grouped(batchSize).foreach { chunk =>
         val requests = chunk.map { record =>
           BatchRequest(action = action, body = record)
         }
@@ -248,8 +248,8 @@ package object extension {
       *
       * @param indexName
       *   The index in which to perform the request.
-      * @param records
-      *   The list of records to save.
+      * @param objects
+      *   The list of objects to save.
       * @param requestOptions
       *   Additional request configuration.
       * @return
@@ -257,18 +257,18 @@ package object extension {
       */
     def saveObjects(
         indexName: String,
-        records: Seq[Any],
+        objects: Seq[Any],
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
-      chunkedBatch(indexName, records, Action.AddObject, false, 1000, requestOptions)
+      chunkedBatch(indexName, objects, Action.AddObject, false, 1000, requestOptions)
     }
 
-    /** Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+    /** Helper: Deletes every objects for the given objectIDs. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
       *
       * @param indexName
       *   The index in which to perform the request.
-      * @param recordIDs
-      *   The list of recordIDs to delete.
+      * @param objectIDs
+      *   The list of objectIDs to delete.
       * @param requestOptions
       *   Additional request configuration.
       * @return
@@ -276,18 +276,18 @@ package object extension {
       */
     def deleteObjects(
         indexName: String,
-        recordIDs: Seq[String],
+        objectIDs: Seq[String],
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
-      chunkedBatch(indexName, recordIDs.map(id => new { val objectID: String = id }), Action.DeleteObject, false, 1000, requestOptions)
+      chunkedBatch(indexName, objectIDs.map(id => new { val objectID: String = id }), Action.DeleteObject, false, 1000, requestOptions)
     }
 
     /** Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
       *
       * @param indexName
       *   The index in which to perform the request.
-      * @param records
-      *   The list of records to save.
+      * @param objects
+      *   The list of objects to save.
       * @param createIfNotExists
       *   To be provided if non-existing objects are passed, otherwise, the call will fail.
       * @param requestOptions
@@ -297,11 +297,11 @@ package object extension {
       */
     def partialUpdateObjects(
         indexName: String,
-        records: Seq[Any],
+        objects: Seq[Any],
         createIfNotExists: Boolean,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
-      chunkedBatch(indexName, records, if (createIfNotExists) Action.PartialUpdateObject else Action.PartialUpdateObjectNoCreate, false, 1000, requestOptions)
+      chunkedBatch(indexName, objects, if (createIfNotExists) Action.PartialUpdateObject else Action.PartialUpdateObjectNoCreate, false, 1000, requestOptions)
     }
 
     /** Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are untouched.
@@ -314,8 +314,8 @@ package object extension {
       *
       * @param indexName
       *   The index in which to perform the request.
-      * @param records
-      *   The list of records to replace.
+      * @param objects
+      *   The list of objects to replace.
       * @param batchSize
       *   The size of the batch. Default is 1000.
       * @param requestOptions
@@ -325,11 +325,11 @@ package object extension {
       */
     def replaceAllObjects(
         indexName: String,
-        records: Seq[Any],
+        objects: Seq[Any],
         batchSize: Int = 1000,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[ReplaceAllObjectsResponse] = {
-      val requests = records.map { record =>
+      val requests = objects.map { record =>
         BatchRequest(action = Action.AddObject, body = record)
       }
       val tmpIndexName = s"${indexName}_tmp_${scala.util.Random.nextInt(100)}"
@@ -347,7 +347,7 @@ package object extension {
 
         batchResponses <- chunkedBatch(
           indexName = tmpIndexName,
-          records = records,
+          objects = objects,
           action = Action.AddObject,
           waitForTasks = true,
           batchSize = batchSize,
