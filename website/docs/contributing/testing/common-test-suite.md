@@ -117,7 +117,7 @@ Clients tests also uses mock servers to test the client behavior, you can find t
 There are currently 3 servers:
 - `gzip` that asserts that the client can send and receive gzip compressed data.
 - `timeout` that asserts that the client retries the request when the server takes too long to respond.
-- `algolia mock` that mimics the behavior of the Algolia engine for `replaceAllObjects`.
+- `replaceAllObjects` that mimics the behavior of the Algolia engine for `replaceAllObjects` and asserts the requests.
 
 The servers are started everytime you run `apic cts run`, but you can also start them manually by running `apic cts server`.
 

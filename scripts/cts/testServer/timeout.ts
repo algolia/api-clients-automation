@@ -11,6 +11,7 @@ export function getTimeoutCounter(): number {
 }
 
 function addRoutes(app: express.Express): void {
+  // this endpoint is also defined in the gzip server but without the timeout
   app.get('/1/test/retry', (req, res) => {
     // this is safe because js is single threaded
     timeoutCounter++;

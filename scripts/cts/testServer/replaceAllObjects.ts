@@ -161,8 +161,8 @@ function addRoutes(app: Express): void {
   });
 }
 
-export function algoliaMockServer(): Promise<Server> {
+export function replaceAllObjectsServer(): Promise<Server> {
   // this server is used to simulate the responses for the replaceAllObjects method,
   // and uses a state machine to determine if the logic is correct.
-  return setupServer('algolia mock', 6679, addRoutes);
+  return setupServer('replaceAllObjects', 6679, addRoutes);
 }

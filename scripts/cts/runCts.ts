@@ -4,7 +4,7 @@ import { isVerbose, run, runComposerInstall, toAbsolutePath } from '../common.js
 import { createSpinner } from '../spinners.js';
 import type { Language } from '../types.js';
 
-import { startTestServer } from './testServer/index.js';
+import { startTestServer } from './testServer';
 import { getTimeoutCounter } from './testServer/timeout.js';
 
 async function runCtsOne(language: string): Promise<void> {

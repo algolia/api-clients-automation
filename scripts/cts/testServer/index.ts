@@ -5,12 +5,12 @@ import type { Express } from 'express';
 
 import { createSpinner } from '../../spinners';
 
-import { algoliaMockServer } from './algoliaMock';
 import { gzipServer } from './gzip';
+import { replaceAllObjectsServer } from './replaceAllObjects';
 import { timeoutServer } from './timeout';
 
 export async function startTestServer(): Promise<() => Promise<void>> {
-  const servers = await Promise.all([timeoutServer(), gzipServer(), algoliaMockServer()]);
+  const servers = await Promise.all([timeoutServer(), gzipServer(), replaceAllObjectsServer()]);
 
   return async () => {
     await Promise.all(
