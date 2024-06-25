@@ -294,8 +294,6 @@ public class ParametersWithDataType {
       CodegenModel model = (CodegenModel) spec;
       IJsonSchemaValidationProperties match = findMatchingOneOf(param, model);
 
-      // paramName = getTransformedParamName(paramName);
-
       testOutput.putAll(traverseParams(paramName, param, match, parent, suffix, isParentFreeFormObject));
 
       Map<String, Object> oneOfModel = new HashMap<>();
