@@ -468,11 +468,11 @@ public extension SearchClient {
     @discardableResult
     func replaceAllObjects(
         indexName: String,
-        objects: [some Encodable], 
+        objects: [some Encodable],
         batchSize: Int = 1000,
         requestOptions: RequestOptions? = nil
     ) async throws -> ReplaceAllObjectsResponse {
-        let tmpIndexName = try "\(indexName)_tmp_\(Int.random(in: 1000000..<10000000))"
+        let tmpIndexName = try "\(indexName)_tmp_\(Int.random(in: 1_000_000 ..< 10_000_000))"
 
         var copyOperationResponse = try await operationIndex(
             indexName: indexName,
