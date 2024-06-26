@@ -12,8 +12,7 @@ body:
         - Is there an issue already opened for this bug?
         - Can I reproduce it?
 
-        If you are not sure about the origin of the issue, and it impact your customer experience, please contact [our support team](https://alg.li/support).
-
+        If you are not sure about the origin of the issue, or if it impacts your customer experience, please contact [our support team](https://alg.li/support).
   - type: textarea
     attributes:
       label: Description
@@ -63,7 +62,7 @@ body:
   - type: textarea
     attributes:
       label: Steps to reproduce
-      description: Write down the steps to reproduce the bug. You should start with a fresh installation, or your git repository linked above.
+      description: Write down the steps to reproduce the bug, please include any information that seems relevant for us to reproduce it properly
       placeholder: |
         1. Use method `...`
         2. With parameters `...`
