@@ -42,6 +42,8 @@ public class AlgoliaRubyGenerator extends RubyClientCodegen {
     apiTestTemplateFiles.clear();
     modelTestTemplateFiles.clear();
 
+    supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
+
     // Remove some files we don't want to output or change their paths
     supportingFiles.removeIf(file ->
       file.getTemplateFile().equals("gitignore.mustache") ||

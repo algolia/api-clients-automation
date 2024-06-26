@@ -99,6 +99,7 @@ public class AlgoliaDartGenerator extends DartDioClientCodegen {
     supportingFiles.removeIf(file -> file.getTemplateFile().contains("README"));
 
     supportingFiles.add(new SupportingFile("version.mustache", srcFolder, "version.dart"));
+    supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
 
     // Search config
     additionalProperties.put("isSearchClient", client.equals("search"));

@@ -244,7 +244,8 @@ package object extension {
       responses
     }
 
-    /** Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+    /** Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used under the hood,
+      * which creates a `batch` requests with at most 1000 objects in it.
       *
       * @param indexName
       *   The index in which to perform the request.
@@ -263,7 +264,8 @@ package object extension {
       chunkedBatch(indexName, objects, Action.AddObject, false, 1000, requestOptions)
     }
 
-    /** Helper: Deletes every objects for the given objectIDs. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+    /** Helper: Deletes every objects for the given objectIDs. The `chunkedBatch` helper is used under the hood, which
+      * creates a `batch` requests with at most 1000 objectIDs in it.
       *
       * @param indexName
       *   The index in which to perform the request.
@@ -279,10 +281,18 @@ package object extension {
         objectIDs: Seq[String],
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
-      chunkedBatch(indexName, objectIDs.map(id => new { val objectID: String = id }), Action.DeleteObject, false, 1000, requestOptions)
+      chunkedBatch(
+        indexName,
+        objectIDs.map(id => new { val objectID: String = id }),
+        Action.DeleteObject,
+        false,
+        1000,
+        requestOptions
+      )
     }
 
-    /** Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
+    /** Helper: Replaces object content of all the given objects according to their respective `objectID` field. The
+      * `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
       *
       * @param indexName
       *   The index in which to perform the request.
@@ -301,7 +311,14 @@ package object extension {
         createIfNotExists: Boolean,
         requestOptions: Option[RequestOptions] = None
     )(implicit ec: ExecutionContext): Future[Seq[BatchResponse]] = {
-      chunkedBatch(indexName, objects, if (createIfNotExists) Action.PartialUpdateObject else Action.PartialUpdateObjectNoCreate, false, 1000, requestOptions)
+      chunkedBatch(
+        indexName,
+        objects,
+        if (createIfNotExists) Action.PartialUpdateObject else Action.PartialUpdateObjectNoCreate,
+        false,
+        1000,
+        requestOptions
+      )
     }
 
     /** Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are untouched.
