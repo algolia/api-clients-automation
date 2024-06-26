@@ -54,7 +54,7 @@ final class {{client}}RequestsTests: XCTestCase {
   {{#blocksRequests}}
     {{#tests}}
       /**
-      {{testName}}
+      {{{testName}}}
       */
       func test{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Test{{testIndex}}() async throws {
         let configuration = try {{client}}Configuration(appID: {{client}}RequestsTests.APPLICATION_ID, apiKey: {{client}}RequestsTests.API_KEY{{#hasRegionalHost}}, region: Region.{{defaultRegion}}{{/hasRegionalHost}})
