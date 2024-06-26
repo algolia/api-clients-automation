@@ -13,8 +13,9 @@ const EMPTY_MATRIX = { client: ['no-run'] };
 
 async function createClientMatrix(baseBranch: string): Promise<void> {
   const matrix: Record<string, ToRunMatrix> = {};
+  // PRs have origin/main as a baseBranch, main is always running from a specific commit
   const commonDependenciesChanged =
-    baseBranch === 'main' || (await isBaseChanged(baseBranch, COMMON_DEPENDENCIES));
+    baseBranch !== 'origin/main' || (await isBaseChanged(baseBranch, COMMON_DEPENDENCIES));
 
   // iterate over every generators to see what changed
   for (const { language, client, output } of Object.values(GENERATORS)) {
