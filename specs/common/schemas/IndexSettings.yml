@@ -64,11 +64,6 @@ baseIndexSettings:
       default: []
       x-categories:
         - Ranking
-    virtual:
-      type: boolean
-      description: Only present if the index is a [virtual replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
-      x-categories:
-        - Ranking
     paginationLimitedTo:
       type: integer
       example: 100
