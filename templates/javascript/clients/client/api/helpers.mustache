@@ -345,7 +345,7 @@ async saveObjects(
   requestOptions?: RequestOptions
 ): Promise<BatchResponse[]> {
   return await this.chunkedBatch(
-    { indexName, objects, action: 'addObject', waitForTasks: true },
+    { indexName, objects, action: 'addObject' },
     requestOptions
   );
 },
@@ -368,7 +368,6 @@ async deleteObjects(
       indexName,
       objects: objectIDs.map((objectID) => ({ objectID })),
       action: 'deleteObject',
-      waitForTasks: true,
     },
     requestOptions
   );
@@ -395,7 +394,6 @@ async partialUpdateObjects(
       action: createIfNotExists
         ? 'partialUpdateObject'
         : 'partialUpdateObjectNoCreate',
-      waitForTasks: true,
     },
     requestOptions
   );
