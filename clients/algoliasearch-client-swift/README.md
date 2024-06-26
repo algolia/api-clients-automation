@@ -165,4 +165,4 @@ This repository hosts the code of the generated Algolia API client for Swift, if
 
 ## 📄 License
 
-Algolia Swift API Client is an open-sourced software licensed under the [MIT license](LICENSE).
+The Algolia Swift API Client is an open-sourced software licensed under the [MIT license](LICENSE).

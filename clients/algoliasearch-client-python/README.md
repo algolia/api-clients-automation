@@ -92,4 +92,4 @@ This repository hosts the code of the generated Algolia API client for Python, i
 
 ## 📄 License
 
-Algolia Python API Client is an open-sourced software licensed under the [MIT license](LICENSE).
+The Algolia Python API Client is an open-sourced software licensed under the [MIT license](LICENSE).

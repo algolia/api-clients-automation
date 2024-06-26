@@ -59,4 +59,4 @@ This repository hosts the code of the generated Algolia API client for Ruby, if 
 
 ## 📄 License
 
-Algolia Ruby API Client is an open-sourced software licensed under the [MIT license](LICENSE.md).
+The Algolia Ruby API Client is an open-sourced software licensed under the [MIT license](LICENSE).

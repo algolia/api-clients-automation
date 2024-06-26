@@ -89,3 +89,7 @@ Encountering an issue? Before reaching out to support, we recommend heading to o
 ## Contributing
 
 This repository hosts the code of the generated Algolia API client for Go, if you'd like to contribut, head over to the [main repository](https://github.com/algolia/api-clients-automation). You can also find contributing guides on [our documentation website](https://api-clients-automation.netlify.app/docs/contributing/introduction).
+
+## 📄 License
+
+The Algolia Go API Client is an open-sourced software licensed under the [MIT license](LICENSE).

@@ -102,6 +102,6 @@ For full documentation, visit the **[Algolia JavaScript API Client](https://www.
 
 Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://www.algolia.com/doc/api-client/troubleshooting/faq/javascript/) where you will find answers for the most common issues and gotchas with the client. You can also open [a GitHub issue](https://github.com/algolia/api-clients-automation/issues/new?assignees=&labels=&projects=&template=Bug_report.md)
 
-## Contributing
+## 📄 License
 
-This repository hosts the code of the generated Algolia API client for JavaScript, if you'd like to contribut, head over to the [main repository](https://github.com/algolia/api-clients-automation). You can also find contributing guides on [our documentation website](https://api-clients-automation.netlify.app/docs/contributing/introduction).
+The Algolia JavaScript API Client is an open-sourced software licensed under the [MIT license](LICENSE).
