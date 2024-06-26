@@ -159,4 +159,6 @@ export const patterns = [
   'tests/output/swift/Package.swift',
   '!tests/output/swift/handwritten/**',
   '!tests/output/swift/Utils/**',
+
+  'clients/**/LICENSE'
 ];
