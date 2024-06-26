@@ -19,8 +19,8 @@ about: Help us improve the generated API clients.
 
 ## Environment
 
-- OS: [e.g. Windows / Linux / macOS / iOS / Android]
-- Environment: [e.g. Browser / Node]
-- Client: [e.g. All / Recommend / Search / Insights]
-- Language: [e.g. JavaScript / PHP / Java]
-- Client version: [e.g. 5.0.0]
+- OS: [Windows / Linux / macOS / iOS / Android / etc. ]
+- Environment: [Browser / Node / Django / Rails / Laravel / etc.]
+- Client: [All / AB testing / Analytics / Ingestion / Insights / Monitoring / Personalization / Query-Suggestions / Recommend / Search / Usage / Crawler]
+- Language: [All / CSharp / Dart / Go / Java / JavaScript / Kotlin / PHP / Python / Ruby / Scala / Swift]
+- Client version: [5.0.0 / 3.0.0-alpha.3 / etc.]
