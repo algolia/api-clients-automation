@@ -34,19 +34,86 @@
 
 ## 💡 Getting Started
 
-Install the Kotlin client by adding the following dependency to your `gradle.build` file:
+### JVM
 
-  ```gradle
-  repositories {
-     mavenCentral()
-  }
-  
-  dependencies {
-     implementation "com.algolia:algoliasearch-client-kotlin:{{packageVersion}}"
-  }
-  ```
-Also, choose and add to your dependencies one of [Ktor http client engines](https://ktor.io/docs/http-client-engines.html).
-Alternatively, you can use [algoliasearch-client-kotlin-bom](/client-bom).  
+1. Install the Kotlin client by adding the following dependency to your gradle.build file:
+
+```kotlin
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation "com.algolia:algoliasearch-client-kotlin:3.0.0-beta.31"
+}
+```
+
+2. Choose and add to your dependencies one of [Ktor’s engines](https://ktor.io/docs/http-client-engines.html).
+
+### BOM
+
+Alternatively, you can use algoliasearch-client-kotlin-bom by adding the following dependency to your build.gradle file
+
+```kotlin
+dependencies {
+    // import Kotlin API client BOM
+    implementation platform("com.algolia:algoliasearch-client-kotlin-bom:3.0.0-beta.31}")
+
+    // define dependencies without versions
+    implementation 'com.algolia:algoliasearch-client-kotlin'
+    runtimeOnly 'io.ktor:ktor-client-okhttp'
+}
+```
+
+### Multiplaform
+
+In multiplatform projects, add Algolia API client dependency to commonMain, and choose an [engine](https://ktor.io/docs/http-client-engines.html) for each target.
+
+You can now import the Algolia API client in your project and play with it.
+
+```kotlin
+import com.algolia.client.api.SearchClient
+
+val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
+
+// Add a new record to your Algolia index
+var response = client.saveObject(
+  indexName = "<YOUR_INDEX_NAME>",
+  body = buildJsonObject {
+    put(
+      "objectID",
+      JsonPrimitive("id"),
+    )
+    put(
+      "test",
+      JsonPrimitive("val"),
+    )
+  },
+)
+
+// Use the response
+println(response)
+
+// Poll the task status to know when it has been indexed
+client.waitTask("<YOUR_INDEX_NAME>", response.taskID)
+
+// Fetch search results, with typo tolerance
+var response = client.search(
+  searchMethodParams = SearchMethodParams(
+    requests = listOf(
+      SearchForHits(
+        indexName = "<YOUR_INDEX_NAME>",
+        query = "<YOUR_QUERY>",
+        hitsPerPage = 50,
+      ),
+    ),
+  ),
+)
+
+// Use the response
+println(response)
+```
+
 For full documentation, visit the **[Algolia Kotlin API Client](https://www.algolia.com/doc/api-client/getting-started/install/kotlin/)**.
 
 ### Guides
@@ -59,11 +126,11 @@ For full documentation, visit the **[Algolia Kotlin API Client](https://www.algo
 
 ## ❓ Troubleshooting
 
-Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://www.algolia.com/doc/api-client/troubleshooting/faq/kotlin/) where you will find answers for the most common issues and gotchas with the client.
+Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://www.algolia.com/doc/api-client/troubleshooting/faq/kotlin/) where you will find answers for the most common issues and gotchas with the client. You can also open [a GitHub issue](https://github.com/algolia/api-clients-automation/issues/new?assignees=&labels=&projects=&template=Bug_report.md)
 
-## Use the Dockerfile
+## Contributing
 
-If you want to contribute to this project without installing all its dependencies, you can use our Docker image. Please check our [dedicated guide](DOCKER_README.md) to learn more.
+This repository hosts the code of the generated Algolia API client for Kotlin, if you'd like to contribut, head over to the [main repository](https://github.com/algolia/api-clients-automation). You can also find contributing guides on [our documentation website](https://api-clients-automation.netlify.app/docs/contributing/introduction).
 
 ## 📄 License
 
