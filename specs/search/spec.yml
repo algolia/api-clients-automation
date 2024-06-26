@@ -366,3 +366,12 @@ paths:
 
   /chunkedBatch:
     $ref: 'helpers/chunkedBatch.yml#/method'
+
+  /saveObjects:
+    $ref: 'helpers/saveObjects.yml#/method'
+
+  /deleteObjects:
+    $ref: 'helpers/deleteObjects.yml#/method'
+
+  /partialUpdateObjects:
+    $ref: 'helpers/partialUpdateObjects.yml#/method'

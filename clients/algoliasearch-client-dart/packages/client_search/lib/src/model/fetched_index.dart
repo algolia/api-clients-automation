@@ -20,6 +20,7 @@ final class FetchedIndex {
     required this.pendingTask,
     this.primary,
     this.replicas,
+    this.virtual,
   });
 
   /// Index name.
@@ -66,6 +67,10 @@ final class FetchedIndex {
   @JsonKey(name: r'replicas')
   final List<String>? replicas;
 
+  /// Only present if the index is a [virtual replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
+  @JsonKey(name: r'virtual')
+  final bool? virtual;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -80,7 +85,8 @@ final class FetchedIndex {
           other.numberOfPendingTasks == numberOfPendingTasks &&
           other.pendingTask == pendingTask &&
           other.primary == primary &&
-          other.replicas == replicas;
+          other.replicas == replicas &&
+          other.virtual == virtual;
 
   @override
   int get hashCode =>
@@ -94,7 +100,8 @@ final class FetchedIndex {
       numberOfPendingTasks.hashCode +
       pendingTask.hashCode +
       primary.hashCode +
-      replicas.hashCode;
+      replicas.hashCode +
+      virtual.hashCode;
 
   factory FetchedIndex.fromJson(Map<String, dynamic> json) =>
       _$FetchedIndexFromJson(json);

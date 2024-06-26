@@ -45,6 +45,9 @@ public class FetchedIndex {
   @JsonProperty("replicas")
   private List<String> replicas;
 
+  @JsonProperty("virtual")
+  private Boolean virtual;
+
   public FetchedIndex setName(String name) {
     this.name = name;
     return this;
@@ -180,6 +183,20 @@ public class FetchedIndex {
     return replicas;
   }
 
+  public FetchedIndex setVirtual(Boolean virtual) {
+    this.virtual = virtual;
+    return this;
+  }
+
+  /**
+   * Only present if the index is a [virtual
+   * replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
+   */
+  @javax.annotation.Nullable
+  public Boolean getVirtual() {
+    return virtual;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -200,7 +217,8 @@ public class FetchedIndex {
       Objects.equals(this.numberOfPendingTasks, fetchedIndex.numberOfPendingTasks) &&
       Objects.equals(this.pendingTask, fetchedIndex.pendingTask) &&
       Objects.equals(this.primary, fetchedIndex.primary) &&
-      Objects.equals(this.replicas, fetchedIndex.replicas)
+      Objects.equals(this.replicas, fetchedIndex.replicas) &&
+      Objects.equals(this.virtual, fetchedIndex.virtual)
     );
   }
 
@@ -217,7 +235,8 @@ public class FetchedIndex {
       numberOfPendingTasks,
       pendingTask,
       primary,
-      replicas
+      replicas,
+      virtual
     );
   }
 
@@ -236,6 +255,7 @@ public class FetchedIndex {
     sb.append("    pendingTask: ").append(toIndentedString(pendingTask)).append("\n");
     sb.append("    primary: ").append(toIndentedString(primary)).append("\n");
     sb.append("    replicas: ").append(toIndentedString(replicas)).append("\n");
+    sb.append("    virtual: ").append(toIndentedString(virtual)).append("\n");
     sb.append("}");
     return sb.toString();
   }

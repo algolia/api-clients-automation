@@ -18,6 +18,9 @@ public class Value {
   @JsonProperty("sortRemainingBy")
   private SortRemainingBy sortRemainingBy;
 
+  @JsonProperty("hide")
+  private List<String> hide;
+
   public Value setOrder(List<String> order) {
     this.order = order;
     return this;
@@ -51,6 +54,25 @@ public class Value {
     return sortRemainingBy;
   }
 
+  public Value setHide(List<String> hide) {
+    this.hide = hide;
+    return this;
+  }
+
+  public Value addHide(String hideItem) {
+    if (this.hide == null) {
+      this.hide = new ArrayList<>();
+    }
+    this.hide.add(hideItem);
+    return this;
+  }
+
+  /** Hide facet values. */
+  @javax.annotation.Nullable
+  public List<String> getHide() {
+    return hide;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -60,12 +82,16 @@ public class Value {
       return false;
     }
     Value value = (Value) o;
-    return Objects.equals(this.order, value.order) && Objects.equals(this.sortRemainingBy, value.sortRemainingBy);
+    return (
+      Objects.equals(this.order, value.order) &&
+      Objects.equals(this.sortRemainingBy, value.sortRemainingBy) &&
+      Objects.equals(this.hide, value.hide)
+    );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(order, sortRemainingBy);
+    return Objects.hash(order, sortRemainingBy, hide);
   }
 
   @Override
@@ -74,6 +100,7 @@ public class Value {
     sb.append("class Value {\n");
     sb.append("    order: ").append(toIndentedString(order)).append("\n");
     sb.append("    sortRemainingBy: ").append(toIndentedString(sortRemainingBy)).append("\n");
+    sb.append("    hide: ").append(toIndentedString(hide)).append("\n");
     sb.append("}");
     return sb.toString();
   }
