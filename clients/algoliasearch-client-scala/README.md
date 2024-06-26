@@ -35,6 +35,7 @@ and you might also target a dead machine.
 
 You should change this TTL by setting the property `networkaddress.cache.ttl`.
 For example, to set the cache to 60 seconds:
+
 ```scala
 java.security.Security.setProperty("networkaddress.cache.ttl", "60");
 ```
@@ -42,9 +43,9 @@ java.security.Security.setProperty("networkaddress.cache.ttl", "60");
 For debug purposes, you can enable debug logging on the API client.
 It's using [slf4j](https://www.slf4j.org) so it should be compatible with most java loggers.
 
-#### Install
+## 💡 Getting Started
 
-With [Maven](https://maven.apache.org/), add the following dependency to your `pom.xml` file:
+To get started, add the algoliasearch-client-scala dependency to your project, with [Maven](https://maven.apache.org/), add the following dependency to your `pom.xml` file:
 
 ```xml
 <dependency>
@@ -79,20 +80,52 @@ For snapshots, add the `sonatype` repository:
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 ```
 
-In 30 seconds, this quick start tutorial will show you how to index and search objects.
+You can now import the Algolia API client in your project and play with it.
 
-#### ⚡️ Getting Started
+```scala
+import algoliasearch.api.SearchClient
 
-To start, you need to initialize the client. To do this, you need your **Application ID** and **API Key**.
-You can find both on [your Algolia account](https://www.algolia.com/api-keys).
+val client = SearchClient(appId = "YOUR_APP_ID", apiKey = "YOUR_API_KEY")
 
-For full documentation,
-visit the **[Algolia Scala API Client](https://www.algolia.com/doc/api-client/getting-started/install/scala/)**.
+// Add a new record to your Algolia index
+val response = client.saveObject(
+  indexName = "<YOUR_INDEX_NAME>",
+  body = JObject(List(JField("objectID", JString("id")), JField("test", JString("val"))))
+)
+
+// Use the response
+val value = Await.result(response, Duration(100, "sec"))
+
+// Poll the task status to know when it has been indexed
+client.waitTask("<YOUR_INDEX_NAME>", response.getTaskID())
+
+// Fetch search results, with typo tolerance
+val response = client.search(
+  searchMethodParams = SearchMethodParams(
+    requests = Seq(
+      SearchForHits(
+        indexName = "<YOUR_INDEX_NAME>",
+        query = Some("<YOUR_QUERY>"),
+        hitsPerPage = Some(50)
+      )
+    )
+  )
+)
+
+// Use the response
+val value = Await.result(response, Duration(100, "sec"))
+```
+
+For full documentation, visit the **[Algolia Scala API Client](https://www.algolia.com/doc/api-client/getting-started/install/scala/)**.
 
 ## ❓ Troubleshooting
 
-Encountering an issue? Before reaching out to support,
-we recommend heading to our [FAQ](https://www.algolia.com/doc/api-client/troubleshooting/faq/scala/) where you will find answers for the most common issues and gotchas with the client.
+Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://www.algolia.com/doc/api-client/troubleshooting/faq/scala/) where you will find answers for the most common issues and gotchas with the client. You can also open [a GitHub issue](https://github.com/algolia/api-clients-automation/issues/new?assignees=&labels=&projects=&template=Bug_report.md)
+
+## Contributing
+
+This repository hosts the code of the generated Algolia API client for Scala, if you'd like to contribute, head over to the [main repository](https://github.com/algolia/api-clients-automation). You can also find contributing guides on [our documentation website](https://api-clients-automation.netlify.app/docs/contributing/introduction).
 
 ## 📄 License
-Algolia Scala API Client is an open-sourced software licensed under the [MIT license](LICENSE).
+
+The Algolia Scala API Client is an open-sourced software licensed under the [MIT license](LICENSE).
