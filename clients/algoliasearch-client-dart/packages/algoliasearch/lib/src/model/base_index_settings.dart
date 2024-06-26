@@ -12,7 +12,6 @@ final class BaseIndexSettings {
   const BaseIndexSettings({
     this.attributesForFaceting,
     this.replicas,
-    this.virtual,
     this.paginationLimitedTo,
     this.unretrievableAttributes,
     this.disableTypoToleranceOnWords,
@@ -37,10 +36,6 @@ final class BaseIndexSettings {
   /// Creates [replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/).  Replicas are copies of a primary index with the same records but different settings, synonyms, or rules. If you want to offer a different ranking or sorting of your search results, you'll use replica indices. All index operations on a primary index are automatically forwarded to its replicas. To add a replica index, you must provide the complete set of replicas to this parameter. If you omit a replica from this list, the replica turns into a regular, standalone index that will no longer by synced with the primary index.  **Modifier**  - `virtual(\"REPLICA\")`.   Create a virtual replica,   Virtual replicas don't increase the number of records and are optimized for [Relevant sorting](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/relevant-sort/).
   @JsonKey(name: r'replicas')
   final List<String>? replicas;
-
-  /// Only present if the index is a [virtual replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
-  @JsonKey(name: r'virtual')
-  final bool? virtual;
 
   /// Maximum number of search results that can be obtained through pagination.  Higher pagination limits might slow down your search. For pagination limits above 1,000, the sorting of results beyond the 1,000th hit can't be guaranteed.
   // maximum: 20000
@@ -109,7 +104,6 @@ final class BaseIndexSettings {
       other is BaseIndexSettings &&
           other.attributesForFaceting == attributesForFaceting &&
           other.replicas == replicas &&
-          other.virtual == virtual &&
           other.paginationLimitedTo == paginationLimitedTo &&
           other.unretrievableAttributes == unretrievableAttributes &&
           other.disableTypoToleranceOnWords == disableTypoToleranceOnWords &&
@@ -132,7 +126,6 @@ final class BaseIndexSettings {
   int get hashCode =>
       attributesForFaceting.hashCode +
       replicas.hashCode +
-      virtual.hashCode +
       paginationLimitedTo.hashCode +
       unretrievableAttributes.hashCode +
       disableTypoToleranceOnWords.hashCode +

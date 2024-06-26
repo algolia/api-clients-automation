@@ -20,9 +20,6 @@ public class IndexSettings {
   @JsonProperty("replicas")
   private List<String> replicas;
 
-  @JsonProperty("virtual")
-  private Boolean virtual;
-
   @JsonProperty("paginationLimitedTo")
   private Integer paginationLimitedTo;
 
@@ -258,20 +255,6 @@ public class IndexSettings {
   @javax.annotation.Nullable
   public List<String> getReplicas() {
     return replicas;
-  }
-
-  public IndexSettings setVirtual(Boolean virtual) {
-    this.virtual = virtual;
-    return this;
-  }
-
-  /**
-   * Only present if the index is a [virtual
-   * replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
-   */
-  @javax.annotation.Nullable
-  public Boolean getVirtual() {
-    return virtual;
   }
 
   public IndexSettings setPaginationLimitedTo(Integer paginationLimitedTo) {
@@ -1359,7 +1342,6 @@ public class IndexSettings {
     return (
       Objects.equals(this.attributesForFaceting, indexSettings.attributesForFaceting) &&
       Objects.equals(this.replicas, indexSettings.replicas) &&
-      Objects.equals(this.virtual, indexSettings.virtual) &&
       Objects.equals(this.paginationLimitedTo, indexSettings.paginationLimitedTo) &&
       Objects.equals(this.unretrievableAttributes, indexSettings.unretrievableAttributes) &&
       Objects.equals(this.disableTypoToleranceOnWords, indexSettings.disableTypoToleranceOnWords) &&
@@ -1427,7 +1409,6 @@ public class IndexSettings {
     return Objects.hash(
       attributesForFaceting,
       replicas,
-      virtual,
       paginationLimitedTo,
       unretrievableAttributes,
       disableTypoToleranceOnWords,
@@ -1496,7 +1477,6 @@ public class IndexSettings {
     sb.append("class IndexSettings {\n");
     sb.append("    attributesForFaceting: ").append(toIndentedString(attributesForFaceting)).append("\n");
     sb.append("    replicas: ").append(toIndentedString(replicas)).append("\n");
-    sb.append("    virtual: ").append(toIndentedString(virtual)).append("\n");
     sb.append("    paginationLimitedTo: ").append(toIndentedString(paginationLimitedTo)).append("\n");
     sb.append("    unretrievableAttributes: ").append(toIndentedString(unretrievableAttributes)).append("\n");
     sb.append("    disableTypoToleranceOnWords: ").append(toIndentedString(disableTypoToleranceOnWords)).append("\n");

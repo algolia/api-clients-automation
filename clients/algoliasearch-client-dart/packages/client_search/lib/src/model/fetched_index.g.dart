@@ -26,6 +26,7 @@ FetchedIndex _$FetchedIndexFromJson(Map<String, dynamic> json) =>
           primary: $checkedConvert('primary', (v) => v as String?),
           replicas: $checkedConvert('replicas',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          virtual: $checkedConvert('virtual', (v) => v as bool?),
         );
         return val;
       },
@@ -52,5 +53,6 @@ Map<String, dynamic> _$FetchedIndexToJson(FetchedIndex instance) {
 
   writeNotNull('primary', instance.primary);
   writeNotNull('replicas', instance.replicas);
+  writeNotNull('virtual', instance.virtual);
   return val;
 }
