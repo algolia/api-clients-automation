@@ -63,18 +63,49 @@ flutter pub add algoliasearch
 
 ### Step 2: Import the Package
 
-Now, you can import the `algoliasearch` package in your Dart code for all operations, including indexing, search, and personalization:
+You can now import the Algolia API client in your project and play with it.
 
 ```dart
-import 'package:algoliasearch/algoliasearch.dart';
+import 'package:algolia_client_search/algolia_client_search.dart';
+// Alternatively, you can import `algoliasearch_lite`, a **search-only** version of the library, if you do not need the full feature set:
+// import 'package:algoliasearch/algoliasearch_lite.dart';
+
+final client = SearchClient(appId: 'YOUR_APP_ID', apiKey: 'YOUR_API_KEY');
+
+// Add a new record to your Algolia index
+final response = await client.saveObject(
+  indexName: "<YOUR_INDEX_NAME>",
+  body: {
+    'objectID': "id",
+    'test': "val",
+  },
+);
+
+// Poll the task status to know when it has been indexed
+await client.waitTask('<YOUR_INDEX_NAME>', response.taskID);
+
+// Fetch search results, with typo tolerance
+final response = await client.search(
+  searchMethodParams: SearchMethodParams(
+    requests: [
+      SearchForHits(
+        indexName: "<YOUR_INDEX_NAME>",
+        query: "<YOUR_QUERY>",
+        hitsPerPage: 50,
+      ),
+    ],
+  ),
+);
 ```
 
-Alternatively, you can import `algoliasearch_lite`, a **search-only** version of the library, if you do not need the full feature set:
+## ❓ Troubleshooting
 
-```dart
-import 'package:algoliasearch/algoliasearch_lite.dart';
-```
+Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://www.algolia.com/doc/api-client/troubleshooting/faq/dart/) where you will find answers for the most common issues and gotchas with the client. You can also open [a GitHub issue](https://github.com/algolia/api-clients-automation/issues/new?assignees=&labels=&projects=&template=Bug_report.md)
+
+## Contributing
+
+This repository hosts the code of the generated Algolia API client for Dart, if you'd like to contribute, head over to the [main repository](https://github.com/algolia/api-clients-automation). You can also find contributing guides on [our documentation website](https://api-clients-automation.netlify.app/docs/contributing/introduction).
 
 ## 📄 License
 
-Algolia API Client is an open-sourced software licensed under the [MIT license](LICENSE).
+The Algolia Dart API Client is an open-sourced software licensed under the [MIT license](LICENSE).

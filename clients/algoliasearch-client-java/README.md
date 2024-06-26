@@ -27,101 +27,63 @@
 * Thread-safe clients
 * Typed requests and responses
 
-**Migration note from v2.x to v3.x**
+**Migration note from v3.x to v4.x**
 >
-> In June 2019, we released v3 of our Java client. If you are using version 2.x of the client, read the [migration guide to version 3.x](https://www.algolia.com/doc/api-client/getting-started/upgrade-guides/java/).
-Version 2.x will **no longer** be under active development.
+> In July 2024, we released the v4 of our Java client. If you are using version 2.x or 3.x of the client, read the [migration guide to version 4.x](https://www.algolia.com/doc/api-client/getting-started/upgrade-guides/java/).
+Version 3.x will **no longer** be under active development.
 
 ## 💡 Getting Started
 
-### Install
-
-* **Maven**: add the following to your `pom.xml` file:
-
-    ```xml
-    <dependency>
-        <groupId>com.algolia</groupId>
-        <artifactId>algoliasearch</artifactId>
-        <version>LATEST</version>
-    </dependency>
-    ```
-* **Gradle**: add the following to your `build.gradle` file:
-  ```groovy
-  implementation "com.algolia:algoliasearch:$version"
-  ```
-
-### Initialize the client
-
-To start, you need to initialize the client. To do this, you need your **Application ID** and **API Key**.
-You can find both on [your Algolia account](https://www.algolia.com/api-keys).
+To get started, add the algoliasearch-client-java dependency to your project, either with [Maven](Maven):
 
 ```java
-SearchClient client = new SearchClient("MY_APPLICATION_ID", "MY_API_KEY");
+<dependency>
+  <groupId>com.algolia</groupId>
+  <artifactId>algoliasearch</artifactId>
+  <version>4.0.0-beta.36</version>
+</dependency>
 ```
 
-If you need to customize the configuration of the client, use
-`ClientOptions` when instantiating the Algolia `SearchClient` instance.
+or [Gradle](https://gradle.org/):
 
 ```java
-ClientOptions options = ClientOptions.builder().setLogLevel(LogLevel.BODY).build();
-SearchClient client = new SearchClient("MY_APPLICATION_ID", "MY_API_KEY", options);
-```
-
-### Push data
-
-Without any prior configuration, you can start indexing contacts in the `contacts` index using the following code:
-
-```java
-class Contact {
-  private String firstname;
-  private String lastname;
-  private int followers;
-  private String company;
-  private String objectID;
-  // Getters/setters ommitted
+dependencies {
+  implementation 'com.algolia:algoliasearch:4.0.0-beta.36'
 }
-
-Contact contact = new Contact()
-        .setObjectID("one")
-        .setFirstname("Jimmie")
-        .setLastname("Barninger")
-        .setFollowers(93)
-        .setCompany("California Paint");
-
-List<Contact> records = Arrays.asList(contact);
-List<BatchRequest> batch = records.stream()
-        .map(entry -> new BatchRequest().setAction(Action.ADD_OBJECT).setBody(entry))
-        .toList();
-BatchResponse response = client.batch("contacts", new BatchWriteParams().setRequests(batch));
 ```
 
-### Search
-
-You can now search for contacts by `firstname`, `lastname`, `company`, etc. (even with typos):
+You can now import the Algolia API client in your project and play with it.
 
 ```java
-SearchParams params = SearchParams.of(new SearchParamsObject().setQuery("jimmie"));
+import com.algolia.api.SearchClient;
+import com.algolia.model.search.*;
 
-// Synchronous search
-client.searchSingleIndex("contacts", params, Contact.class);
+SearchClient client = new SearchClient("YOUR_APP_ID", "YOUR_API_KEY");
 
-// Asynchronous search
-client.searchSingleIndexAsync("contacts", params, Contact.class);
+// Add a new record to your Algolia index
+client.saveObject("<YOUR_INDEX_NAME>", Map.of("objectID", "id", "test", "val"));
+
+// Poll the task status to know when it has been indexed
+client.waitForTask("<YOUR_INDEX_NAME>", response.getTaskID());
+
+// Fetch search results, with typo tolerance
+client.search(
+  new SearchMethodParams()
+    .setRequests(List.of(new SearchForHits().setIndexName("<YOUR_INDEX_NAME>").setQuery("<YOUR_QUERY>").setHitsPerPage(50))),
+  Hit.class
+);
 ```
 
-For full documentation, visit the [Algolia Java API Client's documentation](https://www.algolia.com/doc/api-client/getting-started/install/java/).
-
-## 📝 Examples
-
-You can find code samples in the [Algolia's API Clients playground](https://github.com/algolia/api-clients-playground/tree/master/java/src/main/java).
+For full documentation, visit the **[Algolia Java API Client](https://www.algolia.com/doc/api-client/getting-started/install/java/)**.
 
 ## ❓ Troubleshooting
 
-Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://www.algolia.com/doc/api-client/troubleshooting/faq/java/) where you will find answers for the most common issues and gotchas with the client.
+Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://www.algolia.com/doc/api-client/troubleshooting/faq/java/) where you will find answers for the most common issues and gotchas with the client. You can also open [a GitHub issue](https://github.com/algolia/api-clients-automation/issues/new?assignees=&labels=&projects=&template=Bug_report.md)
 
-## Use the Dockerfile
+## Contributing
 
-If you want to contribute to this project without installing all its dependencies, you can use our Docker image. Please check our [dedicated guide](DOCKER_README.MD) to learn more.
+This repository hosts the code of the generated Algolia API client for Java, if you'd like to contribute, head over to the [main repository](https://github.com/algolia/api-clients-automation). You can also find contributing guides on [our documentation website](https://api-clients-automation.netlify.app/docs/contributing/introduction).
 
 ## 📄 License
-Algolia Java API Client is an open-sourced software licensed under the [MIT license](LICENSE).
+
+The Algolia Java API Client is an open-sourced software licensed under the [MIT license](LICENSE).
