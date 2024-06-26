@@ -6335,6 +6335,68 @@ public class SearchClient extends ApiClient {
   }
 
   /**
+   * Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used
+   * under the hood, which creates a `batch` requests with at most 1000 objects in it.
+   *
+   * @param indexName The `indexName` to replace `objects` in.
+   * @param objects The array of `objects` to store in the given Algolia `indexName`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public <T> List<BatchResponse> saveObjects(String indexName, Iterable<T> objects, RequestOptions requestOptions) {
+    return chunkedBatch(indexName, objects, Action.ADD_OBJECT, false, 1000, requestOptions);
+  }
+
+  /**
+   * Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under
+   * the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
+   *
+   * @param indexName The `indexName` to delete `objectIDs` from.
+   * @param objectIDs The array of `objectIDs` to delete from the `indexName`.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public List<BatchResponse> deleteObjects(String indexName, List<String> objectIDs, RequestOptions requestOptions) {
+    List<Map<String, String>> objects = new ArrayList<>();
+
+    for (String id : objectIDs) {
+      Map<String, String> obj = new HashMap<>();
+      obj.put("objectID", id);
+      objects.add(obj);
+    }
+
+    return chunkedBatch(indexName, objects, Action.DELETE_OBJECT, false, 1000, requestOptions);
+  }
+
+  /**
+   * Helper: Replaces object content of all the given objects according to their respective
+   * `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch`
+   * requests with at most 1000 objects in it.
+   *
+   * @param indexName The `indexName` to update `objects` in.
+   * @param objects The array of `objects` to update in the given Algolia `indexName`.
+   * @param createIfNotExists To be provided if non-existing objects are passed, otherwise, the call
+   *     will fail.
+   * @param requestOptions The requestOptions to send along with the query, they will be merged with
+   *     the transporter requestOptions. (optional)
+   */
+  public <T> List<BatchResponse> partialUpdateObjects(
+    String indexName,
+    Iterable<T> objects,
+    boolean createIfNotExists,
+    RequestOptions requestOptions
+  ) {
+    return chunkedBatch(
+      indexName,
+      objects,
+      createIfNotExists ? Action.PARTIAL_UPDATE_OBJECT : Action.PARTIAL_UPDATE_OBJECT_NO_CREATE,
+      false,
+      1000,
+      requestOptions
+    );
+  }
+
+  /**
    * Push a new set of objects and remove all previous ones. Settings, synonyms and query rules are
    * untouched. Replace all records in an index without any downtime. See
    * https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for
