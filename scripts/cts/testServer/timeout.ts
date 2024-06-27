@@ -15,7 +15,7 @@ export function assertValidTimeouts(expectedCount: number): void {
 
   for (const [lang, state] of Object.entries(timeoutState)) {
     if (state.timestamp.length !== 3 || state.duration.length !== 3) {
-      throw new Error(`Expected 3 requests for ${lang}`);
+      throw new Error(`Expected 3 requests for ${lang}, got ${state.timestamp.length}`);
     }
 
     let delay = state.timestamp[1] - state.timestamp[0];
