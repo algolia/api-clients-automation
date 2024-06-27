@@ -15,7 +15,7 @@ import (
 
 func createPersonalizationClient(t *testing.T) (*personalization.APIClient, *tests.EchoRequester) {
 	echo := &tests.EchoRequester{}
-	cfg := personalization.Configuration{
+	cfg := personalization.PersonalizationConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -72,10 +72,10 @@ func TestPersonalizationparameters0(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *personalization.APIClient
-	var cfg personalization.Configuration
+	var cfg personalization.PersonalizationConfiguration
 	_ = client
 	_ = echo
-	cfg = personalization.Configuration{
+	cfg = personalization.PersonalizationConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -92,10 +92,10 @@ func TestPersonalizationparameters1(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *personalization.APIClient
-	var cfg personalization.Configuration
+	var cfg personalization.PersonalizationConfiguration
 	_ = client
 	_ = echo
-	cfg = personalization.Configuration{
+	cfg = personalization.PersonalizationConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -112,10 +112,10 @@ func TestPersonalizationparameters2(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *personalization.APIClient
-	var cfg personalization.Configuration
+	var cfg personalization.PersonalizationConfiguration
 	_ = client
 	_ = echo
-	cfg = personalization.Configuration{
+	cfg = personalization.PersonalizationConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",

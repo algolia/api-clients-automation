@@ -18,7 +18,7 @@ async def snippet_for_create_config():
 
     # Call the API
     response = await _client.create_config(
-        query_suggestions_configuration_with_index={
+        configuration_with_index={
             "indexName": "theIndexName",
             "sourceIndices": [
                 {
@@ -294,7 +294,7 @@ async def snippet_for_update_config():
     # Call the API
     response = await _client.update_config(
         index_name="theIndexName",
-        query_suggestions_configuration={
+        configuration={
             "sourceIndices": [
                 {
                     "indexName": "testIndex",

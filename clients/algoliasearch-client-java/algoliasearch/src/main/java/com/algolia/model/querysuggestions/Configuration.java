@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 /** Query Suggestions configuration. */
-public class QuerySuggestionsConfiguration {
+public class Configuration {
 
   @JsonProperty("sourceIndices")
   private List<SourceIndex> sourceIndices = new ArrayList<>();
@@ -27,12 +27,12 @@ public class QuerySuggestionsConfiguration {
   @JsonProperty("allowSpecialCharacters")
   private Boolean allowSpecialCharacters;
 
-  public QuerySuggestionsConfiguration setSourceIndices(List<SourceIndex> sourceIndices) {
+  public Configuration setSourceIndices(List<SourceIndex> sourceIndices) {
     this.sourceIndices = sourceIndices;
     return this;
   }
 
-  public QuerySuggestionsConfiguration addSourceIndices(SourceIndex sourceIndicesItem) {
+  public Configuration addSourceIndices(SourceIndex sourceIndicesItem) {
     this.sourceIndices.add(sourceIndicesItem);
     return this;
   }
@@ -43,7 +43,7 @@ public class QuerySuggestionsConfiguration {
     return sourceIndices;
   }
 
-  public QuerySuggestionsConfiguration setLanguages(Languages languages) {
+  public Configuration setLanguages(Languages languages) {
     this.languages = languages;
     return this;
   }
@@ -54,12 +54,12 @@ public class QuerySuggestionsConfiguration {
     return languages;
   }
 
-  public QuerySuggestionsConfiguration setExclude(List<String> exclude) {
+  public Configuration setExclude(List<String> exclude) {
     this.exclude = exclude;
     return this;
   }
 
-  public QuerySuggestionsConfiguration addExclude(String excludeItem) {
+  public Configuration addExclude(String excludeItem) {
     if (this.exclude == null) {
       this.exclude = new ArrayList<>();
     }
@@ -73,7 +73,7 @@ public class QuerySuggestionsConfiguration {
     return exclude;
   }
 
-  public QuerySuggestionsConfiguration setEnablePersonalization(Boolean enablePersonalization) {
+  public Configuration setEnablePersonalization(Boolean enablePersonalization) {
     this.enablePersonalization = enablePersonalization;
     return this;
   }
@@ -84,7 +84,7 @@ public class QuerySuggestionsConfiguration {
     return enablePersonalization;
   }
 
-  public QuerySuggestionsConfiguration setAllowSpecialCharacters(Boolean allowSpecialCharacters) {
+  public Configuration setAllowSpecialCharacters(Boolean allowSpecialCharacters) {
     this.allowSpecialCharacters = allowSpecialCharacters;
     return this;
   }
@@ -103,13 +103,13 @@ public class QuerySuggestionsConfiguration {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    QuerySuggestionsConfiguration querySuggestionsConfiguration = (QuerySuggestionsConfiguration) o;
+    Configuration configuration = (Configuration) o;
     return (
-      Objects.equals(this.sourceIndices, querySuggestionsConfiguration.sourceIndices) &&
-      Objects.equals(this.languages, querySuggestionsConfiguration.languages) &&
-      Objects.equals(this.exclude, querySuggestionsConfiguration.exclude) &&
-      Objects.equals(this.enablePersonalization, querySuggestionsConfiguration.enablePersonalization) &&
-      Objects.equals(this.allowSpecialCharacters, querySuggestionsConfiguration.allowSpecialCharacters)
+      Objects.equals(this.sourceIndices, configuration.sourceIndices) &&
+      Objects.equals(this.languages, configuration.languages) &&
+      Objects.equals(this.exclude, configuration.exclude) &&
+      Objects.equals(this.enablePersonalization, configuration.enablePersonalization) &&
+      Objects.equals(this.allowSpecialCharacters, configuration.allowSpecialCharacters)
     );
   }
 
@@ -121,7 +121,7 @@ public class QuerySuggestionsConfiguration {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class QuerySuggestionsConfiguration {\n");
+    sb.append("class Configuration {\n");
     sb.append("    sourceIndices: ").append(toIndentedString(sourceIndices)).append("\n");
     sb.append("    languages: ").append(toIndentedString(languages)).append("\n");
     sb.append("    exclude: ").append(toIndentedString(exclude)).append("\n");

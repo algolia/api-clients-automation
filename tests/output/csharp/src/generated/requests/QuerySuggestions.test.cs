@@ -55,7 +55,7 @@ public class QuerySuggestionsClientRequestTests
   public async Task CreateConfigTest()
   {
     await _client.CreateConfigAsync(
-      new QuerySuggestionsConfigurationWithIndex
+      new ConfigurationWithIndex
       {
         IndexName = "theIndexName",
         SourceIndices = new List<SourceIndex>
@@ -655,7 +655,7 @@ public class QuerySuggestionsClientRequestTests
   {
     await _client.UpdateConfigAsync(
       "theIndexName",
-      new QuerySuggestionsConfiguration
+      new Configuration
       {
         SourceIndices = new List<SourceIndex>
         {

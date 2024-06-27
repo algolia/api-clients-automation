@@ -15,7 +15,7 @@ import (
 
 func createIngestionClient(t *testing.T) (*ingestion.APIClient, *tests.EchoRequester) {
 	echo := &tests.EchoRequester{}
-	cfg := ingestion.Configuration{
+	cfg := ingestion.IngestionConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -72,10 +72,10 @@ func TestIngestionparameters0(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *ingestion.APIClient
-	var cfg ingestion.Configuration
+	var cfg ingestion.IngestionConfiguration
 	_ = client
 	_ = echo
-	cfg = ingestion.Configuration{
+	cfg = ingestion.IngestionConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -97,10 +97,10 @@ func TestIngestionparameters1(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *ingestion.APIClient
-	var cfg ingestion.Configuration
+	var cfg ingestion.IngestionConfiguration
 	_ = client
 	_ = echo
-	cfg = ingestion.Configuration{
+	cfg = ingestion.IngestionConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",

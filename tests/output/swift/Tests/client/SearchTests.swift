@@ -144,6 +144,91 @@ final class SearchClientClientTests: XCTestCase {
         XCTAssertEqual(TimeInterval(30000 / 1000), echoResponse.timeout)
     }
 
+    /// generate secured api key basic
+    func testHelpersTest0() async throws {
+        let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try client.generateSecuredApiKey(
+            parentApiKey: "2640659426d5107b6e47d75db9cbaef8",
+            restrictions: SecuredApiKeyRestrictions(validUntil: Int64(2_524_604_400), restrictIndices: ["Movies"])
+        )
+
+        XCTAssertEqual(
+            "NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
+            response
+        )
+    }
+
+    /// generate secured api key with searchParams
+    func testHelpersTest1() async throws {
+        let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
+        let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+
+        let response = try client.generateSecuredApiKey(
+            parentApiKey: "2640659426d5107b6e47d75db9cbaef8",
+            restrictions: SecuredApiKeyRestrictions(
+                searchParams: SearchSearchParamsObject(
+                    query: "batman",
+                    aroundRadius: SearchAroundRadius.searchAroundRadiusAll(SearchAroundRadiusAll.all),
+                    hitsPerPage: 10,
+                    typoTolerance: SearchTypoTolerance.searchTypoToleranceEnum(SearchTypoToleranceEnum.strict),
+                    mode: SearchMode.neuralSearch,
+                    optionalWords: ["one", "two"]
+                ),
+                filters: "category:Book OR category:Ebook AND _tags:published",
+                validUntil: Int64(2_524_604_400),
+                restrictIndices: ["Movies", "cts_e2e_settings"],
+                restrictSources: "192.168.1.0/24",
+                userToken: "user123"
+            )
+        )
+
+        XCTAssertEqual(
+            "MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw",
+            response
+        )
+    }
+
+    /// call replaceAllObjects without error
+    func testHelpersTest2() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6679")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.replaceAllObjects(
+            indexName: "cts_e2e_replace_all_objects_Swift",
+            objects: [
+                ["objectID": "1", "name": "Adam"],
+                ["objectID": "2", "name": "Benoit"],
+                ["objectID": "3", "name": "Cyril"],
+                ["objectID": "4", "name": "David"],
+                ["objectID": "5", "name": "Eva"],
+                ["objectID": "6", "name": "Fiona"],
+                ["objectID": "7", "name": "Gael"],
+                ["objectID": "8", "name": "Hugo"],
+                ["objectID": "9", "name": "Igor"],
+                ["objectID": "10", "name": "Julia"],
+            ],
+            batchSize: 3
+        )
+
+        let comparableData =
+            try XCTUnwrap(
+                "{\"copyOperationResponse\":{\"taskID\":125,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"},\"batchResponses\":[{\"taskID\":127,\"objectIDs\":[\"1\",\"2\",\"3\"]},{\"taskID\":130,\"objectIDs\":[\"4\",\"5\",\"6\"]},{\"taskID\":133,\"objectIDs\":[\"7\",\"8\",\"9\"]},{\"taskID\":134,\"objectIDs\":[\"10\"]}],\"moveOperationResponse\":{\"taskID\":777,\"updatedAt\":\"2021-01-01T00:00:00.000Z\"}}"
+                    .data(using: .utf8)
+            )
+        try XCTLenientAssertEqual(
+            received: CodableHelper.jsonEncoder.encode(response),
+            expected: comparableData
+        )
+    }
+
     /// client throws with invalid parameters
     func testParametersTest0() async throws {
         do {
@@ -175,14 +260,14 @@ final class SearchClientClientTests: XCTestCase {
         }
     }
 
-    /// &#x60;addApiKey&#x60; throws with invalid parameters
+    /// `addApiKey` throws with invalid parameters
     func testParametersTest1() async throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = SearchClient(configuration: configuration, transporter: transporter)
     }
 
-    /// &#x60;addOrUpdateObject&#x60; throws with invalid parameters
+    /// `addOrUpdateObject` throws with invalid parameters
     func testParametersTest2() async throws {
         let configuration = try SearchClientConfiguration(appID: APPLICATION_ID, apiKey: API_KEY)
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())

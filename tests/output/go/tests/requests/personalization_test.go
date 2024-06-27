@@ -18,7 +18,7 @@ func createPersonalizationClient(t *testing.T) (*personalization.APIClient, *tes
 	t.Helper()
 
 	echo := &tests.EchoRequester{}
-	cfg := personalization.Configuration{
+	cfg := personalization.PersonalizationConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",

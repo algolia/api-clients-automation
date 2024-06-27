@@ -923,7 +923,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/QuerySuggestionsConfigurationResponse'
+                  $ref: '#/components/schemas/ConfigurationResponse'
         '401':
           $ref: '#/components/responses/Unauthorized'
       x-codeSamples:
@@ -1108,7 +1108,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/QuerySuggestionsConfigurationWithIndex'
+              $ref: '#/components/schemas/ConfigurationWithIndex'
       responses:
         '200':
           description: OK
@@ -1143,7 +1143,7 @@ paths:
 
             // Call the API
             var response = await client.CreateConfigAsync(
-              new QuerySuggestionsConfigurationWithIndex
+              new ConfigurationWithIndex
               {
                 IndexName = "theIndexName",
                 SourceIndices = new List<SourceIndex>
@@ -1183,7 +1183,7 @@ paths:
             response, err :=
             client.CreateConfig(client.NewApiCreateConfigRequest(
 
-              suggestions.NewEmptyQuerySuggestionsConfigurationWithIndex().SetIndexName("theIndexName").SetSourceIndices(
+              suggestions.NewEmptyConfigurationWithIndex().SetIndexName("theIndexName").SetSourceIndices(
                 []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("testIndex").SetFacets(
                   []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
                   [][]string{
@@ -1215,7 +1215,7 @@ paths:
             // Call the API
 
             client.createConfig(
-              new QuerySuggestionsConfigurationWithIndex()
+              new ConfigurationWithIndex()
                 .setIndexName("theIndexName")
                 .setSourceIndices(
                   List.of(
@@ -1266,7 +1266,7 @@ paths:
             // Call the API
 
             var response = client.createConfig(
-              querySuggestionsConfigurationWithIndex = QuerySuggestionsConfigurationWithIndex(
+              configurationWithIndex = ConfigurationWithIndex(
                 indexName = "theIndexName",
                 sourceIndices = listOf(
                   SourceIndex(
@@ -1343,7 +1343,7 @@ paths:
 
             # Call the API
             response = await _client.create_config(
-                query_suggestions_configuration_with_index={
+                configuration_with_index={
                     "indexName": "theIndexName",
                     "sourceIndices": [
                         {
@@ -1390,7 +1390,7 @@ paths:
 
             # Call the API
             response = client.create_config(
-              QuerySuggestionsConfigurationWithIndex.new(
+              ConfigurationWithIndex.new(
                 index_name: "theIndexName",
                 source_indices: [SourceIndex.new(
                   index_name: "testIndex",
@@ -1419,7 +1419,7 @@ paths:
             // Call the API
 
             val response = client.createConfig(
-              querySuggestionsConfigurationWithIndex = QuerySuggestionsConfigurationWithIndex(
+              configurationWithIndex = ConfigurationWithIndex(
                 indexName = "theIndexName",
                 sourceIndices = Seq(
                   SourceIndex(
@@ -1454,17 +1454,17 @@ paths:
 
             // Call the API
 
-            let response = try await client
-                .createConfig(querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex(
-                    sourceIndices: [SourceIndex(
-                        indexName: "testIndex",
-                        facets: [Facet(attribute: "test")],
-                        generate: [["facetA", "facetB"], ["facetC"]]
-                    )],
-                    languages: QuerySuggestionsLanguages.arrayOfString(["french"]),
-                    exclude: ["test"],
-                    indexName: "theIndexName"
-                ))
+            let response = try await client.createConfig(configurationWithIndex:
+            ConfigurationWithIndex(
+                sourceIndices: [SourceIndex(
+                    indexName: "testIndex",
+                    facets: [Facet(attribute: "test")],
+                    generate: [["facetA", "facetB"], ["facetC"]]
+                )],
+                languages: QuerySuggestionsLanguages.arrayOfString(["french"]),
+                exclude: ["test"],
+                indexName: "theIndexName"
+            ))
   /1/configs/{indexName}:
     get:
       tags:
@@ -1482,7 +1482,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QuerySuggestionsConfigurationResponse'
+                $ref: '#/components/schemas/ConfigurationResponse'
         '400':
           $ref: '#/components/responses/BadRequest-2'
         '401':
@@ -1685,7 +1685,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/QuerySuggestionsConfiguration'
+              $ref: '#/components/schemas/Configuration'
       responses:
         '200':
           description: OK
@@ -1717,7 +1717,7 @@ paths:
             // Call the API
             var response = await client.UpdateConfigAsync(
               "theIndexName",
-              new QuerySuggestionsConfiguration
+              new Configuration
               {
                 SourceIndices = new List<SourceIndex>
                 {
@@ -1756,7 +1756,7 @@ paths:
             response, err :=
             client.UpdateConfig(client.NewApiUpdateConfigRequest(
               "theIndexName",
-              suggestions.NewEmptyQuerySuggestionsConfiguration().SetSourceIndices(
+              suggestions.NewEmptyConfiguration().SetSourceIndices(
                 []suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("testIndex").SetFacets(
                   []suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
                   [][]string{
@@ -1789,7 +1789,7 @@ paths:
 
             client.updateConfig(
               "theIndexName",
-              new QuerySuggestionsConfiguration()
+              new Configuration()
                 .setSourceIndices(
                   List.of(
                     new SourceIndex()
@@ -1814,7 +1814,7 @@ paths:
             // Call the API
             const response = await client.updateConfig({
               indexName: 'theIndexName',
-              querySuggestionsConfiguration: {
+              configuration: {
                 sourceIndices: [
                   {
                     indexName: 'testIndex',
@@ -1842,7 +1842,7 @@ paths:
 
             var response = client.updateConfig(
               indexName = "theIndexName",
-              querySuggestionsConfiguration = QuerySuggestionsConfiguration(
+              configuration = Configuration(
                 sourceIndices = listOf(
                   SourceIndex(
                     indexName = "testIndex",
@@ -1919,7 +1919,7 @@ paths:
             # Call the API
             response = await _client.update_config(
                 index_name="theIndexName",
-                query_suggestions_configuration={
+                configuration={
                     "sourceIndices": [
                         {
                             "indexName": "testIndex",
@@ -1966,7 +1966,7 @@ paths:
             # Call the API
             response = client.update_config(
               "theIndexName",
-              QuerySuggestionsConfiguration.new(
+              Configuration.new(
                 source_indices: [SourceIndex.new(
                   index_name: "testIndex",
                   facets: [Facet.new(attribute: "test")],
@@ -1995,7 +1995,7 @@ paths:
 
             val response = client.updateConfig(
               indexName = "theIndexName",
-              querySuggestionsConfiguration = QuerySuggestionsConfiguration(
+              configuration = Configuration(
                 sourceIndices = Seq(
                   SourceIndex(
                     indexName = "testIndex",
@@ -2280,7 +2280,7 @@ paths:
                 additionalProperties: false
                 properties:
                   indexName:
-                    $ref: '#/components/schemas/QuerySuggestionsIndexName'
+                    $ref: '#/components/schemas/IndexName'
                   isRunning:
                     type: boolean
                     description: >-
@@ -2758,7 +2758,7 @@ components:
       required: true
       description: Query Suggestions index name.
       schema:
-        $ref: '#/components/schemas/QuerySuggestionsIndexName'
+        $ref: '#/components/schemas/IndexName'
   schemas:
     ErrorBase:
       description: Error.
@@ -2776,7 +2776,7 @@ components:
           description: >-
             Algolia application ID to which this Query Suggestions configuration
             belongs.
-    QuerySuggestionsIndexName:
+    IndexName:
       title: indexName
       type: string
       description: Name of the Query Suggestions index (case-sensitive).
@@ -2946,7 +2946,7 @@ components:
           items:
             type: string
         - type: 'null'
-    QuerySuggestionsConfiguration:
+    Configuration:
       type: object
       description: Query Suggestions configuration.
       required:
@@ -2972,7 +2972,7 @@ components:
           type: boolean
           default: false
           description: Whether to include suggestions with special characters.
-    QuerySuggestionsConfigurationWithIndex:
+    ConfigurationWithIndex:
       type: object
       description: Query Suggestions configuration.
       required:
@@ -2982,14 +2982,14 @@ components:
         - type: object
           properties:
             indexName:
-              $ref: '#/components/schemas/QuerySuggestionsIndexName'
-        - $ref: '#/components/schemas/QuerySuggestionsConfiguration'
-    QuerySuggestionsConfigurationResponse:
+              $ref: '#/components/schemas/IndexName'
+        - $ref: '#/components/schemas/Configuration'
+    ConfigurationResponse:
       type: object
       description: API response for retrieving Query Suggestions configurations.
       allOf:
         - $ref: '#/components/schemas/AppID'
-        - $ref: '#/components/schemas/QuerySuggestionsConfigurationWithIndex'
+        - $ref: '#/components/schemas/ConfigurationWithIndex'
       required:
         - appID
         - allowSpecialCharacters
