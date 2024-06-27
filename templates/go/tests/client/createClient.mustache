@@ -1,4 +1,4 @@
-cfg = {{clientPrefix}}.Configuration{
+cfg = {{clientPrefix}}.{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Configuration{
   Configuration: transport.Configuration{
     AppID:     "{{parametersWithDataTypeMap.appId.value}}",
     ApiKey:    "{{parametersWithDataTypeMap.apiKey.value}}",
