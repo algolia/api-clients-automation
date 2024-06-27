@@ -24,7 +24,7 @@ func create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t *t
   t.Helper()
 
   echo := &tests.EchoRequester{}
-  cfg := {{clientPrefix}}.{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Configuration{
+  cfg := {{clientPrefix}}.{{clientName}}Configuration{
     Configuration: transport.Configuration{
       AppID:     "appID",
       ApiKey:    "apiKey",
