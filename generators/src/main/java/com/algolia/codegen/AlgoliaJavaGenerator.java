@@ -56,6 +56,8 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     supportingFiles.add(new SupportingFile("gradle.properties.mustache", "", "gradle.properties"));
     additionalProperties.put("isSearchClient", client.equals("search"));
 
+    reservedWords.removeIf(word -> word.equals("configuration"));
+
     try {
       additionalProperties.put("packageVersion", Helpers.getClientConfigField("java", "packageVersion"));
     } catch (GeneratorException e) {
