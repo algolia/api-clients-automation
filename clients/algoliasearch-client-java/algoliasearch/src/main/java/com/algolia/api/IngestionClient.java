@@ -2873,7 +2873,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Searches for transformations.
+   * Try a transformation.
    *
    * @param transformationTry (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2886,7 +2886,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * Searches for transformations.
+   * Try a transformation.
    *
    * @param transformationTry (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
@@ -2896,7 +2896,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Searches for transformations.
+   * (asynchronously) Try a transformation.
    *
    * @param transformationTry (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
@@ -2914,7 +2914,7 @@ public class IngestionClient extends ApiClient {
   }
 
   /**
-   * (asynchronously) Searches for transformations.
+   * (asynchronously) Try a transformation.
    *
    * @param transformationTry (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
