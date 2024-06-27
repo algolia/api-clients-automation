@@ -12,7 +12,7 @@ public class CTSManagerFactory {
       case "java" -> new JavaCTSManager(client);
       case "php" -> new PhpCTSManager();
       case "kotlin" -> new KotlinCTSManager(client);
-      case "go" -> new GoCTSManager();
+      case "go" -> new GoCTSManager(client);
       case "dart" -> new DartCTSManager(client);
       case "ruby" -> new RubyCTSManager(client);
       case "scala" -> new ScalaCTSManager(client);

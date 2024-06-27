@@ -18,7 +18,7 @@ get:
             additionalProperties: false
             properties:
               indexName:
-                $ref: '../common/schemas/QuerySuggestionsIndexName.yml'
+                $ref: '../common/schemas/IndexName.yml'
               isRunning:
                 type: boolean
                 description: Whether the creation or update of the Query Suggestions index is in progress.

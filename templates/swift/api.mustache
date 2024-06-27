@@ -61,7 +61,7 @@ import Foundation
 
     /**
      {{#allParams}}
-     - parameter {{paramName}}: ({{#isFormParam}}form{{/isFormParam}}{{#isQueryParam}}query{{/isQueryParam}}{{#isPathParam}}path{{/isPathParam}}{{#isHeaderParam}}header{{/isHeaderParam}}{{#isBodyParam}}body{{/isBodyParam}}) {{description}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+     - parameter {{paramName}}: ({{#isFormParam}}form{{/isFormParam}}{{#isQueryParam}}query{{/isQueryParam}}{{#isPathParam}}path{{/isPathParam}}{{#isHeaderParam}}header{{/isHeaderParam}}{{#isBodyParam}}body{{/isBodyParam}}) {{{description}}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
      {{/allParams}}
      - returns: {{{returnType}}}{{#returnType}}{{#isResponseOptional}}?{{/isResponseOptional}}{{/returnType}}{{^returnType}}Void{{/returnType}}
      */
@@ -89,9 +89,9 @@ import Foundation
        - {{.}}
      {{/x-acl}}
      {{/vendorExtensions}}{{#allParams}}
-     - parameter {{paramName}}: ({{#isFormParam}}form{{/isFormParam}}{{#isQueryParam}}query{{/isQueryParam}}{{#isPathParam}}path{{/isPathParam}}{{#isHeaderParam}}header{{/isHeaderParam}}{{#isBodyParam}}body{{/isBodyParam}}) {{description}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+     - parameter {{paramName}}: ({{#isFormParam}}form{{/isFormParam}}{{#isQueryParam}}query{{/isQueryParam}}{{#isPathParam}}path{{/isPathParam}}{{#isHeaderParam}}header{{/isHeaderParam}}{{#isBodyParam}}body{{/isBodyParam}}) {{{description}}} {{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
      {{/allParams}}
-     - returns: RequestBuilder<{{{returnType}}}{{#returnType}}{{#isResponseOptional}}?{{/isResponseOptional}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{description}}
+     - returns: RequestBuilder<{{{returnType}}}{{#returnType}}{{#isResponseOptional}}?{{/isResponseOptional}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{{description}}}
      */
     {{#isDeprecated}}
     @available(*, deprecated, message: "This operation is deprecated.")

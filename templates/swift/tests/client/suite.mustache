@@ -12,10 +12,9 @@ final class {{client}}ClientTests: XCTestCase {
   let API_KEY = "my_api_key"
   {{#blocksClient}}
   {{#tests}}
-  {{^isHelper}} {{! Helper tests are not supported yet}}
 
     /**
-    {{testName}}
+    {{{testName}}}
     */
     func test{{#lambda.titlecase}}{{testType}}{{/lambda.titlecase}}Test{{testIndex}}() async throws {
       {{#autoCreateClient}}
@@ -58,20 +57,25 @@ final class {{client}}ClientTests: XCTestCase {
               XCTAssertEqual("{{{match}}}", echoResponse.host);
             {{/testHost}}
             {{#testResponse}}
-              {{#matchIsObject}}
-                let comparableData = "{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}".data(using: .utf8)
-              {{/matchIsObject}}
-              {{^matchIsObject}}
-                let comparableData = "{{#lambda.escapeQuotes}}{{{match}}}{{/lambda.escapeQuotes}}".data(using: .utf8)
-              {{/matchIsObject}}
-              let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
-              XCTAssertEqual(comparableJSON, responseBodyJSON);
+              {{#isHelper}}
+                {{#matchIsObject}}
+                  let comparableData = try XCTUnwrap("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}".data(using: .utf8))
+                  try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
+                {{/matchIsObject}}
+                {{^matchIsObject}}
+                  XCTAssertEqual("{{#lambda.escapeQuotes}}{{{match}}}{{/lambda.escapeQuotes}}", response)
+                {{/matchIsObject}}
+              {{/isHelper}}
+              {{^isHelper}}
+                let comparableData = "{{#lambda.escapeQuotes}}{{#matchIsObject}}{{{match.parameters}}}{{/matchIsObject}}{{^matchIsObject}}{{{match}}}{{/matchIsObject}}{{/lambda.escapeQuotes}}".data(using: .utf8)
+                let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
+                XCTAssertEqual(comparableJSON, responseBodyJSON);
+              {{/isHelper}}
             {{/testResponse}}
           {{/match}}
         {{/isError}}
       {{/steps}}
     }
-  {{/isHelper}}
   {{/tests}}
   {{/blocksClient}}
 }
