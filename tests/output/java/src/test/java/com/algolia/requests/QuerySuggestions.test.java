@@ -54,7 +54,7 @@ class QuerySuggestionsClientRequestsTests {
   void createConfigTest() {
     assertDoesNotThrow(() -> {
       client.createConfig(
-        new QuerySuggestionsConfigurationWithIndex()
+        new ConfigurationWithIndex()
           .setIndexName("theIndexName")
           .setSourceIndices(
             List.of(
@@ -660,7 +660,7 @@ class QuerySuggestionsClientRequestsTests {
     assertDoesNotThrow(() -> {
       client.updateConfig(
         "theIndexName",
-        new QuerySuggestionsConfiguration()
+        new Configuration()
           .setSourceIndices(
             List.of(
               new SourceIndex()

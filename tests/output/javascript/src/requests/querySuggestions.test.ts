@@ -493,7 +493,7 @@ describe('updateConfig', () => {
   test('updateConfig', async () => {
     const req = (await client.updateConfig({
       indexName: 'theIndexName',
-      querySuggestionsConfiguration: {
+      configuration: {
         sourceIndices: [
           {
             indexName: 'testIndex',

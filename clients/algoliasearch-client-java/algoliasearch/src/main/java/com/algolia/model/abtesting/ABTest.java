@@ -50,7 +50,7 @@ public class ABTest {
   private List<Variant> variants = new ArrayList<>();
 
   @JsonProperty("configuration")
-  private ABTestConfiguration _configuration;
+  private ABTestConfiguration configuration;
 
   public ABTest setAbTestID(Integer abTestID) {
     this.abTestID = abTestID;
@@ -197,15 +197,15 @@ public class ABTest {
     return variants;
   }
 
-  public ABTest setConfiguration(ABTestConfiguration _configuration) {
-    this._configuration = _configuration;
+  public ABTest setConfiguration(ABTestConfiguration configuration) {
+    this.configuration = configuration;
     return this;
   }
 
-  /** Get _configuration */
+  /** Get configuration */
   @javax.annotation.Nullable
   public ABTestConfiguration getConfiguration() {
-    return _configuration;
+    return configuration;
   }
 
   @Override
@@ -230,7 +230,7 @@ public class ABTest {
       Objects.equals(this.name, abTest.name) &&
       Objects.equals(this.status, abTest.status) &&
       Objects.equals(this.variants, abTest.variants) &&
-      Objects.equals(this._configuration, abTest._configuration)
+      Objects.equals(this.configuration, abTest.configuration)
     );
   }
 
@@ -249,7 +249,7 @@ public class ABTest {
       name,
       status,
       variants,
-      _configuration
+      configuration
     );
   }
 
@@ -269,7 +269,7 @@ public class ABTest {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    variants: ").append(toIndentedString(variants)).append("\n");
-    sb.append("    _configuration: ").append(toIndentedString(_configuration)).append("\n");
+    sb.append("    configuration: ").append(toIndentedString(configuration)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -15,7 +15,7 @@ import (
 
 func createAnalyticsClient(t *testing.T) (*analytics.APIClient, *tests.EchoRequester) {
 	echo := &tests.EchoRequester{}
-	cfg := analytics.Configuration{
+	cfg := analytics.AnalyticsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -72,10 +72,10 @@ func TestAnalyticsparameters0(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *analytics.APIClient
-	var cfg analytics.Configuration
+	var cfg analytics.AnalyticsConfiguration
 	_ = client
 	_ = echo
-	cfg = analytics.Configuration{
+	cfg = analytics.AnalyticsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -96,10 +96,10 @@ func TestAnalyticsparameters1(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *analytics.APIClient
-	var cfg analytics.Configuration
+	var cfg analytics.AnalyticsConfiguration
 	_ = client
 	_ = echo
-	cfg = analytics.Configuration{
+	cfg = analytics.AnalyticsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -121,10 +121,10 @@ func TestAnalyticsparameters2(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *analytics.APIClient
-	var cfg analytics.Configuration
+	var cfg analytics.AnalyticsConfiguration
 	_ = client
 	_ = echo
-	cfg = analytics.Configuration{
+	cfg = analytics.AnalyticsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",

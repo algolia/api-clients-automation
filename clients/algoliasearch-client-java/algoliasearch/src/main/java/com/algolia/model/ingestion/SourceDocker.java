@@ -24,7 +24,7 @@ public class SourceDocker implements SourceInput {
   private String version;
 
   @JsonProperty("configuration")
-  private Object _configuration;
+  private Object configuration;
 
   public SourceDocker setImageType(DockerImageType imageType) {
     this.imageType = imageType;
@@ -70,15 +70,15 @@ public class SourceDocker implements SourceInput {
     return version;
   }
 
-  public SourceDocker setConfiguration(Object _configuration) {
-    this._configuration = _configuration;
+  public SourceDocker setConfiguration(Object configuration) {
+    this.configuration = configuration;
     return this;
   }
 
   /** Configuration of the spec. */
   @javax.annotation.Nonnull
   public Object getConfiguration() {
-    return _configuration;
+    return configuration;
   }
 
   @Override
@@ -95,13 +95,13 @@ public class SourceDocker implements SourceInput {
       Objects.equals(this.registry, sourceDocker.registry) &&
       Objects.equals(this.image, sourceDocker.image) &&
       Objects.equals(this.version, sourceDocker.version) &&
-      Objects.equals(this._configuration, sourceDocker._configuration)
+      Objects.equals(this.configuration, sourceDocker.configuration)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(imageType, registry, image, version, _configuration);
+    return Objects.hash(imageType, registry, image, version, configuration);
   }
 
   @Override
@@ -112,7 +112,7 @@ public class SourceDocker implements SourceInput {
     sb.append("    registry: ").append(toIndentedString(registry)).append("\n");
     sb.append("    image: ").append(toIndentedString(image)).append("\n");
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
-    sb.append("    _configuration: ").append(toIndentedString(_configuration)).append("\n");
+    sb.append("    configuration: ").append(toIndentedString(configuration)).append("\n");
     sb.append("}");
     return sb.toString();
   }

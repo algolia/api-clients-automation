@@ -26,7 +26,7 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
   # createConfig
   def test_create_config
     req = @client.create_config_with_http_info(
-      QuerySuggestionsConfigurationWithIndex.new(
+      ConfigurationWithIndex.new(
         index_name: "theIndexName",
         source_indices: [SourceIndex.new(
           index_name: "testIndex",
@@ -408,7 +408,7 @@ class TestQuerySuggestionsClient < Test::Unit::TestCase
   def test_update_config
     req = @client.update_config_with_http_info(
       "theIndexName",
-      QuerySuggestionsConfiguration.new(
+      Configuration.new(
         source_indices: [SourceIndex.new(
           index_name: "testIndex",
           facets: [Facet.new(attribute: "test")],

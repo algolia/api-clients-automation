@@ -18,7 +18,7 @@ func createMonitoringClient(t *testing.T) (*monitoring.APIClient, *tests.EchoReq
 	t.Helper()
 
 	echo := &tests.EchoRequester{}
-	cfg := monitoring.Configuration{
+	cfg := monitoring.MonitoringConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",

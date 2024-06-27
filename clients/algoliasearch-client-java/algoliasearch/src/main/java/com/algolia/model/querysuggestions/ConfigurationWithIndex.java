@@ -9,14 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** API response for retrieving Query Suggestions configurations. */
-public class QuerySuggestionsConfigurationResponse {
-
-  @JsonProperty("appID")
-  private String appID;
-
-  @JsonProperty("indexName")
-  private String indexName;
+/** Query Suggestions configuration. */
+public class ConfigurationWithIndex {
 
   @JsonProperty("sourceIndices")
   private List<SourceIndex> sourceIndices = new ArrayList<>();
@@ -33,34 +27,15 @@ public class QuerySuggestionsConfigurationResponse {
   @JsonProperty("allowSpecialCharacters")
   private Boolean allowSpecialCharacters;
 
-  public QuerySuggestionsConfigurationResponse setAppID(String appID) {
-    this.appID = appID;
-    return this;
-  }
+  @JsonProperty("indexName")
+  private String indexName;
 
-  /** Algolia application ID to which this Query Suggestions configuration belongs. */
-  @javax.annotation.Nonnull
-  public String getAppID() {
-    return appID;
-  }
-
-  public QuerySuggestionsConfigurationResponse setIndexName(String indexName) {
-    this.indexName = indexName;
-    return this;
-  }
-
-  /** Name of the Query Suggestions index (case-sensitive). */
-  @javax.annotation.Nonnull
-  public String getIndexName() {
-    return indexName;
-  }
-
-  public QuerySuggestionsConfigurationResponse setSourceIndices(List<SourceIndex> sourceIndices) {
+  public ConfigurationWithIndex setSourceIndices(List<SourceIndex> sourceIndices) {
     this.sourceIndices = sourceIndices;
     return this;
   }
 
-  public QuerySuggestionsConfigurationResponse addSourceIndices(SourceIndex sourceIndicesItem) {
+  public ConfigurationWithIndex addSourceIndices(SourceIndex sourceIndicesItem) {
     this.sourceIndices.add(sourceIndicesItem);
     return this;
   }
@@ -71,23 +46,26 @@ public class QuerySuggestionsConfigurationResponse {
     return sourceIndices;
   }
 
-  public QuerySuggestionsConfigurationResponse setLanguages(Languages languages) {
+  public ConfigurationWithIndex setLanguages(Languages languages) {
     this.languages = languages;
     return this;
   }
 
   /** Get languages */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Languages getLanguages() {
     return languages;
   }
 
-  public QuerySuggestionsConfigurationResponse setExclude(List<String> exclude) {
+  public ConfigurationWithIndex setExclude(List<String> exclude) {
     this.exclude = exclude;
     return this;
   }
 
-  public QuerySuggestionsConfigurationResponse addExclude(String excludeItem) {
+  public ConfigurationWithIndex addExclude(String excludeItem) {
+    if (this.exclude == null) {
+      this.exclude = new ArrayList<>();
+    }
     this.exclude.add(excludeItem);
     return this;
   }
@@ -98,26 +76,37 @@ public class QuerySuggestionsConfigurationResponse {
     return exclude;
   }
 
-  public QuerySuggestionsConfigurationResponse setEnablePersonalization(Boolean enablePersonalization) {
+  public ConfigurationWithIndex setEnablePersonalization(Boolean enablePersonalization) {
     this.enablePersonalization = enablePersonalization;
     return this;
   }
 
   /** Whether to turn on personalized query suggestions. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Boolean getEnablePersonalization() {
     return enablePersonalization;
   }
 
-  public QuerySuggestionsConfigurationResponse setAllowSpecialCharacters(Boolean allowSpecialCharacters) {
+  public ConfigurationWithIndex setAllowSpecialCharacters(Boolean allowSpecialCharacters) {
     this.allowSpecialCharacters = allowSpecialCharacters;
     return this;
   }
 
   /** Whether to include suggestions with special characters. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public Boolean getAllowSpecialCharacters() {
     return allowSpecialCharacters;
+  }
+
+  public ConfigurationWithIndex setIndexName(String indexName) {
+    this.indexName = indexName;
+    return this;
+  }
+
+  /** Name of the Query Suggestions index (case-sensitive). */
+  @javax.annotation.Nonnull
+  public String getIndexName() {
+    return indexName;
   }
 
   @Override
@@ -128,34 +117,32 @@ public class QuerySuggestionsConfigurationResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    QuerySuggestionsConfigurationResponse querySuggestionsConfigurationResponse = (QuerySuggestionsConfigurationResponse) o;
+    ConfigurationWithIndex configurationWithIndex = (ConfigurationWithIndex) o;
     return (
-      Objects.equals(this.appID, querySuggestionsConfigurationResponse.appID) &&
-      Objects.equals(this.indexName, querySuggestionsConfigurationResponse.indexName) &&
-      Objects.equals(this.sourceIndices, querySuggestionsConfigurationResponse.sourceIndices) &&
-      Objects.equals(this.languages, querySuggestionsConfigurationResponse.languages) &&
-      Objects.equals(this.exclude, querySuggestionsConfigurationResponse.exclude) &&
-      Objects.equals(this.enablePersonalization, querySuggestionsConfigurationResponse.enablePersonalization) &&
-      Objects.equals(this.allowSpecialCharacters, querySuggestionsConfigurationResponse.allowSpecialCharacters)
+      Objects.equals(this.sourceIndices, configurationWithIndex.sourceIndices) &&
+      Objects.equals(this.languages, configurationWithIndex.languages) &&
+      Objects.equals(this.exclude, configurationWithIndex.exclude) &&
+      Objects.equals(this.enablePersonalization, configurationWithIndex.enablePersonalization) &&
+      Objects.equals(this.allowSpecialCharacters, configurationWithIndex.allowSpecialCharacters) &&
+      Objects.equals(this.indexName, configurationWithIndex.indexName)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(appID, indexName, sourceIndices, languages, exclude, enablePersonalization, allowSpecialCharacters);
+    return Objects.hash(sourceIndices, languages, exclude, enablePersonalization, allowSpecialCharacters, indexName);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class QuerySuggestionsConfigurationResponse {\n");
-    sb.append("    appID: ").append(toIndentedString(appID)).append("\n");
-    sb.append("    indexName: ").append(toIndentedString(indexName)).append("\n");
+    sb.append("class ConfigurationWithIndex {\n");
     sb.append("    sourceIndices: ").append(toIndentedString(sourceIndices)).append("\n");
     sb.append("    languages: ").append(toIndentedString(languages)).append("\n");
     sb.append("    exclude: ").append(toIndentedString(exclude)).append("\n");
     sb.append("    enablePersonalization: ").append(toIndentedString(enablePersonalization)).append("\n");
     sb.append("    allowSpecialCharacters: ").append(toIndentedString(allowSpecialCharacters)).append("\n");
+    sb.append("    indexName: ").append(toIndentedString(indexName)).append("\n");
     sb.append("}");
     return sb.toString();
   }

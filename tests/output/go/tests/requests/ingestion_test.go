@@ -22,7 +22,7 @@ func createIngestionClient(t *testing.T) (*ingestion.APIClient, *tests.EchoReque
 	t.Helper()
 
 	echo := &tests.EchoRequester{}
-	cfg := ingestion.Configuration{
+	cfg := ingestion.IngestionConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",

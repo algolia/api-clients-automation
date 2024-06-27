@@ -35,7 +35,7 @@ package algoliasearch.querysuggestions
   * @param allowSpecialCharacters
   *   Whether to include suggestions with special characters.
   */
-case class QuerySuggestionsConfigurationResponse(
+case class ConfigurationResponse(
     appID: String,
     indexName: String,
     sourceIndices: Seq[SourceIndex],

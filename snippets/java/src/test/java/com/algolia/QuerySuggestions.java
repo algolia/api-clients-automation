@@ -18,7 +18,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     client.createConfig(
-      new QuerySuggestionsConfigurationWithIndex()
+      new ConfigurationWithIndex()
         .setIndexName("theIndexName")
         .setSourceIndices(
           List.of(
@@ -162,7 +162,7 @@ class SnippetQuerySuggestionsClient {
     // Call the API
     client.updateConfig(
       "theIndexName",
-      new QuerySuggestionsConfiguration()
+      new Configuration()
         .setSourceIndices(
           List.of(
             new SourceIndex()

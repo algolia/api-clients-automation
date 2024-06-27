@@ -30,11 +30,14 @@ package algoliasearch.querysuggestions
   *   Whether to turn on personalized query suggestions.
   * @param allowSpecialCharacters
   *   Whether to include suggestions with special characters.
+  * @param indexName
+  *   Name of the Query Suggestions index (case-sensitive).
   */
-case class QuerySuggestionsConfiguration(
+case class ConfigurationWithIndex(
     sourceIndices: Seq[SourceIndex],
     languages: Option[Languages] = scala.None,
     exclude: Option[Seq[String]] = scala.None,
     enablePersonalization: Option[Boolean] = scala.None,
-    allowSpecialCharacters: Option[Boolean] = scala.None
+    allowSpecialCharacters: Option[Boolean] = scala.None,
+    indexName: String
 )

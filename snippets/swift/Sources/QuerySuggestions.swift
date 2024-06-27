@@ -16,17 +16,16 @@ final class QuerySuggestionsClientSnippet {
         let client = try QuerySuggestionsClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
 
         // Call the API
-        let response = try await client
-            .createConfig(querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex(
-                sourceIndices: [SourceIndex(
-                    indexName: "testIndex",
-                    facets: [Facet(attribute: "test")],
-                    generate: [["facetA", "facetB"], ["facetC"]]
-                )],
-                languages: QuerySuggestionsLanguages.arrayOfString(["french"]),
-                exclude: ["test"],
-                indexName: "theIndexName"
-            ))
+        let response = try await client.createConfig(configurationWithIndex: ConfigurationWithIndex(
+            sourceIndices: [SourceIndex(
+                indexName: "testIndex",
+                facets: [Facet(attribute: "test")],
+                generate: [["facetA", "facetB"], ["facetC"]]
+            )],
+            languages: QuerySuggestionsLanguages.arrayOfString(["french"]),
+            exclude: ["test"],
+            indexName: "theIndexName"
+        ))
         // SEPARATOR<
     }
 

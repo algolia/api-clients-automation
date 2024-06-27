@@ -22,7 +22,7 @@ func createInsightsClient(t *testing.T) (*insights.APIClient, *tests.EchoRequest
 	t.Helper()
 
 	echo := &tests.EchoRequester{}
-	cfg := insights.Configuration{
+	cfg := insights.InsightsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",

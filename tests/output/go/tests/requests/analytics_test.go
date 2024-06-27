@@ -22,7 +22,7 @@ func createAnalyticsClient(t *testing.T) (*analytics.APIClient, *tests.EchoReque
 	t.Helper()
 
 	echo := &tests.EchoRequester{}
-	cfg := analytics.Configuration{
+	cfg := analytics.AnalyticsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",

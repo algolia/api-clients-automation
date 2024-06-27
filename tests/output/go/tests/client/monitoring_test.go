@@ -15,7 +15,7 @@ import (
 
 func createMonitoringClient(t *testing.T) (*monitoring.APIClient, *tests.EchoRequester) {
 	echo := &tests.EchoRequester{}
-	cfg := monitoring.Configuration{
+	cfg := monitoring.MonitoringConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -71,10 +71,10 @@ func TestMonitoringparameters0(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *monitoring.APIClient
-	var cfg monitoring.Configuration
+	var cfg monitoring.MonitoringConfiguration
 	_ = client
 	_ = echo
-	cfg = monitoring.Configuration{
+	cfg = monitoring.MonitoringConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",

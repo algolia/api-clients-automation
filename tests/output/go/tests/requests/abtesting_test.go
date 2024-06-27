@@ -22,7 +22,7 @@ func createAbtestingClient(t *testing.T) (*abtesting.APIClient, *tests.EchoReque
 	t.Helper()
 
 	echo := &tests.EchoRequester{}
-	cfg := abtesting.Configuration{
+	cfg := abtesting.AbtestingConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",

@@ -9,8 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** Query Suggestions configuration. */
-public class QuerySuggestionsConfigurationWithIndex {
+/** API response for retrieving Query Suggestions configurations. */
+public class ConfigurationResponse {
+
+  @JsonProperty("appID")
+  private String appID;
+
+  @JsonProperty("indexName")
+  private String indexName;
 
   @JsonProperty("sourceIndices")
   private List<SourceIndex> sourceIndices = new ArrayList<>();
@@ -27,78 +33,18 @@ public class QuerySuggestionsConfigurationWithIndex {
   @JsonProperty("allowSpecialCharacters")
   private Boolean allowSpecialCharacters;
 
-  @JsonProperty("indexName")
-  private String indexName;
-
-  public QuerySuggestionsConfigurationWithIndex setSourceIndices(List<SourceIndex> sourceIndices) {
-    this.sourceIndices = sourceIndices;
+  public ConfigurationResponse setAppID(String appID) {
+    this.appID = appID;
     return this;
   }
 
-  public QuerySuggestionsConfigurationWithIndex addSourceIndices(SourceIndex sourceIndicesItem) {
-    this.sourceIndices.add(sourceIndicesItem);
-    return this;
-  }
-
-  /** Algolia indices from which to get the popular searches for query suggestions. */
+  /** Algolia application ID to which this Query Suggestions configuration belongs. */
   @javax.annotation.Nonnull
-  public List<SourceIndex> getSourceIndices() {
-    return sourceIndices;
+  public String getAppID() {
+    return appID;
   }
 
-  public QuerySuggestionsConfigurationWithIndex setLanguages(Languages languages) {
-    this.languages = languages;
-    return this;
-  }
-
-  /** Get languages */
-  @javax.annotation.Nullable
-  public Languages getLanguages() {
-    return languages;
-  }
-
-  public QuerySuggestionsConfigurationWithIndex setExclude(List<String> exclude) {
-    this.exclude = exclude;
-    return this;
-  }
-
-  public QuerySuggestionsConfigurationWithIndex addExclude(String excludeItem) {
-    if (this.exclude == null) {
-      this.exclude = new ArrayList<>();
-    }
-    this.exclude.add(excludeItem);
-    return this;
-  }
-
-  /** Get exclude */
-  @javax.annotation.Nullable
-  public List<String> getExclude() {
-    return exclude;
-  }
-
-  public QuerySuggestionsConfigurationWithIndex setEnablePersonalization(Boolean enablePersonalization) {
-    this.enablePersonalization = enablePersonalization;
-    return this;
-  }
-
-  /** Whether to turn on personalized query suggestions. */
-  @javax.annotation.Nullable
-  public Boolean getEnablePersonalization() {
-    return enablePersonalization;
-  }
-
-  public QuerySuggestionsConfigurationWithIndex setAllowSpecialCharacters(Boolean allowSpecialCharacters) {
-    this.allowSpecialCharacters = allowSpecialCharacters;
-    return this;
-  }
-
-  /** Whether to include suggestions with special characters. */
-  @javax.annotation.Nullable
-  public Boolean getAllowSpecialCharacters() {
-    return allowSpecialCharacters;
-  }
-
-  public QuerySuggestionsConfigurationWithIndex setIndexName(String indexName) {
+  public ConfigurationResponse setIndexName(String indexName) {
     this.indexName = indexName;
     return this;
   }
@@ -109,6 +55,71 @@ public class QuerySuggestionsConfigurationWithIndex {
     return indexName;
   }
 
+  public ConfigurationResponse setSourceIndices(List<SourceIndex> sourceIndices) {
+    this.sourceIndices = sourceIndices;
+    return this;
+  }
+
+  public ConfigurationResponse addSourceIndices(SourceIndex sourceIndicesItem) {
+    this.sourceIndices.add(sourceIndicesItem);
+    return this;
+  }
+
+  /** Algolia indices from which to get the popular searches for query suggestions. */
+  @javax.annotation.Nonnull
+  public List<SourceIndex> getSourceIndices() {
+    return sourceIndices;
+  }
+
+  public ConfigurationResponse setLanguages(Languages languages) {
+    this.languages = languages;
+    return this;
+  }
+
+  /** Get languages */
+  @javax.annotation.Nonnull
+  public Languages getLanguages() {
+    return languages;
+  }
+
+  public ConfigurationResponse setExclude(List<String> exclude) {
+    this.exclude = exclude;
+    return this;
+  }
+
+  public ConfigurationResponse addExclude(String excludeItem) {
+    this.exclude.add(excludeItem);
+    return this;
+  }
+
+  /** Get exclude */
+  @javax.annotation.Nullable
+  public List<String> getExclude() {
+    return exclude;
+  }
+
+  public ConfigurationResponse setEnablePersonalization(Boolean enablePersonalization) {
+    this.enablePersonalization = enablePersonalization;
+    return this;
+  }
+
+  /** Whether to turn on personalized query suggestions. */
+  @javax.annotation.Nonnull
+  public Boolean getEnablePersonalization() {
+    return enablePersonalization;
+  }
+
+  public ConfigurationResponse setAllowSpecialCharacters(Boolean allowSpecialCharacters) {
+    this.allowSpecialCharacters = allowSpecialCharacters;
+    return this;
+  }
+
+  /** Whether to include suggestions with special characters. */
+  @javax.annotation.Nonnull
+  public Boolean getAllowSpecialCharacters() {
+    return allowSpecialCharacters;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -117,32 +128,34 @@ public class QuerySuggestionsConfigurationWithIndex {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    QuerySuggestionsConfigurationWithIndex querySuggestionsConfigurationWithIndex = (QuerySuggestionsConfigurationWithIndex) o;
+    ConfigurationResponse configurationResponse = (ConfigurationResponse) o;
     return (
-      Objects.equals(this.sourceIndices, querySuggestionsConfigurationWithIndex.sourceIndices) &&
-      Objects.equals(this.languages, querySuggestionsConfigurationWithIndex.languages) &&
-      Objects.equals(this.exclude, querySuggestionsConfigurationWithIndex.exclude) &&
-      Objects.equals(this.enablePersonalization, querySuggestionsConfigurationWithIndex.enablePersonalization) &&
-      Objects.equals(this.allowSpecialCharacters, querySuggestionsConfigurationWithIndex.allowSpecialCharacters) &&
-      Objects.equals(this.indexName, querySuggestionsConfigurationWithIndex.indexName)
+      Objects.equals(this.appID, configurationResponse.appID) &&
+      Objects.equals(this.indexName, configurationResponse.indexName) &&
+      Objects.equals(this.sourceIndices, configurationResponse.sourceIndices) &&
+      Objects.equals(this.languages, configurationResponse.languages) &&
+      Objects.equals(this.exclude, configurationResponse.exclude) &&
+      Objects.equals(this.enablePersonalization, configurationResponse.enablePersonalization) &&
+      Objects.equals(this.allowSpecialCharacters, configurationResponse.allowSpecialCharacters)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(sourceIndices, languages, exclude, enablePersonalization, allowSpecialCharacters, indexName);
+    return Objects.hash(appID, indexName, sourceIndices, languages, exclude, enablePersonalization, allowSpecialCharacters);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class QuerySuggestionsConfigurationWithIndex {\n");
+    sb.append("class ConfigurationResponse {\n");
+    sb.append("    appID: ").append(toIndentedString(appID)).append("\n");
+    sb.append("    indexName: ").append(toIndentedString(indexName)).append("\n");
     sb.append("    sourceIndices: ").append(toIndentedString(sourceIndices)).append("\n");
     sb.append("    languages: ").append(toIndentedString(languages)).append("\n");
     sb.append("    exclude: ").append(toIndentedString(exclude)).append("\n");
     sb.append("    enablePersonalization: ").append(toIndentedString(enablePersonalization)).append("\n");
     sb.append("    allowSpecialCharacters: ").append(toIndentedString(allowSpecialCharacters)).append("\n");
-    sb.append("    indexName: ").append(toIndentedString(indexName)).append("\n");
     sb.append("}");
     return sb.toString();
   }

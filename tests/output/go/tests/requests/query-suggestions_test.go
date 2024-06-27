@@ -22,7 +22,7 @@ func createSuggestionsClient(t *testing.T) (*suggestions.APIClient, *tests.EchoR
 	t.Helper()
 
 	echo := &tests.EchoRequester{}
-	cfg := suggestions.Configuration{
+	cfg := suggestions.QuerySuggestionsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -59,7 +59,7 @@ func TestSuggestions_CreateConfig(t *testing.T) {
 	t.Run("createConfig", func(t *testing.T) {
 		_, err := client.CreateConfig(client.NewApiCreateConfigRequest(
 
-			suggestions.NewEmptyQuerySuggestionsConfigurationWithIndex().SetIndexName("theIndexName").SetSourceIndices(
+			suggestions.NewEmptyConfigurationWithIndex().SetIndexName("theIndexName").SetSourceIndices(
 				[]suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("testIndex").SetFacets(
 					[]suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
 					[][]string{
@@ -551,7 +551,7 @@ func TestSuggestions_UpdateConfig(t *testing.T) {
 	t.Run("updateConfig", func(t *testing.T) {
 		_, err := client.UpdateConfig(client.NewApiUpdateConfigRequest(
 			"theIndexName",
-			suggestions.NewEmptyQuerySuggestionsConfiguration().SetSourceIndices(
+			suggestions.NewEmptyConfiguration().SetSourceIndices(
 				[]suggestions.SourceIndex{*suggestions.NewEmptySourceIndex().SetIndexName("testIndex").SetFacets(
 					[]suggestions.Facet{*suggestions.NewEmptyFacet().SetAttribute("test")}).SetGenerate(
 					[][]string{

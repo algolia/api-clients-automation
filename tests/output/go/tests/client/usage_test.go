@@ -15,7 +15,7 @@ import (
 
 func createUsageClient(t *testing.T) (*usage.APIClient, *tests.EchoRequester) {
 	echo := &tests.EchoRequester{}
-	cfg := usage.Configuration{
+	cfg := usage.UsageConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -33,10 +33,10 @@ func TestUsageapi0(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *usage.APIClient
-	var cfg usage.Configuration
+	var cfg usage.UsageConfiguration
 	_ = client
 	_ = echo
-	cfg = usage.Configuration{
+	cfg = usage.UsageConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "test-app-id",
 			ApiKey:    "test-api-key",
@@ -57,10 +57,10 @@ func TestUsageapi1(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *usage.APIClient
-	var cfg usage.Configuration
+	var cfg usage.UsageConfiguration
 	_ = client
 	_ = echo
-	cfg = usage.Configuration{
+	cfg = usage.UsageConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "test-app-id",
 			ApiKey:    "test-api-key",
@@ -119,10 +119,10 @@ func TestUsageparameters0(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *usage.APIClient
-	var cfg usage.Configuration
+	var cfg usage.UsageConfiguration
 	_ = client
 	_ = echo
-	cfg = usage.Configuration{
+	cfg = usage.UsageConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "",
 			ApiKey:    "",
@@ -131,7 +131,7 @@ func TestUsageparameters0(t *testing.T) {
 	}
 	client, err = usage.NewClientWithConfig(cfg)
 	require.EqualError(t, err, "`appId` is missing.")
-	cfg = usage.Configuration{
+	cfg = usage.UsageConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "",
 			ApiKey:    "my-api-key",
@@ -140,7 +140,7 @@ func TestUsageparameters0(t *testing.T) {
 	}
 	client, err = usage.NewClientWithConfig(cfg)
 	require.EqualError(t, err, "`appId` is missing.")
-	cfg = usage.Configuration{
+	cfg = usage.UsageConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "",

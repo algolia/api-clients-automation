@@ -15,7 +15,7 @@ import (
 
 func createSuggestionsClient(t *testing.T) (*suggestions.APIClient, *tests.EchoRequester) {
 	echo := &tests.EchoRequester{}
-	cfg := suggestions.Configuration{
+	cfg := suggestions.QuerySuggestionsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -72,10 +72,10 @@ func TestSuggestionsparameters0(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *suggestions.APIClient
-	var cfg suggestions.Configuration
+	var cfg suggestions.QuerySuggestionsConfiguration
 	_ = client
 	_ = echo
-	cfg = suggestions.Configuration{
+	cfg = suggestions.QuerySuggestionsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -92,10 +92,10 @@ func TestSuggestionsparameters1(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *suggestions.APIClient
-	var cfg suggestions.Configuration
+	var cfg suggestions.QuerySuggestionsConfiguration
 	_ = client
 	_ = echo
-	cfg = suggestions.Configuration{
+	cfg = suggestions.QuerySuggestionsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -112,10 +112,10 @@ func TestSuggestionsparameters2(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *suggestions.APIClient
-	var cfg suggestions.Configuration
+	var cfg suggestions.QuerySuggestionsConfiguration
 	_ = client
 	_ = echo
-	cfg = suggestions.Configuration{
+	cfg = suggestions.QuerySuggestionsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
