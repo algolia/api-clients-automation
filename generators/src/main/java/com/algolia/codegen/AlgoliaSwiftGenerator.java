@@ -192,6 +192,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     supportingFiles.add(
       new SupportingFile("client_configuration.mustache", sourceFolder, getClientName(CLIENT) + "ClientConfiguration.swift")
     );
+    supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
     supportingFiles.add(new SupportingFile("Package.mustache", "Package.swift"));
     supportingFiles.add(new SupportingFile("podspec.mustache", projectName + ".podspec"));
     supportingFiles.add(
