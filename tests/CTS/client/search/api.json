@@ -65,6 +65,10 @@
             },
             {
               "host": "${{localhost}}",
+              "port": 6677
+            },
+            {
+              "host": "${{localhost}}",
               "port": 6678
             }
           ]
@@ -75,7 +79,7 @@
         "object": "$client",
         "path": "customGet",
         "parameters": {
-          "path": "1/test/retry"
+          "path": "1/test/retry/${{languageCased}}"
         },
         "expected": {
           "type": "response",
