@@ -8,5 +8,5 @@ val algoliasearch = ProjectRef(file("../../../clients/algoliasearch-client-scala
 dependsOn(algoliasearch)
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.15" % Test
-libraryDependencies += "io.github.cdimascio" % "dotenv-java" % "3.0.0" % Test
+libraryDependencies += "io.github.cdimascio" % "dotenv-java" % "3.0.1" % Test
 libraryDependencies += "org.skyscreamer" % "jsonassert" % "1.5.1" % Test
