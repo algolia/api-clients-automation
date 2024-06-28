@@ -49,12 +49,12 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
         assert _req.host == "{{{match}}}"
         {{/testHost}}
         {{#testResponse}}
-        {{#matchIsObject}}
+        {{#matchIsJSON}}
         assert (_req if isinstance(_req, dict) else _req.to_dict()) == loads("""{{{match.parameters}}}""")
-        {{/matchIsObject}}
-        {{^matchIsObject}}
+        {{/matchIsJSON}}
+        {{^matchIsJSON}}
         assert _req == """{{{match}}}"""
-        {{/matchIsObject}}
+        {{/matchIsJSON}}
         {{/testResponse}}
         {{/match}}
         {{/isError}}

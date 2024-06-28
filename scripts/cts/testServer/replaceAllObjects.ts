@@ -1,7 +1,8 @@
 import type { Server } from 'http';
 
-import express from 'express';
+import { expect } from 'chai';
 import type { Express } from 'express';
+import express from 'express';
 
 import { setupServer } from '.';
 
@@ -29,28 +30,14 @@ function addRoutes(app: Express): void {
     }),
   );
 
-  const assert = (condition: boolean, message: string): void => {
-    if (!condition) {
-      throw new Error(message);
-    }
-  };
-
   app.post('/1/indexes/:indexName/operation', (req, res) => {
-    assert(
-      req.params.indexName.startsWith('cts_e2e_replace_all_objects_'),
-      `invalid index name: ${req.params.indexName}, it should start with cts_e2e_replace_all_objects_`,
-    );
+    expect(req.params.indexName).to.match(/^cts_e2e_replace_all_objects_(.*)$/);
 
     switch (req.body.operation) {
       case 'copy': {
-        assert(
-          !req.params.indexName.includes('tmp') && req.body.destination.includes('tmp'),
-          `invalid copy operation, index name: ${req.params.indexName}`,
-        );
-        assert(
-          req.body.scope?.length === 3,
-          `invalid scope length: ${req.body.scope?.length}, expected 3`,
-        );
+        expect(req.params.indexName).to.not.include('tmp');
+        expect(req.body.destination).to.include('tmp');
+        expect(req.body.scope).to.deep.equal(['settings', 'rules', 'synonyms']);
 
         const lang = req.params.indexName.replace('cts_e2e_replace_all_objects_', '');
         if (!raoState[lang]) {
@@ -71,24 +58,17 @@ function addRoutes(app: Express): void {
       }
       case 'move': {
         const lang = req.body.destination.replace('cts_e2e_replace_all_objects_', '');
-        assert(raoState[lang] !== undefined, `invalid move operation, language ${lang} not found`);
-        assert(
-          raoState[lang].copyCount === 2,
-          `invalid copy count: ${raoState[lang].copyCount}, expected 2`,
-        );
-        assert(
-          raoState[lang].tmpIndexName === req.params.indexName,
-          `invalid tmp name, got ${req.params.indexName}, expected ${raoState[lang].tmpIndexName}`,
-        );
-        assert(req.body.scope === undefined, 'scope should be undefined');
-        assert(
-          raoState[lang].batchCount === 10,
-          `invalid batch count: ${raoState[lang].batchCount}, expected 10`,
-        );
-        assert(
-          raoState[lang].waitTaskCount === 6,
-          `invalid waitTask count: ${raoState[lang].waitTaskCount}, expected 6`,
-        );
+        expect(raoState).to.include.keys(lang);
+        expect(raoState[lang]).to.deep.equal({
+          copyCount: 2,
+          batchCount: 10,
+          waitTaskCount: 6,
+          tmpIndexName: req.params.indexName,
+          waitingForFinalWaitTask: false,
+          successful: false,
+        });
+
+        expect(req.body.scope).to.equal(undefined);
 
         raoState[lang].waitingForFinalWaitTask = true;
 
@@ -105,16 +85,10 @@ function addRoutes(app: Express): void {
 
   app.post('/1/indexes/:indexName/batch', (req, res) => {
     const lang = req.params.indexName.match(
-      /cts_e2e_replace_all_objects_(.*)_tmp_\d+/,
+      /^cts_e2e_replace_all_objects_(.*)_tmp_\d+$/,
     )?.[1] as string;
-    assert(
-      raoState[lang] !== undefined,
-      `language ${lang} not found for index ${req.params.indexName}`,
-    );
-    assert(
-      req.body.requests.every((r) => r.body.objectID),
-      `invalid action: ${req.body.requests[0].action}, expected addObject`,
-    );
+    expect(raoState).to.include.keys(lang);
+    expect(req.body.requests.every((r) => r.action === 'addObject')).to.equal(true);
 
     raoState[lang].batchCount += req.body.requests.length;
 
@@ -126,20 +100,14 @@ function addRoutes(app: Express): void {
 
   app.get('/1/indexes/:indexName/task/:taskID', (req, res) => {
     const lang = req.params.indexName.match(
-      /cts_e2e_replace_all_objects_(.*)_tmp_\d+/,
+      /^cts_e2e_replace_all_objects_(.*)_tmp_\d+$/,
     )?.[1] as string;
-    assert(
-      raoState[lang] !== undefined,
-      `language ${lang} not found for index ${req.params.indexName}`,
-    );
+    expect(raoState).to.include.keys(lang);
 
     raoState[lang].waitTaskCount++;
     if (raoState[lang].waitingForFinalWaitTask) {
-      assert(req.params.taskID === '777', `invalid taskID: ${req.params.taskID}, expected 777`);
-      assert(
-        raoState[lang].waitTaskCount === 7,
-        `invalid waitTask count: ${raoState[lang].waitTaskCount}, expected 7`,
-      );
+      expect(req.params.taskID).to.equal('777');
+      expect(raoState[lang].waitTaskCount).to.equal(7);
 
       raoState[lang].successful = true;
     }
