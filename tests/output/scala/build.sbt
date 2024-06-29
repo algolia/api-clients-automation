@@ -7,6 +7,6 @@ lazy val root = (project in file("."))
 val algoliasearch = ProjectRef(file("../../../clients/algoliasearch-client-scala"), "root")
 dependsOn(algoliasearch)
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.15" % Test
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.19" % Test
 libraryDependencies += "io.github.cdimascio" % "dotenv-java" % "3.0.1" % Test
 libraryDependencies += "org.skyscreamer" % "jsonassert" % "1.5.1" % Test
