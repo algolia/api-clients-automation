@@ -30,7 +30,7 @@
     "@types/folder-hash": "4.0.4",
     "@types/fs-extra": "11.0.4",
     "@types/js-yaml": "4.0.9",
-    "@types/micromatch": "4.0.7",
+    "@types/micromatch": "4.0.9",
     "@types/node": "20.14.9",
     "@types/semver": "7.5.8",
     "@types/spinnies": "0.5.3",
