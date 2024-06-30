@@ -91,7 +91,7 @@ __metadata:
     eslint-plugin-automation-custom: "npm:1.0.0"
     eslint-plugin-eslint-comments: "npm:3.2.0"
     eslint-plugin-import: "npm:2.29.1"
-    eslint-plugin-jsdoc: "npm:48.2.12"
+    eslint-plugin-jsdoc: "npm:48.5.0"
     eslint-plugin-json-format: "npm:2.0.1"
     eslint-plugin-prettier: "npm:5.1.3"
     eslint-plugin-unused-imports: "npm:3.2.0"
@@ -7725,6 +7725,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"es-module-lexer@npm:^1.5.3":
+  version: 1.5.4
+  resolution: "es-module-lexer@npm:1.5.4"
+  checksum: 10/f29c7c97a58eb17640dcbd71bd6ef754ad4f58f95c3073894573d29dae2cad43ecd2060d97ed5b866dfb7804d5590fb7de1d2c5339a5fceae8bd60b580387fc5
+  languageName: node
+  linkType: hard
+
 "es-object-atoms@npm:^1.0.0":
   version: 1.0.0
   resolution: "es-object-atoms@npm:1.0.0"
@@ -8045,9 +8052,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:48.2.12":
-  version: 48.2.12
-  resolution: "eslint-plugin-jsdoc@npm:48.2.12"
+"eslint-plugin-jsdoc@npm:48.5.0":
+  version: 48.5.0
+  resolution: "eslint-plugin-jsdoc@npm:48.5.0"
   dependencies:
     "@es-joy/jsdoccomment": "npm:~0.43.1"
     are-docs-informative: "npm:^0.0.2"
@@ -8055,11 +8062,13 @@ __metadata:
     debug: "npm:^4.3.4"
     escape-string-regexp: "npm:^4.0.0"
     esquery: "npm:^1.5.0"
+    parse-imports: "npm:^2.1.0"
     semver: "npm:^7.6.2"
     spdx-expression-parse: "npm:^4.0.0"
+    synckit: "npm:^0.9.0"
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
-  checksum: 10/c51a9ad790aae191d7bfa287a7b4af93e2e420b360b7f724b0c8b8fcd39ccd1445af98bf2251bcbc61f21e3a10e360d5e6b6c4e5c606c51afb2763c9911edc75
+  checksum: 10/f06e2bbd5034d869e5aea57929b9883115bb4f17e0dbe62183124b5f284e787afa00002d91b85016ccf3c68dd4ca86dbc1d39da4cb04a25172cef1395919e1a2
   languageName: node
   linkType: hard
 
@@ -12307,6 +12316,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"parse-imports@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "parse-imports@npm:2.1.0"
+  dependencies:
+    es-module-lexer: "npm:^1.5.3"
+    slashes: "npm:^3.0.12"
+  checksum: 10/2b4210c6af5309cc8e4f5d7f8eb8c628b2df690e456d4a686d3b618d7ca165e6b13ac9f64dfabc714e0d3bcefff70a0e771cdadc7fd6873e62d70c13d246e7d1
+  languageName: node
+  linkType: hard
+
 "parse-json@npm:^2.2.0":
   version: 2.2.0
   resolution: "parse-json@npm:2.2.0"
@@ -13884,6 +13903,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"slashes@npm:^3.0.12":
+  version: 3.0.12
+  resolution: "slashes@npm:3.0.12"
+  checksum: 10/c221d73765013db64f3eaf49dacc6b99a5d5477e63720c1bb71d1af647965dda23ab100ca1eb622e080f11ffe68e1e0a233b7b908073260bed4ec819ff1d3e42
+  languageName: node
+  linkType: hard
+
 "slice-ansi@npm:^5.0.0":
   version: 5.0.0
   resolution: "slice-ansi@npm:5.0.0"
@@ -14531,6 +14557,16 @@ __metadata:
     "@pkgr/core": "npm:^0.1.0"
     tslib: "npm:^2.6.2"
   checksum: 10/2864a5c3e689ad5b991bebbd8a583c5682c4fa08a4f39986b510b6b5d160c08fc3672444069f8f96ed6a9d12772879c674c1f61e728573eadfa90af40a765b74
+  languageName: node
+  linkType: hard
+
+"synckit@npm:^0.9.0":
+  version: 0.9.0
+  resolution: "synckit@npm:0.9.0"
+  dependencies:
+    "@pkgr/core": "npm:^0.1.0"
+    tslib: "npm:^2.6.2"
+  checksum: 10/e93f3f5ee43fa71d3bb2a345049642d9034f34fa9528706b5ef26e825335ca5446143c56c2b041810afe26aa6e343583ff08525f5530618a4707375270f87be1
   languageName: node
   linkType: hard
 
