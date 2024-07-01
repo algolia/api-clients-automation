@@ -1,8 +1,27 @@
-# Chopper Requester for Algolia Search Client
+<!-- centered logo -->
+<p align="center">
+  <a href="https://www.algolia.com">
+    <img alt="Algolia for Dart" src="https://raw.githubusercontent.com/algolia/algoliasearch-client-common/master/banners/dart.png" >
+  </a>
+</p>
+
+<!-- centered badges -->
+<p align="center">
+  <a href="https://pub.dartlang.org/packages/algolia_chopper_client"><img src="https://img.shields.io/pub/v/algolia_chopper_client.svg" alt="Latest version"></a>
+  <a href="https://pub.dev/packages/algolia_chopper_client/publisher"><img src="https://img.shields.io/pub/publisher/algolia_chopper_client.svg" alt="Publisher"></a>
+</p>
+
+<h3 align="center">
+  <strong>Algolia API Chopper Requester</strong>
+</h3>
+
+<p align="center">
+  Use the Chopper Requester to send requests to the Algolia API with the Algolia Search Client for Dart. This package provides a custom Requester for the Algolia Search Client, allowing users to send requests to the Algolia API using the Chopper HTTP client.
+</p>
 
 ## 💡 Installation
 
-Add Algolia Client Core as a dependency in your project directly from pub.dev:
+Add Chopper Requester as a dependency in your project directly from pub.dev:
 
 #### For Dart projects:
 
