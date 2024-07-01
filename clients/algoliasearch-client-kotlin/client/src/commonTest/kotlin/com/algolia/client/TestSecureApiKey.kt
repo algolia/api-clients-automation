@@ -1,7 +1,7 @@
 package com.algolia.client
 
 import com.algolia.client.api.SearchClient
-import com.algolia.client.extensions.SecuredApiKeyRestrictions
+import com.algolia.client.model.search.SecuredApiKeyRestrictions
 import com.algolia.client.extensions.generateSecuredApiKey
 import com.algolia.client.extensions.securedApiKeyRemainingValidity
 import com.algolia.client.model.search.SearchParamsObject
