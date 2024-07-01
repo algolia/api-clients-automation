@@ -16,6 +16,9 @@ public class RenderingContent {
   @JsonProperty("facetOrdering")
   private FacetOrdering facetOrdering;
 
+  @JsonProperty("redirect")
+  private RedirectURL redirect;
+
   public RenderingContent setFacetOrdering(FacetOrdering facetOrdering) {
     this.facetOrdering = facetOrdering;
     return this;
@@ -27,6 +30,17 @@ public class RenderingContent {
     return facetOrdering;
   }
 
+  public RenderingContent setRedirect(RedirectURL redirect) {
+    this.redirect = redirect;
+    return this;
+  }
+
+  /** Get redirect */
+  @javax.annotation.Nullable
+  public RedirectURL getRedirect() {
+    return redirect;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -36,12 +50,12 @@ public class RenderingContent {
       return false;
     }
     RenderingContent renderingContent = (RenderingContent) o;
-    return Objects.equals(this.facetOrdering, renderingContent.facetOrdering);
+    return Objects.equals(this.facetOrdering, renderingContent.facetOrdering) && Objects.equals(this.redirect, renderingContent.redirect);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(facetOrdering);
+    return Objects.hash(facetOrdering, redirect);
   }
 
   @Override
@@ -49,6 +63,7 @@ public class RenderingContent {
     StringBuilder sb = new StringBuilder();
     sb.append("class RenderingContent {\n");
     sb.append("    facetOrdering: ").append(toIndentedString(facetOrdering)).append("\n");
+    sb.append("    redirect: ").append(toIndentedString(redirect)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -49,6 +49,7 @@ import 'package:algolia_client_recommend/src/model/recommended_for_you_query.dar
 import 'package:algolia_client_recommend/src/model/redirect.dart';
 import 'package:algolia_client_recommend/src/model/redirect_rule_index_metadata.dart';
 import 'package:algolia_client_recommend/src/model/redirect_rule_index_metadata_data.dart';
+import 'package:algolia_client_recommend/src/model/redirect_url.dart';
 import 'package:algolia_client_recommend/src/model/related_model.dart';
 import 'package:algolia_client_recommend/src/model/related_products.dart';
 import 'package:algolia_client_recommend/src/model/related_query.dart';
@@ -226,6 +227,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'RedirectRuleIndexMetadataData':
       return RedirectRuleIndexMetadataData.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'RedirectURL':
+      return RedirectURL.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RelatedModel':
       return RelatedModel.fromJson(value) as ReturnType;
     case 'RelatedProducts':
