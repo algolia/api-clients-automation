@@ -4,12 +4,12 @@ import zlib from 'zlib';
 import crc32 from 'crc/crc32';
 import type { Express } from 'express';
 
+import { retryHandler } from './timeout';
+
 import { setupServer } from '.';
 
 function addRoutes(app: Express): void {
-  app.get('/1/test/retry', (req, res) => {
-    res.json({ message: 'ok test server response' });
-  });
+  app.get('/1/test/retry/:lang', retryHandler(0, 'ok test server response'));
 
   app.post('/1/test/gzip', (req, res) => {
     let rawBody = Buffer.from([]);
