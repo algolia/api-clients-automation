@@ -80,7 +80,9 @@ final requester = ChopperRequester({
   /// The Chopper Interceptors to use for modifying the request
   Iterable<Interceptor>? interceptors,
   /// The HTTP client to use for sending requests
-  Client? client
+  Client? client,
+  /// A custom JSON converter to use for serializing and deserializing JSON
+  JsonConverter? converter,
 });
 ```
 
@@ -98,11 +100,11 @@ final requester = ChopperRequester(
 );
 ```
 
-### Custom Interceptors
+#### Custom Interceptors
 
 For interceptors please see the [Chopper documentation](https://hadrien-lejard.gitbook.io/chopper/interceptors).
 
-### Custom Clients
+#### Custom Clients
 
 Via the `client` option users can use platform specific HTTP clients such:
 - [cronet_http](https://pub.dev/packages/cronet_http) on Android
@@ -130,6 +132,11 @@ Via the `client` option users can use platform specific HTTP clients such:
     ),
   );
   ```
+  
+#### Parsing JSON in the background using Isolates
+
+Parsing JSON in the background is a good idea if you don't want to block the main thread.
+Please see the [Chopper documentation](https://hadrien-lejard.gitbook.io/chopper/faq#decoding-json-using-isolates) on Decoding JSON using thread pool workers.
 
 ## License
 

@@ -26,9 +26,10 @@ class ChopperRequester implements Requester {
     Logger? logger,
     Iterable<Interceptor>? interceptors,
     http.Client? client,
+    JsonConverter? converter,
   }) : _client = ChopperClient(
           client: client,
-          converter: JsonConverter(),
+          converter: converter ?? JsonConverter(),
           interceptors: [
             AuthInterceptor(
               appId: appId,
