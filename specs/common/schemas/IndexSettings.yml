@@ -996,11 +996,11 @@ renderingContent:
     facetOrdering:
       $ref: '#/facetOrdering'
     redirect:
-      $ref: '#/redirect'
+      $ref: '#/redirectURL'
   x-categories:
     - Advanced
 
-redirect:
+redirectURL:
   description: The redirect rule container.
   type: object
   additionalProperties: false
