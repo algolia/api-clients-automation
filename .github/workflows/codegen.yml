@@ -3,6 +3,8 @@ name: Codegen
 on:
   pull_request:
     types: [opened, synchronize, closed]
+  pull_request_target:
+    types: [opened, synchronize, closed]
 
 jobs:
   notification:
