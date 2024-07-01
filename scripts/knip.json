@@ -4,10 +4,8 @@
     ".": {
       "entry": [
         "cli/index.ts",
-        "ci/codegen/cleanGeneratedBranch.ts",
         "ci/codegen/pushGeneratedCode.ts",
         "ci/codegen/spreadGeneration.ts",
-        "ci/codegen/upsertGenerationComment.ts",
         "ci/actions/restore-artifacts/src/index.ts",
         "ci/githubActions/createMatrix.ts",
         "ci/githubActions/setRunVariables.ts",
