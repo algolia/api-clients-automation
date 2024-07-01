@@ -117,6 +117,8 @@ jobs:
       SWIFT_DATA: ${{ steps.gen-matrix.outputs.SWIFT_DATA }}
       RUN_MACOS_SWIFT_CTS: ${{ steps.gen-matrix.outputs.RUN_MACOS_SWIFT_CTS }}
 
+      RUN_MACOS_KOTLIN_BUILD: ${{ steps.gen-matrix.outputs.RUN_MACOS_KOTLIN_BUILD }}
+
   scripts:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
@@ -346,6 +348,7 @@ jobs:
       - client_gen
     if: |
       always() &&
+      needs.setup.outputs.RUN_MACOS_KOTLIN_BUILD == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     env:
@@ -365,10 +368,10 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
         with:
+          type: minimal
           language: kotlin
 
-      - name: Run CTS
-        run: yarn cli build clients kotlin
+      - run: yarn cli build clients kotlin
 
   swift_cts_macos:
     timeout-minutes: 20
@@ -403,8 +406,7 @@ jobs:
           type: minimal
           language: swift
 
-      - name: Run CTS
-        run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
+      - run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
 
   codegen:
     runs-on: ubuntu-22.04

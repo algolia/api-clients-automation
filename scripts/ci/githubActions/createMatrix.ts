@@ -19,6 +19,10 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 
   // iterate over every generators to see what changed
   for (const { language, client, output } of Object.values(GENERATORS)) {
+    if (language !== 'kotlin') {
+      continue;
+    }
+
     const bundledSpec = client === 'algoliasearch' ? 'search' : client;
 
     if (!commonDependenciesChanged) {
@@ -141,6 +145,13 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
   if (swiftData) {
     core.setOutput('SWIFT_DATA', JSON.stringify(swiftData));
     core.setOutput('RUN_MACOS_SWIFT_CTS', true);
+  }
+
+  // If there are updates for the Kotlin client, we allow ourselves to run the build step on macOS
+  const runKotlin = clientMatrix.client.find((c) => c.language === 'kotlin');
+  if (runKotlin) {
+    core.setOutput('SWIFT_DATA', JSON.stringify(swiftData));
+    core.setOutput('RUN_MACOS_KOTLIN_BUILD', true);
   }
 
   const javascriptData = clientMatrix.client.find((c) => c.language === 'javascript');
