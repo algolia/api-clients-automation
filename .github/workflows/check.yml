@@ -117,6 +117,8 @@ jobs:
       SWIFT_DATA: ${{ steps.gen-matrix.outputs.SWIFT_DATA }}
       RUN_MACOS_SWIFT_CTS: ${{ steps.gen-matrix.outputs.RUN_MACOS_SWIFT_CTS }}
 
+      RUN_MACOS_KOTLIN_BUILD: ${{ steps.gen-matrix.outputs.RUN_MACOS_KOTLIN_BUILD }}
+
   scripts:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
@@ -338,6 +340,35 @@ jobs:
           name: clients-${{matrix.client.language }}
           path: clients-${{matrix.client.language }}.zip
 
+  kotlin_build_macos:
+    timeout-minutes: 10
+    runs-on: macos-latest
+    needs:
+      - setup
+      - client_gen
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_MACOS_KOTLIN_BUILD == 'true' &&
+      !contains(needs.*.result, 'cancelled') &&
+      !contains(needs.*.result, 'failure')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: ./scripts/ci/actions/restore-artifacts
+        with:
+          type: languages
+          languages: |
+            kotlin
+
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          type: minimal
+          language: kotlin
+
+      - run: yarn cli build clients kotlin
+
   swift_cts_macos:
     timeout-minutes: 20
     runs-on: macos-latest
@@ -371,8 +402,7 @@ jobs:
           type: minimal
           language: swift
 
-      - name: Run CTS
-        run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
+      - run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
 
   codegen:
     runs-on: ubuntu-22.04
@@ -382,9 +412,9 @@ jobs:
       - client_gen
       - client_gen_javascript
       - swift_cts_macos
+      - kotlin_build_macos
     if: |
       always() &&
-      (needs.swift_cts_macos.result == 'success' || needs.swift_cts_macos.result == 'skipped') &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     permissions:
