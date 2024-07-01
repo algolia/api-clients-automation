@@ -1,7 +1,7 @@
 organization := "com.algolia"
 name := "algoliasearch-scala"
 description := "Scala client for Algolia Search API"
-scalaVersion := "2.13.12"
+scalaVersion := "2.13.14"
 crossScalaVersions := Seq("2.13.12", "3.3.1")
 publishMavenStyle := true
 Test / publishArtifact := false
@@ -35,10 +35,10 @@ lazy val root = project
 
 // Project dependencies
 libraryDependencies ++= Seq(
-  "com.squareup.okhttp3" % "okhttp" % "4.11.0" % "compile",
-  "org.json4s" %% "json4s-native" % "4.0.6" % "compile",
-  "com.squareup.okhttp3" % "logging-interceptor" % "4.11.0",
-  "org.slf4j" % "slf4j-api" % "2.0.5"
+  "com.squareup.okhttp3" % "okhttp" % "4.12.0" % "compile",
+  "org.json4s" %% "json4s-native" % "4.0.7" % "compile",
+  "com.squareup.okhttp3" % "logging-interceptor" % "4.12.0",
+  "org.slf4j" % "slf4j-api" % "2.0.13"
 )
 
 scalacOptions := Seq(

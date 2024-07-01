@@ -97,6 +97,7 @@ export 'src/model/ranking_info.dart';
 export 'src/model/redirect.dart';
 export 'src/model/redirect_rule_index_metadata.dart';
 export 'src/model/redirect_rule_index_metadata_data.dart';
+export 'src/model/redirect_url.dart';
 export 'src/model/remove_user_id_response.dart';
 export 'src/model/remove_words_if_no_results.dart';
 export 'src/model/rendering_content.dart';
