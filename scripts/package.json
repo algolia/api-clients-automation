@@ -6,7 +6,6 @@
     "build": "yarn build:cli & yarn build:actions",
     "build:actions": "cd ci/actions/restore-artifacts && ncc build src/index.ts --source-map --transpile-only --minify -o builddir",
     "build:cli": "tsc && tsc-alias",
-    "cleanGeneratedBranch": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/cleanGeneratedBranch.js",
     "createMatrix": "NODE_NO_WARNINGS=1 node dist/scripts/ci/githubActions/createMatrix.js",
     "lint": "eslint --ext=ts,js,mjs,cjs .",
     "lint:deadcode": "knip",
@@ -17,7 +16,6 @@
     "spreadGeneration": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/spreadGeneration.js",
     "start": "NODE_NO_WARNINGS=1 node dist/scripts/cli/index.js",
     "test": "vitest",
-    "upsertGenerationComment": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/upsertGenerationComment.js",
     "waitForAllReleases": "NODE_NO_WARNINGS=1 node dist/scripts/ci/codegen/waitForAllReleases.js"
   },
   "devDependencies": {
