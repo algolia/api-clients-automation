@@ -136,7 +136,7 @@ Via the `client` option users can use platform specific HTTP clients such:
 #### Parsing JSON in the background using Isolates
 
 Parsing JSON in the background is a good idea if you don't want to block the main thread.
-Please see the [Chopper documentation](https://hadrien-lejard.gitbook.io/chopper/faq#decoding-json-using-isolates) on Decoding JSON using thread pool workers.
+Please see the [Chopper documentation](https://hadrien-lejard.gitbook.io/chopper/faq#decoding-json-using-isolates) on Decoding JSON using Isolate worker pools.
 
 ## License
 
