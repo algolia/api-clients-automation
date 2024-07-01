@@ -995,8 +995,18 @@ renderingContent:
   properties:
     facetOrdering:
       $ref: '#/facetOrdering'
+    redirect:
+      $ref: '#/redirect'
   x-categories:
     - Advanced
+
+redirect:
+  description: The redirect rule container.
+  type: object
+  additionalProperties: false
+  properties:
+    url:
+      type: string
 
 facetOrdering:
   description: Order of facet names and facet values in your UI.
