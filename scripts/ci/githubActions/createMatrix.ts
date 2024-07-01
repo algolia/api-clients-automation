@@ -19,10 +19,6 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
 
   // iterate over every generators to see what changed
   for (const { language, client, output } of Object.values(GENERATORS)) {
-    if (language !== 'kotlin') {
-      continue;
-    }
-
     const bundledSpec = client === 'algoliasearch' ? 'search' : client;
 
     if (!commonDependenciesChanged) {
