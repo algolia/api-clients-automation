@@ -1,5 +1,7 @@
 <div align="center">
 
+foo
+
 # API Clients Automation
 
 The Algolia API clients are generated from [OpenAPI specs](https://swagger.io/specification/), leveraging the open-source [openapi-generator](https://openapi-generator.tech/) tool.
