@@ -30,9 +30,9 @@ jobs:
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           message: |
-            ### 🔨 The codegen job will run at the end of the CI.
+            ### 🔨 The generated code will be pushed at the end of the CI for commit `${{ github.sha}}`.
 
-            _Make sure your last commit does not contain generated code, it will be automatically pushed by our CI._
+            _Please do not push any generated code to this pull request._
 
   setup:
     runs-on: ubuntu-22.04
@@ -438,7 +438,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
           PR_NUMBER: ${{ github.event.number }}
 
-      - uses: marocchino/sticky-pull-request-comment@v2
+      - name: update generation commend
+        uses: marocchino/sticky-pull-request-comment@v2
         with:
           message: |
             ### ✔️ Code generated!

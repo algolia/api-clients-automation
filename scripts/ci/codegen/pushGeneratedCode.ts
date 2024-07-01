@@ -4,8 +4,6 @@ import { getNbGitDiff } from '../utils.js';
 
 import text, { commitStartPrepareRelease } from './text.js';
 
-const PR_NUMBER = parseInt(process.env.PR_NUMBER || '0', 10);
-
 async function isUpToDate(baseBranch: string): Promise<boolean> {
   await run('git fetch origin');
   return (await run(`git pull origin ${baseBranch}`)).includes('Already up to date.');
@@ -33,10 +31,6 @@ export async function pushGeneratedCode(): Promise<void> {
 
   if (nbDiff === 0) {
     console.log(`No generated code changes found for '${baseBranch}'.`);
-
-    if (PR_NUMBER) {
-      await run(`yarn workspace scripts upsertGenerationComment noGen`);
-    }
 
     return;
   }
@@ -82,10 +76,6 @@ Co-authored-by: %an <%ae>
   await run('git add .');
   await run(`git commit -m "${message}"`);
   await run(`git push origin ${branchToPush}`);
-
-  if (PR_NUMBER) {
-    await run(`yarn workspace scripts upsertGenerationComment codegen`);
-  }
 }
 
 if (import.meta.url.endsWith(process.argv[1])) {
