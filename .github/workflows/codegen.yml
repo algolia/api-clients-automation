@@ -1,8 +1,5 @@
 name: Codegen
 
-permissions:
-  pull-requests: write
-
 on:
   pull_request:
     types: [opened, synchronize, closed]
@@ -12,6 +9,8 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     if: (github.event.action == 'opened' || github.event.action == 'synchronize') && github.event.number
+    permissions:
+      pull-requests: write
     steps:
       - name: debugging - dump GitHub context
         env:
@@ -35,6 +34,8 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
     if: github.event.action == 'closed'
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
         with:

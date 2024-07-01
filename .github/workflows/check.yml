@@ -369,6 +369,8 @@ jobs:
       (needs.swift_cts_macos.result == 'success' || needs.swift_cts_macos.result == 'skipped') &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
+    permissions:
+      pull-requests: write
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
     steps:
