@@ -14,7 +14,6 @@ dependencies:
   algolia_client_core: ^1.15.1
   chopper: ^8.0.1+1
   http: ^1.1.0
-  json_annotation: ^4.8.1
   logging: ^1.2.0
 
 dev_dependencies:
