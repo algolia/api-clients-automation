@@ -42,5 +42,7 @@ internal fun SearchClient.buildRestrictionString(restriction: SecuredApiKeyRestr
     sortedParams["validUntil"] = it.toString()
   }
 
-  return sortedParams.toSortedMap().entries.joinToString("&") { "${it.key}=${it.value.encodeURLParameter()}" }
+  return sortedParams.entries
+    .sortedBy { it.key }
+    .joinToString("&") { "${it.key}=${it.value.encodeURLParameter()}" }
 }
