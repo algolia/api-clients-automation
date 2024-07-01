@@ -1,9 +1,11 @@
 name: Codegen
 
+permissions:
+  pull-requests: write
+
 on:
-  pull_request_target:
+  pull_request:
     types: [opened, synchronize, closed]
-    branches: ["main"]
 
 jobs:
   notification:
@@ -22,17 +24,12 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
 
-      - name: Setup
-        uses: ./.github/actions/setup
+      - uses: marocchino/sticky-pull-request-comment@v2
         with:
-          type: minimal
+          message: |
+            ### 🔨 The codegen job will run at the end of the CI.
 
-      - name: Add notification comment
-        run: yarn workspace scripts upsertGenerationComment notification
-        env:
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
-          PR_NUMBER: ${{ github.event.number }}
-          HEAD_BRANCH: ${{ github.head_ref }}
+            _Make sure your last commit does not contain generated code, it will be automatically pushed by our CI._
 
   cleanup:
     runs-on: ubuntu-22.04
@@ -44,16 +41,4 @@ jobs:
           fetch-depth: 0
           ref: main
 
-      - name: Setup
-        uses: ./.github/actions/setup
-        with:
-          type: minimal
-
-      - name: Add cleanup comment
-        run: yarn workspace scripts upsertGenerationComment cleanup
-        env:
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
-          PR_NUMBER: ${{ github.event.number }}
-
-      - name: Clean previously generated branch
-        run: yarn workspace scripts cleanGeneratedBranch ${{ github.head_ref }}
+      - run: git push -d origin generated/${{ github.head_ref }} || true
