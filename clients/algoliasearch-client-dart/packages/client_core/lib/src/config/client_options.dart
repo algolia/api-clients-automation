@@ -34,17 +34,23 @@ final class ClientOptions {
   /// Used only in case of using the default (dio) requester.
   final Iterable<Interceptor>? interceptors;
 
+  /// Custom [HttpClientAdapter] used to send HTTP requests.
+  /// Used only in case of using the default (dio) requester.
+  final HttpClientAdapter? httpClientAdapter;
+
   /// Constructs a [ClientOptions] instance with the provided parameters.
-  const ClientOptions(
-      {this.connectTimeout = const Duration(seconds: 2),
-      this.writeTimeout = const Duration(seconds: 30),
-      this.readTimeout = const Duration(seconds: 5),
-      this.hosts,
-      this.headers,
-      this.agentSegments,
-      this.requester,
-      this.logger,
-      this.interceptors});
+  const ClientOptions({
+    this.connectTimeout = const Duration(seconds: 2),
+    this.writeTimeout = const Duration(seconds: 30),
+    this.readTimeout = const Duration(seconds: 5),
+    this.hosts,
+    this.headers,
+    this.agentSegments,
+    this.requester,
+    this.logger,
+    this.interceptors,
+    this.httpClientAdapter,
+  });
 
   @override
   bool operator ==(Object other) =>
@@ -59,7 +65,8 @@ final class ClientOptions {
           agentSegments == other.agentSegments &&
           logger == other.logger &&
           requester == other.requester &&
-          interceptors == other.interceptors;
+          interceptors == other.interceptors &&
+          httpClientAdapter == other.httpClientAdapter;
 
   @override
   int get hashCode =>
@@ -71,10 +78,11 @@ final class ClientOptions {
       agentSegments.hashCode ^
       logger.hashCode ^
       requester.hashCode ^
-      interceptors.hashCode;
+      interceptors.hashCode ^
+      httpClientAdapter.hashCode;
 
   @override
   String toString() {
-    return 'ClientOptions{hosts: $hosts, connectTimeout: $connectTimeout, writeTimeout: $writeTimeout, readTimeout: $readTimeout, headers: $headers, agentSegments: $agentSegments, logger: $logger, requester: $requester, interceptors: $interceptors}';
+    return 'ClientOptions{hosts: $hosts, connectTimeout: $connectTimeout, writeTimeout: $writeTimeout, readTimeout: $readTimeout, headers: $headers, agentSegments: $agentSegments, logger: $logger, requester: $requester, interceptors: $interceptors, httpClientAdapter: $httpClientAdapter}';
   }
 }

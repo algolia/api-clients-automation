@@ -27,6 +27,7 @@ class DioRequester implements Requester {
     Iterable<AgentSegment>? clientSegments,
     Function(Object?)? logger,
     Iterable<Interceptor>? interceptors,
+    HttpClientAdapter? httpClientAdapter,
   }) : _client = Dio(
           BaseOptions(
             headers: headers,
@@ -49,7 +50,11 @@ class DioRequester implements Requester {
                 logPrint: logger,
               ),
             if (interceptors != null) ...interceptors,
-          ]);
+          ]) {
+    if (httpClientAdapter != null) {
+      _client.httpClientAdapter = httpClientAdapter;
+    }
+  }
 
   @override
   Future<HttpResponse> perform(HttpRequest request) async {
