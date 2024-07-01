@@ -10,6 +10,11 @@ jobs:
     timeout-minutes: 10
     if: (github.event.action == 'opened' || github.event.action == 'synchronize') && github.event.number
     steps:
+      - name: debugging - dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
