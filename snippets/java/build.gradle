@@ -7,12 +7,12 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'com.algolia:algoliasearch-client-java:4.0.0-beta.38'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testImplementation 'com.algolia:algoliasearch-client-java:4.0.0-beta.39'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.3'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    testImplementation 'org.skyscreamer:jsonassert:1.5.1'
+    testImplementation 'org.skyscreamer:jsonassert:1.5.3'
     testImplementation 'com.fasterxml.jackson.core:jackson-core:2.17.1'
-    testImplementation 'io.github.cdimascio:dotenv-java:3.0.0'
+    testImplementation 'io.github.cdimascio:dotenv-java:3.0.1'
 }
 
 test() {

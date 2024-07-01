@@ -84,6 +84,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "redirect",
     "redirectruleindexmetadata",
     "redirectruleindexmetadatadata",
+    "redirecturl",
     "region",
     "removestopwords",
     "removewordsifnoresults",

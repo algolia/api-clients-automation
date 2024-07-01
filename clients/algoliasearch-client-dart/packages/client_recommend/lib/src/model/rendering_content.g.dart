@@ -17,6 +17,11 @@ RenderingContent _$RenderingContentFromJson(Map<String, dynamic> json) =>
               (v) => v == null
                   ? null
                   : FacetOrdering.fromJson(v as Map<String, dynamic>)),
+          redirect: $checkedConvert(
+              'redirect',
+              (v) => v == null
+                  ? null
+                  : RedirectURL.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -32,5 +37,6 @@ Map<String, dynamic> _$RenderingContentToJson(RenderingContent instance) {
   }
 
   writeNotNull('facetOrdering', instance.facetOrdering?.toJson());
+  writeNotNull('redirect', instance.redirect?.toJson());
   return val;
 }

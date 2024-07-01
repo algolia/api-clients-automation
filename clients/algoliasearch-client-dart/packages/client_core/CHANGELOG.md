@@ -1,3 +1,7 @@
+## [1.16.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.15.1...1.16.0)
+
+- [9776cb3ba](https://github.com/algolia/api-clients-automation/commit/9776cb3ba) feat(specs): add redirect to renderingContent ([#3296](https://github.com/algolia/api-clients-automation/pull/3296)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [1.15.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.15.0...1.15.1)
 
 - [8e98407c1](https://github.com/algolia/api-clients-automation/commit/8e98407c1) fix(clients): update ingestion transformations description and fix taggroups ([#3265](https://github.com/algolia/api-clients-automation/pull/3265)) by [@shortcuts](https://github.com/shortcuts/)

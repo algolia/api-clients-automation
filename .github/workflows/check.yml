@@ -18,6 +18,24 @@ concurrency:
 #   ACTIONS_RUNNER_DEBUG: true
 
 jobs:
+  notification:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 1
+    if: ${{ !github.event.pull_request.head.repo.fork && github.event.number }}
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            ### 🔨 The generated code will be pushed at the end of the CI.
+
+            Action triggered by commit `${{ github.sha}}`.
+
+            _Please do not push any generated code to this pull request._
+
   setup:
     runs-on: ubuntu-22.04
     timeout-minutes: 10
@@ -98,6 +116,8 @@ jobs:
 
       SWIFT_DATA: ${{ steps.gen-matrix.outputs.SWIFT_DATA }}
       RUN_MACOS_SWIFT_CTS: ${{ steps.gen-matrix.outputs.RUN_MACOS_SWIFT_CTS }}
+
+      RUN_MACOS_KOTLIN_BUILD: ${{ steps.gen-matrix.outputs.RUN_MACOS_KOTLIN_BUILD }}
 
   scripts:
     runs-on: ubuntu-22.04
@@ -320,6 +340,35 @@ jobs:
           name: clients-${{matrix.client.language }}
           path: clients-${{matrix.client.language }}.zip
 
+  kotlin_build_macos:
+    timeout-minutes: 10
+    runs-on: macos-latest
+    needs:
+      - setup
+      - client_gen
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_MACOS_KOTLIN_BUILD == 'true' &&
+      !contains(needs.*.result, 'cancelled') &&
+      !contains(needs.*.result, 'failure')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: ./scripts/ci/actions/restore-artifacts
+        with:
+          type: languages
+          languages: |
+            kotlin
+
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          type: minimal
+          language: kotlin
+
+      - run: yarn cli build clients kotlin
+
   swift_cts_macos:
     timeout-minutes: 20
     runs-on: macos-latest
@@ -353,8 +402,7 @@ jobs:
           type: minimal
           language: swift
 
-      - name: Run CTS
-        run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
+      - run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
 
   codegen:
     runs-on: ubuntu-22.04
@@ -364,11 +412,13 @@ jobs:
       - client_gen
       - client_gen_javascript
       - swift_cts_macos
+      - kotlin_build_macos
     if: |
       always() &&
-      (needs.swift_cts_macos.result == 'success' || needs.swift_cts_macos.result == 'skipped') &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
+    permissions:
+      pull-requests: write
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
     steps:
@@ -377,6 +427,7 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
 
       - name: Download all artifacts
         uses: ./scripts/ci/actions/restore-artifacts
@@ -418,6 +469,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
           PR_NUMBER: ${{ github.event.number }}
+
+      - name: update generation comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            ### ✔️ Code generated!
+
+            |  Name | Link |
+            |---------------------------------|------------------------|
+            | 🔨 Triggered by | [`${{ github.sha }}`](${{ github.pull_request.html_url }}/commits/${{ github.sha }}) |
+            | 🌲 Generated branch | [`generated/${{ github.head_ref }}`](${{ github.pull_request.base.repo.html_url }}/tree/generated/${{ github.head_ref }}) |
 
       - name: Spread generation to each repository
         id: spreadGeneration

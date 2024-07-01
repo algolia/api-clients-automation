@@ -90,6 +90,7 @@ import 'package:algolia_client_search/src/model/ranking_info.dart';
 import 'package:algolia_client_search/src/model/redirect.dart';
 import 'package:algolia_client_search/src/model/redirect_rule_index_metadata.dart';
 import 'package:algolia_client_search/src/model/redirect_rule_index_metadata_data.dart';
+import 'package:algolia_client_search/src/model/redirect_url.dart';
 import 'package:algolia_client_search/src/model/remove_user_id_response.dart';
 import 'package:algolia_client_search/src/model/remove_words_if_no_results.dart';
 import 'package:algolia_client_search/src/model/rendering_content.dart';
@@ -401,6 +402,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'RedirectRuleIndexMetadataData':
       return RedirectRuleIndexMetadataData.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'RedirectURL':
+      return RedirectURL.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RemoveUserIdResponse':
       return RemoveUserIdResponse.fromJson(value as Map<String, dynamic>)
           as ReturnType;
