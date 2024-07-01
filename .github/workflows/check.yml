@@ -448,8 +448,8 @@ jobs:
 
             |  Name | Link |
             |---------------------------------|------------------------|
-            | 🔨 Triggered by | [`${{ github.sha }}`](${{ github.pull_request.html_url }}/commits/${{ github.sha }}) |
-            | 🌲 Generated branch | [`generated/${{ github.head_ref }}`](${{ github.pull_request.base.repo.html_url }}/tree/generated/${{ github.head_ref }}) |
+            | 🔨 Triggered by | [`${{ github.sha }}`](${{ github.event.pull_request.html_url }}/commits/${{ github.sha }}) |
+            | 🌲 Generated branch | [`generated/${{ github.head_ref }}`](${{ github.event.pull_request.base.repo.html_url }}/tree/generated/${{ github.head_ref }}) |
 
       - name: Spread generation to each repository
         id: spreadGeneration
