@@ -320,6 +320,38 @@ jobs:
           name: clients-${{matrix.client.language }}
           path: clients-${{matrix.client.language }}.zip
 
+  kotlin_build_macos:
+    timeout-minutes: 10
+    runs-on: macos-latest
+    needs:
+      - setup
+      - client_gen
+    if: |
+      always() &&
+      !contains(needs.*.result, 'cancelled') &&
+      !contains(needs.*.result, 'failure')
+    env:
+      ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
+      ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
+      MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: ./scripts/ci/actions/restore-artifacts
+        with:
+          type: languages
+          languages: |
+            kotlin
+
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          language: kotlin
+
+      - name: Run CTS
+        run: yarn cli build clients kotlin
+
   swift_cts_macos:
     timeout-minutes: 20
     runs-on: macos-latest
@@ -364,9 +396,9 @@ jobs:
       - client_gen
       - client_gen_javascript
       - swift_cts_macos
+      - kotlin_build_macos
     if: |
       always() &&
-      (needs.swift_cts_macos.result == 'success' || needs.swift_cts_macos.result == 'skipped') &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     outputs:
