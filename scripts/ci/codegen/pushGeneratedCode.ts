@@ -47,7 +47,7 @@ export async function pushGeneratedCode(): Promise<void> {
   const branchToPush = isMainBranch ? baseBranch : `generated/${baseBranch}`;
 
   if (!isMainBranch) {
-    await run(`yarn workspace scripts cleanGeneratedBranch ${baseBranch}`);
+    await run(`git push -d generated/${baseBranch} || true`);
 
     console.log(`Creating branch for generated code: '${branchToPush}'`);
     await run(`git checkout -b ${branchToPush}`);
