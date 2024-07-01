@@ -150,7 +150,6 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
   // If there are updates for the Kotlin client, we allow ourselves to run the build step on macOS
   const runKotlin = clientMatrix.client.find((c) => c.language === 'kotlin');
   if (runKotlin) {
-    core.setOutput('SWIFT_DATA', JSON.stringify(swiftData));
     core.setOutput('RUN_MACOS_KOTLIN_BUILD', true);
   }
 
