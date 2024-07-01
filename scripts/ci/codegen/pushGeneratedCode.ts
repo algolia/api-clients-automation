@@ -41,7 +41,7 @@ export async function pushGeneratedCode(): Promise<void> {
   const branchToPush = isMainBranch ? baseBranch : `generated/${baseBranch}`;
 
   if (!isMainBranch) {
-    await run(`git push -d generated/${baseBranch} || true`);
+    await run(`git push -d origin generated/${baseBranch} || true`);
 
     console.log(`Creating branch for generated code: '${branchToPush}'`);
     await run(`git checkout -b ${branchToPush}`);
