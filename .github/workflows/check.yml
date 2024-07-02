@@ -30,7 +30,7 @@ jobs:
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           message: |
-            ### 🔨 The generated code will be pushed at the end of the CI.
+            ### 🪓 The generated code will be pushed at the end of the CI.
 
             Action triggered by commit [`${{ github.sha }}`](${{ github.event.pull_request.base.repo.html_url }}/commit/${{ github.sha }}).
 
@@ -488,8 +488,8 @@ jobs:
 
             |  Name | Link |
             |---------------------------------|------------------------|
-            | 🔨 Triggered by | [`${{ github.sha }}`](${{ github.event.pull_request.base.repo.html_url }}/commit/${{ github.sha }}) |
-            | 🪵 Generated commit | [`${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT }}`](${{ github.event.pull_request.base.repo.html_url }}/commit/${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT }}) |
+            | 🪓 Triggered by | [`${{ github.sha }}`](${{ github.event.pull_request.base.repo.html_url }}/commit/${{ github.sha }}) |
+            | 🍃 Generated commit | [`${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT }}`](${{ github.event.pull_request.base.repo.html_url }}/commit/${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT }}) |
             | 🌲 Generated branch | [`generated/${{ github.head_ref }}`](${{ github.event.pull_request.base.repo.html_url }}/tree/generated/${{ github.head_ref }}) |
 
       - name: Spread generation to each repository
