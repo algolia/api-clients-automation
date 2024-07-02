@@ -1,3 +1,7 @@
+## [1.16.1-0](https://github.com/algolia/algoliasearch-client-dart/compare/1.16.0...1.16.1-0)
+
+
+
 ## [1.16.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.15.1...1.16.0)
 
 - [9776cb3ba](https://github.com/algolia/api-clients-automation/commit/9776cb3ba) feat(specs): add redirect to renderingContent ([#3296](https://github.com/algolia/api-clients-automation/pull/3296)) by [@shortcuts](https://github.com/shortcuts/)

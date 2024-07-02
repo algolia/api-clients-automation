@@ -1,3 +1,7 @@
+## [4.0.0b24](https://github.com/algolia/algoliasearch-client-python/compare/4.0.0b23...4.0.0b24)
+
+
+
 ## [4.0.0b23](https://github.com/algolia/algoliasearch-client-python/compare/4.0.0b22...4.0.0b23)
 
 - [9776cb3ba](https://github.com/algolia/api-clients-automation/commit/9776cb3ba) feat(specs): add redirect to renderingContent ([#3296](https://github.com/algolia/api-clients-automation/pull/3296)) by [@shortcuts](https://github.com/shortcuts/)
