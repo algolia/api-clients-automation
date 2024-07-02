@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+import { setOutput } from '@actions/core';
+
 import { configureGitHubAuthor, ensureGitHubToken, MAIN_BRANCH, run } from '../../common.js';
 import { getNbGitDiff } from '../utils.js';
 
@@ -76,6 +78,8 @@ Co-authored-by: %an <%ae>
   await run('git add .');
   await run(`git commit -m "${message}"`);
   await run(`git push origin ${branchToPush}`);
+
+  setOutput('GENERATED_COMMIT', await run('git rev-parse HEAD'));
 }
 
 if (import.meta.url.endsWith(process.argv[1])) {
