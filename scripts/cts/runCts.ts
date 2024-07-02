@@ -5,6 +5,7 @@ import { createSpinner } from '../spinners.js';
 import type { Language } from '../types.js';
 
 import { startTestServer } from './testServer';
+import { assertChunkWrapperValid } from './testServer/chunkWrapper.js';
 import { getTimeoutCounter } from './testServer/timeout.js';
 
 async function runCtsOne(language: string): Promise<void> {
@@ -91,6 +92,8 @@ export async function runCts(languages: Language[], clients: string[]): Promise<
         `Expected ${languages.length} timeout(s), got ${getTimeoutCounter()} instead.`,
       );
     }
+
+    assertChunkWrapperValid(languages.length);
 
     // uncomment this once all languages are supported
     // if (languages.length !== numberOfSuccessfulReplaceAllObjectsCalls()) {

@@ -174,5 +174,201 @@
         }
       }
     ]
+  },
+  {
+    "testName": "call saveObjects without error",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6680
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "object": "$client",
+        "path": "saveObjects",
+        "parameters": {
+          "indexName": "cts_e2e_saveObjects_${{languageCased}}",
+          "objects": [
+            {
+              "objectID": "1",
+              "name": "Adam"
+            },
+            {
+              "objectID": "2",
+              "name": "Benoit"
+            }
+          ],
+          "requestOptions": null
+        },
+        "expected": {
+          "type": "response",
+          "match": [
+            {
+              "taskID": 333,
+              "objectIDs": [
+                "1",
+                "2"
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "testName": "call partialUpdateObjects with createIfNotExists=true",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6680
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "object": "$client",
+        "path": "partialUpdateObjects",
+        "parameters": {
+          "indexName": "cts_e2e_partialUpdateObjects_${{languageCased}}",
+          "objects": [
+            {
+              "objectID": "1",
+              "name": "Adam"
+            },
+            {
+              "objectID": "2",
+              "name": "Benoit"
+            }
+          ],
+          "createIfNotExists": true,
+          "requestOptions": null
+        },
+        "expected": {
+          "type": "response",
+          "match": [
+            {
+              "taskID": 444,
+              "objectIDs": [
+                "1",
+                "2"
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "testName": "call partialUpdateObjects with createIfNotExists=false",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6680
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "object": "$client",
+        "path": "partialUpdateObjects",
+        "parameters": {
+          "indexName": "cts_e2e_partialUpdateObjects_${{languageCased}}",
+          "objects": [
+            {
+              "objectID": "3",
+              "name": "Cyril"
+            },
+            {
+              "objectID": "4",
+              "name": "David"
+            }
+          ],
+          "createIfNotExists": false,
+          "requestOptions": null
+        },
+        "expected": {
+          "type": "response",
+          "match": [
+            {
+              "taskID": 555,
+              "objectIDs": [
+                "3",
+                "4"
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "testName": "call deleteObjects without error",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6680
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "object": "$client",
+        "path": "deleteObjects",
+        "parameters": {
+          "indexName": "cts_e2e_deleteObjects_${{languageCased}}",
+          "objectIDs": [
+            "1",
+            "2"
+          ],
+          "requestOptions": null
+        },
+        "expected": {
+          "type": "response",
+          "match": [
+            {
+              "taskID": 666,
+              "objectIDs": [
+                "1",
+                "2"
+              ]
+            }
+          ]
+        }
+      }
+    ]
   }
 ]

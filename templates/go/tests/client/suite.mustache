@@ -69,14 +69,14 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{testType}}{{/lambda.titlecase}}{
       require.Equal(t, "{{{match}}}", echo.Host)
     {{/testHost}}
     {{#testResponse}}
-      {{#matchIsObject}}
+      {{#matchIsJSON}}
         rawBody, err := json.Marshal(res)
         require.NoError(t, err)
         require.JSONEq(t, `{{{match.parameters}}}`, string(rawBody))
-      {{/matchIsObject}}
-      {{^matchIsObject}}
+      {{/matchIsJSON}}
+      {{^matchIsJSON}}
         require.Equal(t, `{{{match}}}`, res)
-      {{/matchIsObject}}
+      {{/matchIsJSON}}
     {{/testResponse}}
   {{/match}}
   {{/isError}}

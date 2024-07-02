@@ -58,16 +58,16 @@ final class {{client}}ClientTests: XCTestCase {
             {{/testHost}}
             {{#testResponse}}
               {{#isHelper}}
-                {{#matchIsObject}}
+                {{#matchIsJSON}}
                   let comparableData = try XCTUnwrap("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}".data(using: .utf8))
                   try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
-                {{/matchIsObject}}
-                {{^matchIsObject}}
+                {{/matchIsJSON}}
+                {{^matchIsJSON}}
                   XCTAssertEqual("{{#lambda.escapeQuotes}}{{{match}}}{{/lambda.escapeQuotes}}", response)
-                {{/matchIsObject}}
+                {{/matchIsJSON}}
               {{/isHelper}}
               {{^isHelper}}
-                let comparableData = "{{#lambda.escapeQuotes}}{{#matchIsObject}}{{{match.parameters}}}{{/matchIsObject}}{{^matchIsObject}}{{{match}}}{{/matchIsObject}}{{/lambda.escapeQuotes}}".data(using: .utf8)
+                let comparableData = "{{#lambda.escapeQuotes}}{{#matchIsJSON}}{{{match.parameters}}}{{/matchIsJSON}}{{^matchIsJSON}}{{{match}}}{{/matchIsJSON}}{{/lambda.escapeQuotes}}".data(using: .utf8)
                 let comparableJSON = try XCTUnwrap(comparableData?.jsonString)
                 XCTAssertEqual(comparableJSON, responseBodyJSON);
               {{/isHelper}}

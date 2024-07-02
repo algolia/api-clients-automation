@@ -4,6 +4,7 @@ import static com.algolia.codegen.utils.Helpers.CUSTOM_METHODS;
 
 import com.algolia.codegen.exceptions.CTSException;
 import com.algolia.codegen.utils.*;
+import io.swagger.util.Json;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -160,7 +161,11 @@ public class TestsClient extends TestsGenerator {
                 if (step.expected.match instanceof Map match) {
                   paramsType.enhanceParameters(match, matchMap);
                   stepOut.put("match", matchMap);
-                  stepOut.put("matchIsObject", true);
+                  stepOut.put("matchIsJSON", true);
+                } else if (step.expected.match instanceof List match) {
+                  matchMap.put("parameters", Json.mapper().writeValueAsString(step.expected.match));
+                  stepOut.put("match", matchMap);
+                  stepOut.put("matchIsJSON", true);
                 } else {
                   stepOut.put("match", step.expected.match);
                 }
