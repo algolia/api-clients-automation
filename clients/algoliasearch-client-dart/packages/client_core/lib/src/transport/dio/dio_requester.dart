@@ -9,6 +9,7 @@ import 'package:algolia_client_core/src/transport/dio/platform/platform.dart';
 import 'package:algolia_client_core/src/transport/requester.dart';
 import 'package:algolia_client_core/src/version.dart';
 import 'package:dio/dio.dart';
+import 'package:qs_dart/qs_dart.dart' as qs;
 
 /// A [Requester] implementation using the Dio library.
 ///
@@ -99,12 +100,10 @@ class DioRequester implements Requester {
       port: request.host.port,
       path: request.path,
     );
-    if (request.queryParameters.isNotEmpty) {
-      return Uri.dataFromString(
-          "${uri.toString()}?${request.queryParameters.entries.map((e) => "${e.key}=${e.value}").join("&")}");
-    }
 
-    return uri;
+    return request.queryParameters.isNotEmpty
+        ? Uri.parse("${uri.toString()}?${qs.encode(request.queryParameters)}")
+        : uri;
   }
 
   @override
