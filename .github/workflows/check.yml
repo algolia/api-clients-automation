@@ -478,7 +478,7 @@ jobs:
 
             |  Name | Link |
             |---------------------------------|------------------------|
-            | 🔨[`${{ github.sha }}`](${{ github.event.pull_request.base.repo.html_url }}/commit/${{ github.sha }}) Triggered by | [`${{ github.sha }}`](${{ github.event.pull_request.base.repo.html_url }}/commit/${{ github.sha }}) |
+            | 🔨 Triggered by | [`${{ github.sha }}`](${{ github.event.pull_request.base.repo.html_url }}/commit/${{ github.sha }}) |
             | 🌲 Generated branch | [`generated/${{ github.head_ref }}`](${{ github.event.pull_request.base.repo.html_url }}/tree/generated/${{ github.head_ref }}) |
 
       - name: Spread generation to each repository
