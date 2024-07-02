@@ -477,7 +477,7 @@ jobs:
           message: |
             ### No code generated
 
-            _If you believe code should've been generated, please, [report the issue]()https://github.com/algolia/api-clients-automation/issues/new?assignees=&labels=bug%2Ctriage&projects=&template=Bug_report.yml&title=%5Bbug%5D%3A+._
+            _If you believe code should've been generated, please, [report the issue](https://github.com/algolia/api-clients-automation/issues/new?assignees=&labels=bug%2Ctriage&projects=&template=Bug_report.yml&title=%5Bbug%5D%3A+)._
 
       - name: update generation comment
         uses: marocchino/sticky-pull-request-comment@v2
