@@ -30,7 +30,7 @@ jobs:
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           message: |
-            ### 🔨 The generated code will be pushed at the end of the CI.
+            ### 🪓 The generated code will be pushed at the end of the CI.
 
             Action triggered by commit [`${{ github.sha }}`](${{ github.event.pull_request.base.repo.html_url }}/commit/${{ github.sha }}).
 
@@ -472,13 +472,24 @@ jobs:
 
       - name: update generation comment
         uses: marocchino/sticky-pull-request-comment@v2
+        if: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT == '' }}
+        with:
+          message: |
+            ### No code generated
+
+            _If you believe code should've been generated, please, [report the issue](https://github.com/algolia/api-clients-automation/issues/new?assignees=&labels=bug%2Ctriage&projects=&template=Bug_report.yml&title=%5Bbug%5D%3A+)._
+
+      - name: update generation comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT != '' }}
         with:
           message: |
             ### ✔️ Code generated!
 
             |  Name | Link |
             |---------------------------------|------------------------|
-            | 🔨 Triggered by | [`${{ github.sha }}`](${{ github.event.pull_request.base.repo.html_url }}/commit/${{ github.sha }}) |
+            | 🪓 Triggered by | [`${{ github.sha }}`](${{ github.event.pull_request.base.repo.html_url }}/commit/${{ github.sha }}) |
+            | 🍃 Generated commit | [`${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT }}`](${{ github.event.pull_request.base.repo.html_url }}/commit/${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT }}) |
             | 🌲 Generated branch | [`generated/${{ github.head_ref }}`](${{ github.event.pull_request.base.repo.html_url }}/tree/generated/${{ github.head_ref }}) |
 
       - name: Spread generation to each repository
