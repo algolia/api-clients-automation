@@ -94,9 +94,7 @@ async function waitForAllReleases(languagesReleased: Language[]): Promise<void> 
         console.log(
           `${success ? '✅' : '❌'} ${ciRun.language} CI finished with conclusion: ${ciRun.run.conclusion}`,
         );
-
-        // Ruby action is flaky for now but the release succeed
-        if (!success && ciRun.language !== 'ruby') {
+        if (!success) {
           failures.push(ciRun.language);
         }
         // stop fetching this run.
