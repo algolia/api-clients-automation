@@ -77,5 +77,5 @@ function addRoutes(app: express.Express): void {
 }
 
 export function timeoutServer(): Promise<Server> {
-  return setupServer('timeout', 6677, addRoutes);
+  return setupServer('timeout', 6676, addRoutes);
 }

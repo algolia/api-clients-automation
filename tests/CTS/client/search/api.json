@@ -61,7 +61,7 @@
           "customHosts": [
             {
               "host": "${{localhost}}",
-              "port": 6677
+              "port": 6676
             },
             {
               "host": "${{localhost}}",
