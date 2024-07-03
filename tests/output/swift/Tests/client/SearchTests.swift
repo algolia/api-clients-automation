@@ -45,6 +45,7 @@ final class SearchClientClientTests: XCTestCase {
             appID: "test-app-id",
             apiKey: "test-api-key",
             hosts: [
+                RetryableHost(url: URL(string: "http://localhost:6676")!),
                 RetryableHost(url: URL(string: "http://localhost:6677")!),
                 RetryableHost(url: URL(string: "http://localhost:6678")!),
             ]
@@ -52,7 +53,7 @@ final class SearchClientClientTests: XCTestCase {
         let transporter = Transporter(configuration: configuration)
         let client = SearchClient(configuration: configuration, transporter: transporter)
         let response = try await client.customGetWithHTTPInfo(
-            path: "1/test/retry"
+            path: "1/test/retry/Swift"
         )
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let responseBodyJSON = try XCTUnwrap(responseBodyData.jsonString)

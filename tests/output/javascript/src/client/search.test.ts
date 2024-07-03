@@ -24,7 +24,7 @@ describe('api', () => {
     })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('test-app-id-dsn.algolia.net');
-  });
+  }, 15000);
 
   test('calls api with correct write host', async () => {
     const $client = searchClient('test-app-id', 'test-api-key', {
@@ -36,20 +36,21 @@ describe('api', () => {
     })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('test-app-id.algolia.net');
-  });
+  }, 15000);
 
   test('tests the retry strategy', async () => {
     const $client = searchClient('test-app-id', 'test-api-key', {
       hosts: [
+        { url: 'localhost', port: 6676, accept: 'readWrite', protocol: 'http' },
         { url: 'localhost', port: 6677, accept: 'readWrite', protocol: 'http' },
         { url: 'localhost', port: 6678, accept: 'readWrite', protocol: 'http' },
       ],
     });
 
-    const result = await $client.customGet({ path: '1/test/retry' });
+    const result = await $client.customGet({ path: '1/test/retry/JavaScript' });
 
     expect(result).toEqual({ message: 'ok test server response' });
-  });
+  }, 15000);
 });
 
 describe('commonApi', () => {
@@ -63,7 +64,7 @@ describe('commonApi', () => {
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(
       /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Search (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/
     );
-  });
+  }, 15000);
 
   test('calls api with default read timeouts', async () => {
     const $client = createClient();
@@ -75,7 +76,7 @@ describe('commonApi', () => {
     expect(result).toEqual(
       expect.objectContaining({ connectTimeout: 2000, responseTimeout: 5000 })
     );
-  });
+  }, 15000);
 
   test('calls api with default write timeouts', async () => {
     const $client = createClient();
@@ -87,7 +88,7 @@ describe('commonApi', () => {
     expect(result).toEqual(
       expect.objectContaining({ connectTimeout: 2000, responseTimeout: 30000 })
     );
-  });
+  }, 15000);
 });
 
 describe('helpers', () => {
@@ -102,7 +103,7 @@ describe('helpers', () => {
     expect(result).toEqual(
       'NjFhZmE0OGEyMTI3OThiODc0OTlkOGM0YjcxYzljY2M2NmU2NDE5ZWY0NDZjMWJhNjA2NzBkMjAwOTI2YWQyZnJlc3RyaWN0SW5kaWNlcz1Nb3ZpZXMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw'
     );
-  });
+  }, 15000);
 
   test('generate secured api key with searchParams', async () => {
     const $client = createClient();
@@ -129,7 +130,7 @@ describe('helpers', () => {
     expect(result).toEqual(
       'MzAxMDUwYjYyODMxODQ3ZWM1ZDYzNTkxZmNjNDg2OGZjMjAzYjQyOTZhMGQ1NDJhMDFiNGMzYTYzODRhNmMxZWFyb3VuZFJhZGl1cz1hbGwmZmlsdGVycz1jYXRlZ29yeSUzQUJvb2slMjBPUiUyMGNhdGVnb3J5JTNBRWJvb2slMjBBTkQlMjBfdGFncyUzQXB1Ymxpc2hlZCZoaXRzUGVyUGFnZT0xMCZtb2RlPW5ldXJhbFNlYXJjaCZvcHRpb25hbFdvcmRzPW9uZSUyQ3R3byZxdWVyeT1iYXRtYW4mcmVzdHJpY3RJbmRpY2VzPU1vdmllcyUyQ2N0c19lMmVfc2V0dGluZ3MmcmVzdHJpY3RTb3VyY2VzPTE5Mi4xNjguMS4wJTJGMjQmdHlwb1RvbGVyYW5jZT1zdHJpY3QmdXNlclRva2VuPXVzZXIxMjMmdmFsaWRVbnRpbD0yNTI0NjA0NDAw'
     );
-  });
+  }, 15000);
 
   test('call replaceAllObjects without error', async () => {
     const $client = searchClient('test-app-id', 'test-api-key', {
@@ -171,7 +172,7 @@ describe('helpers', () => {
         updatedAt: '2021-01-01T00:00:00.000Z',
       },
     });
-  });
+  }, 15000);
 });
 
 describe('parameters', () => {
@@ -198,7 +199,7 @@ describe('parameters', () => {
     } catch (e) {
       expect((e as Error).message).toMatch('`apiKey` is missing.');
     }
-  });
+  }, 15000);
 
   test('`addApiKey` throws with invalid parameters', async () => {
     const $client = createClient();
@@ -211,7 +212,7 @@ describe('parameters', () => {
         'Parameter `apiKey` is required when calling `addApiKey`.'
       );
     }
-  });
+  }, 15000);
 
   test('`addOrUpdateObject` throws with invalid parameters', async () => {
     const $client = createClient();
@@ -249,7 +250,7 @@ describe('parameters', () => {
         'Parameter `body` is required when calling `addOrUpdateObject`.'
       );
     }
-  });
+  }, 15000);
 });
 
 describe('init', () => {

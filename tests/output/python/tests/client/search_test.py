@@ -53,13 +53,14 @@ class TestSearchClient:
         _config = SearchConfig("test-app-id", "test-api-key")
         _config.hosts = HostsCollection(
             [
+                Host(url="localhost", scheme="http", port=6676),
                 Host(url="localhost", scheme="http", port=6677),
                 Host(url="localhost", scheme="http", port=6678),
             ]
         )
         self._client = SearchClient.create_with_config(config=_config)
         _req = await self._client.custom_get(
-            path="1/test/retry",
+            path="1/test/retry/Python",
         )
         assert (_req if isinstance(_req, dict) else _req.to_dict()) == loads(
             """{"message":"ok test server response"}"""

@@ -8,9 +8,15 @@ import { createSpinner } from '../../spinners';
 import { gzipServer } from './gzip';
 import { replaceAllObjectsServer } from './replaceAllObjects';
 import { timeoutServer } from './timeout';
+import { timeoutServerBis } from './timeoutBis';
 
 export async function startTestServer(): Promise<() => Promise<void>> {
-  const servers = await Promise.all([timeoutServer(), gzipServer(), replaceAllObjectsServer()]);
+  const servers = await Promise.all([
+    timeoutServer(),
+    timeoutServerBis(),
+    gzipServer(),
+    replaceAllObjectsServer(),
+  ]);
 
   return async () => {
     await Promise.all(
