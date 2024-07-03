@@ -25,26 +25,18 @@ import (
   "github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 )
 
-type Option struct {
-	optionType  string
-	name  string
-	value string
+type Option func(url.Values, map[string]string)
+
+func WithQueryParam(name string, val any) Option {
+  return func(queryParams url.Values, _ map[string]string) {
+    queryParams.Set(queryParameterToString(name), queryParameterToString(val))
+  }
 }
 
-func QueryParamOption(name string, val any) Option {
-	return Option{
-    optionType:  "query",
-		name:  queryParameterToString(name),
-		value: queryParameterToString(val),
-	}
-}
-
-func HeaderParamOption(name string, val any) Option {
-	return Option{
-    optionType:  "header",
-		name:  name,
-		value: parameterToString(val),
-	}
+func WithHeaderParam(name string, val any) Option {
+  return func(_ url.Values, headers map[string]string) {
+    headers[name] = parameterToString(val)
+  }
 }
 
 {{#operation}}
@@ -235,12 +227,7 @@ func (c *APIClient) {{nickname}}WithHTTPInfo(ctx context.Context, {{#hasParams}}
 
   // optional params if any
   for _, opt := range opts {
-    switch opt.optionType {
-      case "query":
-        queryParams.Set(opt.name, opt.value)
-      case "header":
-        headers[opt.name] = opt.value
-    }
+    opt(queryParams, headers)
   }
 
 {{#bodyParams}}

@@ -65,46 +65,71 @@ func IsNilOrEmpty(i any) bool {
 	}
 }
 
+type IterableOptions[T any] struct {
+	Aggregator  func(*T, error)
+	Timeout     func() time.Duration
+	IterableErr *IterableError[T]
+}
+
+type IterableOption[T any] func(*IterableOptions[T])
+
+func WithAggregator[T any](aggregator func(*T, error)) IterableOption[T] {
+	return func(options *IterableOptions[T]) {
+		options.Aggregator = aggregator
+	}
+}
+
+func WithTimeout[T any](timeout func() time.Duration) IterableOption[T] {
+	return func(options *IterableOptions[T]) {
+		options.Timeout = timeout
+	}
+}
+
+func WithIterableError[T any](iterableErr *IterableError[T]) IterableOption[T] {
+	return func(options *IterableOptions[T]) {
+		options.IterableErr = iterableErr
+	}
+}
+
 type IterableError[T any] struct {
 	Validate func(*T, error) bool
 	Message  func(*T, error) string
 }
 
-func CreateIterable[T any](
-	execute func(*T, error) (*T, error),
-	validate func(*T, error) bool,
-	aggregator func(*T, error),
-	timeout func() time.Duration,
-	iterableErr *IterableError[T],
-) (*T, error) {
+func CreateIterable[T any](execute func(*T, error) (*T, error), validate func(*T, error) bool, opts ...IterableOption[T]) (*T, error) {
+	options := IterableOptions[T]{
+		Aggregator: nil,
+		Timeout: func() time.Duration {
+			return 1 * time.Second
+		},
+		IterableErr: nil,
+	}
+
+	for _, opt := range opts {
+		opt(&options)
+	}
 	var executor func(*T, error) (*T, error)
 
 	executor = func(previousResponse *T, previousError error) (*T, error) {
 		response, responseErr := execute(previousResponse, previousError)
 
-		if aggregator != nil {
-			aggregator(response, responseErr)
+		if options.Aggregator != nil {
+			options.Aggregator(response, responseErr)
 		}
 
 		if validate(response, responseErr) {
 			return response, responseErr
 		}
 
-		if iterableErr != nil && iterableErr.Validate(response, responseErr) {
-			if iterableErr.Message != nil {
-				return nil, errs.NewWaitError(iterableErr.Message(response, responseErr))
+		if options.IterableErr != nil && options.IterableErr.Validate(response, responseErr) {
+			if options.IterableErr.Message != nil {
+				return nil, errs.NewWaitError(options.IterableErr.Message(response, responseErr))
 			}
 
 			return nil, errs.NewWaitError("an error occurred")
 		}
 
-		if timeout == nil {
-			timeout = func() time.Duration {
-				return 1 * time.Second
-			}
-		}
-
-		time.Sleep(timeout())
+		time.Sleep(options.Timeout())
 
 		return executor(response, responseErr)
 	}

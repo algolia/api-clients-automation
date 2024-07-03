@@ -777,24 +777,26 @@ func (c *APIClient) GetSecuredApiKeyRemainingValidity(securedApiKey string) (tim
 	return time.Until(time.Unix(int64(ts), 0)), nil
 }
 
+
+
 // Helper: Saves the given array of objects in the given index. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
-func (c *APIClient) SaveObjects(indexName string, objects []map[string]any) ([]BatchResponse, error) {
-  return c.ChunkedBatch(indexName, objects, utils.ToPtr(ACTION_ADD_OBJECT), nil, nil)
+func (c *APIClient) SaveObjects(indexName string, objects []map[string]any, opts ...ChunkedBatchOption) ([]BatchResponse, error) {
+  return c.ChunkedBatch(indexName, objects, ACTION_ADD_OBJECT, opts...)
 }
 
 // Helper: Deletes every records for the given objectIDs. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objectIDs in it.
-func (c *APIClient) DeleteObjects(indexName string, objectIDs []string) ([]BatchResponse, error) {
+func (c *APIClient) DeleteObjects(indexName string, objectIDs []string, opts ...ChunkedBatchOption) ([]BatchResponse, error) {
   objects := make([]map[string]any, 0, len(objectIDs))
 
   for _, id := range objectIDs {
     objects = append(objects, map[string]any{"objectID":id})
   }
 
-  return c.ChunkedBatch(indexName, objects, utils.ToPtr(ACTION_DELETE_OBJECT), nil, nil)
+  return c.ChunkedBatch(indexName, objects, ACTION_DELETE_OBJECT, opts...)
 }
 
 // Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunkedBatch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
-func (c *APIClient) PartialUpdateObjects(indexName string, objects []map[string]any, createIfNotExists bool) ([]BatchResponse, error) {
+func (c *APIClient) PartialUpdateObjects(indexName string, objects []map[string]any, createIfNotExists bool, opts ...ChunkedBatchOption) ([]BatchResponse, error) {
   var action Action
 
   if createIfNotExists {
@@ -803,47 +805,57 @@ func (c *APIClient) PartialUpdateObjects(indexName string, objects []map[string]
     action = ACTION_PARTIAL_UPDATE_OBJECT_NO_CREATE
   }
 
-  return c.ChunkedBatch(indexName, objects, utils.ToPtr(action), nil, nil)
+  return c.ChunkedBatch(indexName, objects, action, opts...)
+}
+
+type ChunkedBatchOptions struct {
+  WaitForTasks bool
+  BatchSize    int
+}
+
+type ChunkedBatchOption func(*ChunkedBatchOptions)
+
+func WithChunkedBatchWaitForTasks(waitForTasks bool) ChunkedBatchOption {
+  return func(o *ChunkedBatchOptions) {
+    o.WaitForTasks = waitForTasks
+  }
+}
+
+func WithChunkedBatchBatchSize(batchSize int) ChunkedBatchOption {
+  return func(o *ChunkedBatchOptions) {
+    o.BatchSize = batchSize
+  }
 }
 
 // ChunkedBatch chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
-func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, action *Action, waitForTasks *bool, batchSize *int) ([]BatchResponse, error) {
-	var (
-		defaultBatchSize   = 1000
-		defaultAction      = ACTION_ADD_OBJECT
-		defaultWaitForTask = false
-	)
+func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, action Action, opts ...ChunkedBatchOption) ([]BatchResponse, error) {
+  options := ChunkedBatchOptions{
+    WaitForTasks: false,
+    BatchSize:    1000,
+  }
+	
+  for _, opt := range opts {
+    opt(&options)
+  }
 
-	if batchSize == nil {
-		batchSize = &defaultBatchSize
-	}
-
-	if action == nil {
-		action = &defaultAction
-	}
-
-	if waitForTasks == nil {
-		waitForTasks = &defaultWaitForTask
-	}
-
-	requests := make([]BatchRequest, 0, len(objects)%*batchSize)
-	responses := make([]BatchResponse, 0, len(objects)%*batchSize)
+	requests := make([]BatchRequest, 0, len(objects)%options.BatchSize)
+	responses := make([]BatchResponse, 0, len(objects)%options.BatchSize)
 
 	for i, obj := range objects {
-		requests = append(requests, *NewBatchRequest(*action, obj))
+		requests = append(requests, *NewBatchRequest(action, obj))
 
-		if len(requests) == *batchSize || i == len(objects)-1 {
+		if len(requests) == options.BatchSize || i == len(objects)-1 {
 			resp, err := c.Batch(c.NewApiBatchRequest(indexName, NewBatchWriteParams(requests)))
 			if err != nil {
 				return nil, err
 			}
 
 			responses = append(responses, *resp)
-			requests = make([]BatchRequest, 0, len(objects)%*batchSize)
+			requests = make([]BatchRequest, 0, len(objects)%options.BatchSize)
 		}
 	}
 
-	if *waitForTasks {
+	if options.WaitForTasks {
 		for _, resp := range responses {
 			_, err := c.WaitForTask(indexName, resp.TaskID, nil, nil)
 			if err != nil {
@@ -857,7 +869,7 @@ func (c *APIClient) ChunkedBatch(indexName string, objects []map[string]any, act
 
 // ReplaceAllObjects replaces all objects (records) in the given `indexName` with the given `objects`. A temporary index is created during this process in order to backup your data.
 // See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
-func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any, batchSize *int) (*ReplaceAllObjectsResponse, error) {
+func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any, opts ...ChunkedBatchOption) (*ReplaceAllObjectsResponse, error) {
 	tmpIndexName := fmt.Sprintf("%s_tmp_%d", indexName, time.Now().UnixNano())
 
 	copyResp, err := c.OperationIndex(c.NewApiOperationIndexRequest(indexName, NewOperationIndexParams(OPERATION_TYPE_COPY, tmpIndexName, WithOperationIndexParamsScope([]ScopeType{SCOPE_TYPE_SETTINGS, SCOPE_TYPE_RULES, SCOPE_TYPE_SYNONYMS}))))
@@ -865,9 +877,9 @@ func (c *APIClient) ReplaceAllObjects(indexName string, objects []map[string]any
 		return nil, err
 	}
 
-	waitForTask := true
+  opts = append(opts, WithChunkedBatchWaitForTasks(true))
 
-	batchResp, err := c.ChunkedBatch(tmpIndexName, objects, nil, &waitForTask, batchSize)
+	batchResp, err := c.ChunkedBatch(tmpIndexName, objects, ACTION_ADD_OBJECT, opts...)
 	if err != nil {
 		return nil, err
 	}
