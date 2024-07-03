@@ -29,6 +29,7 @@ jobs:
 
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
+          GIT_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
           message: |
             ### 🪓 The generated code will be pushed at the end of the CI.
 
@@ -474,6 +475,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v2
         if: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT == '' }}
         with:
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
           message: |
             ### No code generated
 
@@ -483,6 +485,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v2
         if: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT != '' }}
         with:
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
           message: |
             ### ✔️ Code generated!
 
