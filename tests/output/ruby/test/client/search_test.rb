@@ -36,6 +36,12 @@ class TestClientSearchClient < Test::Unit::TestCase
           Algolia::Transport::StatefulHost.new(
             'localhost',
             protocol: 'http://',
+            port: 6676,
+            accept: CallType::READ | CallType::WRITE
+          ),
+          Algolia::Transport::StatefulHost.new(
+            'localhost',
+            protocol: 'http://',
             port: 6677,
             accept: CallType::READ | CallType::WRITE
           ),
@@ -49,7 +55,7 @@ class TestClientSearchClient < Test::Unit::TestCase
         'searchClient'
       )
     )
-    req = client.custom_get("1/test/retry")
+    req = client.custom_get("1/test/retry/Ruby")
     assert_equal({ 'message': "ok test server response" }, req.to_hash)
   end
 
