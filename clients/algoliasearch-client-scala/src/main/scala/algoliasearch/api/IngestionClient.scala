@@ -1136,7 +1136,7 @@ class IngestionClient(
     execute[SourceWatchResponse](request, requestOptions)
   }
 
-  /** Searches for transformations.
+  /** Try a transformation.
     *
     * Required API Key ACLs:
     *   - addObject

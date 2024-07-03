@@ -19,7 +19,7 @@ import (
 
 func createSearchClient(t *testing.T) (*search.APIClient, *tests.EchoRequester) {
 	echo := &tests.EchoRequester{}
-	cfg := search.Configuration{
+	cfg := search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -37,10 +37,10 @@ func TestSearchapi0(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
-	var cfg search.Configuration
+	var cfg search.SearchConfiguration
 	_ = client
 	_ = echo
-	cfg = search.Configuration{
+	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "test-app-id",
 			ApiKey:    "test-api-key",
@@ -61,10 +61,10 @@ func TestSearchapi1(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
-	var cfg search.Configuration
+	var cfg search.SearchConfiguration
 	_ = client
 	_ = echo
-	cfg = search.Configuration{
+	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "test-app-id",
 			ApiKey:    "test-api-key",
@@ -85,10 +85,10 @@ func TestSearchapi2(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
-	var cfg search.Configuration
+	var cfg search.SearchConfiguration
 	_ = client
 	_ = echo
-	cfg = search.Configuration{
+	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
@@ -111,10 +111,10 @@ func TestSearchapi3(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
-	var cfg search.Configuration
+	var cfg search.SearchConfiguration
 	_ = client
 	_ = echo
-	cfg = search.Configuration{
+	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:       "test-app-id",
 			ApiKey:      "test-api-key",
@@ -206,10 +206,10 @@ func TestSearchhelpers2(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
-	var cfg search.Configuration
+	var cfg search.SearchConfiguration
 	_ = client
 	_ = echo
-	cfg = search.Configuration{
+	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
@@ -233,10 +233,10 @@ func TestSearchparameters0(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *search.APIClient
-	var cfg search.Configuration
+	var cfg search.SearchConfiguration
 	_ = client
 	_ = echo
-	cfg = search.Configuration{
+	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "",
 			ApiKey:    "",
@@ -245,7 +245,7 @@ func TestSearchparameters0(t *testing.T) {
 	}
 	client, err = search.NewClientWithConfig(cfg)
 	require.EqualError(t, err, "`appId` is missing.")
-	cfg = search.Configuration{
+	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "",
 			ApiKey:    "my-api-key",
@@ -254,7 +254,7 @@ func TestSearchparameters0(t *testing.T) {
 	}
 	client, err = search.NewClientWithConfig(cfg)
 	require.EqualError(t, err, "`appId` is missing.")
-	cfg = search.Configuration{
+	cfg = search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "",

@@ -36,7 +36,12 @@ public func XCTLenientAssertEqual(received: Data, expected: Data) {
         expected: JSONSerialization.jsonObject(with: expected, options: [.fragmentsAllowed]),
         received: JSONSerialization.jsonObject(with: received, options: [.fragmentsAllowed])
     ) else {
-        XCTFail("Unable to unionize received and expected objects")
+        if let receivedString = String(data: received, encoding: .utf8),
+           let expectedString = String(data: expected, encoding: .utf8) {
+            XCTAssertEqual(receivedString, expectedString)
+        } else {
+            XCTFail("Unable to unionize received and expected objects")
+        }
         return
     }
 

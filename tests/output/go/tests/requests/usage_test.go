@@ -18,7 +18,7 @@ func createUsageClient(t *testing.T) (*usage.APIClient, *tests.EchoRequester) {
 	t.Helper()
 
 	echo := &tests.EchoRequester{}
-	cfg := usage.Configuration{
+	cfg := usage.UsageConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",

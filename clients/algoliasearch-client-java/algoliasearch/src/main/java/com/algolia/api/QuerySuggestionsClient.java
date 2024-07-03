@@ -56,54 +56,43 @@ public class QuerySuggestionsClient extends ApiClient {
    * Creates a new Query Suggestions configuration. You can have up to 100 configurations per
    * Algolia application.
    *
-   * @param querySuggestionsConfigurationWithIndex (required)
+   * @param configurationWithIndex (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public BaseResponse createConfig(
-    @Nonnull QuerySuggestionsConfigurationWithIndex querySuggestionsConfigurationWithIndex,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(createConfigAsync(querySuggestionsConfigurationWithIndex, requestOptions));
+  public BaseResponse createConfig(@Nonnull ConfigurationWithIndex configurationWithIndex, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(createConfigAsync(configurationWithIndex, requestOptions));
   }
 
   /**
    * Creates a new Query Suggestions configuration. You can have up to 100 configurations per
    * Algolia application.
    *
-   * @param querySuggestionsConfigurationWithIndex (required)
+   * @param configurationWithIndex (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public BaseResponse createConfig(@Nonnull QuerySuggestionsConfigurationWithIndex querySuggestionsConfigurationWithIndex)
-    throws AlgoliaRuntimeException {
-    return this.createConfig(querySuggestionsConfigurationWithIndex, null);
+  public BaseResponse createConfig(@Nonnull ConfigurationWithIndex configurationWithIndex) throws AlgoliaRuntimeException {
+    return this.createConfig(configurationWithIndex, null);
   }
 
   /**
    * (asynchronously) Creates a new Query Suggestions configuration. You can have up to 100
    * configurations per Algolia application.
    *
-   * @param querySuggestionsConfigurationWithIndex (required)
+   * @param configurationWithIndex (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<BaseResponse> createConfigAsync(
-    @Nonnull QuerySuggestionsConfigurationWithIndex querySuggestionsConfigurationWithIndex,
+    @Nonnull ConfigurationWithIndex configurationWithIndex,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    Parameters.requireNonNull(
-      querySuggestionsConfigurationWithIndex,
-      "Parameter `querySuggestionsConfigurationWithIndex` is required when calling" + " `createConfig`."
-    );
+    Parameters.requireNonNull(configurationWithIndex, "Parameter `configurationWithIndex` is required when calling `createConfig`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
-      .setPath("/1/configs")
-      .setMethod("POST")
-      .setBody(querySuggestionsConfigurationWithIndex)
-      .build();
+    HttpRequest request = HttpRequest.builder().setPath("/1/configs").setMethod("POST").setBody(configurationWithIndex).build();
     return executeAsync(request, requestOptions, new TypeReference<BaseResponse>() {});
   }
 
@@ -111,13 +100,12 @@ public class QuerySuggestionsClient extends ApiClient {
    * (asynchronously) Creates a new Query Suggestions configuration. You can have up to 100
    * configurations per Algolia application.
    *
-   * @param querySuggestionsConfigurationWithIndex (required)
+   * @param configurationWithIndex (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<BaseResponse> createConfigAsync(
-    @Nonnull QuerySuggestionsConfigurationWithIndex querySuggestionsConfigurationWithIndex
-  ) throws AlgoliaRuntimeException {
-    return this.createConfigAsync(querySuggestionsConfigurationWithIndex, null);
+  public CompletableFuture<BaseResponse> createConfigAsync(@Nonnull ConfigurationWithIndex configurationWithIndex)
+    throws AlgoliaRuntimeException {
+    return this.createConfigAsync(configurationWithIndex, null);
   }
 
   /**
@@ -605,7 +593,7 @@ public class QuerySuggestionsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public List<QuerySuggestionsConfigurationResponse> getAllConfigs(RequestOptions requestOptions) throws AlgoliaRuntimeException {
+  public List<ConfigurationResponse> getAllConfigs(RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getAllConfigsAsync(requestOptions));
   }
 
@@ -614,7 +602,7 @@ public class QuerySuggestionsClient extends ApiClient {
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public List<QuerySuggestionsConfigurationResponse> getAllConfigs() throws AlgoliaRuntimeException {
+  public List<ConfigurationResponse> getAllConfigs() throws AlgoliaRuntimeException {
     return this.getAllConfigs(null);
   }
 
@@ -625,11 +613,10 @@ public class QuerySuggestionsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<List<QuerySuggestionsConfigurationResponse>> getAllConfigsAsync(RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public CompletableFuture<List<ConfigurationResponse>> getAllConfigsAsync(RequestOptions requestOptions) throws AlgoliaRuntimeException {
     HttpRequest request = HttpRequest.builder().setPath("/1/configs").setMethod("GET").build();
 
-    return executeAsync(request, requestOptions, new TypeReference<List<QuerySuggestionsConfigurationResponse>>() {});
+    return executeAsync(request, requestOptions, new TypeReference<List<ConfigurationResponse>>() {});
   }
 
   /**
@@ -637,7 +624,7 @@ public class QuerySuggestionsClient extends ApiClient {
    *
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<List<QuerySuggestionsConfigurationResponse>> getAllConfigsAsync() throws AlgoliaRuntimeException {
+  public CompletableFuture<List<ConfigurationResponse>> getAllConfigsAsync() throws AlgoliaRuntimeException {
     return this.getAllConfigsAsync(null);
   }
 
@@ -649,8 +636,7 @@ public class QuerySuggestionsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public QuerySuggestionsConfigurationResponse getConfig(@Nonnull String indexName, RequestOptions requestOptions)
-    throws AlgoliaRuntimeException {
+  public ConfigurationResponse getConfig(@Nonnull String indexName, RequestOptions requestOptions) throws AlgoliaRuntimeException {
     return LaunderThrowable.await(getConfigAsync(indexName, requestOptions));
   }
 
@@ -660,7 +646,7 @@ public class QuerySuggestionsClient extends ApiClient {
    * @param indexName Query Suggestions index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public QuerySuggestionsConfigurationResponse getConfig(@Nonnull String indexName) throws AlgoliaRuntimeException {
+  public ConfigurationResponse getConfig(@Nonnull String indexName) throws AlgoliaRuntimeException {
     return this.getConfig(indexName, null);
   }
 
@@ -672,13 +658,13 @@ public class QuerySuggestionsClient extends ApiClient {
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<QuerySuggestionsConfigurationResponse> getConfigAsync(@Nonnull String indexName, RequestOptions requestOptions)
+  public CompletableFuture<ConfigurationResponse> getConfigAsync(@Nonnull String indexName, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `getConfig`.");
 
     HttpRequest request = HttpRequest.builder().setPath("/1/configs/{indexName}", indexName).setMethod("GET").build();
 
-    return executeAsync(request, requestOptions, new TypeReference<QuerySuggestionsConfigurationResponse>() {});
+    return executeAsync(request, requestOptions, new TypeReference<ConfigurationResponse>() {});
   }
 
   /**
@@ -687,7 +673,7 @@ public class QuerySuggestionsClient extends ApiClient {
    * @param indexName Query Suggestions index name. (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<QuerySuggestionsConfigurationResponse> getConfigAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
+  public CompletableFuture<ConfigurationResponse> getConfigAsync(@Nonnull String indexName) throws AlgoliaRuntimeException {
     return this.getConfigAsync(indexName, null);
   }
 
@@ -793,57 +779,50 @@ public class QuerySuggestionsClient extends ApiClient {
    * Updates a QuerySuggestions configuration.
    *
    * @param indexName Query Suggestions index name. (required)
-   * @param querySuggestionsConfiguration (required)
+   * @param configuration (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public BaseResponse updateConfig(
-    @Nonnull String indexName,
-    @Nonnull QuerySuggestionsConfiguration querySuggestionsConfiguration,
-    RequestOptions requestOptions
-  ) throws AlgoliaRuntimeException {
-    return LaunderThrowable.await(updateConfigAsync(indexName, querySuggestionsConfiguration, requestOptions));
+  public BaseResponse updateConfig(@Nonnull String indexName, @Nonnull Configuration configuration, RequestOptions requestOptions)
+    throws AlgoliaRuntimeException {
+    return LaunderThrowable.await(updateConfigAsync(indexName, configuration, requestOptions));
   }
 
   /**
    * Updates a QuerySuggestions configuration.
    *
    * @param indexName Query Suggestions index name. (required)
-   * @param querySuggestionsConfiguration (required)
+   * @param configuration (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public BaseResponse updateConfig(@Nonnull String indexName, @Nonnull QuerySuggestionsConfiguration querySuggestionsConfiguration)
-    throws AlgoliaRuntimeException {
-    return this.updateConfig(indexName, querySuggestionsConfiguration, null);
+  public BaseResponse updateConfig(@Nonnull String indexName, @Nonnull Configuration configuration) throws AlgoliaRuntimeException {
+    return this.updateConfig(indexName, configuration, null);
   }
 
   /**
    * (asynchronously) Updates a QuerySuggestions configuration.
    *
    * @param indexName Query Suggestions index name. (required)
-   * @param querySuggestionsConfiguration (required)
+   * @param configuration (required)
    * @param requestOptions The requestOptions to send along with the query, they will be merged with
    *     the transporter requestOptions.
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
   public CompletableFuture<BaseResponse> updateConfigAsync(
     @Nonnull String indexName,
-    @Nonnull QuerySuggestionsConfiguration querySuggestionsConfiguration,
+    @Nonnull Configuration configuration,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `updateConfig`.");
 
-    Parameters.requireNonNull(
-      querySuggestionsConfiguration,
-      "Parameter `querySuggestionsConfiguration` is required when calling `updateConfig`."
-    );
+    Parameters.requireNonNull(configuration, "Parameter `configuration` is required when calling `updateConfig`.");
 
     HttpRequest request = HttpRequest
       .builder()
       .setPath("/1/configs/{indexName}", indexName)
       .setMethod("PUT")
-      .setBody(querySuggestionsConfiguration)
+      .setBody(configuration)
       .build();
     return executeAsync(request, requestOptions, new TypeReference<BaseResponse>() {});
   }
@@ -852,13 +831,11 @@ public class QuerySuggestionsClient extends ApiClient {
    * (asynchronously) Updates a QuerySuggestions configuration.
    *
    * @param indexName Query Suggestions index name. (required)
-   * @param querySuggestionsConfiguration (required)
+   * @param configuration (required)
    * @throws AlgoliaRuntimeException If it fails to process the API call
    */
-  public CompletableFuture<BaseResponse> updateConfigAsync(
-    @Nonnull String indexName,
-    @Nonnull QuerySuggestionsConfiguration querySuggestionsConfiguration
-  ) throws AlgoliaRuntimeException {
-    return this.updateConfigAsync(indexName, querySuggestionsConfiguration, null);
+  public CompletableFuture<BaseResponse> updateConfigAsync(@Nonnull String indexName, @Nonnull Configuration configuration)
+    throws AlgoliaRuntimeException {
+    return this.updateConfigAsync(indexName, configuration, null);
   }
 }

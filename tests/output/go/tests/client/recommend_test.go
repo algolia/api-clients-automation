@@ -15,7 +15,7 @@ import (
 
 func createRecommendClient(t *testing.T) (*recommend.APIClient, *tests.EchoRequester) {
 	echo := &tests.EchoRequester{}
-	cfg := recommend.Configuration{
+	cfg := recommend.RecommendConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -33,10 +33,10 @@ func TestRecommendapi0(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *recommend.APIClient
-	var cfg recommend.Configuration
+	var cfg recommend.RecommendConfiguration
 	_ = client
 	_ = echo
-	cfg = recommend.Configuration{
+	cfg = recommend.RecommendConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "test-app-id",
 			ApiKey:    "test-api-key",
@@ -57,10 +57,10 @@ func TestRecommendapi1(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *recommend.APIClient
-	var cfg recommend.Configuration
+	var cfg recommend.RecommendConfiguration
 	_ = client
 	_ = echo
-	cfg = recommend.Configuration{
+	cfg = recommend.RecommendConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "test-app-id",
 			ApiKey:    "test-api-key",

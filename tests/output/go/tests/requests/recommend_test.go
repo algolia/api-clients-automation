@@ -18,7 +18,7 @@ func createRecommendClient(t *testing.T) (*recommend.APIClient, *tests.EchoReque
 	t.Helper()
 
 	echo := &tests.EchoRequester{}
-	cfg := recommend.Configuration{
+	cfg := recommend.RecommendConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",

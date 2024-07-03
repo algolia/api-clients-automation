@@ -23,7 +23,7 @@ public class SnippetQuerySuggestionsClient
 
     // Call the API
     var response = await client.CreateConfigAsync(
-      new QuerySuggestionsConfigurationWithIndex
+      new ConfigurationWithIndex
       {
         IndexName = "theIndexName",
         SourceIndices = new List<SourceIndex>
@@ -224,7 +224,7 @@ public class SnippetQuerySuggestionsClient
     // Call the API
     var response = await client.UpdateConfigAsync(
       "theIndexName",
-      new QuerySuggestionsConfiguration
+      new Configuration
       {
         SourceIndices = new List<SourceIndex>
         {

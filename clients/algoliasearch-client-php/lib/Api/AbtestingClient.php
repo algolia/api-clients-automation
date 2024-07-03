@@ -18,7 +18,7 @@ use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
  */
 class AbtestingClient
 {
-    public const VERSION = '4.0.0-beta.6';
+    public const VERSION = '4.0.0-beta.8';
 
     /**
      * @var ApiWrapperInterface

@@ -15,7 +15,7 @@ import (
 
 func createInsightsClient(t *testing.T) (*insights.APIClient, *tests.EchoRequester) {
 	echo := &tests.EchoRequester{}
-	cfg := insights.Configuration{
+	cfg := insights.InsightsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -72,10 +72,10 @@ func TestInsightsparameters0(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *insights.APIClient
-	var cfg insights.Configuration
+	var cfg insights.InsightsConfiguration
 	_ = client
 	_ = echo
-	cfg = insights.Configuration{
+	cfg = insights.InsightsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -101,10 +101,10 @@ func TestInsightsparameters1(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *insights.APIClient
-	var cfg insights.Configuration
+	var cfg insights.InsightsConfiguration
 	_ = client
 	_ = echo
-	cfg = insights.Configuration{
+	cfg = insights.InsightsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -126,10 +126,10 @@ func TestInsightsparameters2(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *insights.APIClient
-	var cfg insights.Configuration
+	var cfg insights.InsightsConfiguration
 	_ = client
 	_ = echo
-	cfg = insights.Configuration{
+	cfg = insights.InsightsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",

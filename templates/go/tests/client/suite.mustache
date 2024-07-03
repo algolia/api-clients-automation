@@ -20,7 +20,7 @@ import (
 
 func create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t *testing.T) (*{{clientPrefix}}.APIClient, *tests.EchoRequester) {
   echo := &tests.EchoRequester{}
-  cfg := {{clientPrefix}}.Configuration{
+  cfg := {{clientPrefix}}.{{clientName}}Configuration{
     Configuration: transport.Configuration{
       AppID:     "appID",
       ApiKey:    "apiKey",
@@ -45,7 +45,7 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{testType}}{{/lambda.titlecase}}{
   {{^autoCreateClient}}
   echo := &tests.EchoRequester{}
   var client *{{clientPrefix}}.APIClient
-  var cfg {{clientPrefix}}.Configuration
+  var cfg {{clientPrefix}}.{{clientName}}Configuration
   _ = client
   {{/autoCreateClient}}
   _ = echo

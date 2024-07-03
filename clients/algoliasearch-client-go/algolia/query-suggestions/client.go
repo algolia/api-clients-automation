@@ -28,13 +28,13 @@ import (
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	appID     string
-	cfg       *Configuration
+	cfg       *QuerySuggestionsConfiguration
 	transport *transport.Transport
 }
 
 // NewClient creates a new API client with appID, apiKey and region.
 func NewClient(appID, apiKey string, region Region) (*APIClient, error) {
-	return NewClientWithConfig(Configuration{
+	return NewClientWithConfig(QuerySuggestionsConfiguration{
 		Configuration: transport.Configuration{
 			AppID:         appID,
 			ApiKey:        apiKey,
@@ -47,7 +47,7 @@ func NewClient(appID, apiKey string, region Region) (*APIClient, error) {
 }
 
 // NewClientWithConfig creates a new API client with the given configuration to fully customize the client behaviour.
-func NewClientWithConfig(cfg Configuration) (*APIClient, error) {
+func NewClientWithConfig(cfg QuerySuggestionsConfiguration) (*APIClient, error) {
 	var hosts []transport.StatefulHost
 
 	if cfg.AppID == "" {
@@ -90,7 +90,7 @@ func getDefaultHosts(r Region) []transport.StatefulHost {
 }
 
 func getUserAgent() string {
-	return fmt.Sprintf("Algolia for Go (4.0.0-beta.20); Go (%s); QuerySuggestions (4.0.0-beta.20)", runtime.Version())
+	return fmt.Sprintf("Algolia for Go (4.0.0-beta.22); Go (%s); QuerySuggestions (4.0.0-beta.22)", runtime.Version())
 }
 
 // queryParameterToString convert any query parameters to string.
@@ -146,7 +146,7 @@ func (c *APIClient) callAPI(request *http.Request, useReadTransporter bool) (*ht
 
 // Allow modification of underlying config for alternate implementations and testing
 // Caution: modifying the configuration while live can cause data races and potentially unwanted behavior.
-func (c *APIClient) GetConfiguration() *Configuration {
+func (c *APIClient) GetConfiguration() *QuerySuggestionsConfiguration {
 	return c.cfg
 }
 

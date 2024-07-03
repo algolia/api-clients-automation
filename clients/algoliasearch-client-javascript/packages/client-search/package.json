@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-search",
-  "version": "5.0.0-beta.6",
+  "version": "5.0.0-beta.8",
   "description": "JavaScript client for client-search",
   "repository": {
     "type": "git",
@@ -42,12 +42,12 @@
     "clean": "rm -rf ./dist || true"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-beta.7",
-    "@algolia/requester-browser-xhr": "5.0.0-beta.7",
-    "@algolia/requester-node-http": "5.0.0-beta.7"
+    "@algolia/client-common": "5.0.0-beta.9",
+    "@algolia/requester-browser-xhr": "5.0.0-beta.9",
+    "@algolia/requester-node-http": "5.0.0-beta.9"
   },
   "devDependencies": {
-    "@types/node": "20.14.8",
+    "@types/node": "20.14.9",
     "rollup": "4.18.0",
     "typescript": "5.5.2"
   },

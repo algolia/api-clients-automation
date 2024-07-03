@@ -17,7 +17,7 @@ def snippet_for_create_config
 
   # Call the API
   response = client.create_config(
-    QuerySuggestionsConfigurationWithIndex.new(
+    ConfigurationWithIndex.new(
       index_name: "theIndexName",
       source_indices: [SourceIndex.new(
         index_name: "testIndex",
@@ -259,7 +259,7 @@ def snippet_for_update_config
   # Call the API
   response = client.update_config(
     "theIndexName",
-    QuerySuggestionsConfiguration.new(
+    Configuration.new(
       source_indices: [SourceIndex.new(
         index_name: "testIndex",
         facets: [Facet.new(attribute: "test")],

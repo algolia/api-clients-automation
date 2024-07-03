@@ -4242,7 +4242,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
-    /// setSettings allow boolean &#x60;typoTolerance&#x60;
+    /// setSettings allow boolean `typoTolerance`
     func testSetSettingsTest2() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -4279,7 +4279,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow enum &#x60;typoTolerance&#x60;
+    /// setSettings allow enum `typoTolerance`
     func testSetSettingsTest3() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -4319,7 +4319,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow boolean &#x60;ignorePlurals&#x60;
+    /// setSettings allow boolean `ignorePlurals`
     func testSetSettingsTest4() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -4356,7 +4356,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow list of string &#x60;ignorePlurals&#x60;
+    /// setSettings allow list of string `ignorePlurals`
     func testSetSettingsTest5() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -4396,7 +4396,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow boolean &#x60;removeStopWords&#x60;
+    /// setSettings allow boolean `removeStopWords`
     func testSetSettingsTest6() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -4433,7 +4433,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow list of string &#x60;removeStopWords&#x60;
+    /// setSettings allow list of string `removeStopWords`
     func testSetSettingsTest7() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -4473,7 +4473,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow boolean &#x60;distinct&#x60;
+    /// setSettings allow boolean `distinct`
     func testSetSettingsTest8() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -4510,7 +4510,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow integers for &#x60;distinct&#x60;
+    /// setSettings allow integers for `distinct`
     func testSetSettingsTest9() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,
@@ -4547,7 +4547,7 @@ final class SearchClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
     }
 
-    /// setSettings allow all &#x60;indexSettings&#x60;
+    /// setSettings allow all `indexSettings`
     func testSetSettingsTest10() async throws {
         let configuration = try SearchClientConfiguration(
             appID: SearchClientRequestsTests.APPLICATION_ID,

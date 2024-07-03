@@ -62,6 +62,7 @@ export 'src/model/recommended_for_you_query.dart';
 export 'src/model/redirect.dart';
 export 'src/model/redirect_rule_index_metadata.dart';
 export 'src/model/redirect_rule_index_metadata_data.dart';
+export 'src/model/redirect_url.dart';
 export 'src/model/related_model.dart';
 export 'src/model/related_products.dart';
 export 'src/model/related_query.dart';

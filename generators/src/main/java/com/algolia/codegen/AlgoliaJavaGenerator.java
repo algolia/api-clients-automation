@@ -57,6 +57,8 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     additionalProperties.put("isSearchClient", client.equals("search"));
     supportingFiles.add(new SupportingFile("LICENSE", "", "LICENSE"));
 
+    reservedWords.removeIf(word -> word.equals("configuration"));
+
     try {
       additionalProperties.put("packageVersion", Helpers.getClientConfigField("java", "packageVersion"));
     } catch (GeneratorException e) {

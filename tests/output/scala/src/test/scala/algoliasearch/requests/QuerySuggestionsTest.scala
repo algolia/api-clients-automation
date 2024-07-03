@@ -58,7 +58,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
   test("createConfig") {
     val (client, echo) = testClient()
     val future = client.createConfig(
-      querySuggestionsConfigurationWithIndex = QuerySuggestionsConfigurationWithIndex(
+      configurationWithIndex = ConfigurationWithIndex(
         indexName = "theIndexName",
         sourceIndices = Seq(
           SourceIndex(
@@ -659,7 +659,7 @@ class QuerySuggestionsTest extends AnyFunSuite {
     val (client, echo) = testClient()
     val future = client.updateConfig(
       indexName = "theIndexName",
-      querySuggestionsConfiguration = QuerySuggestionsConfiguration(
+      configuration = Configuration(
         sourceIndices = Seq(
           SourceIndex(
             indexName = "testIndex",

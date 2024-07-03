@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import * as core from '@actions/core';
+import { setOutput } from '@actions/core';
 
 import { CLIENTS, createClientName, GENERATORS, LANGUAGES } from '../../common.js';
 import { getLanguageFolder, getTestExtension, getTestOutputFolder } from '../../config.js';
@@ -139,25 +139,31 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
   // If there are updates for the Swift client, we allow ourselves to run the CTS on macOS
   const swiftData = clientMatrix.client.find((c) => c.language === 'swift');
   if (swiftData) {
-    core.setOutput('SWIFT_DATA', JSON.stringify(swiftData));
-    core.setOutput('RUN_MACOS_SWIFT_CTS', true);
+    setOutput('SWIFT_DATA', JSON.stringify(swiftData));
+    setOutput('RUN_MACOS_SWIFT_CTS', true);
+  }
+
+  // If there are updates for the Kotlin client, we allow ourselves to run the build step on macOS
+  const runKotlin = clientMatrix.client.find((c) => c.language === 'kotlin');
+  if (runKotlin) {
+    setOutput('RUN_MACOS_KOTLIN_BUILD', true);
   }
 
   const javascriptData = clientMatrix.client.find((c) => c.language === 'javascript');
   if (javascriptData) {
-    core.setOutput('JAVASCRIPT_DATA', JSON.stringify(javascriptData));
-    core.setOutput('RUN_GEN_JAVASCRIPT', true);
+    setOutput('JAVASCRIPT_DATA', JSON.stringify(javascriptData));
+    setOutput('RUN_GEN_JAVASCRIPT', true);
     clientMatrix.client = clientMatrix.client.filter((c) => c.language !== 'javascript');
   }
 
   const shouldRun = clientMatrix.client.length > 0;
 
-  core.setOutput('RUN_GEN', shouldRun);
-  core.setOutput('GEN_MATRIX', JSON.stringify(shouldRun ? clientMatrix : EMPTY_MATRIX));
+  setOutput('RUN_GEN', shouldRun);
+  setOutput('GEN_MATRIX', JSON.stringify(shouldRun ? clientMatrix : EMPTY_MATRIX));
 }
 
 function createSpecMatrix(): void {
-  core.setOutput(
+  setOutput(
     'MATRIX',
     JSON.stringify({
       bundledPath: 'specs/bundled',

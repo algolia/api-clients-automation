@@ -14,7 +14,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../common/responses/QuerySuggestionsConfigurationResponse.yml#/QuerySuggestionsConfigurationResponse'
+            $ref: '../common/responses/ConfigurationResponse.yml#/ConfigurationResponse'
     '400':
       $ref: '../common/responses/BadRequest.yml'
     '401':
@@ -37,7 +37,7 @@ put:
     content:
       application/json:
         schema:
-          $ref: '../common/schemas/QuerySuggestionsConfiguration.yml#/QuerySuggestionsConfiguration'
+          $ref: '../common/schemas/Configuration.yml#/Configuration'
   responses:
     '200':
       description: OK

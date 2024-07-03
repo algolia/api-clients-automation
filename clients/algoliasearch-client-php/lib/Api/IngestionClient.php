@@ -18,7 +18,7 @@ use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
  */
 class IngestionClient
 {
-    public const VERSION = '4.0.0-beta.6';
+    public const VERSION = '4.0.0-beta.8';
 
     /**
      * @var ApiWrapperInterface
@@ -1724,7 +1724,7 @@ class IngestionClient
     }
 
     /**
-     * Searches for transformations.
+     * Try a transformation.
      *
      * Required API Key ACLs:
      *  - addObject

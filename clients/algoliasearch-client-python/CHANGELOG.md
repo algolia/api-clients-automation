@@ -1,3 +1,11 @@
+## [4.0.0b23](https://github.com/algolia/algoliasearch-client-python/compare/4.0.0b22...4.0.0b23)
+
+- [9776cb3ba](https://github.com/algolia/api-clients-automation/commit/9776cb3ba) feat(specs): add redirect to renderingContent ([#3296](https://github.com/algolia/api-clients-automation/pull/3296)) by [@shortcuts](https://github.com/shortcuts/)
+
+## [4.0.0b22](https://github.com/algolia/algoliasearch-client-python/compare/4.0.0b21...4.0.0b22)
+
+- [8e98407c1](https://github.com/algolia/api-clients-automation/commit/8e98407c1) fix(clients): update ingestion transformations description and fix taggroups ([#3265](https://github.com/algolia/api-clients-automation/pull/3265)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [4.0.0b21](https://github.com/algolia/algoliasearch-client-python/compare/4.0.0b20...4.0.0b21)
 
 - [e5cfcf0c4](https://github.com/algolia/api-clients-automation/commit/e5cfcf0c4) feat(clients): generate common LICENSE ([#3258](https://github.com/algolia/api-clients-automation/pull/3258)) by [@shortcuts](https://github.com/shortcuts/)

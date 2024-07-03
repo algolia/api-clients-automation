@@ -23,7 +23,7 @@ func createSearchClient(t *testing.T) (*search.APIClient, *tests.EchoRequester) 
 	t.Helper()
 
 	echo := &tests.EchoRequester{}
-	cfg := search.Configuration{
+	cfg := search.SearchConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",

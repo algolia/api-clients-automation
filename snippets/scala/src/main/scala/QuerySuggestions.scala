@@ -27,7 +27,7 @@ class SnippetQuerySuggestionsClient {
 
     // Call the API
     val response = client.createConfig(
-      querySuggestionsConfigurationWithIndex = QuerySuggestionsConfigurationWithIndex(
+      configurationWithIndex = ConfigurationWithIndex(
         indexName = "theIndexName",
         sourceIndices = Seq(
           SourceIndex(
@@ -234,7 +234,7 @@ class SnippetQuerySuggestionsClient {
     // Call the API
     val response = client.updateConfig(
       indexName = "theIndexName",
-      querySuggestionsConfiguration = QuerySuggestionsConfiguration(
+      configuration = Configuration(
         sourceIndices = Seq(
           SourceIndex(
             indexName = "testIndex",

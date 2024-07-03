@@ -32,7 +32,7 @@ class TestQuerySuggestionsClient:
         createConfig
         """
         _req = await self._client.create_config_with_http_info(
-            query_suggestions_configuration_with_index={
+            configuration_with_index={
                 "indexName": "theIndexName",
                 "sourceIndices": [
                     {
@@ -548,7 +548,7 @@ class TestQuerySuggestionsClient:
         """
         _req = await self._client.update_config_with_http_info(
             index_name="theIndexName",
-            query_suggestions_configuration={
+            configuration={
                 "sourceIndices": [
                     {
                         "indexName": "testIndex",

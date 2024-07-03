@@ -233,7 +233,7 @@ export async function snippetForUpdateConfig(): Promise<void> {
   // Call the API
   const response = await client.updateConfig({
     indexName: 'theIndexName',
-    querySuggestionsConfiguration: {
+    configuration: {
       sourceIndices: [
         {
           indexName: 'testIndex',

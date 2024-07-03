@@ -21,7 +21,7 @@ public class SourceUpdateDocker implements SourceUpdateInput {
   private String version;
 
   @JsonProperty("configuration")
-  private Object _configuration;
+  private Object configuration;
 
   public SourceUpdateDocker setRegistry(DockerRegistry registry) {
     this.registry = registry;
@@ -56,15 +56,15 @@ public class SourceUpdateDocker implements SourceUpdateInput {
     return version;
   }
 
-  public SourceUpdateDocker setConfiguration(Object _configuration) {
-    this._configuration = _configuration;
+  public SourceUpdateDocker setConfiguration(Object configuration) {
+    this.configuration = configuration;
     return this;
   }
 
   /** Configuration of the spec. */
   @javax.annotation.Nonnull
   public Object getConfiguration() {
-    return _configuration;
+    return configuration;
   }
 
   @Override
@@ -80,13 +80,13 @@ public class SourceUpdateDocker implements SourceUpdateInput {
       Objects.equals(this.registry, sourceUpdateDocker.registry) &&
       Objects.equals(this.image, sourceUpdateDocker.image) &&
       Objects.equals(this.version, sourceUpdateDocker.version) &&
-      Objects.equals(this._configuration, sourceUpdateDocker._configuration)
+      Objects.equals(this.configuration, sourceUpdateDocker.configuration)
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(registry, image, version, _configuration);
+    return Objects.hash(registry, image, version, configuration);
   }
 
   @Override
@@ -96,7 +96,7 @@ public class SourceUpdateDocker implements SourceUpdateInput {
     sb.append("    registry: ").append(toIndentedString(registry)).append("\n");
     sb.append("    image: ").append(toIndentedString(image)).append("\n");
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
-    sb.append("    _configuration: ").append(toIndentedString(_configuration)).append("\n");
+    sb.append("    configuration: ").append(toIndentedString(configuration)).append("\n");
     sb.append("}");
     return sb.toString();
   }

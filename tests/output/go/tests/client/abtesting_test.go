@@ -15,7 +15,7 @@ import (
 
 func createAbtestingClient(t *testing.T) (*abtesting.APIClient, *tests.EchoRequester) {
 	echo := &tests.EchoRequester{}
-	cfg := abtesting.Configuration{
+	cfg := abtesting.AbtestingConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "appID",
 			ApiKey:    "apiKey",
@@ -72,10 +72,10 @@ func TestAbtestingparameters0(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *abtesting.APIClient
-	var cfg abtesting.Configuration
+	var cfg abtesting.AbtestingConfiguration
 	_ = client
 	_ = echo
-	cfg = abtesting.Configuration{
+	cfg = abtesting.AbtestingConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -96,10 +96,10 @@ func TestAbtestingparameters1(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *abtesting.APIClient
-	var cfg abtesting.Configuration
+	var cfg abtesting.AbtestingConfiguration
 	_ = client
 	_ = echo
-	cfg = abtesting.Configuration{
+	cfg = abtesting.AbtestingConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",
@@ -121,10 +121,10 @@ func TestAbtestingparameters2(t *testing.T) {
 	var err error
 	echo := &tests.EchoRequester{}
 	var client *abtesting.APIClient
-	var cfg abtesting.Configuration
+	var cfg abtesting.AbtestingConfiguration
 	_ = client
 	_ = echo
-	cfg = abtesting.Configuration{
+	cfg = abtesting.AbtestingConfiguration{
 		Configuration: transport.Configuration{
 			AppID:     "my-app-id",
 			ApiKey:    "my-api-key",

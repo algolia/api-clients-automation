@@ -29,13 +29,13 @@ import (
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	appID     string
-	cfg       *Configuration
+	cfg       *{{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}}Configuration
 	transport *transport.Transport
 }
 
 // NewClient creates a new API client with {{#hasRegionalHost}}appID, apiKey and region.{{/hasRegionalHost}}{{^hasRegionalHost}}appID and apiKey.{{/hasRegionalHost}}
 func NewClient(appID, apiKey string{{#hasRegionalHost}}, region Region{{/hasRegionalHost}}) (*APIClient, error) {
-return NewClientWithConfig(Configuration{
+return NewClientWithConfig({{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}}Configuration{
       Configuration: transport.Configuration{
       AppID:         appID,
       ApiKey:        apiKey,
@@ -48,7 +48,7 @@ return NewClientWithConfig(Configuration{
 }
 
 // NewClientWithConfig creates a new API client with the given configuration to fully customize the client behaviour.
-func NewClientWithConfig(cfg Configuration) (*APIClient, error) {
+func NewClientWithConfig(cfg {{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}}Configuration) (*APIClient, error) {
   var hosts []transport.StatefulHost
 
   if cfg.AppID == "" {
@@ -175,7 +175,7 @@ func (c *APIClient) callAPI(request *http.Request, useReadTransporter bool) (*ht
 
 // Allow modification of underlying config for alternate implementations and testing
 // Caution: modifying the configuration while live can cause data races and potentially unwanted behavior
-func (c *APIClient) GetConfiguration() *Configuration {
+func (c *APIClient) GetConfiguration() *{{#lambda.titlecase}}{{#lambda.camelcase}}{{client}}{{/lambda.camelcase}}{{/lambda.titlecase}}Configuration {
 	return c.cfg
 }
 

@@ -78,11 +78,13 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "promote",
     "promoteobjectid",
     "promoteobjectids",
+    "querysuggestionsconfiguration",
     "querytype",
     "rankinginfo",
     "redirect",
     "redirectruleindexmetadata",
     "redirectruleindexmetadatadata",
+    "redirecturl",
     "region",
     "removestopwords",
     "removewordsifnoresults",
@@ -130,21 +132,6 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     var camelizedName = camelize(name);
     if (isReservedModelName(camelizedName)) {
       return INSTANCE.getClientName(client) + Helpers.capitalize(camelizedName);
-    }
-
-    return name;
-  }
-
-  public static String removeReservedModelNamePrefix(String name, String client) {
-    if (name == null || name.isEmpty()) {
-      return name;
-    }
-
-    var camelizedName = camelize(name, LOWERCASE_FIRST_LETTER);
-    var clientName = camelize(INSTANCE.getClientName(client), LOWERCASE_FIRST_LETTER);
-    var trimmedName = camelize(camelizedName.replaceFirst(clientName, ""), LOWERCASE_FIRST_LETTER);
-    if (isReservedModelName(trimmedName)) {
-      return trimmedName;
     }
 
     return name;

@@ -26,7 +26,7 @@ class QuerySuggestionsTest {
     client.runTest(
       call = {
         createConfig(
-          querySuggestionsConfigurationWithIndex = QuerySuggestionsConfigurationWithIndex(
+          configurationWithIndex = ConfigurationWithIndex(
             indexName = "theIndexName",
             sourceIndices = listOf(
               SourceIndex(
@@ -595,7 +595,7 @@ class QuerySuggestionsTest {
       call = {
         updateConfig(
           indexName = "theIndexName",
-          querySuggestionsConfiguration = QuerySuggestionsConfiguration(
+          configuration = Configuration(
             sourceIndices = listOf(
               SourceIndex(
                 indexName = "testIndex",

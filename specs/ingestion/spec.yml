@@ -96,10 +96,11 @@ x-tagGroups:
   - name: Resources
     tags:
       - authentications
-      - sources
       - destinations
-      - tasks
       - observability
+      - sources
+      - tasks
+      - transformations
 paths:
   # ######################
   # ### Custom request ###

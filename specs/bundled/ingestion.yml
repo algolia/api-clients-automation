@@ -1112,8 +1112,8 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Search for transformations
-      description: Searches for transformations.
+      summary: Try a transformation
+      description: Try a transformation.
       operationId: tryTransformations
       x-acl:
         - addObject
@@ -3679,7 +3679,8 @@ x-tagGroups:
   - name: Resources
     tags:
       - authentications
-      - sources
       - destinations
-      - tasks
       - observability
+      - sources
+      - tasks
+      - transformations

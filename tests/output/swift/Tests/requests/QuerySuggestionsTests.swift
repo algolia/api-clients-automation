@@ -59,17 +59,16 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         let transporter = Transporter(configuration: configuration, requestBuilder: EchoRequestBuilder())
         let client = QuerySuggestionsClient(configuration: configuration, transporter: transporter)
 
-        let response = try await client
-            .createConfigWithHTTPInfo(querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex(
-                sourceIndices: [SourceIndex(
-                    indexName: "testIndex",
-                    facets: [Facet(attribute: "test")],
-                    generate: [["facetA", "facetB"], ["facetC"]]
-                )],
-                languages: QuerySuggestionsLanguages.arrayOfString(["french"]),
-                exclude: ["test"],
-                indexName: "theIndexName"
-            ))
+        let response = try await client.createConfigWithHTTPInfo(configurationWithIndex: ConfigurationWithIndex(
+            sourceIndices: [SourceIndex(
+                indexName: "testIndex",
+                facets: [Facet(attribute: "test")],
+                generate: [["facetA", "facetB"], ["facetC"]]
+            )],
+            languages: QuerySuggestionsLanguages.arrayOfString(["french"]),
+            exclude: ["test"],
+            indexName: "theIndexName"
+        ))
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 
