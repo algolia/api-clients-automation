@@ -11,7 +11,7 @@ function aboutEqual(a: number, b: number, epsilon = 100): boolean {
 }
 
 export function assertValidTimeouts(expectedCount: number): void {
-  // assert that the retry strategy uses the correct timings, by checking the time between each request, and how long each request took before being timeouted
+  // assert that the retry strategy uses the correct timings, by checking the time between each request, and how long each request took before being timed out
   // there should be no delay between requests, only an increase in timeout.
   if (Object.keys(timeoutState).length !== expectedCount) {
     throw new Error(`Expected ${expectedCount} timeout(s)`);
