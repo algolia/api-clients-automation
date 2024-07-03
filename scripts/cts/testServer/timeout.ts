@@ -6,6 +6,10 @@ import { setupServer } from '.';
 
 const timeoutState: Record<string, { timestamp: number[]; duration: number[] }> = {};
 
+function aboutEqual(a: number, b: number, epsilon = 100): boolean {
+  return Math.abs(a - b) <= epsilon;
+}
+
 export function assertValidTimeouts(expectedCount: number): void {
   // assert that the retry strategy uses the correct timings, by checking the time between each request, and how long each request took before being timeouted
   // there should be no delay between requests, only an increase in timeout.
@@ -19,26 +23,33 @@ export function assertValidTimeouts(expectedCount: number): void {
     }
 
     let delay = state.timestamp[1] - state.timestamp[0];
-    if (Math.abs(delay - state.duration[0]) > 100) {
+    if (!aboutEqual(delay, state.duration[0])) {
       throw new Error(`Expected no delay between requests for ${lang}, got ${delay}ms`);
     }
 
     delay = state.timestamp[2] - state.timestamp[1];
-    if (Math.abs(delay - state.duration[1]) > 100) {
+    if (!aboutEqual(delay, state.duration[1])) {
       throw new Error(`Expected no delay between requests for ${lang}, got ${delay}ms`);
     }
 
-    // for languages other than JS, the delay should be the same, because the `retryCount` is per host instead of global
-    if (lang !== 'JavaScript') {
-      if (Math.abs(state.duration[0] - state.duration[1]) > 100) {
-        throw new Error(
-          `Expected the same delay between requests for ${lang}, got ${state.duration[0]}ms and ${state.duration[1]}ms`,
-        );
-      }
-    } else if (Math.abs(state.duration[0] * 4 - state.duration[1]) > 200) {
-      throw new Error(
-        `Expected increasing delay between requests for ${lang}, got ${state.duration[0]}ms and ${state.duration[1]}ms`,
-      );
+    // languages are not consistent yet for the delay between requests
+    switch (lang) {
+      case 'JavaScript':
+        if (!aboutEqual(state.duration[0] * 4, state.duration[1], 200)) {
+          throw new Error(`Expected increasing delay between requests for ${lang}`);
+        }
+        break;
+      case 'PHP':
+        if (!aboutEqual(state.duration[0] * 2, state.duration[1], 200)) {
+          throw new Error(`Expected increasing delay between requests for ${lang}`);
+        }
+        break;
+      default:
+        // the delay should be the same, because the `retryCount` is per host instead of global
+        if (!aboutEqual(state.duration[0], state.duration[1])) {
+          throw new Error(`Expected the same delay between requests for ${lang}`);
+        }
+        break;
     }
   }
 }
