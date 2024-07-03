@@ -47,13 +47,14 @@ void main() {
         appId: "test-app-id",
         apiKey: "test-api-key",
         options: ClientOptions(hosts: [
+          Host.create(url: 'localhost:6676', scheme: 'http'),
           Host.create(url: 'localhost:6677', scheme: 'http'),
           Host.create(url: 'localhost:6678', scheme: 'http'),
         ]));
     requester.setOnRequest((request) {});
     try {
       final res = await client.customGet(
-        path: "1/test/retry",
+        path: "1/test/retry/Dart",
       );
       expectBody(res, """{"message":"ok test server response"}""");
     } on InterceptionException catch (_) {

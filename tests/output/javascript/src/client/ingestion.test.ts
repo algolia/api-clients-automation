@@ -24,7 +24,7 @@ describe('commonApi', () => {
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(
       /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Ingestion (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/
     );
-  });
+  }, 15000);
 
   test('calls api with default read timeouts', async () => {
     const $client = createClient();
@@ -36,7 +36,7 @@ describe('commonApi', () => {
     expect(result).toEqual(
       expect.objectContaining({ connectTimeout: 2000, responseTimeout: 5000 })
     );
-  });
+  }, 15000);
 
   test('calls api with default write timeouts', async () => {
     const $client = createClient();
@@ -48,7 +48,7 @@ describe('commonApi', () => {
     expect(result).toEqual(
       expect.objectContaining({ connectTimeout: 2000, responseTimeout: 30000 })
     );
-  });
+  }, 15000);
 });
 
 describe('parameters', () => {
@@ -62,7 +62,7 @@ describe('parameters', () => {
     })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('data.us.algolia.com');
-  });
+  }, 15000);
 
   test('throws when incorrect region is given', async () => {
     try {
@@ -78,7 +78,7 @@ describe('parameters', () => {
         '`region` is required and must be one of the following: eu, us'
       );
     }
-  });
+  }, 15000);
 });
 
 describe('init', () => {

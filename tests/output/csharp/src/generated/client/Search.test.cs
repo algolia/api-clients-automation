@@ -55,6 +55,15 @@ public class SearchClientTests
         {
           Scheme = HttpScheme.Http,
           Url = "localhost",
+          Port = 6676,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        },
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
           Port = 6677,
           Up = true,
           LastUse = DateTime.UtcNow,
@@ -73,7 +82,7 @@ public class SearchClientTests
     };
     var client = new SearchClient(_config);
 
-    var res = await client.CustomGetAsync("1/test/retry");
+    var res = await client.CustomGetAsync("1/test/retry/Csharp");
 
     JsonAssert.EqualOverrideDefault(
       "{\"message\":\"ok test server response\"}",

@@ -92,13 +92,13 @@ func TestSearchapi2(t *testing.T) {
 		Configuration: transport.Configuration{
 			AppID:  "test-app-id",
 			ApiKey: "test-api-key",
-			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6677", call.IsReadWrite), transport.NewStatefulHost("http", "localhost:6678", call.IsReadWrite)},
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6676", call.IsReadWrite), transport.NewStatefulHost("http", "localhost:6677", call.IsReadWrite), transport.NewStatefulHost("http", "localhost:6678", call.IsReadWrite)},
 		},
 	}
 	client, err = search.NewClientWithConfig(cfg)
 	require.NoError(t, err)
 	res, err := client.CustomGet(client.NewApiCustomGetRequest(
-		"1/test/retry",
+		"1/test/retry/Go",
 	))
 	require.NoError(t, err)
 	rawBody, err := json.Marshal(res)
