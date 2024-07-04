@@ -9,8 +9,7 @@ import { startTestServer } from '../cts/testServer';
 import { formatter } from '../formatter.js';
 import { generate } from '../generate.js';
 import { playground } from '../playground.js';
-import { createReleasePR, updateSLA } from '../release/createReleasePR.js';
-import type { Versions } from '../release/types.js';
+import { createReleasePR } from '../release/createReleasePR.js';
 import { snippetsGenerateMany } from '../snippets/generate.js';
 import { buildSpecs } from '../specs';
 import type { Language } from '../types.js';
@@ -214,15 +213,8 @@ program
     undefined,
   )
   .option('-d, --dry-run', 'does not push anything to GitHub')
-  .option('-gg, --generate-graph', 'only generates the graph')
-  .action(async (langArgs: LangArg[], { verbose, releaseType, dryRun, generateGraph }) => {
+  .action(async (langArgs: LangArg[], { verbose, releaseType, dryRun }) => {
     setVerbose(Boolean(verbose));
-
-    if (generateGraph) {
-      await updateSLA({} as Versions, true);
-
-      return;
-    }
 
     if (langArgs.length === 0) {
       langArgs = [ALL];
