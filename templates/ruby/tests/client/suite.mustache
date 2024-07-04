@@ -40,7 +40,7 @@ class TestClient{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}} < Test:
     {{/testHost}}
     {{#testResponse}}
     {{#matchIsJSON}}
-    assert_equal({{{match.parameters}}}, req)
+    assert_equal({{{match.parameters}}}, req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
     {{/matchIsJSON}}
     {{^matchIsJSON}}
     assert_equal('{{{match}}}', req)

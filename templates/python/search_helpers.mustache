@@ -265,7 +265,7 @@
         """
         Helper: Replaces object content of all the given objects according to their respective `objectID` field. The `chunked_batch` helper is used under the hood, which creates a `batch` requests with at most 1000 objects in it.
         """
-        return await self.chunked_batch(index_name=index_name, objects=objects, action=Action.PARTIALUPDATEOBJECT and create_if_not_exists or Action.PARTIALUPDATEOBJECTNOCREATE)
+        return await self.chunked_batch(index_name=index_name, objects=objects, action=Action.PARTIALUPDATEOBJECT if create_if_not_exists else Action.PARTIALUPDATEOBJECTNOCREATE)
 
     async def chunked_batch(
         self,

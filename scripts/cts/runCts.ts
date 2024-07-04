@@ -88,8 +88,10 @@ export async function runCts(languages: Language[], clients: string[]): Promise<
   if (useTestServer) {
     await close();
 
+    const skip = (lang: Language): number => (languages.includes(lang) ? 1 : 0);
+
     assertValidTimeouts(languages.length);
-    assertChunkWrapperValid(languages.length - (languages.includes('dart') ? 1 : 0));
-    assertValidReplaceAllObjects(languages.length - (languages.includes('dart') ? 1 : 0));
+    assertChunkWrapperValid(languages.length - skip('dart') - skip('scala'));
+    assertValidReplaceAllObjects(languages.length - skip('dart') - skip('scala'));
   }
 }
