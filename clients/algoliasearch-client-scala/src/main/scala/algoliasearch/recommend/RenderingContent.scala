@@ -33,5 +33,6 @@ package algoliasearch.recommend
   * order of facet names and values without changing your frontend code.
   */
 case class RenderingContent(
-    facetOrdering: Option[FacetOrdering] = scala.None
+    facetOrdering: Option[FacetOrdering] = scala.None,
+    redirect: Option[RedirectURL] = scala.None
 )

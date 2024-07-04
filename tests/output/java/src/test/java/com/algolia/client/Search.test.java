@@ -72,13 +72,14 @@ class SearchClientClientTests {
       "test-api-key",
       withCustomHosts(
         Arrays.asList(
+          new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6676),
           new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6677),
           new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6678)
         ),
         false
       )
     );
-    var res = client.customGet("1/test/retry");
+    var res = client.customGet("1/test/retry/Java");
 
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals("{\"message\":\"ok test server response\"}", json.writeValueAsString(res), JSONCompareMode.STRICT)

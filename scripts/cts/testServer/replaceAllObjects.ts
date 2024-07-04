@@ -18,8 +18,11 @@ const raoState: Record<
   }
 > = {};
 
-export function numberOfSuccessfulReplaceAllObjectsCalls(): number {
-  return Object.values(raoState).filter((s) => s.successful).length;
+export function assertValidReplaceAllObjects(expectedCount: number): void {
+  const count = Object.values(raoState).filter((s) => s.successful).length;
+  if (count !== expectedCount) {
+    throw new Error(`Expected ${expectedCount} call to replaceAllObjects, got ${count} instead.`);
+  }
 }
 
 function addRoutes(app: Express): void {

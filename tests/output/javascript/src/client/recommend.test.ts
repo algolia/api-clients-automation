@@ -24,7 +24,7 @@ describe('api', () => {
     })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('test-app-id-dsn.algolia.net');
-  });
+  }, 15000);
 
   test('calls api with correct write host', async () => {
     const $client = recommendClient('test-app-id', 'test-api-key', {
@@ -36,7 +36,7 @@ describe('api', () => {
     })) as unknown as EchoResponse;
 
     expect(result.host).toEqual('test-app-id.algolia.net');
-  });
+  }, 15000);
 });
 
 describe('commonApi', () => {
@@ -50,7 +50,7 @@ describe('commonApi', () => {
     expect(decodeURIComponent(result.algoliaAgent)).toMatch(
       /^Algolia for JavaScript \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Recommend (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/
     );
-  });
+  }, 15000);
 
   test('calls api with default read timeouts', async () => {
     const $client = createClient();
@@ -62,7 +62,7 @@ describe('commonApi', () => {
     expect(result).toEqual(
       expect.objectContaining({ connectTimeout: 2000, responseTimeout: 5000 })
     );
-  });
+  }, 15000);
 
   test('calls api with default write timeouts', async () => {
     const $client = createClient();
@@ -74,7 +74,7 @@ describe('commonApi', () => {
     expect(result).toEqual(
       expect.objectContaining({ connectTimeout: 2000, responseTimeout: 30000 })
     );
-  });
+  }, 15000);
 });
 
 describe('init', () => {

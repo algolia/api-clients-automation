@@ -9,11 +9,13 @@ import { chunkWrapperServer } from './chunkWrapper';
 import { gzipServer } from './gzip';
 import { replaceAllObjectsServer } from './replaceAllObjects';
 import { timeoutServer } from './timeout';
+import { timeoutServerBis } from './timeoutBis';
 
 export async function startTestServer(): Promise<() => Promise<void>> {
   const servers = await Promise.all([
     timeoutServer(),
     gzipServer(),
+    timeoutServerBis(),
     replaceAllObjectsServer(),
     chunkWrapperServer(),
   ]);

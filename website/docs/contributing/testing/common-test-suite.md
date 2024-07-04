@@ -33,71 +33,86 @@ The list of `queryParameters` must match exactly the actual value, the CTS has t
 > See the [browse test file for the search client](https://github.com/algolia/api-clients-automation/blob/main/tests/CTS/requests/search/browse.json)
 
 ```json
-[
-  {
-    "testName": "The name of the test (e.g. 'searches to testIndex with query parameters')",
-    // The parameters of you'd like to pass to the method
-    "parameters": {
-      "indexName": "testIndex",
-      "searchParams": {
-        "offset": 42,
-        "limit": 21,
-        "query": "the string to search"
-      },
-      "facets": ["*"]
-    },
-    // Additional options sent with your method
-    "requestOptions": {
-      // Merged with transporter query parameters
-      "queryParameters": {
-        "anOtherParam": true
-      },
-      // Merged with transporter headers
-      "headers": {
-        "x-header": "test"
-      }
-    },
-    // The payload of the request
-    "request": {
-      "path": "/1/indexes/testIndex/query",
-      "method": "POST",
-      "body": { "query": "the string to search" },
-      "queryParameters": {
-        "otherParam": "22",
-        "anOtherParam": "true"
-      },
-      "headers": {
-        "x-header": "test"
-      }
-    },
-    // The expected response - useful for e2e assertions
-    "response": {
-      "statusCode": 200,
-      // This doesn't need to be the full response since we support partial assertions
-      "body": {
-        "results": [
-          {
-            "hits": [],
-            "page": 0,
-            "nbHits": 0,
-            "nbPages": 0,
-            "hitsPerPage": 20,
-            "exhaustiveNbHits": true,
-            "exhaustiveTypo": true,
-            "exhaustive": {
-              "nbHits": true,
-              "typo": true
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "testName": {
+            "type": "string",
+            "description": "The name of the test, defaults to the name of the `operation` (file name). The testName is also used for the documentation snippets as a key to access it inside the snippet JSON object: with a testName equal to `foo` on the `operationIndex` of the `search` client, you can access it from the `search.operationIndex.foo` key."
+        },
+        "isSnippet": {
+            "type": "boolean",
+            "description": "Whether this test case should also be a documentation code snippet."
+        },
+        "parameters": {
+            "type": "object",
+            "description": "A free form object that must correspond to the parameters that the method expects."
+        },
+        "requestOptions": {
+            "type": "object",
+            "description": "The requests options of an Algolia client to send with the current test case.",
+            "properties": {
+                "queryParameters": {
+                    "type": "object",
+                    "description": "The extra query parameters to send with your initial request."
+                },
+                "headers": {
+                    "type": "object",
+                    "description": "The extra headers to send with your initial request."
+                }
+            }
+        },
+        "request": {
+            "type": "object",
+            "description": "The expected request to be sent by the client.",
+            "properties": {
+                "path": {
+                    "type": "string",
+                    "description": "The path of the API client request, e.g. /1/foo/bar."
+                },
+                "method": {
+                    "type": "string",
+                    "description": "The HTTP method used to contact the path, e.g. GET."
+                },
+                "body": {
+                    "type": "object",
+                    "description": "A free form object that contains the expected payload to be sent for the current test case."
+                },
+                "queryParameters": {
+                    "type": "object",
+                    "description": "A free form object that contains the expected query parameters to be sent for the current test case."
+                },
+                "headers": {
+                    "type": "object",
+                    "description": "A free form object that contains the expected headers to be sent for the current test case."
+                }
             },
-            "query": "",
-            "params": "",
-            "index": "cts_e2e_search_empty_index",
-            "renderingContent": {}
-          }
-        ]
-      }
-    }
-  }
-]
+            "required": [
+                "path",
+                "method"
+            ]
+        },
+        "response": {
+            "type": "object",
+            "description": "The expected response to be returned by the client. Specificying this field indicates an e2e test will be performed, nothing is mocked.",
+            "properties": {
+                "statusCode": {
+                    "type": "integer",
+                    "description": "The status code of the response."
+                },
+                "body": {
+                    "type": "object",
+                    "description": "A free form object that contains the expected response to be received for the current test case."
+                }
+            }
+        }
+    },
+    "required": [
+        "parameters",
+        "request"
+    ]
+}
 ```
 
 #### e2e

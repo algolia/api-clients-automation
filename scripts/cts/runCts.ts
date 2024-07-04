@@ -6,7 +6,7 @@ import type { Language } from '../types.js';
 
 import { startTestServer } from './testServer';
 import { assertChunkWrapperValid } from './testServer/chunkWrapper.js';
-import { getTimeoutCounter } from './testServer/timeout.js';
+import { assertValidTimeouts } from './testServer/timeout.js';
 
 async function runCtsOne(language: string): Promise<void> {
   const spinner = createSpinner(`running cts for '${language}'`);
@@ -87,19 +87,9 @@ export async function runCts(languages: Language[], clients: string[]): Promise<
   if (useTestServer) {
     await close();
 
-    if (languages.length !== getTimeoutCounter()) {
-      throw new Error(
-        `Expected ${languages.length} timeout(s), got ${getTimeoutCounter()} instead.`,
-      );
-    }
-
+    assertValidTimeouts(languages.length);
     assertChunkWrapperValid(languages.length);
-
     // uncomment this once all languages are supported
-    // if (languages.length !== numberOfSuccessfulReplaceAllObjectsCalls()) {
-    //   throw new Error(
-    //     `Expected ${languages.length} call to replaceAllObjects, got ${numberOfSuccessfulReplaceAllObjectsCalls()} instead.`,
-    //   );
-    // }
+    // assertValidReplaceAllObjects(languages.length);
   }
 }

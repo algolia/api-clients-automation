@@ -1,0 +1,17 @@
+name: Cleanup generated branch
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    permissions:
+      pull-requests: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: git push -d origin generated/${{ github.head_ref }} || true

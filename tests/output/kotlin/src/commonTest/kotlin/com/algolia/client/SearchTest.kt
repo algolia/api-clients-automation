@@ -47,11 +47,11 @@ class SearchTest {
 
   @Test
   fun `tests the retry strategy`() = runTest {
-    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6677), Host(url = "localhost", protocol = "http", port = 6678))))
+    val client = SearchClient(appId = "test-app-id", apiKey = "test-api-key", options = ClientOptions(hosts = listOf(Host(url = "localhost", protocol = "http", port = 6676), Host(url = "localhost", protocol = "http", port = 6677), Host(url = "localhost", protocol = "http", port = 6678))))
     client.runTest(
       call = {
         customGet(
-          path = "1/test/retry",
+          path = "1/test/retry/Kotlin",
         )
       },
       response = {

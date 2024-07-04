@@ -69,6 +69,7 @@ class SearchTest extends AnyFunSuite {
         .builder()
         .withHosts(
           List(
+            Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6676)),
             Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6677)),
             Host("localhost", Set(CallType.Read, CallType.Write), "http", Option(6678))
           )
@@ -78,7 +79,7 @@ class SearchTest extends AnyFunSuite {
 
     var res = Await.result(
       client.customGet[Any](
-        path = "1/test/retry"
+        path = "1/test/retry/Scala"
       ),
       Duration.Inf
     )

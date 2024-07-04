@@ -321,7 +321,7 @@ export async function decideReleaseStrategy({
  *
  * Gracefully exits if there is none.
  */
-async function getCommits(): Promise<{
+async function getCommits(force?: boolean): Promise<{
   validCommits: PassedCommit[];
   skippedCommits: string;
 }> {
@@ -354,7 +354,7 @@ async function getCommits(): Promise<{
     validCommits.push(commit);
   }
 
-  if (validCommits.length === 0) {
+  if (!force && validCommits.length === 0) {
     console.log(
       chalk.black.bgYellow('[INFO]'),
       `Skipping release because no valid commit has been added since \`released\` tag.`,
@@ -505,7 +505,7 @@ export async function createReleasePR({
   }
 
   console.log('Searching for commits since last release...');
-  const { validCommits, skippedCommits } = await getCommits();
+  const { validCommits, skippedCommits } = await getCommits(releaseType !== undefined);
 
   const versions = await decideReleaseStrategy({
     versions: readVersions(),
