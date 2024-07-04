@@ -400,7 +400,7 @@ async function prepareGitEnvironment(): Promise<void> {
 }
 
 // updates the release.config.json file for the sla field, which contains a release history of start and end date support
-// inspired by node: https://github.com/nodejs/Release/blob/main/schedule.json, following https://github.com/nodejs/release#release-schedule, leveraging https://github.com/nodejs/lts-schedule
+// inspired by node: https://github.com/nodejs/Release/blob/main/schedule.json, following https://github.com/nodejs/release#release-schedule
 export async function updateSLA(versions: Versions): Promise<void> {
   const start = new Date();
   const end = new Date(new Date().setMonth(new Date().getMonth() + 24));
@@ -433,10 +433,10 @@ export async function updateSLA(versions: Versions): Promise<void> {
         // if it's a major or not the same minor, it means we release a new latest versions, so the
         // current SLA goes in maintenance mode
       } else {
-        delete supportedVersions[current].lts;
+        supportedVersions[current].status = 'maintenance';
 
         // any other release cases make the previous version enter in maintenance
-        supportedVersions[current].maintenance = start.toISOString().split('T')[0];
+        supportedVersions[current].start = start.toISOString().split('T')[0];
       }
     }
 
@@ -447,15 +447,14 @@ export async function updateSLA(versions: Versions): Promise<void> {
 
     supportedVersions[next] = {
       start: start.toISOString().split('T')[0],
-      lts: isPreRelease ? undefined : start.toISOString().split('T')[0],
+      status: isPreRelease ? 'prerelease' : 'active',
       end: end.toISOString().split('T')[0],
-      prerelease: isPreRelease,
     };
 
     // define the boundaries of the graph by searching for older and newest dates
     for (const [supportedVersion, dates] of Object.entries(supportedVersions)) {
       // delete maintenance versions that are not supported anymore
-      if ('maintenance' in dates && new Date(dates.end as string) < start) {
+      if (dates.status === 'maintenance' && new Date(dates.end as string) < start) {
         delete supportedVersions[supportedVersion];
 
         continue;
