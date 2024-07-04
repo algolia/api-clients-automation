@@ -6,6 +6,7 @@ import type { Language } from '../types.js';
 
 import { startTestServer } from './testServer';
 import { assertChunkWrapperValid } from './testServer/chunkWrapper.js';
+import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.js';
 import { assertValidTimeouts } from './testServer/timeout.js';
 
 async function runCtsOne(language: string): Promise<void> {
@@ -88,8 +89,7 @@ export async function runCts(languages: Language[], clients: string[]): Promise<
     await close();
 
     assertValidTimeouts(languages.length);
-    assertChunkWrapperValid(languages.length);
-    // uncomment this once all languages are supported
-    // assertValidReplaceAllObjects(languages.length);
+    assertChunkWrapperValid(languages.length - (languages.includes('dart') ? 1 : 0));
+    assertValidReplaceAllObjects(languages.length - (languages.includes('dart') ? 1 : 0));
   }
 }

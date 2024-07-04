@@ -309,8 +309,8 @@ def replace_all_objects(index_name, objects, batch_size = 1000, request_options 
       destination: tmp_index_name,
       scope: [
         Search::ScopeType::SETTINGS,
-        Search::ScopeType::SYNONYMS,
-        Search::ScopeType::RULES
+        Search::ScopeType::RULES,
+        Search::ScopeType::SYNONYMS
       ]
     ),
     request_options
@@ -334,8 +334,8 @@ def replace_all_objects(index_name, objects, batch_size = 1000, request_options 
       destination: tmp_index_name,
       scope: [
         Search::ScopeType::SETTINGS,
-        Search::ScopeType::SYNONYMS,
-        Search::ScopeType::RULES
+        Search::ScopeType::RULES,
+        Search::ScopeType::SYNONYMS
       ]
     ),
     request_options

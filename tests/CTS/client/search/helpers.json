@@ -207,8 +207,7 @@
               "objectID": "2",
               "name": "Benoit"
             }
-          ],
-          "requestOptions": null
+          ]
         },
         "expected": {
           "type": "response",
@@ -258,8 +257,7 @@
               "name": "Benoit"
             }
           ],
-          "createIfNotExists": true,
-          "requestOptions": null
+          "createIfNotExists": true
         },
         "expected": {
           "type": "response",
@@ -309,8 +307,7 @@
               "name": "David"
             }
           ],
-          "createIfNotExists": false,
-          "requestOptions": null
+          "createIfNotExists": false
         },
         "expected": {
           "type": "response",
@@ -353,8 +350,7 @@
           "objectIDs": [
             "1",
             "2"
-          ],
-          "requestOptions": null
+          ]
         },
         "expected": {
           "type": "response",
