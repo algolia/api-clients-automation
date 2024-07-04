@@ -74,7 +74,6 @@ const sidebars = {
             'clients/migration-guides/php',
           ],
         },
-        'clients/service-level-agreement'
       ],
     },
     {
