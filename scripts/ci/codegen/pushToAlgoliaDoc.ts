@@ -44,13 +44,9 @@ async function pushToAlgoliaDoc(): Promise<void> {
   await run(`git checkout -B ${targetBranch}`, { cwd: tempGitDir });
 
   const pathToSpecs = toAbsolutePath(`${tempGitDir}/app_data/api/specs`);
-  const pathToImages = toAbsolutePath(`${tempGitDir}/assets/images/api`);
   await run(`cp ${toAbsolutePath('specs/bundled/*.doc.yml')} ${pathToSpecs}`);
   await run(`cp ${toAbsolutePath('config/release.config.json')} ${pathToSpecs}`);
   await run(`cp ${toAbsolutePath('website/src/generated/*.json')} ${pathToSpecs}`);
-  await run(
-    `mkdir -p ${pathToImages} && cp ${toAbsolutePath('website/static/img/*-sla.png')} ${pathToImages}`,
-  );
 
   if ((await getNbGitDiff({ head: null, cwd: tempGitDir })) === 0) {
     console.log(`❎ Skipping push docs because there is no change.`);
@@ -77,7 +73,7 @@ async function pushToAlgoliaDoc(): Promise<void> {
     title: message,
     body: [
       'This PR is automatically created by https://github.com/algolia/api-clients-automation',
-      'It contains the latest released OpenAPI specs, the release SLA dates and PNGs, and the generated code snippets.',
+      'It contains the latest released OpenAPI specs, the release version support dates, and the generated code snippets.',
     ].join('\n\n'),
     base: 'master',
     head: targetBranch,
