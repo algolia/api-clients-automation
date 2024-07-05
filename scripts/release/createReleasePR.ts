@@ -3,7 +3,6 @@ import fsp from 'fs/promises';
 
 import chalk from 'chalk';
 import dotenv from 'dotenv';
-import lts from 'lts';
 import semver from 'semver';
 
 import generationCommitText from '../ci/codegen/text.js';
@@ -401,8 +400,8 @@ async function prepareGitEnvironment(): Promise<void> {
 }
 
 // updates the release.config.json file for the sla field, which contains a release history of start and end date support
-// inspired by node: https://github.com/nodejs/Release/blob/main/schedule.json, following https://github.com/nodejs/release#release-schedule, leveraging https://github.com/nodejs/lts-schedule
-export async function updateSLA(versions: Versions, graphOnly?: boolean): Promise<void> {
+// inspired by node: https://github.com/nodejs/Release/blob/main/schedule.json, following https://github.com/nodejs/release#release-schedule
+export async function updateSLA(versions: Versions): Promise<void> {
   const start = new Date();
   const end = new Date(new Date().setMonth(new Date().getMonth() + 24));
 
@@ -410,56 +409,52 @@ export async function updateSLA(versions: Versions, graphOnly?: boolean): Promis
   let queryEnd = end;
 
   for (const [lang, supportedVersions] of Object.entries(fullReleaseConfig.sla)) {
-    if (!graphOnly) {
-      const next = versions[lang].next;
-      const current = versions[lang].current;
+    const next = versions[lang].next;
+    const current = versions[lang].current;
 
-      // no ongoing release for this client, nothing changes
-      if (!next || current === next) {
-        continue;
-      }
-
-      // update the previously supported SLA version fields
-      if (current in supportedVersions) {
-        const nextMinor = next.match(/.+\.(.+)\..*/);
-        const currentMinor = current.match(/.+\.(.+)\..*/);
-
-        if (!currentMinor || !nextMinor) {
-          throw new Error(`unable to determine minor versions: ${currentMinor}, ${nextMinor}`);
-        }
-
-        // if it's not a major release, and we are on the same minor, we remove the current
-        // patch because we support SLA at minor level
-        if (versions[lang].releaseType !== 'major' && currentMinor[1] === nextMinor[1]) {
-          delete supportedVersions[current];
-          // if it's a major or not the same minor, it means we release a new latest versions, so the
-          // current SLA goes in maintenance mode
-        } else {
-          delete supportedVersions[current].lts;
-
-          // any other release cases make the previous version enter in maintenance
-          supportedVersions[current].maintenance = start.toISOString().split('T')[0];
-        }
-      }
-
-      // we don't support SLA for pre-releases, so we will:
-      // - set them as `prerelease`
-      // - not the set `lts` field, the gen script will set the as `unstable`
-      const isPreRelease =
-        next.match(preReleaseRegExp) !== null || semver.prerelease(next) !== null;
-
-      supportedVersions[next] = {
-        start: start.toISOString().split('T')[0],
-        lts: isPreRelease ? undefined : start.toISOString().split('T')[0],
-        end: end.toISOString().split('T')[0],
-        prerelease: isPreRelease,
-      };
+    // no ongoing release for this client, nothing changes
+    if (!next || current === next) {
+      continue;
     }
+
+    // update the previously supported SLA version fields
+    if (current in supportedVersions) {
+      const nextMinor = next.match(/.+\.(.+)\..*/);
+      const currentMinor = current.match(/.+\.(.+)\..*/);
+
+      if (!currentMinor || !nextMinor) {
+        throw new Error(`unable to determine minor versions: ${currentMinor}, ${nextMinor}`);
+      }
+
+      // if it's not a major release, and we are on the same minor, we remove the current
+      // patch because we support SLA at minor level
+      if (versions[lang].releaseType !== 'major' && currentMinor[1] === nextMinor[1]) {
+        delete supportedVersions[current];
+        // if it's a major or not the same minor, it means we release a new latest versions, so the
+        // current SLA goes in maintenance mode
+      } else {
+        supportedVersions[current].status = 'maintenance';
+
+        // any other release cases make the previous version enter in maintenance
+        supportedVersions[current].start = start.toISOString().split('T')[0];
+      }
+    }
+
+    // we don't support SLA for pre-releases, so we will:
+    // - set them as `prerelease`
+    // - not the set `lts` field, the gen script will set the as `unstable`
+    const isPreRelease = next.match(preReleaseRegExp) !== null || semver.prerelease(next) !== null;
+
+    supportedVersions[next] = {
+      start: start.toISOString().split('T')[0],
+      status: isPreRelease ? 'prerelease' : 'active',
+      end: end.toISOString().split('T')[0],
+    };
 
     // define the boundaries of the graph by searching for older and newest dates
     for (const [supportedVersion, dates] of Object.entries(supportedVersions)) {
       // delete maintenance versions that are not supported anymore
-      if ('maintenance' in dates && new Date(dates.end as string) < start) {
+      if (dates.status === 'maintenance' && new Date(dates.end as string) < start) {
         delete supportedVersions[supportedVersion];
 
         continue;
@@ -475,14 +470,6 @@ export async function updateSLA(versions: Versions, graphOnly?: boolean): Promis
         queryEnd = versionEnd;
       }
     }
-
-    lts.create({
-      queryStart,
-      queryEnd,
-      png: toAbsolutePath(`website/static/img/${lang}-sla.png`),
-      data: supportedVersions,
-      projectName: '',
-    });
   }
 
   await fsp.writeFile(
@@ -514,7 +501,7 @@ export async function createReleasePR({
     releaseType,
   });
 
-  await updateSLA(versions, false);
+  await updateSLA(versions);
 
   const versionChanges = getVersionChangesText(versions);
 
