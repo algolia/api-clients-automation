@@ -16,7 +16,7 @@ post:
     - Records are ranked by attributes and custom ranking.
     - There's no ranking for: typo-tolerance, number of matched words, proximity, geo distance.
 
-    Browse requests override these settings:
+    Browse requests automatically apply these settings:
 
     - `advancedSyntax`: `false`
     - `attributesToHighlight`: `[]`
