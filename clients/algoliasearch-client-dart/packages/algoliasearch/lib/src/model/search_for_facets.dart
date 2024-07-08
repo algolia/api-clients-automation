@@ -618,7 +618,7 @@ final class SearchForFacets {
       attributeCriteriaComputedByMinProximity.hashCode +
       renderingContent.hashCode +
       enableReRanking.hashCode +
-      (reRankingApplyFilter == null ? 0 : reRankingApplyFilter.hashCode) +
+      reRankingApplyFilter.hashCode +
       facet.hashCode +
       indexName.hashCode +
       facetQuery.hashCode +

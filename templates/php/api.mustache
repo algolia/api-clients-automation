@@ -458,7 +458,7 @@ use {{invokerPackage}}\Support\Helpers;
             [
                 'operation' => 'copy',
                 'destination' => $tmpIndexName,
-                'scope' => ['settings', 'synonyms', 'rules'],
+                'scope' => ['settings', 'rules', 'synonyms'],
             ],
             $requestOptions
         );
@@ -472,7 +472,7 @@ use {{invokerPackage}}\Support\Helpers;
             [
                 'operation' => 'copy',
                 'destination' => $tmpIndexName,
-                'scope' => ['settings', 'synonyms', 'rules'],
+                'scope' => ['settings', 'rules', 'synonyms'],
             ],
             $requestOptions
         );
@@ -505,7 +505,7 @@ use {{invokerPackage}}\Support\Helpers;
     * @param array  $requestOptions Request options
     */
     public function saveObjects($indexName, $objects) {
-      return chunkedBatch($indexName, $objects, 'addObject', false, 1000, $requestOptions);
+      return $this->chunkedBatch($indexName, $objects, 'addObject', false, 1000, $requestOptions);
     }
 
     /**
@@ -515,14 +515,15 @@ use {{invokerPackage}}\Support\Helpers;
     * @param array  $objectIDs      The `objectIDs` to delete.
     * @param array  $requestOptions Request options
     */
-    public function deleteObjects($indexName, $objects) {
-      $objects = [];
+    public function deleteObjects($indexName, $objectIDs)
+    {
+        $objects = [];
 
-      foreach ($id as $objectIDs) {
-          $objects[] = ['objectID' => $id];
-      }
+        foreach ($objectIDs as $id) {
+            $objects[] = ['objectID' => $id];
+        }
 
-      return chunkedBatch($indexName, $objects, 'deleteObjects', false, 1000, $requestOptions);
+        return $this->chunkedBatch($indexName, $objects, 'deleteObject', false, 1000, $requestOptions);
     }
 
     /**
@@ -534,7 +535,7 @@ use {{invokerPackage}}\Support\Helpers;
     * @param array  $requestOptions Request options
     */
     public function partialUpdateObjects($indexName, $objects, $createIfNotExists) {
-      return chunkedBatch($indexName, $objects, ($createIfNotExists == TRUE) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', false, 1000, $requestOptions);
+      return $this->chunkedBatch($indexName, $objects, ($createIfNotExists == TRUE) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', false, 1000, $requestOptions);
     }
 
     /**
