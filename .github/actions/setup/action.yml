@@ -202,6 +202,14 @@ runs:
       with:
         swift-version: ${{ steps.versions.outputs.SWIFT_VERSION }}
 
+    - name: Cache the build folder
+      id: cache-swift-build
+      if: ${{ inputs.language == 'swift' }}
+      uses: actions/cache@v4
+      with:
+        path: tests/output/swift/.build
+        key: swift-cts-build-${{ steps.versions.outputs.SWIFT_VERSION }}-${{ runner.os }}
+
     - name: Set swiftformat version
       if: ${{ inputs.language == 'swift' }}
       id: swiftformat-version
@@ -216,7 +224,7 @@ runs:
         ref: ${{ steps.swiftformat-version.outputs.SWIFTFORMAT_VERSION }}
         path: swiftformat
 
-    - name: Cache the build folder
+    - name: Cache the build folder for swiftformat
       id: cache-swiftformat
       if: ${{ inputs.language == 'swift' }}
       uses: actions/cache@v4
