@@ -1,3 +1,7 @@
+## [1.17.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.16.0...1.17.0)
+
+- [2f3b36f90](https://github.com/algolia/api-clients-automation/commit/2f3b36f90) feat(dart): add Dio HttpClientAdapter to ClientOptions ([#3326](https://github.com/algolia/api-clients-automation/pull/3326)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [1.16.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.15.1...1.16.0)
 
 - [9776cb3ba](https://github.com/algolia/api-clients-automation/commit/9776cb3ba) feat(specs): add redirect to renderingContent ([#3296](https://github.com/algolia/api-clients-automation/pull/3296)) by [@shortcuts](https://github.com/shortcuts/)
