@@ -470,7 +470,7 @@ final class IndexSettings {
       attributeCriteriaComputedByMinProximity.hashCode +
       renderingContent.hashCode +
       enableReRanking.hashCode +
-      (reRankingApplyFilter == null ? 0 : reRankingApplyFilter.hashCode);
+      reRankingApplyFilter.hashCode;
 
   factory IndexSettings.fromJson(Map<String, dynamic> json) =>
       _$IndexSettingsFromJson(json);
