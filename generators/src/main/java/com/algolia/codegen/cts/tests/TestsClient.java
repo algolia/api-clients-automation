@@ -97,6 +97,9 @@ public class TestsClient extends TestsGenerator {
               stepOut.put("isMethod", true); // TODO: remove once kotlin is converted
               stepOut.put("hasParams", ope.hasParams);
               stepOut.put("isGeneric", (boolean) ope.vendorExtensions.getOrDefault("x-is-generic", false));
+              if (ope.returnType != null && ope.returnType.length() > 0) {
+                stepOut.put("returnType", Helpers.toPascalCase(ope.returnType));
+              }
 
               // set on testOut because we need to wrap everything for java.
               testOut.put("isHelper", (boolean) ope.vendorExtensions.getOrDefault("x-helper", false));
