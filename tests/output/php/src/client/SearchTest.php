@@ -267,6 +267,104 @@ class SearchTest extends TestCase implements HttpClientInterface
     }
 
     /**
+     * Test case : call saveObjects without error.
+     */
+    public function test3helpers()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
+
+        $res = $client->saveObjects(
+            'cts_e2e_saveObjects_PHP',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+            ],
+        );
+        $this->assertEquals(
+            '[{"taskID":333,"objectIDs":["1","2"]}]',
+            json_encode($res)
+        );
+    }
+
+    /**
+     * Test case : call partialUpdateObjects with createIfNotExists=true.
+     */
+    public function test4helpers()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
+
+        $res = $client->partialUpdateObjects(
+            'cts_e2e_partialUpdateObjects_PHP',
+            [
+                ['objectID' => '1',
+                    'name' => 'Adam',
+                ],
+
+                ['objectID' => '2',
+                    'name' => 'Benoit',
+                ],
+            ],
+            true,
+        );
+        $this->assertEquals(
+            '[{"taskID":444,"objectIDs":["1","2"]}]',
+            json_encode($res)
+        );
+    }
+
+    /**
+     * Test case : call partialUpdateObjects with createIfNotExists=false.
+     */
+    public function test5helpers()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
+
+        $res = $client->partialUpdateObjects(
+            'cts_e2e_partialUpdateObjects_PHP',
+            [
+                ['objectID' => '3',
+                    'name' => 'Cyril',
+                ],
+
+                ['objectID' => '4',
+                    'name' => 'David',
+                ],
+            ],
+            false,
+        );
+        $this->assertEquals(
+            '[{"taskID":555,"objectIDs":["3","4"]}]',
+            json_encode($res)
+        );
+    }
+
+    /**
+     * Test case : call deleteObjects without error.
+     */
+    public function test6helpers()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
+
+        $res = $client->deleteObjects(
+            'cts_e2e_deleteObjects_PHP',
+            [
+                '1',
+
+                '2',
+            ],
+        );
+        $this->assertEquals(
+            '[{"taskID":666,"objectIDs":["1","2"]}]',
+            json_encode($res)
+        );
+    }
+
+    /**
      * Test case : client throws with invalid parameters.
      */
     public function test0parameters()

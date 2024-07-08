@@ -236,6 +236,85 @@ class SearchClientClientTests {
   }
 
   @Test
+  @DisplayName("call saveObjects without error")
+  void helpersTest3() {
+    assertDoesNotThrow(() -> {
+      SearchClient client = new SearchClient(
+        "test-app-id",
+        "test-api-key",
+        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
+      );
+      var res = client.saveObjects(
+        "cts_e2e_saveObjects_Java",
+        List.of(Map.of("objectID", "1", "name", "Adam"), Map.of("objectID", "2", "name", "Benoit"))
+      );
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals("[{\"taskID\":333,\"objectIDs\":[\"1\",\"2\"]}]", json.writeValueAsString(res), JSONCompareMode.STRICT)
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("call partialUpdateObjects with createIfNotExists=true")
+  void helpersTest4() {
+    assertDoesNotThrow(() -> {
+      SearchClient client = new SearchClient(
+        "test-app-id",
+        "test-api-key",
+        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
+      );
+      var res = client.partialUpdateObjects(
+        "cts_e2e_partialUpdateObjects_Java",
+        List.of(Map.of("objectID", "1", "name", "Adam"), Map.of("objectID", "2", "name", "Benoit")),
+        true
+      );
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals("[{\"taskID\":444,\"objectIDs\":[\"1\",\"2\"]}]", json.writeValueAsString(res), JSONCompareMode.STRICT)
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("call partialUpdateObjects with createIfNotExists=false")
+  void helpersTest5() {
+    assertDoesNotThrow(() -> {
+      SearchClient client = new SearchClient(
+        "test-app-id",
+        "test-api-key",
+        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
+      );
+      var res = client.partialUpdateObjects(
+        "cts_e2e_partialUpdateObjects_Java",
+        List.of(Map.of("objectID", "3", "name", "Cyril"), Map.of("objectID", "4", "name", "David")),
+        false
+      );
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals("[{\"taskID\":555,\"objectIDs\":[\"3\",\"4\"]}]", json.writeValueAsString(res), JSONCompareMode.STRICT)
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("call deleteObjects without error")
+  void helpersTest6() {
+    assertDoesNotThrow(() -> {
+      SearchClient client = new SearchClient(
+        "test-app-id",
+        "test-api-key",
+        withCustomHosts(Arrays.asList(new Host("localhost", EnumSet.of(CallType.READ, CallType.WRITE), "http", 6680)), false)
+      );
+      var res = client.deleteObjects("cts_e2e_deleteObjects_Java", List.of("1", "2"));
+
+      assertDoesNotThrow(() ->
+        JSONAssert.assertEquals("[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]", json.writeValueAsString(res), JSONCompareMode.STRICT)
+      );
+    });
+  }
+
+  @Test
   @DisplayName("client throws with invalid parameters")
   void parametersTest0() {
     {
