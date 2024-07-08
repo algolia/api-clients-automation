@@ -97,18 +97,18 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
                     );
                     {{/testTimeouts}}
                     {{#testResponse}}
-                      {{#matchIsObject}}
+                      {{#matchIsJSON}}
                         $this->assertEquals(
                             '{{{match.parameters}}}',
                             json_encode($res)
                         );
-                      {{/matchIsObject}}
-                      {{^matchIsObject}}
+                      {{/matchIsJSON}}
+                      {{^matchIsJSON}}
                         $this->assertEquals(
                             '{{{match}}}',
                             $res
                         );
-                      {{/matchIsObject}}
+                      {{/matchIsJSON}}
                     {{/testResponse}}
                 {{/match}}
             {{/isError}}

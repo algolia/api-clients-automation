@@ -22,6 +22,12 @@ method:
           type: array
           items:
             type: string
+      - in: query
+        name: requestOptions
+        description: The request options to pass to the `batch` method.
+        required: false
+        schema:
+          type: object
     responses:
       '200':
         description: OK
