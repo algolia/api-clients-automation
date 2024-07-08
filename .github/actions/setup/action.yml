@@ -184,6 +184,11 @@ runs:
         ruby-version: ${{ steps.versions.outputs.RUBY_VERSION }}
         bundler-cache: true
 
+    - name: Install Ruby formatter
+      if: ${{ inputs.language == 'ruby' }}
+      shell: bash
+      run: brew install rubyfmt
+
     # Csharp
     - name: Install dotnet
       if: ${{ inputs.language == 'csharp' }}

@@ -118,7 +118,6 @@ export const patterns = [
 
   // Ruby
   '!snippets/ruby/Gemfile',
-  '!snippets/ruby/.rubocop.yml',
   '!clients/algoliasearch-client-ruby/**',
   'clients/algoliasearch-client-ruby/Gemfile.lock',
   'clients/algoliasearch-client-ruby/lib/algolia/**',
