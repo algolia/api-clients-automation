@@ -56,12 +56,12 @@ public void Dispose()
               Assert.Equal("{{{match}}}", result.Host);
           {{/testHost}}
           {{#testResponse}}
-            {{#matchIsObject}}
+            {{#matchIsJSON}}
               JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}", JsonSerializer.Serialize(res, JsonConfig.Options), new JsonDiffConfig(false));
-            {{/matchIsObject}}
-            {{^matchIsObject}}
+            {{/matchIsJSON}}
+            {{^matchIsJSON}}
               Assert.Equal("{{{match}}}", res);
-            {{/matchIsObject}}
+            {{/matchIsJSON}}
           {{/testResponse}}
         {{/match}}
       {{/isError}}

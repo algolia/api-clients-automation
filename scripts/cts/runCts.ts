@@ -5,6 +5,8 @@ import { createSpinner } from '../spinners.js';
 import type { Language } from '../types.js';
 
 import { startTestServer } from './testServer';
+import { assertChunkWrapperValid } from './testServer/chunkWrapper.js';
+import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.js';
 import { assertValidTimeouts } from './testServer/timeout.js';
 
 async function runCtsOne(language: string): Promise<void> {
@@ -86,9 +88,10 @@ export async function runCts(languages: Language[], clients: string[]): Promise<
   if (useTestServer) {
     await close();
 
-    assertValidTimeouts(languages.length);
+    const skip = (lang: Language): number => (languages.includes(lang) ? 1 : 0);
 
-    // uncomment this once all languages are supported
-    // assertValidReplaceAllObjects(languages.length);
+    assertValidTimeouts(languages.length);
+    assertChunkWrapperValid(languages.length - skip('dart') - skip('scala'));
+    assertValidReplaceAllObjects(languages.length - skip('dart') - skip('scala'));
   }
 }
