@@ -50,6 +50,9 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{testType}}{{/lambda.titlecase}}{
   {{/autoCreateClient}}
   _ = echo
   {{#steps}}
+  {{#times}}
+  for i := 0; i < {{.}}; i++ {
+  {{/times}}
   {{#isError}}
   {{#dynamicTemplate}}{{/dynamicTemplate}}
   require.EqualError(t, err, "{{{expectedError}}}")
@@ -85,6 +88,9 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{testType}}{{/lambda.titlecase}}{
     {{/testResponse}}
   {{/match}}
   {{/isError}}
+  {{#times}}
+  }
+  {{/times}}
   {{/steps}}
 }
 

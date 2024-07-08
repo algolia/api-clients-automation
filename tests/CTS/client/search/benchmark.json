@@ -1,0 +1,36 @@
+[
+  {
+    "testName": "benchmark the search method",
+    "autoCreateClient": false,
+    "steps": [
+      {
+        "type": "createClient",
+        "parameters": {
+          "appId": "test-app-id",
+          "apiKey": "test-api-key",
+          "customHosts": [
+            {
+              "host": "${{localhost}}",
+              "port": 6680
+            }
+          ]
+        }
+      },
+      {
+        "type": "method",
+        "object": "$client",
+        "path": "search",
+        "times": 1000,
+        "parameters": {
+          "requests": [
+            {
+              "indexName": "cts_e2e_benchmark_search_${{languageCased}}",
+              "query": "iphone 15 pro max 512gb",
+              "hitsPerPage": 50
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

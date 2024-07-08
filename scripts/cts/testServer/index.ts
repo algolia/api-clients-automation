@@ -44,6 +44,20 @@ export async function setupServer(
 
   addRoutes(app);
 
+  // 404 handler
+  app.use((req, res) => {
+    // eslint-disable-next-line no-console
+    console.error('endpoint not implemented for', req.method, req.url);
+    res.status(404).json({ message: 'not found' });
+  });
+
+  // catch all error handler
+  app.use((err, req, res, _) => {
+    // eslint-disable-next-line no-console
+    console.error(err.message);
+    res.status(500).send({ message: err.message });
+  });
+
   const server = await new Promise<Server>((resolve) => {
     const s = app.listen(port, () => {
       spinner.text = `${name} test server listening at http://localhost:${port}`;

@@ -65,6 +65,7 @@ public class TestsClient extends TestsGenerator {
           for (Step step : test.steps) {
             Map<String, Object> stepOut = new HashMap<>();
             stepOut.put("useEchoRequester", true);
+            if (step.times > 1) stepOut.put("times", step.times);
             CodegenOperation ope = null;
             if (step.type.equals("createClient")) {
               stepOut.put("stepTemplate", "tests/client/createClient.mustache");

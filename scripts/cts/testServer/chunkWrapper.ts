@@ -94,17 +94,68 @@ function addRoutes(app: Express): void {
     }
   });
 
-  // fallback route
-  app.use((req, res) => {
-    // eslint-disable-next-line no-console
-    console.log('fallback route', req.method, req.url);
-    res.status(404).json({ message: 'not found' });
-  });
-
-  app.use((err, req, res, _) => {
-    // eslint-disable-next-line no-console
-    console.error(err.message);
-    res.status(500).send({ message: err.message });
+  app.post('/1/indexes/*/queries', (req, res) => {
+    res.json({
+      results: [
+        {
+          hits: [
+            {
+              objectID: '668bd17a72dcb36605ff10a4',
+              index: 0,
+              guid: '099dc11e-54ab-4d03-ac18-5ce5d5036c82',
+              isActive: true,
+              balance: '$1,584.80',
+              picture: 'http://placehold.it/32x32',
+              age: 21,
+              eyeColor: 'green',
+              name: 'Knapp Russell',
+              gender: 'male',
+              company: 'ZIALACTIC',
+              email: 'knapprussell@zialactic.com',
+              phone: '+1 (952) 480-3477',
+              address: '529 Seba Avenue, Colton, New Jersey, 5975',
+              about:
+                'Deserunt irure duis cillum dolore ad aliqua cillum ut. Qui labore nulla cillum commodo ex labore consequat. Amet sunt irure eiusmod reprehenderit anim tempor irure non tempor sit aute. Culpa dolor labore sit quis. Non ut ut proident voluptate fugiat enim fugiat enim cupidatat ad irure reprehenderit id.\r\n',
+              registered: '2022-09-23T02:45:05 -02:00',
+              latitude: 38.203585,
+              longitude: -150.156823,
+              tags: ['est', 'cupidatat', 'sint', 'ipsum', 'aliqua', 'quis', 'ullamco'],
+              friends: [
+                {
+                  id: 0,
+                  name: 'Mandy Burch',
+                },
+                {
+                  id: 1,
+                  name: 'Connie Dawson',
+                },
+                {
+                  id: 2,
+                  name: 'Reynolds Russo',
+                },
+              ],
+              greeting: 'Hello, Knapp Russell! You have 4 unread messages.',
+              favoriteFruit: 'banana',
+            },
+          ],
+          page: 1,
+          nbHits: 1,
+          nbPages: 1,
+          hitsPerPage: 50,
+          exhaustiveNbHits: true,
+          processingTimeMS: 0,
+          exhaustiveTypo: true,
+          exhaustive: {
+            nbHits: true,
+            typo: true,
+          },
+          query: req.body.requests[0].query,
+          params: '',
+          index: req.body.requests[0].indexName,
+          renderingContent: {},
+        },
+      ],
+    });
   });
 }
 
