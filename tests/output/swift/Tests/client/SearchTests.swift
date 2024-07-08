@@ -230,6 +230,104 @@ final class SearchClientClientTests: XCTestCase {
         )
     }
 
+    /// call saveObjects without error
+    func testHelpersTest3() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.saveObjects(
+            indexName: "cts_e2e_saveObjects_Swift",
+            objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]]
+        )
+
+        let comparableData = try XCTUnwrap(
+            "[{\"taskID\":333,\"objectIDs\":[\"1\",\"2\"]}]"
+                .data(using: .utf8)
+        )
+        try XCTLenientAssertEqual(
+            received: CodableHelper.jsonEncoder.encode(response),
+            expected: comparableData
+        )
+    }
+
+    /// call partialUpdateObjects with createIfNotExists=true
+    func testHelpersTest4() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.partialUpdateObjects(
+            indexName: "cts_e2e_partialUpdateObjects_Swift",
+            objects: [["objectID": "1", "name": "Adam"], ["objectID": "2", "name": "Benoit"]],
+            createIfNotExists: true
+        )
+
+        let comparableData = try XCTUnwrap(
+            "[{\"taskID\":444,\"objectIDs\":[\"1\",\"2\"]}]"
+                .data(using: .utf8)
+        )
+        try XCTLenientAssertEqual(
+            received: CodableHelper.jsonEncoder.encode(response),
+            expected: comparableData
+        )
+    }
+
+    /// call partialUpdateObjects with createIfNotExists=false
+    func testHelpersTest5() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.partialUpdateObjects(
+            indexName: "cts_e2e_partialUpdateObjects_Swift",
+            objects: [["objectID": "3", "name": "Cyril"], ["objectID": "4", "name": "David"]],
+            createIfNotExists: false
+        )
+
+        let comparableData = try XCTUnwrap(
+            "[{\"taskID\":555,\"objectIDs\":[\"3\",\"4\"]}]"
+                .data(using: .utf8)
+        )
+        try XCTLenientAssertEqual(
+            received: CodableHelper.jsonEncoder.encode(response),
+            expected: comparableData
+        )
+    }
+
+    /// call deleteObjects without error
+    func testHelpersTest6() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6680")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.deleteObjects(
+            indexName: "cts_e2e_deleteObjects_Swift",
+            objectIDs: ["1", "2"]
+        )
+
+        let comparableData = try XCTUnwrap(
+            "[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]"
+                .data(using: .utf8)
+        )
+        try XCTLenientAssertEqual(
+            received: CodableHelper.jsonEncoder.encode(response),
+            expected: comparableData
+        )
+    }
+
     /// client throws with invalid parameters
     func testParametersTest0() async throws {
         do {
