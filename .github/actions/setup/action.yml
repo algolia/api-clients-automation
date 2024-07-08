@@ -40,6 +40,12 @@ runs:
         node-version-file: .nvmrc
         cache: yarn
 
+    - name: Cache node_modules
+      uses: actions/cache@v4
+      with:
+        path: node_modules
+        key: node-modules-${{ hashFiles('.nvmrc') }}-${{ hashFiles('yarn.lock') }}-${{ runner.os }}
+
     - name: Install JavaScript dependencies
       shell: bash
       run: YARN_ENABLE_HARDENED_MODE=0 yarn install
