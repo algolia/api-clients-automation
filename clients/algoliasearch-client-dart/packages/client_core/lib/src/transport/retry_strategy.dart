@@ -39,6 +39,7 @@ final class RetryStrategy {
                 clientSegments: [segment, ...?options.agentSegments],
                 logger: options.logger,
                 interceptors: options.interceptors,
+                httpClientAdapter: options.httpClientAdapter,
               ),
         );
 
