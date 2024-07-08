@@ -57,13 +57,13 @@ class {{clientPrefix}}Test {
                     assertEquals("{{{match}}}", it.url.host);
                 {{/testHost}}        
              }{{/testResponse}}{{#testResponse}}response = {
-                  {{#matchIsObject}}
+                  {{#matchIsJSON}}
                   val response = Json.encodeToString(it)
                   assertEquals("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}", response)
-                  {{/matchIsObject}}
-                  {{^matchIsObject}}
+                  {{/matchIsJSON}}
+                  {{^matchIsJSON}}
                   assertEquals("{{{match}}}", it)
-                  {{/matchIsObject}}
+                  {{/matchIsJSON}}
               }{{/testResponse}}
               {{/match}}
         )

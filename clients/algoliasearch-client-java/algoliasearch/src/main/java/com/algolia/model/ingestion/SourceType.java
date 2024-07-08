@@ -18,7 +18,7 @@ public enum SourceType {
 
   DOCKER("docker"),
 
-  GA_4BIGQUERY_EXPORT("ga4BigqueryExport"),
+  GA_4_BIGQUERY_EXPORT("ga4BigqueryExport"),
 
   JSON("json"),
 

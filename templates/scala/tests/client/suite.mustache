@@ -69,12 +69,12 @@ class {{clientPrefix}}Test extends AnyFunSuite {
     assert(echo.lastResponse.get.host == "{{{match}}}")
     {{/testHost}}
     {{#testResponse}}
-    {{#matchIsObject}}
+    {{#matchIsJSON}}
     assert(write(res) == "{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}")
-    {{/matchIsObject}}
-    {{^matchIsObject}}
+    {{/matchIsJSON}}
+    {{^matchIsJSON}}
     assert(res == "{{{match}}}")
-    {{/matchIsObject}}
+    {{/matchIsJSON}}
     {{/testResponse}}
     {{/match}}
     {{/isError}}
