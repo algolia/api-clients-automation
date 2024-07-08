@@ -57,9 +57,14 @@
         "status": "maintenance"
       },
       "1.16.0": {
-        "start": "2024-07-01",
+        "start": "2024-07-08",
         "end": "2026-07-01",
-        "status": "active"
+        "status": "maintenance"
+      },
+      "1.17.0": {
+        "start": "2024-07-08",
+        "status": "active",
+        "end": "2026-07-08"
       }
     },
     "go": {
@@ -92,10 +97,10 @@
         "end": "2026-07-16",
         "status": "active"
       },
-      "5.0.0-beta.9": {
-        "start": "2024-07-01",
-        "end": "2026-07-01",
-        "status": "prerelease"
+      "5.0.0-beta.10": {
+        "start": "2024-07-08",
+        "status": "prerelease",
+        "end": "2026-07-08"
       }
     },
     "kotlin": {
