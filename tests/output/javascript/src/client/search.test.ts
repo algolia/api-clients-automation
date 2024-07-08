@@ -173,6 +173,77 @@ describe('helpers', () => {
       },
     });
   }, 15000);
+
+  test('call saveObjects without error', async () => {
+    const $client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [
+        { url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' },
+      ],
+    });
+
+    const result = await $client.saveObjects({
+      indexName: 'cts_e2e_saveObjects_JavaScript',
+      objects: [
+        { objectID: '1', name: 'Adam' },
+        { objectID: '2', name: 'Benoit' },
+      ],
+    });
+
+    expect(result).toEqual([{ taskID: 333, objectIDs: ['1', '2'] }]);
+  }, 15000);
+
+  test('call partialUpdateObjects with createIfNotExists=true', async () => {
+    const $client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [
+        { url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' },
+      ],
+    });
+
+    const result = await $client.partialUpdateObjects({
+      indexName: 'cts_e2e_partialUpdateObjects_JavaScript',
+      objects: [
+        { objectID: '1', name: 'Adam' },
+        { objectID: '2', name: 'Benoit' },
+      ],
+      createIfNotExists: true,
+    });
+
+    expect(result).toEqual([{ taskID: 444, objectIDs: ['1', '2'] }]);
+  }, 15000);
+
+  test('call partialUpdateObjects with createIfNotExists=false', async () => {
+    const $client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [
+        { url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' },
+      ],
+    });
+
+    const result = await $client.partialUpdateObjects({
+      indexName: 'cts_e2e_partialUpdateObjects_JavaScript',
+      objects: [
+        { objectID: '3', name: 'Cyril' },
+        { objectID: '4', name: 'David' },
+      ],
+      createIfNotExists: false,
+    });
+
+    expect(result).toEqual([{ taskID: 555, objectIDs: ['3', '4'] }]);
+  }, 15000);
+
+  test('call deleteObjects without error', async () => {
+    const $client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [
+        { url: 'localhost', port: 6680, accept: 'readWrite', protocol: 'http' },
+      ],
+    });
+
+    const result = await $client.deleteObjects({
+      indexName: 'cts_e2e_deleteObjects_JavaScript',
+      objectIDs: ['1', '2'],
+    });
+
+    expect(result).toEqual([{ taskID: 666, objectIDs: ['1', '2'] }]);
+  }, 15000);
 });
 
 describe('parameters', () => {

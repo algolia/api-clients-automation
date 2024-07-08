@@ -518,7 +518,7 @@ public partial class SearchClient
       responses.Add(batchResponse);
     }
 
-    if (waitForTasks) 
+    if (waitForTasks)
     {
       foreach (var batch in responses)
       {

@@ -56,7 +56,10 @@ class TestClientSearchClient < Test::Unit::TestCase
       )
     )
     req = client.custom_get("1/test/retry/Ruby")
-    assert_equal({ 'message': "ok test server response" }, req.to_hash)
+    assert_equal(
+      { 'message': "ok test server response" },
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
   end
 
   # test the compression strategy
@@ -83,7 +86,7 @@ class TestClientSearchClient < Test::Unit::TestCase
     assert_equal(
       { 'message': "ok compression test server response",
         'body': { 'message': "this is a compressed body" }},
-      req.to_hash
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
     )
   end
 
@@ -204,7 +207,106 @@ class TestClientSearchClient < Test::Unit::TestCase
           { 'taskID': 133, 'objectIDs': ["7", "8", "9"] },
           { 'taskID': 134, 'objectIDs': ["10"] }],
         'moveOperationResponse': { 'taskID': 777, 'updatedAt': "2021-01-01T00:00:00.000Z" }},
-      req.to_hash
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+  end
+
+  # call saveObjects without error
+  def test_helpers3
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        'test-app-id',
+        'test-api-key',
+        [Algolia::Transport::StatefulHost.new(
+          'localhost',
+          protocol: 'http://',
+          port: 6680,
+          accept: CallType::READ | CallType::WRITE
+        )],
+        'searchClient'
+      )
+    )
+    req = client.save_objects(
+      "cts_e2e_saveObjects_Ruby",
+      [{ objectID: "1", name: "Adam" }, { objectID: "2", name: "Benoit" }]
+    )
+    assert_equal(
+      [{ 'taskID': 333, 'objectIDs': ["1", "2"] }],
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+  end
+
+  # call partialUpdateObjects with createIfNotExists=true
+  def test_helpers4
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        'test-app-id',
+        'test-api-key',
+        [Algolia::Transport::StatefulHost.new(
+          'localhost',
+          protocol: 'http://',
+          port: 6680,
+          accept: CallType::READ | CallType::WRITE
+        )],
+        'searchClient'
+      )
+    )
+    req = client.partial_update_objects(
+      "cts_e2e_partialUpdateObjects_Ruby",
+      [{ objectID: "1", name: "Adam" }, { objectID: "2", name: "Benoit" }],
+      true
+    )
+    assert_equal(
+      [{ 'taskID': 444, 'objectIDs': ["1", "2"] }],
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+  end
+
+  # call partialUpdateObjects with createIfNotExists=false
+  def test_helpers5
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        'test-app-id',
+        'test-api-key',
+        [Algolia::Transport::StatefulHost.new(
+          'localhost',
+          protocol: 'http://',
+          port: 6680,
+          accept: CallType::READ | CallType::WRITE
+        )],
+        'searchClient'
+      )
+    )
+    req = client.partial_update_objects(
+      "cts_e2e_partialUpdateObjects_Ruby",
+      [{ objectID: "3", name: "Cyril" }, { objectID: "4", name: "David" }],
+      false
+    )
+    assert_equal(
+      [{ 'taskID': 555, 'objectIDs': ["3", "4"] }],
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+  end
+
+  # call deleteObjects without error
+  def test_helpers6
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        'test-app-id',
+        'test-api-key',
+        [Algolia::Transport::StatefulHost.new(
+          'localhost',
+          protocol: 'http://',
+          port: 6680,
+          accept: CallType::READ | CallType::WRITE
+        )],
+        'searchClient'
+      )
+    )
+    req = client.delete_objects("cts_e2e_deleteObjects_Ruby", ["1", "2"])
+    assert_equal(
+      [{ 'taskID': 666, 'objectIDs': ["1", "2"] }],
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
     )
   end
 

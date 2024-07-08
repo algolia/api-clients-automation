@@ -228,6 +228,114 @@ func TestSearchhelpers2(t *testing.T) {
 	require.JSONEq(t, `{"copyOperationResponse":{"taskID":125,"updatedAt":"2021-01-01T00:00:00.000Z"},"batchResponses":[{"taskID":127,"objectIDs":["1","2","3"]},{"taskID":130,"objectIDs":["4","5","6"]},{"taskID":133,"objectIDs":["7","8","9"]},{"taskID":134,"objectIDs":["10"]}],"moveOperationResponse":{"taskID":777,"updatedAt":"2021-01-01T00:00:00.000Z"}}`, string(rawBody))
 }
 
+// call saveObjects without error
+func TestSearchhelpers3(t *testing.T) {
+	var err error
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6680", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err := client.SaveObjects(
+		"cts_e2e_saveObjects_Go",
+		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
+	)
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `[{"taskID":333,"objectIDs":["1","2"]}]`, string(rawBody))
+}
+
+// call partialUpdateObjects with createIfNotExists&#x3D;true
+func TestSearchhelpers4(t *testing.T) {
+	var err error
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6680", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err := client.PartialUpdateObjects(
+		"cts_e2e_partialUpdateObjects_Go",
+		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
+		true)
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `[{"taskID":444,"objectIDs":["1","2"]}]`, string(rawBody))
+}
+
+// call partialUpdateObjects with createIfNotExists&#x3D;false
+func TestSearchhelpers5(t *testing.T) {
+	var err error
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6680", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err := client.PartialUpdateObjects(
+		"cts_e2e_partialUpdateObjects_Go",
+		[]map[string]any{map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}},
+		false)
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `[{"taskID":555,"objectIDs":["3","4"]}]`, string(rawBody))
+}
+
+// call deleteObjects without error
+func TestSearchhelpers6(t *testing.T) {
+	var err error
+	echo := &tests.EchoRequester{}
+	var client *search.APIClient
+	var cfg search.SearchConfiguration
+	_ = client
+	_ = echo
+	cfg = search.SearchConfiguration{
+		Configuration: transport.Configuration{
+			AppID:  "test-app-id",
+			ApiKey: "test-api-key",
+			Hosts:  []transport.StatefulHost{transport.NewStatefulHost("http", "localhost:6680", call.IsReadWrite)},
+		},
+	}
+	client, err = search.NewClientWithConfig(cfg)
+	require.NoError(t, err)
+	res, err := client.DeleteObjects(
+		"cts_e2e_deleteObjects_Go",
+		[]string{"1", "2"},
+	)
+	require.NoError(t, err)
+	rawBody, err := json.Marshal(res)
+	require.NoError(t, err)
+	require.JSONEq(t, `[{"taskID":666,"objectIDs":["1","2"]}]`, string(rawBody))
+}
+
 // client throws with invalid parameters
 func TestSearchparameters0(t *testing.T) {
 	var err error

@@ -256,6 +256,148 @@ public class SearchClientTests
     );
   }
 
+  [Fact(DisplayName = "call saveObjects without error")]
+  public async Task HelpersTest3()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6680,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.SaveObjectsAsync(
+      "cts_e2e_saveObjects_Csharp",
+      new List<Object>
+      {
+        new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
+      }
+    );
+
+    JsonAssert.EqualOverrideDefault(
+      "[{\"taskID\":333,\"objectIDs\":[\"1\",\"2\"]}]",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "call partialUpdateObjects with createIfNotExists=true")]
+  public async Task HelpersTest4()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6680,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.PartialUpdateObjectsAsync(
+      "cts_e2e_partialUpdateObjects_Csharp",
+      new List<Object>
+      {
+        new Dictionary<string, string> { { "objectID", "1" }, { "name", "Adam" } },
+        new Dictionary<string, string> { { "objectID", "2" }, { "name", "Benoit" } }
+      },
+      true
+    );
+
+    JsonAssert.EqualOverrideDefault(
+      "[{\"taskID\":444,\"objectIDs\":[\"1\",\"2\"]}]",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "call partialUpdateObjects with createIfNotExists=false")]
+  public async Task HelpersTest5()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6680,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.PartialUpdateObjectsAsync(
+      "cts_e2e_partialUpdateObjects_Csharp",
+      new List<Object>
+      {
+        new Dictionary<string, string> { { "objectID", "3" }, { "name", "Cyril" } },
+        new Dictionary<string, string> { { "objectID", "4" }, { "name", "David" } }
+      },
+      false
+    );
+
+    JsonAssert.EqualOverrideDefault(
+      "[{\"taskID\":555,\"objectIDs\":[\"3\",\"4\"]}]",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "call deleteObjects without error")]
+  public async Task HelpersTest6()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6680,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.DeleteObjectsAsync(
+      "cts_e2e_deleteObjects_Csharp",
+      new List<string> { "1", "2" }
+    );
+
+    JsonAssert.EqualOverrideDefault(
+      "[{\"taskID\":666,\"objectIDs\":[\"1\",\"2\"]}]",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
   [Fact(DisplayName = "client throws with invalid parameters")]
   public async Task ParametersTest0()
   {
