@@ -141,6 +141,13 @@ public class AlgoliaPythonGenerator extends PythonClientCodegen {
         imp.remove("import");
       }
     }
+
     return objs;
+  }
+
+  @Override
+  public String toEnumDefaultValue(CodegenProperty property, String value) {
+    // always default to None in the client, to let the server handle the default value.
+    return "None";
   }
 }
