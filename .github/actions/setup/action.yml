@@ -170,6 +170,15 @@ runs:
         ruby-version: ${{ steps.versions.outputs.RUBY_VERSION }}
         bundler-cache: true
 
+    - name: Install Ruby formatter
+      if: ${{ inputs.language == 'ruby' }}
+      shell: bash
+      run: |
+        curl --retry 3 -L https://github.com/fables-tales/rubyfmt/releases/download/v0.10.0/rubyfmt-v0.10.0-Linux-x86_64.tar.gz > rubyfmt.tar.gz
+        tar -xzf rubyfmt.tar.gz
+        mv tmp/releases/v0.10.0-Linux/rubyfmt /usr/local/bin
+        rm -rf rubyfmt.tar.gz tmp
+
     # Csharp
     - name: Install dotnet
       if: ${{ inputs.language == 'csharp' }}
