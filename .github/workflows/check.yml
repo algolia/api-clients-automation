@@ -329,7 +329,7 @@ jobs:
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --exclude-e2e
 
       - name: Run e2e CTS
-        if: ${{ !github.event.pull_request.head.repo.fork && github.event.number }}
+        if: ${{ !github.event.pull_request.head.repo.fork }}
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --exclude-unit
 
       - name: Generate code snippets for documentation
