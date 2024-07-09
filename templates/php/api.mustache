@@ -504,7 +504,7 @@ use {{invokerPackage}}\Support\Helpers;
     * @param array  $objects        The array of `objects` to store in the given Algolia `indexName`.
     * @param array  $requestOptions Request options
     */
-    public function saveObjects($indexName, $objects) {
+    public function saveObjects($indexName, $objects, $requestOptions = []) {
       return $this->chunkedBatch($indexName, $objects, 'addObject', false, 1000, $requestOptions);
     }
 
@@ -515,7 +515,7 @@ use {{invokerPackage}}\Support\Helpers;
     * @param array  $objectIDs      The `objectIDs` to delete.
     * @param array  $requestOptions Request options
     */
-    public function deleteObjects($indexName, $objectIDs)
+    public function deleteObjects($indexName, $objectIDs, $requestOptions = [])
     {
         $objects = [];
 
@@ -534,7 +534,7 @@ use {{invokerPackage}}\Support\Helpers;
     * @param bool   $createIfNotExists To be provided if non-existing objects are passed, otherwise, the call will fail..
     * @param array  $requestOptions Request options
     */
-    public function partialUpdateObjects($indexName, $objects, $createIfNotExists) {
+    public function partialUpdateObjects($indexName, $objects, $createIfNotExists, $requestOptions = []) {
       return $this->chunkedBatch($indexName, $objects, ($createIfNotExists == TRUE) ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate', false, 1000, $requestOptions);
     }
 
