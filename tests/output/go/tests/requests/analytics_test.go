@@ -3,14 +3,10 @@ package requests
 
 import (
 	"encoding/json"
-	"os"
-	"strings"
 	"testing"
 
 	"github.com/kinbiko/jsonassert"
 	"github.com/stretchr/testify/require"
-
-	"github.com/joho/godotenv"
 
 	"gotests/tests"
 
@@ -34,22 +30,6 @@ func createAnalyticsClient(t *testing.T) (*analytics.APIClient, *tests.EchoReque
 	require.NoError(t, err)
 
 	return client, echo
-}
-
-func createE2EAnalyticsClient(t *testing.T) *analytics.APIClient {
-	t.Helper()
-
-	appID := os.Getenv("ALGOLIA_APPLICATION_ID")
-	if appID == "" && os.Getenv("CI") != "true" {
-		err := godotenv.Load("../../../../.env")
-		require.NoError(t, err)
-		appID = os.Getenv("ALGOLIA_APPLICATION_ID")
-	}
-	apiKey := os.Getenv("ALGOLIA_ADMIN_KEY")
-	client, err := analytics.NewClient(appID, apiKey, analytics.US)
-	require.NoError(t, err)
-
-	return client
 }
 
 func TestAnalytics_CustomDelete(t *testing.T) {
@@ -1201,31 +1181,6 @@ func TestAnalytics_GetTopSearches(t *testing.T) {
 		for k, v := range queryParams {
 			require.Equal(t, v, echo.Query.Get(k))
 		}
-		clientE2E := createE2EAnalyticsClient(t)
-		res, err := clientE2E.GetTopSearches(client.NewApiGetTopSearchesRequest(
-			"cts_e2e_space in index",
-		))
-		require.NoError(t, err)
-		_ = res
-
-		rawBody, err := json.Marshal(res)
-		require.NoError(t, err)
-
-		var rawBodyMap any
-		err = json.Unmarshal(rawBody, &rawBodyMap)
-		require.NoError(t, err)
-
-		expectedBodyRaw := `{"searches":[{"search":"","nbHits":0}]}`
-		var expectedBody any
-		err = json.Unmarshal([]byte(expectedBodyRaw), &expectedBody)
-		require.NoError(t, err)
-
-		unionBody := tests.Union(expectedBody, rawBodyMap)
-		unionBodyRaw, err := json.Marshal(unionBody)
-		require.NoError(t, err)
-
-		jaE2E := jsonassert.New(t)
-		jaE2E.Assertf(expectedBodyRaw, strings.ReplaceAll(string(unionBodyRaw), "%", "%%"))
 	})
 }
 

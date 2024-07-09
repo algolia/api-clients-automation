@@ -9,6 +9,8 @@ use Algolia\AlgoliaSearch\Configuration\SearchConfig;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
@@ -16,16 +18,13 @@ use Psr\Http\Message\RequestInterface;
  * Client tests for SearchClient.
  *
  * @internal
- * @coversNothing
  */
+#[CoversClass(SearchClient::class)]
 class SearchTest extends TestCase implements HttpClientInterface
 {
     public const APP_ID = 'test-app-id';
     public const API_KEY = 'test-api-key';
 
-    /**
-     * @var RequestInterface
-     */
     private $recordedRequest;
 
     public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
@@ -39,9 +38,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         return new Response(200, [], '{}');
     }
 
-    /**
-     * Test case : calls api with correct read host.
-     */
+    #[TestDox('calls api with correct read host')]
     public function test0api()
     {
         $client = $this->createClient(
@@ -59,9 +56,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : calls api with correct write host.
-     */
+    #[TestDox('calls api with correct write host')]
     public function test1api()
     {
         $client = $this->createClient(
@@ -79,9 +74,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : tests the retry strategy.
-     */
+    #[TestDox('tests the retry strategy')]
     public function test2api()
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6676', 'http://localhost:6677', 'http://localhost:6678']));
@@ -95,9 +88,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : calls api with correct user agent.
-     */
+    #[TestDox('calls api with correct user agent')]
     public function test0commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -106,15 +97,13 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Search (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$/',
+                '/^Algolia for PHP \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Search (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
     }
 
-    /**
-     * Test case : calls api with default read timeouts.
-     */
+    #[TestDox('calls api with default read timeouts')]
     public function test1commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -132,9 +121,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : calls api with default write timeouts.
-     */
+    #[TestDox('calls api with default write timeouts')]
     public function test2commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -152,9 +139,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : generate secured api key basic.
-     */
+    #[TestDox('generate secured api key basic')]
     public function test0helpers()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -172,9 +157,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : generate secured api key with searchParams.
-     */
+    #[TestDox('generate secured api key with searchParams')]
     public function test1helpers()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -208,9 +191,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : call replaceAllObjects without error.
-     */
+    #[TestDox('call replaceAllObjects without error')]
     public function test2helpers()
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6679']));
@@ -266,9 +247,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : call saveObjects without error.
-     */
+    #[TestDox('call saveObjects without error')]
     public function test3helpers()
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
@@ -291,9 +270,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : call partialUpdateObjects with createIfNotExists=true.
-     */
+    #[TestDox('call partialUpdateObjects with createIfNotExists=true')]
     public function test4helpers()
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
@@ -317,9 +294,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : call partialUpdateObjects with createIfNotExists=false.
-     */
+    #[TestDox('call partialUpdateObjects with createIfNotExists=false')]
     public function test5helpers()
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
@@ -343,9 +318,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : call deleteObjects without error.
-     */
+    #[TestDox('call deleteObjects without error')]
     public function test6helpers()
     {
         $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6680']));
@@ -364,9 +337,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : client throws with invalid parameters.
-     */
+    #[TestDox('client throws with invalid parameters')]
     public function test0parameters()
     {
         try {
@@ -406,9 +377,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         }
     }
 
-    /**
-     * Test case : `addApiKey` throws with invalid parameters.
-     */
+    #[TestDox('`addApiKey` throws with invalid parameters')]
     public function test1parameters()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -423,9 +392,7 @@ class SearchTest extends TestCase implements HttpClientInterface
         }
     }
 
-    /**
-     * Test case : `addOrUpdateObject` throws with invalid parameters.
-     */
+    #[TestDox('`addOrUpdateObject` throws with invalid parameters')]
     public function test2parameters()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);

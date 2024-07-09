@@ -2,52 +2,14 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 import XCTest
 
-import DotEnv
 import Utils
 
 @testable import Analytics
 @testable import Core
 
 final class AnalyticsClientRequestsTests: XCTestCase {
-    static var APPLICATION_ID = "my_application_id"
-    static var API_KEY = "my_api_key"
-    static var e2eClient: AnalyticsClient?
-
-    override class func setUp() {
-        if !(Bool(ProcessInfo.processInfo.environment["CI"] ?? "false") ?? false) {
-            do {
-                let currentFileURL = try XCTUnwrap(URL(string: #file))
-
-                let packageDirectoryURL = currentFileURL
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-
-                let dotEnvURL = packageDirectoryURL
-                    .appendingPathComponent(".env")
-                dump(dotEnvURL.absoluteString)
-                try DotEnv.load(path: dotEnvURL.absoluteString, encoding: .utf8, overwrite: true)
-            } catch {
-                XCTFail("Unable to load .env file")
-            }
-        }
-
-        do {
-            self.APPLICATION_ID = try XCTUnwrap(ProcessInfo.processInfo.environment["ALGOLIA_APPLICATION_ID"])
-        } catch {
-            XCTFail("Please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests")
-        }
-
-        do {
-            self.API_KEY = try XCTUnwrap(ProcessInfo.processInfo.environment["ALGOLIA_ADMIN_KEY"])
-        } catch {
-            XCTFail("Please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
-        }
-
-        self.e2eClient = try? AnalyticsClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY, region: .us)
-    }
+    static let APPLICATION_ID = "my_application_id"
+    static let API_KEY = "my_api_key"
 
     /// allow del method for a custom path with minimal parameters
     func testCustomDeleteTest() async throws {
@@ -2081,24 +2043,6 @@ final class AnalyticsClientRequestsTests: XCTestCase {
         )
 
         XCTAssertEqual(echoResponse.queryParameters, expectedQueryParametersMap)
-
-        guard let e2eClient = AnalyticsClientRequestsTests.e2eClient else {
-            XCTFail("E2E client is not initialized")
-            return
-        }
-
-        let e2eResponse = try await e2eClient.getTopSearchesWithHTTPInfo(index: "cts_e2e_space in index")
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
-
-        let e2eExpectedBodyData = try XCTUnwrap(
-            "{\"searches\":[{\"search\":\"\",\"nbHits\":0}]}"
-                .data(using: .utf8)
-        )
-
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
-
-        XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
     /// get getUsersCount with minimal parameters
