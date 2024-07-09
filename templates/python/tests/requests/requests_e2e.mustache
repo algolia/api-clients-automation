@@ -1,0 +1,46 @@
+# {{generationBanner}}
+from time import time
+from os import environ
+from json import loads
+from algoliasearch.{{{import}}}.client import {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}
+from algoliasearch.{{{import}}}.config import {{#lambda.pascalcase}}{{clientPrefix}}Config{{/lambda.pascalcase}}
+from algoliasearch.search.models.batch_response import BatchResponse
+from algoliasearch.search.models.updated_at_response import UpdatedAtResponse
+from algoliasearch.search.models.get_task_response import GetTaskResponse
+from ..helpers import Helpers
+from dotenv import load_dotenv
+
+load_dotenv("../../.env")
+
+class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}E2E:
+    _helpers = Helpers()
+    _e2e_app_id = environ.get("ALGOLIA_APPLICATION_ID")
+    if _e2e_app_id is None:
+        raise Exception("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests")
+
+    _e2e_api_key = environ.get("{{e2eApiKey}}")
+    if _e2e_api_key is None:
+        raise Exception("please provide an `{{e2eApiKey}}` env var for e2e tests")
+
+    {{#blocksRequestsE2E}}
+    {{#tests}}
+    async def test_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_{{testIndex}}(self):
+        """
+        {{{testName}}}
+        """
+        raw_resp = await {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}(self._e2e_app_id, self._e2e_api_key{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}}).{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_with_http_info({{#parametersWithDataType}}{{> tests/requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+        {{#response}}
+        {{#statusCode}}
+        assert raw_resp.status_code == {{statusCode}}
+        {{/statusCode}}
+
+
+        {{#body}}
+        resp = await {{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}(self._e2e_app_id, self._e2e_api_key{{#hasRegionalHost}}, "{{{defaultRegion}}}"{{/hasRegionalHost}}).{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}({{#parametersWithDataType}}{{> tests/requests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}} request_options={ {{#requestOptions.headers.parameters}}"headers":loads("""{{{.}}}"""),{{/requestOptions.headers.parameters}}{{#requestOptions.queryParameters.parameters}}"query_parameters":loads("""{{{.}}}"""),{{/requestOptions.queryParameters.parameters}} }{{/hasRequestOptions}})
+        _expected_body = loads("""{{{.}}}""")
+        assert self._helpers.union(_expected_body, resp) == _expected_body
+        {{/body}}
+        {{/response}}
+
+    {{/tests}}
+    {{/blocksRequestsE2E}}

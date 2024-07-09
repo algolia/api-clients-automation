@@ -36,9 +36,12 @@ async function runCtsOne(language: string): Promise<void> {
       break;
     case 'php':
       await runComposerInstall();
-      await run(`php ./clients/algoliasearch-client-php/vendor/bin/phpunit ${cwd}`, {
-        language,
-      });
+      await run(
+        `php ./clients/algoliasearch-client-php/vendor/bin/phpunit --testdox --fail-on-warning ${cwd}`,
+        {
+          language,
+        },
+      );
       break;
     case 'python':
       await run('poetry lock --no-update && poetry install --sync && poetry run pytest -vv', {

@@ -1,0 +1,73 @@
+// {{generationBanner}}
+using Algolia.Search.Http;
+using Algolia.Search.Clients;
+using Algolia.Search.Models.{{clientPrefix}};
+using Algolia.Search.Serializer;
+using Algolia.Search.Tests.Utils;
+using Xunit;
+using System.Text.Json;
+using Quibble.Xunit;
+using dotenv.net;
+using Action = Algolia.Search.Models.Search.Action;
+
+public class {{client}}RequestTestsE2E
+{
+private readonly {{client}} _client;
+
+  public {{client}}RequestTestsE2E()
+  {
+    DotEnv.Load(options: new DotEnvOptions(ignoreExceptions: true, probeForEnv: true, probeLevelsToSearch: 8, envFilePaths: new[] { ".env" }));
+
+    var appId = Environment.GetEnvironmentVariable("ALGOLIA_APPLICATION_ID");
+    if (appId == null)
+    {
+      throw new Exception("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests");
+    }
+
+    var apiKey = Environment.GetEnvironmentVariable("{{e2eApiKey}}");
+    if (apiKey == null)
+    {
+      throw new Exception("please provide an `{{e2eApiKey}}` env var for e2e tests");
+    }
+
+    _client = new {{client}}(new {{clientPrefix}}Config(appId, apiKey{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}));
+  }
+
+  [Fact]
+  public void Dispose()
+  {
+
+  }
+
+  {{#blocksRequestsE2E}}
+  {{#tests}}
+  [Fact(DisplayName = "{{{testName}}}")]
+  public async Task {{#lambda.pascalcase}}{{method}}Test{{testIndex}}{{/lambda.pascalcase}}()
+  {
+      try {
+        var resp = await _client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Hit>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptions(){
+          {{#requestOptions.queryParameters}}
+            QueryParameters = new Dictionary<string, object>(){ {{#parametersWithDataType}} {"{{{key}}}", {{> tests/requests/requestOptionsParams}} } {{^-last}},{{/-last}}{{/parametersWithDataType}} },
+          {{/requestOptions.queryParameters}}
+          {{#requestOptions.headers}}
+            Headers = new Dictionary<string, string>(){ {{#parametersWithDataType}} {"{{{key}}}", "{{{value}}}" } {{^-last}},{{/-last}}{{/parametersWithDataType}} },
+          {{/requestOptions.headers}}
+        }{{/hasRequestOptions}});
+      {{#response}}
+      {{#statusCode}}
+          // Check status code {{statusCode}}
+          Assert.NotNull(resp);
+      {{/statusCode}}
+
+      {{#body}}
+          JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{.}}}{{/lambda.escapeQuotes}}", JsonSerializer.Serialize(resp, JsonConfig.Options), new JsonDiffConfig(true));
+      {{/body}}
+      } catch (Exception e)
+      {
+        Assert.Fail("An exception was thrown: " + e.Message);
+      }
+    {{/response}}
+  }
+  {{/tests}}
+  {{/blocksRequestsE2E}}
+}

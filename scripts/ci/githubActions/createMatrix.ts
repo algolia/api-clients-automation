@@ -69,7 +69,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
     const testsRootFolder = `tests/output/${language}`;
     const testsOutputBase = `${testsRootFolder}/${getTestOutputFolder(language)}`;
     // We delete tests to ensure the CI only run tests against what changed.
-    const testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/requests`;
+    const testsToDelete = `${testsOutputBase}/client ${testsOutputBase}/requests ${testsOutputBase}/requests_e2e`;
 
     // We only store tests of clients that ran during this job, the rest stay as is
     let testsToStore = matrix[language].toRun
@@ -77,7 +77,7 @@ async function createClientMatrix(baseBranch: string): Promise<void> {
         const clientName = createClientName(client, language);
         const extension = getTestExtension(language);
 
-        return `${testsOutputBase}/client/${clientName}${extension} ${testsOutputBase}/requests/${clientName}${extension}`;
+        return `${testsOutputBase}/client/${clientName}${extension} ${testsOutputBase}/requests/${clientName}${extension} ${testsOutputBase}/requests_e2e/${clientName}${extension}`;
       })
       .join(' ');
 

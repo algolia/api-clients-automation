@@ -1,0 +1,82 @@
+// {{generationBanner}}
+import XCTest
+
+import Utils
+import DotEnv
+
+@testable import Core
+@testable import {{import}}
+
+final class {{client}}RequestsTestsE2E: XCTestCase {
+
+  static var APPLICATION_ID = "my_application_id"
+  static var API_KEY = "my_api_key"
+  static var client: {{client}}?
+
+  override class func setUp() {
+      if !(Bool(ProcessInfo.processInfo.environment["CI"] ?? "false") ?? false) {
+          do {
+              let currentFileURL = try XCTUnwrap(URL(string: #file))
+
+              let packageDirectoryURL = currentFileURL
+                  .deletingLastPathComponent()
+                  .deletingLastPathComponent()
+                  .deletingLastPathComponent()
+                  .deletingLastPathComponent()
+                  .deletingLastPathComponent()
+
+              let dotEnvURL = packageDirectoryURL
+                  .appendingPathComponent(".env")
+              dump(dotEnvURL.absoluteString)
+              try DotEnv.load(path: dotEnvURL.absoluteString, encoding: .utf8, overwrite: true)
+          } catch {
+              XCTFail("Unable to load .env file")
+          }
+      }
+
+      do {
+          APPLICATION_ID = try XCTUnwrap(ProcessInfo.processInfo.environment["ALGOLIA_APPLICATION_ID"])
+      } catch {
+          XCTFail("Please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests")
+      }
+
+      do {
+          API_KEY = try XCTUnwrap(ProcessInfo.processInfo.environment["{{e2eApiKey}}"])
+      } catch {
+          XCTFail("Please provide an `{{e2eApiKey}}` env var for e2e tests")
+      }
+
+      e2eClient = try? {{client}}(appID: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: .{{defaultRegion}}{{/hasRegionalHost}})
+    }
+
+  {{#blocksRequestsE2E}}
+    {{#tests}}
+      /**
+      {{{testName}}}
+      */
+      func test{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Test{{testIndex}}() async throws {
+        guard let client = {{client}}RequestsTestsE2E.client else {
+          XCTFail("E2E client is not initialized")
+          return
+        }
+
+        {{#response}}
+          let e2eResponse{{#isGeneric}}: Response<{{{returnType}}}<Hit>>{{/isGeneric}} = try await e2eClient.{{method}}WithHTTPInfo({{#hasParameters}}{{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}{{/hasParameters}}{{#hasRequestOptions}}, requestOptions: requestOptions{{/hasRequestOptions}})
+          {{#body}}
+            let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
+            let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
+
+            let e2eExpectedBodyData = try XCTUnwrap("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}".data(using: .utf8))
+
+            XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
+          {{/body}}
+
+          {{#statusCode}}
+            XCTAssertEqual(e2eResponse.statusCode, {{statusCode}})
+          {{/statusCode}}
+        {{/response}}
+      }
+    {{/tests}}
+
+  {{/blocksRequestsE2E}}
+}

@@ -15,6 +15,7 @@ import org.openapitools.codegen.SupportingFile;
 public class TestsRequest extends TestsGenerator {
 
   private final boolean withSnippets;
+  private List<SupportingFile> supportingFiles;
 
   public TestsRequest(String language, String client, boolean withSnippets) {
     super(language, client);
@@ -64,6 +65,8 @@ public class TestsRequest extends TestsGenerator {
     if (!available()) {
       return;
     }
+    this.supportingFiles = supportingFiles;
+
     supportingFiles.add(
       new SupportingFile(
         "tests/requests/requests.mustache",
@@ -71,6 +74,30 @@ public class TestsRequest extends TestsGenerator {
         Helpers.createClientName(client, language) + extension
       )
     );
+    if (new File("templates/" + language + "/tests/requests/requests_e2e.mustache").exists()) {
+      supportingFiles.add(
+        new SupportingFile(
+          "tests/requests/requests_e2e.mustache",
+          "tests/output/" + language + "/" + outputFolder + "/requests_e2e",
+          Helpers.createClientName(client, language) + extension
+        )
+      );
+    }
+  }
+
+  private String escapeBody(String body) {
+    if (body == null) {
+      return null;
+    }
+
+    switch (language) {
+      case "go": // jsonassert expect % to be formatted, we need to escape them
+        return body.replace("%", "%%");
+      case "dart": // Same thing but for $
+        return body.replace("$", "\\$");
+      default:
+        return body;
+    }
   }
 
   @Override
@@ -82,6 +109,7 @@ public class TestsRequest extends TestsGenerator {
     }
 
     List<Object> blocks = new ArrayList<>();
+    List<Object> blocksE2E = new ArrayList<>();
     ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client);
 
     bundle.put("e2eApiKey", client.equals("monitoring") ? "MONITORING_API_KEY" : "ALGOLIA_ADMIN_KEY");
@@ -138,15 +166,7 @@ public class TestsRequest extends TestsGenerator {
               req.request.body = "{}";
             }
 
-            // For golang, jsonassert expect % to be formatted, we need to escape them
-            if (language.equals("go") && req.request.body != null) {
-              req.request.body = req.request.body.replace("%", "%%");
-            }
-
-            // For dart, same thing but for $
-            if (language.equals("dart") && req.request.body != null) {
-              req.request.body = req.request.body.replace("$", "\\$");
-            }
+            req.request.body = escapeBody(req.request.body);
 
             // In a case of a `GET` or `DELETE` request, we want to assert if the body
             // is correctly parsed (absent from the payload)
@@ -156,7 +176,7 @@ public class TestsRequest extends TestsGenerator {
           }
 
           if (req.response != null) {
-            bundle.put("hasE2E", true);
+            req.response.body = escapeBody(req.response.body);
             test.put("response", req.response);
           }
 
@@ -219,7 +239,21 @@ public class TestsRequest extends TestsGenerator {
       }
 
       blocks.add(testObj);
+
+      // extract e2e
+      List<Map<String, Object>> e2e = tests.stream().filter(t -> t.get("response") != null).toList();
+      if (e2e.size() > 0) {
+        Map<String, Object> e2eObj = new HashMap<>();
+        e2eObj.put("tests", e2e);
+        e2eObj.put("operationId", operationId);
+        blocksE2E.add(e2eObj);
+      }
     }
     bundle.put("blocksRequests", blocks);
+    if (!blocksE2E.isEmpty()) {
+      bundle.put("blocksRequestsE2E", blocksE2E);
+    } else {
+      supportingFiles.removeIf(f -> f.getTemplateFile().equals("tests/requests/requests_e2e.mustache"));
+    }
   }
 }
