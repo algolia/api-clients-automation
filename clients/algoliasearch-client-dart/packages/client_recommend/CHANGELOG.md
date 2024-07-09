@@ -1,3 +1,7 @@
+## [1.17.1](https://github.com/algolia/algoliasearch-client-dart/compare/1.17.0...1.17.1)
+
+- [dcb1b59dc](https://github.com/algolia/api-clients-automation/commit/dcb1b59dc) fix(specs): clarify browse parameters ([#3333](https://github.com/algolia/api-clients-automation/pull/3333)) by [@kai687](https://github.com/kai687/)
+
 ## [1.17.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.16.0...1.17.0)
 
 - [2f3b36f90](https://github.com/algolia/api-clients-automation/commit/2f3b36f90) feat(dart): add Dio HttpClientAdapter to ClientOptions ([#3326](https://github.com/algolia/api-clients-automation/pull/3326)) by [@shortcuts](https://github.com/shortcuts/)

@@ -1,3 +1,7 @@
+## [7.0.0-beta.9](https://github.com/algolia/algoliasearch-client-csharp/compare/7.0.0-beta.8...7.0.0-beta.9)
+
+- [dcb1b59dc](https://github.com/algolia/api-clients-automation/commit/dcb1b59dc) fix(specs): clarify browse parameters ([#3333](https://github.com/algolia/api-clients-automation/pull/3333)) by [@kai687](https://github.com/kai687/)
+
 ## [7.0.0-beta.8](https://github.com/algolia/algoliasearch-client-csharp/compare/7.0.0-beta.7...7.0.0-beta.8)
 
 - [9776cb3ba](https://github.com/algolia/api-clients-automation/commit/9776cb3ba) feat(specs): add redirect to renderingContent ([#3296](https://github.com/algolia/api-clients-automation/pull/3296)) by [@shortcuts](https://github.com/shortcuts/)
