@@ -126,23 +126,24 @@ public extension SearchClient {
                     try await self.getApiKey(key: key, requestOptions: requestOptions)
                 },
                 validate: { response in
-                    if apiKey.description != nil && apiKey.description != response.description {
+                    if apiKey.description != nil, apiKey.description != response.description {
                         return false
                     }
 
-                    if apiKey.queryParameters != nil && apiKey.queryParameters != response.queryParameters {
+                    if apiKey.queryParameters != nil, apiKey.queryParameters != response.queryParameters {
                         return false
                     }
 
-                    if apiKey.maxHitsPerQuery != nil && apiKey.maxHitsPerQuery != response.maxHitsPerQuery {
+                    if apiKey.maxHitsPerQuery != nil, apiKey.maxHitsPerQuery != response.maxHitsPerQuery {
                         return false
                     }
 
-                    if apiKey.maxQueriesPerIPPerHour != nil && apiKey.maxQueriesPerIPPerHour != response.maxQueriesPerIPPerHour {
+                    if apiKey.maxQueriesPerIPPerHour != nil,
+                       apiKey.maxQueriesPerIPPerHour != response.maxQueriesPerIPPerHour {
                         return false
                     }
 
-                    if apiKey.validity != nil && apiKey.validity != response.validity {
+                    if apiKey.validity != nil, apiKey.validity != response.validity {
                         return false
                     }
 
@@ -191,11 +192,11 @@ public extension SearchClient {
             execute: { _ in
                 do {
                     return try await self.getApiKey(key: key, requestOptions: requestOptions)
-                } catch AlgoliaError.httpError(let error) {
+                } catch let AlgoliaError.httpError(error) {
                     if error.statusCode == 404 {
                         return nil
                     }
-                    
+
                     throw error
                 }
             },
