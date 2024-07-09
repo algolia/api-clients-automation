@@ -256,22 +256,26 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: |
+          source: >
             # Initialize the client
-            client = Algolia::PersonalizationClient.create(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            )
+
+            client = Algolia::PersonalizationClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
 
             # Call the API
+
             response = client.custom_get("test/minimal")
 
+
             # use the class directly
-            puts response
+
+            puts(response)
+
 
             # print the JSON response
-            puts response.to_json
+
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -464,22 +468,26 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: |
+          source: >
             # Initialize the client
-            client = Algolia::PersonalizationClient.create(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            )
+
+            client = Algolia::PersonalizationClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
 
             # Call the API
+
             response = client.custom_post("test/minimal")
 
+
             # use the class directly
-            puts response
+
+            puts(response)
+
 
             # print the JSON response
-            puts response.to_json
+
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -672,22 +680,26 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: |
+          source: >
             # Initialize the client
-            client = Algolia::PersonalizationClient.create(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            )
+
+            client = Algolia::PersonalizationClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
 
             # Call the API
+
             response = client.custom_put("test/minimal")
 
+
             # use the class directly
-            puts response
+
+            puts(response)
+
 
             # print the JSON response
-            puts response.to_json
+
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -881,22 +893,26 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: |
+          source: >
             # Initialize the client
-            client = Algolia::PersonalizationClient.create(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            )
+
+            client = Algolia::PersonalizationClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
 
             # Call the API
+
             response = client.custom_delete("test/minimal")
 
+
             # use the class directly
-            puts response
+
+            puts(response)
+
 
             # print the JSON response
-            puts response.to_json
+
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1118,22 +1134,26 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: |
+          source: >
             # Initialize the client
-            client = Algolia::PersonalizationClient.create(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            )
+
+            client = Algolia::PersonalizationClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
 
             # Call the API
+
             response = client.get_user_token_profile("UserToken")
 
+
             # use the class directly
-            puts response
+
+            puts(response)
+
 
             # print the JSON response
-            puts response.to_json
+
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1353,22 +1373,26 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: |
+          source: >
             # Initialize the client
-            client = Algolia::PersonalizationClient.create(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            )
+
+            client = Algolia::PersonalizationClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
 
             # Call the API
+
             response = client.delete_user_profile("UserToken")
 
+
             # use the class directly
-            puts response
+
+            puts(response)
+
 
             # print the JSON response
-            puts response.to_json
+
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1550,22 +1574,26 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: |
+          source: >
             # Initialize the client
-            client = Algolia::PersonalizationClient.create(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            )
+
+            client = Algolia::PersonalizationClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
 
             # Call the API
+
             response = client.get_personalization_strategy
 
+
             # use the class directly
-            puts response
+
+            puts(response)
+
 
             # print the JSON response
-            puts response.to_json
+
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1841,32 +1869,32 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: |
+          source: >
             # Initialize the client
-            client = Algolia::PersonalizationClient.create(
-              'YOUR_APP_ID',
-              'YOUR_API_KEY',
-              'YOUR_APP_ID_REGION'
-            )
+
+            client = Algolia::PersonalizationClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+
 
             # Call the API
+
             response = client.set_personalization_strategy(
               PersonalizationStrategyParams.new(
-                event_scoring: [EventScoring.new(
-                  score: 42,
-                  event_name: "Algolia",
-                  event_type: 'click'
-                )],
+                event_scoring: [EventScoring.new(score: 42, event_name: "Algolia", event_type: "click")],
                 facet_scoring: [FacetScoring.new(score: 42, facet_name: "Event")],
                 personalization_impact: 42
               )
             )
 
+
             # use the class directly
-            puts response
+
+            puts(response)
+
 
             # print the JSON response
-            puts response.to_json
+
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
