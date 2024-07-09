@@ -1,7 +1,4 @@
-/* eslint-disable no-case-declarations */
-import * as fsp from 'fs/promises';
-
-import { run, toAbsolutePath } from './common.js';
+import { run } from './common.js';
 import { getLanguageFolder } from './config.js';
 import { createSpinner } from './spinners.js';
 import type { Generator, Language } from './types.js';
@@ -17,6 +14,7 @@ async function buildClient(language: Language, gens: Generator[]): Promise<void>
       await run('dotnet build --configuration Release', { cwd, language });
       break;
     case 'javascript':
+      // eslint-disable-next-line no-case-declarations
       const packageNames = gens.map(({ additionalProperties: { packageName } }) =>
         packageName === 'algoliasearch' ? packageName : `@algolia/${packageName}`,
       );
@@ -27,11 +25,7 @@ async function buildClient(language: Language, gens: Generator[]): Promise<void>
       break;
     case 'java':
     case 'kotlin':
-      await fsp.rm(toAbsolutePath(`${cwd}/.gradle`), {
-        recursive: true,
-        force: true,
-      });
-      await run(`./gradle/gradlew --no-daemon -p ${cwd} assemble`, { language });
+      await run(`./gradle/gradlew -p ${cwd} assemble`, { language });
       break;
     case 'python':
       await run('poetry build', { cwd, language });
