@@ -59,7 +59,8 @@ export async function formatter(language: string, cwd: string): Promise<void> {
       );
       break;
     case 'ruby':
-      await run('bundle install && bundle exec rubocop -a --fail-level W', { cwd, language });
+      await run('bundle install', { cwd, language });
+      await run('rubyfmt -i -- .', { cwd, language });
       break;
     case 'scala':
       await run('sbt -Dsbt.server.forcestart=true scalafmtAll scalafmtSbt', { cwd, language });
