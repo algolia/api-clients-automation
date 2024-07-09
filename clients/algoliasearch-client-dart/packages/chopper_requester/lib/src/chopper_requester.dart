@@ -80,7 +80,7 @@ class ChopperRequester implements Requester {
     final Request chopperRequest = Request(
       request.method,
       requestUri(request),
-      _client.baseUrl,
+      Uri(),
       body: request.body,
       headers: {
         for (final MapEntry<String, dynamic> entry
