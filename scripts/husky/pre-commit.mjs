@@ -22,7 +22,7 @@ export function getPatterns() {
   for (const [language, { tests }] of Object.entries(clientConfig)) {
     entries.unshift(`tests/output/${language}/${tests.outputFolder}/client/**`);
     entries.unshift(`tests/output/${language}/${tests.outputFolder}/requests/**`);
-    entries.unshift(`tests/output/${language}/${tests.outputFolder}/requests_e2e/**`);
+    entries.unshift(`tests/output/${language}/${tests.outputFolder}/e2e/**`);
   }
   return entries;
 }

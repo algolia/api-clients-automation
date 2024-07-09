@@ -28,7 +28,7 @@ func createE2E{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t
   return client
 }
 
-{{#blocksRequestsE2E}}
+{{#blocksE2E}}
 func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}E2E_{{#lambda.titlecase}}{{operationId}}{{/lambda.titlecase}}(t *testing.T) {
     {{#tests}}
     t.Run("{{{testName}}}", func(t *testing.T) {
@@ -66,4 +66,4 @@ func Test{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}E2E_{{#lambda
 {{/tests}}
 }
 
-{{/blocksRequestsE2E}}
+{{/blocksE2E}}

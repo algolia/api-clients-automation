@@ -250,7 +250,7 @@ If specific values are needed for a specific languages, or custom generated file
   - `import`: the name of the client package to import from
 
 
-### e2e requests tests
+### E2E tests
 
 Only cases that contains a `response` field in [their definition](#input-test-file) will really execute the query in order to assert the API response. We only partially assert `response` since some fields might vary, (see [PR for motivations](https://github.com/algolia/api-clients-automation/pull/2441)).
 
@@ -259,10 +259,10 @@ In order to support the partial assertion, your client must provide an helper na
 - [javascript](https://github.com/algolia/api-clients-automation/blob/main/tests/output/javascript/src/helpers.ts)
 - [ruby](https://github.com/algolia/api-clients-automation/blob/main/tests/output/ruby/src/helpers.rb)
 
-The supporting file must be called `requests_e2e.mustache` and will receive the same data as the `requests` tests with a additional `blocksRequestsE2E` field:
+The supporting file must be called `e2e.mustache` and will receive the same data as the `requests` tests with a additional `blocksE2E` field:
 ```json
 {
-  "blocksRequestsE2E": [
+  "blocksE2E": [
     {
       // it also contains all the other fields from the requests tests
       "tests": [

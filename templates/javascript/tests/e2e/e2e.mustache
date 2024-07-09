@@ -18,7 +18,7 @@ if (!process.env.{{e2eApiKey}}) {
 const client = {{client}}(process.env.ALGOLIA_APPLICATION_ID, process.env.{{e2eApiKey}}, {{#hasRegionalHost}}'{{{defaultRegion}}}'{{/hasRegionalHost}});
 
 
-{{#blocksRequestsE2E}}
+{{#blocksE2E}}
 describe('{{operationId}}', () => {
   {{#tests}}
   test('{{{testName}}}', async () => {
@@ -36,4 +36,4 @@ describe('{{operationId}}', () => {
   {{/tests}}
 })
 
-{{/blocksRequestsE2E}}
+{{/blocksE2E}}

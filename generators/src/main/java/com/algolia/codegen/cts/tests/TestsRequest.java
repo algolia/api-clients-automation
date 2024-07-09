@@ -66,6 +66,8 @@ public class TestsRequest extends TestsGenerator {
       return;
     }
 
+    this.supportingFiles = supportingFiles;
+
     supportingFiles.add(
       new SupportingFile(
         "tests/requests/requests.mustache",
@@ -73,11 +75,11 @@ public class TestsRequest extends TestsGenerator {
         Helpers.createClientName(client, language) + extension
       )
     );
-    if (new File("templates/" + language + "/tests/requests/requests_e2e.mustache").exists()) {
+    if (new File("templates/" + language + "/tests/e2e/e2e.mustache").exists()) {
       supportingFiles.add(
         new SupportingFile(
-          "tests/requests/requests_e2e.mustache",
-          "tests/output/" + language + "/" + outputFolder + "/requests_e2e",
+          "tests/e2e/e2e.mustache",
+          "tests/output/" + language + "/" + outputFolder + "/e2e",
           Helpers.createClientName(client, language) + extension
         )
       );
@@ -250,9 +252,9 @@ public class TestsRequest extends TestsGenerator {
     }
     bundle.put("blocksRequests", blocks);
     if (!blocksE2E.isEmpty()) {
-      bundle.put("blocksRequestsE2E", blocksE2E);
+      bundle.put("blocksE2E", blocksE2E);
     } else if (supportingFiles != null) {
-      supportingFiles.removeIf(f -> f.getTemplateFile().equals("tests/requests/requests_e2e.mustache"));
+      supportingFiles.removeIf(f -> f.getTemplateFile().equals("tests/e2e/e2e.mustache"));
     }
   }
 }

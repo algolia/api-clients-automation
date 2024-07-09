@@ -16,7 +16,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}E2E < Test::Un
     )
   end
 
-  {{#blocksRequestsE2E}}
+  {{#blocksE2E}}
   {{#tests}}
   # {{{testName}}}
   def test_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}{{testIndex}}
@@ -35,5 +35,5 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}E2E < Test::Un
   end
 
   {{/tests}}
-  {{/blocksRequestsE2E}}
+  {{/blocksE2E}}
 end

@@ -39,7 +39,7 @@ private readonly {{client}} _client;
 
   }
 
-  {{#blocksRequestsE2E}}
+  {{#blocksE2E}}
   {{#tests}}
   [Fact(DisplayName = "{{{testName}}}")]
   public async Task {{#lambda.pascalcase}}{{method}}Test{{testIndex}}{{/lambda.pascalcase}}()
@@ -69,5 +69,5 @@ private readonly {{client}} _client;
     {{/response}}
   }
   {{/tests}}
-  {{/blocksRequestsE2E}}
+  {{/blocksE2E}}
 }

@@ -1,5 +1,5 @@
 // {{generationBanner}}
-package algoliasearch.requests_e2e
+package algoliasearch.e2e
 
 import algoliasearch.api.{{client}}
 import algoliasearch.config.*
@@ -40,7 +40,7 @@ class {{clientPrefix}}TestE2E extends AnyFunSuite {
     }
   }
 
-  {{#blocksRequestsE2E}}
+  {{#blocksE2E}}
   {{#tests}}
   
   test("{{{testName}}}{{testIndex}}") {
@@ -70,5 +70,5 @@ class {{clientPrefix}}TestE2E extends AnyFunSuite {
   }
   
   {{/tests}}
-  {{/blocksRequestsE2E}}
+  {{/blocksE2E}}
 }

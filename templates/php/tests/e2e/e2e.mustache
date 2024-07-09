@@ -47,7 +47,7 @@ class {{clientPrefix}}Test extends TestCase
         return {{client}}::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['{{e2eApiKey}}']{{#hasRegionalHost}},'{{defaultRegion}}' {{/hasRegionalHost}});
     }
 
-    {{#blocksRequestsE2E}}
+    {{#blocksE2E}}
     {{#tests}}
     #[TestDox('{{{testName}}}')]
     public function test{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}{{testIndex}}()
@@ -66,5 +66,5 @@ class {{clientPrefix}}Test extends TestCase
         {{/response}}
     }
     {{/tests}}
-    {{/blocksRequestsE2E}}
+    {{/blocksE2E}}
 }

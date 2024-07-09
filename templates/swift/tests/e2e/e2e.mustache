@@ -49,7 +49,7 @@ final class {{client}}RequestsTestsE2E: XCTestCase {
       e2eClient = try? {{client}}(appID: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: .{{defaultRegion}}{{/hasRegionalHost}})
     }
 
-  {{#blocksRequestsE2E}}
+  {{#blocksE2E}}
     {{#tests}}
       /**
       {{{testName}}}
@@ -78,5 +78,5 @@ final class {{client}}RequestsTestsE2E: XCTestCase {
       }
     {{/tests}}
 
-  {{/blocksRequestsE2E}}
+  {{/blocksE2E}}
 }

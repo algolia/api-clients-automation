@@ -1,4 +1,4 @@
-package com.algolia.methods.requests_e2e;
+package com.algolia.methods.e2e;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -36,7 +36,7 @@ class {{client}}RequestsTestsE2E {
       client.close();
     }
 
-    {{#blocksRequestsE2E}}
+    {{#blocksE2E}}
     {{#tests}}
     @Test
     @DisplayName("{{{testName}}}")
@@ -56,5 +56,5 @@ class {{client}}RequestsTestsE2E {
         {{/response}}
     }
     {{/tests}}
-    {{/blocksRequestsE2E}}
+    {{/blocksE2E}}
 }

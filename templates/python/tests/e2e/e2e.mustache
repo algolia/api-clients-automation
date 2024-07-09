@@ -22,7 +22,7 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}E2E:
     if _e2e_api_key is None:
         raise Exception("please provide an `{{e2eApiKey}}` env var for e2e tests")
 
-    {{#blocksRequestsE2E}}
+    {{#blocksE2E}}
     {{#tests}}
     async def test_{{#lambda.snakecase}}{{method}}{{/lambda.snakecase}}_{{testIndex}}(self):
         """
@@ -43,4 +43,4 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}E2E:
         {{/response}}
 
     {{/tests}}
-    {{/blocksRequestsE2E}}
+    {{/blocksE2E}}
