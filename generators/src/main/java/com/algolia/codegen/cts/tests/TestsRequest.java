@@ -65,7 +65,6 @@ public class TestsRequest extends TestsGenerator {
     if (!available()) {
       return;
     }
-    this.supportingFiles = supportingFiles;
 
     supportingFiles.add(
       new SupportingFile(
@@ -252,7 +251,7 @@ public class TestsRequest extends TestsGenerator {
     bundle.put("blocksRequests", blocks);
     if (!blocksE2E.isEmpty()) {
       bundle.put("blocksRequestsE2E", blocksE2E);
-    } else {
+    } else if (supportingFiles != null) {
       supportingFiles.removeIf(f -> f.getTemplateFile().equals("tests/requests/requests_e2e.mustache"));
     }
   }
