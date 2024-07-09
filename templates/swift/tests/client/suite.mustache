@@ -63,7 +63,12 @@ final class {{client}}ClientTests: XCTestCase {
                   try XCTLenientAssertEqual(received: CodableHelper.jsonEncoder.encode(response), expected: comparableData)
                 {{/matchIsJSON}}
                 {{^matchIsJSON}}
-                  XCTAssertEqual("{{#lambda.escapeQuotes}}{{{match}}}{{/lambda.escapeQuotes}}", response)
+                  {{#matchIsNull}}
+                    XCTAssertNil(response)
+                  {{/matchIsNull}}
+                  {{^matchIsNull}}
+                    XCTAssertEqual("{{#lambda.escapeQuotes}}{{{match}}}{{/lambda.escapeQuotes}}", response)
+                  {{/matchIsNull}}
                 {{/matchIsJSON}}
               {{/isHelper}}
               {{^isHelper}}
