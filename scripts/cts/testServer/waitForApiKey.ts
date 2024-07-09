@@ -94,5 +94,5 @@ function addRoutes(app: Express): void {
 }
 
 export function waitForApiKeyServer(): Promise<Server> {
-  return setupServer('waitForApiKey', 6680, addRoutes);
+  return setupServer('waitForApiKey', 6681, addRoutes);
 }

@@ -379,7 +379,7 @@
           "customHosts": [
             {
               "host": "${{localhost}}",
-              "port": 6680
+              "port": 6681
             }
           ]
         }
@@ -422,7 +422,7 @@
           "customHosts": [
             {
               "host": "${{localhost}}",
-              "port": 6680
+              "port": 6681
             }
           ]
         }
@@ -477,7 +477,7 @@
           "customHosts": [
             {
               "host": "${{localhost}}",
-              "port": 6680
+              "port": 6681
             }
           ]
         }
