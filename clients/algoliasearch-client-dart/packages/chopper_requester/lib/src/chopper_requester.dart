@@ -79,15 +79,9 @@ class ChopperRequester implements Requester {
   Future<Response<Map<String, dynamic>>> execute(HttpRequest request) async {
     final Request chopperRequest = Request(
       request.method,
-      Uri(
-        scheme: request.host.scheme,
-        host: request.host.url,
-        port: request.host.port,
-        path: request.path,
-      ),
+      requestUri(request),
       _client.baseUrl,
       body: request.body,
-      parameters: request.queryParameters,
       headers: {
         for (final MapEntry<String, dynamic> entry
             in request.headers?.entries ?? const {})
@@ -103,6 +97,22 @@ class ChopperRequester implements Requester {
           .send<Map<String, dynamic>, Map<String, dynamic>>(chopperRequest)
           .timeout(options.timeout!),
     };
+  }
+
+  /// Constructs the request URI from the [request] details.
+  Uri requestUri(HttpRequest request) {
+    Uri uri = Uri(
+      scheme: request.host.scheme,
+      host: request.host.url,
+      port: request.host.port,
+      path: request.path,
+    );
+
+    return request.queryParameters.isNotEmpty
+        ? Uri.dataFromString(
+            "$uri?${request.queryParameters.entries.map((e) => "${e.key}=${e.value}").join("&")}",
+          )
+        : uri;
   }
 
   @override
