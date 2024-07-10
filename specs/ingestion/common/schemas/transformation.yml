@@ -18,7 +18,6 @@ Transformation:
     - transformationID
     - code
     - name
-    - description
     - createdAt
 
 Code:
@@ -47,7 +46,6 @@ TransformationCreate:
   required:
     - code
     - name
-    - description
 
 TransformationCreateResponse:
   type: object
