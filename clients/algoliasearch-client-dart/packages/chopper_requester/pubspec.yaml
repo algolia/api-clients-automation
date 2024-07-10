@@ -1,6 +1,6 @@
 name: algolia_chopper_requester
 description: Chopper Requester for Algolia Search Client
-version: 1.0.0
+version: 1.17.0
 topics:
   - search
   - discovery
