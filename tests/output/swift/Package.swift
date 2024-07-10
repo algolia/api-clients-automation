@@ -76,14 +76,5 @@ let package = Package(
                 .target(name: "Utils"),
             ] + libraries
         ),
-        .testTarget(
-            name: "handwritten",
-            dependencies: [
-                .product(name: "DotEnv", package: "DotEnv"),
-                .target(name: "Utils"),
-                .product(name: "Core", package: "algoliasearch-client-swift"),
-                .product(name: "Search", package: "algoliasearch-client-swift"),
-            ]
-        ),
     ]
 )

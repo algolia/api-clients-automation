@@ -21,15 +21,12 @@ runs:
         distribution: zulu
         java-version-file: config/.java-version
 
-    - name: Validate gradle wrapper
-      if: inputs.type != 'minimal'
-      uses: gradle/actions/wrapper-validation@v3
-
     - name: Setup gradle
       if: inputs.type != 'minimal'
       uses: gradle/actions/setup-gradle@v3
       with:
-        cache-read-only: false
+        validate-wrappers: true
+        add-job-summary: 'on-failure'
 
     - name: Download Java formatter
       if: inputs.type != 'minimal'
@@ -42,17 +39,6 @@ runs:
       with:
         node-version-file: .nvmrc
         cache: yarn
-
-    - name: Get yarn cache directory path
-      shell: bash
-      id: yarn-cache-dir
-      run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
-
-    - name: Restore Yarn
-      uses: actions/cache@v4
-      with:
-        path: ${{ steps.yarn-cache-dir.outputs.dir || '.yarn/cache' }}
-        key: yarn-cache-monorepo-${{ hashFiles('yarn.lock') }}
 
     - name: Install JavaScript dependencies
       shell: bash
@@ -183,6 +169,15 @@ runs:
       with:
         ruby-version: ${{ steps.versions.outputs.RUBY_VERSION }}
         bundler-cache: true
+
+    - name: Install Ruby formatter
+      if: ${{ inputs.language == 'ruby' }}
+      shell: bash
+      run: |
+        curl --retry 3 -L https://github.com/fables-tales/rubyfmt/releases/download/v0.10.0/rubyfmt-v0.10.0-Linux-x86_64.tar.gz > rubyfmt.tar.gz
+        tar -xzf rubyfmt.tar.gz
+        mv tmp/releases/v0.10.0-Linux/rubyfmt /usr/local/bin
+        rm -rf rubyfmt.tar.gz tmp
 
     # Csharp
     - name: Install dotnet

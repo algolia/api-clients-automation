@@ -221,8 +221,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::MonitoringClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
@@ -232,12 +232,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -413,8 +413,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::MonitoringClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
@@ -424,12 +424,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -605,8 +605,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::MonitoringClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
@@ -616,12 +616,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -805,8 +805,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::MonitoringClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
@@ -816,12 +816,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -974,8 +974,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::MonitoringClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
@@ -985,12 +985,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1169,8 +1169,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::MonitoringClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
@@ -1180,12 +1180,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1338,8 +1338,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::MonitoringClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
@@ -1349,12 +1349,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1533,8 +1533,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::MonitoringClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
@@ -1544,12 +1544,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1714,8 +1714,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::MonitoringClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
@@ -1725,12 +1725,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1893,8 +1893,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::MonitoringClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
@@ -1904,12 +1904,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -2086,8 +2086,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::MonitoringClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
@@ -2097,12 +2097,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -2279,8 +2279,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::MonitoringClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
@@ -2290,12 +2290,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -2476,23 +2476,23 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::MonitoringClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY')
+            client = Algolia::MonitoringClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY")
 
 
             # Call the API
 
-            response = client.get_metrics('avg_build_time', 'minute')
+            response = client.get_metrics("avg_build_time", "minute")
 
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >

@@ -1,0 +1,60 @@
+package com.algolia.methods.e2e;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+import com.algolia.api.{{client}};
+import com.algolia.config.*;
+import com.algolia.model.{{import}}.*;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import io.github.cdimascio.dotenv.Dotenv;
+import java.util.*;
+import org.junit.jupiter.api.*;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class {{client}}RequestsTestsE2E {
+    private {{client}} client;
+    private ObjectMapper json;
+
+    @BeforeAll
+    void init() {
+        this.json = JsonMapper.builder().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).build();
+       
+        if ("true".equals(System.getenv("CI"))) {
+          this.client = new {{client}}(System.getenv("ALGOLIA_APPLICATION_ID"), System.getenv("{{e2eApiKey}}"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
+        } else {
+          var dotenv = Dotenv.configure().directory("../../").load();
+          this.client = new {{client}}(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("{{e2eApiKey}}"){{#hasRegionalHost}}, "{{defaultRegion}}"{{/hasRegionalHost}});
+        }
+    }
+
+    @AfterAll
+    void tearUp() throws Exception {
+      client.close();
+    }
+
+    {{#blocksE2E}}
+    {{#tests}}
+    @Test
+    @DisplayName("{{{testName}}}")
+    void {{method}}Test{{testIndex}}() {
+        var res = client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Hit.class{{/isGeneric}}{{#hasRequestOptions}}, new RequestOptions()
+              {{#requestOptions.queryParameters.parametersWithDataType}}
+                .addExtraQueryParameters("{{{key}}}", {{> tests/generateInnerParams}})
+              {{/requestOptions.queryParameters.parametersWithDataType}}
+              {{#requestOptions.headers.parametersWithDataType}}
+                .addExtraHeader("{{{key}}}", "{{{value}}}")
+              {{/requestOptions.headers.parametersWithDataType}}
+            {{/hasRequestOptions}});
+        {{#response}}
+        {{#body}}
+        assertDoesNotThrow(() -> JSONAssert.assertEquals("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}", json.writeValueAsString(res), JSONCompareMode.LENIENT));
+        {{/body}}
+        {{/response}}
+    }
+    {{/tests}}
+    {{/blocksE2E}}
+}

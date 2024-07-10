@@ -26,10 +26,10 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'faraday', '>= 1.0.1', '< 3.0'
   s.add_dependency 'faraday-net_http_persistent', ['>= 0.15', '< 3']
+  s.add_dependency 'base64', '>= 0.2.0', '< 1'
 
   s.add_dependency 'net-http-persistent'
 
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'rubocop'
 end

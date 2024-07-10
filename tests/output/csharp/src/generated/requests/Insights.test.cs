@@ -12,37 +12,13 @@ using Action = Algolia.Search.Models.Search.Action;
 
 public class InsightsClientRequestTests
 {
-  private readonly InsightsClient _client,
-    _e2eClient;
+  private readonly InsightsClient _client;
   private readonly EchoHttpRequester _echo;
 
   public InsightsClientRequestTests()
   {
     _echo = new EchoHttpRequester();
     _client = new InsightsClient(new InsightsConfig("appId", "apiKey", "us"), _echo);
-
-    DotEnv.Load(
-      options: new DotEnvOptions(
-        ignoreExceptions: true,
-        probeForEnv: true,
-        probeLevelsToSearch: 8,
-        envFilePaths: new[] { ".env" }
-      )
-    );
-
-    var e2EAppId = Environment.GetEnvironmentVariable("ALGOLIA_APPLICATION_ID");
-    if (e2EAppId == null)
-    {
-      throw new Exception("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests");
-    }
-
-    var e2EApiKey = Environment.GetEnvironmentVariable("ALGOLIA_ADMIN_KEY");
-    if (e2EApiKey == null)
-    {
-      throw new Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests");
-    }
-
-    _e2eClient = new InsightsClient(new InsightsConfig(e2EAppId, e2EApiKey, "us"));
   }
 
   [Fact]
@@ -602,7 +578,7 @@ public class InsightsClientRequestTests
               Index = "products",
               UserToken = "user-123456",
               AuthenticatedUserToken = "user-123456",
-              Timestamp = 1720310400000L,
+              Timestamp = 1720569600000L,
               ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
               QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
             }
@@ -615,7 +591,7 @@ public class InsightsClientRequestTests
               Index = "products",
               UserToken = "user-123456",
               AuthenticatedUserToken = "user-123456",
-              Timestamp = 1720310400000L,
+              Timestamp = 1720569600000L,
               ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
             }
           )
@@ -627,60 +603,10 @@ public class InsightsClientRequestTests
     Assert.Equal("/1/events", req.Path);
     Assert.Equal("POST", req.Method.ToString());
     JsonAssert.EqualOverrideDefault(
-      "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1720310400000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1720310400000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
+      "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1720569600000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product Detail Page Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1720569600000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
       req.Body,
       new JsonDiffConfig(false)
     );
-
-    // e2e
-    try
-    {
-      var resp = await _e2eClient.PushEventsAsync(
-        new InsightsEvents
-        {
-          Events = new List<EventsItems>
-          {
-            new EventsItems(
-              new ConvertedObjectIDsAfterSearch
-              {
-                EventType = Enum.Parse<ConversionEvent>("Conversion"),
-                EventName = "Product Purchased",
-                Index = "products",
-                UserToken = "user-123456",
-                AuthenticatedUserToken = "user-123456",
-                Timestamp = 1720310400000L,
-                ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
-                QueryID = "43b15df305339e827f0ac0bdc5ebcaa7",
-              }
-            ),
-            new EventsItems(
-              new ViewedObjectIDs
-              {
-                EventType = Enum.Parse<ViewEvent>("View"),
-                EventName = "Product Detail Page Viewed",
-                Index = "products",
-                UserToken = "user-123456",
-                AuthenticatedUserToken = "user-123456",
-                Timestamp = 1720310400000L,
-                ObjectIDs = new List<string> { "9780545139700", "9780439784542" },
-              }
-            )
-          },
-        }
-      );
-      // Check status code 200
-      Assert.NotNull(resp);
-
-      JsonAssert.EqualOverrideDefault(
-        "{\"message\":\"OK\",\"status\":200}",
-        JsonSerializer.Serialize(resp, JsonConfig.Options),
-        new JsonDiffConfig(true)
-      );
-    }
-    catch (Exception e)
-    {
-      Assert.Fail("An exception was thrown: " + e.Message);
-    }
   }
 
   [Fact(DisplayName = "ConvertedObjectIDsAfterSearch")]

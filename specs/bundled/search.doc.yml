@@ -415,16 +415,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.custom_get("test/minimal")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -607,16 +607,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.custom_post("test/minimal")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -799,16 +799,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.custom_put("test/minimal")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -999,16 +999,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.custom_delete("test/minimal")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1219,16 +1219,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.search_single_index("indexName")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1511,22 +1511,20 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.search(
               SearchMethodParams.new(
-                requests: [SearchForHits.new(
-                  index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", hits_per_page: 50
-                )]
+                requests: [SearchForHits.new(index_name: "<YOUR_INDEX_NAME>", query: "<YOUR_QUERY>", hits_per_page: 50)]
               )
             )
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1770,16 +1768,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.search_for_facet_values("indexName", "facetName")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -2021,16 +2019,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.browse("cts_e2e_browse")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -2283,23 +2281,23 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
 
             # Call the API
 
-            response = client.save_object("<YOUR_INDEX_NAME>", { objectID: "id",
-            test: "val" })
+            response = client.save_object("<YOUR_INDEX_NAME>", {objectID: "id",
+            test: "val"})
 
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -2504,16 +2502,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.delete_index("theIndexName")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -2755,7 +2753,7 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
 
             # Call the API
@@ -2766,12 +2764,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -3010,23 +3008,23 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
 
             # Call the API
 
-            response = client.add_or_update_object("indexName", "uniqueID", {
-            key: "value" })
+            response = client.add_or_update_object("indexName", "uniqueID",
+            {key: "value"})
 
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -3233,16 +3231,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.delete_object("<YOUR_INDEX_NAME>", "uniqueID")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -3452,21 +3450,26 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: |
+          source: >
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
 
             # Call the API
-            response = client.delete_by(
-              "theIndexName",
-              DeleteByParams.new(filters: "brand:brandName")
-            )
+
+            response = client.delete_by("theIndexName",
+            DeleteByParams.new(filters: "brand:brandName"))
+
 
             # use the class directly
-            puts response
+
+            puts(response)
+
 
             # print the JSON response
-            puts response.to_json
+
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -3665,16 +3668,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.clear_objects("theIndexName")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -3956,21 +3959,21 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.partial_update_object(
               "theIndexName",
               "uniqueID",
-              { id1: "test", id2: BuiltInOperation.new(_operation: 'AddUnique', value: "test2") },
+              {id1: "test", id2: BuiltInOperation.new(_operation: "AddUnique", value: "test2")},
               true
             )
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -4341,28 +4344,24 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.batch(
               "<YOUR_INDEX_NAME>",
               BatchWriteParams.new(
                 requests: [
-                  BatchRequest.new(
-                    action: 'addObject',
-                    body: { key: "bar",
-                            foo: "1" }
-                  ),
-                  BatchRequest.new(action: 'addObject', body: { key: "baz", foo: "2" })
+                  BatchRequest.new(action: "addObject", body: {key: "bar", foo: "1"}),
+                  BatchRequest.new(action: "addObject", body: {key: "baz", foo: "2"})
                 ]
               )
             )
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -4701,22 +4700,20 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.multiple_batch(
               BatchParams.new(
-                requests: [MultipleBatchRequest.new(
-                  action: 'addObject', body: { key: "value" }, index_name: "theIndexName"
-                )]
+                requests: [MultipleBatchRequest.new(action: "addObject", body: {key: "value"}, index_name: "theIndexName")]
               )
             )
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -5042,25 +5039,26 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.get_objects(
               GetObjectsParams.new(
-                requests: [GetObjectsRequest.new(
-                  attributes_to_retrieve: ["attr1",
-                    "attr2"],
-                  object_id: "uniqueID",
-                  index_name: "theIndexName"
-                )]
+                requests: [
+                  GetObjectsRequest.new(
+                    attributes_to_retrieve: ["attr1", "attr2"],
+                    object_id: "uniqueID",
+                    index_name: "theIndexName"
+                  )
+                ]
               )
             )
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -5260,16 +5258,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.get_settings("cts_e2e_settings")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -5513,23 +5511,19 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.set_settings(
               "<YOUR_INDEX_NAME>",
-              IndexSettings.new(
-                attributes_for_faceting: ["actor",
-                  "filterOnly(category)",
-                  "searchable(publisher)"]
-              )
+              IndexSettings.new(attributes_for_faceting: ["actor", "filterOnly(category)", "searchable(publisher)"])
             )
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -5731,16 +5725,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.get_synonym("indexName", "id1")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -6017,21 +6011,21 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.save_synonym(
               "indexName",
               "id1",
-              SynonymHit.new(object_id: "id1", type: 'synonym', synonyms: ["car", "vehicule", "auto"]),
+              SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
               true
             )
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -6240,16 +6234,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.delete_synonym("indexName", "id1")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -6585,27 +6579,24 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.save_synonyms(
               "<YOUR_INDEX_NAME>",
-              [SynonymHit.new(object_id: "id1", type: 'synonym', synonyms: ["car", "vehicule", "auto"]),
-                SynonymHit.new(
-                  object_id: "id2",
-                  type: 'onewaysynonym',
-                  input: "iphone",
-                  synonyms: ["ephone", "aphone", "yphone"]
-                )],
+              [
+                SynonymHit.new(object_id: "id1", type: "synonym", synonyms: ["car", "vehicule", "auto"]),
+                SynonymHit.new(object_id: "id2", type: "onewaysynonym", input: "iphone", synonyms: ["ephone", "aphone", "yphone"])
+              ],
               true,
               true
             )
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -6825,16 +6816,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.clear_synonyms("indexName")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -7049,16 +7040,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.search_synonyms("indexName")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -7240,16 +7231,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.list_api_keys
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -7490,12 +7481,12 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.add_api_key(
               ApiKey.new(
-                acl: ['search', 'addObject'],
+                acl: ["search", "addObject"],
                 description: "my new api key",
                 validity: 300,
                 max_queries_per_ip_per_hour: 100,
@@ -7504,10 +7495,10 @@ paths:
             )
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -7706,16 +7697,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.get_api_key("myTestApiKey")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -7977,24 +7968,19 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.update_api_key(
               "myApiKey",
-              ApiKey.new(
-                acl: ['search', 'addObject'],
-                validity: 300,
-                max_queries_per_ip_per_hour: 100,
-                max_hits_per_query: 20
-              )
+              ApiKey.new(acl: ["search", "addObject"], validity: 300, max_queries_per_ip_per_hour: 100, max_hits_per_query: 20)
             )
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -8203,16 +8189,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.delete_api_key("myTestApiKey")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -8411,16 +8397,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.restore_api_key("myApiKey")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -8613,16 +8599,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.get_rule("indexName", "id1")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -8881,23 +8867,20 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.save_rule(
               "indexName",
               "id1",
-              Rule.new(
-                object_id: "id1",
-                conditions: [Condition.new(pattern: "apple", anchoring: 'contains')]
-              )
+              Rule.new(object_id: "id1", conditions: [Condition.new(pattern: "apple", anchoring: "contains")])
             )
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -9104,16 +9087,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.delete_rule("indexName", "id1")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -9448,33 +9431,24 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.save_rules(
               "<YOUR_INDEX_NAME>",
               [
-                Rule.new(
-                  object_id: "a-rule-id",
-                  conditions: [Condition.new(
-                    pattern: "smartphone",
-                    anchoring: 'contains'
-                  )]
-                ),
-                Rule.new(
-                  object_id: "a-second-rule-id",
-                  conditions: [Condition.new(pattern: "apple", anchoring: 'contains')]
-                )
+                Rule.new(object_id: "a-rule-id", conditions: [Condition.new(pattern: "smartphone", anchoring: "contains")]),
+                Rule.new(object_id: "a-second-rule-id", conditions: [Condition.new(pattern: "apple", anchoring: "contains")])
               ],
               false,
               true
             )
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -9698,16 +9672,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.clear_rules("indexName")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -9962,7 +9936,7 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
 
             # Call the API
@@ -9973,12 +9947,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -10351,32 +10325,34 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.batch_dictionary_entries(
-              'plurals',
+              "plurals",
               BatchDictionaryEntriesParams.new(
                 clear_existing_dictionary_entries: true,
-                requests: [BatchDictionaryEntriesRequest.new(
-                  action: 'addEntry',
-                  body: DictionaryEntry.new(
-                    object_id: "1",
-                    language: 'en',
-                    word: "fancy",
-                    words: ["believe", "algolia"],
-                    decomposition: ["trust", "algolia"],
-                    state: 'enabled'
+                requests: [
+                  BatchDictionaryEntriesRequest.new(
+                    action: "addEntry",
+                    body: DictionaryEntry.new(
+                      object_id: "1",
+                      language: "en",
+                      word: "fancy",
+                      words: ["believe", "algolia"],
+                      decomposition: ["trust", "algolia"],
+                      state: "enabled"
+                    )
                   )
-                )]
+                ]
               )
             )
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -10636,21 +10612,26 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: |
+          source: >
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
 
             # Call the API
-            response = client.search_dictionary_entries(
-              'stopwords',
-              SearchDictionaryEntriesParams.new(query: "about")
-            )
+
+            response = client.search_dictionary_entries("stopwords",
+            SearchDictionaryEntriesParams.new(query: "about"))
+
 
             # use the class directly
-            puts response
+
+            puts(response)
+
 
             # print the JSON response
-            puts response.to_json
+
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -10834,16 +10815,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.get_dictionary_settings
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -11088,24 +11069,20 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.set_dictionary_settings(
               DictionarySettingsParams.new(
-                disable_standard_entries: StandardEntries.new(
-                  plurals: {
-                    fr: false, en: false, ru: true
-                  }
-                )
+                disable_standard_entries: StandardEntries.new(plurals: {fr: false, en: false, ru: true})
               )
             )
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -11295,16 +11272,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.get_dictionary_languages
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -11528,7 +11505,7 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
 
             # Call the API
@@ -11539,12 +11516,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -11746,16 +11723,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.list_user_ids
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -12009,7 +11986,7 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.batch_assign_user_ids(
@@ -12018,10 +11995,10 @@ paths:
             )
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -12223,16 +12200,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.get_top_user_ids
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -12420,16 +12397,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.get_user_id("uniqueID")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -12624,16 +12601,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.remove_user_id("uniqueID")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -12815,16 +12792,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.list_clusters
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -13135,23 +13112,18 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.search_user_ids(
-              SearchUserIdsParams.new(
-                query: "test",
-                cluster_name: "theClusterName",
-                page: 5,
-                hits_per_page: 10
-              )
+              SearchUserIdsParams.new(query: "test", cluster_name: "theClusterName", page: 5, hits_per_page: 10)
             )
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -13369,16 +13341,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.has_pending_mappings
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -13547,16 +13519,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.get_sources
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -13782,23 +13754,26 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: |
+          source: >
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
 
             # Call the API
-            response = client.replace_sources(
-              [Source.new(
-                source: "theSource",
-                description: "theDescription"
-              )]
-            )
+
+            response = client.replace_sources([Source.new(source: "theSource",
+            description: "theDescription")])
+
 
             # use the class directly
-            puts response
+
+            puts(response)
+
 
             # print the JSON response
-            puts response.to_json
+
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -14013,23 +13988,26 @@ paths:
             print(response.to_json())
         - lang: ruby
           label: Ruby
-          source: |
+          source: >
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
+
 
             # Call the API
-            response = client.append_source(
-              Source.new(
-                source: "theSource",
-                description: "theDescription"
-              )
-            )
+
+            response = client.append_source(Source.new(source: "theSource",
+            description: "theDescription"))
+
 
             # use the class directly
-            puts response
+
+            puts(response)
+
 
             # print the JSON response
-            puts response.to_json
+
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -14237,16 +14215,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.delete_source("theSource")
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -14598,16 +14576,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.get_logs
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -14801,16 +14779,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.get_app_task(123)
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -15026,16 +15004,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.get_task("theIndexName", 123)
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -15350,23 +15328,19 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.operation_index(
               "<SOURCE_INDEX_NAME>",
-              OperationIndexParams.new(
-                operation: 'move',
-                destination: "<DESTINATION_INDEX_NAME>",
-                scope: ['rules', 'settings']
-              )
+              OperationIndexParams.new(operation: "move", destination: "<DESTINATION_INDEX_NAME>", scope: ["rules", "settings"])
             )
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -15563,16 +15537,16 @@ paths:
           label: Ruby
           source: |
             # Initialize the client
-            client = Algolia::SearchClient.create('YOUR_APP_ID', 'YOUR_API_KEY')
+            client = Algolia::SearchClient.create("YOUR_APP_ID", "YOUR_API_KEY")
 
             # Call the API
             response = client.list_indices
 
             # use the class directly
-            puts response
+            puts(response)
 
             # print the JSON response
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >

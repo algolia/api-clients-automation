@@ -1,0 +1,39 @@
+// {{generationBanner}}
+import { union } from '../helpers';
+
+import * as dotenv from 'dotenv';
+
+dotenv.config({path:'../../.env'});
+import { {{client}} } from '{{{import}}}';
+import type { RequestOptions } from '@algolia/client-common';
+
+if (!process.env.ALGOLIA_APPLICATION_ID) {
+  throw new Error("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests");
+}
+
+if (!process.env.{{e2eApiKey}}) {
+  throw new Error("please provide an `{{e2eApiKey}}` env var for e2e tests");
+}
+
+const client = {{client}}(process.env.ALGOLIA_APPLICATION_ID, process.env.{{e2eApiKey}}, {{#hasRegionalHost}}'{{{defaultRegion}}}'{{/hasRegionalHost}});
+
+
+{{#blocksE2E}}
+describe('{{operationId}}', () => {
+  {{#tests}}
+  test('{{{testName}}}', async () => {
+    {{#response}}
+    {{#body}}const resp = {{/body}}await client.{{method}}({{#hasParameters}}{{{parameters}}}{{/hasParameters}}{{#hasRequestOptions}}, requestOptions{{/hasRequestOptions}});
+  
+    {{#body}}
+    const expectedBody = {{{.}}};
+
+    expect(expectedBody).toEqual(union(expectedBody, resp));
+    {{/body}}
+    {{/response}}
+  });
+
+  {{/tests}}
+})
+
+{{/blocksE2E}}
