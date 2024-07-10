@@ -372,6 +372,11 @@ StreamingInput:
 DockerStreamsInput:
   title: The selected streams of a singer or airbyte connector.
   type: object
+  properties:
+    streams:
+      type: object
+  required:
+    - streams
 
 failureThreshold:
   type: integer
