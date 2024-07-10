@@ -45,6 +45,7 @@ async function pushToAlgoliaDoc(): Promise<void> {
 
   const pathToSpecs = toAbsolutePath(`${tempGitDir}/app_data/api/specs`);
   await run(`rm -rf ${pathToSpecs}/* || true`);
+  await run(`cp ${toAbsolutePath('specs/bundled/README.md')} ${pathToSpecs}`);
   await run(`cp ${toAbsolutePath('specs/bundled/*.doc.yml')} ${pathToSpecs}`);
   await run(`cp ${toAbsolutePath('config/release.config.json')} ${pathToSpecs}`);
   await run(`cp ${toAbsolutePath('website/src/generated/*.json')} ${pathToSpecs}`);
