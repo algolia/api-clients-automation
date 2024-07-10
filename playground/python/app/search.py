@@ -17,19 +17,10 @@ async def main():
     print("client initialized", client)
 
     try:
-        resp = await client.replace_all_objects(
-            index_name="newoneeverytime",
-            objects=[
-                {
-                    "name": f"John Doe{i}",
-                    "objectID": f"fff2bd4d-bb17-4e21-a0c4-0a8ea5e363f2{i}",
-                }
-                for i in range(33)
-            ],
-            batch_size=10,
+        await client.browse_objects(
+            index_name="api-clients-automation",
+            aggregator=lambda _resp: print("baaaaaaaaaaaaaaar", _resp.to_json()),
         )
-
-        print(resp)
     finally:
         await client.close()
 

@@ -283,8 +283,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -294,12 +294,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -494,8 +494,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -505,12 +505,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -705,8 +705,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -716,12 +716,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -917,8 +917,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -928,12 +928,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1143,8 +1143,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -1154,12 +1154,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1392,8 +1392,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -1403,12 +1403,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1643,8 +1643,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -1654,12 +1654,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1899,8 +1899,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -1910,12 +1910,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -2160,8 +2160,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -2171,12 +2171,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -2421,8 +2421,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -2432,12 +2432,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -2645,8 +2645,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -2656,12 +2656,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -2909,8 +2909,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -2920,12 +2920,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -3143,8 +3143,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -3154,12 +3154,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -3384,8 +3384,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -3396,12 +3396,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -3623,8 +3623,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -3634,12 +3634,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -3868,8 +3868,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -3879,12 +3879,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -4135,8 +4135,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -4146,12 +4146,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -4369,8 +4369,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -4380,12 +4380,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -4636,8 +4636,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -4647,12 +4647,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -4897,8 +4897,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -4908,12 +4908,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -5158,8 +5158,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -5169,12 +5169,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -5419,8 +5419,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -5430,12 +5430,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -5662,8 +5662,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -5673,12 +5673,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -5883,8 +5883,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::AnalyticsClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::AnalyticsClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -5894,12 +5894,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >

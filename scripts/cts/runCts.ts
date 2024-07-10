@@ -1,6 +1,4 @@
-import * as fsp from 'fs/promises';
-
-import { isVerbose, run, runComposerInstall, toAbsolutePath } from '../common.js';
+import { isVerbose, run, runComposerInstall } from '../common.js';
 import { createSpinner } from '../spinners.js';
 import type { Language } from '../types.js';
 
@@ -26,26 +24,25 @@ async function runCtsOne(language: string): Promise<void> {
       });
       break;
     case 'java':
-      // I guess this is a bug from gradle and can be removed once it's fixed, it doesn't affect the cache.
-      await fsp.rm(toAbsolutePath('tests/output/java/.gradle'), { recursive: true, force: true });
-      await run('./gradle/gradlew --no-daemon -p tests/output/java test', { language });
+      await run('./gradle/gradlew -p tests/output/java test --rerun', { language });
       break;
     case 'javascript':
       await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test', {
         cwd,
       });
       break;
-
     case 'kotlin':
-      await run('./gradle/gradlew --no-daemon -p tests/output/kotlin allTests', { language });
+      await run('./gradle/gradlew -p tests/output/kotlin allTests', { language });
       break;
-    case 'php': {
+    case 'php':
       await runComposerInstall();
-      await run(`php ./clients/algoliasearch-client-php/vendor/bin/phpunit ${cwd}`, {
-        language,
-      });
+      await run(
+        `php ./clients/algoliasearch-client-php/vendor/bin/phpunit --testdox --fail-on-warning ${cwd}`,
+        {
+          language,
+        },
+      );
       break;
-    }
     case 'python':
       await run('poetry lock --no-update && poetry install --sync && poetry run pytest -vv', {
         cwd,

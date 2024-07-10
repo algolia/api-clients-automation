@@ -9,6 +9,8 @@ use Algolia\AlgoliaSearch\Configuration\UsageConfig;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
@@ -16,16 +18,13 @@ use Psr\Http\Message\RequestInterface;
  * Client tests for UsageClient.
  *
  * @internal
- * @coversNothing
  */
+#[CoversClass(UsageClient::class)]
 class UsageTest extends TestCase implements HttpClientInterface
 {
     public const APP_ID = 'test-app-id';
     public const API_KEY = 'test-api-key';
 
-    /**
-     * @var RequestInterface
-     */
     private $recordedRequest;
 
     public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
@@ -39,9 +38,7 @@ class UsageTest extends TestCase implements HttpClientInterface
         return new Response(200, [], '{}');
     }
 
-    /**
-     * Test case : calls api with correct read host.
-     */
+    #[TestDox('calls api with correct read host')]
     public function test0api()
     {
         $client = $this->createClient(
@@ -59,9 +56,7 @@ class UsageTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : calls api with correct write host.
-     */
+    #[TestDox('calls api with correct write host')]
     public function test1api()
     {
         $client = $this->createClient(
@@ -79,9 +74,7 @@ class UsageTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : calls api with correct user agent.
-     */
+    #[TestDox('calls api with correct user agent')]
     public function test0commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -90,15 +83,13 @@ class UsageTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Usage (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$/',
+                '/^Algolia for PHP \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Usage (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
     }
 
-    /**
-     * Test case : calls api with default read timeouts.
-     */
+    #[TestDox('calls api with default read timeouts')]
     public function test1commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -116,9 +107,7 @@ class UsageTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : calls api with default write timeouts.
-     */
+    #[TestDox('calls api with default write timeouts')]
     public function test2commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -136,9 +125,7 @@ class UsageTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : client throws with invalid parameters.
-     */
+    #[TestDox('client throws with invalid parameters')]
     public function test0parameters()
     {
         try {

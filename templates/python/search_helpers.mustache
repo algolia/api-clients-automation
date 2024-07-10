@@ -111,7 +111,7 @@
         self,
         index_name: str,
         aggregator: Optional[Callable[[BrowseResponse], None]],
-        browse_params: Optional[BrowseParams] = None,
+        browse_params: Optional[BrowseParamsObject] = BrowseParamsObject(),
         request_options: Optional[Union[dict, RequestOptions]] = None,
     ) -> BrowseResponse:
         """

@@ -9,6 +9,8 @@ use Algolia\AlgoliaSearch\Configuration\AnalyticsConfig;
 use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
@@ -16,16 +18,13 @@ use Psr\Http\Message\RequestInterface;
  * Client tests for AnalyticsClient.
  *
  * @internal
- * @coversNothing
  */
+#[CoversClass(AnalyticsClient::class)]
 class AnalyticsTest extends TestCase implements HttpClientInterface
 {
     public const APP_ID = 'test-app-id';
     public const API_KEY = 'test-api-key';
 
-    /**
-     * @var RequestInterface
-     */
     private $recordedRequest;
 
     public function sendRequest(RequestInterface $request, $timeout, $connectTimeout)
@@ -39,9 +38,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
         return new Response(200, [], '{}');
     }
 
-    /**
-     * Test case : calls api with correct user agent.
-     */
+    #[TestDox('calls api with correct user agent')]
     public function test0commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -50,15 +47,13 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
         );
         $this->assertTrue(
             (bool) preg_match(
-                '/^Algolia for PHP \\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*(; Analytics (\\(\\d+\\.\\d+\\.\\d+(-?.*)?\\)))(; [a-zA-Z. ]+ (\\(\\d+((\\.\\d+)?\\.\\d+)?(-?.*)?\\))?)*$/',
+                '/^Algolia for PHP \(\d+\.\d+\.\d+(-?.*)?\)(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*(; Analytics (\(\d+\.\d+\.\d+(-?.*)?\)))(; [a-zA-Z. ]+ (\(\d+((\.\d+)?\.\d+)?(-?.*)?\))?)*$/',
                 $this->recordedRequest['request']->getHeader('User-Agent')[0]
             )
         );
     }
 
-    /**
-     * Test case : calls api with default read timeouts.
-     */
+    #[TestDox('calls api with default read timeouts')]
     public function test1commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -76,9 +71,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : calls api with default write timeouts.
-     */
+    #[TestDox('calls api with default write timeouts')]
     public function test2commonApi()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);
@@ -96,9 +89,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : fallbacks to the alias when region is not given.
-     */
+    #[TestDox('fallbacks to the alias when region is not given')]
     public function test0parameters()
     {
         $client = $this->createClient(
@@ -116,9 +107,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : uses the correct region.
-     */
+    #[TestDox('uses the correct region')]
     public function test1parameters()
     {
         $client = $this->createClient(
@@ -136,9 +125,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
         );
     }
 
-    /**
-     * Test case : throws when incorrect region is given.
-     */
+    #[TestDox('throws when incorrect region is given')]
     public function test2parameters()
     {
         try {
@@ -154,9 +141,7 @@ class AnalyticsTest extends TestCase implements HttpClientInterface
         }
     }
 
-    /**
-     * Test case : getAverageClickPosition throws without index.
-     */
+    #[TestDox('getAverageClickPosition throws without index')]
     public function test3parameters()
     {
         $client = $this->createClient(self::APP_ID, self::API_KEY);

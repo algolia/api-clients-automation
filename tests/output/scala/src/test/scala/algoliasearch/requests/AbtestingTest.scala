@@ -8,11 +8,6 @@ import algoliasearch.abtesting.*
 import org.json4s.*
 import org.json4s.native.JsonParser.*
 import org.scalatest.funsuite.AnyFunSuite
-import io.github.cdimascio.dotenv.Dotenv
-import org.skyscreamer.jsonassert.JSONCompare.compareJSON
-import org.skyscreamer.jsonassert.JSONCompareMode
-import org.json4s.native.Serialization
-import org.json4s.native.Serialization.write
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
@@ -35,24 +30,6 @@ class AbtestingTest extends AnyFunSuite {
       ),
       echo
     )
-  }
-
-  def testE2EClient(): AbtestingClient = {
-    val region = Some("us")
-    if (System.getenv("CI") == "true") {
-      AbtestingClient(
-        appId = System.getenv("ALGOLIA_APPLICATION_ID"),
-        apiKey = System.getenv("ALGOLIA_ADMIN_KEY"),
-        region = region
-      )
-    } else {
-      val dotenv = Dotenv.configure.directory("../../").load
-      AbtestingClient(
-        appId = dotenv.get("ALGOLIA_APPLICATION_ID"),
-        apiKey = dotenv.get("ALGOLIA_ADMIN_KEY"),
-        region = region
-      )
-    }
   }
 
   test("addABTests with minimal parameters") {
@@ -637,20 +614,6 @@ class AbtestingTest extends AnyFunSuite {
       assert(expectedQuery.contains(k))
       assert(expectedQuery(k).values == v)
     }
-    val e2eClient = testE2EClient()
-    val e2eFuture = e2eClient.listABTests(
-      offset = Some(0),
-      limit = Some(21),
-      indexPrefix = Some("cts_e2e ab"),
-      indexSuffix = Some("t")
-    )
-
-    val response = Await.result(e2eFuture, Duration.Inf)
-    compareJSON(
-      """{"abtests":[{"abTestID":85635,"createdAt":"2024-05-13T10:12:27.739233Z","endAt":"2124-05-13T00:00:00Z","name":"cts_e2e_abtest","status":"active","variants":[{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"this abtest is used for api client automation tests and will expire in 2124","index":"cts_e2e_search_facet","purchaseCount":0,"trafficPercentage":25},{"addToCartCount":0,"clickCount":0,"conversionCount":0,"description":"","index":"cts_e2e abtest","purchaseCount":0,"trafficPercentage":75}]}],"count":1,"total":1}""",
-      write(response),
-      JSONCompareMode.LENIENT
-    )
   }
 
   test("stopABTest") {

@@ -293,8 +293,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -304,12 +304,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -504,8 +504,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -515,12 +515,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -715,8 +715,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -726,12 +726,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -927,8 +927,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -938,12 +938,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1142,8 +1142,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -1153,12 +1153,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1403,15 +1403,15 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
 
             response = client.create_authentication(
               AuthenticationCreate.new(
-                type: 'oauth',
+                type: "oauth",
                 name: "authName",
                 input: AuthOAuth.new(url: "http://test.oauth", client_id: "myID", client_secret: "mySecret")
               )
@@ -1420,12 +1420,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1667,29 +1667,27 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
 
             response = client.search_authentications(
               AuthenticationSearch.new(
-                authentication_ids: [
-                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
-                ]
+                authentication_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"]
               )
             )
 
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -1891,8 +1889,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -1903,12 +1901,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -2120,8 +2118,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -2134,12 +2132,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -2342,8 +2340,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -2354,12 +2352,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -2560,8 +2558,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -2571,12 +2569,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -2810,15 +2808,15 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
 
             response = client.create_destination(
               DestinationCreate.new(
-                type: 'search',
+                type: "search",
                 name: "destinationName",
                 input: DestinationIndexPrefix.new(index_prefix: "prefix_"),
                 authentication_id: "6c02aeb1-775e-418e-870b-1faccd4b2c0f"
@@ -2828,12 +2826,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -3073,29 +3071,27 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
 
             response = client.search_destinations(
               DestinationSearch.new(
-                destination_ids: [
-                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
-                ]
+                destination_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"]
               )
             )
 
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -3298,8 +3294,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -3310,12 +3306,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -3527,26 +3523,25 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
 
-            response = client.update_destination(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              DestinationUpdate.new(name: "newName")
-            )
+            response =
+            client.update_destination("6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            DestinationUpdate.new(name: "newName"))
 
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -3749,8 +3744,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -3761,12 +3756,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -3965,8 +3960,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -3976,12 +3971,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -4253,15 +4248,15 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
 
             response = client.create_source(
               SourceCreate.new(
-                type: 'commercetools',
+                type: "commercetools",
                 name: "sourceName",
                 input: SourceCommercetools.new(
                   store_keys: ["myStore"],
@@ -4276,12 +4271,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -4573,15 +4568,15 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
 
             response = client.validate_source(
               SourceCreate.new(
-                type: 'commercetools',
+                type: "commercetools",
                 name: "sourceName",
                 input: SourceCommercetools.new(
                   store_keys: ["myStore"],
@@ -4596,12 +4591,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -4851,29 +4846,25 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
 
             response = client.search_sources(
-              SourceSearch.new(
-                source_ids: [
-                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"
-                ]
-              )
+              SourceSearch.new(source_ids: ["6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a"])
             )
 
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -5074,8 +5065,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -5085,12 +5076,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -5302,26 +5293,25 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
 
-            response = client.update_source(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              SourceUpdate.new(name: "newName")
-            )
+            response =
+            client.update_source("6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            SourceUpdate.new(name: "newName"))
 
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -5524,8 +5514,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -5536,12 +5526,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -5756,8 +5746,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -5770,12 +5760,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -5979,8 +5969,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -5991,12 +5981,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -6200,8 +6190,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -6211,12 +6201,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -6447,8 +6437,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -6457,20 +6447,20 @@ paths:
               TaskCreate.new(
                 source_id: "search",
                 destination_id: "destinationName",
-                trigger: OnDemandTriggerInput.new(type: 'onDemand'),
-                action: 'replace'
+                trigger: OnDemandTriggerInput.new(type: "onDemand"),
+                action: "replace"
               )
             )
 
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -6716,8 +6706,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -6725,7 +6715,9 @@ paths:
             response = client.search_tasks(
               TaskSearch.new(
                 task_ids: [
-                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                  "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
                 ]
               )
             )
@@ -6733,12 +6725,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -6944,8 +6936,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -6955,12 +6947,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -7167,26 +7159,25 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
 
-            response = client.update_task(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              TaskUpdate.new(enabled: false)
-            )
+            response =
+            client.update_task("6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            TaskUpdate.new(enabled: false))
 
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -7382,8 +7373,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -7394,12 +7385,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -7597,8 +7588,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -7608,12 +7599,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -7809,8 +7800,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -7821,12 +7812,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -8022,8 +8013,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -8034,12 +8025,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -8236,8 +8227,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -8247,12 +8238,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -8466,29 +8457,25 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
 
-            response = client.create_transformation(
-              TransformationCreate.new(
-                code: "foo",
-                name: "bar",
-                description: "baz"
-              )
-            )
+            response =
+            client.create_transformation(TransformationCreate.new(code: "foo",
+            name: "bar", description: "baz"))
 
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -8720,28 +8707,24 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
 
-            response = client.try_transformations(
-              TransformationTry.new(
-                code: "foo",
-                sample_record: { bar: "baz" }
-              )
-            )
+            response = client.try_transformations(TransformationTry.new(code:
+            "foo", sample_record: {bar: "baz"}))
 
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -8983,8 +8966,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -8992,7 +8975,9 @@ paths:
             response = client.search_transformations(
               TransformationSearch.new(
                 transformations_ids: [
-                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f", "947ac9c4-7e58-4c87-b1e7-14a68e99699a", "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
+                  "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+                  "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
+                  "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
                 ]
               )
             )
@@ -9000,12 +8985,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -9212,8 +9197,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -9224,12 +9209,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -9450,8 +9435,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -9464,12 +9449,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -9668,8 +9653,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -9680,12 +9665,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -9887,8 +9872,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -9898,12 +9883,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -10098,8 +10083,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -10109,12 +10094,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -10345,8 +10330,8 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
@@ -10356,12 +10341,12 @@ paths:
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >
@@ -10562,26 +10547,24 @@ paths:
           source: >
             # Initialize the client
 
-            client = Algolia::IngestionClient.create('YOUR_APP_ID',
-            'YOUR_API_KEY', 'YOUR_APP_ID_REGION')
+            client = Algolia::IngestionClient.create("YOUR_APP_ID",
+            "YOUR_API_KEY", "YOUR_APP_ID_REGION")
 
 
             # Call the API
 
-            response = client.get_event(
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-              "6c02aeb1-775e-418e-870b-1faccd4b2c0c"
-            )
+            response = client.get_event("6c02aeb1-775e-418e-870b-1faccd4b2c0f",
+            "6c02aeb1-775e-418e-870b-1faccd4b2c0c")
 
 
             # use the class directly
 
-            puts response
+            puts(response)
 
 
             # print the JSON response
 
-            puts response.to_json
+            puts(response.to_json)
         - lang: scala
           label: Scala
           source: >

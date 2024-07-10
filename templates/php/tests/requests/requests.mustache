@@ -2,7 +2,7 @@
 
 // {{generationBanner}}
 
-namespace Algolia\AlgoliaSearch\Test\Api;
+namespace Algolia\AlgoliaSearch\Test\Request;
 
 use Algolia\AlgoliaSearch\Api\{{client}};
 use Algolia\AlgoliaSearch\Configuration\{{clientPrefix}}Config;
@@ -11,49 +11,15 @@ use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
 use GuzzleHttp\Psr7\Query;
+use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
-{{#hasE2E}}
-use Dotenv\Dotenv;
 
-// we only read .env file if we run locally
-if (getenv('ALGOLIA_APPLICATION_ID')) {
-    $_ENV = getenv();
-} else {
-    $dotenv = Dotenv::createImmutable('tests');
-    $dotenv->load();
-}
-{{/hasE2E}}
-
-/**
- * {{clientPrefix}}Test
- *
- * @category Class
- * @package  Algolia\AlgoliaSearch
- */
+#[CoversClass({{client}}::class)]
 class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
 {
-    /**
-     * @var RequestInterface[]
-     */
     private $recordedRequests = [];
-
-    {{#hasE2E}}
-    protected function union($expected, $received)
-    {
-        if (is_array($expected)) {
-            $res = [];
-            // array and object are the same thing in PHP (magic ✨)
-            foreach ($expected as $k => $v) {
-                $res[$k] = $this->union($v, $received[$k]);
-            }
-
-            return $res;
-        }
-        
-        return $received;
-    }
-    {{/hasE2E}}
 
     protected function assertRequests(array $requests)
     {
@@ -103,13 +69,6 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
         return new Response(200, [], '{}');
     }
 
-    {{#hasE2E}}
-    protected function getE2EClient()
-    {
-        return {{client}}::create($_ENV['ALGOLIA_APPLICATION_ID'], $_ENV['{{e2eApiKey}}']{{#hasRegionalHost}},'{{defaultRegion}}' {{/hasRegionalHost}});
-    }
-    {{/hasE2E}}
-
     protected function getClient()
     {
         $config = {{clientPrefix}}Config::create('appID', 'apiKey'{{#hasRegionalHost}},'{{defaultRegion}}' {{/hasRegionalHost}});
@@ -120,10 +79,7 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
 
     {{#blocksRequests}}
     {{#tests}}
-    /**
-    * Test case for {{#lambda.titlecase}}{{{method}}}{{/lambda.titlecase}}
-    * {{{testName}}}
-    */
+    #[TestDox('{{{testName}}}')]
     public function test{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}{{testIndex}}()
     {
         $client = $this->getClient();
@@ -168,20 +124,6 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
                 {{/request.headers}}
             ],
         ]);
-
-        {{#response}}
-        $e2eClient = $this->getE2EClient();
-        $resp = $e2eClient->{{^hasParameters}}{{{method}}}();{{/hasParameters}}{{#hasParameters}}{{{method}}}(
-        {{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}$requestOptions{{/hasRequestOptions}}
-        );{{/hasParameters}}
-
-        {{#body}}
-        $expected = json_decode('{{{.}}}', true);
-
-        $this->assertEquals($this->union($expected, $resp), $expected);
-        {{/body}}
-        {{/response}}
-
     }
     {{/tests}}
     {{/blocksRequests}}
