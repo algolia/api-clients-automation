@@ -2,52 +2,14 @@
 // https://github.com/algolia/api-clients-automation. DO NOT EDIT.
 import XCTest
 
-import DotEnv
 import Utils
 
 @testable import Core
 @testable import QuerySuggestions
 
 final class QuerySuggestionsClientRequestsTests: XCTestCase {
-    static var APPLICATION_ID = "my_application_id"
-    static var API_KEY = "my_api_key"
-    static var e2eClient: QuerySuggestionsClient?
-
-    override class func setUp() {
-        if !(Bool(ProcessInfo.processInfo.environment["CI"] ?? "false") ?? false) {
-            do {
-                let currentFileURL = try XCTUnwrap(URL(string: #file))
-
-                let packageDirectoryURL = currentFileURL
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-                    .deletingLastPathComponent()
-
-                let dotEnvURL = packageDirectoryURL
-                    .appendingPathComponent(".env")
-                dump(dotEnvURL.absoluteString)
-                try DotEnv.load(path: dotEnvURL.absoluteString, encoding: .utf8, overwrite: true)
-            } catch {
-                XCTFail("Unable to load .env file")
-            }
-        }
-
-        do {
-            self.APPLICATION_ID = try XCTUnwrap(ProcessInfo.processInfo.environment["ALGOLIA_APPLICATION_ID"])
-        } catch {
-            XCTFail("Please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests")
-        }
-
-        do {
-            self.API_KEY = try XCTUnwrap(ProcessInfo.processInfo.environment["ALGOLIA_ADMIN_KEY"])
-        } catch {
-            XCTFail("Please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests")
-        }
-
-        self.e2eClient = try? QuerySuggestionsClient(appID: self.APPLICATION_ID, apiKey: self.API_KEY, region: .us)
-    }
+    static let APPLICATION_ID = "my_application_id"
+    static let API_KEY = "my_api_key"
 
     /// createConfig
     func testCreateConfigTest() async throws {
@@ -861,25 +823,6 @@ final class QuerySuggestionsClientRequestsTests: XCTestCase {
         XCTAssertEqual(echoResponse.method, HTTPMethod.get)
 
         XCTAssertNil(echoResponse.queryParameters)
-
-        guard let e2eClient = QuerySuggestionsClientRequestsTests.e2eClient else {
-            XCTFail("E2E client is not initialized")
-            return
-        }
-
-        let e2eResponse = try await e2eClient.getConfigWithHTTPInfo(indexName: "cts_e2e_browse_query_suggestions")
-        let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
-        let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
-
-        let e2eExpectedBodyData =
-            try XCTUnwrap(
-                "{\"appID\":\"T8JK9S7I7X\",\"allowSpecialCharacters\":true,\"enablePersonalization\":false,\"exclude\":[\"^cocaines$\"],\"indexName\":\"cts_e2e_browse_query_suggestions\",\"languages\":[],\"sourceIndices\":[{\"facets\":[{\"amount\":1,\"attribute\":\"title\"}],\"generate\":[[\"year\"]],\"indexName\":\"cts_e2e_browse\",\"minHits\":5,\"minLetters\":4,\"replicas\":false}]}"
-                    .data(using: .utf8)
-            )
-
-        XCTLenientAssertEqual(received: e2eResponseBodyData, expected: e2eExpectedBodyData)
-
-        XCTAssertEqual(e2eResponse.statusCode, 200)
     }
 
     /// getConfigStatus

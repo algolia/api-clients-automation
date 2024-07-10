@@ -12,37 +12,13 @@ using Action = Algolia.Search.Models.Search.Action;
 
 public class IngestionClientRequestTests
 {
-  private readonly IngestionClient _client,
-    _e2eClient;
+  private readonly IngestionClient _client;
   private readonly EchoHttpRequester _echo;
 
   public IngestionClientRequestTests()
   {
     _echo = new EchoHttpRequester();
     _client = new IngestionClient(new IngestionConfig("appId", "apiKey", "us"), _echo);
-
-    DotEnv.Load(
-      options: new DotEnvOptions(
-        ignoreExceptions: true,
-        probeForEnv: true,
-        probeLevelsToSearch: 8,
-        envFilePaths: new[] { ".env" }
-      )
-    );
-
-    var e2EAppId = Environment.GetEnvironmentVariable("ALGOLIA_APPLICATION_ID");
-    if (e2EAppId == null)
-    {
-      throw new Exception("please provide an `ALGOLIA_APPLICATION_ID` env var for e2e tests");
-    }
-
-    var e2EApiKey = Environment.GetEnvironmentVariable("ALGOLIA_ADMIN_KEY");
-    if (e2EApiKey == null)
-    {
-      throw new Exception("please provide an `ALGOLIA_ADMIN_KEY` env var for e2e tests");
-    }
-
-    _e2eClient = new IngestionClient(new IngestionConfig(e2EAppId, e2EApiKey, "us"));
   }
 
   [Fact]
@@ -820,24 +796,6 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/tasks/76ab4c2a-ce17-496f-b7a6-506dc59ee498/enable", req.Path);
     Assert.Equal("PUT", req.Method.ToString());
     Assert.Equal("{}", req.Body);
-
-    // e2e
-    try
-    {
-      var resp = await _e2eClient.EnableTaskAsync("76ab4c2a-ce17-496f-b7a6-506dc59ee498");
-      // Check status code 200
-      Assert.NotNull(resp);
-
-      JsonAssert.EqualOverrideDefault(
-        "{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}",
-        JsonSerializer.Serialize(resp, JsonConfig.Options),
-        new JsonDiffConfig(true)
-      );
-    }
-    catch (Exception e)
-    {
-      Assert.Fail("An exception was thrown: " + e.Message);
-    }
   }
 
   [Fact(DisplayName = "getAuthentication")]
@@ -894,35 +852,6 @@ public class IngestionClientRequestTests
     {
       expectedQuery.TryGetValue(actual.Key, out var expected);
       Assert.Equal(expected, actual.Value);
-    }
-
-    // e2e
-    try
-    {
-      var resp = await _e2eClient.GetAuthenticationsAsync(
-        2,
-        1,
-        new List<AuthenticationType>
-        {
-          Enum.Parse<AuthenticationType>("Basic"),
-          Enum.Parse<AuthenticationType>("Algolia")
-        },
-        new List<PlatformWithNone> { new PlatformWithNone(Enum.Parse<PlatformNone>("None")) },
-        Enum.Parse<AuthenticationSortKeys>("CreatedAt"),
-        Enum.Parse<OrderKeys>("Asc")
-      );
-      // Check status code 200
-      Assert.NotNull(resp);
-
-      JsonAssert.EqualOverrideDefault(
-        "{\"pagination\":{\"page\":1,\"itemsPerPage\":2},\"authentications\":[{\"authenticationID\":\"474f050f-a771-464c-a016-323538029f5f\",\"type\":\"algolia\",\"name\":\"algolia-auth-1677060483885\",\"input\":{},\"createdAt\":\"2023-02-22T10:08:04Z\",\"updatedAt\":\"2023-10-25T08:41:56Z\"},{}]}",
-        JsonSerializer.Serialize(resp, JsonConfig.Options),
-        new JsonDiffConfig(true)
-      );
-    }
-    catch (Exception e)
-    {
-      Assert.Fail("An exception was thrown: " + e.Message);
     }
   }
 
@@ -1007,24 +936,6 @@ public class IngestionClientRequestTests
     Assert.Equal("/1/sources/75eeb306-51d3-4e5e-a279-3c92bd8893ac", req.Path);
     Assert.Equal("GET", req.Method.ToString());
     Assert.Null(req.Body);
-
-    // e2e
-    try
-    {
-      var resp = await _e2eClient.GetSourceAsync("75eeb306-51d3-4e5e-a279-3c92bd8893ac");
-      // Check status code 200
-      Assert.NotNull(resp);
-
-      JsonAssert.EqualOverrideDefault(
-        "{\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"name\":\"cts_e2e_browse\",\"type\":\"json\",\"input\":{\"url\":\"https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json\"}}",
-        JsonSerializer.Serialize(resp, JsonConfig.Options),
-        new JsonDiffConfig(true)
-      );
-    }
-    catch (Exception e)
-    {
-      Assert.Fail("An exception was thrown: " + e.Message);
-    }
   }
 
   [Fact(DisplayName = "getSources")]
@@ -1188,34 +1099,6 @@ public class IngestionClientRequestTests
       req.Body,
       new JsonDiffConfig(false)
     );
-
-    // e2e
-    try
-    {
-      var resp = await _e2eClient.SearchTasksAsync(
-        new TaskSearch
-        {
-          TaskIDs = new List<string>
-          {
-            "6c02aeb1-775e-418e-870b-1faccd4b2c0f",
-            "947ac9c4-7e58-4c87-b1e7-14a68e99699a",
-            "76ab4c2a-ce17-496f-b7a6-506dc59ee498"
-          },
-        }
-      );
-      // Check status code 200
-      Assert.NotNull(resp);
-
-      JsonAssert.EqualOverrideDefault(
-        "[{\"taskID\":\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\"sourceID\":\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\"destinationID\":\"506d79fa-e29d-4bcf-907c-6b6a41172153\",\"trigger\":{\"type\":\"onDemand\"},\"enabled\":true,\"failureThreshold\":0,\"action\":\"replace\",\"createdAt\":\"2024-01-08T16:47:41Z\"}]",
-        JsonSerializer.Serialize(resp, JsonConfig.Options),
-        new JsonDiffConfig(true)
-      );
-    }
-    catch (Exception e)
-    {
-      Assert.Fail("An exception was thrown: " + e.Message);
-    }
   }
 
   [Fact(DisplayName = "searchTransformations")]

@@ -1,0 +1,74 @@
+// {{generationBanner}}
+package algoliasearch.e2e
+
+import algoliasearch.api.{{client}}
+import algoliasearch.config.*
+import algoliasearch.{{import}}.*
+import org.json4s.*
+import org.json4s.native.JsonParser.*
+import org.scalatest.funsuite.AnyFunSuite
+import io.github.cdimascio.dotenv.Dotenv
+import org.skyscreamer.jsonassert.JSONCompare.compareJSON
+import org.skyscreamer.jsonassert.JSONCompareMode
+import org.json4s.native.Serialization
+import org.json4s.native.Serialization.write
+
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContextExecutor}
+
+class {{clientPrefix}}TestE2E extends AnyFunSuite {
+  implicit val ec: ExecutionContextExecutor = scala.concurrent.ExecutionContext.global
+  implicit val formats: Formats = org.json4s.DefaultFormats
+
+  def testClient(): {{client}} = {
+    {{#hasRegionalHost}}
+    val region = {{#fallbackToAliasHost}}Some("{{defaultRegion}}"){{/fallbackToAliasHost}}{{^fallbackToAliasHost}}"{{defaultRegion}}"{{/fallbackToAliasHost}}
+    {{/hasRegionalHost}}
+    if (System.getenv("CI") == "true") {
+      {{client}}(
+        appId = System.getenv("ALGOLIA_APPLICATION_ID"),
+        apiKey = System.getenv("{{e2eApiKey}}"){{#hasRegionalHost}},
+        region = region{{/hasRegionalHost}}
+      )
+    } else {
+      val dotenv = Dotenv.configure.directory("../../").load
+      {{client}}(
+        appId = dotenv.get("ALGOLIA_APPLICATION_ID"),
+        apiKey = dotenv.get("{{e2eApiKey}}"){{#hasRegionalHost}},
+        region = region{{/hasRegionalHost}}
+      )
+    }
+  }
+
+  {{#blocksE2E}}
+  {{#tests}}
+  
+  test("{{{testName}}}{{testIndex}}") {
+    val client = testClient()
+    val future = client.{{method}}{{#isCustomRequest}}[JObject]{{/isCustomRequest}}(
+    {{#parametersWithDataType}}
+    {{> tests/request_param}}{{^-last}},{{/-last}}
+    {{/parametersWithDataType}}    
+    {{#hasRequestOptions}}
+    , requestOptions = Some(RequestOptions.builder()
+    {{#requestOptions.queryParameters.parametersWithDataType}}
+      .withQueryParameter("{{{key}}}", {{> tests/requests/requestOptionsParams}})
+    {{/requestOptions.queryParameters.parametersWithDataType}}
+    {{#requestOptions.headers.parametersWithDataType}}
+      .withHeader("{{{key}}}", "{{{value}}}")
+    {{/requestOptions.headers.parametersWithDataType}}
+      .build())
+    {{/hasRequestOptions}}
+    )
+
+    val response = Await.result(future, Duration.Inf)
+    {{#response}}
+    {{#body}}
+    compareJSON("""{{{body}}}""", write(response), JSONCompareMode.LENIENT)
+    {{/body}}
+    {{/response}}
+  }
+  
+  {{/tests}}
+  {{/blocksE2E}}
+}

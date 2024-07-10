@@ -115,29 +115,6 @@ The list of `queryParameters` must match exactly the actual value, the CTS has t
 }
 ```
 
-#### e2e
-
-Only cases that contains a `response` field in [their definition](#input-test-file) will really execute the query in order to assert the API response. We only partially assert `response` since some fields might vary, (see [PR for motivations](https://github.com/algolia/api-clients-automation/pull/2441)).
-
-In order to support the partial assertion, your client must provide an helper named `union` to do so, you can take a look at existing implementations:
-- [python](https://github.com/algolia/api-clients-automation/blob/main/tests/output/python/tests/helpers.py)
-- [javascript](https://github.com/algolia/api-clients-automation/blob/main/tests/output/javascript/src/helpers.ts)
-- [ruby](https://github.com/algolia/api-clients-automation/blob/main/tests/output/ruby/src/helpers.rb)
-
-### Clients tests
-
-The clients tests are located in the folder `tests/CTS/client/<apiName>`, they aim at testing the constructors and common error thrown by an API, and can be use to build more complex multi-step tests.
-
-Clients tests also uses mock servers to test the client behavior, you can find the mock server in the `scripts/cts/testServer` folder.
-There are currently 3 servers:
-- `gzip` that asserts that the client can send and receive gzip compressed data.
-- `timeout` that asserts that the client retries the request when the server takes too long to respond.
-- `replaceAllObjects` that mimics the behavior of the Algolia engine for `replaceAllObjects` and asserts the requests.
-- `chunkWrapper` that mimics the behavior of the Algolia engine for `chunkWrapper` and asserts the requests.
-
-The servers are started everytime you run `apic cts run`, but you can also start them manually by running `apic cts server`.
-
-
 ## How to add a new language
 
 ### Requests tests
@@ -154,8 +131,7 @@ When writing your template, here is a list of variables accessible from `mustach
   "clientPrefix": "the name of the client without Client at the end",
   "hasRegionalHost": "true if the hosts accepts region",
   "defaultRegion": "the region to provide by default to the constructor",
-  "hasE2E": "true if the test suite has e2e tests to be asserted",
-  "blocks": [
+  "blocksRequests": [
     {
       // The list of test to implement
       "operationID": "the name of the endpoint and the cts file to test",
@@ -244,10 +220,6 @@ When writing your template, here is a list of variables accessible from `mustach
               "headerName": "stringify version of the value"
             }
           },
-          "response": {
-            "statusCode": 200, // any status code expected by the request sent
-            "body": {} // the raw JSON object returned by the API
-          }
         }
       ]
     }
@@ -277,9 +249,47 @@ If specific values are needed for a specific languages, or custom generated file
   - `packageVersion`: the version of the Java client
   - `import`: the name of the client package to import from
 
+
+### E2E tests
+
+Only cases that contains a `response` field in [their definition](#input-test-file) will really execute the query in order to assert the API response. We only partially assert `response` since some fields might vary, (see [PR for motivations](https://github.com/algolia/api-clients-automation/pull/2441)).
+
+In order to support the partial assertion, your client must provide an helper named `union` to do so, you can take a look at existing implementations:
+- [python](https://github.com/algolia/api-clients-automation/blob/main/tests/output/python/tests/helpers.py)
+- [javascript](https://github.com/algolia/api-clients-automation/blob/main/tests/output/javascript/src/helpers.ts)
+- [ruby](https://github.com/algolia/api-clients-automation/blob/main/tests/output/ruby/src/helpers.rb)
+
+The supporting file must be called `e2e.mustache` and will receive the same data as the `requests` tests with a additional `blocksE2E` field:
+```json
+{
+  "blocksE2E": [
+    {
+      // it also contains all the other fields from the requests tests
+      "tests": [
+        {
+          "response": {
+            "statusCode": 200, // any status code expected by the request sent
+            "body": {} // the raw JSON object returned by the API
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
 ### Clients tests
 
-> TODO
+The clients tests are located in the folder `tests/CTS/client/<apiName>`, they aim at testing the constructors and common error thrown by an API, and can be use to build more complex multi-step tests.
+
+Clients tests also uses mock servers to test the client behavior, you can find the mock server in the `scripts/cts/testServer` folder.
+There are currently 3 servers:
+- `gzip` that asserts that the client can send and receive gzip compressed data.
+- `timeout` that asserts that the client retries the request when the server takes too long to respond.
+- `replaceAllObjects` that mimics the behavior of the Algolia engine for `replaceAllObjects` and asserts the requests.
+- `chunkWrapper` that mimics the behavior of the Algolia engine for `chunkWrapper` and asserts the requests.
+
+The servers are started everytime you run `apic cts run`, but you can also start them manually by running `apic cts server`.
 
 ## Add common tests to every clients
 

@@ -10,20 +10,20 @@ use Algolia\AlgoliaSearch\Http\HttpClientInterface;
 use Algolia\AlgoliaSearch\Http\Psr7\Response;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
  * Client tests for {{client}}
  */
+#[CoversClass({{client}}::class)]
 class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
 {
     public const APP_ID = 'test-app-id';
     public const API_KEY = 'test-api-key';
 
-    /**
-     * @var RequestInterface
-     */
     private $recordedRequest;
 
     /**
@@ -51,9 +51,7 @@ class {{clientPrefix}}Test extends TestCase implements HttpClientInterface
 
     {{#blocksClient}}
     {{#tests}}
-    /**
-    * Test case : {{{testName}}}
-    */
+    #[TestDox('{{{testName}}}')]
     public function test{{testIndex}}{{testType}}()
     {
         {{#autoCreateClient}}

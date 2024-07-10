@@ -8,11 +8,6 @@ import algoliasearch.querysuggestions.*
 import org.json4s.*
 import org.json4s.native.JsonParser.*
 import org.scalatest.funsuite.AnyFunSuite
-import io.github.cdimascio.dotenv.Dotenv
-import org.skyscreamer.jsonassert.JSONCompare.compareJSON
-import org.skyscreamer.jsonassert.JSONCompareMode
-import org.json4s.native.Serialization
-import org.json4s.native.Serialization.write
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContextExecutor}
@@ -35,24 +30,6 @@ class QuerySuggestionsTest extends AnyFunSuite {
       ),
       echo
     )
-  }
-
-  def testE2EClient(): QuerySuggestionsClient = {
-    val region = "us"
-    if (System.getenv("CI") == "true") {
-      QuerySuggestionsClient(
-        appId = System.getenv("ALGOLIA_APPLICATION_ID"),
-        apiKey = System.getenv("ALGOLIA_ADMIN_KEY"),
-        region = region
-      )
-    } else {
-      val dotenv = Dotenv.configure.directory("../../").load
-      QuerySuggestionsClient(
-        appId = dotenv.get("ALGOLIA_APPLICATION_ID"),
-        apiKey = dotenv.get("ALGOLIA_ADMIN_KEY"),
-        region = region
-      )
-    }
   }
 
   test("createConfig") {
@@ -614,17 +591,6 @@ class QuerySuggestionsTest extends AnyFunSuite {
     assert(res.path == "/1/configs/cts_e2e_browse_query_suggestions")
     assert(res.method == "GET")
     assert(res.body.isEmpty)
-    val e2eClient = testE2EClient()
-    val e2eFuture = e2eClient.getConfig(
-      indexName = "cts_e2e_browse_query_suggestions"
-    )
-
-    val response = Await.result(e2eFuture, Duration.Inf)
-    compareJSON(
-      """{"appID":"T8JK9S7I7X","allowSpecialCharacters":true,"enablePersonalization":false,"exclude":["^cocaines$"],"indexName":"cts_e2e_browse_query_suggestions","languages":[],"sourceIndices":[{"facets":[{"amount":1,"attribute":"title"}],"generate":[["year"]],"indexName":"cts_e2e_browse","minHits":5,"minLetters":4,"replicas":false}]}""",
-      write(response),
-      JSONCompareMode.LENIENT
-    )
   }
 
   test("getConfigStatus") {
