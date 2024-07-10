@@ -50,6 +50,6 @@ void main() async {
   // Dispose of the requester to clean up its resources.
   requester.dispose();
 
-  // Disposing a custom client has to be done manually.
+  // Disposing a custom [Client] has to be done manually.
   client.close();
 }
