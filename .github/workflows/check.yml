@@ -522,7 +522,7 @@ jobs:
       - check_green
     if: |
       always() &&
-      github.base_ref == 'main'
+      github.ref == 'refs/heads/main'
     permissions:
       pull-requests: write
     steps:
@@ -540,19 +540,16 @@ jobs:
 
       - name: Spread generation to each repository
         id: spreadGeneration
-        if: github.ref == 'refs/heads/main'
         run: yarn workspace scripts spreadGeneration
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
       - name: Wait for all release CI
-        if: github.ref == 'refs/heads/main'
         run: yarn workspace scripts waitForAllReleases ${{ steps.spreadGeneration.outputs.PUSHED_LANGUAGES }}
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
 
       - name: Push specs to algolia documentation
-        if: github.ref == 'refs/heads/main'
         run: yarn workspace scripts pushToAlgoliaDoc
         env:
           GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
