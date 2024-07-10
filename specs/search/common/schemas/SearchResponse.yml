@@ -3,6 +3,12 @@ searchResponse:
   allOf:
     - $ref: '#/baseSearchResponse'
     - $ref: '#/searchHits'
+    - type: object
+      required:
+        - nbHits
+        - page
+        - nbPages
+        - hitsPerPage
 
 searchHits:
   type: object
@@ -31,10 +37,6 @@ baseSearchResponse:
   type: object
   additionalProperties: true
   required:
-    - nbHits
-    - page
-    - nbPages
-    - hitsPerPage
     - processingTimeMS
   properties:
     abTestID:
