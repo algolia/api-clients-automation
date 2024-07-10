@@ -379,6 +379,7 @@ jobs:
       - client_gen
     if: |
       always() &&
+      startsWith(github.head_ref, 'chore/prepare-release-') &&
       needs.setup.outputs.RUN_GEN == 'true' &&
       needs.setup.outputs.RUN_MACOS_SWIFT_CTS == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
@@ -420,6 +421,7 @@ jobs:
       pull-requests: write
     outputs:
       success: ${{ steps.setoutput.outputs.success }}
+      generatedCommit: ${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT || github.event.pull_request.head.ref }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -493,25 +495,6 @@ jobs:
             | 🍃 Generated commit | [`${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT }}`](${{ github.event.pull_request.base.repo.html_url }}/commit/${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT }}) |
             | 🌲 Generated branch | [`generated/${{ github.head_ref }}`](${{ github.event.pull_request.base.repo.html_url }}/tree/generated/${{ github.head_ref }}) |
 
-      - name: Spread generation to each repository
-        id: spreadGeneration
-        if: github.ref == 'refs/heads/main'
-        run: yarn workspace scripts spreadGeneration
-        env:
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
-
-      - name: Wait for all release CI
-        if: github.ref == 'refs/heads/main'
-        run: yarn workspace scripts waitForAllReleases ${{ steps.spreadGeneration.outputs.PUSHED_LANGUAGES }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
-
-      - name: Push specs to algolia documentation
-        if: github.ref == 'refs/heads/main'
-        run: yarn workspace scripts pushToAlgoliaDoc
-        env:
-          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
-
       - name: Set output
         id: setoutput
         run: echo "success=true" >> "$GITHUB_OUTPUT"
@@ -530,3 +513,41 @@ jobs:
             echo "codegen step didn't succeed"
             exit 1
           fi
+
+  push_and_release:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    needs:
+      - codegen
+      - check_green
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ needs.codegen.outputs.generatedCommit }}
+          token: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          type: minimal
+
+      - name: Spread generation to each repository
+        id: spreadGeneration
+        run: yarn workspace scripts spreadGeneration
+        env:
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+
+      - name: Wait for all release CI
+        run: yarn workspace scripts waitForAllReleases ${{ steps.spreadGeneration.outputs.PUSHED_LANGUAGES }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
+
+      - name: Push specs to algolia documentation
+        run: yarn workspace scripts pushToAlgoliaDoc
+        env:
+          GITHUB_TOKEN: ${{ secrets.ALGOLIA_BOT_TOKEN }}
