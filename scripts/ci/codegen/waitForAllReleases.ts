@@ -51,6 +51,8 @@ async function waitForAllReleases(languagesReleased: Language[]): Promise<void> 
   const lastCommitMessage = await run('git log -1 --format="%s"');
 
   if (!lastCommitMessage.startsWith(commitStartRelease)) {
+    console.log('No release commit found, skipping waiting for CI');
+
     return;
   }
 
