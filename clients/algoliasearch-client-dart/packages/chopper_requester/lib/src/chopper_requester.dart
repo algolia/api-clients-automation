@@ -100,20 +100,17 @@ class ChopperRequester implements Requester {
   }
 
   /// Constructs the request URI from the [request] details.
-  Uri requestUri(HttpRequest request) {
-    Uri uri = Uri(
-      scheme: request.host.scheme,
-      host: request.host.url,
-      port: request.host.port,
-      path: request.path,
-    );
-
-    return request.queryParameters.isNotEmpty
-        ? Uri.dataFromString(
-            "$uri?${request.queryParameters.entries.map((e) => "${e.key}=${e.value}").join("&")}",
-          )
-        : uri;
-  }
+  Uri requestUri(HttpRequest request) => Uri(
+        scheme: request.host.scheme,
+        host: request.host.url,
+        port: request.host.port,
+        path: request.path,
+        query: request.queryParameters.isNotEmpty
+            ? request.queryParameters.entries
+                .map((e) => "${e.key}=${e.value}")
+                .join("&")
+            : null,
+      );
 
   @override
   void close() => _client.dispose();
