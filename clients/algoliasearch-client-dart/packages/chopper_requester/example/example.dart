@@ -28,6 +28,8 @@ void main() async {
       requester: ChopperRequester(
         appId: appId,
         apiKey: apiKey,
+        // Optionally, pass a custom http [Client] to the ChopperRequester.
+        // NOTE: The [Client] must be manually disposed of after use.
         client: client,
       ),
     ),
