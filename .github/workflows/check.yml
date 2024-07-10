@@ -349,6 +349,7 @@ jobs:
       - client_gen
     if: |
       always() &&
+      needs.setup.outputs.RUN_GEN == 'true' &&
       needs.setup.outputs.RUN_MACOS_KOTLIN_BUILD == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
@@ -378,7 +379,6 @@ jobs:
       - client_gen
     if: |
       always() &&
-      startsWith(github.head_ref, 'chore/prepare-release-') &&
       needs.setup.outputs.RUN_GEN == 'true' &&
       needs.setup.outputs.RUN_MACOS_SWIFT_CTS == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
@@ -412,8 +412,6 @@ jobs:
       - setup
       - client_gen
       - client_gen_javascript
-      - swift_cts_macos
-      - kotlin_build_macos
     if: |
       always() &&
       !contains(needs.*.result, 'cancelled') &&
@@ -523,6 +521,8 @@ jobs:
     timeout-minutes: 10
     needs:
       - codegen
+      - swift_cts_macos
+      - kotlin_build_macos
     if: always()
     steps:
       - run: |
