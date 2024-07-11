@@ -23,13 +23,9 @@
   */
 package algoliasearch.ingestion
 
-/** Input for scheduled tasks whose source is of type `bigquery` and for which extracted data spans a fixed number of
-  * days.
-  *
-  * @param timeframe
-  *   Number of days in the past until the current day for which to extract Big Query data.
+/** Input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which extracted data is
+  * continuously streamed.
   */
-case class ScheduleDateUtilsInput(
-    timeframe: Int,
-    mapping: Option[MappingInput] = scala.None
+case class StreamingInput(
+    mapping: MappingInput
 ) extends TaskInputTrait

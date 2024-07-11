@@ -7,25 +7,22 @@ import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
-/**
- * Input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which extracted
- * data is continuously streamed.
- */
-@JsonDeserialize(as = StreamingUtilsInput.class)
-public class StreamingUtilsInput implements TaskInput {
+/** DockerStreamsInput */
+@JsonDeserialize(as = DockerStreamsInput.class)
+public class DockerStreamsInput implements TaskInput {
 
-  @JsonProperty("mapping")
-  private MappingInput mapping;
+  @JsonProperty("streams")
+  private Object streams;
 
-  public StreamingUtilsInput setMapping(MappingInput mapping) {
-    this.mapping = mapping;
+  public DockerStreamsInput setStreams(Object streams) {
+    this.streams = streams;
     return this;
   }
 
-  /** Get mapping */
+  /** Get streams */
   @javax.annotation.Nonnull
-  public MappingInput getMapping() {
-    return mapping;
+  public Object getStreams() {
+    return streams;
   }
 
   @Override
@@ -36,20 +33,20 @@ public class StreamingUtilsInput implements TaskInput {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StreamingUtilsInput streamingUtilsInput = (StreamingUtilsInput) o;
-    return Objects.equals(this.mapping, streamingUtilsInput.mapping);
+    DockerStreamsInput dockerStreamsInput = (DockerStreamsInput) o;
+    return Objects.equals(this.streams, dockerStreamsInput.streams);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(mapping);
+    return Objects.hash(streams);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class StreamingUtilsInput {\n");
-    sb.append("    mapping: ").append(toIndentedString(mapping)).append("\n");
+    sb.append("class DockerStreamsInput {\n");
+    sb.append("    streams: ").append(toIndentedString(streams)).append("\n");
     sb.append("}");
     return sb.toString();
   }

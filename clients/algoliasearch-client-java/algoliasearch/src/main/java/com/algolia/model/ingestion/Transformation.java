@@ -67,7 +67,7 @@ public class Transformation {
   }
 
   /** A descriptive name for your transformation of what it does. */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public String getDescription() {
     return description;
   }

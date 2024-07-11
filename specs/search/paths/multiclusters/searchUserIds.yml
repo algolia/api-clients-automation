@@ -80,7 +80,7 @@ post:
                     - objectID
                     - _highlightResult
               nbHits:
-                $ref: '../../common/schemas/SearchResponse.yml#/nbHits'
+                $ref: '../../../common/schemas/SearchResponse.yml#/nbHits'
               page:
                 $ref: '../../../common/schemas/SearchParams.yml#/page'
               hitsPerPage:

@@ -138,7 +138,7 @@ class SnippetIngestionClient {
       transformationCreate = TransformationCreate(
         code = "foo",
         name = "bar",
-        description = "baz"
+        description = Some("baz")
       )
     )
 
@@ -893,7 +893,7 @@ class SnippetIngestionClient {
       transformationCreate = TransformationCreate(
         code = "foo",
         name = "bar",
-        description = "baz"
+        description = Some("baz")
       )
     )
 

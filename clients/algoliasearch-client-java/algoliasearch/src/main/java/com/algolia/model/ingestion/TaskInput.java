@@ -21,35 +21,22 @@ public interface TaskInput {
     @Override
     public TaskInput deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
       JsonNode tree = jp.readValueAsTree();
-      // deserialize OnDemandDateUtilsInput
+      // deserialize StreamingInput
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(OnDemandDateUtilsInput.class);
+          return parser.readValueAs(StreamingInput.class);
         } catch (Exception e) {
           // deserialization failed, continue
-          LOGGER.finest(
-            "Failed to deserialize oneOf OnDemandDateUtilsInput (error: " + e.getMessage() + ") (type: OnDemandDateUtilsInput)"
-          );
+          LOGGER.finest("Failed to deserialize oneOf StreamingInput (error: " + e.getMessage() + ") (type: StreamingInput)");
         }
       }
-      // deserialize ScheduleDateUtilsInput
+      // deserialize DockerStreamsInput
       if (tree.isObject()) {
         try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(ScheduleDateUtilsInput.class);
+          return parser.readValueAs(DockerStreamsInput.class);
         } catch (Exception e) {
           // deserialization failed, continue
-          LOGGER.finest(
-            "Failed to deserialize oneOf ScheduleDateUtilsInput (error: " + e.getMessage() + ") (type: ScheduleDateUtilsInput)"
-          );
-        }
-      }
-      // deserialize StreamingUtilsInput
-      if (tree.isObject()) {
-        try (JsonParser parser = tree.traverse(jp.getCodec())) {
-          return parser.readValueAs(StreamingUtilsInput.class);
-        } catch (Exception e) {
-          // deserialization failed, continue
-          LOGGER.finest("Failed to deserialize oneOf StreamingUtilsInput (error: " + e.getMessage() + ") (type: StreamingUtilsInput)");
+          LOGGER.finest("Failed to deserialize oneOf DockerStreamsInput (error: " + e.getMessage() + ") (type: DockerStreamsInput)");
         }
       }
       // deserialize ShopifyInput
