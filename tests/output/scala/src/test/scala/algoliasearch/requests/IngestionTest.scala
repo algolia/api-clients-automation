@@ -217,7 +217,7 @@ class IngestionTest extends AnyFunSuite {
       transformationCreate = TransformationCreate(
         code = "foo",
         name = "bar",
-        description = "baz"
+        description = Some("baz")
       )
     )
 
@@ -1268,7 +1268,7 @@ class IngestionTest extends AnyFunSuite {
       transformationCreate = TransformationCreate(
         code = "foo",
         name = "bar",
-        description = "baz"
+        description = Some("baz")
       )
     )
 
