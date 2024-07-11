@@ -25,7 +25,11 @@ function addRoutes(app: Express): void {
           maxHitsPerQuery: 20,
           createdAt: 1720094400,
         });
+
+        retryCount.add = -1;
       } else {
+        // eslint-disable-next-line no-console
+        console.error(`Invalid retry count: ${retryCount.add}`);
         res.status(500).json({ message: `Internal Server Error` });
       }
 
@@ -51,7 +55,11 @@ function addRoutes(app: Express): void {
           maxHitsPerQuery: 20,
           createdAt: 1720094400,
         });
+
+        retryCount.update = -1;
       } else {
+        // eslint-disable-next-line no-console
+        console.error(`Invalid retry count: ${retryCount.update}`);
         res.status(500).json({ message: `Internal Server Error` });
       }
 
@@ -69,12 +77,18 @@ function addRoutes(app: Express): void {
         });
       } else if (retryCount.delete === 3) {
         res.status(404).json({ message: `API key doesn't exist` });
+
+        retryCount.delete = -1;
       } else {
+        // eslint-disable-next-line no-console
+        console.error(`Invalid retry count: ${retryCount.delete}`);
         res.status(500).json({ message: `Internal Server Error` });
       }
 
       retryCount.delete += 1;
     } else {
+      // eslint-disable-next-line no-console
+      console.error(`Invalid API key ${req.params.key}`);
       res.status(500).json({ message: `Internal Server Error` });
     }
   });
