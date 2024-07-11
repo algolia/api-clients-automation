@@ -29,7 +29,7 @@ async function runCtsOne(
     return;
   }
 
-  const filter = (mapper: (string) => string): string => folders.map(mapper).join(' ');
+  const filter = (mapper: (f: string) => string): string => folders.map(mapper).join(' ');
 
   switch (language) {
     case 'csharp':
@@ -60,9 +60,12 @@ async function runCtsOne(
       );
       break;
     case 'javascript':
-      await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test', {
-        cwd,
-      });
+      await run(
+        `YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install && yarn test ${filter((f) => `dist/${f}`)}`,
+        {
+          cwd,
+        },
+      );
       break;
     case 'kotlin':
       await run('./gradle/gradlew -p tests/output/kotlin allTests', { language });
@@ -86,7 +89,7 @@ async function runCtsOne(
       );
       break;
     case 'ruby':
-      await run(`bundle install && bundle exec rake test --trace ${filter((f) => f)}`, {
+      await run(`bundle install && bundle exec rake test --trace`, {
         cwd,
         language,
       });

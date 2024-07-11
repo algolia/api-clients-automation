@@ -532,6 +532,8 @@ jobs:
       - check_green
     if: |
       always() &&
+      !contains(needs.*.result, 'cancelled') &&
+      !contains(needs.*.result, 'failure') &&
       github.ref == 'refs/heads/main'
     permissions:
       pull-requests: write
