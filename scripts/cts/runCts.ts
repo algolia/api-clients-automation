@@ -33,7 +33,10 @@ async function runCtsOne(
 
   switch (language) {
     case 'csharp':
-      await run('dotnet test /clp:ErrorsOnly', { cwd, language });
+      await run(
+        `dotnet test /clp:ErrorsOnly --filter 'Algolia.Search.Tests${folders.map((f) => `|Algolia.Search.${f}`).join('')}'`,
+        { cwd, language },
+      );
       break;
     case 'dart':
       await run(`dart test ${filter((f) => `test/${f}`)}`, {
