@@ -18,6 +18,11 @@ abTestID:
   description: Unique A/B test identifier.
   example: 224
 
+abTestScheduleID:
+  type: integer
+  description: Unique scheduled A/B test identifier.
+  example: 224
+
 endAt:
   type: string
   description: End date and time of the A/B test, in RFC 3339 format.
@@ -31,6 +36,11 @@ createdAt:
 updatedAt:
   type: string
   description: Date and time when the A/B test was last updated, in RFC 3339 format.
+  example: 2023-06-15T15:06:44.400601Z
+
+scheduledAt:
+  type: string
+  description: Date and time when the A/B test scheduled to start, in RFC 3339 format.
   example: 2023-06-15T15:06:44.400601Z
 
 name:
