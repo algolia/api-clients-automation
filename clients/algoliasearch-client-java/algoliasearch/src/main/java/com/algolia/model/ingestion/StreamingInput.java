@@ -8,39 +8,22 @@ import com.fasterxml.jackson.databind.annotation.*;
 import java.util.Objects;
 
 /**
- * Input for scheduled tasks whose source is of type `bigquery` and for which extracted data spans a
- * fixed number of days.
+ * Input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which extracted
+ * data is continuously streamed.
  */
-@JsonDeserialize(as = ScheduleDateUtilsInput.class)
-public class ScheduleDateUtilsInput implements TaskInput {
-
-  @JsonProperty("timeframe")
-  private Integer timeframe;
+@JsonDeserialize(as = StreamingInput.class)
+public class StreamingInput implements TaskInput {
 
   @JsonProperty("mapping")
   private MappingInput mapping;
 
-  public ScheduleDateUtilsInput setTimeframe(Integer timeframe) {
-    this.timeframe = timeframe;
-    return this;
-  }
-
-  /**
-   * Number of days in the past until the current day for which to extract Big Query data. minimum:
-   * 1 maximum: 30
-   */
-  @javax.annotation.Nonnull
-  public Integer getTimeframe() {
-    return timeframe;
-  }
-
-  public ScheduleDateUtilsInput setMapping(MappingInput mapping) {
+  public StreamingInput setMapping(MappingInput mapping) {
     this.mapping = mapping;
     return this;
   }
 
   /** Get mapping */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public MappingInput getMapping() {
     return mapping;
   }
@@ -53,20 +36,19 @@ public class ScheduleDateUtilsInput implements TaskInput {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ScheduleDateUtilsInput scheduleDateUtilsInput = (ScheduleDateUtilsInput) o;
-    return Objects.equals(this.timeframe, scheduleDateUtilsInput.timeframe) && Objects.equals(this.mapping, scheduleDateUtilsInput.mapping);
+    StreamingInput streamingInput = (StreamingInput) o;
+    return Objects.equals(this.mapping, streamingInput.mapping);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(timeframe, mapping);
+    return Objects.hash(mapping);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ScheduleDateUtilsInput {\n");
-    sb.append("    timeframe: ").append(toIndentedString(timeframe)).append("\n");
+    sb.append("class StreamingInput {\n");
     sb.append("    mapping: ").append(toIndentedString(mapping)).append("\n");
     sb.append("}");
     return sb.toString();

@@ -3104,47 +3104,7 @@ components:
       required:
         - format
         - actions
-    OnDemandDateUtilsInput:
-      title: On demand date range
-      type: object
-      additionalProperties: false
-      description: >-
-        Input for a manually-triggered task whose source is of type `bigquery`
-        and for which extracted data spans a given time range.
-      properties:
-        startDate:
-          description: >-
-            Earliest date in RFC 3339 format of the extracted data from Big
-            Query.
-          type: string
-        endDate:
-          description: Latest date in RFC 3339 format of the extracted data from Big Query.
-          type: string
-        mapping:
-          $ref: '#/components/schemas/MappingInput'
-      required:
-        - startDate
-        - endDate
-    ScheduleDateUtilsInput:
-      title: Schedule dates
-      type: object
-      additionalProperties: false
-      description: >-
-        Input for scheduled tasks whose source is of type `bigquery` and for
-        which extracted data spans a fixed number of days.
-      properties:
-        timeframe:
-          description: >-
-            Number of days in the past until the current day for which to
-            extract Big Query data.
-          type: integer
-          minimum: 1
-          maximum: 30
-        mapping:
-          $ref: '#/components/schemas/MappingInput'
-      required:
-        - timeframe
-    StreamingUtilsInput:
+    StreamingInput:
       title: Streaming input
       type: object
       additionalProperties: false
@@ -3156,6 +3116,14 @@ components:
           $ref: '#/components/schemas/MappingInput'
       required:
         - mapping
+    DockerStreamsInput:
+      title: The selected streams of a singer or airbyte connector.
+      type: object
+      properties:
+        streams:
+          type: object
+      required:
+        - streams
     ShopifyMetafield:
       type: object
       additionalProperties: false
@@ -3212,9 +3180,8 @@ components:
     TaskInput:
       description: Configuration of the task, depending on its type.
       oneOf:
-        - $ref: '#/components/schemas/OnDemandDateUtilsInput'
-        - $ref: '#/components/schemas/ScheduleDateUtilsInput'
-        - $ref: '#/components/schemas/StreamingUtilsInput'
+        - $ref: '#/components/schemas/StreamingInput'
+        - $ref: '#/components/schemas/DockerStreamsInput'
         - $ref: '#/components/schemas/ShopifyInput'
     failureThreshold:
       type: integer
@@ -3431,7 +3398,6 @@ components:
         - transformationID
         - code
         - name
-        - description
         - createdAt
     TransformationCreate:
       type: object
@@ -3447,7 +3413,6 @@ components:
       required:
         - code
         - name
-        - description
     TransformationCreateResponse:
       type: object
       additionalProperties: false

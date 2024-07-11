@@ -23,16 +23,8 @@
   */
 package algoliasearch.ingestion
 
-/** Input for a manually-triggered task whose source is of type `bigquery` and for which extracted data spans a given
-  * time range.
-  *
-  * @param startDate
-  *   Earliest date in RFC 3339 format of the extracted data from Big Query.
-  * @param endDate
-  *   Latest date in RFC 3339 format of the extracted data from Big Query.
+/** DockerStreamsInput
   */
-case class OnDemandDateUtilsInput(
-    startDate: String,
-    endDate: String,
-    mapping: Option[MappingInput] = scala.None
+case class DockerStreamsInput(
+    streams: Any
 ) extends TaskInputTrait

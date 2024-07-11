@@ -42,7 +42,7 @@ case class Transformation(
     transformationID: String,
     code: String,
     name: String,
-    description: String,
+    description: Option[String] = scala.None,
     createdAt: String,
     updatedAt: Option[String] = scala.None
 )

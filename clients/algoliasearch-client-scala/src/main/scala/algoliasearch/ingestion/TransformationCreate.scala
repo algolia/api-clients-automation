@@ -35,5 +35,5 @@ package algoliasearch.ingestion
 case class TransformationCreate(
     code: String,
     name: String,
-    description: String
+    description: Option[String] = scala.None
 )
