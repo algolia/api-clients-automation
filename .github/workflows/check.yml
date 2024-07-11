@@ -21,7 +21,7 @@ jobs:
   notification:
     runs-on: ubuntu-22.04
     timeout-minutes: 1
-    if: ${{ secrets.ALGOLIA_BOT_TOKEN != '' }}
+    if: ${{ !github.event.pull_request.head.repo.fork && github.event.number }}
     permissions:
       pull-requests: write
     steps:
@@ -243,10 +243,10 @@ jobs:
 
       - name: Run CTS
         id: cts
-        run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} ${{ secrets.ALGOLIA_BOT_TOKEN == '' && '--exclude-e2e' || '' }}
+        run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} ${{ github.event.pull_request.head.repo.fork && '--exclude-e2e' || '' }}
 
       - name: Retry e2e CTS
-        if: ${{ secrets.ALGOLIA_BOT_TOKEN != '' && steps.cts.outcome == 'failure' }}
+        if: ${{ !github.event.pull_request.head.repo.fork && github.event.number && steps.cts.outcome == 'failure' }}
         run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --exclude-unit
 
       - name: Generate code snippets for documentation

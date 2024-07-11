@@ -65,26 +65,32 @@ async function runCtsOne(
     case 'php':
       await runComposerInstall();
       await run(
-        `php ./clients/algoliasearch-client-php/vendor/bin/phpunit --testdox --fail-on-warning ${cwd}`,
+        `php ./clients/algoliasearch-client-php/vendor/bin/phpunit --testdox --fail-on-warning ${folders.map((f) => `${cwd}/src/${f}`).join(' ')}`,
         {
           language,
         },
       );
       break;
     case 'python':
-      await run('poetry lock --no-update && poetry install --sync && poetry run pytest -vv', {
-        cwd,
-        language,
-      });
+      await run(
+        `poetry lock --no-update && poetry install --sync && poetry run pytest -vv ${folders.map((f) => `tests/${f}`).join(' ')}`,
+        {
+          cwd,
+          language,
+        },
+      );
       break;
     case 'ruby':
-      await run(`bundle install && bundle exec rake test --trace`, {
+      await run(`bundle install && bundle exec rake test --trace ${folders.join(' ')}`, {
         cwd,
         language,
       });
       break;
     case 'scala':
-      await run('sbt test', { cwd, language });
+      await run(`sbt testonly ${folders.map((f) => `algoliasearch.${f}`).join(' ')}`, {
+        cwd,
+        language,
+      });
       break;
     case 'swift':
       await run('swift test -Xswiftc -suppress-warnings -q --parallel', {
