@@ -452,10 +452,6 @@ SourceUpdateInput:
     - $ref: '#/SourceUpdateDocker'
     - $ref: '#/SourceUpdateShopify'
 
-DockerSourceStream:
-  type: object
-  description: Stream definition (see the Singer specification for details).
-
 SourceUpdateShopify:
   title: Shopify
   type: object
