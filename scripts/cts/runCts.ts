@@ -29,19 +29,21 @@ async function runCtsOne(
     return;
   }
 
+  const filter = (mapper: (string) => string): string => folders.map(mapper).join(' ');
+
   switch (language) {
     case 'csharp':
       await run('dotnet test /clp:ErrorsOnly', { cwd, language });
       break;
     case 'dart':
-      await run(`dart test ${folders.map((f) => `test/${f}`).join(' ')}`, {
+      await run(`dart test ${filter((f) => `test/${f}`)}`, {
         cwd,
         language,
       });
       break;
     case 'go':
       await run(
-        `go test -race -count 1 ${isVerbose() ? '-v' : ''} ${folders.map((f) => `gotests/tests/${f}/...`).join(' ')}`,
+        `go test -race -count 1 ${isVerbose() ? '-v' : ''} ${filter((f) => `gotests/tests/${f}/...`)}`,
         {
           cwd,
           language,
@@ -50,7 +52,7 @@ async function runCtsOne(
       break;
     case 'java':
       await run(
-        `./gradle/gradlew -p tests/output/java test --rerun ${folders.map((f) => `--tests 'com.algolia.${f}*'`).join(' ')}`,
+        `./gradle/gradlew -p tests/output/java test --rerun ${filter((f) => `--tests 'com.algolia.${f}*'`)}`,
         { language },
       );
       break;
@@ -65,7 +67,7 @@ async function runCtsOne(
     case 'php':
       await runComposerInstall();
       await run(
-        `php ./clients/algoliasearch-client-php/vendor/bin/phpunit --testdox --fail-on-warning ${folders.map((f) => `${cwd}/src/${f}`).join(' ')}`,
+        `php ./clients/algoliasearch-client-php/vendor/bin/phpunit --testdox --fail-on-warning ${filter((f) => `${cwd}/src/${f}`)}`,
         {
           language,
         },
@@ -73,7 +75,7 @@ async function runCtsOne(
       break;
     case 'python':
       await run(
-        `poetry lock --no-update && poetry install --sync && poetry run pytest -vv ${folders.map((f) => `tests/${f}`).join(' ')}`,
+        `poetry lock --no-update && poetry install --sync && poetry run pytest -vv ${filter((f) => `tests/${f}`)}`,
         {
           cwd,
           language,
@@ -81,22 +83,25 @@ async function runCtsOne(
       );
       break;
     case 'ruby':
-      await run(`bundle install && bundle exec rake test --trace ${folders.join(' ')}`, {
+      await run(`bundle install && bundle exec rake test --trace ${filter((f) => f)}`, {
         cwd,
         language,
       });
       break;
     case 'scala':
-      await run(`sbt testonly ${folders.map((f) => `algoliasearch.${f}`).join(' ')}`, {
+      await run(`sbt testonly ${filter((f) => `algoliasearch.${f}`)}`, {
         cwd,
         language,
       });
       break;
     case 'swift':
-      await run('swift test -Xswiftc -suppress-warnings -q --parallel', {
-        cwd,
-        language,
-      });
+      await run(
+        `swift test -Xswiftc -suppress-warnings -q --parallel ${filter((f) => `--filter ${f}.*`)}`,
+        {
+          cwd,
+          language,
+        },
+      );
       break;
     default:
       spinner.warn(`skipping unknown language '${language}' to run the CTS`);
