@@ -520,7 +520,7 @@ jobs:
     needs:
       - codegen
       - check_green
-    if: github.ref == 'refs/heads/main'
+    if: ${{ github.ref == 'refs/heads/main' }}
     permissions:
       pull-requests: write
     steps:
