@@ -12,7 +12,7 @@ post:
     content:
       application/json:
         schema:
-          title: addABTestsRequest
+          title: scheduleABTestsRequest
           type: object
           additionalProperties: false
           properties:
