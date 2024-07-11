@@ -76,11 +76,11 @@ post:
                 items:
                   $ref: '../common/schemas/RecommendRule.yml#/RecommendRule'
               nbHits:
-                $ref: '../../search/common/schemas/SearchResponse.yml#/nbHits'
+                $ref: '../../common/schemas/SearchResponse.yml#/nbHits'
               page:
                 $ref: '../../common/schemas/SearchParams.yml#/page'
               nbPages:
-                $ref: '../../search/common/schemas/SearchResponse.yml#/nbPages'
+                $ref: '../../common/schemas/SearchResponse.yml#/nbPages'
     '400':
       $ref: '../../common/responses/BadRequest.yml'
     '402':
