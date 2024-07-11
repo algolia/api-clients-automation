@@ -115,7 +115,7 @@ public class ClientExtensionsTests
         )
       );
 
-    await client.WaitForApiKeyAsync(ApiKeyOperation.Add, "my-key");
+    await client.WaitForApiKeyAsync("my-key", ApiKeyOperation.Add);
 
     // Verify that the request has been called three times
     httpMock.Verify(
