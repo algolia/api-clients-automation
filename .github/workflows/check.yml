@@ -251,7 +251,7 @@ jobs:
         run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --exclude-unit
 
       - name: Retry e2e CTS
-        if: ${{ !github.event.pull_request.head.repo.fork && steps.cts.outcome == 'failure' }}
+        if: ${{ !github.event.pull_request.head.repo.fork && steps.cts-e2e.outcome == 'failure' }}
         run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --exclude-unit
 
       - name: Generate code snippets for documentation
@@ -345,7 +345,7 @@ jobs:
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --exclude-unit
 
       - name: Retry e2e CTS
-        if: ${{ !github.event.pull_request.head.repo.fork && steps.cts.outcome == 'failure' }}
+        if: ${{ !github.event.pull_request.head.repo.fork && steps.cts-e2e.outcome == 'failure' }}
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --exclude-unit
 
       - name: Generate code snippets for documentation
