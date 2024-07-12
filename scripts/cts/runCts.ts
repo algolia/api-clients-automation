@@ -95,7 +95,7 @@ async function runCtsOne(
       });
       break;
     case 'scala':
-      await run(`sbt test`, {
+      await run(`sbt 'testOnly ${filter((f) => `algoliasearch.${f}.*`)}'`, {
         cwd,
         language,
       });
