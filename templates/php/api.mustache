@@ -389,14 +389,14 @@ use {{invokerPackage}}\Support\Helpers;
             $maxRetries = $this->config->getDefaultMaxRetries();
         }
 
-        Helpers::retryForApiKeyUntil(
+        return Helpers::retryForApiKeyUntil(
             $operation,
             $this,
             $key,
             $apiKey,
             $maxRetries,
             $timeout,
-            null,
+            'Algolia\AlgoliaSearch\Support\Helpers::linearTimeout',
             $requestOptions
         );
     }
