@@ -23,7 +23,12 @@ async function runCtsOne(
     const e2eFolder = toAbsolutePath(
       `tests/output/${language}/${getTestOutputFolder(language)}/e2e`,
     );
-    if ((await exists(e2eFolder)) && (await fsp.readdir(e2eFolder)).length > 0) folders.push('e2e');
+    if (
+      (await exists(e2eFolder)) &&
+      (await fsp.readdir(e2eFolder)).filter((f) => f !== '__init__.py' && f !== '__pycache__')
+        .length > 0
+    )
+      folders.push('e2e');
   }
   if (!excludeUnit) {
     folders.push('client', 'requests');
