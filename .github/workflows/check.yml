@@ -241,13 +241,17 @@ jobs:
           path: tests/output/javascript/node_modules
           key: node-modules-tests-${{ hashFiles('tests/output/javascript/yarn.lock') }}
 
-      - name: Run CTS
-        id: cts
+      - name: Run unit CTS
+        run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --exclude-e2e
+
+      - name: Run e2e CTS
+        id: cts-e2e
         continue-on-error: true
-        run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} ${{ github.event.pull_request.head.repo.fork && '--exclude-e2e' || '' }}
+        if: ${{ !github.event.pull_request.head.repo.fork }}
+        run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --exclude-unit
 
       - name: Retry e2e CTS
-        if: ${{ !github.event.pull_request.head.repo.fork && github.event.number && steps.cts.outcome == 'failure' }}
+        if: ${{ !github.event.pull_request.head.repo.fork && steps.cts-e2e.outcome == 'failure' }}
         run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --exclude-unit
 
       - name: Generate code snippets for documentation
@@ -331,13 +335,17 @@ jobs:
       - name: Generate CTS
         run: yarn cli cts generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
-      - name: Run CTS
-        id: cts
+      - name: Run unit CTS
+        run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --exclude-e2e
+
+      - name: Run e2e CTS
+        id: cts-e2e
         continue-on-error: true
-        run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} ${{ github.event.pull_request.head.repo.fork && '--exclude-e2e' || '' }}
+        if: ${{ !github.event.pull_request.head.repo.fork }}
+        run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --exclude-unit
 
       - name: Retry e2e CTS
-        if: ${{ !github.event.pull_request.head.repo.fork && steps.cts.outcome == 'failure' }}
+        if: ${{ !github.event.pull_request.head.repo.fork && steps.cts-e2e.outcome == 'failure' }}
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --exclude-unit
 
       - name: Generate code snippets for documentation

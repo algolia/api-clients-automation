@@ -89,13 +89,13 @@ async function runCtsOne(
       );
       break;
     case 'ruby':
-      await run(`bundle install && bundle exec rake test --trace`, {
+      await run(`bundle install && bundle exec rake ${filter((f) => `test:${f}`)} --trace`, {
         cwd,
         language,
       });
       break;
     case 'scala':
-      await run(`sbt test`, {
+      await run(`sbt 'testOnly ${filter((f) => `algoliasearch.${f}.*`)}'`, {
         cwd,
         language,
       });

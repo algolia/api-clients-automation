@@ -33,7 +33,7 @@ public class Search {
 
         var options = new ClientOptions.Builder()
                 .addAlgoliaAgentSegment("Playground", "1.0.0")
-                .setLogLevel(LogLevel.BODY)
+                //.setLogLevel(LogLevel.BODY)
                 .build();
 
         var client = new SearchClient(appId, apiKey, options);
@@ -43,6 +43,12 @@ public class Search {
                 .toList();
         var response = client.batch(indexName, new BatchWriteParams().setRequests(batch));
         client.waitForTask(indexName, response.getTaskID());
+
+        var browse = client.browseObjects(indexName, new BrowseParamsObject().setQuery("tom"), Actor.class);
+        System.out.println("-> Browse Objects:");
+        for (var hit : browse) {
+            System.out.println("> " + hit.name);
+        }
 
         singleSearch(client, indexName, query);
         multiSearch(indexName, query, client);
