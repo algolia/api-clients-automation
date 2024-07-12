@@ -62,7 +62,12 @@ class {{clientPrefix}}Test {
                   assertEquals("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}", response)
                   {{/matchIsJSON}}
                   {{^matchIsJSON}}
+                  {{#matchIsNull}}
+                  assertNull(it)
+                  {{/matchIsNull}}
+                  {{^matchIsNull}}
                   assertEquals("{{{match}}}", it)
+                  {{/matchIsNull}}
                   {{/matchIsJSON}}
               }{{/testResponse}}
               {{/match}}
