@@ -1,0 +1,1574 @@
+{
+  "csharp": {
+    "import": {
+      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Http;"
+    },
+    "createAuthentication": {
+      "default": "var response = await client.CreateAuthenticationAsync(\n  new AuthenticationCreate\n  {\n    Type = Enum.Parse<AuthenticationType>(\"Oauth\"),\n    Name = \"authName\",\n    Input = new AuthInput(\n      new AuthOAuth\n      {\n        Url = \"http://test.oauth\",\n        ClientId = \"myID\",\n        ClientSecret = \"mySecret\",\n      }\n    ),\n  }\n);"
+    },
+    "createDestination": {
+      "default": "var response = await client.CreateDestinationAsync(\n  new DestinationCreate\n  {\n    Type = Enum.Parse<DestinationType>(\"Search\"),\n    Name = \"destinationName\",\n    Input = new DestinationInput(new DestinationIndexPrefix { IndexPrefix = \"prefix_\", }),\n    AuthenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  }\n);"
+    },
+    "createSource": {
+      "default": "var response = await client.CreateSourceAsync(\n  new SourceCreate\n  {\n    Type = Enum.Parse<SourceType>(\"Commercetools\"),\n    Name = \"sourceName\",\n    Input = new SourceInput(\n      new SourceCommercetools\n      {\n        StoreKeys = new List<string> { \"myStore\" },\n        Locales = new List<string> { \"de\" },\n        Url = \"http://commercetools.com\",\n        ProjectKey = \"keyID\",\n      }\n    ),\n    AuthenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  }\n);"
+    },
+    "createTask": {
+      "default": "var response = await client.CreateTaskAsync(\n  new TaskCreate\n  {\n    SourceID = \"search\",\n    DestinationID = \"destinationName\",\n    Trigger = new TaskCreateTrigger(\n      new OnDemandTriggerInput { Type = Enum.Parse<OnDemandTriggerType>(\"OnDemand\"), }\n    ),\n    Action = Enum.Parse<ActionType>(\"Replace\"),\n  }\n);"
+    },
+    "createTransformation": {
+      "default": "var response = await client.CreateTransformationAsync(\n  new TransformationCreate\n  {\n    Code = \"foo\",\n    Name = \"bar\",\n    Description = \"baz\",\n  }\n);"
+    },
+    "customDelete": {
+      "default": "var response = await client.CustomDeleteAsync(\"test/minimal\");"
+    },
+    "customGet": {
+      "default": "var response = await client.CustomGetAsync(\"test/minimal\");"
+    },
+    "customPost": {
+      "default": "var response = await client.CustomPostAsync(\"test/minimal\");"
+    },
+    "customPut": {
+      "default": "var response = await client.CustomPutAsync(\"test/minimal\");"
+    },
+    "deleteAuthentication": {
+      "default": "var response = await client.DeleteAuthenticationAsync(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "deleteDestination": {
+      "default": "var response = await client.DeleteDestinationAsync(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "deleteSource": {
+      "default": "var response = await client.DeleteSourceAsync(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "deleteTask": {
+      "default": "var response = await client.DeleteTaskAsync(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "deleteTransformation": {
+      "default": "var response = await client.DeleteTransformationAsync(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "disableTask": {
+      "default": "var response = await client.DisableTaskAsync(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "enableTask": {
+      "default": "var response = await client.EnableTaskAsync(\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\");"
+    },
+    "getAuthentication": {
+      "default": "var response = await client.GetAuthenticationAsync(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "getAuthentications": {
+      "default": "var response = await client.GetAuthenticationsAsync();"
+    },
+    "getDestination": {
+      "default": "var response = await client.GetDestinationAsync(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "getDestinations": {
+      "default": "var response = await client.GetDestinationsAsync();"
+    },
+    "getEvent": {
+      "default": "var response = await client.GetEventAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0c\"\n);"
+    },
+    "getEvents": {
+      "default": "var response = await client.GetEventsAsync(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "getRun": {
+      "default": "var response = await client.GetRunAsync(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "getRuns": {
+      "default": "var response = await client.GetRunsAsync();"
+    },
+    "getSource": {
+      "default": "var response = await client.GetSourceAsync(\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\");"
+    },
+    "getSources": {
+      "default": "var response = await client.GetSourcesAsync();"
+    },
+    "getTask": {
+      "default": "var response = await client.GetTaskAsync(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "getTasks": {
+      "default": "var response = await client.GetTasksAsync();"
+    },
+    "getTransformation": {
+      "default": "var response = await client.GetTransformationAsync(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "getTransformations": {
+      "default": "var response = await client.GetTransformationsAsync();"
+    },
+    "runTask": {
+      "default": "var response = await client.RunTaskAsync(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "searchAuthentications": {
+      "default": "var response = await client.SearchAuthenticationsAsync(\n  new AuthenticationSearch\n  {\n    AuthenticationIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"\n    },\n  }\n);"
+    },
+    "searchDestinations": {
+      "default": "var response = await client.SearchDestinationsAsync(\n  new DestinationSearch\n  {\n    DestinationIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"\n    },\n  }\n);"
+    },
+    "searchSources": {
+      "default": "var response = await client.SearchSourcesAsync(\n  new SourceSearch\n  {\n    SourceIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"\n    },\n  }\n);"
+    },
+    "searchTasks": {
+      "default": "var response = await client.SearchTasksAsync(\n  new TaskSearch\n  {\n    TaskIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    },\n  }\n);"
+    },
+    "searchTransformations": {
+      "default": "var response = await client.SearchTransformationsAsync(\n  new TransformationSearch\n  {\n    TransformationsIDs = new List<string>\n    {\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    },\n  }\n);"
+    },
+    "triggerDockerSourceDiscover": {
+      "default": "var response = await client.TriggerDockerSourceDiscoverAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n);"
+    },
+    "tryTransformations": {
+      "default": "var response = await client.TryTransformationsAsync(\n  new TransformationTry\n  {\n    Code = \"foo\",\n    SampleRecord = new Dictionary<string, string> { { \"bar\", \"baz\" } },\n  }\n);"
+    },
+    "updateAuthentication": {
+      "default": "var response = await client.UpdateAuthenticationAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new AuthenticationUpdate { Name = \"newName\", }\n);"
+    },
+    "updateDestination": {
+      "default": "var response = await client.UpdateDestinationAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new DestinationUpdate { Name = \"newName\", }\n);"
+    },
+    "updateSource": {
+      "default": "var response = await client.UpdateSourceAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new SourceUpdate { Name = \"newName\", }\n);"
+    },
+    "updateTask": {
+      "default": "var response = await client.UpdateTaskAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TaskUpdate { Enabled = false, }\n);"
+    },
+    "updateTransformation": {
+      "default": "var response = await client.UpdateTransformationAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationCreate\n  {\n    Code = \"foo\",\n    Name = \"bar\",\n    Description = \"baz\",\n  }\n);"
+    },
+    "validateSource": {
+      "default": "var response = await client.ValidateSourceAsync(\n  new SourceCreate\n  {\n    Type = Enum.Parse<SourceType>(\"Commercetools\"),\n    Name = \"sourceName\",\n    Input = new SourceInput(\n      new SourceCommercetools\n      {\n        StoreKeys = new List<string> { \"myStore\" },\n        Locales = new List<string> { \"de\" },\n        Url = \"http://commercetools.com\",\n        ProjectKey = \"keyID\",\n      }\n    ),\n    AuthenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  }\n);"
+    },
+    "validateSourceBeforeUpdate": {
+      "default": "var response = await client.ValidateSourceBeforeUpdateAsync(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new SourceUpdate { Name = \"newName\", }\n);"
+    },
+    "init": {
+      "default": "var client = new IngestionClient("
+    },
+    "waitForAppTask": {
+      "default": "await client.WaitForAppTaskAsync(response.TaskID);"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "await client.WaitForApiKeyAsync(ApiKeyOperation.Add, response.Key);",
+        "update": "await client.WaitForApiKeyAsync(ApiKeyOperation.Update, response.Key, {\n        Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n        Validity = 300,\n        MaxQueriesPerIPPerHour = 100,\n        MaxHitsPerQuery = 20,\n      });",
+        "delete": "await client.WaitForApiKeyAsync(ApiKeyOperation.Delete, response.Key);"
+      }
+    },
+    "waitForTask": {
+      "default": "await client.WaitForTaskAsync(\"<<indexName>>\", response.TaskID);"
+    }
+  },
+  "dart": {
+    "waitForAppTask": {
+      "default": "await client.waitAppTask(response.taskID);"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "",
+        "update": "",
+        "delete": ""
+      }
+    },
+    "waitForTask": {
+      "default": "await client.waitTask('<<indexName>>', response.taskID);"
+    }
+  },
+  "go": {
+    "import": {
+      "default": "import \"github.com/algolia/algoliasearch-client-go/v4/algolia/ingestion\""
+    },
+    "createAuthentication": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CreateAuthentication(client.NewApiCreateAuthenticationRequest(\n\n  ingestion.NewEmptyAuthenticationCreate().SetType(ingestion.AuthenticationType(\"oauth\")).SetName(\"authName\").SetInput(ingestion.AuthOAuthAsAuthInput(\n    ingestion.NewEmptyAuthOAuth().SetUrl(\"http://test.oauth\").SetClientId(\"myID\").SetClientSecret(\"mySecret\"))),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "createDestination": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CreateDestination(client.NewApiCreateDestinationRequest(\n\n  ingestion.NewEmptyDestinationCreate().SetType(ingestion.DestinationType(\"search\")).SetName(\"destinationName\").SetInput(ingestion.DestinationIndexPrefixAsDestinationInput(\n    ingestion.NewEmptyDestinationIndexPrefix().SetIndexPrefix(\"prefix_\"))).SetAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "createSource": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CreateSource(client.NewApiCreateSourceRequest(\n\n  ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType(\"commercetools\")).SetName(\"sourceName\").SetInput(ingestion.SourceCommercetoolsAsSourceInput(\n    ingestion.NewEmptySourceCommercetools().SetStoreKeys(\n      []string{\"myStore\"}).SetLocales(\n      []string{\"de\"}).SetUrl(\"http://commercetools.com\").SetProjectKey(\"keyID\"))).SetAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "createTask": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CreateTask(client.NewApiCreateTaskRequest(\n\n  ingestion.NewEmptyTaskCreate().SetSourceID(\"search\").SetDestinationID(\"destinationName\").SetTrigger(ingestion.OnDemandTriggerInputAsTaskCreateTrigger(\n    ingestion.NewEmptyOnDemandTriggerInput().SetType(ingestion.OnDemandTriggerType(\"onDemand\")))).SetAction(ingestion.ActionType(\"replace\")),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "createTransformation": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CreateTransformation(client.NewApiCreateTransformationRequest(\n\n  ingestion.NewEmptyTransformationCreate().SetCode(\"foo\").SetName(\"bar\").SetDescription(\"baz\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "customDelete": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "customGet": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "customPost": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "customPut": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "deleteAuthentication": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.DeleteAuthentication(client.NewApiDeleteAuthenticationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "deleteDestination": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.DeleteDestination(client.NewApiDeleteDestinationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "deleteSource": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.DeleteSource(client.NewApiDeleteSourceRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "deleteTask": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.DeleteTask(client.NewApiDeleteTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "deleteTransformation": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.DeleteTransformation(client.NewApiDeleteTransformationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "disableTask": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.DisableTask(client.NewApiDisableTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "enableTask": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.EnableTask(client.NewApiEnableTaskRequest(\n  \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getAuthentication": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetAuthentication(client.NewApiGetAuthenticationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getAuthentications": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetAuthentications(client.NewApiGetAuthenticationsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getDestination": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetDestination(client.NewApiGetDestinationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getDestinations": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetDestinations(client.NewApiGetDestinationsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getEvent": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetEvent(client.NewApiGetEventRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"6c02aeb1-775e-418e-870b-1faccd4b2c0c\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getEvents": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetEvents(client.NewApiGetEventsRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getRun": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetRun(client.NewApiGetRunRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getRuns": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetRuns(client.NewApiGetRunsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getSource": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetSource(client.NewApiGetSourceRequest(\n  \"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getSources": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetSources(client.NewApiGetSourcesRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getTask": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetTask(client.NewApiGetTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getTasks": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetTasks(client.NewApiGetTasksRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getTransformation": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetTransformation(client.NewApiGetTransformationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getTransformations": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetTransformations(client.NewApiGetTransformationsRequest())\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "runTask": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.RunTask(client.NewApiRunTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "searchAuthentications": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.SearchAuthentications(client.NewApiSearchAuthenticationsRequest(\n\n  ingestion.NewEmptyAuthenticationSearch().SetAuthenticationIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "searchDestinations": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.SearchDestinations(client.NewApiSearchDestinationsRequest(\n\n  ingestion.NewEmptyDestinationSearch().SetDestinationIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "searchSources": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.SearchSources(client.NewApiSearchSourcesRequest(\n\n  ingestion.NewEmptySourceSearch().SetSourceIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "searchTasks": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.SearchTasks(client.NewApiSearchTasksRequest(\n\n  ingestion.NewEmptyTaskSearch().SetTaskIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "searchTransformations": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.SearchTransformations(client.NewApiSearchTransformationsRequest(\n\n  ingestion.NewEmptyTransformationSearch().SetTransformationsIDs(\n    []string{\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "triggerDockerSourceDiscover": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.TriggerDockerSourceDiscover(client.NewApiTriggerDockerSourceDiscoverRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "tryTransformations": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.TryTransformations(client.NewApiTryTransformationsRequest(\n\n  ingestion.NewEmptyTransformationTry().SetCode(\"foo\").SetSampleRecord(map[string]any{\"bar\": \"baz\"}),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "updateAuthentication": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.UpdateAuthentication(client.NewApiUpdateAuthenticationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyAuthenticationUpdate().SetName(\"newName\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "updateDestination": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.UpdateDestination(client.NewApiUpdateDestinationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyDestinationUpdate().SetName(\"newName\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "updateSource": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.UpdateSource(client.NewApiUpdateSourceRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptySourceUpdate().SetName(\"newName\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "updateTask": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.UpdateTask(client.NewApiUpdateTaskRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyTaskUpdate().SetEnabled(false),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "updateTransformation": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.UpdateTransformation(client.NewApiUpdateTransformationRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptyTransformationCreate().SetCode(\"foo\").SetName(\"bar\").SetDescription(\"baz\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "validateSource": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.ValidateSource(client.NewApiValidateSourceRequest().WithSourceCreate(\n  ingestion.NewEmptySourceCreate().SetType(ingestion.SourceType(\"commercetools\")).SetName(\"sourceName\").SetInput(ingestion.SourceCommercetoolsAsSourceInput(\n    ingestion.NewEmptySourceCommercetools().SetStoreKeys(\n      []string{\"myStore\"}).SetLocales(\n      []string{\"de\"}).SetUrl(\"http://commercetools.com\").SetProjectKey(\"keyID\"))).SetAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "validateSourceBeforeUpdate": {
+      "default": "// Initialize the client with your application region, eg. ingestion.YOUR_APP_ID_REGION\nclient, err := ingestion.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", ingestion.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.ValidateSourceBeforeUpdate(client.NewApiValidateSourceBeforeUpdateRequest(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ingestion.NewEmptySourceUpdate().SetName(\"newName\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "waitForAppTask": {
+      "default": "taskResponse, err := searchClient.WaitForAppTask(response.TaskID, nil, nil, nil)\nif err != nil {\n  panic(err)\n}"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_ADD, response.Key, nil)\nif err != nil {\n  panic(err)\n}",
+        "update": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_UPDATE, response.Key, search.NewEmptyApiKey().SetAcl([]search.Acl{search.Acl(\"search\"), search.Acl(\"addObject\")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20))\nif err != nil {\n  panic(err)\n}",
+        "delete": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_DELETE, response.Key, nil)\nif err != nil {\n  panic(err)\n}"
+      }
+    },
+    "waitForTask": {
+      "default": "taskResponse, err := searchClient.WaitForTask(\"<<indexName>>\", response.TaskID, nil, nil, nil)\nif err != nil {\n  panic(err)\n}"
+    }
+  },
+  "java": {
+    "import": {
+      "default": "import com.algolia.api.IngestionClient;\nimport com.algolia.model.ingestion.*;"
+    },
+    "createAuthentication": {
+      "default": "client.createAuthentication(\n  new AuthenticationCreate()\n    .setType(AuthenticationType.OAUTH)\n    .setName(\"authName\")\n    .setInput(new AuthOAuth().setUrl(\"http://test.oauth\").setClientId(\"myID\").setClientSecret(\"mySecret\"))\n);"
+    },
+    "createDestination": {
+      "default": "client.createDestination(\n  new DestinationCreate()\n    .setType(DestinationType.SEARCH)\n    .setName(\"destinationName\")\n    .setInput(new DestinationIndexPrefix().setIndexPrefix(\"prefix_\"))\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);"
+    },
+    "createSource": {
+      "default": "client.createSource(\n  new SourceCreate()\n    .setType(SourceType.COMMERCETOOLS)\n    .setName(\"sourceName\")\n    .setInput(\n      new SourceCommercetools()\n        .setStoreKeys(List.of(\"myStore\"))\n        .setLocales(List.of(\"de\"))\n        .setUrl(\"http://commercetools.com\")\n        .setProjectKey(\"keyID\")\n    )\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);"
+    },
+    "createTask": {
+      "default": "client.createTask(\n  new TaskCreate()\n    .setSourceID(\"search\")\n    .setDestinationID(\"destinationName\")\n    .setTrigger(new OnDemandTriggerInput().setType(OnDemandTriggerType.ON_DEMAND))\n    .setAction(ActionType.REPLACE)\n);"
+    },
+    "createTransformation": {
+      "default": "client.createTransformation(new TransformationCreate().setCode(\"foo\").setName(\"bar\").setDescription(\"baz\"));"
+    },
+    "customDelete": {
+      "default": "client.customDelete(\"test/minimal\");"
+    },
+    "customGet": {
+      "default": "client.customGet(\"test/minimal\");"
+    },
+    "customPost": {
+      "default": "client.customPost(\"test/minimal\");"
+    },
+    "customPut": {
+      "default": "client.customPut(\"test/minimal\");"
+    },
+    "deleteAuthentication": {
+      "default": "client.deleteAuthentication(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "deleteDestination": {
+      "default": "client.deleteDestination(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "deleteSource": {
+      "default": "client.deleteSource(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "deleteTask": {
+      "default": "client.deleteTask(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "deleteTransformation": {
+      "default": "client.deleteTransformation(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "disableTask": {
+      "default": "client.disableTask(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "enableTask": {
+      "default": "client.enableTask(\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\");"
+    },
+    "getAuthentication": {
+      "default": "client.getAuthentication(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "getAuthentications": {
+      "default": "client.getAuthentications();"
+    },
+    "getDestination": {
+      "default": "client.getDestination(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "getDestinations": {
+      "default": "client.getDestinations();"
+    },
+    "getEvent": {
+      "default": "client.getEvent(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"6c02aeb1-775e-418e-870b-1faccd4b2c0c\");"
+    },
+    "getEvents": {
+      "default": "client.getEvents(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "getRun": {
+      "default": "client.getRun(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "getRuns": {
+      "default": "client.getRuns();"
+    },
+    "getSource": {
+      "default": "client.getSource(\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\");"
+    },
+    "getSources": {
+      "default": "client.getSources();"
+    },
+    "getTask": {
+      "default": "client.getTask(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "getTasks": {
+      "default": "client.getTasks();"
+    },
+    "getTransformation": {
+      "default": "client.getTransformation(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "getTransformations": {
+      "default": "client.getTransformations();"
+    },
+    "runTask": {
+      "default": "client.runTask(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "searchAuthentications": {
+      "default": "client.searchAuthentications(\n  new AuthenticationSearch()\n    .setAuthenticationIDs(List.of(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"))\n);"
+    },
+    "searchDestinations": {
+      "default": "client.searchDestinations(\n  new DestinationSearch().setDestinationIDs(List.of(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"))\n);"
+    },
+    "searchSources": {
+      "default": "client.searchSources(\n  new SourceSearch().setSourceIDs(List.of(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"))\n);"
+    },
+    "searchTasks": {
+      "default": "client.searchTasks(\n  new TaskSearch()\n    .setTaskIDs(\n      List.of(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\")\n    )\n);"
+    },
+    "searchTransformations": {
+      "default": "client.searchTransformations(\n  new TransformationSearch()\n    .setTransformationsIDs(\n      List.of(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\")\n    )\n);"
+    },
+    "triggerDockerSourceDiscover": {
+      "default": "client.triggerDockerSourceDiscover(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\");"
+    },
+    "tryTransformations": {
+      "default": "client.tryTransformations(new TransformationTry().setCode(\"foo\").setSampleRecord(Map.of(\"bar\", \"baz\")));"
+    },
+    "updateAuthentication": {
+      "default": "client.updateAuthentication(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", new AuthenticationUpdate().setName(\"newName\"));"
+    },
+    "updateDestination": {
+      "default": "client.updateDestination(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", new DestinationUpdate().setName(\"newName\"));"
+    },
+    "updateSource": {
+      "default": "client.updateSource(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", new SourceUpdate().setName(\"newName\"));"
+    },
+    "updateTask": {
+      "default": "client.updateTask(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", new TaskUpdate().setEnabled(false));"
+    },
+    "updateTransformation": {
+      "default": "client.updateTransformation(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  new TransformationCreate().setCode(\"foo\").setName(\"bar\").setDescription(\"baz\")\n);"
+    },
+    "validateSource": {
+      "default": "client.validateSource(\n  new SourceCreate()\n    .setType(SourceType.COMMERCETOOLS)\n    .setName(\"sourceName\")\n    .setInput(\n      new SourceCommercetools()\n        .setStoreKeys(List.of(\"myStore\"))\n        .setLocales(List.of(\"de\"))\n        .setUrl(\"http://commercetools.com\")\n        .setProjectKey(\"keyID\")\n    )\n    .setAuthenticationID(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n);"
+    },
+    "validateSourceBeforeUpdate": {
+      "default": "client.validateSourceBeforeUpdate(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", new SourceUpdate().setName(\"newName\"));"
+    },
+    "init": {
+      "default": "IngestionClient client = new IngestionClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\");"
+    },
+    "waitForAppTask": {
+      "default": "client.waitForAppTask(response.getTaskID());"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "client.waitForApiKey(ApiKeyOperation.ADD, response.Key, null)",
+        "update": "client.waitForApiKey(ApiKeyOperation.UPDATE, response.Key, new ApiKey()\n        .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT))\n        .setValidity(300)\n        .setMaxQueriesPerIPPerHour(100)\n        .setMaxHitsPerQuery(20))",
+        "delete": "client.waitForApiKey(ApiKeyOperation.DELETE, response.Key, null)"
+      }
+    },
+    "waitForTask": {
+      "default": "client.waitForTask(\"<<indexName>>\", response.getTaskID());"
+    }
+  },
+  "javascript": {
+    "import": {
+      "default": "import { ingestionClient } from '@algolia/ingestion';"
+    },
+    "createAuthentication": {
+      "default": "const response = await client.createAuthentication({\n  type: 'oauth',\n  name: 'authName',\n  input: {\n    url: 'http://test.oauth',\n    client_id: 'myID',\n    client_secret: 'mySecret',\n  },\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "createDestination": {
+      "default": "const response = await client.createDestination({\n  type: 'search',\n  name: 'destinationName',\n  input: { indexPrefix: 'prefix_' },\n  authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "createSource": {
+      "default": "const response = await client.createSource({\n  type: 'commercetools',\n  name: 'sourceName',\n  input: {\n    storeKeys: ['myStore'],\n    locales: ['de'],\n    url: 'http://commercetools.com',\n    projectKey: 'keyID',\n  },\n  authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "createTask": {
+      "default": "const response = await client.createTask({\n  sourceID: 'search',\n  destinationID: 'destinationName',\n  trigger: { type: 'onDemand' },\n  action: 'replace',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "createTransformation": {
+      "default": "const response = await client.createTransformation({\n  code: 'foo',\n  name: 'bar',\n  description: 'baz',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "customDelete": {
+      "default": "const response = await client.customDelete({ path: 'test/minimal' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "customGet": {
+      "default": "const response = await client.customGet({ path: 'test/minimal' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "customPost": {
+      "default": "const response = await client.customPost({ path: 'test/minimal' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "customPut": {
+      "default": "const response = await client.customPut({ path: 'test/minimal' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "deleteAuthentication": {
+      "default": "const response = await client.deleteAuthentication({\n  authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "deleteDestination": {
+      "default": "const response = await client.deleteDestination({\n  destinationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "deleteSource": {
+      "default": "const response = await client.deleteSource({\n  sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "deleteTask": {
+      "default": "const response = await client.deleteTask({\n  taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "deleteTransformation": {
+      "default": "const response = await client.deleteTransformation({\n  transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "disableTask": {
+      "default": "const response = await client.disableTask({\n  taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "enableTask": {
+      "default": "const response = await client.enableTask({\n  taskID: '76ab4c2a-ce17-496f-b7a6-506dc59ee498',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "getAuthentication": {
+      "default": "const response = await client.getAuthentication({\n  authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "getAuthentications": {
+      "default": "const response = await client.getAuthentications();\n\n// use typed response\nconsole.log(response);"
+    },
+    "getDestination": {
+      "default": "const response = await client.getDestination({\n  destinationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "getDestinations": {
+      "default": "const response = await client.getDestinations();\n\n// use typed response\nconsole.log(response);"
+    },
+    "getEvent": {
+      "default": "const response = await client.getEvent({\n  runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  eventID: '6c02aeb1-775e-418e-870b-1faccd4b2c0c',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "getEvents": {
+      "default": "const response = await client.getEvents({\n  runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "getRun": {
+      "default": "const response = await client.getRun({\n  runID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "getRuns": {
+      "default": "const response = await client.getRuns();\n\n// use typed response\nconsole.log(response);"
+    },
+    "getSource": {
+      "default": "const response = await client.getSource({\n  sourceID: '75eeb306-51d3-4e5e-a279-3c92bd8893ac',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "getSources": {
+      "default": "const response = await client.getSources();\n\n// use typed response\nconsole.log(response);"
+    },
+    "getTask": {
+      "default": "const response = await client.getTask({\n  taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "getTasks": {
+      "default": "const response = await client.getTasks();\n\n// use typed response\nconsole.log(response);"
+    },
+    "getTransformation": {
+      "default": "const response = await client.getTransformation({\n  transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "getTransformations": {
+      "default": "const response = await client.getTransformations();\n\n// use typed response\nconsole.log(response);"
+    },
+    "runTask": {
+      "default": "const response = await client.runTask({\n  taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "searchAuthentications": {
+      "default": "const response = await client.searchAuthentications({\n  authenticationIDs: [\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    '947ac9c4-7e58-4c87-b1e7-14a68e99699a',\n  ],\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "searchDestinations": {
+      "default": "const response = await client.searchDestinations({\n  destinationIDs: [\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    '947ac9c4-7e58-4c87-b1e7-14a68e99699a',\n  ],\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "searchSources": {
+      "default": "const response = await client.searchSources({\n  sourceIDs: [\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    '947ac9c4-7e58-4c87-b1e7-14a68e99699a',\n  ],\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "searchTasks": {
+      "default": "const response = await client.searchTasks({\n  taskIDs: [\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    '947ac9c4-7e58-4c87-b1e7-14a68e99699a',\n    '76ab4c2a-ce17-496f-b7a6-506dc59ee498',\n  ],\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "searchTransformations": {
+      "default": "const response = await client.searchTransformations({\n  transformationsIDs: [\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    '947ac9c4-7e58-4c87-b1e7-14a68e99699a',\n    '76ab4c2a-ce17-496f-b7a6-506dc59ee498',\n  ],\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "triggerDockerSourceDiscover": {
+      "default": "const response = await client.triggerDockerSourceDiscover({\n  sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "tryTransformations": {
+      "default": "const response = await client.tryTransformations({\n  code: 'foo',\n  sampleRecord: { bar: 'baz' },\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "updateAuthentication": {
+      "default": "const response = await client.updateAuthentication({\n  authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  authenticationUpdate: { name: 'newName' },\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "updateDestination": {
+      "default": "const response = await client.updateDestination({\n  destinationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  destinationUpdate: { name: 'newName' },\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "updateSource": {
+      "default": "const response = await client.updateSource({\n  sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  sourceUpdate: { name: 'newName' },\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "updateTask": {
+      "default": "const response = await client.updateTask({\n  taskID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  taskUpdate: { enabled: false },\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "updateTransformation": {
+      "default": "const response = await client.updateTransformation({\n  transformationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  transformationCreate: { code: 'foo', name: 'bar', description: 'baz' },\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "validateSource": {
+      "default": "const response = await client.validateSource({\n  type: 'commercetools',\n  name: 'sourceName',\n  input: {\n    storeKeys: ['myStore'],\n    locales: ['de'],\n    url: 'http://commercetools.com',\n    projectKey: 'keyID',\n  },\n  authenticationID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "validateSourceBeforeUpdate": {
+      "default": "const response = await client.validateSourceBeforeUpdate({\n  sourceID: '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n  sourceUpdate: { name: 'newName' },\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "init": {
+      "default": "const client = ingestionClient("
+    },
+    "waitForAppTask": {
+      "default": "await client.waitForAppTask({ taskID: response.taskID });"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });",
+        "update": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key, apiKey: {\n        acl: ['search', 'addObject'],\n        validity: 300,\n        maxQueriesPerIPPerHour: 100,\n        maxHitsPerQuery: 20,\n      }});",
+        "delete": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });"
+      }
+    },
+    "waitForTask": {
+      "default": "await client.waitForTask({ indexName: '<<indexName>>', taskID: response.taskID });"
+    }
+  },
+  "kotlin": {
+    "import": {
+      "default": "import com.algolia.client.api.IngestionClient"
+    },
+    "createAuthentication": {
+      "default": "var response = client.createAuthentication(\n  authenticationCreate = AuthenticationCreate(\n    type = AuthenticationType.entries.first { it.value == \"oauth\" },\n    name = \"authName\",\n    input = AuthOAuth(\n      url = \"http://test.oauth\",\n      clientId = \"myID\",\n      clientSecret = \"mySecret\",\n    ),\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
+    "createDestination": {
+      "default": "var response = client.createDestination(\n  destinationCreate = DestinationCreate(\n    type = DestinationType.entries.first { it.value == \"search\" },\n    name = \"destinationName\",\n    input = DestinationIndexPrefix(\n      indexPrefix = \"prefix_\",\n    ),\n    authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
+    "createSource": {
+      "default": "var response = client.createSource(\n  sourceCreate = SourceCreate(\n    type = SourceType.entries.first { it.value == \"commercetools\" },\n    name = \"sourceName\",\n    input = SourceCommercetools(\n      storeKeys = listOf(\"myStore\"),\n      locales = listOf(\"de\"),\n      url = \"http://commercetools.com\",\n      projectKey = \"keyID\",\n    ),\n    authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
+    "createTask": {
+      "default": "var response = client.createTask(\n  taskCreate = TaskCreate(\n    sourceID = \"search\",\n    destinationID = \"destinationName\",\n    trigger = OnDemandTriggerInput(\n      type = OnDemandTriggerType.entries.first { it.value == \"onDemand\" },\n    ),\n    action = ActionType.entries.first { it.value == \"replace\" },\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
+    "createTransformation": {
+      "default": "var response = client.createTransformation(\n  transformationCreate = TransformationCreate(\n    code = \"foo\",\n    name = \"bar\",\n    description = \"baz\",\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
+    "customDelete": {
+      "default": "var response = client.customDelete(\n  path = \"test/minimal\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "customGet": {
+      "default": "var response = client.customGet(\n  path = \"test/minimal\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "customPost": {
+      "default": "var response = client.customPost(\n  path = \"test/minimal\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "customPut": {
+      "default": "var response = client.customPut(\n  path = \"test/minimal\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "deleteAuthentication": {
+      "default": "var response = client.deleteAuthentication(\n  authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "deleteDestination": {
+      "default": "var response = client.deleteDestination(\n  destinationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "deleteSource": {
+      "default": "var response = client.deleteSource(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "deleteTask": {
+      "default": "var response = client.deleteTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "deleteTransformation": {
+      "default": "var response = client.deleteTransformation(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "disableTask": {
+      "default": "var response = client.disableTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "enableTask": {
+      "default": "var response = client.enableTask(\n  taskID = \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getAuthentication": {
+      "default": "var response = client.getAuthentication(\n  authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getAuthentications": {
+      "default": "var response = client.getAuthentications()\n\n// Use the response\nprintln(response)"
+    },
+    "getDestination": {
+      "default": "var response = client.getDestination(\n  destinationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getDestinations": {
+      "default": "var response = client.getDestinations()\n\n// Use the response\nprintln(response)"
+    },
+    "getEvent": {
+      "default": "var response = client.getEvent(\n  runID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  eventID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0c\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getEvents": {
+      "default": "var response = client.getEvents(\n  runID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getRun": {
+      "default": "var response = client.getRun(\n  runID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getRuns": {
+      "default": "var response = client.getRuns()\n\n// Use the response\nprintln(response)"
+    },
+    "getSource": {
+      "default": "var response = client.getSource(\n  sourceID = \"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getSources": {
+      "default": "var response = client.getSources()\n\n// Use the response\nprintln(response)"
+    },
+    "getTask": {
+      "default": "var response = client.getTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getTasks": {
+      "default": "var response = client.getTasks()\n\n// Use the response\nprintln(response)"
+    },
+    "getTransformation": {
+      "default": "var response = client.getTransformation(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getTransformations": {
+      "default": "var response = client.getTransformations()\n\n// Use the response\nprintln(response)"
+    },
+    "runTask": {
+      "default": "var response = client.runTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "searchAuthentications": {
+      "default": "var response = client.searchAuthentications(\n  authenticationSearch = AuthenticationSearch(\n    authenticationIDs = listOf(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"),\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
+    "searchDestinations": {
+      "default": "var response = client.searchDestinations(\n  destinationSearch = DestinationSearch(\n    destinationIDs = listOf(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"),\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
+    "searchSources": {
+      "default": "var response = client.searchSources(\n  sourceSearch = SourceSearch(\n    sourceIDs = listOf(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"),\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
+    "searchTasks": {
+      "default": "var response = client.searchTasks(\n  taskSearch = TaskSearch(\n    taskIDs = listOf(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"),\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
+    "searchTransformations": {
+      "default": "var response = client.searchTransformations(\n  transformationSearch = TransformationSearch(\n    transformationsIDs = listOf(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\", \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"),\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
+    "triggerDockerSourceDiscover": {
+      "default": "var response = client.triggerDockerSourceDiscover(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "tryTransformations": {
+      "default": "var response = client.tryTransformations(\n  transformationTry = TransformationTry(\n    code = \"foo\",\n    sampleRecord = buildJsonObject {\n      put(\n        \"bar\",\n        JsonPrimitive(\"baz\"),\n      )\n    },\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
+    "updateAuthentication": {
+      "default": "var response = client.updateAuthentication(\n  authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  authenticationUpdate = AuthenticationUpdate(\n    name = \"newName\",\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
+    "updateDestination": {
+      "default": "var response = client.updateDestination(\n  destinationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  destinationUpdate = DestinationUpdate(\n    name = \"newName\",\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
+    "updateSource": {
+      "default": "var response = client.updateSource(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  sourceUpdate = SourceUpdate(\n    name = \"newName\",\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
+    "updateTask": {
+      "default": "var response = client.updateTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  taskUpdate = TaskUpdate(\n    enabled = false,\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
+    "updateTransformation": {
+      "default": "var response = client.updateTransformation(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  transformationCreate = TransformationCreate(\n    code = \"foo\",\n    name = \"bar\",\n    description = \"baz\",\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
+    "validateSource": {
+      "default": "var response = client.validateSource(\n  sourceCreate = SourceCreate(\n    type = SourceType.entries.first { it.value == \"commercetools\" },\n    name = \"sourceName\",\n    input = SourceCommercetools(\n      storeKeys = listOf(\"myStore\"),\n      locales = listOf(\"de\"),\n      url = \"http://commercetools.com\",\n      projectKey = \"keyID\",\n    ),\n    authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
+    "validateSourceBeforeUpdate": {
+      "default": "var response = client.validateSourceBeforeUpdate(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  sourceUpdate = SourceUpdate(\n    name = \"newName\",\n  ),\n)\n\n// Use the response\nprintln(response)"
+    },
+    "init": {
+      "default": "val client = IngestionClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\", region = \"YOUR_APP_ID_REGION\")"
+    },
+    "waitForAppTask": {
+      "default": "client.waitAppTask(response.taskID)"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "",
+        "update": "",
+        "delete": ""
+      }
+    },
+    "waitForTask": {
+      "default": "client.waitTask(\"<<indexName>>\", response.taskID)"
+    }
+  },
+  "php": {
+    "import": {
+      "default": "use Algolia\\AlgoliaSearch\\Api\\IngestionClient;"
+    },
+    "createAuthentication": {
+      "default": "$response = $client->createAuthentication(\n    ['type' => 'oauth',\n        'name' => 'authName',\n        'input' => ['url' => 'http://test.oauth',\n            'client_id' => 'myID',\n            'client_secret' => 'mySecret',\n        ],\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "createDestination": {
+      "default": "$response = $client->createDestination(\n    ['type' => 'search',\n        'name' => 'destinationName',\n        'input' => ['indexPrefix' => 'prefix_',\n        ],\n        'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "createSource": {
+      "default": "$response = $client->createSource(\n    ['type' => 'commercetools',\n        'name' => 'sourceName',\n        'input' => ['storeKeys' => [\n            'myStore',\n        ],\n            'locales' => [\n                'de',\n            ],\n            'url' => 'http://commercetools.com',\n            'projectKey' => 'keyID',\n        ],\n        'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "createTask": {
+      "default": "$response = $client->createTask(\n    ['sourceID' => 'search',\n        'destinationID' => 'destinationName',\n        'trigger' => ['type' => 'onDemand',\n        ],\n        'action' => 'replace',\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "createTransformation": {
+      "default": "$response = $client->createTransformation(\n    ['code' => 'foo',\n        'name' => 'bar',\n        'description' => 'baz',\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "customDelete": {
+      "default": "$response = $client->customDelete(\n    'test/minimal',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "customGet": {
+      "default": "$response = $client->customGet(\n    'test/minimal',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "customPost": {
+      "default": "$response = $client->customPost(\n    'test/minimal',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "customPut": {
+      "default": "$response = $client->customPut(\n    'test/minimal',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "deleteAuthentication": {
+      "default": "$response = $client->deleteAuthentication(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "deleteDestination": {
+      "default": "$response = $client->deleteDestination(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "deleteSource": {
+      "default": "$response = $client->deleteSource(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "deleteTask": {
+      "default": "$response = $client->deleteTask(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "deleteTransformation": {
+      "default": "$response = $client->deleteTransformation(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "disableTask": {
+      "default": "$response = $client->disableTask(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "enableTask": {
+      "default": "$response = $client->enableTask(\n    '76ab4c2a-ce17-496f-b7a6-506dc59ee498',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getAuthentication": {
+      "default": "$response = $client->getAuthentication(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getAuthentications": {
+      "default": "$response = $client->getAuthentications();\n\n// play with the response\nvar_dump($response);"
+    },
+    "getDestination": {
+      "default": "$response = $client->getDestination(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getDestinations": {
+      "default": "$response = $client->getDestinations();\n\n// play with the response\nvar_dump($response);"
+    },
+    "getEvent": {
+      "default": "$response = $client->getEvent(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0c',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getEvents": {
+      "default": "$response = $client->getEvents(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getRun": {
+      "default": "$response = $client->getRun(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getRuns": {
+      "default": "$response = $client->getRuns();\n\n// play with the response\nvar_dump($response);"
+    },
+    "getSource": {
+      "default": "$response = $client->getSource(\n    '75eeb306-51d3-4e5e-a279-3c92bd8893ac',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getSources": {
+      "default": "$response = $client->getSources();\n\n// play with the response\nvar_dump($response);"
+    },
+    "getTask": {
+      "default": "$response = $client->getTask(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getTasks": {
+      "default": "$response = $client->getTasks();\n\n// play with the response\nvar_dump($response);"
+    },
+    "getTransformation": {
+      "default": "$response = $client->getTransformation(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getTransformations": {
+      "default": "$response = $client->getTransformations();\n\n// play with the response\nvar_dump($response);"
+    },
+    "runTask": {
+      "default": "$response = $client->runTask(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "searchAuthentications": {
+      "default": "$response = $client->searchAuthentications(\n    ['authenticationIDs' => [\n        '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n\n        '947ac9c4-7e58-4c87-b1e7-14a68e99699a',\n    ],\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "searchDestinations": {
+      "default": "$response = $client->searchDestinations(\n    ['destinationIDs' => [\n        '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n\n        '947ac9c4-7e58-4c87-b1e7-14a68e99699a',\n    ],\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "searchSources": {
+      "default": "$response = $client->searchSources(\n    ['sourceIDs' => [\n        '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n\n        '947ac9c4-7e58-4c87-b1e7-14a68e99699a',\n    ],\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "searchTasks": {
+      "default": "$response = $client->searchTasks(\n    ['taskIDs' => [\n        '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n\n        '947ac9c4-7e58-4c87-b1e7-14a68e99699a',\n\n        '76ab4c2a-ce17-496f-b7a6-506dc59ee498',\n    ],\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "searchTransformations": {
+      "default": "$response = $client->searchTransformations(\n    ['transformationsIDs' => [\n        '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n\n        '947ac9c4-7e58-4c87-b1e7-14a68e99699a',\n\n        '76ab4c2a-ce17-496f-b7a6-506dc59ee498',\n    ],\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "triggerDockerSourceDiscover": {
+      "default": "$response = $client->triggerDockerSourceDiscover(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "tryTransformations": {
+      "default": "$response = $client->tryTransformations(\n    ['code' => 'foo',\n        'sampleRecord' => ['bar' => 'baz',\n        ],\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "updateAuthentication": {
+      "default": "$response = $client->updateAuthentication(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ['name' => 'newName',\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "updateDestination": {
+      "default": "$response = $client->updateDestination(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ['name' => 'newName',\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "updateSource": {
+      "default": "$response = $client->updateSource(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ['name' => 'newName',\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "updateTask": {
+      "default": "$response = $client->updateTask(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ['enabled' => false,\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "updateTransformation": {
+      "default": "$response = $client->updateTransformation(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ['code' => 'foo',\n        'name' => 'bar',\n        'description' => 'baz',\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "validateSource": {
+      "default": "$response = $client->validateSource(\n    ['type' => 'commercetools',\n        'name' => 'sourceName',\n        'input' => ['storeKeys' => [\n            'myStore',\n        ],\n            'locales' => [\n                'de',\n            ],\n            'url' => 'http://commercetools.com',\n            'projectKey' => 'keyID',\n        ],\n        'authenticationID' => '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "validateSourceBeforeUpdate": {
+      "default": "$response = $client->validateSourceBeforeUpdate(\n    '6c02aeb1-775e-418e-870b-1faccd4b2c0f',\n    ['name' => 'newName',\n    ],\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "init": {
+      "default": "$client = IngestionClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');"
+    },
+    "waitForAppTask": {
+      "default": "$client->waitForAppTask($response['taskID']);"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "$client->waitForApiKey('<<operation>>', $response['key']);",
+        "update": "$client->waitForApiKey('<<operation>>', $response['key'], [\n        'acl' => [\n          'search',\n          'addObject',\n        ],\n          'validity' => 300,\n          'maxQueriesPerIPPerHour' => 100,\n          'maxHitsPerQuery' => 20,\n        ]);",
+        "delete": "$client->waitForApiKey('<<operation>>', $response['key']);"
+      }
+    },
+    "waitForTask": {
+      "default": "$client->waitForTask('<<indexName>>', $response['taskID']);"
+    }
+  },
+  "python": {
+    "import": {
+      "default": "from algoliasearch.ingestion.client import IngestionClient"
+    },
+    "createAuthentication": {
+      "default": "response = await _client.create_authentication(\n    authentication_create={\n        \"type\": \"oauth\",\n        \"name\": \"authName\",\n        \"input\": {\n            \"url\": \"http://test.oauth\",\n            \"client_id\": \"myID\",\n            \"client_secret\": \"mySecret\",\n        },\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "createDestination": {
+      "default": "response = await _client.create_destination(\n    destination_create={\n        \"type\": \"search\",\n        \"name\": \"destinationName\",\n        \"input\": {\n            \"indexPrefix\": \"prefix_\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "createSource": {
+      "default": "response = await _client.create_source(\n    source_create={\n        \"type\": \"commercetools\",\n        \"name\": \"sourceName\",\n        \"input\": {\n            \"storeKeys\": [\n                \"myStore\",\n            ],\n            \"locales\": [\n                \"de\",\n            ],\n            \"url\": \"http://commercetools.com\",\n            \"projectKey\": \"keyID\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "createTask": {
+      "default": "response = await _client.create_task(\n    task_create={\n        \"sourceID\": \"search\",\n        \"destinationID\": \"destinationName\",\n        \"trigger\": {\n            \"type\": \"onDemand\",\n        },\n        \"action\": \"replace\",\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "createTransformation": {
+      "default": "response = await _client.create_transformation(\n    transformation_create={\n        \"code\": \"foo\",\n        \"name\": \"bar\",\n        \"description\": \"baz\",\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "customDelete": {
+      "default": "response = await _client.custom_delete(\n    path=\"test/minimal\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "customGet": {
+      "default": "response = await _client.custom_get(\n    path=\"test/minimal\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "customPost": {
+      "default": "response = await _client.custom_post(\n    path=\"test/minimal\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "customPut": {
+      "default": "response = await _client.custom_put(\n    path=\"test/minimal\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "deleteAuthentication": {
+      "default": "response = await _client.delete_authentication(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "deleteDestination": {
+      "default": "response = await _client.delete_destination(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "deleteSource": {
+      "default": "response = await _client.delete_source(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "deleteTask": {
+      "default": "response = await _client.delete_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "deleteTransformation": {
+      "default": "response = await _client.delete_transformation(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "disableTask": {
+      "default": "response = await _client.disable_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "enableTask": {
+      "default": "response = await _client.enable_task(\n    task_id=\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getAuthentication": {
+      "default": "response = await _client.get_authentication(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getAuthentications": {
+      "default": "response = await _client.get_authentications()\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getDestination": {
+      "default": "response = await _client.get_destination(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getDestinations": {
+      "default": "response = await _client.get_destinations()\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getEvent": {
+      "default": "response = await _client.get_event(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    event_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0c\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getEvents": {
+      "default": "response = await _client.get_events(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getRun": {
+      "default": "response = await _client.get_run(\n    run_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getRuns": {
+      "default": "response = await _client.get_runs()\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getSource": {
+      "default": "response = await _client.get_source(\n    source_id=\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getSources": {
+      "default": "response = await _client.get_sources()\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getTask": {
+      "default": "response = await _client.get_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getTasks": {
+      "default": "response = await _client.get_tasks()\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getTransformation": {
+      "default": "response = await _client.get_transformation(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getTransformations": {
+      "default": "response = await _client.get_transformations()\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "runTask": {
+      "default": "response = await _client.run_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "searchAuthentications": {
+      "default": "response = await _client.search_authentications(\n    authentication_search={\n        \"authenticationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "searchDestinations": {
+      "default": "response = await _client.search_destinations(\n    destination_search={\n        \"destinationIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "searchSources": {
+      "default": "response = await _client.search_sources(\n    source_search={\n        \"sourceIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        ],\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "searchTasks": {
+      "default": "response = await _client.search_tasks(\n    task_search={\n        \"taskIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "searchTransformations": {
+      "default": "response = await _client.search_transformations(\n    transformation_search={\n        \"transformationsIDs\": [\n            \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n            \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n            \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n        ],\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "triggerDockerSourceDiscover": {
+      "default": "response = await _client.trigger_docker_source_discover(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "tryTransformations": {
+      "default": "response = await _client.try_transformations(\n    transformation_try={\n        \"code\": \"foo\",\n        \"sampleRecord\": {\n            \"bar\": \"baz\",\n        },\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "updateAuthentication": {
+      "default": "response = await _client.update_authentication(\n    authentication_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    authentication_update={\n        \"name\": \"newName\",\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "updateDestination": {
+      "default": "response = await _client.update_destination(\n    destination_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    destination_update={\n        \"name\": \"newName\",\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "updateSource": {
+      "default": "response = await _client.update_source(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    source_update={\n        \"name\": \"newName\",\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "updateTask": {
+      "default": "response = await _client.update_task(\n    task_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    task_update={\n        \"enabled\": False,\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "updateTransformation": {
+      "default": "response = await _client.update_transformation(\n    transformation_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformation_create={\n        \"code\": \"foo\",\n        \"name\": \"bar\",\n        \"description\": \"baz\",\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "validateSource": {
+      "default": "response = await _client.validate_source(\n    source_create={\n        \"type\": \"commercetools\",\n        \"name\": \"sourceName\",\n        \"input\": {\n            \"storeKeys\": [\n                \"myStore\",\n            ],\n            \"locales\": [\n                \"de\",\n            ],\n            \"url\": \"http://commercetools.com\",\n            \"projectKey\": \"keyID\",\n        },\n        \"authenticationID\": \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "validateSourceBeforeUpdate": {
+      "default": "response = await _client.validate_source_before_update(\n    source_id=\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    source_update={\n        \"name\": \"newName\",\n    },\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "init": {
+      "default": "_client = IngestionClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\")"
+    },
+    "waitForAppTask": {
+      "default": "await client.wait_for_app_task(task_id=response.task_id)"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
+        "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key={\n          \"acl\": [\n              \"search\",\n              \"addObject\",\n          ],\n          \"validity\": 300,\n          \"maxQueriesPerIPPerHour\": 100,\n          \"maxHitsPerQuery\": 20,\n      })",
+        "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
+      }
+    },
+    "waitForTask": {
+      "default": "await client.wait_for_task(index_name=\"<<indexName>>\", task_id=response.task_id)"
+    }
+  },
+  "ruby": {
+    "import": {
+      "default": "require \"algolia\""
+    },
+    "createAuthentication": {
+      "default": "response = client.create_authentication(\n  AuthenticationCreate.new(\n    type: \"oauth\",\n    name: \"authName\",\n    input: AuthOAuth.new(url: \"http://test.oauth\", client_id: \"myID\", client_secret: \"mySecret\")\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "createDestination": {
+      "default": "response = client.create_destination(\n  DestinationCreate.new(\n    type: \"search\",\n    name: \"destinationName\",\n    input: DestinationIndexPrefix.new(index_prefix: \"prefix_\"),\n    authentication_id: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "createSource": {
+      "default": "response = client.create_source(\n  SourceCreate.new(\n    type: \"commercetools\",\n    name: \"sourceName\",\n    input: SourceCommercetools.new(\n      store_keys: [\"myStore\"],\n      locales: [\"de\"],\n      url: \"http://commercetools.com\",\n      project_key: \"keyID\"\n    ),\n    authentication_id: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "createTask": {
+      "default": "response = client.create_task(\n  TaskCreate.new(\n    source_id: \"search\",\n    destination_id: \"destinationName\",\n    trigger: OnDemandTriggerInput.new(type: \"onDemand\"),\n    action: \"replace\"\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "createTransformation": {
+      "default": "response = client.create_transformation(TransformationCreate.new(code: \"foo\", name: \"bar\", description: \"baz\"))\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "customDelete": {
+      "default": "response = client.custom_delete(\"test/minimal\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "customGet": {
+      "default": "response = client.custom_get(\"test/minimal\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "customPost": {
+      "default": "response = client.custom_post(\"test/minimal\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "customPut": {
+      "default": "response = client.custom_put(\"test/minimal\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "deleteAuthentication": {
+      "default": "response = client.delete_authentication(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "deleteDestination": {
+      "default": "response = client.delete_destination(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "deleteSource": {
+      "default": "response = client.delete_source(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "deleteTask": {
+      "default": "response = client.delete_task(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "deleteTransformation": {
+      "default": "response = client.delete_transformation(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "disableTask": {
+      "default": "response = client.disable_task(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "enableTask": {
+      "default": "response = client.enable_task(\"76ab4c2a-ce17-496f-b7a6-506dc59ee498\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getAuthentication": {
+      "default": "response = client.get_authentication(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getAuthentications": {
+      "default": "response = client.get_authentications\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getDestination": {
+      "default": "response = client.get_destination(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getDestinations": {
+      "default": "response = client.get_destinations\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getEvent": {
+      "default": "response = client.get_event(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"6c02aeb1-775e-418e-870b-1faccd4b2c0c\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getEvents": {
+      "default": "response = client.get_events(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getRun": {
+      "default": "response = client.get_run(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getRuns": {
+      "default": "response = client.get_runs\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getSource": {
+      "default": "response = client.get_source(\"75eeb306-51d3-4e5e-a279-3c92bd8893ac\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getSources": {
+      "default": "response = client.get_sources\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getTask": {
+      "default": "response = client.get_task(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getTasks": {
+      "default": "response = client.get_tasks\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getTransformation": {
+      "default": "response = client.get_transformation(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getTransformations": {
+      "default": "response = client.get_transformations\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "runTask": {
+      "default": "response = client.run_task(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "searchAuthentications": {
+      "default": "response = client.search_authentications(\n  AuthenticationSearch.new(\n    authentication_ids: [\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "searchDestinations": {
+      "default": "response = client.search_destinations(\n  DestinationSearch.new(\n    destination_ids: [\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"]\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "searchSources": {
+      "default": "response = client.search_sources(\n  SourceSearch.new(source_ids: [\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\"])\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "searchTasks": {
+      "default": "response = client.search_tasks(\n  TaskSearch.new(\n    task_ids: [\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    ]\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "searchTransformations": {
+      "default": "response = client.search_transformations(\n  TransformationSearch.new(\n    transformations_ids: [\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    ]\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "triggerDockerSourceDiscover": {
+      "default": "response = client.trigger_docker_source_discover(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "tryTransformations": {
+      "default": "response = client.try_transformations(TransformationTry.new(code: \"foo\", sample_record: {bar: \"baz\"}))\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "updateAuthentication": {
+      "default": "response = client.update_authentication(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  AuthenticationUpdate.new(name: \"newName\")\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "updateDestination": {
+      "default": "response = client.update_destination(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", DestinationUpdate.new(name: \"newName\"))\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "updateSource": {
+      "default": "response = client.update_source(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", SourceUpdate.new(name: \"newName\"))\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "updateTask": {
+      "default": "response = client.update_task(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", TaskUpdate.new(enabled: false))\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "updateTransformation": {
+      "default": "response = client.update_transformation(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  TransformationCreate.new(code: \"foo\", name: \"bar\", description: \"baz\")\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "validateSource": {
+      "default": "response = client.validate_source(\n  SourceCreate.new(\n    type: \"commercetools\",\n    name: \"sourceName\",\n    input: SourceCommercetools.new(\n      store_keys: [\"myStore\"],\n      locales: [\"de\"],\n      url: \"http://commercetools.com\",\n      project_key: \"keyID\"\n    ),\n    authentication_id: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n  )\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "validateSourceBeforeUpdate": {
+      "default": "response = client.validate_source_before_update(\n  \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  SourceUpdate.new(name: \"newName\")\n)\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "init": {
+      "default": "client = Algolia::IngestionClient.create(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\")"
+    },
+    "waitForAppTask": {
+      "default": "client.wait_for_app_task(response.task_id)"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
+        "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key=ApiKey.new(\n        acl: ['search', 'addObject'],\n        validity: 300,\n        max_queries_per_ip_per_hour: 100,\n        max_hits_per_query: 20\n      ))",
+        "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
+      }
+    },
+    "waitForTask": {
+      "default": "client.wait_for_task(\"<<indexName>>\", response.task_id)"
+    }
+  },
+  "scala": {
+    "import": {
+      "default": "import algoliasearch.api.IngestionClient"
+    },
+    "createAuthentication": {
+      "default": "val response = client.createAuthentication(\n  authenticationCreate = AuthenticationCreate(\n    `type` = AuthenticationType.withName(\"oauth\"),\n    name = \"authName\",\n    input = AuthOAuth(\n      url = \"http://test.oauth\",\n      client_id = \"myID\",\n      client_secret = \"mySecret\"\n    )\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "createDestination": {
+      "default": "val response = client.createDestination(\n  destinationCreate = DestinationCreate(\n    `type` = DestinationType.withName(\"search\"),\n    name = \"destinationName\",\n    input = DestinationIndexPrefix(\n      indexPrefix = \"prefix_\"\n    ),\n    authenticationID = Some(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "createSource": {
+      "default": "val response = client.createSource(\n  sourceCreate = SourceCreate(\n    `type` = SourceType.withName(\"commercetools\"),\n    name = \"sourceName\",\n    input = SourceCommercetools(\n      storeKeys = Some(Seq(\"myStore\")),\n      locales = Some(Seq(\"de\")),\n      url = \"http://commercetools.com\",\n      projectKey = \"keyID\"\n    ),\n    authenticationID = Some(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "createTask": {
+      "default": "val response = client.createTask(\n  taskCreate = TaskCreate(\n    sourceID = \"search\",\n    destinationID = \"destinationName\",\n    trigger = OnDemandTriggerInput(\n      `type` = OnDemandTriggerType.withName(\"onDemand\")\n    ),\n    action = ActionType.withName(\"replace\")\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "createTransformation": {
+      "default": "val response = client.createTransformation(\n  transformationCreate = TransformationCreate(\n    code = \"foo\",\n    name = \"bar\",\n    description = Some(\"baz\")\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "customDelete": {
+      "default": "val response = client.customDelete[JObject](\n  path = \"test/minimal\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "customGet": {
+      "default": "val response = client.customGet[JObject](\n  path = \"test/minimal\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "customPost": {
+      "default": "val response = client.customPost[JObject](\n  path = \"test/minimal\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "customPut": {
+      "default": "val response = client.customPut[JObject](\n  path = \"test/minimal\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "deleteAuthentication": {
+      "default": "val response = client.deleteAuthentication(\n  authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "deleteDestination": {
+      "default": "val response = client.deleteDestination(\n  destinationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "deleteSource": {
+      "default": "val response = client.deleteSource(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "deleteTask": {
+      "default": "val response = client.deleteTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "deleteTransformation": {
+      "default": "val response = client.deleteTransformation(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "disableTask": {
+      "default": "val response = client.disableTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "enableTask": {
+      "default": "val response = client.enableTask(\n  taskID = \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getAuthentication": {
+      "default": "val response = client.getAuthentication(\n  authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getAuthentications": {
+      "default": "val response = client.getAuthentications(\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getDestination": {
+      "default": "val response = client.getDestination(\n  destinationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getDestinations": {
+      "default": "val response = client.getDestinations(\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getEvent": {
+      "default": "val response = client.getEvent(\n  runID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  eventID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0c\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getEvents": {
+      "default": "val response = client.getEvents(\n  runID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getRun": {
+      "default": "val response = client.getRun(\n  runID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getRuns": {
+      "default": "val response = client.getRuns(\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getSource": {
+      "default": "val response = client.getSource(\n  sourceID = \"75eeb306-51d3-4e5e-a279-3c92bd8893ac\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getSources": {
+      "default": "val response = client.getSources(\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getTask": {
+      "default": "val response = client.getTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getTasks": {
+      "default": "val response = client.getTasks(\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getTransformation": {
+      "default": "val response = client.getTransformation(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getTransformations": {
+      "default": "val response = client.getTransformations(\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "runTask": {
+      "default": "val response = client.runTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "searchAuthentications": {
+      "default": "val response = client.searchAuthentications(\n  authenticationSearch = AuthenticationSearch(\n    authenticationIDs = Seq(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\")\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "searchDestinations": {
+      "default": "val response = client.searchDestinations(\n  destinationSearch = DestinationSearch(\n    destinationIDs = Seq(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\")\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "searchSources": {
+      "default": "val response = client.searchSources(\n  sourceSearch = SourceSearch(\n    sourceIDs = Seq(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\", \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\")\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "searchTasks": {
+      "default": "val response = client.searchTasks(\n  taskSearch = TaskSearch(\n    taskIDs = Seq(\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    )\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "searchTransformations": {
+      "default": "val response = client.searchTransformations(\n  transformationSearch = TransformationSearch(\n    transformationsIDs = Seq(\n      \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n      \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n      \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\"\n    )\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "triggerDockerSourceDiscover": {
+      "default": "val response = client.triggerDockerSourceDiscover(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "tryTransformations": {
+      "default": "val response = client.tryTransformations(\n  transformationTry = TransformationTry(\n    code = \"foo\",\n    sampleRecord = JObject(List(JField(\"bar\", JString(\"baz\"))))\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "updateAuthentication": {
+      "default": "val response = client.updateAuthentication(\n  authenticationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  authenticationUpdate = AuthenticationUpdate(\n    name = Some(\"newName\")\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "updateDestination": {
+      "default": "val response = client.updateDestination(\n  destinationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  destinationUpdate = DestinationUpdate(\n    name = Some(\"newName\")\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "updateSource": {
+      "default": "val response = client.updateSource(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  sourceUpdate = SourceUpdate(\n    name = Some(\"newName\")\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "updateTask": {
+      "default": "val response = client.updateTask(\n  taskID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  taskUpdate = TaskUpdate(\n    enabled = Some(false)\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "updateTransformation": {
+      "default": "val response = client.updateTransformation(\n  transformationID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  transformationCreate = TransformationCreate(\n    code = \"foo\",\n    name = \"bar\",\n    description = Some(\"baz\")\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "validateSource": {
+      "default": "val response = client.validateSource(\n  sourceCreate = Some(\n    SourceCreate(\n      `type` = SourceType.withName(\"commercetools\"),\n      name = \"sourceName\",\n      input = SourceCommercetools(\n        storeKeys = Some(Seq(\"myStore\")),\n        locales = Some(Seq(\"de\")),\n        url = \"http://commercetools.com\",\n        projectKey = \"keyID\"\n      ),\n      authenticationID = Some(\"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")\n    )\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "validateSourceBeforeUpdate": {
+      "default": "val response = client.validateSourceBeforeUpdate(\n  sourceID = \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n  sourceUpdate = SourceUpdate(\n    name = Some(\"newName\")\n  )\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "init": {
+      "default": "val client = IngestionClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\", region = \"YOUR_APP_ID_REGION\")"
+    },
+    "waitForAppTask": {
+      "default": "client.waitAppTask(response.getTaskID())"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "",
+        "update": "",
+        "delete": ""
+      }
+    },
+    "waitForTask": {
+      "default": "client.waitTask(\"<<indexName>>\", response.getTaskID())"
+    }
+  },
+  "swift": {
+    "import": {
+      "default": "import Ingestion"
+    },
+    "createAuthentication": {
+      "default": "let response = try await client.createAuthentication(authenticationCreate: AuthenticationCreate(\n    type: AuthenticationType.oauth,\n    name: \"authName\",\n    input: AuthInput.authOAuth(AuthOAuth(url: \"http://test.oauth\", clientId: \"myID\", clientSecret: \"mySecret\"))\n))"
+    },
+    "createDestination": {
+      "default": "let response = try await client.createDestination(destinationCreate: DestinationCreate(\n    type: DestinationType.search,\n    name: \"destinationName\",\n    input: DestinationInput.destinationIndexPrefix(DestinationIndexPrefix(indexPrefix: \"prefix_\")),\n    authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n))"
+    },
+    "createSource": {
+      "default": "let response = try await client.createSource(sourceCreate: SourceCreate(\n    type: SourceType.commercetools,\n    name: \"sourceName\",\n    input: SourceInput.sourceCommercetools(SourceCommercetools(\n        storeKeys: [\"myStore\"],\n        locales: [\"de\"],\n        url: \"http://commercetools.com\",\n        projectKey: \"keyID\"\n    )),\n    authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n))"
+    },
+    "createTask": {
+      "default": "let response = try await client.createTask(taskCreate: TaskCreate(\n    sourceID: \"search\",\n    destinationID: \"destinationName\",\n    trigger: TaskCreateTrigger.onDemandTriggerInput(OnDemandTriggerInput(type: OnDemandTriggerType.onDemand)),\n    action: ActionType.replace\n))"
+    },
+    "createTransformation": {
+      "default": "let response = try await client.createTransformation(transformationCreate: TransformationCreate(\n    code: \"foo\",\n    name: \"bar\",\n    description: \"baz\"\n))"
+    },
+    "customDelete": {
+      "default": "let response = try await client.customDelete(path: \"test/minimal\")"
+    },
+    "customGet": {
+      "default": "let response = try await client.customGet(path: \"test/minimal\")"
+    },
+    "customPost": {
+      "default": "let response = try await client.customPost(path: \"test/minimal\")"
+    },
+    "customPut": {
+      "default": "let response = try await client.customPut(path: \"test/minimal\")"
+    },
+    "deleteAuthentication": {
+      "default": "let response = try await client.deleteAuthentication(authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
+    },
+    "deleteDestination": {
+      "default": "let response = try await client.deleteDestination(destinationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
+    },
+    "deleteSource": {
+      "default": "let response = try await client.deleteSource(sourceID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
+    },
+    "deleteTask": {
+      "default": "let response = try await client.deleteTask(taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
+    },
+    "deleteTransformation": {
+      "default": "let response = try await client.deleteTransformation(transformationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
+    },
+    "disableTask": {
+      "default": "let response = try await client.disableTask(taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
+    },
+    "enableTask": {
+      "default": "let response = try await client.enableTask(taskID: \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\")"
+    },
+    "getAuthentication": {
+      "default": "let response = try await client.getAuthentication(authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
+    },
+    "getAuthentications": {
+      "default": "let response = try await client.getAuthentications()"
+    },
+    "getDestination": {
+      "default": "let response = try await client.getDestination(destinationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
+    },
+    "getDestinations": {
+      "default": "let response = try await client.getDestinations()"
+    },
+    "getEvent": {
+      "default": "let response = try await client.getEvent(\n    runID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    eventID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0c\"\n)"
+    },
+    "getEvents": {
+      "default": "let response = try await client.getEvents(runID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
+    },
+    "getRun": {
+      "default": "let response = try await client.getRun(runID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
+    },
+    "getRuns": {
+      "default": "let response = try await client.getRuns()"
+    },
+    "getSource": {
+      "default": "let response = try await client.getSource(sourceID: \"75eeb306-51d3-4e5e-a279-3c92bd8893ac\")"
+    },
+    "getSources": {
+      "default": "let response = try await client.getSources()"
+    },
+    "getTask": {
+      "default": "let response = try await client.getTask(taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
+    },
+    "getTasks": {
+      "default": "let response = try await client.getTasks()"
+    },
+    "getTransformation": {
+      "default": "let response = try await client.getTransformation(transformationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
+    },
+    "getTransformations": {
+      "default": "let response = try await client.getTransformations()"
+    },
+    "runTask": {
+      "default": "let response = try await client.runTask(taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
+    },
+    "searchAuthentications": {
+      "default": "let response = try await client\n    .searchAuthentications(authenticationSearch: AuthenticationSearch(authenticationIDs: [\n        \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n        \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n    ]))"
+    },
+    "searchDestinations": {
+      "default": "let response = try await client.searchDestinations(destinationSearch: DestinationSearch(destinationIDs: [\n    \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n]))"
+    },
+    "searchSources": {
+      "default": "let response = try await client.searchSources(sourceSearch: SourceSearch(sourceIDs: [\n    \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n]))"
+    },
+    "searchTasks": {
+      "default": "let response = try await client.searchTasks(taskSearch: TaskSearch(taskIDs: [\n    \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n    \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n]))"
+    },
+    "searchTransformations": {
+      "default": "let response = try await client\n    .searchTransformations(transformationSearch: TransformationSearch(transformationsIDs: [\n        \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n        \"947ac9c4-7e58-4c87-b1e7-14a68e99699a\",\n        \"76ab4c2a-ce17-496f-b7a6-506dc59ee498\",\n    ]))"
+    },
+    "triggerDockerSourceDiscover": {
+      "default": "let response = try await client.triggerDockerSourceDiscover(sourceID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\")"
+    },
+    "tryTransformations": {
+      "default": "let response = try await client.tryTransformations(transformationTry: TransformationTry(\n    code: \"foo\",\n    sampleRecord: [\"bar\": \"baz\"]\n))"
+    },
+    "updateAuthentication": {
+      "default": "let response = try await client.updateAuthentication(\n    authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    authenticationUpdate: AuthenticationUpdate(name: \"newName\")\n)"
+    },
+    "updateDestination": {
+      "default": "let response = try await client.updateDestination(\n    destinationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    destinationUpdate: DestinationUpdate(name: \"newName\")\n)"
+    },
+    "updateSource": {
+      "default": "let response = try await client.updateSource(\n    sourceID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    sourceUpdate: SourceUpdate(name: \"newName\")\n)"
+    },
+    "updateTask": {
+      "default": "let response = try await client.updateTask(\n    taskID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    taskUpdate: TaskUpdate(enabled: false)\n)"
+    },
+    "updateTransformation": {
+      "default": "let response = try await client.updateTransformation(\n    transformationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    transformationCreate: TransformationCreate(code: \"foo\", name: \"bar\", description: \"baz\")\n)"
+    },
+    "validateSource": {
+      "default": "let response = try await client.validateSource(sourceCreate: SourceCreate(\n    type: SourceType.commercetools,\n    name: \"sourceName\",\n    input: SourceInput.sourceCommercetools(SourceCommercetools(\n        storeKeys: [\"myStore\"],\n        locales: [\"de\"],\n        url: \"http://commercetools.com\",\n        projectKey: \"keyID\"\n    )),\n    authenticationID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\"\n))"
+    },
+    "validateSourceBeforeUpdate": {
+      "default": "let response = try await client.validateSourceBeforeUpdate(\n    sourceID: \"6c02aeb1-775e-418e-870b-1faccd4b2c0f\",\n    sourceUpdate: SourceUpdate(name: \"newName\")\n)"
+    },
+    "init": {
+      "default": "let client = try IngestionClient(appID: \"YOUR_APP_ID\", apiKey: \"YOUR_API_KEY\", region: .us)"
+    },
+    "waitForAppTask": {
+      "default": "try await client.waitForAppTask(with: response.taskID)"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.add)",
+        "update": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.update, apiKey: ApiKey(\n          acl: [Acl.search, Acl.addObject],\n          maxHitsPerQuery: 20,\n          maxQueriesPerIPPerHour: 100,\n          validity: 300\n      ))",
+        "delete": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.delete)"
+      }
+    },
+    "waitForTask": {
+      "default": "try await client.waitForTask(with: response.taskID, in: \"<<indexName>>\")"
+    }
+  }
+}

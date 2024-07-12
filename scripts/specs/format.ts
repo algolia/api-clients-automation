@@ -75,10 +75,7 @@ export async function transformBundle({
       toAbsolutePath(`website/src/generated/${clientName}-snippets.js`),
       `export const snippets = ${snippets}`,
     );
-    await fsp.writeFile(
-      toAbsolutePath(`website/src/generated/${clientName}-snippets.json`),
-      snippets,
-    );
+    await fsp.writeFile(toAbsolutePath(`snippets/guides/${clientName}-snippets.json`), snippets);
   }
 
   for (const [pathKey, pathMethods] of Object.entries(bundledSpec.paths)) {

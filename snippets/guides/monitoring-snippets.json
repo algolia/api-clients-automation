@@ -1,0 +1,617 @@
+{
+  "csharp": {
+    "import": {
+      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Http;"
+    },
+    "customDelete": {
+      "default": "var response = await client.CustomDeleteAsync(\"test/minimal\");"
+    },
+    "customGet": {
+      "default": "var response = await client.CustomGetAsync(\"test/minimal\");"
+    },
+    "customPost": {
+      "default": "var response = await client.CustomPostAsync(\"test/minimal\");"
+    },
+    "customPut": {
+      "default": "var response = await client.CustomPutAsync(\"test/minimal\");"
+    },
+    "getClusterIncidents": {
+      "default": "var response = await client.GetClusterIncidentsAsync(\"c1-de\");"
+    },
+    "getClusterStatus": {
+      "default": "var response = await client.GetClusterStatusAsync(\"c1-de\");"
+    },
+    "getIncidents": {
+      "default": "var response = await client.GetIncidentsAsync();"
+    },
+    "getIndexingTime": {
+      "default": "var response = await client.GetIndexingTimeAsync(\"c1-de\");"
+    },
+    "getLatency": {
+      "default": "var response = await client.GetLatencyAsync(\"c1-de\");"
+    },
+    "getMetrics": {
+      "default": "var response = await client.GetMetricsAsync(\n  Enum.Parse<Metric>(\"AvgBuildTime\"),\n  Enum.Parse<Period>(\"Minute\")\n);"
+    },
+    "getReachability": {
+      "default": "var response = await client.GetReachabilityAsync(\"c1-de\");"
+    },
+    "getServers": {
+      "default": "var response = await client.GetServersAsync();"
+    },
+    "getStatus": {
+      "default": "var response = await client.GetStatusAsync();"
+    },
+    "init": {
+      "default": "var client = new MonitoringClient(new MonitoringConfig(\"YOUR_APP_ID\", \"YOUR_API_KEY\"));"
+    },
+    "waitForAppTask": {
+      "default": "await client.WaitForAppTaskAsync(response.TaskID);"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "await client.WaitForApiKeyAsync(ApiKeyOperation.Add, response.Key);",
+        "update": "await client.WaitForApiKeyAsync(ApiKeyOperation.Update, response.Key, {\n        Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n        Validity = 300,\n        MaxQueriesPerIPPerHour = 100,\n        MaxHitsPerQuery = 20,\n      });",
+        "delete": "await client.WaitForApiKeyAsync(ApiKeyOperation.Delete, response.Key);"
+      }
+    },
+    "waitForTask": {
+      "default": "await client.WaitForTaskAsync(\"<<indexName>>\", response.TaskID);"
+    }
+  },
+  "dart": {
+    "waitForAppTask": {
+      "default": "await client.waitAppTask(response.taskID);"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "",
+        "update": "",
+        "delete": ""
+      }
+    },
+    "waitForTask": {
+      "default": "await client.waitTask('<<indexName>>', response.taskID);"
+    }
+  },
+  "go": {
+    "import": {
+      "default": "import \"github.com/algolia/algoliasearch-client-go/v4/algolia/monitoring\""
+    },
+    "customDelete": {
+      "default": "response, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
+    },
+    "customGet": {
+      "default": "response, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
+    },
+    "customPost": {
+      "default": "response, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
+    },
+    "customPut": {
+      "default": "response, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
+    },
+    "getClusterIncidents": {
+      "default": "response, err := client.GetClusterIncidents(client.NewApiGetClusterIncidentsRequest(\n  \"c1-de\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
+    },
+    "getClusterStatus": {
+      "default": "response, err := client.GetClusterStatus(client.NewApiGetClusterStatusRequest(\n  \"c1-de\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
+    },
+    "getIncidents": {
+      "default": "response, err := client.GetIncidents()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
+    },
+    "getIndexingTime": {
+      "default": "response, err := client.GetIndexingTime(client.NewApiGetIndexingTimeRequest(\n  \"c1-de\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
+    },
+    "getLatency": {
+      "default": "response, err := client.GetLatency(client.NewApiGetLatencyRequest(\n  \"c1-de\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
+    },
+    "getMetrics": {
+      "default": "response, err := client.GetMetrics(client.NewApiGetMetricsRequest(\n  monitoring.Metric(\"avg_build_time\"), monitoring.Period(\"minute\"),\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
+    },
+    "getReachability": {
+      "default": "response, err := client.GetReachability(client.NewApiGetReachabilityRequest(\n  \"c1-de\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
+    },
+    "getServers": {
+      "default": "response, err := client.GetServers()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
+    },
+    "getStatus": {
+      "default": "response, err := client.GetStatus()\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)"
+    },
+    "init": {
+      "default": "client, err := monitoring.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\")"
+    },
+    "waitForAppTask": {
+      "default": "taskResponse, err := searchClient.WaitForAppTask(response.TaskID, nil, nil, nil)\nif err != nil {\n  panic(err)\n}"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_ADD, response.Key, nil)\nif err != nil {\n  panic(err)\n}",
+        "update": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_UPDATE, response.Key, search.NewEmptyApiKey().SetAcl([]search.Acl{search.Acl(\"search\"), search.Acl(\"addObject\")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20))\nif err != nil {\n  panic(err)\n}",
+        "delete": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_DELETE, response.Key, nil)\nif err != nil {\n  panic(err)\n}"
+      }
+    },
+    "waitForTask": {
+      "default": "taskResponse, err := searchClient.WaitForTask(\"<<indexName>>\", response.TaskID, nil, nil, nil)\nif err != nil {\n  panic(err)\n}"
+    }
+  },
+  "java": {
+    "import": {
+      "default": "import com.algolia.api.MonitoringClient;\nimport com.algolia.model.monitoring.*;"
+    },
+    "customDelete": {
+      "default": "client.customDelete(\"test/minimal\");"
+    },
+    "customGet": {
+      "default": "client.customGet(\"test/minimal\");"
+    },
+    "customPost": {
+      "default": "client.customPost(\"test/minimal\");"
+    },
+    "customPut": {
+      "default": "client.customPut(\"test/minimal\");"
+    },
+    "getClusterIncidents": {
+      "default": "client.getClusterIncidents(\"c1-de\");"
+    },
+    "getClusterStatus": {
+      "default": "client.getClusterStatus(\"c1-de\");"
+    },
+    "getIncidents": {
+      "default": "client.getIncidents();"
+    },
+    "getIndexingTime": {
+      "default": "client.getIndexingTime(\"c1-de\");"
+    },
+    "getLatency": {
+      "default": "client.getLatency(\"c1-de\");"
+    },
+    "getMetrics": {
+      "default": "client.getMetrics(Metric.AVG_BUILD_TIME, Period.MINUTE);"
+    },
+    "getReachability": {
+      "default": "client.getReachability(\"c1-de\");"
+    },
+    "getServers": {
+      "default": "client.getServers();"
+    },
+    "getStatus": {
+      "default": "client.getStatus();"
+    },
+    "init": {
+      "default": "MonitoringClient client = new MonitoringClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\");"
+    },
+    "waitForAppTask": {
+      "default": "client.waitForAppTask(response.getTaskID());"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "client.waitForApiKey(ApiKeyOperation.ADD, response.Key, null)",
+        "update": "client.waitForApiKey(ApiKeyOperation.UPDATE, response.Key, new ApiKey()\n        .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT))\n        .setValidity(300)\n        .setMaxQueriesPerIPPerHour(100)\n        .setMaxHitsPerQuery(20))",
+        "delete": "client.waitForApiKey(ApiKeyOperation.DELETE, response.Key, null)"
+      }
+    },
+    "waitForTask": {
+      "default": "client.waitForTask(\"<<indexName>>\", response.getTaskID());"
+    }
+  },
+  "javascript": {
+    "import": {
+      "default": "import { monitoringClient } from '@algolia/monitoring';"
+    },
+    "customDelete": {
+      "default": "const response = await client.customDelete({ path: 'test/minimal' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "customGet": {
+      "default": "const response = await client.customGet({ path: 'test/minimal' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "customPost": {
+      "default": "const response = await client.customPost({ path: 'test/minimal' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "customPut": {
+      "default": "const response = await client.customPut({ path: 'test/minimal' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getClusterIncidents": {
+      "default": "const response = await client.getClusterIncidents({ clusters: 'c1-de' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getClusterStatus": {
+      "default": "const response = await client.getClusterStatus({ clusters: 'c1-de' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getIncidents": {
+      "default": "const response = await client.getIncidents();\n\n// use typed response\nconsole.log(response);"
+    },
+    "getIndexingTime": {
+      "default": "const response = await client.getIndexingTime({ clusters: 'c1-de' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getLatency": {
+      "default": "const response = await client.getLatency({ clusters: 'c1-de' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getMetrics": {
+      "default": "const response = await client.getMetrics({\n  metric: 'avg_build_time',\n  period: 'minute',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "getReachability": {
+      "default": "const response = await client.getReachability({ clusters: 'c1-de' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getServers": {
+      "default": "const response = await client.getServers();\n\n// use typed response\nconsole.log(response);"
+    },
+    "getStatus": {
+      "default": "const response = await client.getStatus();\n\n// use typed response\nconsole.log(response);"
+    },
+    "init": {
+      "default": "const client = monitoringClient('YOUR_APP_ID', 'YOUR_API_KEY');"
+    },
+    "waitForAppTask": {
+      "default": "await client.waitForAppTask({ taskID: response.taskID });"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });",
+        "update": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key, apiKey: {\n        acl: ['search', 'addObject'],\n        validity: 300,\n        maxQueriesPerIPPerHour: 100,\n        maxHitsPerQuery: 20,\n      }});",
+        "delete": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });"
+      }
+    },
+    "waitForTask": {
+      "default": "await client.waitForTask({ indexName: '<<indexName>>', taskID: response.taskID });"
+    }
+  },
+  "kotlin": {
+    "import": {
+      "default": "import com.algolia.client.api.MonitoringClient"
+    },
+    "customDelete": {
+      "default": "var response = client.customDelete(\n  path = \"test/minimal\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "customGet": {
+      "default": "var response = client.customGet(\n  path = \"test/minimal\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "customPost": {
+      "default": "var response = client.customPost(\n  path = \"test/minimal\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "customPut": {
+      "default": "var response = client.customPut(\n  path = \"test/minimal\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getClusterIncidents": {
+      "default": "var response = client.getClusterIncidents(\n  clusters = \"c1-de\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getClusterStatus": {
+      "default": "var response = client.getClusterStatus(\n  clusters = \"c1-de\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getIncidents": {
+      "default": "var response = client.getIncidents()\n\n// Use the response\nprintln(response)"
+    },
+    "getIndexingTime": {
+      "default": "var response = client.getIndexingTime(\n  clusters = \"c1-de\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getLatency": {
+      "default": "var response = client.getLatency(\n  clusters = \"c1-de\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getMetrics": {
+      "default": "var response = client.getMetrics(\n  metric = Metric.entries.first { it.value == \"avg_build_time\" },\n  period = Period.entries.first { it.value == \"minute\" },\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getReachability": {
+      "default": "var response = client.getReachability(\n  clusters = \"c1-de\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getServers": {
+      "default": "var response = client.getServers()\n\n// Use the response\nprintln(response)"
+    },
+    "getStatus": {
+      "default": "var response = client.getStatus()\n\n// Use the response\nprintln(response)"
+    },
+    "init": {
+      "default": "val client = MonitoringClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\")"
+    },
+    "waitForAppTask": {
+      "default": "client.waitAppTask(response.taskID)"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "",
+        "update": "",
+        "delete": ""
+      }
+    },
+    "waitForTask": {
+      "default": "client.waitTask(\"<<indexName>>\", response.taskID)"
+    }
+  },
+  "php": {
+    "import": {
+      "default": "use Algolia\\AlgoliaSearch\\Api\\MonitoringClient;"
+    },
+    "customDelete": {
+      "default": "$response = $client->customDelete(\n    'test/minimal',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "customGet": {
+      "default": "$response = $client->customGet(\n    'test/minimal',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "customPost": {
+      "default": "$response = $client->customPost(\n    'test/minimal',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "customPut": {
+      "default": "$response = $client->customPut(\n    'test/minimal',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getClusterIncidents": {
+      "default": "$response = $client->getClusterIncidents(\n    'c1-de',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getClusterStatus": {
+      "default": "$response = $client->getClusterStatus(\n    'c1-de',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getIncidents": {
+      "default": "$response = $client->getIncidents();\n\n// play with the response\nvar_dump($response);"
+    },
+    "getIndexingTime": {
+      "default": "$response = $client->getIndexingTime(\n    'c1-de',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getLatency": {
+      "default": "$response = $client->getLatency(\n    'c1-de',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getMetrics": {
+      "default": "$response = $client->getMetrics(\n    'avg_build_time',\n    'minute',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getReachability": {
+      "default": "$response = $client->getReachability(\n    'c1-de',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getServers": {
+      "default": "$response = $client->getServers();\n\n// play with the response\nvar_dump($response);"
+    },
+    "getStatus": {
+      "default": "$response = $client->getStatus();\n\n// play with the response\nvar_dump($response);"
+    },
+    "init": {
+      "default": "$client = MonitoringClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>');"
+    },
+    "waitForAppTask": {
+      "default": "$client->waitForAppTask($response['taskID']);"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "$client->waitForApiKey('<<operation>>', $response['key']);",
+        "update": "$client->waitForApiKey('<<operation>>', $response['key'], [\n        'acl' => [\n          'search',\n          'addObject',\n        ],\n          'validity' => 300,\n          'maxQueriesPerIPPerHour' => 100,\n          'maxHitsPerQuery' => 20,\n        ]);",
+        "delete": "$client->waitForApiKey('<<operation>>', $response['key']);"
+      }
+    },
+    "waitForTask": {
+      "default": "$client->waitForTask('<<indexName>>', $response['taskID']);"
+    }
+  },
+  "python": {
+    "import": {
+      "default": "from algoliasearch.monitoring.client import MonitoringClient"
+    },
+    "customDelete": {
+      "default": "response = await _client.custom_delete(\n    path=\"test/minimal\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "customGet": {
+      "default": "response = await _client.custom_get(\n    path=\"test/minimal\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "customPost": {
+      "default": "response = await _client.custom_post(\n    path=\"test/minimal\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "customPut": {
+      "default": "response = await _client.custom_put(\n    path=\"test/minimal\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getClusterIncidents": {
+      "default": "response = await _client.get_cluster_incidents(\n    clusters=\"c1-de\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getClusterStatus": {
+      "default": "response = await _client.get_cluster_status(\n    clusters=\"c1-de\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getIncidents": {
+      "default": "response = await _client.get_incidents()\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getIndexingTime": {
+      "default": "response = await _client.get_indexing_time(\n    clusters=\"c1-de\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getLatency": {
+      "default": "response = await _client.get_latency(\n    clusters=\"c1-de\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getMetrics": {
+      "default": "response = await _client.get_metrics(\n    metric=\"avg_build_time\",\n    period=\"minute\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getReachability": {
+      "default": "response = await _client.get_reachability(\n    clusters=\"c1-de\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getServers": {
+      "default": "response = await _client.get_servers()\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getStatus": {
+      "default": "response = await _client.get_status()\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "init": {
+      "default": "_client = MonitoringClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\")"
+    },
+    "waitForAppTask": {
+      "default": "await client.wait_for_app_task(task_id=response.task_id)"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
+        "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key={\n          \"acl\": [\n              \"search\",\n              \"addObject\",\n          ],\n          \"validity\": 300,\n          \"maxQueriesPerIPPerHour\": 100,\n          \"maxHitsPerQuery\": 20,\n      })",
+        "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
+      }
+    },
+    "waitForTask": {
+      "default": "await client.wait_for_task(index_name=\"<<indexName>>\", task_id=response.task_id)"
+    }
+  },
+  "ruby": {
+    "import": {
+      "default": "require \"algolia\""
+    },
+    "customDelete": {
+      "default": "response = client.custom_delete(\"test/minimal\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "customGet": {
+      "default": "response = client.custom_get(\"test/minimal\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "customPost": {
+      "default": "response = client.custom_post(\"test/minimal\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "customPut": {
+      "default": "response = client.custom_put(\"test/minimal\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getClusterIncidents": {
+      "default": "response = client.get_cluster_incidents(\"c1-de\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getClusterStatus": {
+      "default": "response = client.get_cluster_status(\"c1-de\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getIncidents": {
+      "default": "response = client.get_incidents\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getIndexingTime": {
+      "default": "response = client.get_indexing_time(\"c1-de\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getLatency": {
+      "default": "response = client.get_latency(\"c1-de\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getMetrics": {
+      "default": "response = client.get_metrics(\"avg_build_time\", \"minute\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getReachability": {
+      "default": "response = client.get_reachability(\"c1-de\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getServers": {
+      "default": "response = client.get_servers\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getStatus": {
+      "default": "response = client.get_status\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "init": {
+      "default": "client = Algolia::MonitoringClient.create(\"YOUR_APP_ID\", \"YOUR_API_KEY\")"
+    },
+    "waitForAppTask": {
+      "default": "client.wait_for_app_task(response.task_id)"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
+        "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key=ApiKey.new(\n        acl: ['search', 'addObject'],\n        validity: 300,\n        max_queries_per_ip_per_hour: 100,\n        max_hits_per_query: 20\n      ))",
+        "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
+      }
+    },
+    "waitForTask": {
+      "default": "client.wait_for_task(\"<<indexName>>\", response.task_id)"
+    }
+  },
+  "scala": {
+    "import": {
+      "default": "import algoliasearch.api.MonitoringClient"
+    },
+    "customDelete": {
+      "default": "val response = client.customDelete[JObject](\n  path = \"test/minimal\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "customGet": {
+      "default": "val response = client.customGet[JObject](\n  path = \"test/minimal\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "customPost": {
+      "default": "val response = client.customPost[JObject](\n  path = \"test/minimal\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "customPut": {
+      "default": "val response = client.customPut[JObject](\n  path = \"test/minimal\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getClusterIncidents": {
+      "default": "val response = client.getClusterIncidents(\n  clusters = \"c1-de\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getClusterStatus": {
+      "default": "val response = client.getClusterStatus(\n  clusters = \"c1-de\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getIncidents": {
+      "default": "val response = client.getIncidents(\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getIndexingTime": {
+      "default": "val response = client.getIndexingTime(\n  clusters = \"c1-de\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getLatency": {
+      "default": "val response = client.getLatency(\n  clusters = \"c1-de\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getMetrics": {
+      "default": "val response = client.getMetrics(\n  metric = Metric.withName(\"avg_build_time\"),\n  period = Period.withName(\"minute\")\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getReachability": {
+      "default": "val response = client.getReachability(\n  clusters = \"c1-de\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getServers": {
+      "default": "val response = client.getServers(\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getStatus": {
+      "default": "val response = client.getStatus(\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "init": {
+      "default": "val client = MonitoringClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\")"
+    },
+    "waitForAppTask": {
+      "default": "client.waitAppTask(response.getTaskID())"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "",
+        "update": "",
+        "delete": ""
+      }
+    },
+    "waitForTask": {
+      "default": "client.waitTask(\"<<indexName>>\", response.getTaskID())"
+    }
+  },
+  "swift": {
+    "import": {
+      "default": "import Monitoring"
+    },
+    "customDelete": {
+      "default": "let response = try await client.customDelete(path: \"test/minimal\")"
+    },
+    "customGet": {
+      "default": "let response = try await client.customGet(path: \"test/minimal\")"
+    },
+    "customPost": {
+      "default": "let response = try await client.customPost(path: \"test/minimal\")"
+    },
+    "customPut": {
+      "default": "let response = try await client.customPut(path: \"test/minimal\")"
+    },
+    "getClusterIncidents": {
+      "default": "let response = try await client.getClusterIncidents(clusters: \"c1-de\")"
+    },
+    "getClusterStatus": {
+      "default": "let response = try await client.getClusterStatus(clusters: \"c1-de\")"
+    },
+    "getIncidents": {
+      "default": "let response = try await client.getIncidents()"
+    },
+    "getIndexingTime": {
+      "default": "let response = try await client.getIndexingTime(clusters: \"c1-de\")"
+    },
+    "getLatency": {
+      "default": "let response = try await client.getLatency(clusters: \"c1-de\")"
+    },
+    "getMetrics": {
+      "default": "let response = try await client.getMetrics(metric: Metric.avgBuildTime, period: Period.minute)"
+    },
+    "getReachability": {
+      "default": "let response = try await client.getReachability(clusters: \"c1-de\")"
+    },
+    "getServers": {
+      "default": "let response = try await client.getServers()"
+    },
+    "getStatus": {
+      "default": "let response = try await client.getStatus()"
+    },
+    "init": {
+      "default": "let client = try MonitoringClient(appID: \"YOUR_APP_ID\", apiKey: \"YOUR_API_KEY\")"
+    },
+    "waitForAppTask": {
+      "default": "try await client.waitForAppTask(with: response.taskID)"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.add)",
+        "update": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.update, apiKey: ApiKey(\n          acl: [Acl.search, Acl.addObject],\n          maxHitsPerQuery: 20,\n          maxQueriesPerIPPerHour: 100,\n          validity: 300\n      ))",
+        "delete": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.delete)"
+      }
+    },
+    "waitForTask": {
+      "default": "try await client.waitForTask(with: response.taskID, in: \"<<indexName>>\")"
+    }
+  }
+}
