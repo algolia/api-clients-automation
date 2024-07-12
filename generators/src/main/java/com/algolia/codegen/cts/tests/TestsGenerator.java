@@ -50,7 +50,6 @@ public abstract class TestsGenerator {
     Map<String, T> cts = new TreeMap<>();
 
     for (File f : allTests) {
-      System.out.println("Loading " + f.getAbsolutePath() + " for" + path);
       String json = new String(Files.readAllBytes(Paths.get(f.getAbsolutePath())));
       json = injectVariables(json);
       cts.put(f.getName().replace(".json", ""), Json.mapper().readValue(json, jsonType));
