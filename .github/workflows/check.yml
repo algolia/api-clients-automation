@@ -243,6 +243,7 @@ jobs:
 
       - name: Run CTS
         id: cts
+        continue-on-error: true
         run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} ${{ github.event.pull_request.head.repo.fork && '--exclude-e2e' || '' }}
 
       - name: Retry e2e CTS
@@ -332,6 +333,7 @@ jobs:
 
       - name: Run CTS
         id: cts
+        continue-on-error: true
         run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} ${{ github.event.pull_request.head.repo.fork && '--exclude-e2e' || '' }}
 
       - name: Retry e2e CTS
