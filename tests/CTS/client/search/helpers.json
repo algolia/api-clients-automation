@@ -389,13 +389,13 @@
         "object": "$client",
         "path": "waitForApiKey",
         "parameters": {
-          "key": "api-key-add-operation-test",
+          "key": "api-key-add-operation-test-${{languageCased}}",
           "operation": "add"
         },
         "expected": {
           "type": "response",
           "match": {
-            "value": "api-key-add-operation-test",
+            "value": "api-key-add-operation-test-${{languageCased}}",
             "description": "my new api key",
             "acl": [
               "search",
@@ -432,7 +432,7 @@
         "object": "$client",
         "path": "waitForApiKey",
         "parameters": {
-          "key": "api-key-update-operation-test",
+          "key": "api-key-update-operation-test-${{languageCased}}",
           "operation": "update",
           "apiKey": {
             "description": "my updated api key",
@@ -449,7 +449,7 @@
         "expected": {
           "type": "response",
           "match": {
-            "value": "api-key-update-operation-test",
+            "value": "api-key-update-operation-test-${{languageCased}}",
             "description": "my updated api key",
             "acl": [
               "search",
@@ -487,7 +487,7 @@
         "object": "$client",
         "path": "waitForApiKey",
         "parameters": {
-          "key": "api-key-delete-operation-test",
+          "key": "api-key-delete-operation-test-${{languageCased}}",
           "operation": "delete"
         },
         "expected": {

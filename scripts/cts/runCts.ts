@@ -9,6 +9,7 @@ import { startTestServer } from './testServer';
 import { assertChunkWrapperValid } from './testServer/chunkWrapper.js';
 import { assertValidReplaceAllObjects } from './testServer/replaceAllObjects.js';
 import { assertValidTimeouts } from './testServer/timeout.js';
+import { assertValidWaitForApiKey } from './testServer/waitForApiKey.js';
 
 async function runCtsOne(
   language: Language,
@@ -152,5 +153,6 @@ export async function runCts(
     assertValidTimeouts(languages.length);
     assertChunkWrapperValid(languages.length - skip('dart') - skip('scala'));
     assertValidReplaceAllObjects(languages.length - skip('dart') - skip('scala'));
+    assertValidWaitForApiKey(languages.length - skip('dart') - skip('scala'));
   }
 }
