@@ -62,6 +62,7 @@ export 'src/model/related_products.dart';
 export 'src/model/related_query.dart';
 export 'src/model/remove_words_if_no_results.dart';
 export 'src/model/rendering_content.dart';
+export 'src/model/search_pagination.dart';
 export 'src/model/search_params.dart';
 export 'src/model/search_params_object.dart';
 export 'src/model/search_params_query.dart';

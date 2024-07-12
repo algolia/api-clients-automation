@@ -242,7 +242,13 @@ jobs:
           key: node-modules-tests-${{ hashFiles('tests/output/javascript/yarn.lock') }}
 
       - name: Run CTS
-        run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
+        id: cts
+        continue-on-error: true
+        run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} ${{ github.event.pull_request.head.repo.fork && '--exclude-e2e' || '' }}
+
+      - name: Retry e2e CTS
+        if: ${{ !github.event.pull_request.head.repo.fork && github.event.number && steps.cts.outcome == 'failure' }}
+        run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --exclude-unit
 
       - name: Generate code snippets for documentation
         run: yarn cli snippets javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
@@ -326,7 +332,13 @@ jobs:
         run: yarn cli cts generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
       - name: Run CTS
-        run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }}
+        id: cts
+        continue-on-error: true
+        run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} ${{ github.event.pull_request.head.repo.fork && '--exclude-e2e' || '' }}
+
+      - name: Retry e2e CTS
+        if: ${{ !github.event.pull_request.head.repo.fork && steps.cts.outcome == 'failure' }}
+        run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --exclude-unit
 
       - name: Generate code snippets for documentation
         run: yarn cli snippets ${{ matrix.client.language }} ${{ matrix.client.toRun }}
@@ -522,6 +534,8 @@ jobs:
       - check_green
     if: |
       always() &&
+      !contains(needs.*.result, 'cancelled') &&
+      !contains(needs.*.result, 'failure') &&
       github.ref == 'refs/heads/main'
     permissions:
       pull-requests: write

@@ -1,4 +1,4 @@
-package com.algolia.methods.e2e;
+package com.algolia.e2e;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
