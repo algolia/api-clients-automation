@@ -5,6 +5,7 @@ import type { Express } from 'express';
 
 import { createSpinner } from '../../spinners';
 
+import { benchmarkServer } from './benchmark';
 import { chunkWrapperServer } from './chunkWrapper';
 import { gzipServer } from './gzip';
 import { replaceAllObjectsServer } from './replaceAllObjects';
@@ -31,6 +32,16 @@ export async function startTestServer(): Promise<() => Promise<void>> {
           }),
       ),
     );
+  };
+}
+
+export async function startBenchmarkServer(): Promise<() => Promise<void>> {
+  const server = await benchmarkServer();
+
+  return async () => {
+    await new Promise<void>((resolve) => {
+      server.close(() => resolve());
+    });
   };
 }
 

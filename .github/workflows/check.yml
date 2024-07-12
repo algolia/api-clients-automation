@@ -242,17 +242,17 @@ jobs:
           key: node-modules-tests-${{ hashFiles('tests/output/javascript/yarn.lock') }}
 
       - name: Run unit CTS
-        run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --exclude-e2e
+        run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --no-e2e
 
       - name: Run e2e CTS
         id: cts-e2e
         continue-on-error: true
         if: ${{ !github.event.pull_request.head.repo.fork }}
-        run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --exclude-unit
+        run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --no-client --no-requests
 
       - name: Retry e2e CTS
         if: ${{ !github.event.pull_request.head.repo.fork && steps.cts-e2e.outcome == 'failure' }}
-        run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --exclude-unit
+        run: yarn cli cts run javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }} --no-client --no-requests
 
       - name: Generate code snippets for documentation
         run: yarn cli snippets javascript ${{ fromJSON(needs.setup.outputs.JAVASCRIPT_DATA).toRun }}
@@ -336,17 +336,17 @@ jobs:
         run: yarn cli cts generate ${{ matrix.client.language }} ${{ matrix.client.toRun }}
 
       - name: Run unit CTS
-        run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --exclude-e2e
+        run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --no-e2e
 
       - name: Run e2e CTS
         id: cts-e2e
         continue-on-error: true
         if: ${{ !github.event.pull_request.head.repo.fork }}
-        run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --exclude-unit
+        run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --no-client --no-requests
 
       - name: Retry e2e CTS
         if: ${{ !github.event.pull_request.head.repo.fork && steps.cts-e2e.outcome == 'failure' }}
-        run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --exclude-unit
+        run: yarn cli cts run ${{ matrix.client.language }} ${{ matrix.client.toRun }} --no-client --no-requests
 
       - name: Generate code snippets for documentation
         run: yarn cli snippets ${{ matrix.client.language }} ${{ matrix.client.toRun }}
@@ -504,7 +504,7 @@ jobs:
             | 🪓 Triggered by | [`${{ github.sha }}`](${{ github.event.pull_request.base.repo.html_url }}/commit/${{ github.sha }}) |
             | 🍃 Generated commit | [`${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT }}`](${{ github.event.pull_request.base.repo.html_url }}/commit/${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT }}) |
             | 🌲 Generated branch | [`generated/${{ github.head_ref }}`](${{ github.event.pull_request.base.repo.html_url }}/tree/generated/${{ github.head_ref }}) |
-    
+
       - name: Build website
         if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' }}
         run: yarn website:build

@@ -1,5 +1,5 @@
 // {{generationBanner}}
-package client
+package benchmark
 
 import (
   "encoding/json"
@@ -34,6 +34,6 @@ func create{{#lambda.titlecase}}{{clientPrefix}}{{/lambda.titlecase}}Client(t *t
   return client, echo
 }
 
-{{#blocksClient}}
+{{#blocksBenchmark}}
 {{> tests/client/tests}}
-{{/blocksClient}}
+{{/blocksBenchmark}}

@@ -16,8 +16,11 @@ import org.openapitools.codegen.SupportingFile;
 
 public class TestsClient extends TestsGenerator {
 
-  public TestsClient(String language, String client) {
+  private final boolean withBenchmark;
+
+  public TestsClient(String language, String client, boolean withBenchmark) {
     super(language, client);
+    this.withBenchmark = withBenchmark;
   }
 
   @Override
@@ -27,8 +30,17 @@ public class TestsClient extends TestsGenerator {
       return false;
     }
 
-    File templates = new File("templates/" + language + "/tests/client/suite.mustache");
-    return templates.exists();
+    File templates = new File("templates/" + language + "/tests/client/" + (withBenchmark ? "benchmark" : "suite") + ".mustache");
+    if (!templates.exists()) {
+      return false;
+    }
+
+    if (withBenchmark) {
+      File benchmarkTest = new File("tests/CTS/benchmark/" + client + "/benchmark.json");
+      return benchmarkTest.exists();
+    }
+
+    return true;
   }
 
   @Override
@@ -38,15 +50,15 @@ public class TestsClient extends TestsGenerator {
     }
     supportingFiles.add(
       new SupportingFile(
-        "tests/client/suite.mustache",
-        "tests/output/" + language + "/" + outputFolder + "/client",
+        "tests/client/" + (withBenchmark ? "benchmark" : "suite") + ".mustache",
+        "tests/output/" + language + "/" + outputFolder + "/" + (withBenchmark ? "benchmark" : "client"),
         Helpers.createClientName(client, language) + extension
       )
     );
   }
 
   public void run(Map<String, CodegenModel> models, Map<String, CodegenOperation> operations, Map<String, Object> bundle) throws Exception {
-    Map<String, ClientTestData[]> cts = loadCTS("client", client, ClientTestData[].class);
+    Map<String, ClientTestData[]> cts = loadCTS(withBenchmark ? "benchmark" : "client", client, ClientTestData[].class);
     ParametersWithDataType paramsType = new ParametersWithDataType(models, language, client);
 
     List<Object> blocks = new ArrayList<>();
@@ -186,6 +198,6 @@ public class TestsClient extends TestsGenerator {
       testObj.put("testType", blockEntry.getKey());
       blocks.add(testObj);
     }
-    bundle.put("blocksClient", blocks);
+    bundle.put(withBenchmark ? "blocksBenchmark" : "blocksClient", blocks);
   }
 }

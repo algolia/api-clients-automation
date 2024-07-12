@@ -41,16 +41,16 @@ public abstract class TestsGenerator {
     if (!dir.exists()) {
       throw new CTSException("CTS not found at " + dir.getAbsolutePath(), true);
     }
-    if (!commonTestDir.exists()) {
-      throw new CTSException("CTS not found at " + commonTestDir.getAbsolutePath(), true);
-    }
     List<File> allTests = new ArrayList<>();
     Collections.addAll(allTests, dir.listFiles());
-    Collections.addAll(allTests, commonTestDir.listFiles());
+    if (commonTestDir.exists()) {
+      Collections.addAll(allTests, commonTestDir.listFiles());
+    }
 
     Map<String, T> cts = new TreeMap<>();
 
     for (File f : allTests) {
+      System.out.println("Loading " + f.getAbsolutePath() + " for" + path);
       String json = new String(Files.readAllBytes(Paths.get(f.getAbsolutePath())));
       json = injectVariables(json);
       cts.put(f.getName().replace(".json", ""), Json.mapper().readValue(json, jsonType));
