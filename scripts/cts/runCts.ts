@@ -89,7 +89,7 @@ async function runCtsOne(
       );
       break;
     case 'ruby':
-      await run(`bundle install && bundle exec rake test --trace`, {
+      await run(`bundle install && bundle exec rake ${filter((f) => `test:${f}`)} --trace`, {
         cwd,
         language,
       });
