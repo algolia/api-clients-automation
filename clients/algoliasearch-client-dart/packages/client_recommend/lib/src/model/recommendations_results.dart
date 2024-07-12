@@ -23,14 +23,10 @@ final class RecommendationsResults {
     this.exhaustiveTypo,
     this.facets,
     this.facetsStats,
-    required this.hitsPerPage,
     this.index,
     this.indexUsed,
     this.message,
-    required this.nbHits,
-    required this.nbPages,
     this.nbSortedHits,
-    required this.page,
     this.parsedQuery,
     required this.processingTimeMS,
     this.processingTimingsMS,
@@ -41,6 +37,10 @@ final class RecommendationsResults {
     this.serverUsed,
     this.userData,
     this.queryID,
+    required this.page,
+    required this.nbHits,
+    required this.nbPages,
+    required this.hitsPerPage,
     required this.hits,
   });
 
@@ -87,12 +87,6 @@ final class RecommendationsResults {
   @JsonKey(name: r'facets_stats')
   final Map<String, FacetsStats>? facetsStats;
 
-  /// Number of hits per page.
-  // minimum: 1
-  // maximum: 1000
-  @JsonKey(name: r'hitsPerPage')
-  final int hitsPerPage;
-
   /// Index name used for the query.
   @JsonKey(name: r'index')
   final String? index;
@@ -105,22 +99,9 @@ final class RecommendationsResults {
   @JsonKey(name: r'message')
   final String? message;
 
-  /// Number of results (hits).
-  @JsonKey(name: r'nbHits')
-  final int nbHits;
-
-  /// Number of pages of results.
-  @JsonKey(name: r'nbPages')
-  final int nbPages;
-
   /// Number of hits selected and sorted by the relevant sort algorithm.
   @JsonKey(name: r'nbSortedHits')
   final int? nbSortedHits;
-
-  /// Page of search results to retrieve.
-  // minimum: 0
-  @JsonKey(name: r'page')
-  final int page;
 
   /// Post-[normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/#what-does-normalization-mean) query string that will be searched.
   @JsonKey(name: r'parsedQuery')
@@ -160,6 +141,25 @@ final class RecommendationsResults {
   @JsonKey(name: r'queryID')
   final String? queryID;
 
+  /// Page of search results to retrieve.
+  // minimum: 0
+  @JsonKey(name: r'page')
+  final int page;
+
+  /// Number of results (hits).
+  @JsonKey(name: r'nbHits')
+  final int nbHits;
+
+  /// Number of pages of results.
+  @JsonKey(name: r'nbPages')
+  final int nbPages;
+
+  /// Number of hits per page.
+  // minimum: 1
+  // maximum: 1000
+  @JsonKey(name: r'hitsPerPage')
+  final int hitsPerPage;
+
   /// One of types:
   /// - [RecommendHit]
   /// - [TrendingFacetHit]
@@ -177,14 +177,10 @@ final class RecommendationsResults {
           other.exhaustive == exhaustive &&
           other.facets == facets &&
           other.facetsStats == facetsStats &&
-          other.hitsPerPage == hitsPerPage &&
           other.index == index &&
           other.indexUsed == indexUsed &&
           other.message == message &&
-          other.nbHits == nbHits &&
-          other.nbPages == nbPages &&
           other.nbSortedHits == nbSortedHits &&
-          other.page == page &&
           other.parsedQuery == parsedQuery &&
           other.processingTimeMS == processingTimeMS &&
           other.processingTimingsMS == processingTimingsMS &&
@@ -195,6 +191,10 @@ final class RecommendationsResults {
           other.serverUsed == serverUsed &&
           other.userData == userData &&
           other.queryID == queryID &&
+          other.page == page &&
+          other.nbHits == nbHits &&
+          other.nbPages == nbPages &&
+          other.hitsPerPage == hitsPerPage &&
           other.hits == hits;
 
   @override
@@ -206,14 +206,10 @@ final class RecommendationsResults {
       exhaustive.hashCode +
       facets.hashCode +
       facetsStats.hashCode +
-      hitsPerPage.hashCode +
       index.hashCode +
       indexUsed.hashCode +
       message.hashCode +
-      nbHits.hashCode +
-      nbPages.hashCode +
       nbSortedHits.hashCode +
-      page.hashCode +
       parsedQuery.hashCode +
       processingTimeMS.hashCode +
       processingTimingsMS.hashCode +
@@ -224,6 +220,10 @@ final class RecommendationsResults {
       serverUsed.hashCode +
       userData.hashCode +
       queryID.hashCode +
+      page.hashCode +
+      nbHits.hashCode +
+      nbPages.hashCode +
+      hitsPerPage.hashCode +
       hits.hashCode;
 
   factory RecommendationsResults.fromJson(Map<String, dynamic> json) =>

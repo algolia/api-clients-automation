@@ -90,6 +90,7 @@ public class AlgoliaSwiftGenerator extends Swift5ClientCodegen {
     "removewordsifnoresults",
     "renderingcontent",
     "rerankingapplyfilter",
+    "searchpagination",
     "searchparams",
     "searchparamsobject",
     "searchparamsquery",

@@ -42,9 +42,6 @@ public class BaseSearchResponse {
   @JsonProperty("facets_stats")
   private Map<String, FacetsStats> facetsStats;
 
-  @JsonProperty("hitsPerPage")
-  private Integer hitsPerPage;
-
   @JsonProperty("index")
   private String index;
 
@@ -54,17 +51,8 @@ public class BaseSearchResponse {
   @JsonProperty("message")
   private String message;
 
-  @JsonProperty("nbHits")
-  private Integer nbHits;
-
-  @JsonProperty("nbPages")
-  private Integer nbPages;
-
   @JsonProperty("nbSortedHits")
   private Integer nbSortedHits;
-
-  @JsonProperty("page")
-  private Integer page;
 
   @JsonProperty("parsedQuery")
   private String parsedQuery;
@@ -255,17 +243,6 @@ public class BaseSearchResponse {
     return facetsStats;
   }
 
-  public BaseSearchResponse setHitsPerPage(Integer hitsPerPage) {
-    this.hitsPerPage = hitsPerPage;
-    return this;
-  }
-
-  /** Number of hits per page. minimum: 1 maximum: 1000 */
-  @javax.annotation.Nonnull
-  public Integer getHitsPerPage() {
-    return hitsPerPage;
-  }
-
   public BaseSearchResponse setIndex(String index) {
     this.index = index;
     return this;
@@ -302,28 +279,6 @@ public class BaseSearchResponse {
     return message;
   }
 
-  public BaseSearchResponse setNbHits(Integer nbHits) {
-    this.nbHits = nbHits;
-    return this;
-  }
-
-  /** Number of results (hits). */
-  @javax.annotation.Nonnull
-  public Integer getNbHits() {
-    return nbHits;
-  }
-
-  public BaseSearchResponse setNbPages(Integer nbPages) {
-    this.nbPages = nbPages;
-    return this;
-  }
-
-  /** Number of pages of results. */
-  @javax.annotation.Nonnull
-  public Integer getNbPages() {
-    return nbPages;
-  }
-
   public BaseSearchResponse setNbSortedHits(Integer nbSortedHits) {
     this.nbSortedHits = nbSortedHits;
     return this;
@@ -333,17 +288,6 @@ public class BaseSearchResponse {
   @javax.annotation.Nullable
   public Integer getNbSortedHits() {
     return nbSortedHits;
-  }
-
-  public BaseSearchResponse setPage(Integer page) {
-    this.page = page;
-    return this;
-  }
-
-  /** Page of search results to retrieve. minimum: 0 */
-  @javax.annotation.Nonnull
-  public Integer getPage() {
-    return page;
   }
 
   public BaseSearchResponse setParsedQuery(String parsedQuery) {
@@ -488,14 +432,10 @@ public class BaseSearchResponse {
       Objects.equals(this.exhaustiveTypo, baseSearchResponse.exhaustiveTypo) &&
       Objects.equals(this.facets, baseSearchResponse.facets) &&
       Objects.equals(this.facetsStats, baseSearchResponse.facetsStats) &&
-      Objects.equals(this.hitsPerPage, baseSearchResponse.hitsPerPage) &&
       Objects.equals(this.index, baseSearchResponse.index) &&
       Objects.equals(this.indexUsed, baseSearchResponse.indexUsed) &&
       Objects.equals(this.message, baseSearchResponse.message) &&
-      Objects.equals(this.nbHits, baseSearchResponse.nbHits) &&
-      Objects.equals(this.nbPages, baseSearchResponse.nbPages) &&
       Objects.equals(this.nbSortedHits, baseSearchResponse.nbSortedHits) &&
-      Objects.equals(this.page, baseSearchResponse.page) &&
       Objects.equals(this.parsedQuery, baseSearchResponse.parsedQuery) &&
       Objects.equals(this.processingTimeMS, baseSearchResponse.processingTimeMS) &&
       Objects.equals(this.processingTimingsMS, baseSearchResponse.processingTimingsMS) &&
@@ -523,14 +463,10 @@ public class BaseSearchResponse {
       exhaustiveTypo,
       facets,
       facetsStats,
-      hitsPerPage,
       index,
       indexUsed,
       message,
-      nbHits,
-      nbPages,
       nbSortedHits,
-      page,
       parsedQuery,
       processingTimeMS,
       processingTimingsMS,
@@ -560,14 +496,10 @@ public class BaseSearchResponse {
     sb.append("    exhaustiveTypo: ").append(toIndentedString(exhaustiveTypo)).append("\n");
     sb.append("    facets: ").append(toIndentedString(facets)).append("\n");
     sb.append("    facetsStats: ").append(toIndentedString(facetsStats)).append("\n");
-    sb.append("    hitsPerPage: ").append(toIndentedString(hitsPerPage)).append("\n");
     sb.append("    index: ").append(toIndentedString(index)).append("\n");
     sb.append("    indexUsed: ").append(toIndentedString(indexUsed)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
-    sb.append("    nbHits: ").append(toIndentedString(nbHits)).append("\n");
-    sb.append("    nbPages: ").append(toIndentedString(nbPages)).append("\n");
     sb.append("    nbSortedHits: ").append(toIndentedString(nbSortedHits)).append("\n");
-    sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    parsedQuery: ").append(toIndentedString(parsedQuery)).append("\n");
     sb.append("    processingTimeMS: ").append(toIndentedString(processingTimeMS)).append("\n");
     sb.append("    processingTimingsMS: ").append(toIndentedString(processingTimingsMS)).append("\n");

@@ -52,7 +52,7 @@ get:
                       minimum: 1
                       example: 7
                     nbHits:
-                      $ref: '../../../search/common/schemas/SearchResponse.yml#/nbHits'
+                      $ref: '../../../common/schemas/SearchResponse.yml#/nbHits'
     '400':
       $ref: '../../../common/responses/BadRequest.yml'
     '402':

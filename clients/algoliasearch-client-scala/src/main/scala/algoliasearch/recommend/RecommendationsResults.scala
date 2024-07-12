@@ -49,22 +49,14 @@ package algoliasearch.recommend
   *   Facet counts.
   * @param facetsStats
   *   Statistics for numerical facets.
-  * @param hitsPerPage
-  *   Number of hits per page.
   * @param index
   *   Index name used for the query.
   * @param indexUsed
   *   Index name used for the query. During A/B testing, the targeted index isn't always the index used by the query.
   * @param message
   *   Warnings about the query.
-  * @param nbHits
-  *   Number of results (hits).
-  * @param nbPages
-  *   Number of pages of results.
   * @param nbSortedHits
   *   Number of hits selected and sorted by the relevant sort algorithm.
-  * @param page
-  *   Page of search results to retrieve.
   * @param parsedQuery
   *   Post-[normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/#what-does-normalization-mean)
   *   query string that will be searched.
@@ -84,6 +76,14 @@ package algoliasearch.recommend
   * @param queryID
   *   Unique identifier for the query. This is used for [click
   *   analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+  * @param page
+  *   Page of search results to retrieve.
+  * @param nbHits
+  *   Number of results (hits).
+  * @param nbPages
+  *   Number of pages of results.
+  * @param hitsPerPage
+  *   Number of hits per page.
   */
 case class RecommendationsResults(
     abTestID: Option[Int] = scala.None,
@@ -96,14 +96,10 @@ case class RecommendationsResults(
     exhaustiveTypo: Option[Boolean] = scala.None,
     facets: Option[Map[String, Map[String, Int]]] = scala.None,
     facetsStats: Option[Map[String, FacetsStats]] = scala.None,
-    hitsPerPage: Int,
     index: Option[String] = scala.None,
     indexUsed: Option[String] = scala.None,
     message: Option[String] = scala.None,
-    nbHits: Int,
-    nbPages: Int,
     nbSortedHits: Option[Int] = scala.None,
-    page: Int,
     parsedQuery: Option[String] = scala.None,
     processingTimeMS: Int,
     processingTimingsMS: Option[Any] = scala.None,
@@ -114,5 +110,9 @@ case class RecommendationsResults(
     serverUsed: Option[String] = scala.None,
     userData: Option[Any] = scala.None,
     queryID: Option[String] = scala.None,
+    page: Int,
+    nbHits: Int,
+    nbPages: Int,
+    hitsPerPage: Int,
     hits: Seq[RecommendationsHit]
 )

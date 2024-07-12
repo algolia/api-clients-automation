@@ -40,16 +40,11 @@ RecommendationsResults _$RecommendationsResultsFromJson(
                     (k, e) => MapEntry(
                         k, FacetsStats.fromJson(e as Map<String, dynamic>)),
                   )),
-          hitsPerPage:
-              $checkedConvert('hitsPerPage', (v) => (v as num).toInt()),
           index: $checkedConvert('index', (v) => v as String?),
           indexUsed: $checkedConvert('indexUsed', (v) => v as String?),
           message: $checkedConvert('message', (v) => v as String?),
-          nbHits: $checkedConvert('nbHits', (v) => (v as num).toInt()),
-          nbPages: $checkedConvert('nbPages', (v) => (v as num).toInt()),
           nbSortedHits:
               $checkedConvert('nbSortedHits', (v) => (v as num?)?.toInt()),
-          page: $checkedConvert('page', (v) => (v as num).toInt()),
           parsedQuery: $checkedConvert('parsedQuery', (v) => v as String?),
           processingTimeMS:
               $checkedConvert('processingTimeMS', (v) => (v as num).toInt()),
@@ -71,6 +66,11 @@ RecommendationsResults _$RecommendationsResultsFromJson(
           serverUsed: $checkedConvert('serverUsed', (v) => v as String?),
           userData: $checkedConvert('userData', (v) => v),
           queryID: $checkedConvert('queryID', (v) => v as String?),
+          page: $checkedConvert('page', (v) => (v as num).toInt()),
+          nbHits: $checkedConvert('nbHits', (v) => (v as num).toInt()),
+          nbPages: $checkedConvert('nbPages', (v) => (v as num).toInt()),
+          hitsPerPage:
+              $checkedConvert('hitsPerPage', (v) => (v as num).toInt()),
           hits: $checkedConvert('hits', (v) => v as List<dynamic>),
         );
         return val;
@@ -99,14 +99,10 @@ Map<String, dynamic> _$RecommendationsResultsToJson(
   writeNotNull('facets', instance.facets);
   writeNotNull('facets_stats',
       instance.facetsStats?.map((k, e) => MapEntry(k, e.toJson())));
-  val['hitsPerPage'] = instance.hitsPerPage;
   writeNotNull('index', instance.index);
   writeNotNull('indexUsed', instance.indexUsed);
   writeNotNull('message', instance.message);
-  val['nbHits'] = instance.nbHits;
-  val['nbPages'] = instance.nbPages;
   writeNotNull('nbSortedHits', instance.nbSortedHits);
-  val['page'] = instance.page;
   writeNotNull('parsedQuery', instance.parsedQuery);
   val['processingTimeMS'] = instance.processingTimeMS;
   writeNotNull('processingTimingsMS', instance.processingTimingsMS);
@@ -117,6 +113,10 @@ Map<String, dynamic> _$RecommendationsResultsToJson(
   writeNotNull('serverUsed', instance.serverUsed);
   writeNotNull('userData', instance.userData);
   writeNotNull('queryID', instance.queryID);
+  val['page'] = instance.page;
+  val['nbHits'] = instance.nbHits;
+  val['nbPages'] = instance.nbPages;
+  val['hitsPerPage'] = instance.hitsPerPage;
   val['hits'] = instance.hits.toList();
   return val;
 }

@@ -129,16 +129,29 @@ ctsCommand
   .addArgument(args.language)
   .addArgument(args.clients)
   .option(flags.verbose.flag, flags.verbose.description)
-  .action(async (langArg: LangArg, clientArg: string[], { verbose }) => {
-    const { language, client } = transformSelection({
-      langArg,
-      clientArg,
-    });
+  .option('-e, --exclude-e2e', "don't run the e2e tests, useful for offline testing")
+  .option('-u, --exclude-unit', "don't run the client and requests tests")
+  .action(
+    async (
+      langArg: LangArg,
+      clientArg: string[],
+      { verbose, excludeE2e: excludeE2E, excludeUnit },
+    ) => {
+      const { language, client } = transformSelection({
+        langArg,
+        clientArg,
+      });
 
-    setVerbose(Boolean(verbose));
+      setVerbose(Boolean(verbose));
 
-    await runCts(language === ALL ? LANGUAGES : [language], client);
-  });
+      await runCts(
+        language === ALL ? LANGUAGES : [language],
+        client,
+        Boolean(excludeE2E),
+        Boolean(excludeUnit),
+      );
+    },
+  );
 
 ctsCommand
   .command('server')

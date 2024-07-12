@@ -10,9 +10,9 @@ searchDictionaryEntriesResponse:
     page:
       $ref: '../../../../../common/parameters.yml#/page'
     nbHits:
-      $ref: '../../../../common/schemas/SearchResponse.yml#/nbHits'
+      $ref: '../../../../../common/schemas/SearchResponse.yml#/nbHits'
     nbPages:
-      $ref: '../../../../common/schemas/SearchResponse.yml#/nbPages'
+      $ref: '../../../../../common/schemas/SearchResponse.yml#/nbPages'
   required:
     - hits
     - page

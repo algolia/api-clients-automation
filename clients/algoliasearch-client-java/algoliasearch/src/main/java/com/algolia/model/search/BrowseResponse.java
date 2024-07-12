@@ -44,9 +44,6 @@ public class BrowseResponse<T> {
   @JsonProperty("facets_stats")
   private Map<String, FacetsStats> facetsStats;
 
-  @JsonProperty("hitsPerPage")
-  private Integer hitsPerPage;
-
   @JsonProperty("index")
   private String index;
 
@@ -56,17 +53,8 @@ public class BrowseResponse<T> {
   @JsonProperty("message")
   private String message;
 
-  @JsonProperty("nbHits")
-  private Integer nbHits;
-
-  @JsonProperty("nbPages")
-  private Integer nbPages;
-
   @JsonProperty("nbSortedHits")
   private Integer nbSortedHits;
-
-  @JsonProperty("page")
-  private Integer page;
 
   @JsonProperty("parsedQuery")
   private String parsedQuery;
@@ -97,6 +85,18 @@ public class BrowseResponse<T> {
 
   @JsonProperty("queryID")
   private String queryID;
+
+  @JsonProperty("page")
+  private Integer page;
+
+  @JsonProperty("nbHits")
+  private Integer nbHits;
+
+  @JsonProperty("nbPages")
+  private Integer nbPages;
+
+  @JsonProperty("hitsPerPage")
+  private Integer hitsPerPage;
 
   @JsonProperty("hits")
   private List<T> hits = new ArrayList<>();
@@ -256,17 +256,6 @@ public class BrowseResponse<T> {
     return facetsStats;
   }
 
-  public BrowseResponse<T> setHitsPerPage(Integer hitsPerPage) {
-    this.hitsPerPage = hitsPerPage;
-    return this;
-  }
-
-  /** Number of hits per page. minimum: 1 maximum: 1000 */
-  @javax.annotation.Nonnull
-  public Integer getHitsPerPage() {
-    return hitsPerPage;
-  }
-
   public BrowseResponse<T> setIndex(String index) {
     this.index = index;
     return this;
@@ -303,28 +292,6 @@ public class BrowseResponse<T> {
     return message;
   }
 
-  public BrowseResponse<T> setNbHits(Integer nbHits) {
-    this.nbHits = nbHits;
-    return this;
-  }
-
-  /** Number of results (hits). */
-  @javax.annotation.Nonnull
-  public Integer getNbHits() {
-    return nbHits;
-  }
-
-  public BrowseResponse<T> setNbPages(Integer nbPages) {
-    this.nbPages = nbPages;
-    return this;
-  }
-
-  /** Number of pages of results. */
-  @javax.annotation.Nonnull
-  public Integer getNbPages() {
-    return nbPages;
-  }
-
   public BrowseResponse<T> setNbSortedHits(Integer nbSortedHits) {
     this.nbSortedHits = nbSortedHits;
     return this;
@@ -334,17 +301,6 @@ public class BrowseResponse<T> {
   @javax.annotation.Nullable
   public Integer getNbSortedHits() {
     return nbSortedHits;
-  }
-
-  public BrowseResponse<T> setPage(Integer page) {
-    this.page = page;
-    return this;
-  }
-
-  /** Page of search results to retrieve. minimum: 0 */
-  @javax.annotation.Nonnull
-  public Integer getPage() {
-    return page;
   }
 
   public BrowseResponse<T> setParsedQuery(String parsedQuery) {
@@ -469,6 +425,50 @@ public class BrowseResponse<T> {
     return queryID;
   }
 
+  public BrowseResponse<T> setPage(Integer page) {
+    this.page = page;
+    return this;
+  }
+
+  /** Page of search results to retrieve. minimum: 0 */
+  @javax.annotation.Nullable
+  public Integer getPage() {
+    return page;
+  }
+
+  public BrowseResponse<T> setNbHits(Integer nbHits) {
+    this.nbHits = nbHits;
+    return this;
+  }
+
+  /** Number of results (hits). */
+  @javax.annotation.Nullable
+  public Integer getNbHits() {
+    return nbHits;
+  }
+
+  public BrowseResponse<T> setNbPages(Integer nbPages) {
+    this.nbPages = nbPages;
+    return this;
+  }
+
+  /** Number of pages of results. */
+  @javax.annotation.Nullable
+  public Integer getNbPages() {
+    return nbPages;
+  }
+
+  public BrowseResponse<T> setHitsPerPage(Integer hitsPerPage) {
+    this.hitsPerPage = hitsPerPage;
+    return this;
+  }
+
+  /** Number of hits per page. minimum: 1 maximum: 1000 */
+  @javax.annotation.Nullable
+  public Integer getHitsPerPage() {
+    return hitsPerPage;
+  }
+
   public BrowseResponse<T> setHits(List<T> hits) {
     this.hits = hits;
     return this;
@@ -545,14 +545,10 @@ public class BrowseResponse<T> {
       Objects.equals(this.exhaustiveTypo, browseResponse.exhaustiveTypo) &&
       Objects.equals(this.facets, browseResponse.facets) &&
       Objects.equals(this.facetsStats, browseResponse.facetsStats) &&
-      Objects.equals(this.hitsPerPage, browseResponse.hitsPerPage) &&
       Objects.equals(this.index, browseResponse.index) &&
       Objects.equals(this.indexUsed, browseResponse.indexUsed) &&
       Objects.equals(this.message, browseResponse.message) &&
-      Objects.equals(this.nbHits, browseResponse.nbHits) &&
-      Objects.equals(this.nbPages, browseResponse.nbPages) &&
       Objects.equals(this.nbSortedHits, browseResponse.nbSortedHits) &&
-      Objects.equals(this.page, browseResponse.page) &&
       Objects.equals(this.parsedQuery, browseResponse.parsedQuery) &&
       Objects.equals(this.processingTimeMS, browseResponse.processingTimeMS) &&
       Objects.equals(this.processingTimingsMS, browseResponse.processingTimingsMS) &&
@@ -563,6 +559,10 @@ public class BrowseResponse<T> {
       Objects.equals(this.serverUsed, browseResponse.serverUsed) &&
       Objects.equals(this.userData, browseResponse.userData) &&
       Objects.equals(this.queryID, browseResponse.queryID) &&
+      Objects.equals(this.page, browseResponse.page) &&
+      Objects.equals(this.nbHits, browseResponse.nbHits) &&
+      Objects.equals(this.nbPages, browseResponse.nbPages) &&
+      Objects.equals(this.hitsPerPage, browseResponse.hitsPerPage) &&
       Objects.equals(this.hits, browseResponse.hits) &&
       Objects.equals(this.query, browseResponse.query) &&
       Objects.equals(this.params, browseResponse.params) &&
@@ -583,14 +583,10 @@ public class BrowseResponse<T> {
       exhaustiveTypo,
       facets,
       facetsStats,
-      hitsPerPage,
       index,
       indexUsed,
       message,
-      nbHits,
-      nbPages,
       nbSortedHits,
-      page,
       parsedQuery,
       processingTimeMS,
       processingTimingsMS,
@@ -601,6 +597,10 @@ public class BrowseResponse<T> {
       serverUsed,
       userData,
       queryID,
+      page,
+      nbHits,
+      nbPages,
+      hitsPerPage,
       hits,
       query,
       params,
@@ -622,14 +622,10 @@ public class BrowseResponse<T> {
     sb.append("    exhaustiveTypo: ").append(toIndentedString(exhaustiveTypo)).append("\n");
     sb.append("    facets: ").append(toIndentedString(facets)).append("\n");
     sb.append("    facetsStats: ").append(toIndentedString(facetsStats)).append("\n");
-    sb.append("    hitsPerPage: ").append(toIndentedString(hitsPerPage)).append("\n");
     sb.append("    index: ").append(toIndentedString(index)).append("\n");
     sb.append("    indexUsed: ").append(toIndentedString(indexUsed)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
-    sb.append("    nbHits: ").append(toIndentedString(nbHits)).append("\n");
-    sb.append("    nbPages: ").append(toIndentedString(nbPages)).append("\n");
     sb.append("    nbSortedHits: ").append(toIndentedString(nbSortedHits)).append("\n");
-    sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    parsedQuery: ").append(toIndentedString(parsedQuery)).append("\n");
     sb.append("    processingTimeMS: ").append(toIndentedString(processingTimeMS)).append("\n");
     sb.append("    processingTimingsMS: ").append(toIndentedString(processingTimingsMS)).append("\n");
@@ -640,6 +636,10 @@ public class BrowseResponse<T> {
     sb.append("    serverUsed: ").append(toIndentedString(serverUsed)).append("\n");
     sb.append("    userData: ").append(toIndentedString(userData)).append("\n");
     sb.append("    queryID: ").append(toIndentedString(queryID)).append("\n");
+    sb.append("    page: ").append(toIndentedString(page)).append("\n");
+    sb.append("    nbHits: ").append(toIndentedString(nbHits)).append("\n");
+    sb.append("    nbPages: ").append(toIndentedString(nbPages)).append("\n");
+    sb.append("    hitsPerPage: ").append(toIndentedString(hitsPerPage)).append("\n");
     sb.append("    hits: ").append(toIndentedString(hits)).append("\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb.append("    params: ").append(toIndentedString(params)).append("\n");

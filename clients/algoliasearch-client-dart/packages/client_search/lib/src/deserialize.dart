@@ -22,6 +22,7 @@ import 'package:algolia_client_search/src/model/batch_params.dart';
 import 'package:algolia_client_search/src/model/batch_request.dart';
 import 'package:algolia_client_search/src/model/batch_response.dart';
 import 'package:algolia_client_search/src/model/batch_write_params.dart';
+import 'package:algolia_client_search/src/model/browse_pagination.dart';
 import 'package:algolia_client_search/src/model/browse_params_object.dart';
 import 'package:algolia_client_search/src/model/browse_response.dart';
 import 'package:algolia_client_search/src/model/built_in_operation.dart';
@@ -110,6 +111,7 @@ import 'package:algolia_client_search/src/model/search_for_hits.dart';
 import 'package:algolia_client_search/src/model/search_for_hits_options.dart';
 import 'package:algolia_client_search/src/model/search_hits.dart';
 import 'package:algolia_client_search/src/model/search_method_params.dart';
+import 'package:algolia_client_search/src/model/search_pagination.dart';
 import 'package:algolia_client_search/src/model/search_params_object.dart';
 import 'package:algolia_client_search/src/model/search_params_query.dart';
 import 'package:algolia_client_search/src/model/search_params_string.dart';
@@ -225,6 +227,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'BatchWriteParams':
       return BatchWriteParams.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'BrowsePagination':
+      return BrowsePagination.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'BrowseParamsObject':
       return BrowseParamsObject.fromJson(value as Map<String, dynamic>)
@@ -456,6 +461,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return SearchHits.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'SearchMethodParams':
       return SearchMethodParams.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'SearchPagination':
+      return SearchPagination.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'SearchParamsObject':
       return SearchParamsObject.fromJson(value as Map<String, dynamic>)

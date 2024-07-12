@@ -1,5 +1,19 @@
 browseResponse:
   allOf:
-    - $ref: './SearchResponse.yml#/baseSearchResponse'
+    - $ref: '../../../common/schemas/SearchResponse.yml#/baseSearchResponse'
+    - $ref: '#/BrowsePagination'
     - $ref: './SearchResponse.yml#/searchHits'
     - $ref: './BrowseParams.yml#/cursor'
+
+BrowsePagination:
+  type: object
+  additionalProperties: false
+  properties:
+    page:
+      $ref: '../../../common/schemas/SearchParams.yml#/page'
+    nbHits:
+      $ref: '../../../common/schemas/SearchResponse.yml#/nbHits'
+    nbPages:
+      $ref: '../../../common/schemas/SearchResponse.yml#/nbPages'
+    hitsPerPage:
+      $ref: '../../../common/schemas/IndexSettings.yml#/hitsPerPage'

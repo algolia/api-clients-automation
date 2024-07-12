@@ -24,14 +24,10 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
     this.exhaustiveTypo,
     this.facets,
     this.facetsStats,
-    required this.hitsPerPage,
     this.index,
     this.indexUsed,
     this.message,
-    required this.nbHits,
-    required this.nbPages,
     this.nbSortedHits,
-    required this.page,
     this.parsedQuery,
     required this.processingTimeMS,
     this.processingTimingsMS,
@@ -88,12 +84,6 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
   @JsonKey(name: r'facets_stats')
   final Map<String, FacetsStats>? facetsStats;
 
-  /// Number of hits per page.
-  // minimum: 1
-  // maximum: 1000
-  @JsonKey(name: r'hitsPerPage')
-  final int hitsPerPage;
-
   /// Index name used for the query.
   @JsonKey(name: r'index')
   final String? index;
@@ -106,22 +96,9 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
   @JsonKey(name: r'message')
   final String? message;
 
-  /// Number of results (hits).
-  @JsonKey(name: r'nbHits')
-  final int nbHits;
-
-  /// Number of pages of results.
-  @JsonKey(name: r'nbPages')
-  final int nbPages;
-
   /// Number of hits selected and sorted by the relevant sort algorithm.
   @JsonKey(name: r'nbSortedHits')
   final int? nbSortedHits;
-
-  /// Page of search results to retrieve.
-  // minimum: 0
-  @JsonKey(name: r'page')
-  final int page;
 
   /// Post-[normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/#what-does-normalization-mean) query string that will be searched.
   @JsonKey(name: r'parsedQuery')
@@ -175,14 +152,10 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
           other.exhaustiveTypo == exhaustiveTypo &&
           other.facets == facets &&
           other.facetsStats == facetsStats &&
-          other.hitsPerPage == hitsPerPage &&
           other.index == index &&
           other.indexUsed == indexUsed &&
           other.message == message &&
-          other.nbHits == nbHits &&
-          other.nbPages == nbPages &&
           other.nbSortedHits == nbSortedHits &&
-          other.page == page &&
           other.parsedQuery == parsedQuery &&
           other.processingTimeMS == processingTimeMS &&
           other.processingTimingsMS == processingTimingsMS &&
@@ -207,14 +180,10 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
       exhaustiveTypo.hashCode +
       facets.hashCode +
       facetsStats.hashCode +
-      hitsPerPage.hashCode +
       index.hashCode +
       indexUsed.hashCode +
       message.hashCode +
-      nbHits.hashCode +
-      nbPages.hashCode +
       nbSortedHits.hashCode +
-      page.hashCode +
       parsedQuery.hashCode +
       processingTimeMS.hashCode +
       processingTimingsMS.hashCode +
@@ -243,14 +212,10 @@ final class BaseSearchResponse extends DelegatingMap<String, dynamic> {
       exhaustiveTypo: instance.exhaustiveTypo,
       facets: instance.facets,
       facetsStats: instance.facetsStats,
-      hitsPerPage: instance.hitsPerPage,
       index: instance.index,
       indexUsed: instance.indexUsed,
       message: instance.message,
-      nbHits: instance.nbHits,
-      nbPages: instance.nbPages,
       nbSortedHits: instance.nbSortedHits,
-      page: instance.page,
       parsedQuery: instance.parsedQuery,
       processingTimeMS: instance.processingTimeMS,
       processingTimingsMS: instance.processingTimingsMS,

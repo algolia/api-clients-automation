@@ -11,6 +11,8 @@ using Algolia.Search.Transport;
 using Quibble.Xunit;
 using Xunit;
 
+namespace Algolia.Search.client;
+
 public class SearchClientTests
 {
   private readonly EchoHttpRequester _echo;

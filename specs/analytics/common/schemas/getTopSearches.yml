@@ -22,7 +22,7 @@ topSearchesResponse:
           count:
             $ref: '../parameters.yml#/count'
           nbHits:
-            $ref: '../../../search/common/schemas/SearchResponse.yml#/nbHits'
+            $ref: '../../../common/schemas/SearchResponse.yml#/nbHits'
 
 topSearchesResponseWithAnalytics:
   type: object
@@ -69,7 +69,7 @@ topSearchesResponseWithAnalytics:
           conversionCount:
             $ref: '../parameters.yml#/conversionCount'
           nbHits:
-            $ref: '../../../search/common/schemas/SearchResponse.yml#/nbHits'
+            $ref: '../../../common/schemas/SearchResponse.yml#/nbHits'
 
 topSearchesResponseWithRevenueAnalytics:
   type: object
@@ -121,7 +121,7 @@ topSearchesResponseWithRevenueAnalytics:
           conversionCount:
             $ref: '../parameters.yml#/conversionCount'
           nbHits:
-            $ref: '../../../search/common/schemas/SearchResponse.yml#/nbHits'
+            $ref: '../../../common/schemas/SearchResponse.yml#/nbHits'
           currencies:
             $ref: '../parameters.yml#/currencies'
           addToCartRate:

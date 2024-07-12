@@ -1,7 +1,8 @@
 recommendationsResults:
   allOf:
     # TODO: this isn't correct. Not all elements of the Search response are included for Recommend.
-    - $ref: '../../../search/common/schemas/SearchResponse.yml#/baseSearchResponse'
+    - $ref: '../../../common/schemas/SearchResponse.yml#/baseSearchResponse'
+    - $ref: '../../../common/schemas/SearchResponse.yml#/SearchPagination'
     - $ref: '#/recommendationsHits'
 
 recommendationsHits:

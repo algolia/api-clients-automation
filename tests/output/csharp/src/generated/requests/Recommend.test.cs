@@ -10,6 +10,8 @@ using Quibble.Xunit;
 using Xunit;
 using Action = Algolia.Search.Models.Search.Action;
 
+namespace Algolia.Search.requests;
+
 public class RecommendClientRequestTests
 {
   private readonly RecommendClient _client;
