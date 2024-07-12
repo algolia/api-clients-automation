@@ -16,8 +16,6 @@ trendingItems:
     fallbackParameters:
       $ref: '../../../common/schemas/SearchParams.yml#/searchParamsObject'
   required:
-    - facetName
-    - facetValue
     - model
 
 trendingItemsModel:
