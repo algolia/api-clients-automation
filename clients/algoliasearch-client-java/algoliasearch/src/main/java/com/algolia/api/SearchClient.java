@@ -6038,6 +6038,16 @@ public class SearchClient extends ApiClient {
   }
 
   /**
+   * Helper: Returns an iterator on top of the `browse` method.
+   *
+   * @param indexName The index in which to perform the request.
+   * @param innerType The class held by the index, could be your custom class or {@link Object}.
+   */
+  public <T> Iterable<T> browseObjects(String indexName, Class<T> innerType) {
+    return browseObjects(indexName, new BrowseParamsObject(), innerType, null);
+  }
+
+  /**
    * Helper: Returns an iterator on top of the `searchSynonyms` method.
    *
    * @param indexName The index in which to perform the request.
