@@ -10,11 +10,11 @@ part 'get_recommendations_response.g.dart';
 final class GetRecommendationsResponse {
   /// Returns a new [GetRecommendationsResponse] instance.
   const GetRecommendationsResponse({
-    this.results,
+    required this.results,
   });
 
   @JsonKey(name: r'results')
-  final List<RecommendationsResults>? results;
+  final List<RecommendationsResults> results;
 
   @override
   bool operator ==(Object other) =>

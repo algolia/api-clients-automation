@@ -40,10 +40,6 @@ void main() async {
 /// Prints the search hits.
 void printRecommendations(GetRecommendationsResponse response) {
   final results = response.results;
-  if (results == null) {
-    print("No recommendations found");
-    return;
-  }
 
   // Loop over each result and map over the search hits,
   // converting each hit to a product.
