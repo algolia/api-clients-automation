@@ -413,6 +413,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/recommendationsResults'
+                required:
+                  - results
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':

@@ -13,7 +13,7 @@ import java.util.Objects;
 public class GetRecommendationsResponse {
 
   @JsonProperty("results")
-  private List<RecommendationsResults> results;
+  private List<RecommendationsResults> results = new ArrayList<>();
 
   public GetRecommendationsResponse setResults(List<RecommendationsResults> results) {
     this.results = results;
@@ -21,15 +21,12 @@ public class GetRecommendationsResponse {
   }
 
   public GetRecommendationsResponse addResults(RecommendationsResults resultsItem) {
-    if (this.results == null) {
-      this.results = new ArrayList<>();
-    }
     this.results.add(resultsItem);
     return this;
   }
 
   /** Get results */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public List<RecommendationsResults> getResults() {
     return results;
   }
