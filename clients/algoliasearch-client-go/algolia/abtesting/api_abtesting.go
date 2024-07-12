@@ -1359,6 +1359,156 @@ func (c *APIClient) ListABTestsWithContext(ctx context.Context, r ApiListABTests
 	return returnValue, nil
 }
 
+func (r *ApiScheduleABTestRequest) UnmarshalJSON(b []byte) error {
+	req := map[string]json.RawMessage{}
+	err := json.Unmarshal(b, &req)
+	if err != nil {
+		return fmt.Errorf("cannot unmarshal request: %w", err)
+	}
+	if v, ok := req["scheduleABTestsRequest"]; ok {
+		err = json.Unmarshal(v, &r.scheduleABTestsRequest)
+		if err != nil {
+			err = json.Unmarshal(b, &r.scheduleABTestsRequest)
+			if err != nil {
+				return fmt.Errorf("cannot unmarshal scheduleABTestsRequest: %w", err)
+			}
+		}
+	} else {
+		err = json.Unmarshal(b, &r.scheduleABTestsRequest)
+		if err != nil {
+			return fmt.Errorf("cannot unmarshal body parameter scheduleABTestsRequest: %w", err)
+		}
+	}
+
+	return nil
+}
+
+// ApiScheduleABTestRequest represents the request with all the parameters for the API call.
+type ApiScheduleABTestRequest struct {
+	scheduleABTestsRequest *ScheduleABTestsRequest
+}
+
+// NewApiScheduleABTestRequest creates an instance of the ApiScheduleABTestRequest to be used for the API call.
+func (c *APIClient) NewApiScheduleABTestRequest(scheduleABTestsRequest *ScheduleABTestsRequest) ApiScheduleABTestRequest {
+	return ApiScheduleABTestRequest{
+		scheduleABTestsRequest: scheduleABTestsRequest,
+	}
+}
+
+/*
+ScheduleABTest calls the API and returns the raw response from it.
+
+	  Schedule an A/B test to be started at a later time.
+
+
+	    Required API Key ACLs:
+	    - editSettings
+
+	Request can be constructed by NewApiScheduleABTestRequest with parameters below.
+	@param ctx context.Context - Context of the request
+	  @param scheduleABTestsRequest ScheduleABTestsRequest
+	@param opts ...Option - Optional parameters for the API call
+	@return *http.Response - The raw response from the API
+	@return []byte - The raw response body from the API
+	@return error - An error if the API call fails
+*/
+func (c *APIClient) ScheduleABTestWithHTTPInfo(ctx context.Context, r ApiScheduleABTestRequest, opts ...Option) (*http.Response, []byte, error) {
+	var postBody any
+
+	requestPath := "/2/abtests/schedule"
+
+	headers := make(map[string]string)
+	queryParams := url.Values{}
+
+	if r.scheduleABTestsRequest == nil {
+		return nil, nil, reportError("Parameter `scheduleABTestsRequest` is required when calling `ScheduleABTest`.")
+	}
+
+	// optional params if any
+	for _, opt := range opts {
+		switch opt.optionType {
+		case "query":
+			queryParams.Set(opt.name, opt.value)
+		case "header":
+			headers[opt.name] = opt.value
+		}
+	}
+
+	// body params
+	postBody = r.scheduleABTestsRequest
+	req, err := c.prepareRequest(ctx, requestPath, http.MethodPost, postBody, headers, queryParams)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return c.callAPI(req, false)
+}
+
+/*
+ScheduleABTest wraps ScheduleABTestWithContext using context.Background.
+
+Schedule an A/B test to be started at a later time.
+
+Required API Key ACLs:
+  - editSettings
+
+Request can be constructed by NewApiScheduleABTestRequest with parameters below.
+
+	@param scheduleABTestsRequest ScheduleABTestsRequest
+	@return ScheduledABTestResponse
+*/
+func (c *APIClient) ScheduleABTest(r ApiScheduleABTestRequest, opts ...Option) (*ScheduledABTestResponse, error) {
+	return c.ScheduleABTestWithContext(context.Background(), r, opts...)
+}
+
+/*
+ScheduleABTest casts the HTTP response body to a defined struct.
+
+Schedule an A/B test to be started at a later time.
+
+Required API Key ACLs:
+  - editSettings
+
+Request can be constructed by NewApiScheduleABTestRequest with parameters below.
+
+	@param scheduleABTestsRequest ScheduleABTestsRequest
+	@return ScheduledABTestResponse
+*/
+func (c *APIClient) ScheduleABTestWithContext(ctx context.Context, r ApiScheduleABTestRequest, opts ...Option) (*ScheduledABTestResponse, error) {
+	var returnValue *ScheduledABTestResponse
+
+	res, resBody, err := c.ScheduleABTestWithHTTPInfo(ctx, r, opts...)
+	if err != nil {
+		return returnValue, err
+	}
+	if res == nil {
+		return returnValue, reportError("res is nil")
+	}
+
+	if res.StatusCode >= 300 {
+		newErr := &APIError{
+			Message: string(resBody),
+			Status:  res.StatusCode,
+		}
+
+		var v ErrorBase
+		err = c.decode(&v, resBody)
+		if err != nil {
+			newErr.Message = err.Error()
+			return returnValue, newErr
+		}
+
+		return returnValue, newErr
+	}
+
+	err = c.decode(&returnValue, resBody)
+	if err != nil {
+		return returnValue, reportError("cannot decode result: %w", err)
+	}
+
+	return returnValue, nil
+}
+
 func (r *ApiStopABTestRequest) UnmarshalJSON(b []byte) error {
 	req := map[string]json.RawMessage{}
 	err := json.Unmarshal(b, &req)

@@ -166,6 +166,38 @@ public class SnippetAbtestingClient
   }
 
   /// <summary>
+  /// Snippet for the ScheduleABTest method.
+  ///
+  /// scheduleABTest with minimal parameters
+  /// </summary>
+  public async Task SnippetForAbtestingClientScheduleABTest()
+  {
+    // >SEPARATOR scheduleABTest default
+    // Initialize the client
+    var client = new AbtestingClient(
+      new AbtestingConfig("YOUR_APP_ID", "YOUR_API_KEY", "YOUR_APP_ID_REGION")
+    );
+
+    // Call the API
+    var response = await client.ScheduleABTestAsync(
+      new ScheduleABTestsRequest
+      {
+        EndAt = "2022-12-31T00:00:00.000Z",
+        ScheduledAt = "2022-11-31T00:00:00.000Z",
+        Name = "myABTest",
+        Variants = new List<AddABTestsVariant>
+        {
+          new AddABTestsVariant(
+            new AbTestsVariant { Index = "AB_TEST_1", TrafficPercentage = 30, }
+          ),
+          new AddABTestsVariant(new AbTestsVariant { Index = "AB_TEST_2", TrafficPercentage = 50, })
+        },
+      }
+    );
+    // SEPARATOR<
+  }
+
+  /// <summary>
   /// Snippet for the StopABTest method.
   ///
   /// stopABTest

@@ -18,6 +18,8 @@ export * from './filterEffectsOutliers';
 export * from './listABTestsResponse';
 export * from './minimumDetectableEffect';
 export * from './outliers';
+export * from './scheduleABTestsRequest';
+export * from './scheduledABTestResponse';
 export * from './status';
 export * from './variant';
 export * from './clientMethodProps';

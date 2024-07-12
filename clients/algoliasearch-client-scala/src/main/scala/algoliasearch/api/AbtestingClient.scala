@@ -8,6 +8,8 @@ import algoliasearch.abtesting.ABTestResponse
 import algoliasearch.abtesting.AddABTestsRequest
 import algoliasearch.abtesting.ErrorBase
 import algoliasearch.abtesting.ListABTestsResponse
+import algoliasearch.abtesting.ScheduleABTestsRequest
+import algoliasearch.abtesting.ScheduledABTestResponse
 import algoliasearch.abtesting._
 import algoliasearch.ApiClient
 import algoliasearch.api.AbtestingClient.hosts
@@ -259,6 +261,28 @@ class AbtestingClient(
       .withQueryParameter("indexSuffix", indexSuffix)
       .build()
     execute[ListABTestsResponse](request, requestOptions)
+  }
+
+  /** Schedule an A/B test to be started at a later time.
+    *
+    * Required API Key ACLs:
+    *   - editSettings
+    */
+  def scheduleABTest(scheduleABTestsRequest: ScheduleABTestsRequest, requestOptions: Option[RequestOptions] = None)(
+      implicit ec: ExecutionContext
+  ): Future[ScheduledABTestResponse] = Future {
+    requireNotNull(
+      scheduleABTestsRequest,
+      "Parameter `scheduleABTestsRequest` is required when calling `scheduleABTest`."
+    )
+
+    val request = HttpRequest
+      .builder()
+      .withMethod("POST")
+      .withPath(s"/2/abtests/schedule")
+      .withBody(scheduleABTestsRequest)
+      .build()
+    execute[ScheduledABTestResponse](request, requestOptions)
   }
 
   /** Stops an A/B test by its ID. You can't restart stopped A/B tests.

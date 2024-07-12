@@ -118,6 +118,27 @@ final class AbtestingClientSnippet {
         // SEPARATOR<
     }
 
+    /// Snippet for the scheduleABTest method.
+    ///
+    /// scheduleABTest with minimal parameters
+    func snippetForScheduleABTest() async throws {
+        // >SEPARATOR scheduleABTest default
+        // Initialize the client
+        let client = try AbtestingClient(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY", region: .us)
+
+        // Call the API
+        let response = try await client.scheduleABTest(scheduleABTestsRequest: ScheduleABTestsRequest(
+            name: "myABTest",
+            variants: [
+                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_1", trafficPercentage: 30)),
+                AddABTestsVariant.abTestsVariant(AbTestsVariant(index: "AB_TEST_2", trafficPercentage: 50)),
+            ],
+            scheduledAt: "2022-11-31T00:00:00.000Z",
+            endAt: "2022-12-31T00:00:00.000Z"
+        ))
+        // SEPARATOR<
+    }
+
     /// Snippet for the stopABTest method.
     ///
     /// stopABTest
