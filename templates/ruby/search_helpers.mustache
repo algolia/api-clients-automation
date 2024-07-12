@@ -41,14 +41,14 @@ end
 
 # Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
 #
-# @param operation [String] the `operation` that was done on a `key`.
 # @param key [String] the `key` that has been added, deleted or updated.
+# @param operation [String] the `operation` that was done on a `key`.
 # @param api_key [Hash] necessary to know if an `update` operation has been processed, compare fields of the response with it.
 # @param max_retries [Integer] the maximum number of retries.
 # @param timeout [Proc] the function to decide how long to wait between retries.
 # @param request_options [Hash] the requestOptions to send along with the query, they will be forwarded to the `getApikey` method and merged with the transporter requestOptions.
 # @return [Http::Response] the last get_api_key response
-def wait_for_api_key(operation, key, api_key = {}, max_retries = 50, timeout = -> (retry_count) { [retry_count * 200, 5000].min }, request_options = {})
+def wait_for_api_key(key, operation, api_key = {}, max_retries = 50, timeout = -> (retry_count) { [retry_count * 200, 5000].min }, request_options = {})
   retries = 0
   if operation == 'update'
     raise ArgumentError, '`api_key` is required when waiting for an `update` operation.' if api_key.nil?
