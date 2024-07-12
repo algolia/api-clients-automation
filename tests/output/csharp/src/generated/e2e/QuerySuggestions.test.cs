@@ -10,6 +10,8 @@ using Quibble.Xunit;
 using Xunit;
 using Action = Algolia.Search.Models.Search.Action;
 
+namespace Algolia.Search.e2e;
+
 public class QuerySuggestionsClientRequestTestsE2E
 {
   private readonly QuerySuggestionsClient _client;
