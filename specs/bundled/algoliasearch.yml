@@ -3692,8 +3692,6 @@ components:
         fallbackParameters:
           $ref: '#/components/schemas/searchParamsObject'
       required:
-        - facetName
-        - facetValue
         - model
     trendingItemsQuery:
       title: Trending items

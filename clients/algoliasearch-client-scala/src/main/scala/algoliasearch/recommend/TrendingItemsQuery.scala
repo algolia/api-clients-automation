@@ -53,8 +53,8 @@ case class TrendingItemsQuery(
     threshold: Double,
     maxRecommendations: Option[Int] = scala.None,
     queryParameters: Option[SearchParams] = scala.None,
-    facetName: String,
-    facetValue: String,
+    facetName: Option[String] = scala.None,
+    facetValue: Option[String] = scala.None,
     model: TrendingItemsModel,
     fallbackParameters: Option[SearchParamsObject] = scala.None
 ) extends RecommendationsRequestTrait

@@ -96,7 +96,7 @@ public class TrendingItemsQuery implements RecommendationsRequest {
    * Facet attribute. To be used in combination with `facetValue`. If specified, only
    * recommendations matching the facet filter will be returned.
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public String getFacetName() {
     return facetName;
   }
@@ -110,7 +110,7 @@ public class TrendingItemsQuery implements RecommendationsRequest {
    * Facet value. To be used in combination with `facetName`. If specified, only recommendations
    * matching the facet filter will be returned.
    */
-  @javax.annotation.Nonnull
+  @javax.annotation.Nullable
   public String getFacetValue() {
     return facetValue;
   }

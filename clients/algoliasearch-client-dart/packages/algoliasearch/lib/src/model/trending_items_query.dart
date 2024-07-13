@@ -16,8 +16,8 @@ final class TrendingItemsQuery {
     required this.threshold,
     this.maxRecommendations,
     this.queryParameters,
-    required this.facetName,
-    required this.facetValue,
+    this.facetName,
+    this.facetValue,
     required this.model,
     this.fallbackParameters,
   });
@@ -43,11 +43,11 @@ final class TrendingItemsQuery {
 
   /// Facet attribute. To be used in combination with `facetValue`. If specified, only recommendations matching the facet filter will be returned.
   @JsonKey(name: r'facetName')
-  final String facetName;
+  final String? facetName;
 
   /// Facet value. To be used in combination with `facetName`. If specified, only recommendations matching the facet filter will be returned.
   @JsonKey(name: r'facetValue')
-  final String facetValue;
+  final String? facetValue;
 
   @JsonKey(name: r'model')
   final TrendingItemsModel model;
