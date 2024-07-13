@@ -368,7 +368,7 @@
     ]
   },
   {
-    "testName": "wait for api key helper (add)",
+    "testName": "wait for api key helper - add",
     "autoCreateClient": false,
     "steps": [
       {
@@ -411,7 +411,7 @@
     ]
   },
   {
-    "testName": "wait for api key (update)",
+    "testName": "wait for api key - update",
     "autoCreateClient": false,
     "steps": [
       {
@@ -466,7 +466,7 @@
     ]
   },
   {
-    "testName": "wait for api key (delete)",
+    "testName": "wait for api key - delete",
     "autoCreateClient": false,
     "steps": [
       {

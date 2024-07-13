@@ -39,8 +39,8 @@ public suspend fun SearchClient.waitForApiKey(
   initialDelay: Duration = 200.milliseconds,
   maxDelay: Duration = 5.seconds,
   requestOptions: RequestOptions? = null,
-) {
-  when (operation) {
+): GetApiKeyResponse? {
+  return when (operation) {
     ApiKeyOperation.Add -> waitKeyCreation(
       key = key,
       maxRetries = maxRetries,
@@ -226,25 +226,25 @@ public suspend fun SearchClient.waitKeyDelete(
   initialDelay: Duration = 200.milliseconds,
   maxDelay: Duration = 5.seconds,
   requestOptions: RequestOptions? = null,
-) {
-  retryUntil(
+): GetApiKeyResponse? {
+  return retryUntil(
     timeout = timeout,
     maxRetries = maxRetries,
     initialDelay = initialDelay,
     maxDelay = maxDelay,
     retry = {
       try {
-        val response = getApiKey(key, requestOptions)
-        Result.success(response)
+        return@retryUntil getApiKey(key, requestOptions)
       } catch (e: AlgoliaApiException) {
-        Result.failure(e)
+        if (e.httpErrorCode == 404) {
+          return@retryUntil null
+        }
+
+        throw e
       }
     },
     until = { result ->
-      result.fold(
-        onSuccess = { false },
-        onFailure = { (it as AlgoliaApiException).httpErrorCode == 404 },
-      )
+      result == null
     },
   )
 }
