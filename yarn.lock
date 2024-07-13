@@ -81,7 +81,7 @@ __metadata:
   dependencies:
     "@babel/eslint-parser": "npm:7.24.8"
     "@openapitools/openapi-generator-cli": "npm:2.13.4"
-    "@redocly/cli": "npm:1.17.1"
+    "@redocly/cli": "npm:1.18.0"
     "@typescript-eslint/eslint-plugin": "npm:7.15.0"
     "@typescript-eslint/parser": "npm:7.15.0"
     eslint: "npm:8.57.0"
@@ -3931,11 +3931,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/cli@npm:1.17.1":
-  version: 1.17.1
-  resolution: "@redocly/cli@npm:1.17.1"
+"@redocly/cli@npm:1.18.0":
+  version: 1.18.0
+  resolution: "@redocly/cli@npm:1.18.0"
   dependencies:
-    "@redocly/openapi-core": "npm:1.17.1"
+    "@redocly/openapi-core": "npm:1.18.0"
     abort-controller: "npm:^3.0.0"
     chokidar: "npm:^3.5.1"
     colorette: "npm:^1.2.0"
@@ -3956,7 +3956,7 @@ __metadata:
   bin:
     openapi: bin/cli.js
     redocly: bin/cli.js
-  checksum: 10/c52e06b1e46922780ef881e37d643e6d38140880fcaf420d19613179beec1119869ca1a1fbcfbdac92312a657ca21bc5568989881e80ca90dacc998620481980
+  checksum: 10/d74fb6705a095fb34abf4e7f4e2e90d65b28d555bd59b1a7c00d80bc755c6ee052aa1d3e473161a5adb4acddd9e78f8fad0107ea4a68a4144cff5f95c51085ff
   languageName: node
   linkType: hard
 
@@ -3974,9 +3974,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/openapi-core@npm:1.17.1":
-  version: 1.17.1
-  resolution: "@redocly/openapi-core@npm:1.17.1"
+"@redocly/openapi-core@npm:1.18.0":
+  version: 1.18.0
+  resolution: "@redocly/openapi-core@npm:1.18.0"
   dependencies:
     "@redocly/ajv": "npm:^8.11.0"
     "@redocly/config": "npm:^0.6.2"
@@ -3989,7 +3989,7 @@ __metadata:
     node-fetch: "npm:^2.6.1"
     pluralize: "npm:^8.0.0"
     yaml-ast-parser: "npm:0.0.43"
-  checksum: 10/b468f8e88b49cefe87213c89d5b7c03c5bbea92a83abf03cad13ff466f9e777172a1b9fd6f889a45ecde2c48752e10b422ac1784ac81e3f8b241f2128c7c3abc
+  checksum: 10/808654a9efffba32f03371b59e77ab5648d15aff47bbdc0b9115a6f3eb02de311787095fa8164a41aaa020112b9638c237b9dd89078ac1f58f1629ddebcdbcf0
   languageName: node
   linkType: hard
 
