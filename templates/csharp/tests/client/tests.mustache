@@ -1,0 +1,46 @@
+{{#tests}} 
+    [Fact(DisplayName = "{{{testName}}}")]
+    public async Task {{#lambda.pascalcase}}{{testType}}Test{{testIndex}}{{/lambda.pascalcase}}()
+    {
+    {{#autoCreateClient}}
+    var client = new {{client}}(new {{clientPrefix}}Config("appId", "apiKey"{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}), _echo);
+    {{/autoCreateClient}}
+    {{#steps}}
+    {{#times}}
+    for (int i = 0; i < {{.}}; i++) {
+    {{/times}}
+      {{#isError}}
+        _ex = await Assert.ThrowsAnyAsync<Exception>(async () => { {{#dynamicTemplate}}{{/dynamicTemplate}} });
+        Assert.Equal("{{{expectedError}}}".ToLowerInvariant(), _ex.Message.ToLowerInvariant());
+
+      {{/isError}}
+      {{^isError}}
+        {{#dynamicTemplate}}{{/dynamicTemplate}}
+        {{#match}}
+          {{#testUserAgent}} {
+            var regexp = new Regex("{{#lambda.escapeSlash}}{{{match}}}{{/lambda.escapeSlash}}");
+            Assert.Matches(regexp,result.Headers["user-agent"]);
+            }{{/testUserAgent}}
+          {{#testTimeouts}}
+              Assert.Equal({{{match.parametersWithDataTypeMap.connectTimeout.value}}}, result.ConnectTimeout.TotalMilliseconds);
+              Assert.Equal({{{match.parametersWithDataTypeMap.responseTimeout.value}}}, result.ResponseTimeout.TotalMilliseconds);
+          {{/testTimeouts}}
+          {{#testHost}}
+              Assert.Equal("{{{match}}}", result.Host);
+          {{/testHost}}
+          {{#testResponse}}
+            {{#matchIsJSON}}
+              JsonAssert.EqualOverrideDefault("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}", JsonSerializer.Serialize(res, JsonConfig.Options), new JsonDiffConfig(false));
+            {{/matchIsJSON}}
+            {{^matchIsJSON}}
+              Assert.Equal("{{{match}}}", res);
+            {{/matchIsJSON}}
+          {{/testResponse}}
+        {{/match}}
+      {{/isError}}
+    {{#times}}
+    }
+    {{/times}}
+    {{/steps}}
+    }
+{{/tests}}

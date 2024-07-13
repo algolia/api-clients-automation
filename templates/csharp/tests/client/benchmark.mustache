@@ -11,16 +11,14 @@ using System.Text.Json;
 using Xunit;
 using Quibble.Xunit;
 
-namespace Algolia.Search.client;
+namespace Algolia.Search.benchmark;
 
-public class {{client}}Tests
+public class {{client}}Benchmark
 {
-private readonly EchoHttpRequester _echo;
 private Exception _ex;
 
-public {{client}}Tests()
+public {{client}}Benchmark()
 {
-_echo = new EchoHttpRequester();
 }
 
 [Fact]
@@ -29,7 +27,7 @@ public void Dispose()
 
 }
 
-{{#blocksClient}}
+{{#blocksBenchmark}}
 {{> tests/client/tests}}
-{{/blocksClient}}
+{{/blocksBenchmark}}
 }

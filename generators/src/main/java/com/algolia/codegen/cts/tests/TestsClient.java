@@ -74,9 +74,9 @@ public class TestsClient extends TestsGenerator {
           testOut.put("testName", test.testName);
           testOut.put("testIndex", testIndex++);
           testOut.put("autoCreateClient", test.autoCreateClient);
+          testOut.put("useEchoRequester", true);
           for (Step step : test.steps) {
             Map<String, Object> stepOut = new HashMap<>();
-            stepOut.put("useEchoRequester", true);
             if (step.times > 1) stepOut.put("times", step.times);
             CodegenOperation ope = null;
             if (step.type.equals("createClient")) {
@@ -84,8 +84,7 @@ public class TestsClient extends TestsGenerator {
               stepOut.put("isCreateClient", true); // TODO: remove once kotlin is converted
 
               boolean hasCustomHosts = step.parameters != null && step.parameters.containsKey("customHosts");
-
-              stepOut.put("useEchoRequester", !hasCustomHosts);
+              if (hasCustomHosts) testOut.put("useEchoRequester", false);
               stepOut.put("hasCustomHosts", hasCustomHosts);
               if (hasCustomHosts) {
                 stepOut.put("customHosts", step.parameters.get("customHosts"));
