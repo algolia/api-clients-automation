@@ -29,7 +29,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "7.24.8",
     "@openapitools/openapi-generator-cli": "2.13.4",
-    "@redocly/cli": "1.17.1",
+    "@redocly/cli": "1.18.0",
     "@typescript-eslint/eslint-plugin": "7.15.0",
     "@typescript-eslint/parser": "7.15.0",
     "eslint": "8.57.0",
