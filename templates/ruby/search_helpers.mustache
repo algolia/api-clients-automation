@@ -53,18 +53,14 @@ def wait_for_api_key(key, operation, api_key = {}, max_retries = 50, timeout = -
   if operation == 'update'
     raise ArgumentError, '`api_key` is required when waiting for an `update` operation.' if api_key.nil?
     while retries < max_retries
-      begin
-        updatad_key = get_api_key(key, request_options)
-        updated_key_hash = updatad_key.to_hash
-        equals = true
-        api_key.to_hash.each do |k, v|
-          equals &&= updated_key_hash[k] == v
-        end
-      
-        return updatad_key if equals
-      rescue AlgoliaError => e
-        raise e unless e.code == 404
+      updated_key = get_api_key(key, request_options)
+      updated_key_hash = updated_key.to_hash
+      equals = true
+      api_key.to_hash.each do |k, v|
+        equals &&= updated_key_hash[k] == v
       end
+
+      return updated_key if equals
 
       retries += 1
       sleep(timeout.call(retries) / 1000.0)
@@ -76,13 +72,19 @@ def wait_for_api_key(key, operation, api_key = {}, max_retries = 50, timeout = -
   while retries < max_retries
     begin
       res = get_api_key(key, request_options)
-      return res if operation == 'add'
-    rescue AlgoliaError => e
-      return res if operation == 'delete' && e.code == 404
+      return res if operation == "add"
+    rescue AlgoliaHttpError => e
+      if e.code == 404
+        return nil if operation == "delete"
+      else
+        raise e
+      end
     end
+
     retries += 1
     sleep(timeout.call(retries) / 1000.0)
   end
+
   raise ApiError, "The maximum number of retries exceeded. (#{max_retries})"
 end
 
