@@ -405,7 +405,6 @@ jobs:
       - client_gen
     if: |
       always() &&
-      startsWith(github.head_ref, 'chore/prepare-release-') &&
       needs.setup.outputs.RUN_GEN == 'true' &&
       needs.setup.outputs.RUN_MACOS_SWIFT_CTS == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
@@ -541,7 +540,7 @@ jobs:
     if: always()
     steps:
       - run: |
-          if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_cts_macos.outputs.success }}" != "true") || ("${{ needs.kotlin_build_macos.outputs.success }}" != "true")]]; then
+          if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_cts_macos.result }}" != "skipped" && "${{ needs.swift_cts_macos.outputs.success }}" != "true") || ("${{ needs.kotlin_build_macos.result }}" != "skipped" && "${{ needs.kotlin_build_macos.outputs.success }}" != "true")]]; then
             echo "a needed step failed"
             exit 1
           fi
