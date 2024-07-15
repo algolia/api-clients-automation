@@ -3,6 +3,7 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
 	"reflect"
 	"time"
 
@@ -65,53 +66,31 @@ func IsNilOrEmpty(i any) bool {
 	}
 }
 
-type IterableOptions[T any] struct {
-	Aggregator  func(*T, error)
-	Timeout     func() time.Duration
-	IterableErr *IterableError[T]
+type IterableError struct {
+	Validate func(any, error) bool
+	Message  func(any, error) string
 }
 
-type IterableOption[T any] func(*IterableOptions[T])
-
-func WithAggregator[T any](aggregator func(*T, error)) IterableOption[T] {
-	return func(options *IterableOptions[T]) {
-		options.Aggregator = aggregator
-	}
-}
-
-func WithTimeout[T any](timeout func() time.Duration) IterableOption[T] {
-	return func(options *IterableOptions[T]) {
-		options.Timeout = timeout
-	}
-}
-
-func WithIterableError[T any](iterableErr *IterableError[T]) IterableOption[T] {
-	return func(options *IterableOptions[T]) {
-		options.IterableErr = iterableErr
-	}
-}
-
-type IterableError[T any] struct {
-	Validate func(*T, error) bool
-	Message  func(*T, error) string
-}
-
-func CreateIterable[T any](execute func(*T, error) (*T, error), validate func(*T, error) bool, opts ...IterableOption[T]) (*T, error) {
-	options := IterableOptions[T]{
-		Aggregator: nil,
-		Timeout: func() time.Duration {
+func CreateIterable[T any](execute func(*T, error) (*T, error), validate func(*T, error) bool, opts ...IterableOption) (*T, error) {
+	options := Options{
+		MaxRetries: 50,
+		Timeout: func(_ int) time.Duration {
 			return 1 * time.Second
 		},
-		IterableErr: nil,
 	}
 
 	for _, opt := range opts {
-		opt(&options)
+		opt.Apply(&options)
 	}
+
 	var executor func(*T, error) (*T, error)
+
+	retryCount := 0
 
 	executor = func(previousResponse *T, previousError error) (*T, error) {
 		response, responseErr := execute(previousResponse, previousError)
+
+		retryCount++
 
 		if options.Aggregator != nil {
 			options.Aggregator(response, responseErr)
@@ -121,15 +100,21 @@ func CreateIterable[T any](execute func(*T, error) (*T, error), validate func(*T
 			return response, responseErr
 		}
 
-		if options.IterableErr != nil && options.IterableErr.Validate(response, responseErr) {
-			if options.IterableErr.Message != nil {
-				return nil, errs.NewWaitError(options.IterableErr.Message(response, responseErr))
+		if retryCount >= options.MaxRetries {
+			return nil, errs.NewWaitError(fmt.Sprintf("The maximum number of retries exceeded. (%d/%d)", retryCount, options.MaxRetries))
+		}
+
+		if options.IterableError != nil && options.IterableError.Validate(response, responseErr) {
+			if options.IterableError.Message != nil {
+				return nil, errs.NewWaitError(options.IterableError.Message(response, responseErr))
 			}
 
 			return nil, errs.NewWaitError("an error occurred")
 		}
 
-		time.Sleep(options.Timeout())
+		fmt.Println("Sleeping for", options.Timeout(retryCount))
+
+		time.Sleep(options.Timeout(retryCount))
 
 		return executor(response, responseErr)
 	}
