@@ -548,7 +548,7 @@ jobs:
     if: always()
     steps:
       - run: |
-          if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_cts_macos.outputs.success }}" != "false") || ("${{ needs.kotlin_build_macos.outputs.success }}" != "false")]]; then
+          if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_cts_macos.outputs.success }}" == "false") || ("${{ needs.kotlin_build_macos.outputs.success }}" == "false")]]; then
             echo "a needed step failed"
             exit 1
           fi
