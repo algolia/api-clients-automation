@@ -28,9 +28,6 @@ export function assertValidTimeouts(expectedCount: number): void {
       case 'PHP':
         expect(state.duration[0] * 2).to.be.closeTo(state.duration[1], 200);
         break;
-      case 'Swift':
-        expect(state.duration[0]).to.be.closeTo(state.duration[1], 500);
-        break;
       default:
         // the delay should be the same, because the `retryCount` is per host instead of global
         expect(state.duration[0]).to.be.closeTo(state.duration[1], 100);
