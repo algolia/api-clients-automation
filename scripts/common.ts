@@ -291,7 +291,14 @@ export async function setupAndGen(
   await generateOpenapitools(generators, mode);
   await buildCustomGenerators();
 
-  await Promise.allSettled(
-    generators.map((gen) => wrapSpinner(fn(gen), `generating ${mode} for ${gen.key}`)),
-  );
+  const promise = (gen: Generator): Promise<void> =>
+    wrapSpinner(fn(gen), `generating ${mode} for ${gen.key}`);
+
+  if (CI) {
+    for (const gen of generators) {
+      await promise(gen);
+    }
+  } else {
+    await Promise.allSettled(generators.map(promise));
+  }
 }
