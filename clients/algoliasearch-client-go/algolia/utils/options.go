@@ -41,15 +41,15 @@ func WithContext(ctx context.Context) requestOption {
 	})
 }
 
-func WithHeaderParam(key, value string) requestOption {
+func WithHeaderParam(key string, value any) requestOption {
 	return requestOption(func(o *Options) {
-		o.HeaderParams[key] = value
+		o.HeaderParams[key] = ParameterToString(value)
 	})
 }
 
-func WithQueryParam(key, value string) requestOption {
+func WithQueryParam(key string, value any) requestOption {
 	return requestOption(func(o *Options) {
-		o.QueryParams.Add(key, value)
+		o.QueryParams.Set(QueryParameterToString(key), QueryParameterToString(value))
 	})
 }
 

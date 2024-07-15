@@ -4,7 +4,9 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
+	"net/url"
 	"reflect"
+	"strings"
 	"time"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/errs"
@@ -120,4 +122,35 @@ func CreateIterable[T any](execute func(*T, error) (*T, error), validate func(*T
 	}
 
 	return executor(nil, nil)
+}
+
+// QueryParameterToString convert any query parameters to string.
+func QueryParameterToString(obj any) string {
+	return strings.ReplaceAll(url.QueryEscape(ParameterToString(obj)), "+", "%20")
+}
+
+// ParameterToString convert any parameters to string.
+func ParameterToString(obj any) string {
+	objKind := reflect.TypeOf(obj).Kind()
+	if objKind == reflect.Slice {
+		var result []string
+		sliceValue := reflect.ValueOf(obj)
+		for i := 0; i < sliceValue.Len(); i++ {
+			element := sliceValue.Index(i).Interface()
+			result = append(result, ParameterToString(element))
+		}
+		return strings.Join(result, ",")
+	}
+
+	if t, ok := obj.(time.Time); ok {
+		return t.Format(time.RFC3339)
+	}
+
+	if objKind == reflect.Struct {
+		if actualObj, ok := obj.(interface{ GetActualInstance() any }); ok {
+			return ParameterToString(actualObj.GetActualInstance())
+		}
+	}
+
+	return fmt.Sprintf("%v", obj)
 }

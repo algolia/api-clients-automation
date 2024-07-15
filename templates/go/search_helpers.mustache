@@ -399,7 +399,7 @@ func encodeRestrictions(restrictions *SecuredApiKeyRestrictions) (string, error)
 
 	queryString := make([]string, 0, len(toSerialize))
 	for _, k := range keys {
-		queryString = append(queryString, k+"="+queryParameterToString(toSerialize[k]))
+		queryString = append(queryString, k+"="+utils.QueryParameterToString(toSerialize[k]))
 	}
 
 	return strings.Join(queryString, "&"), nil
