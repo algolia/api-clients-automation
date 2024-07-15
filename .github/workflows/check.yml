@@ -378,6 +378,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set output
+        id: setoutput
+        run: echo "success=false" >> "$GITHUB_OUTPUT"
+
       - name: Download artifacts
         uses: ./scripts/ci/actions/restore-artifacts
         with:
@@ -405,7 +409,6 @@ jobs:
       - client_gen
     if: |
       always() &&
-      startsWith(github.head_ref, 'chore/prepare-release-') &&
       needs.setup.outputs.RUN_GEN == 'true' &&
       needs.setup.outputs.RUN_MACOS_SWIFT_CTS == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
@@ -418,6 +421,10 @@ jobs:
       success: ${{ steps.setoutput.outputs.success }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set output
+        id: setoutput
+        run: echo "success=false" >> "$GITHUB_OUTPUT"
 
       - name: Download artifacts
         uses: ./scripts/ci/actions/restore-artifacts
@@ -541,8 +548,8 @@ jobs:
     if: always()
     steps:
       - run: |
-          if [[ "${{ needs.codegen.outputs.success }}" != "true" ]]; then
-            echo "codegen step didn't succeed"
+          if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_cts_macos.outputs.success }}" != "false") || ("${{ needs.kotlin_build_macos.outputs.success }}" != "false")]]; then
+            echo "a needed step failed"
             exit 1
           fi
 
