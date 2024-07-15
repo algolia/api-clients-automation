@@ -114,8 +114,6 @@ func CreateIterable[T any](execute func(*T, error) (*T, error), validate func(*T
 			return nil, errs.NewWaitError("an error occurred")
 		}
 
-		fmt.Println("Sleeping for", options.Timeout(retryCount))
-
 		time.Sleep(options.Timeout(retryCount))
 
 		return executor(response, responseErr)
