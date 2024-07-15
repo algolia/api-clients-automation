@@ -14,7 +14,7 @@ import { getDockerImage } from './config';
 import { generateOpenapitools } from './pre-gen';
 import { getGitAuthor } from './release/common.js';
 import { buildSpecs } from './specs';
-import { createSpinner } from './spinners.js';
+import { createSpinner, wrapSpinner } from './spinners.js';
 import type { Generator, GeneratorMode, Language, RunOptions } from './types.js';
 
 export const fullReleaseConfig = releaseConfig;
@@ -291,9 +291,7 @@ export async function setupAndGen(
   await generateOpenapitools(generators, mode);
   await buildCustomGenerators();
 
-  for (const gen of generators) {
-    const spinner = createSpinner(`generating ${mode} for ${gen.key}`);
-    await fn(gen);
-    spinner.succeed();
-  }
+  await Promise.allSettled(
+    generators.map((gen) => wrapSpinner(fn(gen), `generating ${mode} for ${gen.key}`)),
+  );
 }

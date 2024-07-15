@@ -1,7 +1,6 @@
 import { writeFile } from 'fs/promises';
 
 import { toAbsolutePath } from '../common.js';
-import { getClientsConfigField } from '../config.js';
 import type { Generator, GeneratorMode } from '../types.js';
 
 /**
@@ -20,9 +19,6 @@ export async function generateOpenapitools(gens: Generator[], mode: GeneratorMod
 
     generators[key] = {
       config: '#{cwd}/openapitools.json',
-      gitHost: 'github.com',
-      gitUserId: 'algolia',
-      gitRepoId: getClientsConfigField(language, 'gitRepoId'),
       glob: `specs/bundled/${client}.yml`,
       templateDir,
       generatorName: `algolia-${mode === 'client' ? language : 'cts'}`,

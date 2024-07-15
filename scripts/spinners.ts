@@ -69,3 +69,20 @@ class SpinnerWrapper {
 export function createSpinner(text: string): SpinnerStatic | SpinnerWrapper {
   return CI || isVerbose() ? new SpinnerStatic(text) : new SpinnerWrapper(text, text);
 }
+
+export async function wrapSpinner(
+  fn: Promise<any>,
+  text: string,
+  succeedText?: string,
+  failText?: string,
+): Promise<void> {
+  const spinner = createSpinner(text);
+
+  try {
+    await fn;
+    return spinner.succeed(succeedText);
+  } catch (e) {
+    spinner.fail(failText);
+    throw e;
+  }
+}
