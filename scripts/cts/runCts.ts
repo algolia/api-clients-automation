@@ -1,4 +1,7 @@
-import { isVerbose, run, runComposerInstall } from '../common.js';
+import fsp from 'fs/promises';
+
+import { exists, isVerbose, run, runComposerInstall, toAbsolutePath } from '../common.js';
+import { getTestOutputFolder } from '../config.js';
 import { createSpinner } from '../spinners.js';
 import type { Language } from '../types.js';
 
@@ -15,8 +18,17 @@ async function runCtsOne(
   const cwd = `tests/output/${language}`;
 
   const folders: string[] = [];
-  if (language !== 'dart' && language !== 'kotlin' && !excludeE2E) {
-    folders.push('e2e');
+  if (!excludeE2E) {
+    // check if the folder has files
+    const e2eFolder = toAbsolutePath(
+      `tests/output/${language}/${getTestOutputFolder(language)}/e2e`,
+    );
+    if (
+      (await exists(e2eFolder)) &&
+      (await fsp.readdir(e2eFolder)).filter((f) => f !== '__init__.py' && f !== '__pycache__')
+        .length > 0
+    )
+      folders.push('e2e');
   }
   if (!excludeUnit) {
     folders.push('client', 'requests');

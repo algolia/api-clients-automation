@@ -373,6 +373,8 @@ jobs:
       needs.setup.outputs.RUN_MACOS_KOTLIN_BUILD == 'true' &&
       !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
+    outputs:
+      success: ${{ steps.setoutput.outputs.success }}
     steps:
       - uses: actions/checkout@v4
 
@@ -391,6 +393,10 @@ jobs:
 
       - run: yarn cli build clients kotlin
 
+      - name: Set output
+        id: setoutput
+        run: echo "success=true" >> "$GITHUB_OUTPUT"
+
   swift_cts_macos:
     timeout-minutes: 20
     runs-on: macos-latest
@@ -408,6 +414,8 @@ jobs:
       ALGOLIA_APPLICATION_ID: ${{ secrets.ALGOLIA_APPLICATION_ID }}
       ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
       MONITORING_API_KEY: ${{ secrets.MONITORING_API_KEY }}
+    outputs:
+      success: ${{ steps.setoutput.outputs.success }}
     steps:
       - uses: actions/checkout@v4
 
@@ -425,6 +433,10 @@ jobs:
           language: swift
 
       - run: yarn cli cts run swift ${{ fromJSON(needs.setup.outputs.SWIFT_DATA).toRun }}
+
+      - name: Set output
+        id: setoutput
+        run: echo "success=true" >> "$GITHUB_OUTPUT"
 
   codegen:
     runs-on: ubuntu-22.04
@@ -463,27 +475,6 @@ jobs:
       - name: Generate documentation specs with code snippets
         run: yarn cli build specs ${{ fromJSON(needs.setup.outputs.SPECS_MATRIX).toRun }} --docs
 
-      - name: Build website
-        if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' }}
-        run: yarn website:build
-
-      - name: Deploy documentation
-        if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' }}
-        uses: nwtgck/actions-netlify@v3.0
-        with:
-          publish-dir: 'website/build'
-          production-branch: main
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: 'Deploy from GitHub Actions'
-          enable-pull-request-comment: true
-          enable-commit-comment: true
-          overwrites-pull-request-comment: true
-          netlify-config-path: ./netlify.toml
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        timeout-minutes: 5
-
       - name: Push generated code
         id: pushGeneratedCode
         run: yarn workspace scripts pushGeneratedCode
@@ -514,6 +505,27 @@ jobs:
             | 🪓 Triggered by | [`${{ github.sha }}`](${{ github.event.pull_request.base.repo.html_url }}/commit/${{ github.sha }}) |
             | 🍃 Generated commit | [`${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT }}`](${{ github.event.pull_request.base.repo.html_url }}/commit/${{ steps.pushGeneratedCode.outputs.GENERATED_COMMIT }}) |
             | 🌲 Generated branch | [`generated/${{ github.head_ref }}`](${{ github.event.pull_request.base.repo.html_url }}/tree/generated/${{ github.head_ref }}) |
+    
+      - name: Build website
+        if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' }}
+        run: yarn website:build
+
+      - name: Deploy documentation
+        if: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' }}
+        uses: nwtgck/actions-netlify@v3.0
+        with:
+          publish-dir: 'website/build'
+          production-branch: main
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: 'Deploy from GitHub Actions'
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
+          netlify-config-path: ./netlify.toml
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 5
 
       - name: Set output
         id: setoutput

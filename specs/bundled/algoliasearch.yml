@@ -413,6 +413,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/recommendationsResults'
+                required:
+                  - results
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -3690,8 +3692,6 @@ components:
         fallbackParameters:
           $ref: '#/components/schemas/searchParamsObject'
       required:
-        - facetName
-        - facetValue
         - model
     trendingItemsQuery:
       title: Trending items

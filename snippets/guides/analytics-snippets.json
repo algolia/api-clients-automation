@@ -1,0 +1,944 @@
+{
+  "csharp": {
+    "import": {
+      "default": "using Algolia.Search.Clients;\nusing Algolia.Search.Http;"
+    },
+    "customDelete": {
+      "default": "var response = await client.CustomDeleteAsync(\"test/minimal\");"
+    },
+    "customGet": {
+      "default": "var response = await client.CustomGetAsync(\"test/minimal\");"
+    },
+    "customPost": {
+      "default": "var response = await client.CustomPostAsync(\"test/minimal\");"
+    },
+    "customPut": {
+      "default": "var response = await client.CustomPutAsync(\"test/minimal\");"
+    },
+    "getAddToCartRate": {
+      "default": "var response = await client.GetAddToCartRateAsync(\"index\");"
+    },
+    "getAverageClickPosition": {
+      "default": "var response = await client.GetAverageClickPositionAsync(\"index\");"
+    },
+    "getClickPositions": {
+      "default": "var response = await client.GetClickPositionsAsync(\"index\");"
+    },
+    "getClickThroughRate": {
+      "default": "var response = await client.GetClickThroughRateAsync(\"index\");"
+    },
+    "getConversionRate": {
+      "default": "var response = await client.GetConversionRateAsync(\"index\");"
+    },
+    "getNoClickRate": {
+      "default": "var response = await client.GetNoClickRateAsync(\"index\");"
+    },
+    "getNoResultsRate": {
+      "default": "var response = await client.GetNoResultsRateAsync(\"index\");"
+    },
+    "getPurchaseRate": {
+      "default": "var response = await client.GetPurchaseRateAsync(\"index\");"
+    },
+    "getRevenue": {
+      "default": "var response = await client.GetRevenueAsync(\"index\");"
+    },
+    "getSearchesCount": {
+      "default": "var response = await client.GetSearchesCountAsync(\"index\");"
+    },
+    "getSearchesNoClicks": {
+      "default": "var response = await client.GetSearchesNoClicksAsync(\"index\");"
+    },
+    "getSearchesNoResults": {
+      "default": "var response = await client.GetSearchesNoResultsAsync(\"index\");"
+    },
+    "getStatus": {
+      "default": "var response = await client.GetStatusAsync(\"index\");"
+    },
+    "getTopCountries": {
+      "default": "var response = await client.GetTopCountriesAsync(\"index\");"
+    },
+    "getTopFilterAttributes": {
+      "default": "var response = await client.GetTopFilterAttributesAsync(\"index\");"
+    },
+    "getTopFilterForAttribute": {
+      "default": "var response = await client.GetTopFilterForAttributeAsync(\"myAttribute\", \"index\");"
+    },
+    "getTopFiltersNoResults": {
+      "default": "var response = await client.GetTopFiltersNoResultsAsync(\"index\");"
+    },
+    "getTopHits": {
+      "default": "var response = await client.GetTopHitsAsync(\"index\");"
+    },
+    "getTopSearches": {
+      "default": "var response = await client.GetTopSearchesAsync(\"index\");"
+    },
+    "getUsersCount": {
+      "default": "var response = await client.GetUsersCountAsync(\"index\");"
+    },
+    "init": {
+      "default": "var client = new AnalyticsClient("
+    },
+    "waitForAppTask": {
+      "default": "await client.WaitForAppTaskAsync(response.TaskID);"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "await client.WaitForApiKeyAsync(ApiKeyOperation.Add, response.Key);",
+        "update": "await client.WaitForApiKeyAsync(ApiKeyOperation.Update, response.Key, {\n        Acl = new List<Acl> { Enum.Parse<Acl>(\"Search\"), Enum.Parse<Acl>(\"AddObject\") },\n        Validity = 300,\n        MaxQueriesPerIPPerHour = 100,\n        MaxHitsPerQuery = 20,\n      });",
+        "delete": "await client.WaitForApiKeyAsync(ApiKeyOperation.Delete, response.Key);"
+      }
+    },
+    "waitForTask": {
+      "default": "await client.WaitForTaskAsync(\"<<indexName>>\", response.TaskID);"
+    }
+  },
+  "dart": {
+    "waitForAppTask": {
+      "default": "await client.waitAppTask(response.taskID);"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "",
+        "update": "",
+        "delete": ""
+      }
+    },
+    "waitForTask": {
+      "default": "await client.waitTask('<<indexName>>', response.taskID);"
+    }
+  },
+  "go": {
+    "import": {
+      "default": "import \"github.com/algolia/algoliasearch-client-go/v4/algolia/analytics\""
+    },
+    "customDelete": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CustomDelete(client.NewApiCustomDeleteRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "customGet": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CustomGet(client.NewApiCustomGetRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "customPost": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CustomPost(client.NewApiCustomPostRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "customPut": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.CustomPut(client.NewApiCustomPutRequest(\n  \"test/minimal\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getAddToCartRate": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetAddToCartRate(client.NewApiGetAddToCartRateRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getAverageClickPosition": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetAverageClickPosition(client.NewApiGetAverageClickPositionRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getClickPositions": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetClickPositions(client.NewApiGetClickPositionsRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getClickThroughRate": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetClickThroughRate(client.NewApiGetClickThroughRateRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getConversionRate": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetConversionRate(client.NewApiGetConversionRateRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getNoClickRate": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetNoClickRate(client.NewApiGetNoClickRateRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getNoResultsRate": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetNoResultsRate(client.NewApiGetNoResultsRateRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getPurchaseRate": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetPurchaseRate(client.NewApiGetPurchaseRateRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getRevenue": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetRevenue(client.NewApiGetRevenueRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getSearchesCount": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetSearchesCount(client.NewApiGetSearchesCountRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getSearchesNoClicks": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetSearchesNoClicks(client.NewApiGetSearchesNoClicksRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getSearchesNoResults": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetSearchesNoResults(client.NewApiGetSearchesNoResultsRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getStatus": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetStatus(client.NewApiGetStatusRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getTopCountries": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetTopCountries(client.NewApiGetTopCountriesRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getTopFilterAttributes": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetTopFilterAttributes(client.NewApiGetTopFilterAttributesRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getTopFilterForAttribute": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetTopFilterForAttribute(client.NewApiGetTopFilterForAttributeRequest(\n  \"myAttribute\", \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getTopFiltersNoResults": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetTopFiltersNoResults(client.NewApiGetTopFiltersNoResultsRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getTopHits": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetTopHits(client.NewApiGetTopHitsRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getTopSearches": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetTopSearches(client.NewApiGetTopSearchesRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "getUsersCount": {
+      "default": "// Initialize the client with your application region, eg. analytics.YOUR_APP_ID_REGION\nclient, err := analytics.NewClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", analytics.US)\nif err != nil {\n  // The client can fail to initialize if you pass an invalid parameter.\n  panic(err)\n}\n\n// Call the API\nresponse, err := client.GetUsersCount(client.NewApiGetUsersCountRequest(\n  \"index\",\n))\nif err != nil {\n  // handle the eventual error\n  panic(err)\n}\n\n// use the model directly\nprint(response)\n"
+    },
+    "waitForAppTask": {
+      "default": "taskResponse, err := searchClient.WaitForAppTask(response.TaskID, nil, nil, nil)\nif err != nil {\n  panic(err)\n}"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_ADD, response.Key, nil)\nif err != nil {\n  panic(err)\n}",
+        "update": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_UPDATE, response.Key, search.NewEmptyApiKey().SetAcl([]search.Acl{search.Acl(\"search\"), search.Acl(\"addObject\")}).SetValidity(300).SetMaxQueriesPerIPPerHour(100).SetMaxHitsPerQuery(20))\nif err != nil {\n  panic(err)\n}",
+        "delete": "waitResponse, err := client.WaitForApiKey(search.API_KEY_OPERATION_DELETE, response.Key, nil)\nif err != nil {\n  panic(err)\n}"
+      }
+    },
+    "waitForTask": {
+      "default": "taskResponse, err := searchClient.WaitForTask(\"<<indexName>>\", response.TaskID, nil, nil, nil)\nif err != nil {\n  panic(err)\n}"
+    }
+  },
+  "java": {
+    "import": {
+      "default": "import com.algolia.api.AnalyticsClient;\nimport com.algolia.model.analytics.*;"
+    },
+    "customDelete": {
+      "default": "client.customDelete(\"test/minimal\");"
+    },
+    "customGet": {
+      "default": "client.customGet(\"test/minimal\");"
+    },
+    "customPost": {
+      "default": "client.customPost(\"test/minimal\");"
+    },
+    "customPut": {
+      "default": "client.customPut(\"test/minimal\");"
+    },
+    "getAddToCartRate": {
+      "default": "client.getAddToCartRate(\"index\");"
+    },
+    "getAverageClickPosition": {
+      "default": "client.getAverageClickPosition(\"index\");"
+    },
+    "getClickPositions": {
+      "default": "client.getClickPositions(\"index\");"
+    },
+    "getClickThroughRate": {
+      "default": "client.getClickThroughRate(\"index\");"
+    },
+    "getConversionRate": {
+      "default": "client.getConversionRate(\"index\");"
+    },
+    "getNoClickRate": {
+      "default": "client.getNoClickRate(\"index\");"
+    },
+    "getNoResultsRate": {
+      "default": "client.getNoResultsRate(\"index\");"
+    },
+    "getPurchaseRate": {
+      "default": "client.getPurchaseRate(\"index\");"
+    },
+    "getRevenue": {
+      "default": "client.getRevenue(\"index\");"
+    },
+    "getSearchesCount": {
+      "default": "client.getSearchesCount(\"index\");"
+    },
+    "getSearchesNoClicks": {
+      "default": "client.getSearchesNoClicks(\"index\");"
+    },
+    "getSearchesNoResults": {
+      "default": "client.getSearchesNoResults(\"index\");"
+    },
+    "getStatus": {
+      "default": "client.getStatus(\"index\");"
+    },
+    "getTopCountries": {
+      "default": "client.getTopCountries(\"index\");"
+    },
+    "getTopFilterAttributes": {
+      "default": "client.getTopFilterAttributes(\"index\");"
+    },
+    "getTopFilterForAttribute": {
+      "default": "client.getTopFilterForAttribute(\"myAttribute\", \"index\");"
+    },
+    "getTopFiltersNoResults": {
+      "default": "client.getTopFiltersNoResults(\"index\");"
+    },
+    "getTopHits": {
+      "default": "client.getTopHits(\"index\");"
+    },
+    "getTopSearches": {
+      "default": "client.getTopSearches(\"index\");"
+    },
+    "getUsersCount": {
+      "default": "client.getUsersCount(\"index\");"
+    },
+    "init": {
+      "default": "AnalyticsClient client = new AnalyticsClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\");"
+    },
+    "waitForAppTask": {
+      "default": "client.waitForAppTask(response.getTaskID());"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "client.waitForApiKey(ApiKeyOperation.ADD, response.Key, null)",
+        "update": "client.waitForApiKey(ApiKeyOperation.UPDATE, response.Key, new ApiKey()\n        .setAcl(List.of(Acl.SEARCH, Acl.ADD_OBJECT))\n        .setValidity(300)\n        .setMaxQueriesPerIPPerHour(100)\n        .setMaxHitsPerQuery(20))",
+        "delete": "client.waitForApiKey(ApiKeyOperation.DELETE, response.Key, null)"
+      }
+    },
+    "waitForTask": {
+      "default": "client.waitForTask(\"<<indexName>>\", response.getTaskID());"
+    }
+  },
+  "javascript": {
+    "import": {
+      "default": "import { analyticsClient } from '@algolia/client-analytics';"
+    },
+    "customDelete": {
+      "default": "const response = await client.customDelete({ path: 'test/minimal' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "customGet": {
+      "default": "const response = await client.customGet({ path: 'test/minimal' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "customPost": {
+      "default": "const response = await client.customPost({ path: 'test/minimal' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "customPut": {
+      "default": "const response = await client.customPut({ path: 'test/minimal' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getAddToCartRate": {
+      "default": "const response = await client.getAddToCartRate({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getAverageClickPosition": {
+      "default": "const response = await client.getAverageClickPosition({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getClickPositions": {
+      "default": "const response = await client.getClickPositions({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getClickThroughRate": {
+      "default": "const response = await client.getClickThroughRate({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getConversionRate": {
+      "default": "const response = await client.getConversionRate({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getNoClickRate": {
+      "default": "const response = await client.getNoClickRate({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getNoResultsRate": {
+      "default": "const response = await client.getNoResultsRate({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getPurchaseRate": {
+      "default": "const response = await client.getPurchaseRate({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getRevenue": {
+      "default": "const response = await client.getRevenue({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getSearchesCount": {
+      "default": "const response = await client.getSearchesCount({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getSearchesNoClicks": {
+      "default": "const response = await client.getSearchesNoClicks({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getSearchesNoResults": {
+      "default": "const response = await client.getSearchesNoResults({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getStatus": {
+      "default": "const response = await client.getStatus({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getTopCountries": {
+      "default": "const response = await client.getTopCountries({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getTopFilterAttributes": {
+      "default": "const response = await client.getTopFilterAttributes({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getTopFilterForAttribute": {
+      "default": "const response = await client.getTopFilterForAttribute({\n  attribute: 'myAttribute',\n  index: 'index',\n});\n\n// use typed response\nconsole.log(response);"
+    },
+    "getTopFiltersNoResults": {
+      "default": "const response = await client.getTopFiltersNoResults({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getTopHits": {
+      "default": "const response = await client.getTopHits({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getTopSearches": {
+      "default": "const response = await client.getTopSearches({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "getUsersCount": {
+      "default": "const response = await client.getUsersCount({ index: 'index' });\n\n// use typed response\nconsole.log(response);"
+    },
+    "init": {
+      "default": "const client = analyticsClient("
+    },
+    "waitForAppTask": {
+      "default": "await client.waitForAppTask({ taskID: response.taskID });"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });",
+        "update": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key, apiKey: {\n        acl: ['search', 'addObject'],\n        validity: 300,\n        maxQueriesPerIPPerHour: 100,\n        maxHitsPerQuery: 20,\n      }});",
+        "delete": "await client.waitForApiKey({ operation: \"<<operation>>\", key: response.key });"
+      }
+    },
+    "waitForTask": {
+      "default": "await client.waitForTask({ indexName: '<<indexName>>', taskID: response.taskID });"
+    }
+  },
+  "kotlin": {
+    "import": {
+      "default": "import com.algolia.client.api.AnalyticsClient"
+    },
+    "customDelete": {
+      "default": "var response = client.customDelete(\n  path = \"test/minimal\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "customGet": {
+      "default": "var response = client.customGet(\n  path = \"test/minimal\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "customPost": {
+      "default": "var response = client.customPost(\n  path = \"test/minimal\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "customPut": {
+      "default": "var response = client.customPut(\n  path = \"test/minimal\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getAddToCartRate": {
+      "default": "var response = client.getAddToCartRate(\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getAverageClickPosition": {
+      "default": "var response = client.getAverageClickPosition(\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getClickPositions": {
+      "default": "var response = client.getClickPositions(\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getClickThroughRate": {
+      "default": "var response = client.getClickThroughRate(\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getConversionRate": {
+      "default": "var response = client.getConversionRate(\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getNoClickRate": {
+      "default": "var response = client.getNoClickRate(\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getNoResultsRate": {
+      "default": "var response = client.getNoResultsRate(\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getPurchaseRate": {
+      "default": "var response = client.getPurchaseRate(\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getRevenue": {
+      "default": "var response = client.getRevenue(\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getSearchesCount": {
+      "default": "var response = client.getSearchesCount(\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getSearchesNoClicks": {
+      "default": "var response = client.getSearchesNoClicks(\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getSearchesNoResults": {
+      "default": "var response = client.getSearchesNoResults(\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getStatus": {
+      "default": "var response = client.getStatus(\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getTopCountries": {
+      "default": "var response = client.getTopCountries(\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getTopFilterAttributes": {
+      "default": "var response = client.getTopFilterAttributes(\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getTopFilterForAttribute": {
+      "default": "var response = client.getTopFilterForAttribute(\n  attribute = \"myAttribute\",\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getTopFiltersNoResults": {
+      "default": "var response = client.getTopFiltersNoResults(\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getTopHits": {
+      "default": "var response = client.getTopHits(\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getTopSearches": {
+      "default": "var response = client.getTopSearches(\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "getUsersCount": {
+      "default": "var response = client.getUsersCount(\n  index = \"index\",\n)\n\n// Use the response\nprintln(response)"
+    },
+    "init": {
+      "default": "val client = AnalyticsClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\", region = \"YOUR_APP_ID_REGION\")"
+    },
+    "waitForAppTask": {
+      "default": "client.waitAppTask(response.taskID)"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "",
+        "update": "",
+        "delete": ""
+      }
+    },
+    "waitForTask": {
+      "default": "client.waitTask(\"<<indexName>>\", response.taskID)"
+    }
+  },
+  "php": {
+    "import": {
+      "default": "use Algolia\\AlgoliaSearch\\Api\\AnalyticsClient;"
+    },
+    "customDelete": {
+      "default": "$response = $client->customDelete(\n    'test/minimal',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "customGet": {
+      "default": "$response = $client->customGet(\n    'test/minimal',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "customPost": {
+      "default": "$response = $client->customPost(\n    'test/minimal',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "customPut": {
+      "default": "$response = $client->customPut(\n    'test/minimal',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getAddToCartRate": {
+      "default": "$response = $client->getAddToCartRate(\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getAverageClickPosition": {
+      "default": "$response = $client->getAverageClickPosition(\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getClickPositions": {
+      "default": "$response = $client->getClickPositions(\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getClickThroughRate": {
+      "default": "$response = $client->getClickThroughRate(\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getConversionRate": {
+      "default": "$response = $client->getConversionRate(\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getNoClickRate": {
+      "default": "$response = $client->getNoClickRate(\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getNoResultsRate": {
+      "default": "$response = $client->getNoResultsRate(\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getPurchaseRate": {
+      "default": "$response = $client->getPurchaseRate(\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getRevenue": {
+      "default": "$response = $client->getRevenue(\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getSearchesCount": {
+      "default": "$response = $client->getSearchesCount(\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getSearchesNoClicks": {
+      "default": "$response = $client->getSearchesNoClicks(\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getSearchesNoResults": {
+      "default": "$response = $client->getSearchesNoResults(\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getStatus": {
+      "default": "$response = $client->getStatus(\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getTopCountries": {
+      "default": "$response = $client->getTopCountries(\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getTopFilterAttributes": {
+      "default": "$response = $client->getTopFilterAttributes(\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getTopFilterForAttribute": {
+      "default": "$response = $client->getTopFilterForAttribute(\n    'myAttribute',\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getTopFiltersNoResults": {
+      "default": "$response = $client->getTopFiltersNoResults(\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getTopHits": {
+      "default": "$response = $client->getTopHits(\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getTopSearches": {
+      "default": "$response = $client->getTopSearches(\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "getUsersCount": {
+      "default": "$response = $client->getUsersCount(\n    'index',\n);\n\n// play with the response\nvar_dump($response);"
+    },
+    "init": {
+      "default": "$client = AnalyticsClient::create('<YOUR_APP_ID>', '<YOUR_API_KEY>', 'YOUR_APP_ID_REGION');"
+    },
+    "waitForAppTask": {
+      "default": "$client->waitForAppTask($response['taskID']);"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "$client->waitForApiKey('<<operation>>', $response['key']);",
+        "update": "$client->waitForApiKey('<<operation>>', $response['key'], [\n        'acl' => [\n          'search',\n          'addObject',\n        ],\n          'validity' => 300,\n          'maxQueriesPerIPPerHour' => 100,\n          'maxHitsPerQuery' => 20,\n        ]);",
+        "delete": "$client->waitForApiKey('<<operation>>', $response['key']);"
+      }
+    },
+    "waitForTask": {
+      "default": "$client->waitForTask('<<indexName>>', $response['taskID']);"
+    }
+  },
+  "python": {
+    "import": {
+      "default": "from algoliasearch.analytics.client import AnalyticsClient"
+    },
+    "customDelete": {
+      "default": "response = await _client.custom_delete(\n    path=\"test/minimal\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "customGet": {
+      "default": "response = await _client.custom_get(\n    path=\"test/minimal\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "customPost": {
+      "default": "response = await _client.custom_post(\n    path=\"test/minimal\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "customPut": {
+      "default": "response = await _client.custom_put(\n    path=\"test/minimal\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getAddToCartRate": {
+      "default": "response = await _client.get_add_to_cart_rate(\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getAverageClickPosition": {
+      "default": "response = await _client.get_average_click_position(\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getClickPositions": {
+      "default": "response = await _client.get_click_positions(\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getClickThroughRate": {
+      "default": "response = await _client.get_click_through_rate(\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getConversionRate": {
+      "default": "response = await _client.get_conversion_rate(\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getNoClickRate": {
+      "default": "response = await _client.get_no_click_rate(\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getNoResultsRate": {
+      "default": "response = await _client.get_no_results_rate(\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getPurchaseRate": {
+      "default": "response = await _client.get_purchase_rate(\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getRevenue": {
+      "default": "response = await _client.get_revenue(\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getSearchesCount": {
+      "default": "response = await _client.get_searches_count(\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getSearchesNoClicks": {
+      "default": "response = await _client.get_searches_no_clicks(\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getSearchesNoResults": {
+      "default": "response = await _client.get_searches_no_results(\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getStatus": {
+      "default": "response = await _client.get_status(\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getTopCountries": {
+      "default": "response = await _client.get_top_countries(\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getTopFilterAttributes": {
+      "default": "response = await _client.get_top_filter_attributes(\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getTopFilterForAttribute": {
+      "default": "response = await _client.get_top_filter_for_attribute(\n    attribute=\"myAttribute\",\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getTopFiltersNoResults": {
+      "default": "response = await _client.get_top_filters_no_results(\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getTopHits": {
+      "default": "response = await _client.get_top_hits(\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getTopSearches": {
+      "default": "response = await _client.get_top_searches(\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "getUsersCount": {
+      "default": "response = await _client.get_users_count(\n    index=\"index\",\n)\n\n# use the class directly\nprint(response)\n\n# print the JSON response\nprint(response.to_json())"
+    },
+    "init": {
+      "default": "_client = AnalyticsClient(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\")"
+    },
+    "waitForAppTask": {
+      "default": "await client.wait_for_app_task(task_id=response.task_id)"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
+        "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key={\n          \"acl\": [\n              \"search\",\n              \"addObject\",\n          ],\n          \"validity\": 300,\n          \"maxQueriesPerIPPerHour\": 100,\n          \"maxHitsPerQuery\": 20,\n      })",
+        "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
+      }
+    },
+    "waitForTask": {
+      "default": "await client.wait_for_task(index_name=\"<<indexName>>\", task_id=response.task_id)"
+    }
+  },
+  "ruby": {
+    "import": {
+      "default": "require \"algolia\""
+    },
+    "customDelete": {
+      "default": "response = client.custom_delete(\"test/minimal\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "customGet": {
+      "default": "response = client.custom_get(\"test/minimal\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "customPost": {
+      "default": "response = client.custom_post(\"test/minimal\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "customPut": {
+      "default": "response = client.custom_put(\"test/minimal\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getAddToCartRate": {
+      "default": "response = client.get_add_to_cart_rate(\"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getAverageClickPosition": {
+      "default": "response = client.get_average_click_position(\"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getClickPositions": {
+      "default": "response = client.get_click_positions(\"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getClickThroughRate": {
+      "default": "response = client.get_click_through_rate(\"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getConversionRate": {
+      "default": "response = client.get_conversion_rate(\"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getNoClickRate": {
+      "default": "response = client.get_no_click_rate(\"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getNoResultsRate": {
+      "default": "response = client.get_no_results_rate(\"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getPurchaseRate": {
+      "default": "response = client.get_purchase_rate(\"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getRevenue": {
+      "default": "response = client.get_revenue(\"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getSearchesCount": {
+      "default": "response = client.get_searches_count(\"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getSearchesNoClicks": {
+      "default": "response = client.get_searches_no_clicks(\"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getSearchesNoResults": {
+      "default": "response = client.get_searches_no_results(\"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getStatus": {
+      "default": "response = client.get_status(\"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getTopCountries": {
+      "default": "response = client.get_top_countries(\"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getTopFilterAttributes": {
+      "default": "response = client.get_top_filter_attributes(\"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getTopFilterForAttribute": {
+      "default": "response = client.get_top_filter_for_attribute(\"myAttribute\", \"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getTopFiltersNoResults": {
+      "default": "response = client.get_top_filters_no_results(\"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getTopHits": {
+      "default": "response = client.get_top_hits(\"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getTopSearches": {
+      "default": "response = client.get_top_searches(\"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "getUsersCount": {
+      "default": "response = client.get_users_count(\"index\")\n\n# use the class directly\nputs(response)\n\n# print the JSON response\nputs(response.to_json)"
+    },
+    "init": {
+      "default": "client = Algolia::AnalyticsClient.create(\"YOUR_APP_ID\", \"YOUR_API_KEY\", \"YOUR_APP_ID_REGION\")"
+    },
+    "waitForAppTask": {
+      "default": "client.wait_for_app_task(response.task_id)"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)",
+        "update": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key, api_key=ApiKey.new(\n        acl: ['search', 'addObject'],\n        validity: 300,\n        max_queries_per_ip_per_hour: 100,\n        max_hits_per_query: 20\n      ))",
+        "delete": "await client.wait_for_api_key(operation=\"<<operation>>\", key=response.key)"
+      }
+    },
+    "waitForTask": {
+      "default": "client.wait_for_task(\"<<indexName>>\", response.task_id)"
+    }
+  },
+  "scala": {
+    "import": {
+      "default": "import algoliasearch.api.AnalyticsClient"
+    },
+    "customDelete": {
+      "default": "val response = client.customDelete[JObject](\n  path = \"test/minimal\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "customGet": {
+      "default": "val response = client.customGet[JObject](\n  path = \"test/minimal\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "customPost": {
+      "default": "val response = client.customPost[JObject](\n  path = \"test/minimal\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "customPut": {
+      "default": "val response = client.customPut[JObject](\n  path = \"test/minimal\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getAddToCartRate": {
+      "default": "val response = client.getAddToCartRate(\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getAverageClickPosition": {
+      "default": "val response = client.getAverageClickPosition(\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getClickPositions": {
+      "default": "val response = client.getClickPositions(\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getClickThroughRate": {
+      "default": "val response = client.getClickThroughRate(\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getConversionRate": {
+      "default": "val response = client.getConversionRate(\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getNoClickRate": {
+      "default": "val response = client.getNoClickRate(\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getNoResultsRate": {
+      "default": "val response = client.getNoResultsRate(\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getPurchaseRate": {
+      "default": "val response = client.getPurchaseRate(\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getRevenue": {
+      "default": "val response = client.getRevenue(\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getSearchesCount": {
+      "default": "val response = client.getSearchesCount(\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getSearchesNoClicks": {
+      "default": "val response = client.getSearchesNoClicks(\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getSearchesNoResults": {
+      "default": "val response = client.getSearchesNoResults(\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getStatus": {
+      "default": "val response = client.getStatus(\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getTopCountries": {
+      "default": "val response = client.getTopCountries(\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getTopFilterAttributes": {
+      "default": "val response = client.getTopFilterAttributes(\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getTopFilterForAttribute": {
+      "default": "val response = client.getTopFilterForAttribute(\n  attribute = \"myAttribute\",\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getTopFiltersNoResults": {
+      "default": "val response = client.getTopFiltersNoResults(\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getTopHits": {
+      "default": "val response = client.getTopHits(\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getTopSearches": {
+      "default": "val response = client.getTopSearches(\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "getUsersCount": {
+      "default": "val response = client.getUsersCount(\n  index = \"index\"\n)\n\n// Use the response\nval value = Await.result(response, Duration(100, \"sec\"))"
+    },
+    "init": {
+      "default": "val client = AnalyticsClient(appId = \"YOUR_APP_ID\", apiKey = \"YOUR_API_KEY\", region = Option(\"YOUR_APP_ID_REGION\"))"
+    },
+    "waitForAppTask": {
+      "default": "client.waitAppTask(response.getTaskID())"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "",
+        "update": "",
+        "delete": ""
+      }
+    },
+    "waitForTask": {
+      "default": "client.waitTask(\"<<indexName>>\", response.getTaskID())"
+    }
+  },
+  "swift": {
+    "import": {
+      "default": "import Analytics"
+    },
+    "customDelete": {
+      "default": "let response = try await client.customDelete(path: \"test/minimal\")"
+    },
+    "customGet": {
+      "default": "let response = try await client.customGet(path: \"test/minimal\")"
+    },
+    "customPost": {
+      "default": "let response = try await client.customPost(path: \"test/minimal\")"
+    },
+    "customPut": {
+      "default": "let response = try await client.customPut(path: \"test/minimal\")"
+    },
+    "getAddToCartRate": {
+      "default": "let response = try await client.getAddToCartRate(index: \"index\")"
+    },
+    "getAverageClickPosition": {
+      "default": "let response = try await client.getAverageClickPosition(index: \"index\")"
+    },
+    "getClickPositions": {
+      "default": "let response = try await client.getClickPositions(index: \"index\")"
+    },
+    "getClickThroughRate": {
+      "default": "let response = try await client.getClickThroughRate(index: \"index\")"
+    },
+    "getConversionRate": {
+      "default": "let response = try await client.getConversionRate(index: \"index\")"
+    },
+    "getNoClickRate": {
+      "default": "let response = try await client.getNoClickRate(index: \"index\")"
+    },
+    "getNoResultsRate": {
+      "default": "let response = try await client.getNoResultsRate(index: \"index\")"
+    },
+    "getPurchaseRate": {
+      "default": "let response = try await client.getPurchaseRate(index: \"index\")"
+    },
+    "getRevenue": {
+      "default": "let response = try await client.getRevenue(index: \"index\")"
+    },
+    "getSearchesCount": {
+      "default": "let response = try await client.getSearchesCount(index: \"index\")"
+    },
+    "getSearchesNoClicks": {
+      "default": "let response = try await client.getSearchesNoClicks(index: \"index\")"
+    },
+    "getSearchesNoResults": {
+      "default": "let response = try await client.getSearchesNoResults(index: \"index\")"
+    },
+    "getStatus": {
+      "default": "let response = try await client.getStatus(index: \"index\")"
+    },
+    "getTopCountries": {
+      "default": "let response = try await client.getTopCountries(index: \"index\")"
+    },
+    "getTopFilterAttributes": {
+      "default": "let response = try await client.getTopFilterAttributes(index: \"index\")"
+    },
+    "getTopFilterForAttribute": {
+      "default": "let response = try await client.getTopFilterForAttribute(attribute: \"myAttribute\", index: \"index\")"
+    },
+    "getTopFiltersNoResults": {
+      "default": "let response = try await client.getTopFiltersNoResults(index: \"index\")"
+    },
+    "getTopHits": {
+      "default": "let response = try await client.getTopHits(index: \"index\")"
+    },
+    "getTopSearches": {
+      "default": "let response = try await client.getTopSearches(index: \"index\")"
+    },
+    "getUsersCount": {
+      "default": "let response = try await client.getUsersCount(index: \"index\")"
+    },
+    "init": {
+      "default": "let client = try AnalyticsClient(appID: \"YOUR_APP_ID\", apiKey: \"YOUR_API_KEY\", region: .us)"
+    },
+    "waitForAppTask": {
+      "default": "try await client.waitForAppTask(with: response.taskID)"
+    },
+    "waitForApiKey": {
+      "default": {
+        "add": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.add)",
+        "update": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.update, apiKey: ApiKey(\n          acl: [Acl.search, Acl.addObject],\n          maxHitsPerQuery: 20,\n          maxQueriesPerIPPerHour: 100,\n          validity: 300\n      ))",
+        "delete": "try await client.waitForApiKey(with: response.key, operation: ApiKeyOperation.delete)"
+      }
+    },
+    "waitForTask": {
+      "default": "try await client.waitForTask(with: response.taskID, in: \"<<indexName>>\")"
+    }
+  }
+}
