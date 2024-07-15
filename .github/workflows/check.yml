@@ -378,10 +378,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set output
-        id: setoutput
-        run: echo "success=false" >> "$GITHUB_OUTPUT"
-
       - name: Download artifacts
         uses: ./scripts/ci/actions/restore-artifacts
         with:
@@ -421,10 +417,6 @@ jobs:
       success: ${{ steps.setoutput.outputs.success }}
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set output
-        id: setoutput
-        run: echo "success=false" >> "$GITHUB_OUTPUT"
 
       - name: Download artifacts
         uses: ./scripts/ci/actions/restore-artifacts
@@ -548,7 +540,7 @@ jobs:
     if: always()
     steps:
       - run: |
-          if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_cts_macos.outputs.success }}" == "false") || ("${{ needs.kotlin_build_macos.outputs.success }}" == "false")]]; then
+          if [[ ("${{ needs.codegen.outputs.success }}" != "true") || ("${{ needs.swift_cts_macos.result }}" != "skipped" && "${{ needs.swift_cts_macos.outputs.success }}" != "true") || ("${{ needs.kotlin_build_macos.result }}" != "skipped" && "${{ needs.kotlin_build_macos.outputs.success }}" != "true")]]; then
             echo "a needed step failed"
             exit 1
           fi
