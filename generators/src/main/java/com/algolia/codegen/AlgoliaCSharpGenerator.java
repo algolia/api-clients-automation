@@ -84,37 +84,38 @@ public class AlgoliaCSharpGenerator extends CSharpClientCodegen {
     modelTestTemplateFiles.clear();
 
     // Remove some files we don't want to output or change their paths
-    supportingFiles.removeIf(file ->
-      file.getTemplateFile().equals("git_push.sh.mustache") ||
-      file.getTemplateFile().equals("openapi.mustache") ||
-      file.getTemplateFile().equals("Solution.mustache") ||
-      file.getTemplateFile().equals("README.mustache") ||
-      file.getTemplateFile().equals("netcore_project.mustache") ||
-      file.getTemplateFile().equals("netcore_testproject.mustache") ||
-      file.getTemplateFile().equals("gitignore.mustache") ||
-      file.getTemplateFile().equals("IApiAccessor.mustache") ||
-      file.getTemplateFile().equals("HttpSigningConfiguration.mustache") ||
-      file.getTemplateFile().equals("IAsynchronousClient.mustache") ||
-      file.getTemplateFile().equals("FileParameter.mustache") ||
-      file.getTemplateFile().equals("RetryConfiguration.mustache") ||
-      file.getTemplateFile().equals("ApiClient.mustache") ||
-      file.getTemplateFile().equals("OpenAPIDateConverter.mustache") ||
-      file.getTemplateFile().equals("ExceptionFactory.mustache") ||
-      file.getTemplateFile().equals("ISynchronousClient.mustache") ||
-      file.getTemplateFile().equals("ReadOnlyDictionary.mustache") ||
-      file.getTemplateFile().equals("WebRequestPathBuilder.mustache") ||
-      file.getTemplateFile().equals("RequestOptions.mustache") ||
-      file.getTemplateFile().equals("AbstractOpenAPISchema.mustache") ||
-      file.getTemplateFile().equals("ApiResponse.mustache") ||
-      file.getTemplateFile().equals("Multimap.mustache") ||
-      file.getTemplateFile().equals("modelInnerEnum.mustache") ||
-      file.getTemplateFile().equals("ApiException.mustache") ||
-      file.getTemplateFile().equals("GlobalConfiguration.mustache") ||
-      file.getTemplateFile().equals("IReadableConfiguration.mustache") ||
-      file.getTemplateFile().equals("ClientUtils.mustache") ||
-      file.getTemplateFile().equals("Configuration.mustache") ||
-      file.getTemplateFile().equals("nuspec.mustache") ||
-      file.getTemplateFile().equals("appveyor.mustache")
+    supportingFiles.removeIf(
+      file ->
+        file.getTemplateFile().equals("git_push.sh.mustache") ||
+        file.getTemplateFile().equals("openapi.mustache") ||
+        file.getTemplateFile().equals("Solution.mustache") ||
+        file.getTemplateFile().equals("README.mustache") ||
+        file.getTemplateFile().equals("netcore_project.mustache") ||
+        file.getTemplateFile().equals("netcore_testproject.mustache") ||
+        file.getTemplateFile().equals("gitignore.mustache") ||
+        file.getTemplateFile().equals("IApiAccessor.mustache") ||
+        file.getTemplateFile().equals("HttpSigningConfiguration.mustache") ||
+        file.getTemplateFile().equals("IAsynchronousClient.mustache") ||
+        file.getTemplateFile().equals("FileParameter.mustache") ||
+        file.getTemplateFile().equals("RetryConfiguration.mustache") ||
+        file.getTemplateFile().equals("ApiClient.mustache") ||
+        file.getTemplateFile().equals("OpenAPIDateConverter.mustache") ||
+        file.getTemplateFile().equals("ExceptionFactory.mustache") ||
+        file.getTemplateFile().equals("ISynchronousClient.mustache") ||
+        file.getTemplateFile().equals("ReadOnlyDictionary.mustache") ||
+        file.getTemplateFile().equals("WebRequestPathBuilder.mustache") ||
+        file.getTemplateFile().equals("RequestOptions.mustache") ||
+        file.getTemplateFile().equals("AbstractOpenAPISchema.mustache") ||
+        file.getTemplateFile().equals("ApiResponse.mustache") ||
+        file.getTemplateFile().equals("Multimap.mustache") ||
+        file.getTemplateFile().equals("modelInnerEnum.mustache") ||
+        file.getTemplateFile().equals("ApiException.mustache") ||
+        file.getTemplateFile().equals("GlobalConfiguration.mustache") ||
+        file.getTemplateFile().equals("IReadableConfiguration.mustache") ||
+        file.getTemplateFile().equals("ClientUtils.mustache") ||
+        file.getTemplateFile().equals("Configuration.mustache") ||
+        file.getTemplateFile().equals("nuspec.mustache") ||
+        file.getTemplateFile().equals("appveyor.mustache")
     );
 
     // repository

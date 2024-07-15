@@ -25,8 +25,7 @@ public class SwiftCTSManager implements CTSManager {
     bundle.put("import", Helpers.capitalize(Helpers.camelize(this.client)));
     bundle.put(
       "packageList",
-      Helpers
-        .getClientListForLanguage("swift")
+      Helpers.getClientListForLanguage("swift")
         .stream()
         .map(packageName -> Helpers.capitalize(Helpers.camelize(packageName)))
         .collect(Collectors.toList())

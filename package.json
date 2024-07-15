@@ -48,7 +48,7 @@
     "lint-staged": "15.2.7",
     "pinst": "3.0.0",
     "prettier": "3.3.3",
-    "prettier-plugin-java": "2.5.0",
+    "prettier-plugin-java": "2.6.4",
     "renovate-config-algolia": "2.1.10"
   },
   "packageManager": "yarn@4.3.1",
