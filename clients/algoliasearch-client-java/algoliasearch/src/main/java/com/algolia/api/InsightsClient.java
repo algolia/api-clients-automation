@@ -321,8 +321,7 @@ public class InsightsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
       .setBody(body)
@@ -433,8 +432,7 @@ public class InsightsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
       .setBody(body)

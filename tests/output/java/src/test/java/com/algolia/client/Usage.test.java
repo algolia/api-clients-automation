@@ -109,30 +109,21 @@ class UsageClientClientTests {
   @DisplayName("client throws with invalid parameters")
   void parametersTest0() {
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          UsageClient client = new UsageClient("", "", withEchoRequester());
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        UsageClient client = new UsageClient("", "", withEchoRequester());
+      });
       assertEquals("`appId` is missing.", exception.getMessage());
     }
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          UsageClient client = new UsageClient("", "my-api-key", withEchoRequester());
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        UsageClient client = new UsageClient("", "my-api-key", withEchoRequester());
+      });
       assertEquals("`appId` is missing.", exception.getMessage());
     }
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          UsageClient client = new UsageClient("my-app-id", "", withEchoRequester());
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        UsageClient client = new UsageClient("my-app-id", "", withEchoRequester());
+      });
       assertEquals("`apiKey` is missing.", exception.getMessage());
     }
   }

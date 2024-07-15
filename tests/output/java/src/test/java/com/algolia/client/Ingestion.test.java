@@ -99,12 +99,9 @@ class IngestionClientClientTests {
   @DisplayName("throws when incorrect region is given")
   void parametersTest1() {
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          IngestionClient client = new IngestionClient("my-app-id", "my-api-key", "not_a_region", withEchoRequester());
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        IngestionClient client = new IngestionClient("my-app-id", "my-api-key", "not_a_region", withEchoRequester());
+      });
       assertEquals("`region` is required and must be one of the following: eu, us", exception.getMessage());
     }
   }

@@ -294,8 +294,7 @@ public class MonitoringClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
       .setBody(body)
@@ -406,8 +405,7 @@ public class MonitoringClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
       .setBody(body)
@@ -756,8 +754,7 @@ public class MonitoringClient extends ApiClient {
 
     Parameters.requireNonNull(period, "Parameter `period` is required when calling `getMetrics`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/infrastructure/{metric}/period/{period}", metric, period)
       .setMethod("GET")
       .build();

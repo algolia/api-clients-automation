@@ -109,12 +109,9 @@ class AbtestingClientClientTests {
   @DisplayName("throws when incorrect region is given")
   void parametersTest2() {
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          AbtestingClient client = new AbtestingClient("my-app-id", "my-api-key", "not_a_region", withEchoRequester());
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        AbtestingClient client = new AbtestingClient("my-app-id", "my-api-key", "not_a_region", withEchoRequester());
+      });
       assertEquals("`region` must be one of the following: de, us", exception.getMessage());
     }
   }

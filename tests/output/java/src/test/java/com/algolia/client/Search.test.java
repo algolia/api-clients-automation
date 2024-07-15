@@ -318,30 +318,21 @@ class SearchClientClientTests {
   @DisplayName("client throws with invalid parameters")
   void parametersTest0() {
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          SearchClient client = new SearchClient("", "", withEchoRequester());
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        SearchClient client = new SearchClient("", "", withEchoRequester());
+      });
       assertEquals("`appId` is missing.", exception.getMessage());
     }
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          SearchClient client = new SearchClient("", "my-api-key", withEchoRequester());
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        SearchClient client = new SearchClient("", "my-api-key", withEchoRequester());
+      });
       assertEquals("`appId` is missing.", exception.getMessage());
     }
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          SearchClient client = new SearchClient("my-app-id", "", withEchoRequester());
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        SearchClient client = new SearchClient("my-app-id", "", withEchoRequester());
+      });
       assertEquals("`apiKey` is missing.", exception.getMessage());
     }
   }
@@ -352,13 +343,10 @@ class SearchClientClientTests {
     SearchClient client = createClient();
 
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          client.addApiKey(null);
-          EchoResponse result = echo.getLastResponse();
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        client.addApiKey(null);
+        EchoResponse result = echo.getLastResponse();
+      });
       assertEquals("Parameter `apiKey` is required when calling `addApiKey`.", exception.getMessage());
     }
   }
@@ -369,33 +357,24 @@ class SearchClientClientTests {
     SearchClient client = createClient();
 
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          client.addOrUpdateObject(null, "my-object-id", Map.of());
-          EchoResponse result = echo.getLastResponse();
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        client.addOrUpdateObject(null, "my-object-id", Map.of());
+        EchoResponse result = echo.getLastResponse();
+      });
       assertEquals("Parameter `indexName` is required when calling `addOrUpdateObject`.", exception.getMessage());
     }
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          client.addOrUpdateObject("my-index-name", null, Map.of());
-          EchoResponse result = echo.getLastResponse();
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        client.addOrUpdateObject("my-index-name", null, Map.of());
+        EchoResponse result = echo.getLastResponse();
+      });
       assertEquals("Parameter `objectID` is required when calling `addOrUpdateObject`.", exception.getMessage());
     }
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          client.addOrUpdateObject("my-index-name", "my-object-id", null);
-          EchoResponse result = echo.getLastResponse();
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        client.addOrUpdateObject("my-index-name", "my-object-id", null);
+        EchoResponse result = echo.getLastResponse();
+      });
       assertEquals("Parameter `body` is required when calling `addOrUpdateObject`.", exception.getMessage());
     }
   }
