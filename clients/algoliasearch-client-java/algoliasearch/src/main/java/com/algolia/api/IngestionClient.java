@@ -574,8 +574,7 @@ public class IngestionClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
       .setBody(body)
@@ -686,8 +685,7 @@ public class IngestionClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
       .setBody(body)
@@ -769,8 +767,7 @@ public class IngestionClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(authenticationID, "Parameter `authenticationID` is required when calling `deleteAuthentication`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/authentications/{authenticationID}", authenticationID)
       .setMethod("DELETE")
       .build();
@@ -972,8 +969,7 @@ public class IngestionClient extends ApiClient {
     throws AlgoliaRuntimeException {
     Parameters.requireNonNull(transformationID, "Parameter `transformationID` is required when calling `deleteTransformation`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/transformations/{transformationID}", transformationID)
       .setMethod("DELETE")
       .build();
@@ -1228,8 +1224,7 @@ public class IngestionClient extends ApiClient {
     OrderKeys order,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/authentications")
       .setMethod("GET")
       .addQueryParameter("itemsPerPage", itemsPerPage)
@@ -1423,8 +1418,7 @@ public class IngestionClient extends ApiClient {
     OrderKeys order,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/destinations")
       .setMethod("GET")
       .addQueryParameter("itemsPerPage", itemsPerPage)
@@ -1650,8 +1644,7 @@ public class IngestionClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(runID, "Parameter `runID` is required when calling `getEvents`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/runs/{runID}/events", runID)
       .setMethod("GET")
       .addQueryParameter("itemsPerPage", itemsPerPage)
@@ -1874,8 +1867,7 @@ public class IngestionClient extends ApiClient {
     String endDate,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/runs")
       .setMethod("GET")
       .addQueryParameter("itemsPerPage", itemsPerPage)
@@ -2078,8 +2070,7 @@ public class IngestionClient extends ApiClient {
     OrderKeys order,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/sources")
       .setMethod("GET")
       .addQueryParameter("itemsPerPage", itemsPerPage)
@@ -2292,8 +2283,7 @@ public class IngestionClient extends ApiClient {
     OrderKeys order,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/tasks")
       .setMethod("GET")
       .addQueryParameter("itemsPerPage", itemsPerPage)
@@ -2464,8 +2454,7 @@ public class IngestionClient extends ApiClient {
     OrderKeys order,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/transformations")
       .setMethod("GET")
       .addQueryParameter("sort", sort)
@@ -2594,8 +2583,7 @@ public class IngestionClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(authenticationSearch, "Parameter `authenticationSearch` is required when calling `searchAuthentications`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/authentications/search")
       .setMethod("POST")
       .setBody(authenticationSearch)
@@ -2799,8 +2787,7 @@ public class IngestionClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(transformationSearch, "Parameter `transformationSearch` is required when calling `searchTransformations`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/transformations/search")
       .setMethod("POST")
       .setBody(transformationSearch)
@@ -2973,8 +2960,7 @@ public class IngestionClient extends ApiClient {
 
     Parameters.requireNonNull(authenticationUpdate, "Parameter `authenticationUpdate` is required when calling `updateAuthentication`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/authentications/{authenticationID}", authenticationID)
       .setMethod("PATCH")
       .setBody(authenticationUpdate)
@@ -3043,8 +3029,7 @@ public class IngestionClient extends ApiClient {
 
     Parameters.requireNonNull(destinationUpdate, "Parameter `destinationUpdate` is required when calling `updateDestination`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/destinations/{destinationID}", destinationID)
       .setMethod("PATCH")
       .setBody(destinationUpdate)
@@ -3233,8 +3218,7 @@ public class IngestionClient extends ApiClient {
 
     Parameters.requireNonNull(transformationCreate, "Parameter `transformationCreate` is required when calling `updateTransformation`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/transformations/{transformationID}", transformationID)
       .setMethod("PUT")
       .setBody(transformationCreate)
@@ -3400,8 +3384,7 @@ public class IngestionClient extends ApiClient {
 
     Parameters.requireNonNull(sourceUpdate, "Parameter `sourceUpdate` is required when calling `validateSourceBeforeUpdate`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/sources/{sourceID}/validate", sourceID)
       .setMethod("POST")
       .setBody(sourceUpdate)

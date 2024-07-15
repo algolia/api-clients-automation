@@ -370,8 +370,7 @@ public class AbtestingClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
       .setBody(body)
@@ -482,8 +481,7 @@ public class AbtestingClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
       .setBody(body)
@@ -703,8 +701,7 @@ public class AbtestingClient extends ApiClient {
     String indexSuffix,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/abtests")
       .setMethod("GET")
       .addQueryParameter("offset", offset)

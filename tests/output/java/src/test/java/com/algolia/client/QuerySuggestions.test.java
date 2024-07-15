@@ -89,12 +89,9 @@ class QuerySuggestionsClientClientTests {
   @DisplayName("throws when region is not given")
   void parametersTest0() {
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          QuerySuggestionsClient client = new QuerySuggestionsClient("my-app-id", "my-api-key", "", withEchoRequester());
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        QuerySuggestionsClient client = new QuerySuggestionsClient("my-app-id", "my-api-key", "", withEchoRequester());
+      });
       assertEquals("`region` is required and must be one of the following: eu, us", exception.getMessage());
     }
   }
@@ -103,12 +100,9 @@ class QuerySuggestionsClientClientTests {
   @DisplayName("throws when incorrect region is given")
   void parametersTest1() {
     {
-      Exception exception = assertThrows(
-        Exception.class,
-        () -> {
-          QuerySuggestionsClient client = new QuerySuggestionsClient("my-app-id", "my-api-key", "not_a_region", withEchoRequester());
-        }
-      );
+      Exception exception = assertThrows(Exception.class, () -> {
+        QuerySuggestionsClient client = new QuerySuggestionsClient("my-app-id", "my-api-key", "not_a_region", withEchoRequester());
+      });
       assertEquals("`region` is required and must be one of the following: eu, us", exception.getMessage());
     }
   }

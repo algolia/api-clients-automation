@@ -174,8 +174,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(body, "Parameter `body` is required when calling `addOrUpdateObject`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{objectID}", indexName, objectID)
       .setMethod("PUT")
       .setBody(body)
@@ -302,8 +301,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(assignUserIdParams, "Parameter `assignUserIdParams` is required when calling `assignUserId`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/clusters/mapping")
       .setMethod("POST")
       .setBody(assignUserIdParams)
@@ -377,8 +375,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(batchWriteParams, "Parameter `batchWriteParams` is required when calling `batch`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/batch", indexName)
       .setMethod("POST")
       .setBody(batchWriteParams)
@@ -452,8 +449,7 @@ public class SearchClient extends ApiClient {
       "Parameter `batchAssignUserIdsParams` is required when calling `batchAssignUserIds`."
     );
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/clusters/mapping/batch")
       .setMethod("POST")
       .setBody(batchAssignUserIdsParams)
@@ -530,8 +526,7 @@ public class SearchClient extends ApiClient {
       "Parameter `batchDictionaryEntriesParams` is required when calling" + " `batchDictionaryEntries`."
     );
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/dictionaries/{dictionaryName}/batch", dictionaryName)
       .setMethod("POST")
       .setBody(batchDictionaryEntriesParams)
@@ -679,8 +674,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `browse`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/browse", indexName)
       .setMethod("POST")
       .setBody(browseParams)
@@ -870,8 +864,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `clearRules`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/clear", indexName)
       .setMethod("POST")
       .addQueryParameter("forwardToReplicas", forwardToReplicas)
@@ -977,8 +970,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `clearSynonyms`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/clear", indexName)
       .setMethod("POST")
       .addQueryParameter("forwardToReplicas", forwardToReplicas)
@@ -1282,8 +1274,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
       .setBody(body)
@@ -1394,8 +1385,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
       .setBody(body)
@@ -1537,8 +1527,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(deleteByParams, "Parameter `deleteByParams` is required when calling `deleteBy`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/deleteByQuery", indexName)
       .setMethod("POST")
       .setBody(deleteByParams)
@@ -1677,8 +1666,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `deleteObject`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{objectID}", indexName, objectID)
       .setMethod("DELETE")
       .build();
@@ -1781,8 +1769,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `deleteRule`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/{objectID}", indexName, objectID)
       .setMethod("DELETE")
       .addQueryParameter("forwardToReplicas", forwardToReplicas)
@@ -1968,8 +1955,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `deleteSynonym`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/{objectID}", indexName, objectID)
       .setMethod("DELETE")
       .addQueryParameter("forwardToReplicas", forwardToReplicas)
@@ -2320,8 +2306,7 @@ public class SearchClient extends ApiClient {
     LogType type,
     RequestOptions requestOptions
   ) throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/logs")
       .setMethod("GET")
       .addQueryParameter("offset", offset)
@@ -2475,8 +2460,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `getObject`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{objectID}", indexName, objectID)
       .setMethod("GET")
       .addQueryParameter("attributesToRetrieve", attributesToRetrieve)
@@ -2583,8 +2567,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(getObjectsParams, "Parameter `getObjectsParams` is required when calling `getObjects`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/*/objects")
       .setMethod("POST")
       .setBody(getObjectsParams)
@@ -2648,8 +2631,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `getRule`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/{objectID}", indexName, objectID)
       .setMethod("GET")
       .build();
@@ -2801,8 +2783,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `getSynonym`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/{objectID}", indexName, objectID)
       .setMethod("GET")
       .build();
@@ -3052,8 +3033,7 @@ public class SearchClient extends ApiClient {
    */
   public CompletableFuture<HasPendingMappingsResponse> hasPendingMappingsAsync(Boolean getClusters, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/clusters/mapping/pending")
       .setMethod("GET")
       .addQueryParameter("getClusters", getClusters)
@@ -3250,8 +3230,7 @@ public class SearchClient extends ApiClient {
    */
   public CompletableFuture<ListIndicesResponse> listIndicesAsync(Integer page, Integer hitsPerPage, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes")
       .setMethod("GET")
       .addQueryParameter("page", page)
@@ -3358,8 +3337,7 @@ public class SearchClient extends ApiClient {
    */
   public CompletableFuture<ListUserIdsResponse> listUserIdsAsync(Integer page, Integer hitsPerPage, RequestOptions requestOptions)
     throws AlgoliaRuntimeException {
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/clusters/mapping")
       .setMethod("GET")
       .addQueryParameter("page", page)
@@ -3552,8 +3530,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(operationIndexParams, "Parameter `operationIndexParams` is required when calling `operationIndex`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/operation", indexName)
       .setMethod("POST")
       .setBody(operationIndexParams)
@@ -3711,8 +3688,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(attributesToUpdate, "Parameter `attributesToUpdate` is required when calling `partialUpdateObject`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{objectID}/partial", indexName, objectID)
       .setMethod("POST")
       .setBody(attributesToUpdate)
@@ -4128,8 +4104,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(rule, "Parameter `rule` is required when calling `saveRule`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/{objectID}", indexName, objectID)
       .setMethod("PUT")
       .setBody(rule)
@@ -4288,8 +4263,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(rules, "Parameter `rules` is required when calling `saveRules`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/batch", indexName)
       .setMethod("POST")
       .setBody(rules)
@@ -4455,8 +4429,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(synonymHit, "Parameter `synonymHit` is required when calling `saveSynonym`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/{objectID}", indexName, objectID)
       .setMethod("PUT")
       .setBody(synonymHit)
@@ -4618,8 +4591,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(synonymHit, "Parameter `synonymHit` is required when calling `saveSynonyms`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/batch", indexName)
       .setMethod("POST")
       .setBody(synonymHit)
@@ -4731,8 +4703,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(searchMethodParams, "Parameter `searchMethodParams` is required when calling `search`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/*/queries")
       .setMethod("POST")
       .setBody(searchMethodParams)
@@ -4809,8 +4780,7 @@ public class SearchClient extends ApiClient {
       "Parameter `searchDictionaryEntriesParams` is required when calling" + " `searchDictionaryEntries`."
     );
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/dictionaries/{dictionaryName}/search", dictionaryName)
       .setMethod("POST")
       .setBody(searchDictionaryEntriesParams)
@@ -4937,8 +4907,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(facetName, "Parameter `facetName` is required when calling `searchForFacetValues`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/facets/{facetName}/query", indexName, facetName)
       .setMethod("POST")
       .setBody(searchForFacetValuesRequest)
@@ -5067,8 +5036,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `searchRules`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/rules/search", indexName)
       .setMethod("POST")
       .setBody(searchRulesParams)
@@ -5197,8 +5165,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `searchSingleIndex`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/query", indexName)
       .setMethod("POST")
       .setBody(searchParams)
@@ -5325,8 +5292,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(indexName, "Parameter `indexName` is required when calling `searchSynonyms`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/synonyms/search", indexName)
       .setMethod("POST")
       .setBody(searchSynonymsParams)
@@ -5421,8 +5387,7 @@ public class SearchClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(searchUserIdsParams, "Parameter `searchUserIdsParams` is required when calling `searchUserIds`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/clusters/mapping/search")
       .setMethod("POST")
       .setBody(searchUserIdsParams)
@@ -5487,8 +5452,7 @@ public class SearchClient extends ApiClient {
       "Parameter `dictionarySettingsParams` is required when calling `setDictionarySettings`."
     );
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/dictionaries/*/settings")
       .setMethod("PUT")
       .setBody(dictionarySettingsParams)
@@ -5594,8 +5558,7 @@ public class SearchClient extends ApiClient {
 
     Parameters.requireNonNull(indexSettings, "Parameter `indexSettings` is required when calling `setSettings`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/settings", indexName)
       .setMethod("PUT")
       .setBody(indexSettings)
@@ -6212,8 +6175,9 @@ public class SearchClient extends ApiClient {
   ) {
     final List<SearchQuery> searchQueries = new ArrayList<>(requests); // Upcast the list
     final SearchMethodParams params = new SearchMethodParams().setRequests(searchQueries).setStrategy(strategy);
-    return searchAsync(params, innerType)
-      .thenApply(searchResponses -> searchResponses.getResults().stream().map(res -> (SearchResponse<T>) res).collect(Collectors.toList()));
+    return searchAsync(params, innerType).thenApply(searchResponses ->
+      searchResponses.getResults().stream().map(res -> (SearchResponse<T>) res).collect(Collectors.toList())
+    );
   }
 
   /**
@@ -6292,10 +6256,9 @@ public class SearchClient extends ApiClient {
   ) {
     final List<SearchQuery> searchQueries = new ArrayList<>(requests); // Upcast the list
     final SearchMethodParams params = new SearchMethodParams().setRequests(searchQueries).setStrategy(strategy);
-    return searchAsync(params, Hit.class)
-      .thenApply(searchResponses ->
-        searchResponses.getResults().stream().map(res -> (SearchForFacetValuesResponse) res).collect(Collectors.toList())
-      );
+    return searchAsync(params, Hit.class).thenApply(searchResponses ->
+      searchResponses.getResults().stream().map(res -> (SearchForFacetValuesResponse) res).collect(Collectors.toList())
+    );
   }
 
   /**
@@ -6524,17 +6487,16 @@ public class SearchClient extends ApiClient {
 
     waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
 
-    copyOperationResponse =
-      operationIndex(
-        indexName,
-        new OperationIndexParams()
-          .setOperation(OperationType.COPY)
-          .setDestination(tmpIndexName)
-          .addScope(ScopeType.SETTINGS)
-          .addScope(ScopeType.RULES)
-          .addScope(ScopeType.SYNONYMS),
-        requestOptions
-      );
+    copyOperationResponse = operationIndex(
+      indexName,
+      new OperationIndexParams()
+        .setOperation(OperationType.COPY)
+        .setDestination(tmpIndexName)
+        .addScope(ScopeType.SETTINGS)
+        .addScope(ScopeType.RULES)
+        .addScope(ScopeType.SYNONYMS),
+      requestOptions
+    );
     waitForTask(tmpIndexName, copyOperationResponse.getTaskID(), requestOptions);
 
     // Move temporary index to source index
@@ -6577,8 +6539,7 @@ public class SearchClient extends ApiClient {
     if (restrictions.getUserToken() != null) restrictionsMap.put("userToken", StringUtils.paramToString(restrictions.getUserToken()));
 
     if (restrictions.getSearchParams() != null) {
-      Map<String, Object> searchParamsMap = JsonSerializer
-        .getObjectMapper()
+      Map<String, Object> searchParamsMap = JsonSerializer.getObjectMapper()
         .convertValue(restrictions.getSearchParams(), new TypeReference<Map<String, Object>>() {});
       searchParamsMap.forEach((key, value) -> restrictionsMap.put(key, StringUtils.paramToString(value)));
     }
