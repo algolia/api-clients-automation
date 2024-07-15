@@ -1,8 +1,3 @@
-## [5.0.0-beta.12](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.11...5.0.0-beta.12)
-
-- [31ba7f6d0](https://github.com/algolia/api-clients-automation/commit/31ba7f6d0) fix(specs): recommend non required parameters ([#3355](https://github.com/algolia/api-clients-automation/pull/3355)) by [@shortcuts](https://github.com/shortcuts/)
-- [337eea93e](https://github.com/algolia/api-clients-automation/commit/337eea93e) fix(specs): results is required in GetRecommendationsResponse ([#3357](https://github.com/algolia/api-clients-automation/pull/3357)) by [@millotp](https://github.com/millotp/)
-
 ## [5.0.0-beta.11](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.10...5.0.0-beta.11)
 
 - [a009967f6](https://github.com/algolia/api-clients-automation/commit/a009967f6) fix(specs): browse response required properties ([#3348](https://github.com/algolia/api-clients-automation/pull/3348)) by [@millotp](https://github.com/millotp/)
