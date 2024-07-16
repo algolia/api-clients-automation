@@ -14,7 +14,7 @@ func testInsights(appID, apiKey string) int {
 
 	events := insights.NewInsightsEvents([]insights.EventsItems{
 		*insights.ClickedObjectIDsAsEventsItems(insights.NewClickedObjectIDs("myEvent",
-			insights.CLICKEVENT_CLICK,
+			insights.CLICK_EVENT_CLICK,
 			"test_index",
 			[]string{"myObjectID"},
 			"myToken",
