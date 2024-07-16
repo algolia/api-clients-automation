@@ -369,8 +369,7 @@ public class QuerySuggestionsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
       .setBody(body)
@@ -481,8 +480,7 @@ public class QuerySuggestionsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
       .setBody(body)
@@ -818,8 +816,7 @@ public class QuerySuggestionsClient extends ApiClient {
 
     Parameters.requireNonNull(configuration, "Parameter `configuration` is required when calling `updateConfig`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/configs/{indexName}", indexName)
       .setMethod("PUT")
       .setBody(configuration)

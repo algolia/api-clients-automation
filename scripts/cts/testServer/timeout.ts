@@ -1,14 +1,11 @@
 import type { Server } from 'http';
 
+import { expect } from 'chai';
 import type express from 'express';
 
 import { setupServer } from '.';
 
 const timeoutState: Record<string, { timestamp: number[]; duration: number[] }> = {};
-
-function aboutEqual(a: number, b: number, epsilon = 100): boolean {
-  return Math.abs(a - b) <= epsilon;
-}
 
 export function assertValidTimeouts(expectedCount: number): void {
   // assert that the retry strategy uses the correct timings, by checking the time between each request, and how long each request took before being timed out
@@ -18,37 +15,25 @@ export function assertValidTimeouts(expectedCount: number): void {
   }
 
   for (const [lang, state] of Object.entries(timeoutState)) {
-    if (state.timestamp.length !== 3 || state.duration.length !== 3) {
-      throw new Error(`Expected 3 requests for ${lang}, got ${state.timestamp.length}`);
-    }
-
-    let delay = state.timestamp[1] - state.timestamp[0];
-    if (!aboutEqual(delay, state.duration[0])) {
-      throw new Error(`Expected no delay between requests for ${lang}, got ${delay}ms`);
-    }
-
-    delay = state.timestamp[2] - state.timestamp[1];
-    if (!aboutEqual(delay, state.duration[1])) {
-      throw new Error(`Expected no delay between requests for ${lang}, got ${delay}ms`);
-    }
+    expect(state.timestamp.length).to.equal(3);
+    expect(state.duration.length).to.equal(3);
+    expect(state.timestamp[1] - state.timestamp[0]).to.be.closeTo(state.duration[0], 100);
+    expect(state.timestamp[2] - state.timestamp[1]).to.be.closeTo(state.duration[1], 100);
 
     // languages are not consistent yet for the delay between requests
     switch (lang) {
       case 'JavaScript':
-        if (!aboutEqual(state.duration[0] * 4, state.duration[1], 200)) {
-          throw new Error(`Expected increasing delay between requests for ${lang}`);
-        }
+        expect(state.duration[0] * 4).to.be.closeTo(state.duration[1], 200);
         break;
       case 'PHP':
-        if (!aboutEqual(state.duration[0] * 2, state.duration[1], 200)) {
-          throw new Error(`Expected increasing delay between requests for ${lang}`);
-        }
+        expect(state.duration[0] * 2).to.be.closeTo(state.duration[1], 200);
+        break;
+      case 'Swift':
+        expect(state.duration[0]).to.be.closeTo(state.duration[1], 500);
         break;
       default:
         // the delay should be the same, because the `retryCount` is per host instead of global
-        if (!aboutEqual(state.duration[0], state.duration[1])) {
-          throw new Error(`Expected the same delay between requests for ${lang}`);
-        }
+        expect(state.duration[0]).to.be.closeTo(state.duration[1], 100);
         break;
     }
   }

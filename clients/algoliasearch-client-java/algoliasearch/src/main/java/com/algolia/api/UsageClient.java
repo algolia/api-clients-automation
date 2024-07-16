@@ -307,8 +307,7 @@ public class UsageClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
       .setBody(body)
@@ -419,8 +418,7 @@ public class UsageClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
       .setBody(body)
@@ -1170,8 +1168,7 @@ public class UsageClient extends ApiClient {
 
     Parameters.requireNonNull(endDate, "Parameter `endDate` is required when calling `getIndexUsage`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/usage/{statistic}/{indexName}", statistic, indexName)
       .setMethod("GET")
       .addQueryParameter("startDate", startDate)
@@ -2287,8 +2284,7 @@ public class UsageClient extends ApiClient {
 
     Parameters.requireNonNull(endDate, "Parameter `endDate` is required when calling `getUsage`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/usage/{statistic}", statistic)
       .setMethod("GET")
       .addQueryParameter("startDate", startDate)

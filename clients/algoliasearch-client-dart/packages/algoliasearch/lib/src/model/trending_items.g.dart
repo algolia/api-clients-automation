@@ -12,8 +12,8 @@ TrendingItems _$TrendingItemsFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = TrendingItems(
-          facetName: $checkedConvert('facetName', (v) => v as String),
-          facetValue: $checkedConvert('facetValue', (v) => v as String),
+          facetName: $checkedConvert('facetName', (v) => v as String?),
+          facetValue: $checkedConvert('facetValue', (v) => v as String?),
           model: $checkedConvert(
               'model', (v) => $enumDecode(_$TrendingItemsModelEnumMap, v)),
           fallbackParameters: $checkedConvert(
@@ -27,11 +27,7 @@ TrendingItems _$TrendingItemsFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$TrendingItemsToJson(TrendingItems instance) {
-  final val = <String, dynamic>{
-    'facetName': instance.facetName,
-    'facetValue': instance.facetValue,
-    'model': instance.model.toJson(),
-  };
+  final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -39,6 +35,9 @@ Map<String, dynamic> _$TrendingItemsToJson(TrendingItems instance) {
     }
   }
 
+  writeNotNull('facetName', instance.facetName);
+  writeNotNull('facetValue', instance.facetValue);
+  val['model'] = instance.model.toJson();
   writeNotNull('fallbackParameters', instance.fallbackParameters?.toJson());
   return val;
 }

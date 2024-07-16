@@ -39,16 +39,11 @@ BaseSearchResponse _$BaseSearchResponseFromJson(Map<String, dynamic> json) =>
                     (k, e) => MapEntry(
                         k, FacetsStats.fromJson(e as Map<String, dynamic>)),
                   )),
-          hitsPerPage:
-              $checkedConvert('hitsPerPage', (v) => (v as num).toInt()),
           index: $checkedConvert('index', (v) => v as String?),
           indexUsed: $checkedConvert('indexUsed', (v) => v as String?),
           message: $checkedConvert('message', (v) => v as String?),
-          nbHits: $checkedConvert('nbHits', (v) => (v as num).toInt()),
-          nbPages: $checkedConvert('nbPages', (v) => (v as num).toInt()),
           nbSortedHits:
               $checkedConvert('nbSortedHits', (v) => (v as num?)?.toInt()),
-          page: $checkedConvert('page', (v) => (v as num).toInt()),
           parsedQuery: $checkedConvert('parsedQuery', (v) => v as String?),
           processingTimeMS:
               $checkedConvert('processingTimeMS', (v) => (v as num).toInt()),
@@ -87,14 +82,10 @@ const _$BaseSearchResponseFieldMap = <String, String>{
   'exhaustiveTypo': 'exhaustiveTypo',
   'facets': 'facets',
   'facetsStats': 'facets_stats',
-  'hitsPerPage': 'hitsPerPage',
   'index': 'index',
   'indexUsed': 'indexUsed',
   'message': 'message',
-  'nbHits': 'nbHits',
-  'nbPages': 'nbPages',
   'nbSortedHits': 'nbSortedHits',
-  'page': 'page',
   'parsedQuery': 'parsedQuery',
   'processingTimeMS': 'processingTimeMS',
   'processingTimingsMS': 'processingTimingsMS',
@@ -127,14 +118,10 @@ Map<String, dynamic> _$BaseSearchResponseToJson(BaseSearchResponse instance) {
   writeNotNull('facets', instance.facets);
   writeNotNull('facets_stats',
       instance.facetsStats?.map((k, e) => MapEntry(k, e.toJson())));
-  val['hitsPerPage'] = instance.hitsPerPage;
   writeNotNull('index', instance.index);
   writeNotNull('indexUsed', instance.indexUsed);
   writeNotNull('message', instance.message);
-  val['nbHits'] = instance.nbHits;
-  val['nbPages'] = instance.nbPages;
   writeNotNull('nbSortedHits', instance.nbSortedHits);
-  val['page'] = instance.page;
   writeNotNull('parsedQuery', instance.parsedQuery);
   val['processingTimeMS'] = instance.processingTimeMS;
   writeNotNull('processingTimingsMS', instance.processingTimingsMS);

@@ -41,8 +41,8 @@ import algoliasearch.recommend.TrendingItemsModel._
   *   filter will be returned.
   */
 case class TrendingItems(
-    facetName: String,
-    facetValue: String,
+    facetName: Option[String] = scala.None,
+    facetValue: Option[String] = scala.None,
     model: TrendingItemsModel,
     fallbackParameters: Option[SearchParamsObject] = scala.None
 )

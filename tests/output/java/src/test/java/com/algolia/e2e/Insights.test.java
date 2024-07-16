@@ -1,4 +1,4 @@
-package com.algolia.methods.e2e;
+package com.algolia.e2e;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -50,7 +50,7 @@ class InsightsClientRequestsTestsE2E {
               .setIndex("products")
               .setUserToken("user-123456")
               .setAuthenticatedUserToken("user-123456")
-              .setTimestamp(1720569600000L)
+              .setTimestamp(1720828800000L)
               .setObjectIDs(List.of("9780545139700", "9780439784542"))
               .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
             new ViewedObjectIDs()
@@ -59,7 +59,7 @@ class InsightsClientRequestsTestsE2E {
               .setIndex("products")
               .setUserToken("user-123456")
               .setAuthenticatedUserToken("user-123456")
-              .setTimestamp(1720569600000L)
+              .setTimestamp(1720828800000L)
               .setObjectIDs(List.of("9780545139700", "9780439784542"))
           )
         )

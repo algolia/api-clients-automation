@@ -45,9 +45,6 @@ public class SearchResponse<T> implements SearchResult<T> {
   @JsonProperty("facets_stats")
   private Map<String, FacetsStats> facetsStats;
 
-  @JsonProperty("hitsPerPage")
-  private Integer hitsPerPage;
-
   @JsonProperty("index")
   private String index;
 
@@ -57,17 +54,8 @@ public class SearchResponse<T> implements SearchResult<T> {
   @JsonProperty("message")
   private String message;
 
-  @JsonProperty("nbHits")
-  private Integer nbHits;
-
-  @JsonProperty("nbPages")
-  private Integer nbPages;
-
   @JsonProperty("nbSortedHits")
   private Integer nbSortedHits;
-
-  @JsonProperty("page")
-  private Integer page;
 
   @JsonProperty("parsedQuery")
   private String parsedQuery;
@@ -98,6 +86,18 @@ public class SearchResponse<T> implements SearchResult<T> {
 
   @JsonProperty("queryID")
   private String queryID;
+
+  @JsonProperty("page")
+  private Integer page;
+
+  @JsonProperty("nbHits")
+  private Integer nbHits;
+
+  @JsonProperty("nbPages")
+  private Integer nbPages;
+
+  @JsonProperty("hitsPerPage")
+  private Integer hitsPerPage;
 
   @JsonProperty("hits")
   private List<T> hits = new ArrayList<>();
@@ -267,17 +267,6 @@ public class SearchResponse<T> implements SearchResult<T> {
     return facetsStats;
   }
 
-  public SearchResponse<T> setHitsPerPage(Integer hitsPerPage) {
-    this.hitsPerPage = hitsPerPage;
-    return this;
-  }
-
-  /** Number of hits per page. minimum: 1 maximum: 1000 */
-  @javax.annotation.Nonnull
-  public Integer getHitsPerPage() {
-    return hitsPerPage;
-  }
-
   public SearchResponse<T> setIndex(String index) {
     this.index = index;
     return this;
@@ -314,28 +303,6 @@ public class SearchResponse<T> implements SearchResult<T> {
     return message;
   }
 
-  public SearchResponse<T> setNbHits(Integer nbHits) {
-    this.nbHits = nbHits;
-    return this;
-  }
-
-  /** Number of results (hits). */
-  @javax.annotation.Nonnull
-  public Integer getNbHits() {
-    return nbHits;
-  }
-
-  public SearchResponse<T> setNbPages(Integer nbPages) {
-    this.nbPages = nbPages;
-    return this;
-  }
-
-  /** Number of pages of results. */
-  @javax.annotation.Nonnull
-  public Integer getNbPages() {
-    return nbPages;
-  }
-
   public SearchResponse<T> setNbSortedHits(Integer nbSortedHits) {
     this.nbSortedHits = nbSortedHits;
     return this;
@@ -345,17 +312,6 @@ public class SearchResponse<T> implements SearchResult<T> {
   @javax.annotation.Nullable
   public Integer getNbSortedHits() {
     return nbSortedHits;
-  }
-
-  public SearchResponse<T> setPage(Integer page) {
-    this.page = page;
-    return this;
-  }
-
-  /** Page of search results to retrieve. minimum: 0 */
-  @javax.annotation.Nonnull
-  public Integer getPage() {
-    return page;
   }
 
   public SearchResponse<T> setParsedQuery(String parsedQuery) {
@@ -480,6 +436,50 @@ public class SearchResponse<T> implements SearchResult<T> {
     return queryID;
   }
 
+  public SearchResponse<T> setPage(Integer page) {
+    this.page = page;
+    return this;
+  }
+
+  /** Page of search results to retrieve. minimum: 0 */
+  @javax.annotation.Nonnull
+  public Integer getPage() {
+    return page;
+  }
+
+  public SearchResponse<T> setNbHits(Integer nbHits) {
+    this.nbHits = nbHits;
+    return this;
+  }
+
+  /** Number of results (hits). */
+  @javax.annotation.Nonnull
+  public Integer getNbHits() {
+    return nbHits;
+  }
+
+  public SearchResponse<T> setNbPages(Integer nbPages) {
+    this.nbPages = nbPages;
+    return this;
+  }
+
+  /** Number of pages of results. */
+  @javax.annotation.Nonnull
+  public Integer getNbPages() {
+    return nbPages;
+  }
+
+  public SearchResponse<T> setHitsPerPage(Integer hitsPerPage) {
+    this.hitsPerPage = hitsPerPage;
+    return this;
+  }
+
+  /** Number of hits per page. minimum: 1 maximum: 1000 */
+  @javax.annotation.Nonnull
+  public Integer getHitsPerPage() {
+    return hitsPerPage;
+  }
+
   public SearchResponse<T> setHits(List<T> hits) {
     this.hits = hits;
     return this;
@@ -541,14 +541,10 @@ public class SearchResponse<T> implements SearchResult<T> {
       Objects.equals(this.exhaustiveTypo, searchResponse.exhaustiveTypo) &&
       Objects.equals(this.facets, searchResponse.facets) &&
       Objects.equals(this.facetsStats, searchResponse.facetsStats) &&
-      Objects.equals(this.hitsPerPage, searchResponse.hitsPerPage) &&
       Objects.equals(this.index, searchResponse.index) &&
       Objects.equals(this.indexUsed, searchResponse.indexUsed) &&
       Objects.equals(this.message, searchResponse.message) &&
-      Objects.equals(this.nbHits, searchResponse.nbHits) &&
-      Objects.equals(this.nbPages, searchResponse.nbPages) &&
       Objects.equals(this.nbSortedHits, searchResponse.nbSortedHits) &&
-      Objects.equals(this.page, searchResponse.page) &&
       Objects.equals(this.parsedQuery, searchResponse.parsedQuery) &&
       Objects.equals(this.processingTimeMS, searchResponse.processingTimeMS) &&
       Objects.equals(this.processingTimingsMS, searchResponse.processingTimingsMS) &&
@@ -559,6 +555,10 @@ public class SearchResponse<T> implements SearchResult<T> {
       Objects.equals(this.serverUsed, searchResponse.serverUsed) &&
       Objects.equals(this.userData, searchResponse.userData) &&
       Objects.equals(this.queryID, searchResponse.queryID) &&
+      Objects.equals(this.page, searchResponse.page) &&
+      Objects.equals(this.nbHits, searchResponse.nbHits) &&
+      Objects.equals(this.nbPages, searchResponse.nbPages) &&
+      Objects.equals(this.hitsPerPage, searchResponse.hitsPerPage) &&
       Objects.equals(this.hits, searchResponse.hits) &&
       Objects.equals(this.query, searchResponse.query) &&
       Objects.equals(this.params, searchResponse.params) &&
@@ -579,14 +579,10 @@ public class SearchResponse<T> implements SearchResult<T> {
       exhaustiveTypo,
       facets,
       facetsStats,
-      hitsPerPage,
       index,
       indexUsed,
       message,
-      nbHits,
-      nbPages,
       nbSortedHits,
-      page,
       parsedQuery,
       processingTimeMS,
       processingTimingsMS,
@@ -597,6 +593,10 @@ public class SearchResponse<T> implements SearchResult<T> {
       serverUsed,
       userData,
       queryID,
+      page,
+      nbHits,
+      nbPages,
+      hitsPerPage,
       hits,
       query,
       params,
@@ -619,14 +619,10 @@ public class SearchResponse<T> implements SearchResult<T> {
     sb.append("    exhaustiveTypo: ").append(toIndentedString(exhaustiveTypo)).append("\n");
     sb.append("    facets: ").append(toIndentedString(facets)).append("\n");
     sb.append("    facetsStats: ").append(toIndentedString(facetsStats)).append("\n");
-    sb.append("    hitsPerPage: ").append(toIndentedString(hitsPerPage)).append("\n");
     sb.append("    index: ").append(toIndentedString(index)).append("\n");
     sb.append("    indexUsed: ").append(toIndentedString(indexUsed)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
-    sb.append("    nbHits: ").append(toIndentedString(nbHits)).append("\n");
-    sb.append("    nbPages: ").append(toIndentedString(nbPages)).append("\n");
     sb.append("    nbSortedHits: ").append(toIndentedString(nbSortedHits)).append("\n");
-    sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    parsedQuery: ").append(toIndentedString(parsedQuery)).append("\n");
     sb.append("    processingTimeMS: ").append(toIndentedString(processingTimeMS)).append("\n");
     sb.append("    processingTimingsMS: ").append(toIndentedString(processingTimingsMS)).append("\n");
@@ -637,6 +633,10 @@ public class SearchResponse<T> implements SearchResult<T> {
     sb.append("    serverUsed: ").append(toIndentedString(serverUsed)).append("\n");
     sb.append("    userData: ").append(toIndentedString(userData)).append("\n");
     sb.append("    queryID: ").append(toIndentedString(queryID)).append("\n");
+    sb.append("    page: ").append(toIndentedString(page)).append("\n");
+    sb.append("    nbHits: ").append(toIndentedString(nbHits)).append("\n");
+    sb.append("    nbPages: ").append(toIndentedString(nbPages)).append("\n");
+    sb.append("    hitsPerPage: ").append(toIndentedString(hitsPerPage)).append("\n");
     sb.append("    hits: ").append(toIndentedString(hits)).append("\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb.append("    params: ").append(toIndentedString(params)).append("\n");

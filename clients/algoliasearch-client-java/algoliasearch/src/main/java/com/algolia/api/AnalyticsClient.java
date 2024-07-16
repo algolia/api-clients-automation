@@ -321,8 +321,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
       .setBody(body)
@@ -433,8 +432,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
       .setBody(body)
@@ -571,8 +569,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getAddToCartRate`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/conversions/addToCartRate")
       .setMethod("GET")
       .addQueryParameter("index", index)
@@ -732,8 +729,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getAverageClickPosition`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/clicks/averageClickPosition")
       .setMethod("GET")
       .addQueryParameter("index", index)
@@ -890,8 +886,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getClickPositions`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/clicks/positions")
       .setMethod("GET")
       .addQueryParameter("index", index)
@@ -1042,8 +1037,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getClickThroughRate`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/clicks/clickThroughRate")
       .setMethod("GET")
       .addQueryParameter("index", index)
@@ -1196,8 +1190,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getConversionRate`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/conversions/conversionRate")
       .setMethod("GET")
       .addQueryParameter("index", index)
@@ -1350,8 +1343,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getNoClickRate`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/searches/noClickRate")
       .setMethod("GET")
       .addQueryParameter("index", index)
@@ -1504,8 +1496,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getNoResultsRate`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/searches/noResultRate")
       .setMethod("GET")
       .addQueryParameter("index", index)
@@ -1658,8 +1649,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getPurchaseRate`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/conversions/purchaseRate")
       .setMethod("GET")
       .addQueryParameter("index", index)
@@ -1806,8 +1796,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getRevenue`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/conversions/revenue")
       .setMethod("GET")
       .addQueryParameter("index", index)
@@ -1952,8 +1941,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getSearchesCount`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/searches/count")
       .setMethod("GET")
       .addQueryParameter("index", index)
@@ -2118,8 +2106,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getSearchesNoClicks`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/searches/noClicks")
       .setMethod("GET")
       .addQueryParameter("index", index)
@@ -2282,8 +2269,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getSearchesNoResults`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/searches/noResults")
       .setMethod("GET")
       .addQueryParameter("index", index)
@@ -2494,8 +2480,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getTopCountries`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/countries")
       .setMethod("GET")
       .addQueryParameter("index", index)
@@ -2666,8 +2651,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getTopFilterAttributes`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/filters")
       .setMethod("GET")
       .addQueryParameter("index", index)
@@ -2863,8 +2847,7 @@ public class AnalyticsClient extends ApiClient {
 
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getTopFilterForAttribute`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/filters/{attribute}", attribute)
       .setMethod("GET")
       .addQueryParameter("index", index)
@@ -3056,8 +3039,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getTopFiltersNoResults`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/filters/noResults")
       .setMethod("GET")
       .addQueryParameter("index", index)
@@ -3257,8 +3239,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getTopHits`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/hits")
       .setMethod("GET")
       .addQueryParameter("index", index)
@@ -3482,8 +3463,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getTopSearches`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/searches")
       .setMethod("GET")
       .addQueryParameter("index", index)
@@ -3680,8 +3660,7 @@ public class AnalyticsClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(index, "Parameter `index` is required when calling `getUsersCount`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/2/users/count")
       .setMethod("GET")
       .addQueryParameter("index", index)

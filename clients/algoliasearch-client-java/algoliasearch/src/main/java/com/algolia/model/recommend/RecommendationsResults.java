@@ -44,9 +44,6 @@ public class RecommendationsResults {
   @JsonProperty("facets_stats")
   private Map<String, FacetsStats> facetsStats;
 
-  @JsonProperty("hitsPerPage")
-  private Integer hitsPerPage;
-
   @JsonProperty("index")
   private String index;
 
@@ -56,17 +53,8 @@ public class RecommendationsResults {
   @JsonProperty("message")
   private String message;
 
-  @JsonProperty("nbHits")
-  private Integer nbHits;
-
-  @JsonProperty("nbPages")
-  private Integer nbPages;
-
   @JsonProperty("nbSortedHits")
   private Integer nbSortedHits;
-
-  @JsonProperty("page")
-  private Integer page;
 
   @JsonProperty("parsedQuery")
   private String parsedQuery;
@@ -97,6 +85,18 @@ public class RecommendationsResults {
 
   @JsonProperty("queryID")
   private String queryID;
+
+  @JsonProperty("page")
+  private Integer page;
+
+  @JsonProperty("nbHits")
+  private Integer nbHits;
+
+  @JsonProperty("nbPages")
+  private Integer nbPages;
+
+  @JsonProperty("hitsPerPage")
+  private Integer hitsPerPage;
 
   @JsonProperty("hits")
   private List<RecommendationsHit> hits = new ArrayList<>();
@@ -247,17 +247,6 @@ public class RecommendationsResults {
     return facetsStats;
   }
 
-  public RecommendationsResults setHitsPerPage(Integer hitsPerPage) {
-    this.hitsPerPage = hitsPerPage;
-    return this;
-  }
-
-  /** Number of hits per page. minimum: 1 maximum: 1000 */
-  @javax.annotation.Nonnull
-  public Integer getHitsPerPage() {
-    return hitsPerPage;
-  }
-
   public RecommendationsResults setIndex(String index) {
     this.index = index;
     return this;
@@ -294,28 +283,6 @@ public class RecommendationsResults {
     return message;
   }
 
-  public RecommendationsResults setNbHits(Integer nbHits) {
-    this.nbHits = nbHits;
-    return this;
-  }
-
-  /** Number of results (hits). */
-  @javax.annotation.Nonnull
-  public Integer getNbHits() {
-    return nbHits;
-  }
-
-  public RecommendationsResults setNbPages(Integer nbPages) {
-    this.nbPages = nbPages;
-    return this;
-  }
-
-  /** Number of pages of results. */
-  @javax.annotation.Nonnull
-  public Integer getNbPages() {
-    return nbPages;
-  }
-
   public RecommendationsResults setNbSortedHits(Integer nbSortedHits) {
     this.nbSortedHits = nbSortedHits;
     return this;
@@ -325,17 +292,6 @@ public class RecommendationsResults {
   @javax.annotation.Nullable
   public Integer getNbSortedHits() {
     return nbSortedHits;
-  }
-
-  public RecommendationsResults setPage(Integer page) {
-    this.page = page;
-    return this;
-  }
-
-  /** Page of search results to retrieve. minimum: 0 */
-  @javax.annotation.Nonnull
-  public Integer getPage() {
-    return page;
   }
 
   public RecommendationsResults setParsedQuery(String parsedQuery) {
@@ -460,6 +416,50 @@ public class RecommendationsResults {
     return queryID;
   }
 
+  public RecommendationsResults setPage(Integer page) {
+    this.page = page;
+    return this;
+  }
+
+  /** Page of search results to retrieve. minimum: 0 */
+  @javax.annotation.Nonnull
+  public Integer getPage() {
+    return page;
+  }
+
+  public RecommendationsResults setNbHits(Integer nbHits) {
+    this.nbHits = nbHits;
+    return this;
+  }
+
+  /** Number of results (hits). */
+  @javax.annotation.Nonnull
+  public Integer getNbHits() {
+    return nbHits;
+  }
+
+  public RecommendationsResults setNbPages(Integer nbPages) {
+    this.nbPages = nbPages;
+    return this;
+  }
+
+  /** Number of pages of results. */
+  @javax.annotation.Nonnull
+  public Integer getNbPages() {
+    return nbPages;
+  }
+
+  public RecommendationsResults setHitsPerPage(Integer hitsPerPage) {
+    this.hitsPerPage = hitsPerPage;
+    return this;
+  }
+
+  /** Number of hits per page. minimum: 1 maximum: 1000 */
+  @javax.annotation.Nonnull
+  public Integer getHitsPerPage() {
+    return hitsPerPage;
+  }
+
   public RecommendationsResults setHits(List<RecommendationsHit> hits) {
     this.hits = hits;
     return this;
@@ -496,14 +496,10 @@ public class RecommendationsResults {
       Objects.equals(this.exhaustiveTypo, recommendationsResults.exhaustiveTypo) &&
       Objects.equals(this.facets, recommendationsResults.facets) &&
       Objects.equals(this.facetsStats, recommendationsResults.facetsStats) &&
-      Objects.equals(this.hitsPerPage, recommendationsResults.hitsPerPage) &&
       Objects.equals(this.index, recommendationsResults.index) &&
       Objects.equals(this.indexUsed, recommendationsResults.indexUsed) &&
       Objects.equals(this.message, recommendationsResults.message) &&
-      Objects.equals(this.nbHits, recommendationsResults.nbHits) &&
-      Objects.equals(this.nbPages, recommendationsResults.nbPages) &&
       Objects.equals(this.nbSortedHits, recommendationsResults.nbSortedHits) &&
-      Objects.equals(this.page, recommendationsResults.page) &&
       Objects.equals(this.parsedQuery, recommendationsResults.parsedQuery) &&
       Objects.equals(this.processingTimeMS, recommendationsResults.processingTimeMS) &&
       Objects.equals(this.processingTimingsMS, recommendationsResults.processingTimingsMS) &&
@@ -514,6 +510,10 @@ public class RecommendationsResults {
       Objects.equals(this.serverUsed, recommendationsResults.serverUsed) &&
       Objects.equals(this.userData, recommendationsResults.userData) &&
       Objects.equals(this.queryID, recommendationsResults.queryID) &&
+      Objects.equals(this.page, recommendationsResults.page) &&
+      Objects.equals(this.nbHits, recommendationsResults.nbHits) &&
+      Objects.equals(this.nbPages, recommendationsResults.nbPages) &&
+      Objects.equals(this.hitsPerPage, recommendationsResults.hitsPerPage) &&
       Objects.equals(this.hits, recommendationsResults.hits)
     );
   }
@@ -531,14 +531,10 @@ public class RecommendationsResults {
       exhaustiveTypo,
       facets,
       facetsStats,
-      hitsPerPage,
       index,
       indexUsed,
       message,
-      nbHits,
-      nbPages,
       nbSortedHits,
-      page,
       parsedQuery,
       processingTimeMS,
       processingTimingsMS,
@@ -549,6 +545,10 @@ public class RecommendationsResults {
       serverUsed,
       userData,
       queryID,
+      page,
+      nbHits,
+      nbPages,
+      hitsPerPage,
       hits
     );
   }
@@ -567,14 +567,10 @@ public class RecommendationsResults {
     sb.append("    exhaustiveTypo: ").append(toIndentedString(exhaustiveTypo)).append("\n");
     sb.append("    facets: ").append(toIndentedString(facets)).append("\n");
     sb.append("    facetsStats: ").append(toIndentedString(facetsStats)).append("\n");
-    sb.append("    hitsPerPage: ").append(toIndentedString(hitsPerPage)).append("\n");
     sb.append("    index: ").append(toIndentedString(index)).append("\n");
     sb.append("    indexUsed: ").append(toIndentedString(indexUsed)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
-    sb.append("    nbHits: ").append(toIndentedString(nbHits)).append("\n");
-    sb.append("    nbPages: ").append(toIndentedString(nbPages)).append("\n");
     sb.append("    nbSortedHits: ").append(toIndentedString(nbSortedHits)).append("\n");
-    sb.append("    page: ").append(toIndentedString(page)).append("\n");
     sb.append("    parsedQuery: ").append(toIndentedString(parsedQuery)).append("\n");
     sb.append("    processingTimeMS: ").append(toIndentedString(processingTimeMS)).append("\n");
     sb.append("    processingTimingsMS: ").append(toIndentedString(processingTimingsMS)).append("\n");
@@ -585,6 +581,10 @@ public class RecommendationsResults {
     sb.append("    serverUsed: ").append(toIndentedString(serverUsed)).append("\n");
     sb.append("    userData: ").append(toIndentedString(userData)).append("\n");
     sb.append("    queryID: ").append(toIndentedString(queryID)).append("\n");
+    sb.append("    page: ").append(toIndentedString(page)).append("\n");
+    sb.append("    nbHits: ").append(toIndentedString(nbHits)).append("\n");
+    sb.append("    nbPages: ").append(toIndentedString(nbPages)).append("\n");
+    sb.append("    hitsPerPage: ").append(toIndentedString(hitsPerPage)).append("\n");
     sb.append("    hits: ").append(toIndentedString(hits)).append("\n");
     sb.append("}");
     return sb.toString();

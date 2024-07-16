@@ -21,8 +21,8 @@ TrendingItemsQuery _$TrendingItemsQueryFromJson(Map<String, dynamic> json) =>
               (v) => v == null
                   ? null
                   : SearchParams.fromJson(v as Map<String, dynamic>)),
-          facetName: $checkedConvert('facetName', (v) => v as String),
-          facetValue: $checkedConvert('facetValue', (v) => v as String),
+          facetName: $checkedConvert('facetName', (v) => v as String?),
+          facetValue: $checkedConvert('facetValue', (v) => v as String?),
           model: $checkedConvert(
               'model', (v) => $enumDecode(_$TrendingItemsModelEnumMap, v)),
           fallbackParameters: $checkedConvert(
@@ -49,8 +49,8 @@ Map<String, dynamic> _$TrendingItemsQueryToJson(TrendingItemsQuery instance) {
 
   writeNotNull('maxRecommendations', instance.maxRecommendations);
   writeNotNull('queryParameters', instance.queryParameters?.toJson());
-  val['facetName'] = instance.facetName;
-  val['facetValue'] = instance.facetValue;
+  writeNotNull('facetName', instance.facetName);
+  writeNotNull('facetValue', instance.facetValue);
   val['model'] = instance.model.toJson();
   writeNotNull('fallbackParameters', instance.fallbackParameters?.toJson());
   return val;

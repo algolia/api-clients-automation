@@ -307,8 +307,7 @@ public class RecommendClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPost`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("POST")
       .setBody(body)
@@ -419,8 +418,7 @@ public class RecommendClient extends ApiClient {
   ) throws AlgoliaRuntimeException {
     Parameters.requireNonNull(path, "Parameter `path` is required when calling `customPut`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPathEncoded("/{path}", path)
       .setMethod("PUT")
       .setBody(body)
@@ -524,8 +522,7 @@ public class RecommendClient extends ApiClient {
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `deleteRecommendRule`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{model}/recommend/rules/{objectID}", indexName, model, objectID)
       .setMethod("DELETE")
       .build();
@@ -611,8 +608,7 @@ public class RecommendClient extends ApiClient {
 
     Parameters.requireNonNull(objectID, "Parameter `objectID` is required when calling `getRecommendRule`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{model}/recommend/rules/{objectID}", indexName, model, objectID)
       .setMethod("GET")
       .build();
@@ -704,8 +700,7 @@ public class RecommendClient extends ApiClient {
 
     Parameters.requireNonNull(taskID, "Parameter `taskID` is required when calling `getRecommendStatus`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{model}/task/{taskID}", indexName, model, taskID)
       .setMethod("GET")
       .build();
@@ -775,8 +770,7 @@ public class RecommendClient extends ApiClient {
       "Parameter `getRecommendationsParams` is required when calling `getRecommendations`."
     );
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/*/recommendations")
       .setMethod("POST")
       .setBody(getRecommendationsParams)
@@ -895,8 +889,7 @@ public class RecommendClient extends ApiClient {
 
     Parameters.requireNonNull(model, "Parameter `model` is required when calling `searchRecommendRules`.");
 
-    HttpRequest request = HttpRequest
-      .builder()
+    HttpRequest request = HttpRequest.builder()
       .setPath("/1/indexes/{indexName}/{model}/recommend/rules/search", indexName, model)
       .setMethod("POST")
       .setBody(searchRecommendRulesParams)
