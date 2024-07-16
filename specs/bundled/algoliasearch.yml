@@ -413,6 +413,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/recommendationsResults'
+                required:
+                  - results
         '400':
           $ref: '#/components/responses/BadRequest'
         '402':
@@ -2204,14 +2206,6 @@ components:
         - $ref: '#/components/schemas/searchParamsObject'
         - type: object
           description: Search parameters for filtering the recommendations.
-    nbHits:
-      type: integer
-      description: Number of results (hits).
-      example: 20
-    nbPages:
-      type: integer
-      description: Number of pages of results.
-      example: 1
     processingTimeMS:
       type: integer
       description: Time the server took to process the request, in milliseconds.
@@ -2261,10 +2255,6 @@ components:
       type: object
       additionalProperties: true
       required:
-        - nbHits
-        - page
-        - nbPages
-        - hitsPerPage
         - processingTimeMS
       properties:
         abTestID:
@@ -2387,8 +2377,6 @@ components:
                 type: number
                 format: double
                 description: Sum of all values in the results.
-        hitsPerPage:
-          $ref: '#/components/schemas/hitsPerPage'
         index:
           type: string
           example: indexName
@@ -2402,16 +2390,10 @@ components:
         message:
           type: string
           description: Warnings about the query.
-        nbHits:
-          $ref: '#/components/schemas/nbHits'
-        nbPages:
-          $ref: '#/components/schemas/nbPages'
         nbSortedHits:
           type: integer
           description: Number of hits selected and sorted by the relevant sort algorithm.
           example: 20
-        page:
-          $ref: '#/components/schemas/page'
         parsedQuery:
           type: string
           description: >-
@@ -2461,6 +2443,31 @@ components:
             Unique identifier for the query. This is used for [click
             analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
           example: a00dbc80a8d13c4565a442e7e2dca80a
+    nbHits:
+      type: integer
+      description: Number of results (hits).
+      example: 20
+    nbPages:
+      type: integer
+      description: Number of pages of results.
+      example: 1
+    SearchPagination:
+      type: object
+      additionalProperties: false
+      properties:
+        page:
+          $ref: '#/components/schemas/page'
+        nbHits:
+          $ref: '#/components/schemas/nbHits'
+        nbPages:
+          $ref: '#/components/schemas/nbPages'
+        hitsPerPage:
+          $ref: '#/components/schemas/hitsPerPage'
+      required:
+        - page
+        - nbHits
+        - nbPages
+        - hitsPerPage
     objectID:
       type: string
       description: Unique record identifier.
@@ -2701,6 +2708,7 @@ components:
       additionalProperties: true
       allOf:
         - $ref: '#/components/schemas/baseSearchResponse'
+        - $ref: '#/components/schemas/SearchPagination'
         - $ref: '#/components/schemas/searchHits'
     indexName:
       type: string
@@ -2851,9 +2859,22 @@ components:
       allOf:
         - $ref: '#/components/schemas/searchParamsObject'
         - $ref: '#/components/schemas/cursor'
+    BrowsePagination:
+      type: object
+      additionalProperties: false
+      properties:
+        page:
+          $ref: '#/components/schemas/page'
+        nbHits:
+          $ref: '#/components/schemas/nbHits'
+        nbPages:
+          $ref: '#/components/schemas/nbPages'
+        hitsPerPage:
+          $ref: '#/components/schemas/hitsPerPage'
     browseResponse:
       allOf:
         - $ref: '#/components/schemas/baseSearchResponse'
+        - $ref: '#/components/schemas/BrowsePagination'
         - $ref: '#/components/schemas/searchHits'
         - $ref: '#/components/schemas/cursor'
     baseIndexSettings:
@@ -3671,8 +3692,6 @@ components:
         fallbackParameters:
           $ref: '#/components/schemas/searchParamsObject'
       required:
-        - facetName
-        - facetValue
         - model
     trendingItemsQuery:
       title: Trending items
@@ -3818,6 +3837,7 @@ components:
     recommendationsResults:
       allOf:
         - $ref: '#/components/schemas/baseSearchResponse'
+        - $ref: '#/components/schemas/SearchPagination'
         - $ref: '#/components/schemas/recommendationsHits'
   responses:
     BadRequest:

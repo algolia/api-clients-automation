@@ -640,8 +640,8 @@ class RecommendTest extends AnyFunSuite {
             indexName = "indexName",
             model = TrendingItemsModel.withName("trending-items"),
             threshold = 42.1,
-            facetName = "facet",
-            facetValue = "value"
+            facetName = Some("facet"),
+            facetValue = Some("value")
           )
         )
       )
@@ -669,8 +669,8 @@ class RecommendTest extends AnyFunSuite {
             model = TrendingItemsModel.withName("trending-items"),
             threshold = 42.1,
             maxRecommendations = Some(10),
-            facetName = "myFacetName",
-            facetValue = "myFacetValue",
+            facetName = Some("myFacetName"),
+            facetValue = Some("myFacetValue"),
             queryParameters = Some(
               SearchParams(
                 query = Some("myQuery"),

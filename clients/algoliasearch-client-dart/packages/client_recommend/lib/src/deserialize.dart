@@ -55,6 +55,7 @@ import 'package:algolia_client_recommend/src/model/related_products.dart';
 import 'package:algolia_client_recommend/src/model/related_query.dart';
 import 'package:algolia_client_recommend/src/model/remove_words_if_no_results.dart';
 import 'package:algolia_client_recommend/src/model/rendering_content.dart';
+import 'package:algolia_client_recommend/src/model/search_pagination.dart';
 import 'package:algolia_client_recommend/src/model/search_params.dart';
 import 'package:algolia_client_recommend/src/model/search_params_object.dart';
 import 'package:algolia_client_recommend/src/model/search_params_query.dart';
@@ -240,6 +241,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return RemoveWordsIfNoResults.fromJson(value) as ReturnType;
     case 'RenderingContent':
       return RenderingContent.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'SearchPagination':
+      return SearchPagination.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'SearchParams':
       return SearchParams.fromJson(value as Map<String, dynamic>) as ReturnType;

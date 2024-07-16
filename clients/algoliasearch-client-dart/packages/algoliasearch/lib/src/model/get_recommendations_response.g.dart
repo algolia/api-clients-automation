@@ -15,8 +15,8 @@ GetRecommendationsResponse _$GetRecommendationsResponseFromJson(
         final val = GetRecommendationsResponse(
           results: $checkedConvert(
               'results',
-              (v) => (v as List<dynamic>?)
-                  ?.map((e) => RecommendationsResults.fromJson(
+              (v) => (v as List<dynamic>)
+                  .map((e) => RecommendationsResults.fromJson(
                       e as Map<String, dynamic>))
                   .toList()),
         );
@@ -25,15 +25,7 @@ GetRecommendationsResponse _$GetRecommendationsResponseFromJson(
     );
 
 Map<String, dynamic> _$GetRecommendationsResponseToJson(
-    GetRecommendationsResponse instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('results', instance.results?.map((e) => e.toJson()).toList());
-  return val;
-}
+        GetRecommendationsResponse instance) =>
+    <String, dynamic>{
+      'results': instance.results.map((e) => e.toJson()).toList(),
+    };

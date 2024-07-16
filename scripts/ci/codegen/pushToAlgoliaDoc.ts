@@ -48,7 +48,7 @@ async function pushToAlgoliaDoc(): Promise<void> {
   await run(`cp ${toAbsolutePath('specs/bundled/README.md')} ${pathToSpecs}`);
   await run(`cp ${toAbsolutePath('specs/bundled/*.doc.yml')} ${pathToSpecs}`);
   await run(`cp ${toAbsolutePath('config/release.config.json')} ${pathToSpecs}`);
-  await run(`cp ${toAbsolutePath('website/src/generated/*.json')} ${pathToSpecs}`);
+  await run(`cp ${toAbsolutePath('snippets/guides/*.json')} ${pathToSpecs}`);
 
   if ((await getNbGitDiff({ head: null, cwd: tempGitDir })) === 0) {
     console.log(`❎ Skipping push docs because there is no change.`);
