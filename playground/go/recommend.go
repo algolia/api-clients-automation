@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/recommend"
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 func testRecommend(appID, apiKey string) int {
@@ -22,11 +21,11 @@ func testRecommend(appID, apiKey string) int {
 	params := &recommend.GetRecommendationsParams{
 		Requests: []recommend.RecommendationsRequest{
 			{
-				RecommendationsQuery: &recommend.RecommendationsQuery{
-					Model:     recommend.RECOMMENDATIONMODELS_BOUGHT_TOGETHER,
+				BoughtTogetherQuery: &recommend.BoughtTogetherQuery{
+					Model:     recommend.FBT_MODEL_BOUGHT_TOGETHER,
 					ObjectID:  "test_query",
 					IndexName: "test_index",
-					Threshold: utils.PtrInt32(0),
+					Threshold: 0,
 				},
 			},
 		},
