@@ -10,7 +10,6 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.apache.commons.lang3.StringUtils;
 import org.openapitools.codegen.*;
 
 @SuppressWarnings("unchecked")
@@ -128,7 +127,6 @@ public class ParametersWithDataType {
     String finalParamName = getFinalParamName(paramName);
 
     testOutput.put("key", finalParamName);
-    testOutput.put("isKeyAllUpperCase", StringUtils.isAllUpperCase(finalParamName));
     testOutput.put("useAnonymousKey", !finalParamName.matches("(.*)_[0-9]$") && depth != 0);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
