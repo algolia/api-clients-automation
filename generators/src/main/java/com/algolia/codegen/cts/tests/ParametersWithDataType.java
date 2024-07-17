@@ -109,10 +109,6 @@ public class ParametersWithDataType {
       isRequired = parameter.required;
     } else if (spec instanceof CodegenProperty property) {
       isRequired = property.required;
-    } else if (spec instanceof CodegenModel model) {
-      isRequired = !model.isOptional;
-    } else {
-      throw new CTSException("unknown type for " + paramName + " (type: " + spec.getClass().getSimpleName() + ")");
     }
 
     Map<String, Object> testOutput = createDefaultOutput();
