@@ -25,28 +25,6 @@ import (
   "github.com/algolia/algoliasearch-client-go/v4/algolia/call"
 )
 
-type Option struct {
-	optionType  string
-	name  string
-	value string
-}
-
-func QueryParamOption(name string, val any) Option {
-	return Option{
-    optionType:  "query",
-		name:  queryParameterToString(name),
-		value: queryParameterToString(val),
-	}
-}
-
-func HeaderParamOption(name string, val any) Option {
-	return Option{
-    optionType:  "header",
-		name:  name,
-		value: parameterToString(val),
-	}
-}
-
 {{#operation}}
   {{#hasParams}}
 func (r *{{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request) UnmarshalJSON(b []byte) error {
@@ -124,7 +102,6 @@ func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/s
   {{/vendorExtensions}}
 
   Request can be constructed by NewApi{{operationId}}Request with parameters below.
-  @param ctx context.Context - Context of the request
   {{#allParams}}
     @param {{paramName}} {{dataType}}{{#description}} - {{{.}}}{{/description}}
   {{/allParams}}
@@ -137,18 +114,12 @@ func (r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/s
     Deprecated
   {{/isDeprecated}}
   */
-func (c *APIClient) {{nickname}}WithHTTPInfo(ctx context.Context, {{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...Option) (*http.Response, []byte, error) {
-	var (
-    postBody     any
-	)
-
+func (c *APIClient) {{nickname}}WithHTTPInfo({{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...utils.RequestOption) (*http.Response, []byte, error) {
   {{#vendorExtensions}}
   requestPath := "{{{path}}}"{{#pathParams}}
-  requestPath = strings.ReplaceAll(requestPath, {{=<% %>=}}"{<%baseName%>}"<%={{ }}=%>, {{#x-is-custom-request}}parameterToString(r.{{paramName}}){{/x-is-custom-request}}{{^x-is-custom-request}}url.PathEscape(parameterToString(r.{{paramName}})){{/x-is-custom-request}}){{/pathParams}}
+  requestPath = strings.ReplaceAll(requestPath, {{=<% %>=}}"{<%baseName%>}"<%={{ }}=%>, {{#x-is-custom-request}}utils.ParameterToString(r.{{paramName}}){{/x-is-custom-request}}{{^x-is-custom-request}}url.PathEscape(utils.ParameterToString(r.{{paramName}})){{/x-is-custom-request}}){{/pathParams}}
   {{/vendorExtensions}}
 
-	headers := make(map[string]string)
-	queryParams := url.Values{}
 	{{#allParams}}
 	{{#required}}
   {{#isString}}
@@ -201,11 +172,17 @@ func (c *APIClient) {{nickname}}WithHTTPInfo(ctx context.Context, {{#hasParams}}
 	{{/required}}
 	{{/allParams}}
 
+  options := utils.Options{
+    Context:      context.Background(),
+    QueryParams:  url.Values{},
+    HeaderParams: map[string]string{},
+  }
+
   {{#vendorExtensions.x-is-custom-request}}
     {{#queryParams}}
       {{^required}}if !utils.IsNilOrEmpty(r.{{paramName}}) { {{/required}}
           for k, v := range r.{{paramName}} {
-           queryParams.Set(k, queryParameterToString(v))
+           options.QueryParams.Set(k, utils.QueryParameterToString(v))
           }
       {{^required}} } {{/required}}
     {{/queryParams}}
@@ -213,35 +190,32 @@ func (c *APIClient) {{nickname}}WithHTTPInfo(ctx context.Context, {{#hasParams}}
   {{^vendorExtensions.x-is-custom-request}}
 	{{#queryParams}}
 	{{#required}}
-	queryParams.Set("{{baseName}}", queryParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
+	options.QueryParams.Set("{{baseName}}", utils.QueryParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
 	{{/required}}
   {{^required}}
   if !utils.IsNilOrEmpty(r.{{paramName}}) {
-    queryParams.Set("{{baseName}}", queryParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isEnumRef}}*{{/isEnumRef}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
+    options.QueryParams.Set("{{baseName}}", utils.QueryParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isEnumRef}}*{{/isEnumRef}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}}))
   }
   {{/required}}
 	{{/queryParams}}
   {{/vendorExtensions.x-is-custom-request}}
   {{#headerParams}}
 	{{#required}}
-	headers["{{baseName}}"] = parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
+	options.HeaderParams["{{baseName}}"] = utils.ParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isPrimitiveType}}{{^isEnumRef}}*{{/isEnumRef}}{{/isPrimitiveType}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
 	{{/required}}
   {{^required}}
   if !utils.IsNilOrEmpty(r.{{paramName}}) {
-    headers["{{baseName}}"] = parameterToString({{^isFreeFormObject}}{{^isArray}}{{^isEnumRef}}*{{/isEnumRef}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
+    options.HeaderParams["{{baseName}}"] = utils.ParameterToString({{^isFreeFormObject}}{{^isArray}}{{^isEnumRef}}*{{/isEnumRef}}{{/isArray}}{{/isFreeFormObject}}r.{{paramName}})
   }
   {{/required}}
 {{/headerParams}}
 
   // optional params if any
   for _, opt := range opts {
-    switch opt.optionType {
-      case "query":
-        queryParams.Set(opt.name, opt.value)
-      case "header":
-        headers[opt.name] = opt.value
-    }
+    opt.Apply(&options)
   }
+
+  var postBody any
 
 {{#bodyParams}}
   // body params{{^required}}
@@ -251,7 +225,7 @@ func (c *APIClient) {{nickname}}WithHTTPInfo(ctx context.Context, {{#hasParams}}
     postBody = r.{{paramName}}{{^required}}
    } {{/required}}
 {{/bodyParams}}
-	req, err := c.prepareRequest(ctx, requestPath, http.Method{{httpMethod}}, postBody, headers, queryParams)
+	req, err := c.prepareRequest(options.Context, requestPath, http.Method{{httpMethod}}, postBody, options.HeaderParams, options.QueryParams)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -260,21 +234,14 @@ func (c *APIClient) {{nickname}}WithHTTPInfo(ctx context.Context, {{#hasParams}}
 }
 
 /*
-{{operationId}} wraps {{nickname}}WithContext using context.Background.
-{{> operation_description}}
-func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...Option) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
-  return c.{{nickname}}WithContext(context.Background(), {{#hasParams}}r,{{/hasParams}} opts...)
-}
-
-/*
 {{operationId}} casts the HTTP response body to a defined struct.
 {{> operation_description}}
-func (c *APIClient) {{nickname}}WithContext(ctx context.Context, {{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...Option) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
+func (c *APIClient) {{nickname}}({{#hasParams}}r {{#structPrefix}}{{&classname}}{{/structPrefix}}{{^structPrefix}}Api{{/structPrefix}}{{operationId}}Request,{{/hasParams}} opts ...utils.RequestOption) ({{#returnType}}{{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}, {{/returnType}}error) {
   {{#returnType}}
     var returnValue  {{^isArray}}{{^returnTypeIsPrimitive}}*{{/returnTypeIsPrimitive}}{{/isArray}}{{{.}}}
   {{/returnType}}
 
-  res, resBody, err := c.{{nickname}}WithHTTPInfo(ctx{{#hasParams}}, r{{/hasParams}}, opts...)
+  res, resBody, err := c.{{nickname}}WithHTTPInfo({{#hasParams}}r, {{/hasParams}}opts...)
   if err != nil {
 		return {{#returnType}}returnValue, {{/returnType}}err
 	}

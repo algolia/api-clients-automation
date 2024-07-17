@@ -606,7 +606,7 @@ class InsightsClientRequestsTests {
                 .setIndex("products")
                 .setUserToken("user-123456")
                 .setAuthenticatedUserToken("user-123456")
-                .setTimestamp(1720828800000L)
+                .setTimestamp(1721088000000L)
                 .setObjectIDs(List.of("9780545139700", "9780439784542"))
                 .setQueryID("43b15df305339e827f0ac0bdc5ebcaa7"),
               new ViewedObjectIDs()
@@ -615,7 +615,7 @@ class InsightsClientRequestsTests {
                 .setIndex("products")
                 .setUserToken("user-123456")
                 .setAuthenticatedUserToken("user-123456")
-                .setTimestamp(1720828800000L)
+                .setTimestamp(1721088000000L)
                 .setObjectIDs(List.of("9780545139700", "9780439784542"))
             )
           )
@@ -627,9 +627,9 @@ class InsightsClientRequestsTests {
     assertDoesNotThrow(() ->
       JSONAssert.assertEquals(
         "{\"events\":[{\"eventType\":\"conversion\",\"eventName\":\"Product" +
-        " Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1720828800000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product" +
+        " Purchased\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1721088000000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"],\"queryID\":\"43b15df305339e827f0ac0bdc5ebcaa7\"},{\"eventType\":\"view\",\"eventName\":\"Product" +
         " Detail Page" +
-        " Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1720828800000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
+        " Viewed\",\"index\":\"products\",\"userToken\":\"user-123456\",\"authenticatedUserToken\":\"user-123456\",\"timestamp\":1721088000000,\"objectIDs\":[\"9780545139700\",\"9780439784542\"]}]}",
         req.body,
         JSONCompareMode.STRICT
       )
