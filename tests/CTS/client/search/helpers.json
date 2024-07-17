@@ -390,7 +390,8 @@
         "path": "waitForApiKey",
         "parameters": {
           "key": "api-key-add-operation-test-${{languageCased}}",
-          "operation": "add"
+          "operation": "add",
+          "apiKey": null
         },
         "expected": {
           "type": "response",
@@ -441,6 +442,14 @@
               "addObject",
               "deleteObject"
             ],
+            "indexes": [
+              "Movies",
+              "Books"
+            ],
+            "referers": [
+              "*google.com",
+              "*algolia.com"
+            ],
             "validity": 305,
             "maxQueriesPerIPPerHour": 95,
             "maxHitsPerQuery": 20
@@ -455,6 +464,14 @@
               "search",
               "addObject",
               "deleteObject"
+            ],
+            "indexes": [
+              "Movies",
+              "Books"
+            ],
+            "referers": [
+              "*google.com",
+              "*algolia.com"
             ],
             "validity": 305,
             "maxQueriesPerIPPerHour": 95,
@@ -488,7 +505,8 @@
         "path": "waitForApiKey",
         "parameters": {
           "key": "api-key-delete-operation-test-${{languageCased}}",
-          "operation": "delete"
+          "operation": "delete",
+          "apiKey": null
         },
         "expected": {
           "type": "response",

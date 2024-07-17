@@ -73,6 +73,8 @@ function addRoutes(app: Express): void {
           value: req.params.key,
           description: 'my updated api key',
           acl: ['search', 'addObject', 'deleteObject'],
+          indexes: ['Movies', 'Books'],
+          referers: ['*google.com', '*algolia.com'],
           validity: 305,
           maxQueriesPerIPPerHour: 95,
           maxHitsPerQuery: 20,
