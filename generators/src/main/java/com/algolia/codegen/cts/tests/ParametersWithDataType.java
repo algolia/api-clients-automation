@@ -91,11 +91,11 @@ public class ParametersWithDataType {
     Object param,
     IJsonSchemaValidationProperties spec,
     String parent,
-    int suffix,
+    int depth,
     boolean isParentFreeFormObject
   ) throws CTSException {
     if (spec == null) {
-      return traverseParamsWithoutSpec(paramName, param, parent, suffix);
+      return traverseParamsWithoutSpec(paramName, param, parent, depth);
     }
     String baseType = getTypeName(spec);
     if (baseType == null) {
@@ -103,19 +103,15 @@ public class ParametersWithDataType {
     }
 
     boolean isCodegenModel = spec instanceof CodegenModel;
-
-    Map<String, Object> testOutput = createDefaultOutput();
-    boolean isRequired = false;
+    Boolean isRequired = null;
 
     if (spec instanceof CodegenParameter parameter) {
       isRequired = parameter.required;
     } else if (spec instanceof CodegenProperty property) {
       isRequired = property.required;
-    } else if (spec instanceof CodegenModel model) {
-      isRequired = !model.isOptional;
-    } else {
-      throw new CTSException("unknown type for " + paramName + " (type: " + spec.getClass().getSimpleName() + ")");
     }
+
+    Map<String, Object> testOutput = createDefaultOutput();
 
     if (!isCodegenModel) {
       // don't overwrite it if it's already a model sometimes it's in lowercase for some reason
@@ -133,31 +129,32 @@ public class ParametersWithDataType {
 
     testOutput.put("key", finalParamName);
     testOutput.put("isKeyAllUpperCase", StringUtils.isAllUpperCase(finalParamName));
-    testOutput.put("parentSuffix", suffix - 1);
-    testOutput.put("useAnonymousKey", !finalParamName.matches("(.*)_[0-9]$") && suffix != 0);
-    testOutput.put("required", isRequired);
-    testOutput.put("goFunctionalParam", !isRequired && suffix == 0);
-    testOutput.put("suffix", suffix);
+    testOutput.put("useAnonymousKey", !finalParamName.matches("(.*)_[0-9]$") && depth != 0);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
     testOutput.put("objectName", getObjectNameForLanguage(baseType));
     testOutput.put("isParentFreeFormObject", isParentFreeFormObject);
 
+    if (isRequired != null) {
+      testOutput.put("required", isRequired);
+      testOutput.put("goFunctionalParam", !isRequired && depth == 0);
+    }
+
     if (param == null) {
       handleNull(spec, testOutput);
     } else if (spec.getIsArray()) {
-      handleArray(paramName, param, testOutput, spec, suffix);
+      handleArray(paramName, param, testOutput, spec, depth);
     } else if (spec.getIsEnum()) {
       handleEnum(param, testOutput);
     } else if (spec.getIsModel() || isCodegenModel) {
       // recursive object
-      handleModel(paramName, param, testOutput, spec, baseType, parent, suffix, isParentFreeFormObject);
+      handleModel(paramName, param, testOutput, spec, baseType, parent, depth, isParentFreeFormObject);
     } else if (baseType.equals("Object")) {
       // not var, no item, pure free form
-      handleObject(paramName, param, testOutput, true, suffix);
+      handleObject(paramName, param, testOutput, true, depth);
     } else if (spec.getIsMap()) {
       // free key but only one type
-      handleMap(paramName, param, testOutput, spec, suffix);
+      handleMap(paramName, param, testOutput, spec, depth);
     } else {
       handlePrimitive(param, testOutput, spec);
     }
@@ -166,14 +163,12 @@ public class ParametersWithDataType {
   }
 
   /** Same method but with inference only */
-  private Map<String, Object> traverseParamsWithoutSpec(String paramName, Object param, String parent, int suffix) throws CTSException {
+  private Map<String, Object> traverseParamsWithoutSpec(String paramName, Object param, String parent, int depth) throws CTSException {
     String finalParamName = getFinalParamName(paramName);
 
     Map<String, Object> testOutput = createDefaultOutput();
     testOutput.put("key", finalParamName);
-    testOutput.put("parentSuffix", suffix - 1);
-    testOutput.put("useAnonymousKey", !finalParamName.matches("(.*)_[0-9]$") && suffix != 0);
-    testOutput.put("suffix", suffix);
+    testOutput.put("useAnonymousKey", !finalParamName.matches("(.*)_[0-9]$") && depth != 0);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
     // try to infer the type
@@ -187,9 +182,9 @@ public class ParametersWithDataType {
     if (param == null) {
       handleNull(null, testOutput);
     } else if (param instanceof List) {
-      handleArray(paramName, param, testOutput, null, suffix);
+      handleArray(paramName, param, testOutput, null, depth);
     } else if (param instanceof Map) {
-      handleObject(paramName, param, testOutput, false, suffix);
+      handleObject(paramName, param, testOutput, false, depth);
     } else {
       handlePrimitive(param, testOutput, null);
     }
@@ -240,18 +235,13 @@ public class ParametersWithDataType {
     }
   }
 
-  private void handleArray(
-    String paramName,
-    Object param,
-    Map<String, Object> testOutput,
-    IJsonSchemaValidationProperties spec,
-    int suffix
-  ) throws CTSException {
+  private void handleArray(String paramName, Object param, Map<String, Object> testOutput, IJsonSchemaValidationProperties spec, int depth)
+    throws CTSException {
     List<Object> items = (List<Object>) param;
 
     List<Object> values = new ArrayList<>();
     for (int i = 0; i < items.size(); i++) {
-      values.add(traverseParams(paramName + "_" + i, items.get(i), spec == null ? null : spec.getItems(), paramName, suffix + 1, false));
+      values.add(traverseParams(paramName + "_" + i, items.get(i), spec == null ? null : spec.getItems(), paramName, depth + 1, false));
     }
 
     testOutput.put("isArray", true);
@@ -270,7 +260,7 @@ public class ParametersWithDataType {
     IJsonSchemaValidationProperties spec,
     String baseType,
     String parent,
-    int suffix,
+    int depth,
     boolean isParentFreeFormObject
   ) throws CTSException {
     if (!spec.getHasVars()) {
@@ -281,7 +271,7 @@ public class ParametersWithDataType {
         List<CodegenProperty> allOf = composedSchemas.getAllOf();
 
         if (allOf != null && !allOf.isEmpty()) {
-          traverseParams(paramName, param, allOf.get(0), parent, suffix, false);
+          traverseParams(paramName, param, allOf.get(0), parent, depth, false);
 
           return;
         }
@@ -301,7 +291,7 @@ public class ParametersWithDataType {
       CodegenModel model = (CodegenModel) spec;
       IJsonSchemaValidationProperties match = findMatchingOneOf(param, model);
 
-      testOutput.putAll(traverseParams(paramName, param, match, parent, suffix, isParentFreeFormObject));
+      testOutput.putAll(traverseParams(paramName, param, match, parent, depth, isParentFreeFormObject));
 
       Map<String, Object> oneOfModel = new HashMap<>();
       IJsonSchemaValidationProperties current = match;
@@ -362,7 +352,7 @@ public class ParametersWithDataType {
             entry.getValue(),
             additionalPropertiesSpec,
             paramName,
-            suffix + 1,
+            depth + 1,
             false
           );
           value.put("isAdditionalProperty", true);
@@ -382,7 +372,7 @@ public class ParametersWithDataType {
           );
         }
       } else {
-        Map<String, Object> transformedParam = traverseParams(entry.getKey(), entry.getValue(), varSpec, paramName, suffix + 1, false);
+        Map<String, Object> transformedParam = traverseParams(entry.getKey(), entry.getValue(), varSpec, paramName, depth + 1, false);
         values.add(transformedParam);
       }
     }
@@ -416,7 +406,7 @@ public class ParametersWithDataType {
     return paramName;
   }
 
-  private void handleObject(String paramName, Object param, Map<String, Object> testOutput, boolean isSimpleObject, int suffix)
+  private void handleObject(String paramName, Object param, Map<String, Object> testOutput, boolean isSimpleObject, int depth)
     throws CTSException {
     Map<String, Object> vars = (Map<String, Object>) param;
 
@@ -424,7 +414,7 @@ public class ParametersWithDataType {
     for (Entry<String, Object> entry : vars.entrySet()) {
       CodegenParameter objSpec = new CodegenParameter();
       objSpec.dataType = inferDataType(entry.getValue(), objSpec, null);
-      values.add(traverseParams(entry.getKey(), entry.getValue(), objSpec, paramName, suffix + 1, true));
+      values.add(traverseParams(entry.getKey(), entry.getValue(), objSpec, paramName, depth + 1, true));
     }
 
     testOutput.put("isSimpleObject", isSimpleObject);
@@ -432,7 +422,7 @@ public class ParametersWithDataType {
     testOutput.put("value", values);
   }
 
-  private void handleMap(String paramName, Object param, Map<String, Object> testOutput, IJsonSchemaValidationProperties spec, int suffix)
+  private void handleMap(String paramName, Object param, Map<String, Object> testOutput, IJsonSchemaValidationProperties spec, int depth)
     throws CTSException {
     if (spec.getHasVars()) {
       throw new CTSException("Spec has vars.");
@@ -459,7 +449,7 @@ public class ParametersWithDataType {
         itemType = maybeMatch;
       }
 
-      values.add(traverseParams(entry.getKey(), entry.getValue(), itemType, paramName, suffix + 1, true));
+      values.add(traverseParams(entry.getKey(), entry.getValue(), itemType, paramName, depth + 1, true));
     }
 
     testOutput.put("isFreeFormObject", true);
