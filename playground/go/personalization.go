@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/personalization"
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 func testPersonalization(appID, apiKey string) int {
@@ -20,7 +19,7 @@ func testPersonalization(appID, apiKey string) int {
 	// it will fail expectedly because of the very short timeout to showcase the context usage.
 	deleteUserProfileResponse, err := personalizationClient.DeleteUserProfile(
 		personalizationClient.NewApiDeleteUserProfileRequest("userToken"),
-		utils.WithContext(ctx),
+		personalization.WithContext(ctx),
 	)
 	if err != nil {
 		fmt.Printf("request error with DeleteUserProfile: %v\n", err)
