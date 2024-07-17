@@ -105,11 +105,12 @@ public class ParametersWithDataType {
     boolean isCodegenModel = spec instanceof CodegenModel;
 
     Map<String, Object> testOutput = createDefaultOutput();
+    boolean isRequired = false;
 
     if (spec instanceof CodegenParameter parameter) {
-      testOutput.put("required", parameter.required);
+      isRequired = parameter.required;
     } else if (spec instanceof CodegenProperty property) {
-      testOutput.put("required", property.required);
+      isRequired = property.required;
     }
 
     if (!isCodegenModel) {
@@ -130,6 +131,8 @@ public class ParametersWithDataType {
     testOutput.put("isKeyAllUpperCase", StringUtils.isAllUpperCase(finalParamName));
     testOutput.put("parentSuffix", suffix - 1);
     testOutput.put("useAnonymousKey", !finalParamName.matches("(.*)_[0-9]$") && suffix != 0);
+    testOutput.put("required", isRequired);
+    testOutput.put("goFunctionalParam", !isRequired && suffix == 0);
     testOutput.put("suffix", suffix);
     testOutput.put("parent", parent);
     testOutput.put("isRoot", "".equals(parent));
