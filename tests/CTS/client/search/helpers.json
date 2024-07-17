@@ -390,8 +390,7 @@
         "path": "waitForApiKey",
         "parameters": {
           "key": "api-key-add-operation-test-${{languageCased}}",
-          "operation": "add",
-          "apiKey": null
+          "operation": "add"
         },
         "expected": {
           "type": "response",
@@ -505,8 +504,7 @@
         "path": "waitForApiKey",
         "parameters": {
           "key": "api-key-delete-operation-test-${{languageCased}}",
-          "operation": "delete",
-          "apiKey": null
+          "operation": "delete"
         },
         "expected": {
           "type": "response",
