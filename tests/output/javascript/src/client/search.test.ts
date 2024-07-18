@@ -244,6 +244,78 @@ describe('helpers', () => {
 
     expect(result).toEqual([{ taskID: 666, objectIDs: ['1', '2'] }]);
   }, 15000);
+
+  test('wait for api key helper - add', async () => {
+    const $client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [
+        { url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' },
+      ],
+    });
+
+    const result = await $client.waitForApiKey({
+      key: 'api-key-add-operation-test-JavaScript',
+      operation: 'add',
+    });
+
+    expect(result).toEqual({
+      value: 'api-key-add-operation-test-JavaScript',
+      description: 'my new api key',
+      acl: ['search', 'addObject'],
+      validity: 300,
+      maxQueriesPerIPPerHour: 100,
+      maxHitsPerQuery: 20,
+      createdAt: 1720094400,
+    });
+  }, 15000);
+
+  test('wait for api key - update', async () => {
+    const $client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [
+        { url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' },
+      ],
+    });
+
+    const result = await $client.waitForApiKey({
+      key: 'api-key-update-operation-test-JavaScript',
+      operation: 'update',
+      apiKey: {
+        description: 'my updated api key',
+        acl: ['search', 'addObject', 'deleteObject'],
+        indexes: ['Movies', 'Books'],
+        referers: ['*google.com', '*algolia.com'],
+        validity: 305,
+        maxQueriesPerIPPerHour: 95,
+        maxHitsPerQuery: 20,
+      },
+    });
+
+    expect(result).toEqual({
+      value: 'api-key-update-operation-test-JavaScript',
+      description: 'my updated api key',
+      acl: ['search', 'addObject', 'deleteObject'],
+      indexes: ['Movies', 'Books'],
+      referers: ['*google.com', '*algolia.com'],
+      validity: 305,
+      maxQueriesPerIPPerHour: 95,
+      maxHitsPerQuery: 20,
+      createdAt: 1720094400,
+    });
+  }, 15000);
+
+  test('wait for api key - delete', async () => {
+    const $client = searchClient('test-app-id', 'test-api-key', {
+      hosts: [
+        { url: 'localhost', port: 6681, accept: 'readWrite', protocol: 'http' },
+      ],
+    });
+
+    const result = await $client.waitForApiKey({
+      key: 'api-key-delete-operation-test-JavaScript',
+      operation: 'delete',
+    });
+
+    expect(result).toBeUndefined();
+  }, 15000);
 });
 
 describe('parameters', () => {

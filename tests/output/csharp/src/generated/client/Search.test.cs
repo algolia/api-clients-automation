@@ -400,6 +400,113 @@ public class SearchClientTests
     );
   }
 
+  [Fact(DisplayName = "wait for api key helper - add")]
+  public async Task HelpersTest7()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6681,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.WaitForApiKeyAsync(
+      "api-key-add-operation-test-Csharp",
+      Enum.Parse<ApiKeyOperation>("Add")
+    );
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"value\":\"api-key-add-operation-test-Csharp\",\"description\":\"my new api key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "wait for api key - update")]
+  public async Task HelpersTest8()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6681,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.WaitForApiKeyAsync(
+      "api-key-update-operation-test-Csharp",
+      Enum.Parse<ApiKeyOperation>("Update"),
+      new ApiKey
+      {
+        Description = "my updated api key",
+        Acl = new List<Acl>
+        {
+          Enum.Parse<Acl>("Search"),
+          Enum.Parse<Acl>("AddObject"),
+          Enum.Parse<Acl>("DeleteObject")
+        },
+        Indexes = new List<string> { "Movies", "Books" },
+        Referers = new List<string> { "*google.com", "*algolia.com" },
+        Validity = 305,
+        MaxQueriesPerIPPerHour = 95,
+        MaxHitsPerQuery = 20,
+      }
+    );
+
+    JsonAssert.EqualOverrideDefault(
+      "{\"value\":\"api-key-update-operation-test-Csharp\",\"description\":\"my updated api key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}",
+      JsonSerializer.Serialize(res, JsonConfig.Options),
+      new JsonDiffConfig(false)
+    );
+  }
+
+  [Fact(DisplayName = "wait for api key - delete")]
+  public async Task HelpersTest9()
+  {
+    SearchConfig _config = new SearchConfig("test-app-id", "test-api-key")
+    {
+      CustomHosts = new List<StatefulHost>
+      {
+        new()
+        {
+          Scheme = HttpScheme.Http,
+          Url = "localhost",
+          Port = 6681,
+          Up = true,
+          LastUse = DateTime.UtcNow,
+          Accept = CallType.Read | CallType.Write,
+        }
+      }
+    };
+    var client = new SearchClient(_config);
+
+    var res = await client.WaitForApiKeyAsync(
+      "api-key-delete-operation-test-Csharp",
+      Enum.Parse<ApiKeyOperation>("Delete")
+    );
+
+    Assert.Null(res);
+  }
+
   [Fact(DisplayName = "client throws with invalid parameters")]
   public async Task ParametersTest0()
   {

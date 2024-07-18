@@ -166,7 +166,7 @@ final class Helpers
                 // In case of a deletion, if there was an error, the $key has been deleted as it should be
                 if (
                     'delete' === $operation
-                    && $e->getCode() === 404
+                    && 404 === $e->getCode()
                 ) {
                     return null;
                 }
