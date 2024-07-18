@@ -18,14 +18,7 @@ class Snippet{{client}} {
     {{client}} client = new {{client}}("YOUR_APP_ID", "YOUR_API_KEY"{{#hasRegionalHost}}, "YOUR_APP_ID_REGION"{{/hasRegionalHost}});
 
     // Call the API
-    client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Hit.class{{/isGeneric}}{{#hasRequestOptions}}, new RequestOptions()
-      {{#requestOptions.queryParameters.parametersWithDataType}}
-        .addExtraQueryParameters("{{{key}}}", {{> tests/generateInnerParams}})
-      {{/requestOptions.queryParameters.parametersWithDataType}}
-      {{#requestOptions.headers.parametersWithDataType}}
-        .addExtraHeader("{{{key}}}", "{{{value}}}")
-      {{/requestOptions.headers.parametersWithDataType}}
-    {{/hasRequestOptions}});
+    {{> tests/method}};
     // SEPARATOR<
   }
 

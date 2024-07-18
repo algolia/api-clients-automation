@@ -41,14 +41,7 @@ class {{client}}RequestsTestsE2E {
     @Test
     @DisplayName("{{{testName}}}")
     void {{method}}Test{{testIndex}}() {
-        var res = client.{{method}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#isGeneric}}, Hit.class{{/isGeneric}}{{#hasRequestOptions}}, new RequestOptions()
-              {{#requestOptions.queryParameters.parametersWithDataType}}
-                .addExtraQueryParameters("{{{key}}}", {{> tests/generateInnerParams}})
-              {{/requestOptions.queryParameters.parametersWithDataType}}
-              {{#requestOptions.headers.parametersWithDataType}}
-                .addExtraHeader("{{{key}}}", "{{{value}}}")
-              {{/requestOptions.headers.parametersWithDataType}}
-            {{/hasRequestOptions}});
+        var res = {{> tests/method}};
         {{#response}}
         {{#body}}
         assertDoesNotThrow(() -> JSONAssert.assertEquals("{{#lambda.escapeQuotes}}{{{body}}}{{/lambda.escapeQuotes}}", json.writeValueAsString(res), JSONCompareMode.LENIENT));
