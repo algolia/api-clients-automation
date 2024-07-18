@@ -193,14 +193,12 @@ public class TestsRequest extends TestsGenerator {
               Map<String, Object> queryParameters = new HashMap<>();
               paramsType.enhanceParameters(req.requestOptions.queryParameters, queryParameters);
               requestOptions.put("queryParameters", queryParameters);
-              requestOptions.put("hasQueryParameters", !queryParameters.isEmpty());
             }
             if (req.requestOptions.headers != null) {
               Map<String, Object> headers = new HashMap<>();
               // convert the headers to an acceptable type
               paramsType.enhanceParameters(new HashMap<String, Object>(req.requestOptions.headers), headers);
               requestOptions.put("headers", headers);
-              requestOptions.put("hasHeaders", !headers.isEmpty());
             }
             test.put("requestOptions", requestOptions);
           }

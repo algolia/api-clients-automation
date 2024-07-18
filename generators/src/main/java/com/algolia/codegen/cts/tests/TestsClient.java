@@ -104,7 +104,7 @@ public class TestsClient extends TestsGenerator {
             stepOut.put("method", step.method);
 
             if (step.method != null && CUSTOM_METHODS.contains(step.method)) {
-              stepOut.put("isCustom", true);
+              stepOut.put("isCustomRequest", true);
             }
             paramsType.enhanceParameters(step.parameters, stepOut, ope);
 
