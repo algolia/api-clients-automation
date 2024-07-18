@@ -12,7 +12,6 @@ import (
 
 	suggestions "github.com/algolia/algoliasearch-client-go/v4/algolia/query-suggestions"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 func createSuggestionsClient(t *testing.T) (*suggestions.APIClient, *tests.EchoRequester) {
@@ -129,8 +128,8 @@ func TestSuggestions_CustomGet(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
 			"test/all",
 		).WithParameters(map[string]any{"query": "to be overriden"}),
-			utils.WithQueryParam("query", "parameters with space"), utils.WithQueryParam("and an array",
-				[]string{"array", "with spaces"}), utils.WithHeaderParam("x-header-1", "spaces are left alone"),
+			suggestions.WithQueryParam("query", "parameters with space"), suggestions.WithQueryParam("and an array",
+				[]string{"array", "with spaces"}), suggestions.WithHeaderParam("x-header-1", "spaces are left alone"),
 		)
 		require.NoError(t, err)
 
@@ -190,7 +189,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			utils.WithQueryParam("query", "myQueryParameter"),
+			suggestions.WithQueryParam("query", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -210,7 +209,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			utils.WithQueryParam("query2", "myQueryParameter"),
+			suggestions.WithQueryParam("query2", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -230,7 +229,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			utils.WithHeaderParam("x-algolia-api-key", "myApiKey"),
+			suggestions.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -255,7 +254,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			utils.WithHeaderParam("x-algolia-api-key", "myApiKey"),
+			suggestions.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -280,7 +279,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			utils.WithQueryParam("isItWorking", true),
+			suggestions.WithQueryParam("isItWorking", true),
 		)
 		require.NoError(t, err)
 
@@ -300,7 +299,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			utils.WithQueryParam("myParam", 2),
+			suggestions.WithQueryParam("myParam", 2),
 		)
 		require.NoError(t, err)
 
@@ -320,7 +319,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			utils.WithQueryParam("myParam",
+			suggestions.WithQueryParam("myParam",
 				[]string{"b and c", "d"}),
 		)
 		require.NoError(t, err)
@@ -341,7 +340,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			utils.WithQueryParam("myParam",
+			suggestions.WithQueryParam("myParam",
 				[]bool{true, true, false}),
 		)
 		require.NoError(t, err)
@@ -362,7 +361,7 @@ func TestSuggestions_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			utils.WithQueryParam("myParam",
+			suggestions.WithQueryParam("myParam",
 				[]int32{1, 2}),
 		)
 		require.NoError(t, err)

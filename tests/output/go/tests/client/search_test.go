@@ -14,7 +14,6 @@ import (
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/compression"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 func createSearchClient(t *testing.T) (*search.APIClient, *tests.EchoRequester) {
@@ -221,7 +220,7 @@ func TestSearchhelpers2(t *testing.T) {
 	res, err := client.ReplaceAllObjects(
 		"cts_e2e_replace_all_objects_Go",
 		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}, map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}, map[string]any{"objectID": "5", "name": "Eva"}, map[string]any{"objectID": "6", "name": "Fiona"}, map[string]any{"objectID": "7", "name": "Gael"}, map[string]any{"objectID": "8", "name": "Hugo"}, map[string]any{"objectID": "9", "name": "Igor"}, map[string]any{"objectID": "10", "name": "Julia"}},
-		utils.WithBatchSize(3))
+		search.WithBatchSize(3))
 	require.NoError(t, err)
 	rawBody, err := json.Marshal(res)
 	require.NoError(t, err)
@@ -275,7 +274,7 @@ func TestSearchhelpers4(t *testing.T) {
 	res, err := client.PartialUpdateObjects(
 		"cts_e2e_partialUpdateObjects_Go",
 		[]map[string]any{map[string]any{"objectID": "1", "name": "Adam"}, map[string]any{"objectID": "2", "name": "Benoit"}},
-		true)
+		search.WithCreateIfNotExists(true))
 	require.NoError(t, err)
 	rawBody, err := json.Marshal(res)
 	require.NoError(t, err)
@@ -302,7 +301,7 @@ func TestSearchhelpers5(t *testing.T) {
 	res, err := client.PartialUpdateObjects(
 		"cts_e2e_partialUpdateObjects_Go",
 		[]map[string]any{map[string]any{"objectID": "3", "name": "Cyril"}, map[string]any{"objectID": "4", "name": "David"}},
-		false)
+		search.WithCreateIfNotExists(false))
 	require.NoError(t, err)
 	rawBody, err := json.Marshal(res)
 	require.NoError(t, err)
