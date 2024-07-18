@@ -53,7 +53,12 @@ class Test{{#lambda.pascalcase}}{{{client}}}{{/lambda.pascalcase}}:
         assert (_req if isinstance(_req, dict) else [elem.to_dict() for elem in _req] if isinstance(_req, list) else  _req.to_dict()) == loads("""{{{match.parameters}}}""")
         {{/matchIsJSON}}
         {{^matchIsJSON}}
+        {{#matchIsNull}}
+        assert _req is None
+        {{/matchIsNull}}
+        {{^matchIsNull}}
         assert _req == """{{{match}}}"""
+        {{/matchIsNull}}
         {{/matchIsJSON}}
         {{/testResponse}}
         {{/match}}

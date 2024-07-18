@@ -10,6 +10,7 @@ import { gzipServer } from './gzip';
 import { replaceAllObjectsServer } from './replaceAllObjects';
 import { timeoutServer } from './timeout';
 import { timeoutServerBis } from './timeoutBis';
+import { waitForApiKeyServer } from './waitForApiKey';
 
 export async function startTestServer(): Promise<() => Promise<void>> {
   const servers = await Promise.all([
@@ -18,6 +19,7 @@ export async function startTestServer(): Promise<() => Promise<void>> {
     timeoutServerBis(),
     replaceAllObjectsServer(),
     chunkWrapperServer(),
+    waitForApiKeyServer(),
   ]);
 
   return async () => {
