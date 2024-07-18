@@ -34,8 +34,7 @@
     "steps": [
       {
         "type": "method",
-        "object": "$client",
-        "path": "addApiKey",
+        "method": "addApiKey",
         "parameters": null,
         "expected": {
           "error": "Parameter `apiKey` is required when calling `addApiKey`."
@@ -48,8 +47,7 @@
     "steps": [
       {
         "type": "method",
-        "object": "$client",
-        "path": "addOrUpdateObject",
+        "method": "addOrUpdateObject",
         "parameters": {
           "indexName": null,
           "objectID": "my-object-id",
@@ -61,8 +59,7 @@
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "addOrUpdateObject",
+        "method": "addOrUpdateObject",
         "parameters": {
           "indexName": "my-index-name",
           "objectID": null,
@@ -74,8 +71,7 @@
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "addOrUpdateObject",
+        "method": "addOrUpdateObject",
         "parameters": {
           "indexName": "my-index-name",
           "objectID": "my-object-id",

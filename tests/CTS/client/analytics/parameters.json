@@ -12,8 +12,7 @@
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "getAverageClickPosition",
+        "method": "getAverageClickPosition",
         "parameters": {
           "index": "my-index"
         },
@@ -38,8 +37,7 @@
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "customPost",
+        "method": "customPost",
         "parameters": {
           "path": "test"
         },
@@ -72,8 +70,7 @@
     "steps": [
       {
         "type": "method",
-        "object": "$client",
-        "path": "getClickPositions",
+        "method": "getClickPositions",
         "parameters": {
           "index": null
         },

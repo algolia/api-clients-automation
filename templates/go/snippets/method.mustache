@@ -24,11 +24,7 @@ func SnippetFor{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Of{{#lambda.p
     }
 
     // Call the API
-    {{#hasResponsePayload}}response, err :={{/hasResponsePayload}}{{^hasResponsePayload}}err ={{/hasResponsePayload}} client.{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}({{#hasOperationParams}}client.NewApi{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}Request(
-        {{#parametersWithDataType}}{{#required}}{{> tests/generateParams}},{{/required}}{{/parametersWithDataType}}
-      ){{#parametersWithDataType}}{{^required}}.With{{#lambda.pascalcase}}{{{key}}}{{/lambda.pascalcase}}({{> tests/generateParams}}){{/required}}{{/parametersWithDataType}}{{/hasOperationParams}}{{#requestOptions}}{{#hasOperationParams}},{{/hasOperationParams}}
-      {{#queryParameters.parametersWithDataType}}{{clientPrefix}}.WithQueryParam("{{{key}}}", {{> tests/generateInnerParams}}),{{/queryParameters.parametersWithDataType}}{{#headers.parametersWithDataType}}{{clientPrefix}}.WithHeaderParam("{{{key}}}", {{> tests/generateInnerParams}}),{{/headers.parametersWithDataType}}
-      {{/requestOptions}})
+    {{#hasResponsePayload}}response, err :={{/hasResponsePayload}}{{^hasResponsePayload}}err ={{/hasResponsePayload}} {{> tests/method}}
     if err != nil {
       // handle the eventual error
       panic(err)

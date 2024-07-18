@@ -88,9 +88,9 @@ public class TestsClient extends TestsGenerator {
               }
               stepOut.put("gzipEncoding", gzipEncoding);
             } else if (step.type.equals("method")) {
-              ope = operations.get(step.path);
+              ope = operations.get(step.method);
               if (ope == null) {
-                throw new CTSException("Cannot find operation for method: " + step.path, test.testName);
+                throw new CTSException("Cannot find operation for method: " + step.method, test.testName);
               }
               stepOut.put("stepTemplate", "tests/client/method.mustache");
               stepOut.put("isMethod", true); // TODO: remove once kotlin is converted
@@ -101,8 +101,7 @@ public class TestsClient extends TestsGenerator {
               testOut.put("isAsync", (boolean) ope.vendorExtensions.getOrDefault("x-asynchronous-helper", true)); // default to true because most api calls are asynchronous
             }
 
-            stepOut.put("object", step.object);
-            stepOut.put("path", step.path);
+            stepOut.put("method", step.method);
 
             if (step.requestOptions != null) {
               Map<String, Object> requestOptions = new HashMap<>();
@@ -110,7 +109,7 @@ public class TestsClient extends TestsGenerator {
               stepOut.put("requestOptions", requestOptions);
             }
 
-            if (step.path != null && CUSTOM_METHODS.contains(step.path)) {
+            if (step.method != null && CUSTOM_METHODS.contains(step.method)) {
               stepOut.put("isCustom", true);
             }
             paramsType.enhanceParameters(step.parameters, stepOut, ope);
@@ -152,9 +151,9 @@ public class TestsClient extends TestsGenerator {
               if (step.expected.error != null) {
                 stepOut.put("isError", true);
                 stepOut.put("expectedError", step.expected.error);
-                if (language.equals("go") && step.path != null) {
+                if (language.equals("go") && step.method != null) {
                   // hack for go that use PascalCase, but just in the operationID
-                  stepOut.put("expectedError", step.expected.error.replace(step.path, Helpers.toPascalCase(step.path)));
+                  stepOut.put("expectedError", step.expected.error.replace(step.method, Helpers.toPascalCase(step.method)));
                 }
               } else if (step.expected.match != null) {
                 Map<String, Object> matchMap = new HashMap<>();

@@ -12,8 +12,7 @@
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "getABTest",
+        "method": "getABTest",
         "parameters": {
           "id": 123
         },
@@ -38,8 +37,7 @@
       },
       {
         "type": "method",
-        "object": "$client",
-        "path": "getABTest",
+        "method": "getABTest",
         "parameters": {
           "id": 123
         },

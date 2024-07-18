@@ -1,4 +1,4 @@
-let response = try {{#isAsync}}await {{/isAsync}}client{{#path}}.{{.}}{{^isHelper}}WithHTTPInfo{{/isHelper}}{{/path}}(
+let response = try {{#isAsync}}await {{/isAsync}}client{{#method}}.{{.}}{{^isHelper}}WithHTTPInfo{{/isHelper}}{{/method}}(
 {{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}},{{/-last}}
 {{/parametersWithDataType}}{{#requestOptions.parametersWithDataType}}{{#-first}}, requestOptions: RequestOptions({{/-first}}
 {{> tests/generateParams }}{{^-last}},{{/-last}}
