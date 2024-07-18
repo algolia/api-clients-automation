@@ -46,7 +46,7 @@ final class {{client}}RequestsTestsE2E: XCTestCase {
           XCTFail("Please provide an `{{e2eApiKey}}` env var for e2e tests")
       }
 
-      e2eClient = try? {{client}}(appID: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: .{{defaultRegion}}{{/hasRegionalHost}})
+      client = try? {{client}}(appID: APPLICATION_ID, apiKey: API_KEY{{#hasRegionalHost}}, region: .{{defaultRegion}}{{/hasRegionalHost}})
     }
 
   {{#blocksE2E}}
@@ -61,7 +61,7 @@ final class {{client}}RequestsTestsE2E: XCTestCase {
         }
 
         {{#response}}
-          let e2eResponse{{#isGeneric}}: Response<{{{returnType}}}<Hit>>{{/isGeneric}} = try await e2eClient.{{method}}WithHTTPInfo({{#hasParams}}{{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}{{/hasParams}}{{#hasRequestOptions}}, requestOptions: requestOptions{{/hasRequestOptions}})
+          let e2eResponse{{#isGeneric}}: Response<{{{returnType}}}<Hit>>{{/isGeneric}} = {{> tests/method}}
           {{#body}}
             let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
             let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)
