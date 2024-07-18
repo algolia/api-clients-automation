@@ -337,6 +337,70 @@ class SearchTest extends TestCase implements HttpClientInterface
         );
     }
 
+    #[TestDox('wait for api key helper - add')]
+    public function test7helpers()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+
+        $res = $client->waitForApiKey(
+            'api-key-add-operation-test-PHP',
+            'add',
+        );
+        $this->assertEquals(
+            '{"value":"api-key-add-operation-test-PHP","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('wait for api key - update')]
+    public function test8helpers()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+
+        $res = $client->waitForApiKey(
+            'api-key-update-operation-test-PHP',
+            'update',
+            ['description' => 'my updated api key',
+                'acl' => [
+                    'search',
+
+                    'addObject',
+
+                    'deleteObject',
+                ],
+                'indexes' => [
+                    'Movies',
+
+                    'Books',
+                ],
+                'referers' => [
+                    '*google.com',
+
+                    '*algolia.com',
+                ],
+                'validity' => 305,
+                'maxQueriesPerIPPerHour' => 95,
+                'maxHitsPerQuery' => 20,
+            ],
+        );
+        $this->assertEquals(
+            '{"value":"api-key-update-operation-test-PHP","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}',
+            json_encode($res)
+        );
+    }
+
+    #[TestDox('wait for api key - delete')]
+    public function test9helpers()
+    {
+        $client = SearchClient::createWithConfig(SearchConfig::create('test-app-id', 'test-api-key')->setFullHosts(['http://localhost:6681']));
+
+        $res = $client->waitForApiKey(
+            'api-key-delete-operation-test-PHP',
+            'delete',
+        );
+        $this->assertNull($res);
+    }
+
     #[TestDox('client throws with invalid parameters')]
     public function test0parameters()
     {

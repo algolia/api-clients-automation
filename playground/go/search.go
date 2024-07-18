@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/search"
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 func testSearch(appID, apiKey string) int {
@@ -14,7 +13,7 @@ func testSearch(appID, apiKey string) int {
 		panic(err)
 	}
 
-	res, err := searchClient.WaitForApiKey(search.API_KEY_OPERATION_ADD, "test", &search.ApiKey{}, utils.WithContext(context.Background()), utils.WithMaxRetries(4))
+	res, err := searchClient.WaitForApiKey("test", search.API_KEY_OPERATION_ADD, search.WithContext(context.Background()), search.WithMaxRetries(4))
 	print(res)
 	print(err.Error())
 

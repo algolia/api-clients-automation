@@ -3175,17 +3175,17 @@ paths:
       description: Waits for an API key to be added, updated, or deleted.
       parameters:
         - in: query
-          name: operation
-          description: Whether the API key was created, updated, or deleted.
-          required: true
-          schema:
-            $ref: '#/components/schemas/apiKeyOperation'
-        - in: query
           name: key
           description: API key to wait for.
           required: true
           schema:
             type: string
+        - in: query
+          name: operation
+          description: Whether the API key was created, updated, or deleted.
+          required: true
+          schema:
+            $ref: '#/components/schemas/apiKeyOperation'
         - in: query
           name: apiKey
           description: >-

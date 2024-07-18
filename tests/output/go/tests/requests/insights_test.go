@@ -12,7 +12,6 @@ import (
 
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/insights"
 	"github.com/algolia/algoliasearch-client-go/v4/algolia/transport"
-	"github.com/algolia/algoliasearch-client-go/v4/algolia/utils"
 )
 
 func createInsightsClient(t *testing.T) (*insights.APIClient, *tests.EchoRequester) {
@@ -103,8 +102,8 @@ func TestInsights_CustomGet(t *testing.T) {
 		_, err := client.CustomGet(client.NewApiCustomGetRequest(
 			"test/all",
 		).WithParameters(map[string]any{"query": "to be overriden"}),
-			utils.WithQueryParam("query", "parameters with space"), utils.WithQueryParam("and an array",
-				[]string{"array", "with spaces"}), utils.WithHeaderParam("x-header-1", "spaces are left alone"),
+			insights.WithQueryParam("query", "parameters with space"), insights.WithQueryParam("and an array",
+				[]string{"array", "with spaces"}), insights.WithHeaderParam("x-header-1", "spaces are left alone"),
 		)
 		require.NoError(t, err)
 
@@ -164,7 +163,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			utils.WithQueryParam("query", "myQueryParameter"),
+			insights.WithQueryParam("query", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -184,7 +183,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			utils.WithQueryParam("query2", "myQueryParameter"),
+			insights.WithQueryParam("query2", "myQueryParameter"),
 		)
 		require.NoError(t, err)
 
@@ -204,7 +203,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			utils.WithHeaderParam("x-algolia-api-key", "myApiKey"),
+			insights.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -229,7 +228,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			utils.WithHeaderParam("x-algolia-api-key", "myApiKey"),
+			insights.WithHeaderParam("x-algolia-api-key", "myApiKey"),
 		)
 		require.NoError(t, err)
 
@@ -254,7 +253,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			utils.WithQueryParam("isItWorking", true),
+			insights.WithQueryParam("isItWorking", true),
 		)
 		require.NoError(t, err)
 
@@ -274,7 +273,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			utils.WithQueryParam("myParam", 2),
+			insights.WithQueryParam("myParam", 2),
 		)
 		require.NoError(t, err)
 
@@ -294,7 +293,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			utils.WithQueryParam("myParam",
+			insights.WithQueryParam("myParam",
 				[]string{"b and c", "d"}),
 		)
 		require.NoError(t, err)
@@ -315,7 +314,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			utils.WithQueryParam("myParam",
+			insights.WithQueryParam("myParam",
 				[]bool{true, true, false}),
 		)
 		require.NoError(t, err)
@@ -336,7 +335,7 @@ func TestInsights_CustomPost(t *testing.T) {
 		_, err := client.CustomPost(client.NewApiCustomPostRequest(
 			"test/requestOptions",
 		).WithParameters(map[string]any{"query": "parameters"}).WithBody(map[string]any{"facet": "filters"}),
-			utils.WithQueryParam("myParam",
+			insights.WithQueryParam("myParam",
 				[]int32{1, 2}),
 		)
 		require.NoError(t, err)

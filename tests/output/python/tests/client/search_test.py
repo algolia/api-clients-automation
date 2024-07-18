@@ -349,6 +349,89 @@ class TestSearchClient:
             else _req.to_dict()
         ) == loads("""[{"taskID":666,"objectIDs":["1","2"]}]""")
 
+    async def test_helpers_7(self):
+        """
+        wait for api key helper - add
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6681)]
+        )
+        self._client = SearchClient.create_with_config(config=_config)
+        _req = await self._client.wait_for_api_key(
+            key="api-key-add-operation-test-Python",
+            operation="add",
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"value":"api-key-add-operation-test-Python","description":"my new api key","acl":["search","addObject"],"validity":300,"maxQueriesPerIPPerHour":100,"maxHitsPerQuery":20,"createdAt":1720094400}"""
+        )
+
+    async def test_helpers_8(self):
+        """
+        wait for api key - update
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6681)]
+        )
+        self._client = SearchClient.create_with_config(config=_config)
+        _req = await self._client.wait_for_api_key(
+            key="api-key-update-operation-test-Python",
+            operation="update",
+            api_key={
+                "description": "my updated api key",
+                "acl": [
+                    "search",
+                    "addObject",
+                    "deleteObject",
+                ],
+                "indexes": [
+                    "Movies",
+                    "Books",
+                ],
+                "referers": [
+                    "*google.com",
+                    "*algolia.com",
+                ],
+                "validity": 305,
+                "maxQueriesPerIPPerHour": 95,
+                "maxHitsPerQuery": 20,
+            },
+        )
+        assert (
+            _req
+            if isinstance(_req, dict)
+            else [elem.to_dict() for elem in _req]
+            if isinstance(_req, list)
+            else _req.to_dict()
+        ) == loads(
+            """{"value":"api-key-update-operation-test-Python","description":"my updated api key","acl":["search","addObject","deleteObject"],"indexes":["Movies","Books"],"referers":["*google.com","*algolia.com"],"validity":305,"maxQueriesPerIPPerHour":95,"maxHitsPerQuery":20,"createdAt":1720094400}"""
+        )
+
+    async def test_helpers_9(self):
+        """
+        wait for api key - delete
+        """
+
+        _config = SearchConfig("test-app-id", "test-api-key")
+        _config.hosts = HostsCollection(
+            [Host(url="localhost", scheme="http", port=6681)]
+        )
+        self._client = SearchClient.create_with_config(config=_config)
+        _req = await self._client.wait_for_api_key(
+            key="api-key-delete-operation-test-Python",
+            operation="delete",
+        )
+        assert _req is None
+
     async def test_parameters_0(self):
         """
         client throws with invalid parameters

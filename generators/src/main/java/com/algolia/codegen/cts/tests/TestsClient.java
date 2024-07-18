@@ -169,6 +169,10 @@ public class TestsClient extends TestsGenerator {
                 } else {
                   stepOut.put("match", step.expected.match);
                 }
+              } else if (step.expected.match == null) {
+                stepOut.put("match", Map.of());
+                stepOut.put("matchIsJSON", false);
+                stepOut.put("matchIsNull", true);
               }
             }
             steps.add(stepOut);

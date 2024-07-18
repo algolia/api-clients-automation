@@ -328,6 +328,82 @@ final class SearchClientClientTests: XCTestCase {
         )
     }
 
+    /// wait for api key helper - add
+    func testHelpersTest7() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.waitForApiKey(
+            key: "api-key-add-operation-test-Swift",
+            operation: ApiKeyOperation.add
+        )
+
+        let comparableData =
+            try XCTUnwrap(
+                "{\"value\":\"api-key-add-operation-test-Swift\",\"description\":\"my new api key\",\"acl\":[\"search\",\"addObject\"],\"validity\":300,\"maxQueriesPerIPPerHour\":100,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}"
+                    .data(using: .utf8)
+            )
+        try XCTLenientAssertEqual(
+            received: CodableHelper.jsonEncoder.encode(response),
+            expected: comparableData
+        )
+    }
+
+    /// wait for api key - update
+    func testHelpersTest8() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.waitForApiKey(
+            key: "api-key-update-operation-test-Swift",
+            operation: ApiKeyOperation.update,
+            apiKey: ApiKey(
+                acl: [Acl.search, Acl.addObject, Acl.deleteObject],
+                description: "my updated api key",
+                indexes: ["Movies", "Books"],
+                maxHitsPerQuery: 20,
+                maxQueriesPerIPPerHour: 95,
+                referers: ["*google.com", "*algolia.com"],
+                validity: 305
+            )
+        )
+
+        let comparableData =
+            try XCTUnwrap(
+                "{\"value\":\"api-key-update-operation-test-Swift\",\"description\":\"my updated api key\",\"acl\":[\"search\",\"addObject\",\"deleteObject\"],\"indexes\":[\"Movies\",\"Books\"],\"referers\":[\"*google.com\",\"*algolia.com\"],\"validity\":305,\"maxQueriesPerIPPerHour\":95,\"maxHitsPerQuery\":20,\"createdAt\":1720094400}"
+                    .data(using: .utf8)
+            )
+        try XCTLenientAssertEqual(
+            received: CodableHelper.jsonEncoder.encode(response),
+            expected: comparableData
+        )
+    }
+
+    /// wait for api key - delete
+    func testHelpersTest9() async throws {
+        let configuration = try SearchClientConfiguration(
+            appID: "test-app-id",
+            apiKey: "test-api-key",
+            hosts: [RetryableHost(url: URL(string: "http://localhost:6681")!)]
+        )
+        let transporter = Transporter(configuration: configuration)
+        let client = SearchClient(configuration: configuration, transporter: transporter)
+        let response = try await client.waitForApiKey(
+            key: "api-key-delete-operation-test-Swift",
+            operation: ApiKeyOperation.delete
+        )
+
+        XCTAssertNil(response)
+    }
+
     /// client throws with invalid parameters
     func testParametersTest0() async throws {
         do {

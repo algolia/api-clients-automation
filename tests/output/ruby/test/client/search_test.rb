@@ -323,6 +323,105 @@ class TestClientSearchClient < Test::Unit::TestCase
     assert_equal([{:"taskID" => 666, :"objectIDs" => ["1", "2"]}], req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash)
   end
 
+  # wait for api key helper - add
+  def test_helpers7
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            "localhost",
+            protocol: "http://",
+            port: 6681,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    req = client.wait_for_api_key("api-key-add-operation-test-Ruby", "add")
+    assert_equal(
+      {
+        :"value" => "api-key-add-operation-test-Ruby",
+        :"description" => "my new api key",
+        :"acl" => ["search", "addObject"],
+        :"validity" => 300,
+        :"maxQueriesPerIPPerHour" => 100,
+        :"maxHitsPerQuery" => 20,
+        :"createdAt" => 1720094400
+      },
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+  end
+
+  # wait for api key - update
+  def test_helpers8
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            "localhost",
+            protocol: "http://",
+            port: 6681,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    req = client.wait_for_api_key(
+      "api-key-update-operation-test-Ruby",
+      "update",
+      ApiKey.new(
+        description: "my updated api key",
+        acl: ["search", "addObject", "deleteObject"],
+        indexes: ["Movies", "Books"],
+        referers: ["*google.com", "*algolia.com"],
+        validity: 305,
+        max_queries_per_ip_per_hour: 95,
+        max_hits_per_query: 20
+      )
+    )
+    assert_equal(
+      {
+        :"value" => "api-key-update-operation-test-Ruby",
+        :"description" => "my updated api key",
+        :"acl" => ["search", "addObject", "deleteObject"],
+        :"indexes" => ["Movies", "Books"],
+        :"referers" => ["*google.com", "*algolia.com"],
+        :"validity" => 305,
+        :"maxQueriesPerIPPerHour" => 95,
+        :"maxHitsPerQuery" => 20,
+        :"createdAt" => 1720094400
+      },
+      req.is_a?(Array) ? req.map(&:to_hash) : req.to_hash
+    )
+  end
+
+  # wait for api key - delete
+  def test_helpers9
+    client = Algolia::SearchClient.create_with_config(
+      Algolia::Configuration.new(
+        "test-app-id",
+        "test-api-key",
+        [
+          Algolia::Transport::StatefulHost.new(
+            "localhost",
+            protocol: "http://",
+            port: 6681,
+            accept: CallType::READ | CallType::WRITE
+          )
+        ],
+        "searchClient"
+      )
+    )
+    req = client.wait_for_api_key("api-key-delete-operation-test-Ruby", "delete")
+    assert_nil(req)
+  end
+
   # client throws with invalid parameters
   def test_parameters0
     begin

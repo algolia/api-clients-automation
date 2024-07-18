@@ -59,7 +59,7 @@ fun assertJsonBody(json: String, body: Any) {
 /**
  * Compares two [JsonElement] instances for structural equality without considering the order of elements.
  */
-private fun areJsonElementsEqual(elem1: JsonElement?, elem2: JsonElement?): Boolean {
+public fun areJsonElementsEqual(elem1: JsonElement?, elem2: JsonElement?): Boolean {
   return when {
     elem1 == null && elem2 == null -> true
     elem1 is JsonObject && elem2 is JsonObject -> {

@@ -56,15 +56,28 @@ class {{clientPrefix}}Test {
                 {{#testHost}}
                     assertEquals("{{{match}}}", it.url.host);
                 {{/testHost}}        
-             }{{/testResponse}}{{#testResponse}}response = {
-                  {{#matchIsJSON}}
-                  val response = Json.encodeToString(it)
-                  assertEquals("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}", response)
-                  {{/matchIsJSON}}
-                  {{^matchIsJSON}}
-                  assertEquals("{{{match}}}", it)
-                  {{/matchIsJSON}}
-              }{{/testResponse}}
+             }{{/testResponse}}{{#testResponse}}
+               {{#isHelper}}response = {
+               {{#matchIsJSON}}
+                 assertNotNull(it)
+                 val expected = Json.parseToJsonElement("""{{{match.parameters}}}""")
+                 val actual = Json.encodeToJsonElement(it)
+                 areJsonElementsEqual(expected, actual)
+               {{/matchIsJSON}}
+               {{^matchIsJSON}}
+                 {{#matchIsNull}}
+                   assertNull(it)
+                 {{/matchIsNull}}
+                 {{^matchIsNull}}
+                   assertEquals("""{{{match}}}""", it)
+                 {{/matchIsNull}}
+               {{/matchIsJSON}}
+               }{{/isHelper}}
+               {{^isHelper}}response = {
+                    val response = Json.encodeToString(it)
+                    assertEquals("{{#lambda.escapeQuotes}}{{{match.parameters}}}{{/lambda.escapeQuotes}}", response)
+                }{{/isHelper}}
+               {{/testResponse}}
               {{/match}}
         )
         {{/isMethod}}
