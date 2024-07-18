@@ -1,1 +1,13 @@
-$client->{{{method}}}{{^parametersWithDataType}}();{{/parametersWithDataType}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}});
+$client->{{^hasParams}}{{{method}}}(){{/hasParams}}{{#hasParams}}{{{method}}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}[
+  {{#requestOptions.hasQueryParameters}}
+    'queryParameters' => [
+      {{#requestOptions.queryParameters.parametersWithDataType}}
+        '{{{key}}}' => {{> tests/requests/requestOptionsParams}},
+      {{/requestOptions.queryParameters.parametersWithDataType}}
+    ],{{/requestOptions.hasQueryParameters}}{{#requestOptions.hasHeaders}}
+    'headers' => [
+      {{#requestOptions.headers.parametersWithDataType}}
+        '{{{key}}}' => '{{{value}}}',
+      {{/requestOptions.headers.parametersWithDataType}}
+    ]{{/requestOptions.hasHeaders}}
+  ]{{/hasRequestOptions}}){{/hasParams}}

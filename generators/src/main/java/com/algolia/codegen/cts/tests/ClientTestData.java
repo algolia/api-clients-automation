@@ -15,7 +15,6 @@ class Step {
   public String type;
   public String method;
   public Map<String, Object> parameters;
-  public Map<String, Object> requestOptions;
   public Expected expected;
 }
 

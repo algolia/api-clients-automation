@@ -103,12 +103,6 @@ public class TestsClient extends TestsGenerator {
 
             stepOut.put("method", step.method);
 
-            if (step.requestOptions != null) {
-              Map<String, Object> requestOptions = new HashMap<>();
-              paramsType.enhanceParameters(step.requestOptions, requestOptions);
-              stepOut.put("requestOptions", requestOptions);
-            }
-
             if (step.method != null && CUSTOM_METHODS.contains(step.method)) {
               stepOut.put("isCustom", true);
             }
