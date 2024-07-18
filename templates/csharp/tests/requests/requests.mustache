@@ -14,13 +14,13 @@ namespace Algolia.Search.requests;
 
 public class {{client}}RequestTests
 {
-private readonly {{client}} _client;
+private readonly {{client}} client;
   private readonly EchoHttpRequester _echo;
 
   public {{client}}RequestTests()
   {
     _echo = new EchoHttpRequester();
-    _client = new {{client}}(new {{clientPrefix}}Config("appId", "apiKey"{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}), _echo);
+    client = new {{client}}(new {{clientPrefix}}Config("appId", "apiKey"{{#hasRegionalHost}},"{{defaultRegion}}"{{/hasRegionalHost}}), _echo);
   }
 
   [Fact]
@@ -34,15 +34,7 @@ private readonly {{client}} _client;
   [Fact(DisplayName = "{{{testName}}}")]
   public async Task {{#lambda.pascalcase}}{{method}}Test{{testIndex}}{{/lambda.pascalcase}}()
   {
-     await _client.{{#lambda.pascalcase}}{{method}}{{/lambda.pascalcase}}Async{{#isGeneric}}<Hit>{{/isGeneric}}({{#parametersWithDataType}}{{> tests/generateParams}}{{^-last}},{{/-last}}{{/parametersWithDataType}}{{#hasRequestOptions}}, new RequestOptionBuilder()
-      {{#requestOptions.queryParameters.parametersWithDataType}}
-          .AddExtraQueryParameters("{{{key}}}", {{> tests/requests/requestOptionsParams}} )
-      {{/requestOptions.queryParameters.parametersWithDataType}}
-      {{#requestOptions.headers.parametersWithDataType}}
-          .AddExtraHeader("{{{key}}}", "{{{value}}}")
-      {{/requestOptions.headers.parametersWithDataType}}
-          .Build()
-    {{/hasRequestOptions}});
+     {{> tests/method}};
 
      var req = _echo.LastResponse;
     {{#request}}
