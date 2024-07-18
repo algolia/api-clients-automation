@@ -1,0 +1,4 @@
+{{#isAsync}}await {{/isAsync}}client.{{method}}({{#hasParams}}{{{parameters}}}{{/hasParams}}{{#hasRequestOptions}}, {
+  {{#requestOptions.queryParameters.parameters}}queryParameters: {{{.}}},{{/requestOptions.queryParameters.parameters}}
+  {{#requestOptions.headers.parameters}}headers: {{{.}}}{{/requestOptions.headers.parameters}}
+}{{/hasRequestOptions}})

@@ -29,7 +29,7 @@ final class {{client}}RequestsTests: XCTestCase {
           )
         {{/hasRequestOptions}}
 
-        let response{{#isGeneric}}: Response<{{{returnType}}}<Hit>>{{/isGeneric}} = try await client.{{method}}WithHTTPInfo({{#hasParameters}}{{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}{{/hasParameters}}{{#hasRequestOptions}}, requestOptions: requestOptions{{/hasRequestOptions}})
+        let response{{#isGeneric}}: Response<{{{returnType}}}<Hit>>{{/isGeneric}} = try await client.{{method}}WithHTTPInfo({{#hasParams}}{{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}{{/hasParams}}{{#hasRequestOptions}}, requestOptions: requestOptions{{/hasRequestOptions}})
         let responseBodyData = try XCTUnwrap(response.bodyData)
         let echoResponse = try CodableHelper.jsonDecoder.decode(EchoResponse.self, from: responseBodyData)
 

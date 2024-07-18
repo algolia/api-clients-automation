@@ -17,7 +17,7 @@ describe('{{testType}}', () => {
   {{#tests}}
   test('{{{testName}}}', async () => {
     {{#autoCreateClient}}
-      const $client = createClient();
+      const client = createClient();
     {{/autoCreateClient}}
 
     {{#steps}}

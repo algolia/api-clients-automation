@@ -39,7 +39,7 @@ class Snippet{{client}}
         {{/hasRequestOptions}}
 
         // Call the API
-        $response = $client->{{^hasParameters}}{{{method}}}();{{/hasParameters}}{{#hasParameters}}{{{method}}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}$requestOptions{{/hasRequestOptions}});{{/hasParameters}}
+        $response = $client->{{^hasParams}}{{{method}}}();{{/hasParams}}{{#hasParams}}{{{method}}}({{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}$requestOptions{{/hasRequestOptions}});{{/hasParams}}
 
         // play with the response
         var_dump($response);

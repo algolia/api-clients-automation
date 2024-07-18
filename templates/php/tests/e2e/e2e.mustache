@@ -53,9 +53,9 @@ class {{clientPrefix}}Test extends TestCase
     public function test{{#lambda.titlecase}}{{method}}{{/lambda.titlecase}}{{testIndex}}()
     {
         $client = $this->getClient();
-        $resp = $client->{{^hasParameters}}{{{method}}}();{{/hasParameters}}{{#hasParameters}}{{{method}}}(
+        $resp = $client->{{^hasParams}}{{{method}}}();{{/hasParams}}{{#hasParams}}{{{method}}}(
         {{#parametersWithDataType}}{{> tests/generateParams}}{{/parametersWithDataType}}{{#hasRequestOptions}}$requestOptions{{/hasRequestOptions}}
-        );{{/hasParameters}}
+        );{{/hasParams}}
 
         {{#response}}
         {{#body}}

@@ -61,7 +61,7 @@ final class {{client}}RequestsTestsE2E: XCTestCase {
         }
 
         {{#response}}
-          let e2eResponse{{#isGeneric}}: Response<{{{returnType}}}<Hit>>{{/isGeneric}} = try await e2eClient.{{method}}WithHTTPInfo({{#hasParameters}}{{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}{{/hasParameters}}{{#hasRequestOptions}}, requestOptions: requestOptions{{/hasRequestOptions}})
+          let e2eResponse{{#isGeneric}}: Response<{{{returnType}}}<Hit>>{{/isGeneric}} = try await e2eClient.{{method}}WithHTTPInfo({{#hasParams}}{{#parametersWithDataType}}{{> tests/generateParams }}{{^-last}}, {{/-last}}{{/parametersWithDataType}}{{/hasParams}}{{#hasRequestOptions}}, requestOptions: requestOptions{{/hasRequestOptions}})
           {{#body}}
             let e2eResponseBody = try XCTUnwrap(e2eResponse.body)
             let e2eResponseBodyData = try CodableHelper.jsonEncoder.encode(e2eResponseBody)

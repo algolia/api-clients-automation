@@ -68,7 +68,7 @@ public class TestsClient extends TestsGenerator {
             CodegenOperation ope = null;
             if (step.type.equals("createClient")) {
               stepOut.put("stepTemplate", "tests/client/createClient.mustache");
-              stepOut.put("isCreateClient", true); // TODO: remove once dart and kotlin are converted
+              stepOut.put("isCreateClient", true); // TODO: remove once kotlin is converted
 
               boolean hasCustomHosts = step.parameters != null && step.parameters.containsKey("customHosts");
 
@@ -94,7 +94,7 @@ public class TestsClient extends TestsGenerator {
               }
               stepOut.put("stepTemplate", "tests/client/method.mustache");
               stepOut.put("isMethod", true); // TODO: remove once kotlin is converted
-              stepOut.put("hasOperationParams", ope.hasParams);
+              stepOut.put("hasParams", ope.hasParams);
 
               // set on testOut because we need to wrap everything for java.
               testOut.put("isHelper", (boolean) ope.vendorExtensions.getOrDefault("x-helper", false));
