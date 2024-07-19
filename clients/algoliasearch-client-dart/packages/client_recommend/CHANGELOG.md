@@ -1,3 +1,7 @@
+## [2.0.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.18.0...2.0.0)
+
+
+
 ## [1.18.0](https://github.com/algolia/algoliasearch-client-dart/compare/1.17.1...1.18.0)
 
 - [280037178](https://github.com/algolia/api-clients-automation/commit/280037178) fix(specs): update shopify feature flags ([#3380](https://github.com/algolia/api-clients-automation/pull/3380)) by [@millotp](https://github.com/millotp/)

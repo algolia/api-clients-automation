@@ -31,7 +31,12 @@
       },
       "7.0.0-beta.10": {
         "start": "2024-07-19",
-        "status": "prerelease",
+        "status": "maintenance",
+        "end": "2026-07-19"
+      },
+      "7.0.0": {
+        "start": "2024-07-19",
+        "status": "active",
         "end": "2026-07-19"
       }
     },
@@ -68,6 +73,11 @@
       },
       "1.18.0": {
         "start": "2024-07-19",
+        "status": "maintenance",
+        "end": "2026-07-19"
+      },
+      "2.0.0": {
+        "start": "2024-07-19",
         "status": "active",
         "end": "2026-07-19"
       }
@@ -80,7 +90,12 @@
       },
       "4.0.0-beta.24": {
         "start": "2024-07-19",
-        "status": "prerelease",
+        "status": "maintenance",
+        "end": "2026-07-19"
+      },
+      "4.0.0": {
+        "start": "2024-07-19",
+        "status": "active",
         "end": "2026-07-19"
       }
     },
@@ -92,7 +107,12 @@
       },
       "4.0.0-beta.41": {
         "start": "2024-07-19",
-        "status": "prerelease",
+        "status": "maintenance",
+        "end": "2026-07-19"
+      },
+      "4.0.0": {
+        "start": "2024-07-19",
+        "status": "active",
         "end": "2026-07-19"
       }
     },
@@ -104,7 +124,12 @@
       },
       "5.0.0-beta.12": {
         "start": "2024-07-19",
-        "status": "prerelease",
+        "status": "maintenance",
+        "end": "2026-07-19"
+      },
+      "5.0.0": {
+        "start": "2024-07-19",
+        "status": "active",
         "end": "2026-07-19"
       }
     },
@@ -116,7 +141,12 @@
       },
       "3.0.0-beta.36": {
         "start": "2024-07-19",
-        "status": "prerelease",
+        "status": "maintenance",
+        "end": "2026-07-19"
+      },
+      "3.0.0": {
+        "start": "2024-07-19",
+        "status": "active",
         "end": "2026-07-19"
       }
     },
@@ -128,7 +158,12 @@
       },
       "4.0.0-beta.10": {
         "start": "2024-07-19",
-        "status": "prerelease",
+        "status": "maintenance",
+        "end": "2026-07-19"
+      },
+      "4.0.0": {
+        "start": "2024-07-19",
+        "status": "active",
         "end": "2026-07-19"
       }
     },
@@ -140,7 +175,12 @@
       },
       "4.0.0b25": {
         "start": "2024-07-19",
-        "status": "prerelease",
+        "status": "maintenance",
+        "end": "2026-07-19"
+      },
+      "4.0.0": {
+        "start": "2024-07-19",
+        "status": "active",
         "end": "2026-07-19"
       }
     },
@@ -152,7 +192,12 @@
       },
       "3.0.0.beta.10": {
         "start": "2024-07-19",
-        "status": "prerelease",
+        "status": "maintenance",
+        "end": "2026-07-19"
+      },
+      "3.0.0": {
+        "start": "2024-07-19",
+        "status": "active",
         "end": "2026-07-19"
       }
     },
@@ -164,7 +209,12 @@
       },
       "2.0.0-beta.10": {
         "start": "2024-07-19",
-        "status": "prerelease",
+        "status": "maintenance",
+        "end": "2026-07-19"
+      },
+      "2.0.0": {
+        "start": "2024-07-19",
+        "status": "active",
         "end": "2026-07-19"
       }
     },
@@ -176,7 +226,12 @@
       },
       "9.0.0-beta.11": {
         "start": "2024-07-19",
-        "status": "prerelease",
+        "status": "maintenance",
+        "end": "2026-07-19"
+      },
+      "9.0.0": {
+        "start": "2024-07-19",
+        "status": "active",
         "end": "2026-07-19"
       }
     }
